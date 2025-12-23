@@ -1,0 +1,176 @@
+---
+import { ClientRouter } from 'astro:transitions';
+import SEO from '../components/SEO.astro';
+import '../styles/global.css';
+import Header from '../components/Header.astro';
+import Container from '../components/ui/Container.astro';
+
+interface Props {
+  // SEO props
+  title: string;
+  description: string;
+  robots?: 'index, follow' | 'noindex, follow' | 'noindex, nofollow';
+  canonical?: string;
+  ogType?: 'website' | 'article';
+  ogImage?: string;
+  ogImageAlt?: string;
+  twitterCard?: 'summary' | 'summary_large_image';
+  publishedTime?: string;
+  modifiedTime?: string;
+  author?: string;
+
+  // Layout props
+  class?: string;
+}
+
+const {
+  title,
+  description,
+  robots,
+  canonical,
+  ogType,
+  ogImage,
+  ogImageAlt,
+  twitterCard,
+  publishedTime,
+  modifiedTime,
+  author,
+  class: className,
+} = Astro.props;
+
+// Get locale from site settings for lang attribute
+let lang = 'fr';
+try {
+  const reader = await import('../../keystatic.config').then(async (mod) => {
+    const { createReader } = await import('@keystatic/core/reader');
+    return createReader({ config: mod.default });
+  });
+  const settings = await reader.singletons.siteSettings.read();
+  if (settings?.locale) {
+    lang = settings.locale.split('_')[0];
+  }
+} catch {
+  // Use default lang
+}
+---
+
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <SEO
+      title={title}
+      description={description}
+      robots={robots}
+      canonical={canonical}
+      ogType={ogType}
+      ogImage={ogImage}
+      ogImageAlt={ogImageAlt}
+      twitterCard={twitterCard}
+      publishedTime={publishedTime}
+      modifiedTime={modifiedTime}
+      author={author}
+    />
+    <ClientRouter />
+  </head>
+  <body class=`bg-bg ${className}`>
+    <a href="#main-content" class="skip-link">Aller au contenu principal</a>
+
+    <Header />
+    <Container>
+      <main id="main-content">
+        <slot />
+      </main>
+
+      <slot name="footer" />
+    </Container>
+  </body>
+</html>
+
+<style is:global>
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  * {
+    margin: 0;
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+    -moz-tab-size: 4;
+    tab-size: 4;
+  }
+
+  body {
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+    font-family: 'PP Neue Montreal';
+  }
+
+  img,
+  picture,
+  video,
+  canvas,
+  svg {
+    display: block;
+    max-width: 100%;
+  }
+
+  input,
+  button,
+  textarea,
+  select {
+    font: inherit;
+  }
+
+  p,
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    overflow-wrap: break-word;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: inherit;
+  }
+
+  /* Skip link for accessibility */
+  .skip-link {
+    position: absolute;
+    top: -100%;
+    left: 0;
+    z-index: 9999;
+    padding: 1rem;
+    background: var(--color-primary, #000);
+    color: var(--color-on-primary, #fff);
+    text-decoration: underline;
+  }
+
+  .skip-link:focus {
+    top: 0;
+  }
+
+  /* Focus visible */
+  :focus-visible {
+    outline: 2px solid var(--color-primary, #0066cc);
+    outline-offset: 2px;
+  }
+
+  /* Respect reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+</style>

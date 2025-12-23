@@ -1,0 +1,57 @@
+---
+interface Props {
+  padding?: string;
+  class?: string;
+  svgClass?: string;
+}
+
+const { padding = '0.5rem', class: className = '', svgClass = '' } = Astro.props;
+---
+
+<div class:list={['wrapped', className]} style={`--wrapped-padding: ${padding}`}>
+  <svg
+    class:list={['wrapped-svg', svgClass]}
+    width="3"
+    height="13"
+    viewBox="0 0 3 13"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    aria-hidden="true"
+  >
+    <path d="M0 12.7004V0H2.478V0.810048H0.854V11.8904H2.478V12.7004H0Z" fill="currentColor" />
+  </svg>
+
+  <div class="wrapped-content">
+    <slot />
+  </div>
+
+  <svg
+    class:list={['wrapped-svg', svgClass]}
+    width="3"
+    height="13"
+    viewBox="0 0 3 13"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    aria-hidden="true"
+  >
+    <path d="M2.478 12.7004H0V11.8904H1.62399V0.810048H0V0H2.478V12.7004Z" fill="currentColor" />
+  </svg>
+</div>
+
+<style>
+  .wrapped {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--wrapped-padding);
+    color: var(--color-black);
+  }
+
+  .wrapped-svg {
+    flex-shrink: 0;
+  }
+
+  .wrapped-content {
+    display: flex;
+    align-items: center;
+  }
+</style>

@@ -1,0 +1,130 @@
+---
+import yaml from 'js-yaml';
+import fs from 'node:fs';
+import path from 'node:path';
+import Wrapped from './ui/Wrapped.astro';
+
+const navPath = path.join(process.cwd(), 'src/content/settings/navigation.yaml');
+const navContent = fs.readFileSync(navPath, 'utf8');
+const navigation = yaml.load(navContent) as {
+  logo?: string;
+  logoAlt?: string;
+  items?: { label: string; url: string; isExternal?: boolean }[];
+  ctaButton?: { label?: string; url?: string };
+};
+
+const { logo, logoAlt = 'Logo', items = [], ctaButton } = navigation;
+---
+
+<header class="fixed top-0 left-0 right-0 z-50 px-4 py-4 md:px-8">
+  <div class="flex items-center justify-between">
+    <a href="/" class="block">
+      {logo ? (
+        <img src={logo} alt={logoAlt} class="h-8 w-14 md:h-10" />
+      ) : (
+        <span class="text-black font-display text-xl">{logoAlt}</span>
+      )}
+    </a>
+
+    <button
+      type="button"
+      id="menu-toggle"
+      class="flex items-center gap-2 text-black"
+      aria-expanded="false"
+      aria-controls="mobile-menu"
+      aria-label="Ouvrir le menu"
+    >
+      <span id="menu-label" class="tracking-wide">Menu</span>
+      <Wrapped padding="0.5rem">
+        <span id="menu-icon" class="leading-none">+</span>
+      </Wrapped>
+    </button>
+  </div>
+</header>
+
+<div
+  id="mobile-menu"
+  class="opacity-0"
+  aria-hidden="true"
+>
+  <nav class="fixed top-15 right-4 px-5 py-5 bg-bg-light flex flex-col gap-4">
+    <ul class="flex flex-col gap-4">
+      {items.map((item) => (
+        <li>
+          <a
+            href={item.url}
+            class="menu-link text-black text-3xl font-sans hover:opacity-70 transition-opacity"
+            target={item.isExternal ? '_blank' : undefined}
+            rel={item.isExternal ? 'noopener noreferrer' : undefined}
+          >
+            {item.label}
+          </a>
+        </li>
+      ))}
+    </ul>
+    <span class="w-full h-px bg-lines"></span>
+
+    {ctaButton?.label && ctaButton?.url && (
+      <a
+        href={ctaButton.url}
+        class="menu-link tracking-wide hover:opacity-90 transition-opacity"
+      >
+        {ctaButton.label}
+      </a>
+    )}
+  </nav>
+</div>
+
+<div class="h-16 md:h-20"></div>
+
+<script>
+  const toggle = document.getElementById('menu-toggle');
+  const menu = document.getElementById('mobile-menu');
+  const label = document.getElementById('menu-label');
+  const icon = document.getElementById('menu-icon');
+  const links = document.querySelectorAll('.menu-link');
+
+  let isOpen = false;
+
+  function openMenu() {
+    isOpen = true;
+    menu?.classList.remove('opacity-0', 'invisible');
+    menu?.classList.add('opacity-100', 'visible');
+    menu?.setAttribute('aria-hidden', 'false');
+    toggle?.setAttribute('aria-expanded', 'true');
+    toggle?.setAttribute('aria-label', 'Fermer le menu');
+    if (label) label.textContent = 'Close';
+    if (icon) icon.textContent = '⨯';
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeMenu() {
+    isOpen = false;
+    menu?.classList.remove('opacity-100', 'visible');
+    menu?.classList.add('opacity-0', 'invisible');
+    menu?.setAttribute('aria-hidden', 'true');
+    toggle?.setAttribute('aria-expanded', 'false');
+    toggle?.setAttribute('aria-label', 'Ouvrir le menu');
+    if (label) label.textContent = 'Menu';
+    if (icon) icon.textContent = '+';
+    document.body.style.overflow = '';
+  }
+
+  toggle?.addEventListener('click', () => {
+    if (isOpen) {
+      closeMenu();
+    } else {
+      openMenu();
+    }
+  });
+
+  links.forEach(link => {
+    link.addEventListener('click', closeMenu);
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && isOpen) {
+      closeMenu();
+    }
+  });
+</script>

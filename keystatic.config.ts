@@ -104,6 +104,7 @@ export default config({
     siteSettings: singleton({
       label: 'Paramètres du site',
       path: 'src/content/settings/site',
+      format: 'yaml',
       schema: {
         siteName: fields.text({
           label: 'Nom du site',
@@ -157,6 +158,7 @@ export default config({
     navigation: singleton({
       label: 'Navigation',
       path: 'src/content/settings/navigation',
+      format: 'yaml',
       schema: {
         logo: fields.image({
           label: 'Logo',
@@ -194,6 +196,7 @@ export default config({
     footer: singleton({
       label: 'Pied de page',
       path: 'src/content/settings/footer',
+      format: 'yaml',
       schema: {
         description: fields.text({
           label: 'Description',

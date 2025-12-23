@@ -30,14 +30,14 @@ npm run preview  # Preview production build locally
 **Performance (astro.config.mjs) :**
 - `prefetch: true` - Préchargement des liens au hover
 - `compressHTML: true` - Compression HTML en production
-- ViewTransitions : ajouter `<ViewTransitions />` dans le `<head>` des layouts
+- ClientRouter : ajouter `<ClientRouter />` dans le `<head>` des layouts
 
 ```astro
 ---
-import { ViewTransitions } from 'astro:transitions';
+import { ClientRouter } from 'astro:transitions';
 ---
 <head>
-  <ViewTransitions />
+  <ClientRouter />
 </head>
 ```
 

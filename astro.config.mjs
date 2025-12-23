@@ -1,5 +1,6 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
+import tailwindcss from '@tailwindcss/vite';
 
 import react from '@astrojs/react';
 import markdoc from '@astrojs/markdoc';
@@ -15,4 +16,7 @@ export default defineConfig({
   integrations: [react(), markdoc(), keystatic(), sitemap()],
   prefetch: true,
   compressHTML: true,
+  vite: {
+    plugins: [tailwindcss()],
+  },
 });
