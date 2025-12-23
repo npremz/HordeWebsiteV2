@@ -16,7 +16,7 @@ const navigation = yaml.load(navContent) as {
 const { logo, logoAlt = 'Logo', items = [], ctaButton } = navigation;
 ---
 
-<header class="fixed top-0 left-0 right-0 z-50 px-4 py-4 md:px-8">
+<header class="fixed top-0 left-0 right-0 z-50 px-4 py-5 md:px-8">
   <div class="flex items-center justify-between">
     <a href="/" class="block">
       {logo ? (
@@ -47,7 +47,7 @@ const { logo, logoAlt = 'Logo', items = [], ctaButton } = navigation;
   class="opacity-0"
   aria-hidden="true"
 >
-  <nav class="fixed top-15 right-4 px-5 py-5 bg-bg-light flex flex-col gap-4">
+  <nav class="fixed top-14 right-4 px-5 py-5 bg-bg-light flex flex-col gap-4">
     <ul class="flex flex-col gap-4">
       {items.map((item) => (
         <li>
@@ -74,8 +74,6 @@ const { logo, logoAlt = 'Logo', items = [], ctaButton } = navigation;
     )}
   </nav>
 </div>
-
-<div class="h-16 md:h-20"></div>
 
 <script>
   const toggle = document.getElementById('menu-toggle');

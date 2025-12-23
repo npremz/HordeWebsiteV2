@@ -8,7 +8,7 @@ const { class: className = '', as: Tag = 'div' } = Astro.props;
 ---
 
 <Tag class:list={['container mx-auto px-4 md:px-8 max-w-7xl', className]}>
-  <span class="fixed h-full w-px bg-lines left-4 top-0"></span>
+  <span class="fixed h-full w-px bg-lines left-4 top-0 -z-9999"></span>
   <slot />
-  <span class="fixed h-full w-px bg-lines right-4 top-0"></span>
+  <span class="fixed h-full w-px bg-lines right-4 top-0 -z-9999"></span>
 </Tag>

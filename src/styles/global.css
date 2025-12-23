@@ -24,11 +24,17 @@
   font-display: swap;
 }
 
+:root{
+  --gutter: 1rem;
+}
+
 @theme {
   --color-bg: #D0CDCB;
   --color-bg-light: #F4F3F3;
   --color-black: #3A3737;
   --color-lines: #B1B1B1;
+
+  --spacing-lines: calc(100% + 2 * var(--gutter));
 
   --font-sans: 'PP Neue Montreal', system-ui, sans-serif;
   --font-mono: 'PP Fraktion Mono', monospace;
