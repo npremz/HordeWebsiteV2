@@ -1,0 +1,215 @@
+---
+interface Props {
+	targetId?: string;
+	topOffset?: number;
+	bottomOffset?: number;
+	triggerDistance?: number;
+	triggerDistanceBottom?: number;
+}
+
+const { 
+	targetId = 'page-content',
+	topOffset = 500,
+	bottomOffset = -450,
+	triggerDistance = 500,
+	triggerDistanceBottom = 500
+} = Astro.props;
+---
+
+<canvas 
+	id="bg-canvas" 
+	class="fixed top-0 left-0 w-full min-h-lvh pointer-events-none -z-1000" 
+	data-target-id={targetId}
+	data-top-offset={topOffset}
+	data-bottom-offset={bottomOffset}
+	data-trigger-distance={triggerDistance}
+	data-trigger-distance-bottom={triggerDistanceBottom}
+></canvas>
+
+<script>
+  const canvas = document.getElementById('bg-canvas') as HTMLCanvasElement;
+  const ctx = canvas.getContext('2d')!;
+  const targetId = canvas.getAttribute('data-target-id') || 'projects';
+  const topOffset = Number(canvas.getAttribute('data-top-offset')) || 500;
+  const bottomOffset = Number(canvas.getAttribute('data-bottom-offset')) || -450;
+  const triggerDistance = Number(canvas.getAttribute('data-trigger-distance')) || 500;
+  const triggerDistanceBottom = Number(canvas.getAttribute('data-trigger-distance-bottom')) || 500;
+
+  let animationId: number | null = null;
+  let resizeTimeout: number | undefined;
+  let lastWidth = window.innerWidth;
+  
+  let pixels: { x: number; y: number; alpha: number }[] = [];
+
+  function getPixelSize(): number
+  {
+	const width = window.innerWidth;
+	
+	if (width < 640) return 40; // Mobile
+	if (width < 1024) return 80; // Tablette
+	if (width < 1512) return 128; // Tablette
+	if (width < 1920) return 190; // Tablette
+	if (width < 2560) return 240; // Tablette
+	return 320; // Desktop
+  }
+
+  let pixelSize = 20;
+  
+  function resizeCanvas() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+	pixelSize = getPixelSize();
+  }
+  
+  resizeCanvas();
+  
+  function getProjectSectionPosition(): number | null {
+    const projectSection = document.getElementById(targetId);
+    if (!projectSection) return null;
+    
+    const rect = projectSection.getBoundingClientRect();
+    return rect.top + window.scrollY;
+  }
+  
+  function updatePixels() {
+    const scrollY = window.scrollY;
+    const viewportHeight = window.innerHeight;
+    const projectPos = getProjectSectionPosition() + topOffset;
+    
+    if (!projectPos) {
+      pixels = [];
+      return;
+    }
+    
+    const projectSection = document.getElementById(targetId);
+    if (!projectSection) {
+      pixels = [];
+      return;
+    }
+    
+    const projectRect = projectSection.getBoundingClientRect();
+    const projectEnd = projectRect.bottom + window.scrollY;
+    
+    const distanceToProject = projectPos - (scrollY + viewportHeight);
+    
+    // Calculer la progression d'entrée (depuis le bas)
+    const progressIn = Math.max(0, Math.min(1, 1 - distanceToProject / triggerDistance));
+    
+    // Calculer la progression de sortie (après la section)
+    const distanceAfterProject = scrollY - (projectEnd + bottomOffset);
+    const progressOut = Math.max(0, Math.min(1, distanceAfterProject / triggerDistanceBottom));
+    
+    // La progression finale combine entrée et sortie
+    const finalProgress = progressIn * (1 - progressOut);
+    
+    // Déterminer si on est en train de sortir par le haut (remontant) ou par le bas (descendant)
+    const isExitingTop = scrollY + viewportHeight < projectPos && progressIn < 1;
+    const isExitingBottom = scrollY > (projectEnd + bottomOffset);
+    
+    if (finalProgress === 0) {
+      pixels = [];
+      return;
+    }
+    
+    // Calculer tous les pixels possibles pour remplir complètement l'écran
+    const cols = Math.floor(canvas.width / pixelSize) + 1;
+    const rows = Math.floor(canvas.height / pixelSize) + 1;
+    const maxPixels = cols * rows;
+    
+    // À 100% de progression, on veut TOUS les pixels
+    const targetPixelCount = Math.floor(maxPixels * finalProgress);
+    
+    // Créer un Set des positions déjà occupées
+    const occupiedPositions = new Set(pixels.map(p => `${p.x},${p.y}`));
+    
+    // Générer toutes les positions possibles non occupées
+    const availablePositions: {x: number, y: number}[] = [];
+    for (let row = 0; row < rows; row++) {
+      for (let col = 0; col < cols; col++) {
+        const x = col * pixelSize;
+        const y = row * pixelSize;
+        if (!occupiedPositions.has(`${x},${y}`)) {
+          availablePositions.push({x, y});
+        }
+      }
+    }
+    
+    // Trier les positions avec une pondération : priorité selon la direction
+    availablePositions.sort((a, b) => {
+      const randomWeight = 200;
+      if (isExitingBottom) {
+        // Si on est après la section et qu'on remonte, apparaître depuis le haut
+        const scoreA = -a.y - Math.random() * randomWeight;
+        const scoreB = -b.y - Math.random() * randomWeight;
+        return scoreB - scoreA;
+      } else {
+        // Sinon apparaître depuis le bas (comportement normal)
+        const scoreA = a.y - Math.random() * randomWeight;
+        const scoreB = b.y - Math.random() * randomWeight;
+        return scoreB - scoreA;
+      }
+    });
+    
+    // Ajouter les pixels manquants
+    const pixelsToAdd = targetPixelCount - pixels.length;
+    if (pixelsToAdd > 0) {
+      for (let i = 0; i < Math.min(pixelsToAdd, availablePositions.length); i++) {
+        pixels.push({
+          x: availablePositions[i].x,
+          y: availablePositions[i].y,
+          alpha: 1
+        });
+      }
+    } else if (pixelsToAdd < 0) {
+      // Supprimer avec variation aléatoire selon la direction
+      pixels.sort((a, b) => {
+        const randomWeight = 200;
+        if (isExitingTop) {
+          // Supprimer depuis le haut (valeurs Y plus petites en premier)
+          const scoreA = -a.y + Math.random() * randomWeight;
+          const scoreB = -b.y + Math.random() * randomWeight;
+          return scoreA - scoreB;
+        } else {
+          // Supprimer depuis le bas (valeurs Y plus grandes en premier)
+          const scoreA = a.y + Math.random() * randomWeight;
+          const scoreB = b.y + Math.random() * randomWeight;
+          return scoreA - scoreB;
+        }
+      });
+      pixels.length = targetPixelCount;
+    }
+  }
+  
+  function draw() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    
+    pixels.forEach(pixel => {
+      ctx.fillStyle = `rgb(244, 243, 243)`;
+      ctx.fillRect(pixel.x, pixel.y, pixelSize, pixelSize);
+    });
+  }
+  
+  function animate() {
+    updatePixels();
+    draw();
+    requestAnimationFrame(animate);
+  }
+  
+	window.addEventListener('resize', () =>
+	{
+		const currentWidth = window.innerWidth;
+		if (currentWidth === lastWidth) return; // Ignore si la largeur n'a pas changé
+		
+		lastWidth = currentWidth;
+		clearTimeout(resizeTimeout);
+		
+		resizeTimeout = setTimeout(() =>
+		{
+			resizeCanvas();
+			pixels = [];
+		}, 200);
+	});
+
+  // Démarrer l'animation
+  animate();
+</script>

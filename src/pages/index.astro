@@ -2,13 +2,15 @@
 import Layout from '../layouts/Layout.astro';
 import Line from '../components/ui/Line.astro';
 import Wrapped from '../components/ui/Wrapped.astro';
+import BackgroundCanvas from '../components/ui/BackgroundCanvas.astro'
 ---
 
 <Layout
   title="Accueil"
   description="Bienvenue sur notre site. Découvrez nos services et notre expertise."
 >
-  <div class="h-screen">
+  <BackgroundCanvas />
+  <section class="h-screen">
     <div class="relative top-1/2 -translate-y-1/2">
       <h1 class="font-display uppercase leading-none text-4xl">
         <span class="block mb-2">Nous<br>concevons</span>
@@ -17,5 +19,10 @@ import Wrapped from '../components/ui/Wrapped.astro';
       </h1>
     </div>
     <button class="absolute bottom-8 font-mono uppercase text-sm left-1/2 -translate-x-1/2">Notre methode <Wrapped class='text-[1rem] relative '>↓</Wrapped></button>
+  </section>
+  <div id="page-content">
+    <section class="h-screen">
+
+    </section>
   </div>
 </Layout>

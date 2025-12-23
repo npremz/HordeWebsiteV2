@@ -29,6 +29,12 @@
 }
 
 @theme {
+  --breakpoint-sm: 640px;
+  --breakpoint-md: 1024px;
+  --breakpoint-lg: 1512px;
+  --breakpoint-xl: 1920px;
+  --breakpoint-2xl: 2560px;
+
   --color-bg: #D0CDCB;
   --color-bg-light: #F4F3F3;
   --color-black: #3A3737;

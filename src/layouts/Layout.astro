@@ -163,4 +163,47 @@ try {
       scroll-behavior: auto !important;
     }
   }
+
+  /* Lenis */
+  html.lenis, html.lenis body {
+    height: auto;
+  }
+
+  .lenis.lenis-smooth {
+    scroll-behavior: auto !important;
+  }
+
+  .lenis.lenis-smooth [data-lenis-prevent] {
+    overscroll-behavior: contain;
+  }
+
+  .lenis.lenis-stopped {
+    overflow: hidden;
+  }
+
+  .lenis.lenis-smooth iframe {
+    pointer-events: none;
+  }
 </style>
+
+<script>
+  import Lenis from 'lenis';
+
+  const isMobile = window.matchMedia('(max-width: 768px)').matches;
+
+  const lenis = new Lenis({
+    touchMultiplier: isMobile ? 3.5 : 1,
+  });
+
+  function raf(time: number) {
+    lenis.raf(time);
+    requestAnimationFrame(raf);
+  }
+
+  requestAnimationFrame(raf);
+
+  // Re-init on view transitions
+  document.addEventListener('astro:after-swap', () => {
+    lenis.scrollTo(0, { immediate: true });
+  });
+</script>
