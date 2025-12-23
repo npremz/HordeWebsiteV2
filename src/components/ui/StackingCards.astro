@@ -1,0 +1,124 @@
+---
+interface Card {
+  title: string;
+  description: string;
+  icon: 'creation' | 'optimisation' | 'audit';
+}
+
+interface Props {
+  class?: string;
+}
+
+const { class: className } = Astro.props;
+
+const cards: Card[] = [
+  {
+    title: 'Création From Scratch & MVP',
+    description: 'Lancement de produit ou nouvelle identité ? Nous concevons des plateformes web sur-mesure. Une architecture solide et pensée pour le long terme.',
+    icon: 'creation',
+  },
+  {
+    title: 'Optimisation & Refonte',
+    description: 'Pas besoin de tout jeter. Nous intervenons sur votre site existant pour booster ses performances (Core Web Vitals), moderniser son interface et le rendre ultra-rapide sur mobile.',
+    icon: 'optimisation',
+  },
+  {
+    title: 'Audit UX & Performance',
+    description: 'Vous voulez optimiser la conversion de votre site ? Nous réalisons un diagnostic complet (Vitesse de chargement, UX, SEO) pour identifier les points de friction qui bloquent vos utilisateurs. Une analyse factuelle pour des actions immédiates.',
+    icon: 'audit',
+  },
+];
+---
+
+<div class:list={['stacking-cards grid', className]}>
+  {cards.map((card, index) => (
+    <article
+      class="stacking-card sticky w-full p-7 bg-[var(--color-bg-light)] border border-[var(--color-lines)] origin-top will-change-transform"
+      data-card-index={index}
+      style={`--card-index: ${index};`}
+    >
+      <div class="flex flex-col h-full relative gap-5">
+        <div class="text-[var(--color-black)] [&_svg]:w-11 lg:[&_svg]:w-20 lg:[&_svg]:h-20">
+          {card.icon === 'creation' && (
+            <svg viewBox="0 0 44 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M40.001 4H43.999V24H40.001V28H35.999V32H32.001V36H36.002V32H40.002V36H44V40H0V36H3.99707V32H7.99707V36H11.998V32H8.00098V28H4.13379V24H39.999V4H4.13379V0H40.001V4ZM12.001 32H15.998V36H19.999V32H16.001V28H12.001V32ZM27.9961 32H23.999V36H28.001V32H31.999V28H27.9961V32ZM20.001 32H23.9961V28H20.001V32ZM4.13086 24H0.130859V4H4.13086V24ZM35.999 20H8.13281V8H35.999V20ZM12.1328 16H31.999V12H12.1328V16Z" fill="#3A3737"/>
+            </svg>
+
+          )}
+          {card.icon === 'optimisation' && (
+            <svg viewBox="0 0 36 33" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M25.959 32.4502H9.62598V29.2051H25.959V32.4502ZM9.62598 29.2051H6.38086V25.96H9.62598V29.2051ZM32.4473 25.96H29.2051V29.2051H25.96V25.96H29.2021V22.7148H32.4473V25.96ZM6.37988 9.73535H3.24512V22.7148H6.37988V25.96H3.13477V22.7148H0V9.73535H3.13477V6.49023H6.37988V9.73535ZM19.3633 22.7148H16.0098V25.96H12.7646V19.4697H9.62598V16.2246H19.3633V22.7148ZM29.207 6.49023H32.4492V9.73535H35.6924V22.7148H32.4473V12.9805H29.208V16.2256H25.8525V19.4707H22.6074V16.2256H19.3643V12.9805H12.8691V9.73535H19.3643V6.49023H25.8545V3.24512H29.207V6.49023ZM9.62402 6.49023H6.37988V3.24512H9.62402V6.49023ZM25.8516 3.24512H9.62598V0H25.8516V3.24512Z" fill="#3A3737"/>
+            </svg>
+
+          )}
+          {card.icon === 'audit' && (
+            <svg viewBox="0 0 29 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M7.80078 26H0.000976562V23.4004H7.80078V26ZM20.8027 18.2002H28.6016V20.7998H20.8027V23.4004H7.80273V20.7998H18.2012V18.2002H7.80273V15.5996H20.8027V18.2002ZM7.80078 20.7998H0.000976562V18.2002H7.80078V20.7998ZM7.80078 15.5996H0V13H7.80078V15.5996ZM28.6016 13H20.8018V10.4004H28.6016V13ZM20.7988 5.2002H10.4014V7.7998H20.7988V10.4004H7.79883V7.7998H0V5.2002H7.79883V2.59961H20.7988V5.2002ZM28.6016 7.7998H20.8018V5.2002H28.6016V7.7998ZM28.6016 2.59961H20.8018V0H28.6016V2.59961Z" fill="#3A3737"/>
+            </svg>
+
+          )}
+        </div>
+        <div class="leading-tight max-w-[480px]">
+          <h3 class="font-display text-[2rem] lg:text-[2.5rem] uppercase leading-tight mb-5 text-black">{card.title}</h3>
+          <p class="text-base lg:text-lg leading-relaxed text-black opacity-80">{card.description}</p>
+        </div>
+      </div>
+    </article>
+  ))}
+</div>
+
+<style>
+  .stacking-cards {
+    --card-height: 60vh;
+    --card-top-offset: 8.5rem;
+    --card-gap: 2rem;
+    --num-cards: 3;
+    grid-template-rows: repeat(3, var(--card-height));
+    gap: calc(var(--card-height) - var(--card-top-offset) - var(--card-gap));
+    /* Limiter la hauteur pour que la dernière carte ne dépasse pas l'offset des précédentes */
+    margin-bottom: calc(-1 * (var(--card-height) - var(--card-top-offset) - ((var(--num-cards) - 1) * var(--card-gap))));
+  }
+
+  .stacking-card {
+    --top-position: calc(var(--card-top-offset) + (var(--card-index) * var(--card-gap)));
+    top: var(--top-position);
+    height: var(--card-height);
+    z-index: calc(var(--card-index) + 1);
+  }
+
+  @media (min-width: 1024px) {
+    .stacking-cards {
+      --card-height: 80vh;
+    }
+  }
+</style>
+
+<script>
+  const cards = Array.from(document.querySelectorAll<HTMLElement>('.stacking-card'));
+  const len = cards.length;
+
+  if (len > 1) {
+    let ticking = false;
+
+    const update = () => {
+      for (let i = 0; i < len - 1; i++) {
+        const curr = cards[i].getBoundingClientRect();
+        const next = cards[i + 1].getBoundingClientRect();
+        const progress = Math.max(0, Math.min(1, 1 - (next.top - curr.top) / curr.height));
+        cards[i].style.transform = `scale(${1 - progress * 0.1})`;
+      }
+    };
+
+    window.addEventListener('scroll', () => {
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          update();
+          ticking = false;
+        });
+        ticking = true;
+      }
+    }, { passive: true });
+
+    update();
+  }
+</script>

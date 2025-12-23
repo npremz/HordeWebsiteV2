@@ -1,0 +1,187 @@
+---
+interface Props {
+  class?: string;
+}
+
+const { class: className = '' } = Astro.props;
+---
+
+<div id="physics-container" class:list={['physics-grid w-full aspect-square relative overflow-hidden', className]}>
+  <div id="logo-letters" class="absolute inset-0" aria-hidden="true" role="presentation">
+    <svg class="physics-letter" width="121" height="67" viewBox="0 0 121 67" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M13.4004 66.999H0V40.1992H13.4004V66.999ZM120.6 66.999H107.2V40.1992H120.6V66.999ZM107.2 40.1992H13.4004V26.7998H107.2V40.1992ZM13.4004 26.7998H0V0H13.4004V26.7998ZM120.6 26.7998H107.2V0H120.6V26.7998Z" fill="#3A3737"/>
+    </svg>
+    <svg class="physics-letter" width="121" height="67" viewBox="0 0 121 67" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M107.2 67H13.4004V53.5996H107.2V67ZM13.3994 53.5996H0V13.3994H13.3994V53.5996ZM120.6 53.5996H107.2V13.3994H120.6V53.5996ZM107.2 13.4004H13.4004V0H107.2V13.4004Z" fill="#3A3737"/>
+    </svg>
+    <svg class="physics-letter" width="121" height="67" viewBox="0 0 121 67" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M13.4004 26.7998H107.199V40.1992H13.4004V67H0V13.3994H13.4004V26.7998ZM120.6 66.999H107.2V40.1992H120.6V66.999ZM120.6 26.7998H107.2V13.4004H13.4004V0H120.6V26.7998Z" fill="#3A3737"/>
+    </svg>
+    <svg class="physics-letter" width="121" height="67" viewBox="0 0 121 67" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M107.199 0V13.4004H13.3994V53.5996H107.2V13.3994H120.6V67H0V0H107.199Z" fill="#3A3737"/>
+    </svg>
+    <svg class="physics-letter" width="121" height="67" viewBox="0 0 121 67" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M120.599 13.4004H13.3994V26.7998H120.599V40.1992H13.3994V53.5996H120.599V67H0V13.3994H13.3984V0H120.599V13.4004Z" fill="#3A3737"/>
+    </svg>
+    <svg class="physics-letter" width="121" height="67" viewBox="0 0 121 67" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M13.3994 26.7998H107.198V13.3994H120.599V66.1064H107.198V40.1992H13.3994V66.1064H0V13.3994H13.3994V26.7998ZM107.198 13.3994H13.3994V0H107.198V13.3994Z" fill="#3A3737"/>
+    </svg>
+    <svg class="physics-letter" width="121" height="67" viewBox="0 0 121 67" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M13.3994 52.7061H107.199V66.1064H0V13.3994H13.3994V52.7061ZM120.599 38.4131H120.6V52.7061H107.199V39.3066H26.7988V25.9062H120.599V38.4131ZM120.6 13.3994H13.4004V0H120.6V13.3994Z" fill="#3A3737"/>
+    </svg>
+    <svg class="physics-letter" width="121" height="67" viewBox="0 0 121 67" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M13.3994 26.7998H120.6V40.1992H13.3994V53.5996H120.6V67H0V13.3994H13.3994V26.7998ZM120.6 13.4004H13.4004V0H120.6V13.4004Z" fill="#3A3737"/>
+    </svg>
+    <svg class="physics-letter" width="121" height="67" viewBox="0 0 121 67" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M107.199 0V13.4004H13.3994V67H0V0H107.199ZM120.6 67H107.199V13.3994H120.6V67Z" fill="#3A3737"/>
+    </svg>
+    <svg class="physics-letter" width="121" height="67" viewBox="0 0 121 67" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M13.4004 53.5996H120.6V67H0V13.3994H13.4004V53.5996ZM120.601 13.4004H13.4004V0H120.601V13.4004Z" fill="#3A3737"/>
+    </svg>
+    <svg class="physics-letter" width="121" height="67" viewBox="0 0 121 67" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M120.599 13.4004H13.3994V26.7998H120.599V40.1992H13.3994V53.5996H120.599V67H0V13.3994H13.3984V0H120.599V13.4004Z" fill="#3A3737"/>
+    </svg>
+  </div>
+</div>
+
+<style>
+  .physics-grid {
+    --grid-color: var(--color-bg);
+    --grid-size: calc(100% / 6);
+    background-image:
+      linear-gradient(to right, var(--grid-color) 1px, transparent 1px),
+      linear-gradient(to bottom, var(--grid-color) 1px, transparent 1px);
+    background-size: var(--grid-size) var(--grid-size);
+    background-position: 0 0;
+  }
+
+  .physics-grid::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border: 1px solid var(--grid-color);
+    pointer-events: none;
+    z-index: 10;
+  }
+
+  .physics-letter {
+    position: absolute;
+    will-change: transform;
+    pointer-events: none;
+  }
+</style>
+
+<script>
+  import Matter from 'matter-js';
+
+  const { Engine, Render, Runner, Bodies, Composite, Body } = Matter;
+
+  function initPhysics() {
+    const container = document.getElementById('physics-container');
+    const letters = document.querySelectorAll<SVGSVGElement>('.physics-letter');
+
+    if (!container || letters.length === 0) return;
+
+    const rect = container.getBoundingClientRect();
+    const width = rect.width;
+    const height = rect.height;
+
+    // Taille des lettres proportionnelle au container
+    const letterScale = width / 300;
+    const letterWidth = 121 * letterScale * 0.4;
+    const letterHeight = 67 * letterScale * 0.4;
+
+    // Créer le moteur
+    const engine = Engine.create();
+    const world = engine.world;
+
+    // Gravité
+    engine.gravity.y = 1;
+
+    // Épaisseur des murs
+    const wallThickness = 50;
+
+    // Créer le bowl (murs gauche, droite, bas)
+    const walls = [
+      // Mur gauche
+      Bodies.rectangle(
+        -wallThickness / 2,
+        height / 2,
+        wallThickness,
+        height * 2,
+        { isStatic: true }
+      ),
+      // Mur droite
+      Bodies.rectangle(
+        width + wallThickness / 2,
+        height / 2,
+        wallThickness,
+        height * 2,
+        { isStatic: true }
+      ),
+      // Mur bas
+      Bodies.rectangle(
+        width / 2,
+        height + wallThickness / 2,
+        width + wallThickness * 2,
+        wallThickness,
+        { isStatic: true }
+      ),
+    ];
+
+    Composite.add(world, walls);
+
+    // Créer les corps pour chaque lettre
+    const bodies: Matter.Body[] = [];
+
+    letters.forEach((letter, index) => {
+      // Position initiale au-dessus du container, espacée
+      const x = (width / 2) + (Math.random() - 0.5) * width * 0.6;
+      const y = -letterHeight - (index * letterHeight * 1.5) - Math.random() * 100;
+
+      const body = Bodies.rectangle(x, y, letterWidth, letterHeight, {
+        restitution: 0.3,
+        friction: 0.5,
+        frictionAir: 0.01,
+        angle: (Math.random() - 0.5) * 0.5,
+      });
+
+      bodies.push(body);
+      Composite.add(world, body);
+
+      // Appliquer l'échelle au SVG
+      letter.style.width = `${letterWidth}px`;
+      letter.style.height = `${letterHeight}px`;
+    });
+
+    // Boucle de rendu
+    function update() {
+      Engine.update(engine, 1000 / 60);
+
+      bodies.forEach((body, index) => {
+        const letter = letters[index];
+        if (letter) {
+          const x = body.position.x - letterWidth / 2;
+          const y = body.position.y - letterHeight / 2;
+          const angle = body.angle;
+
+          letter.style.transform = `translate(${x}px, ${y}px) rotate(${angle}rad)`;
+        }
+      });
+
+      requestAnimationFrame(update);
+    }
+
+    update();
+  }
+
+  // Init au chargement
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initPhysics);
+  } else {
+    initPhysics();
+  }
+
+  // Re-init sur les view transitions
+  document.addEventListener('astro:after-swap', initPhysics);
+</script>
