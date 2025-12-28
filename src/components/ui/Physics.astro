@@ -89,14 +89,19 @@ const { class: className = '' } = Astro.props;
   .physics-letter {
     position: absolute;
     will-change: transform;
-    pointer-events: none;
+    pointer-events: auto;
+    cursor: grab;
+  }
+
+  .physics-letter:active {
+    cursor: grabbing;
   }
 </style>
 
 <script>
   import Matter from 'matter-js';
 
-  const { Engine, Render, Runner, Bodies, Composite, Body } = Matter;
+  const { Engine, Render, Runner, Bodies, Composite, Body, Mouse, MouseConstraint, Events, Query } = Matter;
 
   function initPhysics() {
     const container = document.getElementById('physics-container');
@@ -110,8 +115,8 @@ const { class: className = '' } = Astro.props;
 
     // Taille des lettres proportionnelle au container
     const letterScale = width / 300;
-    const letterWidth = 121 * letterScale * 0.4;
-    const letterHeight = 67 * letterScale * 0.4;
+    const letterWidth = 121 * letterScale * 0.4 * 0.7;
+    const letterHeight = 67 * letterScale * 0.4 * 0.7;
 
     // Créer le moteur
     const engine = Engine.create();
@@ -155,6 +160,7 @@ const { class: className = '' } = Astro.props;
 
     // Créer les corps pour chaque lettre
     const bodies: Matter.Body[] = [];
+    const bodyToLetterMap = new Map<Matter.Body, SVGSVGElement>();
 
     letters.forEach((letter, index) => {
       // Position initiale au-dessus du container, espacée
@@ -166,15 +172,91 @@ const { class: className = '' } = Astro.props;
         friction: 0.5,
         frictionAir: 0.01,
         angle: (Math.random() - 0.5) * 0.5,
+        label: `letter-${index}`,
       });
 
       bodies.push(body);
+      bodyToLetterMap.set(body, letter);
       Composite.add(world, body);
 
       // Appliquer l'échelle au SVG
       letter.style.width = `${letterWidth}px`;
       letter.style.height = `${letterHeight}px`;
     });
+
+    // Créer le système de drag & drop avec MouseConstraint
+    const mouse = Mouse.create(container);
+    const mouseConstraint = MouseConstraint.create(engine, {
+      mouse: mouse,
+      constraint: {
+        stiffness: 0.2,
+        render: {
+          visible: false
+        }
+      }
+    });
+
+    Composite.add(world, mouseConstraint);
+
+    // Convertir les coordonnées de la souris en coordonnées du monde physique
+    function getMousePosition(event: MouseEvent | TouchEvent): { x: number; y: number } {
+      if (!container) return { x: 0, y: 0 };
+      const rect = container.getBoundingClientRect();
+      const clientX = 'touches' in event ? event.touches[0].clientX : event.clientX;
+      const clientY = 'touches' in event ? event.touches[0].clientY : event.clientY;
+      return {
+        x: clientX - rect.left,
+        y: clientY - rect.top
+      };
+    }
+
+    // Gérer les événements de souris/touch sur les lettres
+    let isDragging = false;
+    let draggedBody: Matter.Body | null = null;
+
+    function handleStart(event: MouseEvent | TouchEvent) {
+      if (!container) return;
+      event.preventDefault();
+      const pos = getMousePosition(event);
+      const clickedBody = Query.point(bodies, pos)[0];
+      
+      if (clickedBody) {
+        draggedBody = clickedBody;
+        isDragging = true;
+        Body.setStatic(clickedBody, true);
+        mouse.position.x = pos.x;
+        mouse.position.y = pos.y;
+        Mouse.setElement(mouse, container);
+      }
+    }
+
+    function handleMove(event: MouseEvent | TouchEvent) {
+      if (!isDragging || !draggedBody) return;
+      event.preventDefault();
+      const pos = getMousePosition(event);
+      Body.setPosition(draggedBody, { x: pos.x, y: pos.y });
+    }
+
+    function handleEnd(event: MouseEvent | TouchEvent) {
+      if (!isDragging || !draggedBody) return;
+      event.preventDefault();
+      Body.setStatic(draggedBody, false);
+      Body.setVelocity(draggedBody, { x: 0, y: 0 });
+      isDragging = false;
+      draggedBody = null;
+    }
+
+    // Événements souris
+    container.addEventListener('mousedown', handleStart);
+    container.addEventListener('mousemove', handleMove);
+    container.addEventListener('mouseup', handleEnd);
+    container.addEventListener('mouseleave', handleEnd);
+
+    // Événements tactiles
+    container.addEventListener('touchstart', handleStart);
+    container.addEventListener('touchmove', handleMove);
+    container.addEventListener('touchend', handleEnd);
+    container.addEventListener('touchcancel', handleEnd);
 
     // Boucle de rendu
     function update() {
