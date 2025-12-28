@@ -26,54 +26,56 @@ const { logo, logoAlt = 'Logo', items = [], ctaButton } = navigation;
       )}
     </a>
 
-    <button
-      type="button"
-      id="menu-toggle"
-      class="flex items-center gap-2 text-black"
-      aria-expanded="false"
-      aria-controls="mobile-menu"
-      aria-label="Ouvrir le menu"
-    >
-      <span id="menu-label" class="tracking-wide sm:text-[1.625rem] md:text-[2rem]">Menu</span>
-      <Wrapped padding="0.5rem" class='sm:mt-1 md:mt-2'>
-        <span id="menu-icon" class="leading-none font-mono">+</span>
-      </Wrapped>
-    </button>
+    <div class="relative">
+      <button
+        type="button"
+        id="menu-toggle"
+        class="flex items-center gap-2 text-black"
+        aria-expanded="false"
+        aria-controls="mobile-menu"
+        aria-label="Ouvrir le menu"
+      >
+        <span id="menu-label" class="tracking-wide sm:text-[1.625rem] md:text-[2rem]">Menu</span>
+        <Wrapped padding="0.5rem" class='sm:mt-1 md:mt-2'>
+          <span id="menu-icon" class="leading-none font-mono">+</span>
+        </Wrapped>
+      </button>
+
+      <div
+        id="mobile-menu"
+        class="absolute top-full right-0 mt-4 opacity-0 invisible"
+        aria-hidden="true"
+      >
+        <nav class="px-5 py-5 bg-white flex flex-col gap-4">
+          <ul class="flex flex-col gap-4">
+            {items.map((item) => (
+              <li>
+                <a
+                  href={item.url}
+                  class="menu-link text-black text-3xl font-sans hover:opacity-70 transition-opacity whitespace-nowrap"
+                  target={item.isExternal ? '_blank' : undefined}
+                  rel={item.isExternal ? 'noopener noreferrer' : undefined}
+                >
+                  {item.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+          <span class="w-full h-px bg-lines"></span>
+
+          {ctaButton?.label && ctaButton?.url && (
+            <a
+              href={ctaButton.url}
+              class="menu-link tracking-wide hover:opacity-90 transition-opacity"
+            >
+              {ctaButton.label}
+            </a>
+          )}
+        </nav>
+      </div>
+    </div>
   </div>
 </header>
-
-<div
-  id="mobile-menu"
-  class="opacity-0"
-  aria-hidden="true"
->
-  <nav class="fixed top-14 right-4 px-5 py-5 bg-white flex flex-col gap-4 z-9999">
-    <ul class="flex flex-col gap-4">
-      {items.map((item) => (
-        <li>
-          <a
-            href={item.url}
-            class="menu-link text-black text-3xl font-sans hover:opacity-70 transition-opacity"
-            target={item.isExternal ? '_blank' : undefined}
-            rel={item.isExternal ? 'noopener noreferrer' : undefined}
-          >
-            {item.label}
-          </a>
-        </li>
-      ))}
-    </ul>
-    <span class="w-full h-px bg-lines"></span>
-
-    {ctaButton?.label && ctaButton?.url && (
-      <a
-        href={ctaButton.url}
-        class="menu-link tracking-wide hover:opacity-90 transition-opacity"
-      >
-        {ctaButton.label}
-      </a>
-    )}
-  </nav>
-</div>
 
 <script>
   const toggle = document.getElementById('menu-toggle');
