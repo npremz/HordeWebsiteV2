@@ -6,7 +6,7 @@ interface Props {
 const { class: className = '' } = Astro.props;
 ---
 
-<div id="physics-container" class:list={['physics-grid w-full aspect-square relative overflow-hidden', className]}>
+<div id="physics-container" class:list={['physics-grid w-full aspect-square md:aspect-2/1 xl:aspect-3/1 xl:w-[calc(100vw-8rem)] xl:left-1/2 xl:-translate-x-1/2 relative overflow-hidden', className]}>
   <div id="logo-letters" class="absolute inset-0" aria-hidden="true" role="presentation">
     <svg class="physics-letter" width="121" height="67" viewBox="0 0 121 67" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path d="M13.4004 66.999H0V40.1992H13.4004V66.999ZM120.6 66.999H107.2V40.1992H120.6V66.999ZM107.2 40.1992H13.4004V26.7998H107.2V40.1992ZM13.4004 26.7998H0V0H13.4004V26.7998ZM120.6 26.7998H107.2V0H120.6V26.7998Z" fill="#3A3737"/>
@@ -47,12 +47,34 @@ const { class: className = '' } = Astro.props;
 <style>
   .physics-grid {
     --grid-color: var(--color-bg);
-    --grid-size: calc(100% / 6);
+    --grid-cols: 6;
+    --grid-rows: 6;
     background-image:
       linear-gradient(to right, var(--grid-color) 1px, transparent 1px),
       linear-gradient(to bottom, var(--grid-color) 1px, transparent 1px);
-    background-size: var(--grid-size) var(--grid-size);
+    background-size: calc(100% / var(--grid-cols)) calc(100% / var(--grid-rows));
     background-position: 0 0;
+  }
+
+  @media (min-width: 768px) {
+    .physics-grid {
+      --grid-cols: 12;
+      --grid-rows: 6;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .physics-grid {
+      --grid-cols: 14;
+      --grid-rows: 7;
+    }
+  }
+
+  @media (min-width: 1280px) {
+    .physics-grid {
+      --grid-cols: 21;
+      --grid-rows: 7;
+    }
   }
 
   .physics-grid::after {

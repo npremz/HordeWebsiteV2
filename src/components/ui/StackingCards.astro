@@ -2,43 +2,58 @@
 import { Image } from "astro:assets"
 import Wrapped from "./Wrapped.astro"
 import s1 from '/public/images/placeholder-8.webp'
+
+const cards = [
+	{
+		title: "Audit UX & Performance",
+		description: "Vous voulez optimiser la conversion de votre site ? Nous réalisons un diagnostic complet (Vitesse de chargement, UX, SEO) pour identifier les points de friction qui bloquent vos utilisateurs. Une analyse factuelle pour des actions immédiates.",
+		link: "",
+		image: s1,
+		imageAlt: "",
+	},
+	{
+		title: "Optimisation & Refonte",
+		description: "Pas besoin de tout jeter. Nous intervenons sur votre site existant pour booster ses performances (Core Web Vitals), moderniser son interface et le rendre ultra-rapide sur mobile.",
+		link: "",
+		image: s1,
+		imageAlt: "",
+	},
+	{
+		title: "Création \"From Scratch\" & MVP",
+		description: "Lancement de produit ou nouvelle identité ? Nous concevons des plateformes web sur-mesure. Une architecture solide et pensée pour le long terme.",
+		link: "",
+		image: s1,
+		imageAlt: "",
+	},
+];
+
+const topOffsets = ['sm:top-12 md:top-20 lg:top-48', 'sm:top-16 md:top-24 lg:top-62', 'sm:top-20 md:top-28 lg:top-88'];
 ---
-<div>
-	<h2 class="font-mono text-sm uppercase sm:sticky sm:top-16">J'ai besoin de</h2>
-	<article class="mt-10 sm:sticky sm:top-24 bg-bg-light min-h-[700px]">
-		<span class="block w-full h-px bg-bg"></span>
-		<div class="py-5 leading-none flex flex-col gap-5 h-full before:content-['S_/_001'] before:font-mono before:text-sm">
-			<h3 class="text-xl text-[26px]">Audit UX & Performance</h3>
-			<p class="text-xl leading-[1.2]">Vous voulez optimiser la conversion de votre site ? Nous réalisons un diagnostic complet (Vitesse de chargement, UX, SEO) pour identifier les points de friction qui bloquent vos utilisateurs. Une analyse factuelle pour des actions immédiates.</p>
-			<a href="" class="text-xl leading-[1.2] w-fit flex gap-4"><span class="border-b">Reserver un appel</span> <Wrapped class="font-mono leading-none">→</Wrapped></a>
-			<div class="relative aspect-video overflow-hidden rounded-lg">
-				<div class="absolute inset-0 bg-linear-to-r from-neutral-200 via-neutral-100 to-neutral-200 animate-pulse"></div>
-				<Image src={s1} alt="" class="relative w-full h-full object-cover"/>
+<div class="border-b border-lines">
+	<h2 class="font-mono text-sm uppercase">J'ai besoin de</h2>
+	{cards.map((card, index) => (
+		<article class:list={['mt-10 lg:mt-18 xl:mt-24 sm:sticky bg-bg-light min-h-175 sm:min-h-237.5 md:min-h-172 lg:min-h-130', topOffsets[index]]}>
+			<span class="block w-full h-px bg-bg"></span>
+			<div class="py-5 sm:py-8 leading-none flex flex-col lg:grid lg:grid-cols-10 gap-5 h-full lg:before:col-span-2 before:font-mono before:text-sm" data-index={`S ${index + 1} / ${cards.length}`}>
+				<div class="flex flex-col gap-5 lg:col-span-5 lg:justify-between">
+					<h3 class="text-xl text-[1.625rem] sm:text-[2rem] xl:text-[2.625rem]">{card.title}</h3>
+					<p class="text-xl xl:text-2xl">{card.description}</p>
+					<a href={card.link} class="text-xl sm:text-2xl lg:text-[2rem] leading-[1.2] w-fit flex gap-4 sm:mt-8 md:mt-2 md:self-end lg:self-start">
+						<span class="border-b ">Reserver un appel</span>
+						<Wrapped class="font-mono leading-none">→</Wrapped>
+					</a>
+				</div>
+				<div class="relative overflow-hidden md:mt-2 lg:col-span-2 lg:col-start-9">
+					<div class="absolute inset-0 bg-linear-to-r from-neutral-200 via-neutral-100 to-neutral-200 animate-pulse"></div>
+					<Image src={card.image} alt={card.imageAlt} class="relative w-full h-full object-cover lg:h-100 xl:h-128 lg:w-[280px] lg:object-cover"/>
+				</div>
 			</div>
-		</div>
-	</article>
-	<article class="mt-10 sm:sticky sm:top-28 bg-bg-light min-h-[700x]">
-		<span class="block w-full h-px bg-bg"></span>
-		<div class="py-5 leading-none flex flex-col gap-5 h-full before:content-['S_/_002'] before:font-mono before:text-sm">
-			<h3 class="text-xl text-[26px]">Optimisation & Refonte</h3>
-			<p class="text-xl leading-[1.2]">Pas besoin de tout jeter. Nous intervenons sur votre site existant pour booster ses performances (Core Web Vitals), moderniser son interface et le rendre ultra-rapide sur mobile.</p>
-			<a href="" class="text-xl leading-[1.2] w-fit flex gap-4"><span class="border-b">Reserver un appel</span> <Wrapped class="font-mono leading-none">→</Wrapped></a>
-			<div class="relative aspect-video overflow-hidden rounded-lg">
-				<div class="absolute inset-0 bg-linear-to-r from-neutral-200 via-neutral-100 to-neutral-200 animate-pulse"></div>
-				<Image src={s1} alt="" class="relative w-full h-full object-cover"/>
-			</div>
-		</div>
-	</article>
-	<article class="mt-10 sm:sticky sm:top-32 bg-bg-light min-h-[700px]">
-		<span class="block w-full h-px bg-bg"></span>
-		<div class="py-5 leading-none flex flex-col gap-5 h-full before:content-['S_/_003'] before:font-mono before:text-sm">
-			<h3 class="text-xl text-[26px]">Création "From Scratch" & MVP</h3>
-			<p class="text-xl leading-[1.2]">Lancement de produit ou nouvelle identité ? Nous concevons des plateformes web sur-mesure. Une architecture solide et pensée pour le long terme.</p>
-			<a href="" class="text-xl leading-[1.2] w-fit flex gap-4"><span class="border-b">Reserver un appel</span> <Wrapped class="font-mono leading-none">→</Wrapped></a>
-			<div class="relative aspect-video overflow-hidden rounded-lg">
-				<div class="absolute inset-0 bg-linear-to-r from-neutral-200 via-neutral-100 to-neutral-200 animate-pulse"></div>
-				<Image src={s1} alt="" class="relative w-full h-full object-cover"/>
-			</div>
-		</div>
-	</article>
+		</article>
+	))}
 </div>
+
+<style>
+	article div[data-index]::before {
+		content: attr(data-index);
+	}
+</style>
