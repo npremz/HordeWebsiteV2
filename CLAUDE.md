@@ -4,7 +4,16 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-AstroBoiler is an Astro 5 static site with Keystatic CMS for content management. It uses React for interactive components and Markdoc for content with embedded components.
+**HordeWebsiteV2** is a high-performance French digital agency website built with Astro 5. The site emphasizes ultra-fast interfaces, smooth animations, and exceptional user experience. It uses Keystatic CMS for content management, Tailwind CSS 4 for styling, and includes custom interactive components powered by Matter.js and canvas animations.
+
+**Key Technologies:**
+- Astro 5 (static site generation)
+- Keystatic CMS (local file-based)
+- Tailwind CSS 4 (with Vite plugin)
+- React 19 (for interactive components)
+- Markdoc (content with embedded components)
+- Matter.js (physics animations)
+- Lenis (smooth scrolling)
 
 ## Development Commands
 
@@ -12,204 +21,541 @@ AstroBoiler is an Astro 5 static site with Keystatic CMS for content management.
 npm run dev      # Start dev server at localhost:4321
 npm run build    # Build production site to ./dist/
 npm run preview  # Preview production build locally
+npm run astro    # Run Astro CLI commands
 ```
 
 ## Architecture
 
+### Integrations & Configuration
+
+**Astro Config (`astro.config.mjs`):**
+- `output: 'static'` - Static site generation
+- `adapter: node()` - Node adapter for standalone mode
+- `prefetch: true` - Preload links on hover for instant navigation
+- `compressHTML: true` - HTML compression in production
+- `site: 'https://example.com'` - Update with actual production URL
+
 **Integrations:**
-- **React** - Interactive client-side components
-- **Markdoc** - Markdown content with embedded React components
-- **Keystatic** - Local file-based CMS with admin UI at `/keystatic`
-- **Sitemap** - Auto-generated at `/sitemap-index.xml` on build
+- **@astrojs/react** - React components with Islands architecture
+- **@astrojs/markdoc** - Rich content with embedded components
+- **@keystatic/astro** - CMS admin UI at `/keystatic`
+- **@astrojs/sitemap** - Auto-generated sitemap on build
+- **Tailwind CSS 4** - Via Vite plugin (new architecture)
 
-**SEO Technique:**
-- `robots.txt` dynamique (`src/pages/robots.txt.ts`) - utilise `site` de astro.config.mjs
-- Sitemap auto-généré par `@astrojs/sitemap`
-- URL du site à configurer dans `astro.config.mjs` (propriété `site`)
+**Client-Side Features:**
+- `<ClientRouter />` in Layout head for view transitions
+- Lenis smooth scroll (mobile-optimized touch multiplier)
+- Custom canvas-based background animation
+- Matter.js physics simulations
 
-**Performance (astro.config.mjs) :**
-- `prefetch: true` - Préchargement des liens au hover
-- `compressHTML: true` - Compression HTML en production
-- ClientRouter : ajouter `<ClientRouter />` dans le `<head>` des layouts
+### Content System (Keystatic)
 
-```astro
----
-import { ClientRouter } from 'astro:transitions';
----
-<head>
-  <ClientRouter />
-</head>
-```
+**Storage:** Local file-based (no cloud backend)
+- Files stored in `src/content/` as YAML + Markdown
 
-**Content System:**
-- Keystatic stores content as local files (no cloud backend)
-- Singletons : `siteSettings`, `navigation`, `footer`
-- Collections : `posts`, `pages`, `testimonials`
+**Singletons:**
+- `siteSettings` - Site name, URL, default meta tags, OG images, locale
+- `navigation` - Logo, menu items, CTA button
+- `footer` - Description, link columns, social links, copyright, legal links
+
+**Collections:**
+- `posts` - Blog articles with featured images, author, dates, SEO fields
+- `pages` - Static pages with flexible content
+- `testimonials` - Customer testimonials with ratings and avatars
+
+**Content Locations:**
+- `src/content/settings/` - Singleton YAML files
+- `src/content/posts/` - Blog posts (Markdoc)
+- `src/content/pages/` - Static pages (Markdoc)
+- `src/content/testimonials/` - Testimonial entries
+
+**Available Content Blocks (in Markdoc):**
+- CTA buttons (primary, secondary, outline)
+- Image with caption
+- Video embed (YouTube/Vimeo)
+- Citation/testimonial
+- FAQ accordion
+- Image gallery
+
+### SEO System
 
 **SEO Component (`src/components/SEO.astro`):**
-- Centralized SEO meta tags for all pages
-- Reads defaults from Keystatic `siteSettings` singleton
-- Props override defaults per-page (title, description, ogImage, robots, etc.)
-- Includes Open Graph, Twitter Cards, favicon links, and theme-color
+- Centralized meta tags for all pages
+- Reads defaults from `siteSettings` singleton
+- Props override defaults per-page
+- Includes:
+  - Essential meta (title, description, robots, canonical)
+  - Open Graph (image 1200x630px, type, locale, site name)
+  - Twitter Cards
+  - Article metadata (published/modified time, author)
+  - Favicon links (SVG, ICO, Apple touch icon)
+  - Theme color (light/dark mode support)
+  - Safari pinned tab
 
-**TypeScript:**
-- Strict mode enabled via `astro/tsconfigs/strict`
-- React JSX configured for use in .astro files
+**Dynamic robots.txt:**
+- Generated at `src/pages/robots.txt.ts`
+- Uses `site` URL from `astro.config.mjs`
 
-## Optimisation Images
+**Sitemap:**
+- Auto-generated by `@astrojs/sitemap`
+- Available at `/sitemap-index.xml` after build
 
-Utiliser `<Image />` d'Astro pour l'optimisation automatique :
+### Layout System
 
+**Main Layout (`src/layouts/Layout.astro`):**
+- SEO component integration with all meta tags
+- ClientRouter for view transitions
+- Lenis smooth scroll initialization
+- Skip to main content link (accessibility)
+- Header component
+- Container component for content width
+- Footer slot
+
+**Props Accepted:**
+- `title`, `description` (required)
+- `robots`, `canonical`, `ogType`, `ogImage`, `ogImageAlt`
+- `twitterCard`, `publishedTime`, `modifiedTime`, `author`
+- `class` for custom styling
+
+### Components
+
+**UI Components (`src/components/ui/`):**
+- `BackgroundCanvas.astro` - Scroll-based pixelated canvas animation
+- `Physics.astro` - Matter.js physics simulation with falling letters
+- `StackingCards.astro` - Card stacking effect
+- `Weather.astro` - Weather display component
+- `Line.astro` - Decorative line element
+- `Wrapped.astro` - Text wrapper utility
+- `Container.astro` - Content container with responsive gutters
+
+**Global Components:**
+- `Header.astro` - Main navigation
+- `Footer.astro` - Site footer with links and social
+- `SEO.astro` - Meta tags and SEO
+
+**Interactive Features:**
+- Components use `client:visible` or `client:idle` directives for hydration
+- Physics simulation responds to view transitions (`astro:after-swap`)
+- Background canvas syncs with scroll position and viewport
+
+## Styling & Design
+
+### Tailwind CSS 4
+
+**Setup:**
+- Configured via Vite plugin in `astro.config.mjs`
+- Main CSS: `src/styles/global.css`
+- Uses new `@import "tailwindcss"` syntax
+
+**Custom CSS Variables:**
+- `--gutter` - Responsive content padding (1rem → 6rem)
+- Breakpoints: 640px (sm), 1024px (lg), 1512px (xl), 2560px (2xl)
+
+**Design Tokens (from global.css):**
+- Colors: `bg-bg`, `bg-bg-light`, `text-lines`
+- Typography: Font display, font mono
+- Z-index: `-z-9998`, `-z-1000`, `z-9999`
+
+### Typography
+
+**Custom Fonts (local, optimized):**
+1. **PP Neue Montreal** (Regular, 400) - Body text
+2. **PP Neue Machina** (Light, 300) - Display headings
+3. **PP Fraktion Mono** (Light, 300) - Monospace
+
+**Font Loading:**
+- Format: `.woff2` only (modern, compressed)
+- `font-display: swap` - Prevent FOIT
+- Hosted locally in `src/assets/fonts/`
+- No external font CDNs
+
+**Typography Classes:**
+- `.font-display` - Display font (PP Neue Machina)
+- `.font-mono` - Monospace font (PP Fraktion Mono)
+- Default: PP Neue Montreal
+
+### Accessibility (a11y)
+
+**Implemented Features:**
+- Skip to main content link (keyboard navigation)
+- `:focus-visible` styling (2px outline with offset)
+- `prefers-reduced-motion` support (animations disabled)
+- Proper semantic HTML
+- ARIA attributes where needed
+- Alt text on all images
+- Contrast compliance (text on backgrounds)
+
+**Best Practices:**
+- All interactive elements must be keyboard accessible
+- Focus visible on all focusable elements
+- Minimum touch target size: 44x44px on mobile
+- Proper heading hierarchy
+- Form labels associated with inputs
+- `aria-hidden="true"` on decorative elements
+
+## Performance Optimization
+
+### Images
+
+**Astro Image Component:**
 ```astro
 ---
 import { Image } from 'astro:assets';
-import monImage from '../assets/image.jpg';
+import myImage from '../assets/image.jpg';
 ---
-<Image src={monImage} alt="Description" />
+<Image src={myImage} alt="Description" width={800} height={600} />
 ```
 
-**Règles obligatoires :**
-- Formats modernes : WebP/AVIF avec fallback (géré auto par Astro)
-- Attributs `width` et `height` explicites (évite CLS)
-- `decoding="async"` sur toutes les images
+**Rules:**
+- Use `<Image />` component for automatic optimization
+- Always specify `width` and `height` (prevents CLS)
+- `decoding="async"` on all images
+- Modern formats: WebP/AVIF with fallback (automatic)
 
-**Images above the fold (LCP) :**
-- `loading="eager"` + `fetchpriority="high"`
-- Précharger dans `<head>` : `<link rel="preload" as="image" href="..." />`
-
-**Images below the fold :**
-- `loading="lazy"`
-
-**Images responsives :**
-- Utiliser l'attribut `sizes` pour définir les tailles selon viewport
-
-## Performance CSS & Fonts
-
-**CSS :**
-- CSS critique inliné automatiquement (géré par Astro)
-- Pas de CSS inutilisé (audit régulier)
-- Variables CSS pour theming
-- `@media (prefers-reduced-motion)` respecté
-- `@media (prefers-color-scheme)` si dark mode
-
-**Fonts :**
-- Fonts hébergées localement (pas Google Fonts CDN)
-- Format `.woff2` uniquement
-- `font-display: swap` (ou `optional`)
-- Preload des fonts critiques :
+**Above the fold (LCP):**
+- `loading="eager"`
+- `fetchpriority="high"`
+- Preload in `<head>`:
   ```html
-  <link rel="preload" href="/fonts/main.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" as="image" href="..." />
   ```
-- Subset des fonts (uniquement caractères utilisés)
-- Fallback font stack bien défini (évite FOUT)
-- Limiter à 2-3 fonts maximum
-- `size-adjust` pour réduire le CLS
 
-## Optimisation JS
+**Below the fold:**
+- `loading="lazy"` (browser lazy loading)
 
-- Minimum de JS côté client (Astro Islands)
-- `client:visible` / `client:idle` pour composants interactifs
-- Pas de frameworks lourds inutiles
-- `defer` sur scripts non-critiques
-- Third-party scripts chargés après interaction (Partytown optionnel)
+**Responsive Images:**
+- Use `sizes` attribute to define viewport-based sizes
+- Let Astro generate appropriate `srcset`
+
+**Image Directories:**
+- `public/images/og/` - Open Graph images (1200x630px)
+- `public/images/posts/` - Blog featured images
+- `public/images/pages/` - Page featured images
+- `public/images/content/` - In-content images
+- `public/images/gallery/` - Gallery images
+- `public/images/testimonials/` - Testimonial avatars
+
+### CSS Optimization
+
+**Best Practices:**
+- Critical CSS inlined automatically by Astro
+- No unused CSS (audit regularly)
+- CSS variables for theming and consistency
+- Respect `prefers-reduced-motion`
+- Mobile-first responsive design
+
+**Performance:**
+- Tailwind purges unused styles automatically
+- Component-scoped styles when possible
+- Global styles in `src/styles/global.css`
+
+### JavaScript Optimization
+
+**Astro Islands Architecture:**
+- Minimal JS by default (Astro components are static)
+- Hydrate only when needed:
+  - `client:visible` - When component enters viewport
+  - `client:idle` - When browser is idle
+  - `client:load` - On page load (use sparingly)
+  - `client:media` - Based on media query
+
+**Current Interactive Components:**
+- BackgroundCanvas - Vanilla JS canvas animation
+- Physics - Matter.js simulation
+- Lenis - Smooth scroll library
+
+**Best Practices:**
+- Defer non-critical scripts
+- Keep bundle size minimal
+- No unnecessary frameworks
+- Use native browser APIs when possible
+
+### Core Web Vitals
+
+**LCP (Largest Contentful Paint < 2.5s):**
+- Preload hero images
+- Optimize above-the-fold content
+- Use `loading="eager"` on LCP images
+- Static generation for fast TTFB
+
+**FID/INP (Interaction to Next Paint < 200ms):**
+- Minimal blocking JavaScript
+- Efficient event handlers
+- No long tasks (>50ms)
+- Islands architecture for progressive enhancement
+
+**CLS (Cumulative Layout Shift < 0.1):**
+- Explicit dimensions on images/videos/iframes
+- Font fallbacks with `size-adjust`
+- No content injection above the fold
+- Skeleton loaders for dynamic content
+
+## Development Workflow
+
+### File Structure
+
+```
+/
+├── public/                 # Static assets (served at root)
+│   ├── images/            # Organized by type (og, posts, pages, etc.)
+│   ├── favicon.svg
+│   ├── manifest.webmanifest
+│   └── safari-pinned-tab.svg
+├── src/
+│   ├── assets/            # Processed assets (fonts, imported images)
+│   ├── components/        # Astro/React components
+│   │   ├── ui/           # UI components
+│   │   ├── Header.astro
+│   │   ├── Footer.astro
+│   │   └── SEO.astro
+│   ├── content/           # Keystatic content
+│   │   ├── settings/     # Singletons (YAML)
+│   │   ├── posts/        # Blog posts
+│   │   ├── pages/        # Static pages
+│   │   └── testimonials/ # Testimonials
+│   ├── layouts/           # Page layouts
+│   │   └── Layout.astro
+│   ├── pages/             # File-based routing
+│   │   ├── index.astro   # Homepage
+│   │   └── robots.txt.ts # Dynamic robots.txt
+│   └── styles/            # Global styles
+│       └── global.css
+├── astro.config.mjs       # Astro configuration
+├── keystatic.config.ts    # Keystatic CMS config
+├── package.json
+└── tsconfig.json
+```
+
+### Key Files
+
+**`keystatic.config.ts`:**
+- Defines all content schemas
+- Collections and singletons
+- Field types and validation
+- Image directories and paths
+- Reusable SEO fields
+
+**`src/components/SEO.astro`:**
+- Centralized SEO meta tags
+- Integrates with Keystatic settings
+- Per-page overrides
+- Open Graph and Twitter Cards
+
+**`src/layouts/Layout.astro`:**
+- Main page wrapper
+- SEO integration
+- Global scripts (Lenis)
+- Skip link and accessibility
+
+**`src/styles/global.css`:**
+- Tailwind import
+- Custom font faces
+- CSS variables
+- Global resets
+- Accessibility styles
+
+### Content Management
+
+**Keystatic Admin:**
+- Access at `http://localhost:4321/keystatic` during dev
+- Create/edit posts, pages, testimonials
+- Manage site settings, navigation, footer
+- WYSIWYG Markdoc editor with content blocks
+
+**Content Workflow:**
+1. Start dev server: `npm run dev`
+2. Navigate to `/keystatic`
+3. Create or edit content
+4. Content saved as local files in `src/content/`
+5. Commit content files to git
+6. Deploy (build generates static HTML)
+
+### Adding New Components
+
+**Astro Component (static):**
+```astro
+---
+interface Props {
+  title: string;
+  class?: string;
+}
+
+const { title, class: className } = Astro.props;
+---
+
+<div class={className}>
+  <h2>{title}</h2>
+  <slot />
+</div>
+```
+
+**Interactive Component (client-side):**
+```astro
+<div id="my-component">
+  <!-- Markup -->
+</div>
+
+<script>
+  // Client-side JavaScript
+  const component = document.getElementById('my-component');
+  // Add interactivity
+
+  // Re-init on view transitions
+  document.addEventListener('astro:after-swap', () => {
+    // Re-initialize component
+  });
+</script>
+```
+
+## Language & Localization
+
+**Primary Language:** French (France)
+- Default locale: `fr_FR` (configurable in Keystatic)
+- Content in French
+- Meta tags use French locale
+
+**Locale Configuration:**
+- Set in Keystatic `siteSettings` singleton
+- Affects `lang` attribute and `og:locale`
+- Supported locales: fr_FR, fr_CA, fr_BE, fr_CH, en_US, en_GB, en_CA
+
+## Git & Deployment
+
+**Important Files:**
+- `.gitignore` - Excludes `node_modules/`, `dist/`, `.astro/`
+- Content files in `src/content/` should be committed
+- Public assets should be committed
+
+**Build Process:**
+1. `npm run build` - Generates static site to `dist/`
+2. Optimizes images, CSS, JS
+3. Generates sitemap
+4. Compresses HTML
+
+**Deployment:**
+- Deploy `dist/` folder to static hosting
+- Supports: Netlify, Vercel, Cloudflare Pages, GitHub Pages, etc.
+- No server required (static output)
+
+## Code Conventions
+
+### TypeScript
+
+- Strict mode enabled
+- Type props interfaces for components
+- Use Astro's built-in types
+
+### Component Props
 
 ```astro
-<!-- Composant hydraté quand visible -->
-<MonComposant client:visible />
+---
+interface Props {
+  title: string;          // Required
+  description?: string;   // Optional
+  class?: string;         // For CSS classes
+}
 
-<!-- Composant hydraté quand le navigateur est idle -->
-<MonComposant client:idle />
+const { title, description, class: className } = Astro.props;
+---
 ```
 
-## Core Web Vitals
+### CSS Classes
 
-**LCP (Largest Contentful Paint < 2.5s) :**
-- Preload de l'image LCP
-- Image LCP optimisée et dimensionnée
-- Pas de lazy loading sur LCP (`loading="eager"`)
-- Server-side rendering ou static
+- Use Tailwind utilities first
+- Component-scoped styles with `<style>` tags
+- Global styles in `global.css`
+- Avoid inline styles
 
-**FID/INP (Interaction to Next Paint < 200ms) :**
-- Minimal JS blocking
-- Event handlers optimisés
-- Pas de long tasks (>50ms)
+### Accessibility
 
-**CLS (Cumulative Layout Shift < 0.1) :**
-- Dimensions explicites sur images/videos/iframes
-- Fonts avec fallback et `size-adjust`
-- Pas d'injection de contenu au-dessus du fold
-- Skeleton loaders si contenu dynamique
+- Always include `alt` on images
+- Use semantic HTML
+- Ensure keyboard navigation
+- Test with reduced motion
+- Maintain color contrast
 
-## Accessibilité (a11y)
+### Performance
 
-**Fondamentaux :**
-- Contraste suffisant (WCAG AA minimum : 4.5:1)
-- Focus visible sur tous les éléments interactifs
-- `:focus-visible` pour focus clavier uniquement
-- Taille de tap minimum 44x44px sur mobile
-- Textes lisibles (16px minimum pour body)
+- Optimize images before adding to `public/`
+- Use Astro `<Image />` component
+- Minimize client-side JavaScript
+- Lazy load below-the-fold content
+- Test Core Web Vitals regularly
 
-**Navigation :**
-- Skip to main content link
-- Navigation au clavier complète
-- `aria-current="page"` sur lien actif
-- Menu mobile accessible (focus trap, escape to close)
+## Common Tasks
 
-**Formulaires :**
-- `<label>` associé à chaque input
-- Messages d'erreur explicites et liés (`aria-describedby`)
-- `autocomplete` sur champs appropriés
-- États visuels clairs (focus, error, success)
+### Update Site Metadata
 
-**Médias :**
-- `alt` descriptif sur toutes les images (vide si décoratif)
-- Sous-titres sur vidéos
-- Contrôles accessibles sur lecteurs média
+1. Go to `/keystatic` admin
+2. Click "Paramètres du site" (Site Settings)
+3. Update site name, description, OG image, etc.
+4. Save changes
 
-**ARIA (avec parcimonie) :**
-- `aria-label` où le texte visible manque
-- `aria-expanded` sur toggles
-- `aria-hidden="true"` sur icônes décoratives
-- Roles landmarks appropriés
+### Add a New Blog Post
 
-## Keystatic Configuration
+1. Go to `/keystatic` admin
+2. Click "Articles" (Posts)
+3. Click "Create Entry"
+4. Fill in title, excerpt, featured image, content
+5. Add SEO metadata
+6. Save and commit
 
-**Setup :**
-- `keystatic.config.ts` proprement structuré
-- Collections définies (pages, posts, etc.)
-- Singletons pour settings globaux (site info, navigation, footer)
-- Slugs auto-générés et validés
+### Add a New Page
 
-**Champs types obligatoires :**
-- Titre (text)
-- Slug (slug)
-- Description/excerpt (text, multiline)
-- Body (markdoc avec composants custom)
-- Featured image avec alt
-- SEO overrides (title, description, noindex)
-- Date de publication
-- Auteur (relation ou select)
+1. Go to `/keystatic` admin
+2. Click "Pages"
+3. Click "Create Entry"
+4. Fill in content and SEO fields
+5. Save
 
-**Content components (blocks) disponibles :**
-- CTA blocks
-- Image avec caption
-- Vidéo embed
-- Citation/Testimonial
-- FAQ accordion
-- Galerie
+### Update Navigation
 
-## Key Directories
+1. Go to `/keystatic` admin
+2. Click "Navigation"
+3. Add/edit menu items
+4. Update logo if needed
+5. Configure CTA button
+6. Save
 
-- `src/pages/` - File-based routing (each file becomes a route)
-- `src/components/` - Reusable Astro/React components (SEO.astro, etc.)
-- `src/content/posts/` - Keystatic posts collection
-- `src/content/pages/` - Keystatic pages collection
-- `src/content/settings/` - Keystatic singletons (site settings)
-- `public/` - Static assets served at root
-- `public/images/og/` - Open Graph images (1200x630px)
-- `public/images/posts/` - Images à la une des articles
-- `public/images/pages/` - Images à la une des pages
-- `public/images/content/` - Images dans le contenu Markdoc
-- `public/images/gallery/` - Images des galeries
-- `public/images/testimonials/` - Avatars des témoignages
-- `dist/` - Build output (gitignored)
+### Customize Footer
+
+1. Go to `/keystatic` admin
+2. Click "Pied de page" (Footer)
+3. Edit description, columns, social links
+4. Update copyright and legal links
+5. Save
+
+## Troubleshooting
+
+**Images not loading:**
+- Check file path is correct
+- Ensure image is in `public/images/` for static assets
+- For processed images, use `src/assets/` and import
+
+**Keystatic not showing content:**
+- Ensure content files exist in `src/content/`
+- Check YAML syntax is valid
+- Restart dev server
+
+**Smooth scroll not working:**
+- Check Lenis script is loaded in Layout
+- Ensure no conflicting scroll libraries
+- Check console for errors
+
+**View transitions broken:**
+- Ensure `<ClientRouter />` in Layout head
+- Check for conflicting JavaScript
+- Test without custom scripts
+
+**Build fails:**
+- Check TypeScript errors: `npm run astro check`
+- Ensure all content fields are valid
+- Check for missing images referenced in content
+
+## Resources
+
+- [Astro Documentation](https://docs.astro.build)
+- [Keystatic Documentation](https://keystatic.com/docs)
+- [Tailwind CSS v4 Documentation](https://tailwindcss.com/docs)
+- [Matter.js Documentation](https://brm.io/matter-js/)
+- [Lenis Smooth Scroll](https://lenis.studiofreight.com/)
