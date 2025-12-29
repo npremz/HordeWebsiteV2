@@ -1,5 +1,5 @@
 services:
-  horde:
+  hordev2:
     build: .
     container_name: horde
     restart: unless-stopped
