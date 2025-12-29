@@ -37,7 +37,7 @@ interface Props
 const { class: className = '' } = Astro.props;
 ---
 
-<div class={`flex flex-col w-full lg:flex-row ${className}`}>
+<div class={`flex-col-container w-full lg:flex-row ${className}`}>
 	<div id="time-display" class="whitespace-nowrap w-fit">Jour --:--:--</div>
 	<div id="weather-display" class="whitespace-nowrap leading-none flex gap-1.5 w-fit">Chargement...</div>
 </div>

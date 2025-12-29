@@ -1,0 +1,36 @@
+---
+interface Props {
+	title?: string;
+	stepsCount?: string;
+	steps?: string[];
+}
+
+const {
+	title = 'Notre\nMéthode',
+	stepsCount = '03',
+	steps = [
+		'Retirer la friction',
+		'Maximiser la conversion',
+		'Soigner l\'expérience',
+	],
+} = Astro.props;
+---
+
+<div class="relative h-[80svh] sm:h-svh flex-col-container justify-center items-center content-gap overflow-hidden">
+	<div class="flex justify-center gap-4">
+		<span class="font-mono text-[14px] leading-loose">(↓)</span>
+		<h2 class="heading-display-sm text-center w-fit" set:html={title.replace(/\n/g, '<br>')} />
+		<span class="font-mono text-[14px] leading-loose">({stepsCount})</span>
+	</div>
+	<ul class="text-2xl sm:text-3xl lg:text-[2.5rem] xl:text-[3.5rem] text-center flex-col-container items-center [&>li]:leading-none [&>li]:px-4.5 [&>li]:py-3.5 sm:[&>li]:px-6 sm:[&>li]:py-5 lg:[&>li]:px-8 lg:[&>li]:py-6 xl:[&>li]:px-10 xl:[&>li]:py-8 [&>li]:border [&>li]:border-lines [&>li]:w-fit [&>li]:max-w-full">
+		{steps.map((step, index) => (
+			<li class:list={[
+				{ 'border-b-0!': index === 0 },
+				{ 'bg-bg-light': index === 1 },
+				{ 'border-t-0!': index === steps.length - 1 && index !== 0 },
+			]}>
+				{step}
+			</li>
+		))}
+	</ul>
+</div>

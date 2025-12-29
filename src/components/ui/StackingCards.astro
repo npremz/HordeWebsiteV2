@@ -30,12 +30,12 @@ const cards = [
 const topOffsets = ['sm:top-12 md:top-20 lg:top-48', 'sm:top-16 md:top-24 lg:top-62', 'sm:top-20 md:top-28 lg:top-88'];
 ---
 <div class="border-b border-lines">
-	<h2 class="font-mono text-sm uppercase">J'ai besoin de</h2>
+	<h2 class="section-label">J'ai besoin de</h2>
 	{cards.map((card, index) => (
 		<article class:list={['mt-10 lg:mt-18 xl:mt-24 sm:sticky bg-bg-light min-h-175 sm:min-h-237.5 md:min-h-172 lg:min-h-130', topOffsets[index]]}>
-			<span class="block w-full h-px bg-bg"></span>
-			<div class="py-5 sm:py-8 leading-none flex flex-col lg:grid lg:grid-cols-10 gap-5 h-full lg:before:col-span-2 before:font-mono before:text-sm" data-index={`S ${index + 1} / ${cards.length}`}>
-				<div class="flex flex-col gap-5 lg:col-span-5 lg:justify-between">
+			<span class="divider"></span>
+			<div class="py-5 sm:py-8 leading-none flex-col-container lg:grid lg:grid-cols-10 gap-5 h-full lg:before:col-span-2 before:font-mono before:text-sm" data-index={`S ${index + 1} / ${cards.length}`}>
+				<div class="flex-col-container gap-5 lg:col-span-5 lg:justify-between">
 					<h3 class="text-xl text-[1.625rem] sm:text-[2rem] xl:text-[2.625rem]">{card.title}</h3>
 					<p class="text-xl xl:text-2xl">{card.description}</p>
 					<a href={card.link} class="text-xl sm:text-2xl lg:text-[2rem] leading-[1.2] w-fit flex gap-4 sm:mt-8 md:mt-2 md:self-end lg:self-start">
