@@ -1,0 +1,48 @@
+---
+import Line from '../ui/Line.astro';
+import Wrapped from '../ui/Wrapped.astro';
+import Weather from '../ui/Weather.astro';
+
+interface Props {
+	titleLine1?: string;
+	titleLine2?: string;
+	titleLine3?: string;
+	subtitle?: string;
+	ctaLabel?: string;
+}
+
+const {
+	titleLine1 = 'Nous\nconcevons',
+	titleLine2 = 'des',
+	titleLine3 = 'interfaces\nultra rapides',
+	subtitle = 'Agence Digitale & UX',
+	ctaLabel = 'Notre methode',
+} = Astro.props;
+---
+
+<section class="relative h-screen -z-9998">
+	<div class="relative top-1/2 -translate-y-1/2 sm:top-2/5 md:top-1/2">
+		<h1 class="font-display uppercase leading-none text-4xl lg:text-9xl xl:text-[140px] sm:text-[3.25rem] md:text-[4.875rem]">
+			<span class="block mb-2" set:html={titleLine1.replace(/\n/g, '<br>')} />
+			<svg class="hidden sm:block lg:hidden -z-10 absolute w-[calc(100%-2*1rem)] -translate-y-[51%] center-x" viewBox="0 0 531 883" fill="none" xmlns="http://www.w3.org/2000/svg">
+				<rect x="-0.5" y="0.5" width="298.273" height="298.273" rx="149.136" transform="matrix(-1 -8.74228e-08 -8.74228e-08 1 414.272 457.887)" stroke="#B1B1B1"/>
+				<rect x="-0.5" y="0.5" width="298.273" height="298.273" rx="149.136" transform="matrix(-1 -8.74228e-08 -8.74228e-08 1 414.272 143)" stroke="#B1B1B1"/>
+				<rect x="414.772" y="607.023" width="298.273" height="312.586" transform="rotate(-180 414.772 607.023)" stroke="#B1B1B1"/>
+				<path d="M530.5 0.5V617.5C530.5 763.855 411.855 882.5 265.5 882.5C119.145 882.5 0.500002 763.855 0.5 617.5V0.5H530.5Z" stroke="#B1B1B1"/>
+			</svg>
+			<svg class="hidden lg:block -z-10 absolute w-[calc(100%-2*1.5rem)] -translate-y-[54%] center-x" viewBox="0 0 1218 1282" fill="none" xmlns="http://www.w3.org/2000/svg">
+				<rect x="0.5" y="0.5" width="379.504" height="379.504" rx="189.752" transform="matrix(-4.37114e-08 1 1 4.37114e-08 619.356 498.087)" stroke="#B1B1B1"/>
+				<rect x="0.5" y="0.5" width="379.504" height="379.504" rx="189.752" transform="matrix(-4.37114e-08 1 1 4.37114e-08 219 498.087)" stroke="#B1B1B1"/>
+				<rect x="809.108" y="498.587" width="379.504" height="397.702" transform="rotate(90 809.108 498.587)" stroke="#B1B1B1"/>
+				<path d="M1217.5 0.5V673C1217.5 1009.07 945.065 1281.5 609 1281.5C272.935 1281.5 0.500003 1009.07 0.5 673V0.5H1217.5Z" stroke="#B1B1B1"/>
+			</svg>
+			<Line dotClass="z-9999" />
+			<span class="block text-right" set:html={`${titleLine2}<br>${titleLine3.replace(/\n/g, '<br>')}`} />
+		</h1>
+	</div>
+	<div class="absolute bottom-8 md:bottom-16 w-full flex justify-center sm:justify-between md:grid md:grid-cols-3 md:items-end">
+		<Weather class='hidden md:flex lg:items-end lg:gap-2 font-mono text-sm uppercase md:justify-self-start'/>
+		<p class="hidden sm:block text-sm font-mono uppercase md:justify-self-center">{subtitle}</p>
+		<button class="font-mono uppercase text-sm md:justify-self-end">{ctaLabel} <Wrapped class='text-[1rem] relative'>↓</Wrapped></button>
+	</div>
+</section>
