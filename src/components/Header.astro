@@ -17,10 +17,10 @@ const { logo, logoAlt = 'Logo', items = [], ctaButton } = navigation;
 ---
 
 <header class="fixed z-9999999 top-0 left-0 right-0 px-4 sm:px-8 md:px-4 lg:px-12 py-5 xl:py-12">
-  <div class="flex items-center justify-between">
+  <div class="flex-between">
     <a href="/" class="block">
       {logo ? (
-        <img src={logo} alt={logoAlt} class="w-14 sm:w-20 md:w-28" />
+        <img src={logo} alt={logoAlt} class="logo-size" />
       ) : (
         <span class="text-black font-display text-xl">{logoAlt}</span>
       )}
@@ -30,7 +30,7 @@ const { logo, logoAlt = 'Logo', items = [], ctaButton } = navigation;
       <button
         type="button"
         id="menu-toggle"
-        class="flex items-center gap-2 text-black"
+        class="flex-center gap-2 text-black"
         aria-expanded="false"
         aria-controls="mobile-menu"
         aria-label="Ouvrir le menu"
@@ -46,13 +46,13 @@ const { logo, logoAlt = 'Logo', items = [], ctaButton } = navigation;
         class="absolute top-full right-0 mt-4 opacity-0 invisible"
         aria-hidden="true"
       >
-        <nav class="px-5 py-5 bg-white flex flex-col gap-4">
-          <ul class="flex flex-col gap-4">
+        <nav class="px-5 py-5 bg-white flex-col-container gap-4">
+          <ul class="flex-col-container gap-4">
             {items.map((item) => (
               <li>
                 <a
                   href={item.url}
-                  class="menu-link text-black text-3xl font-sans hover:opacity-70 transition-opacity whitespace-nowrap"
+                  class="menu-link text-black text-3xl font-sans link-hover whitespace-nowrap"
                   target={item.isExternal ? '_blank' : undefined}
                   rel={item.isExternal ? 'noopener noreferrer' : undefined}
                 >
@@ -61,12 +61,12 @@ const { logo, logoAlt = 'Logo', items = [], ctaButton } = navigation;
               </li>
             ))}
           </ul>
-          <span class="w-full h-px bg-lines"></span>
+          <span class="divider-lines"></span>
 
           {ctaButton?.label && ctaButton?.url && (
             <a
               href={ctaButton.url}
-              class="menu-link tracking-wide hover:opacity-90 transition-opacity"
+              class="menu-link tracking-wide link-hover-subtle"
             >
               {ctaButton.label}
             </a>

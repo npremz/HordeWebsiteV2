@@ -108,6 +108,114 @@ body {
   overflow-x: clip;
 }
 
+/* ==========================================
+   REUSABLE UTILITY CLASSES
+   ========================================== */
+
+@layer components {
+  /* -----------------------------------------
+     Typography
+     ----------------------------------------- */
+
+  /* Section headers - monospace uppercase labels */
+  .section-label {
+    @apply font-mono text-sm uppercase;
+  }
+
+  /* Display headings - large decorative titles */
+  .heading-display {
+    @apply font-display uppercase leading-[1.2];
+  }
+
+  .heading-display-sm {
+    @apply font-display uppercase leading-[1.2] text-[1.625rem] sm:text-4xl lg:text-5xl xl:text-[3.5rem];
+  }
+
+  .heading-display-lg {
+    @apply font-display uppercase leading-[1.2] text-[1.625rem] md:text-4xl lg:text-[2.5rem] xl:text-[3.5rem];
+  }
+
+  /* Footer/card link text sizing */
+  .text-link-lg {
+    @apply text-xl md:text-2xl xl:text-[2rem];
+  }
+
+  /* -----------------------------------------
+     Interactive Elements
+     ----------------------------------------- */
+
+  /* Standard link hover effect */
+  .link-hover {
+    @apply hover:opacity-70 transition-opacity;
+  }
+
+  /* CTA link hover effect (subtler) */
+  .link-hover-subtle {
+    @apply hover:opacity-90 transition-opacity;
+  }
+
+  /* -----------------------------------------
+     Spacing
+     ----------------------------------------- */
+
+  /* Standard vertical section spacing */
+  .section-spacing {
+    @apply mt-10 sm:mt-16 lg:mt-18 xl:mt-24;
+  }
+
+  /* Standard gap for flex columns */
+  .column-gap {
+    @apply gap-4 md:gap-8;
+  }
+
+  /* Standard gap for section content */
+  .content-gap {
+    @apply gap-10 sm:gap-16;
+  }
+
+  /* -----------------------------------------
+     Layout
+     ----------------------------------------- */
+
+  /* Flex column container */
+  .flex-col-container {
+    @apply flex flex-col;
+  }
+
+  /* Center items horizontally */
+  .flex-center {
+    @apply flex items-center;
+  }
+
+  /* Space between items */
+  .flex-between {
+    @apply flex items-center justify-between;
+  }
+
+  /* Absolute center horizontally */
+  .center-x {
+    @apply left-1/2 -translate-x-1/2;
+  }
+
+  /* -----------------------------------------
+     Visual Elements
+     ----------------------------------------- */
+
+  /* Horizontal divider line */
+  .divider {
+    @apply block w-full h-px bg-bg;
+  }
+
+  .divider-lines {
+    @apply block w-full h-px bg-lines;
+  }
+
+  /* Logo sizing (responsive) */
+  .logo-size {
+    @apply w-14 sm:w-20 md:w-28;
+  }
+}
+
 svg path,
 svg line,
 svg circle,

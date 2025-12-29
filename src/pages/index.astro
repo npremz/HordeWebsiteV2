@@ -18,13 +18,13 @@ import Weather from '../components/ui/Weather.astro'
     <div class="relative top-1/2 -translate-y-1/2 sm:top-2/5 md:top-1/2">
       <h1 class="font-display uppercase leading-none text-4xl lg:text-9xl xl:text-[140px] sm:text-[3.25rem] md:text-[4.875rem]">
         <span class="block mb-2">Nous<br>concevons</span>
-        <svg class="hidden sm:block lg:hidden -z-10 absolute w-[calc(100%-2*1rem)] -translate-y-[51%] left-1/2 -translate-x-1/2" viewBox="0 0 531 883" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <svg class="hidden sm:block lg:hidden -z-10 absolute w-[calc(100%-2*1rem)] -translate-y-[51%] center-x" viewBox="0 0 531 883" fill="none" xmlns="http://www.w3.org/2000/svg">
           <rect x="-0.5" y="0.5" width="298.273" height="298.273" rx="149.136" transform="matrix(-1 -8.74228e-08 -8.74228e-08 1 414.272 457.887)" stroke="#B1B1B1"/>
           <rect x="-0.5" y="0.5" width="298.273" height="298.273" rx="149.136" transform="matrix(-1 -8.74228e-08 -8.74228e-08 1 414.272 143)" stroke="#B1B1B1"/>
           <rect x="414.772" y="607.023" width="298.273" height="312.586" transform="rotate(-180 414.772 607.023)" stroke="#B1B1B1"/>
           <path d="M530.5 0.5V617.5C530.5 763.855 411.855 882.5 265.5 882.5C119.145 882.5 0.500002 763.855 0.5 617.5V0.5H530.5Z" stroke="#B1B1B1"/>
         </svg>
-        <svg class="hidden lg:block -z-10 absolute w-[calc(100%-2*1.5rem)] -translate-y-[54%] left-1/2 -translate-x-1/2" viewBox="0 0 1218 1282" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <svg class="hidden lg:block -z-10 absolute w-[calc(100%-2*1.5rem)] -translate-y-[54%] center-x" viewBox="0 0 1218 1282" fill="none" xmlns="http://www.w3.org/2000/svg">
           <rect x="0.5" y="0.5" width="379.504" height="379.504" rx="189.752" transform="matrix(-4.37114e-08 1 1 4.37114e-08 619.356 498.087)" stroke="#B1B1B1"/>
           <rect x="0.5" y="0.5" width="379.504" height="379.504" rx="189.752" transform="matrix(-4.37114e-08 1 1 4.37114e-08 219 498.087)" stroke="#B1B1B1"/>
           <rect x="809.108" y="498.587" width="379.504" height="397.702" transform="rotate(90 809.108 498.587)" stroke="#B1B1B1"/>
@@ -42,13 +42,13 @@ import Weather from '../components/ui/Weather.astro'
   </section>
   <div id="page-content">
     <section class="pt-128">
-      <div class="relative h-[80svh] sm:h-svh flex flex-col justify-center items-center gap-10 sm:gap-16 overflow-hidden">
+      <div class="relative h-[80svh] sm:h-svh flex-col-container justify-center items-center content-gap overflow-hidden">
         <div class="flex justify-center gap-4">
           <span class="font-mono text-[14px] leading-loose">(↓)</span>
-          <h2 class="font-display text-[1.625rem] sm:text-4xl leading-[1.2] uppercase text-center w-fit lg:text-5xl xl:text-[3.5rem]">Notre<br>Méthode</h2>
+          <h2 class="heading-display-sm text-center w-fit">Notre<br>Méthode</h2>
           <span class="font-mono text-[14px] leading-loose">(03)</span>
         </div>
-        <ul class="text-2xl sm:text-3xl lg:text-[2.5rem] xl:text-[3.5rem] text-center flex flex-col items-center [&>li]:leading-none [&>li]:px-4.5 [&>li]:py-3.5 sm:[&>li]:px-6 sm:[&>li]:py-5 lg:[&>li]:px-8 lg:[&>li]:py-6 xl:[&>li]:px-10 xl:[&>li]:py-8 [&>li]:border [&>li]:border-lines [&>li]:w-fit [&>li]:max-w-full">
+        <ul class="text-2xl sm:text-3xl lg:text-[2.5rem] xl:text-[3.5rem] text-center flex-col-container items-center [&>li]:leading-none [&>li]:px-4.5 [&>li]:py-3.5 sm:[&>li]:px-6 sm:[&>li]:py-5 lg:[&>li]:px-8 lg:[&>li]:py-6 xl:[&>li]:px-10 xl:[&>li]:py-8 [&>li]:border [&>li]:border-lines [&>li]:w-fit [&>li]:max-w-full">
           <li class="border-b-0!">Retirer la friction</li>
           <li class="bg-bg-light">Maximiser la conversion</li>
           <li class="border-t-0!">Soigner l’expérience</li>
@@ -60,22 +60,22 @@ import Weather from '../components/ui/Weather.astro'
           <path d="M14.8701 35.7998L9.17871 37.6357L7.34277 31.9443L13.0342 30.1084L14.8701 35.7998ZM26.2529 32.1289L20.5615 33.9648L18.7256 28.2734L24.417 26.4375L26.2529 32.1289ZM30.1113 24.6006L35.8008 22.7666L37.6367 28.458L31.9453 30.293L30.1094 24.6016L24.4209 26.4375L22.5859 20.7461L28.2773 18.9102L30.1113 24.6006ZM11.2002 24.416L16.8896 22.582L18.7256 28.2734L13.0342 30.1084L11.1982 24.417L5.50977 26.2529L3.67383 20.5615L9.36523 18.7256L11.2002 24.416ZM33.9678 17.0752L28.2764 18.9102L26.4404 13.2188L32.1318 11.3838L33.9678 17.0752ZM15.0557 16.8906L9.36426 18.7256L7.52832 13.0342L13.2197 11.1992L15.0557 16.8906ZM26.4395 13.2188L20.748 15.0537L18.9121 9.3623L24.6035 7.52734L26.4395 13.2188ZM7.52734 13.0342L1.83594 14.8701L0 9.17773L5.69141 7.34277L7.52734 13.0342ZM18.9111 9.36328L13.2197 11.1982L11.3838 5.50684L17.0752 3.67188L18.9111 9.36328ZM30.293 5.69141L24.6016 7.52734L22.7666 1.83594L28.458 0L30.293 5.69141Z" fill="#3A3737"/>
         </svg> -->
       </div>
-      <span class="block w-full h-px bg-bg"></span>
-      <div class="mt-10 sm:mt-16 lg:mt-18 xl:mt-24">
-        <div class="flex justify-between items-center">
-          <h3 class="font-mono uppercase text-sm leading-[1.414]">L'experience<br>est la clé</h3>
+      <span class="divider"></span>
+      <div class="section-spacing">
+        <div class="flex-between">
+          <h3 class="section-label leading-[1.414]">L'experience<br>est la clé</h3>
           <svg width="27" height="18" viewBox="0 0 27 18" fill="none" xmlns="http://www.w3.org/2000/svg">
             <rect y="0.00012207" width="8.96048" height="8.96048" fill="#3A3737"/>
             <rect x="17.9219" y="0.00012207" width="8.96048" height="8.96048" fill="#3A3737"/>
             <rect x="8.95996" y="8.96033" width="8.96048" height="8.96048" fill="#3A3737"/>
           </svg>
         </div>
-        <div class="mt-10 sm:mt-16 lg:mt-18 font-display text-[1.625rem] md:text-4xl lg:text-[2.5rem] xl:text-[3.5rem] leading-[1.2] uppercase">
+        <div class="section-spacing heading-display-lg">
           <p>Le design attire, <br class="lg:hidden">l’expérience retient.</p>
           <p>Nous créons des interfaces intuitives qui répondent aux intentions de vos utilisateurs.</p>
         </div>
       </div>
-      <Physics class='mt-10 sm:mt-16 lg:mt-18 xl:mt-24' />
+      <Physics class='section-spacing' />
     </section>
     <section class="mt-24 sm:mt-32 lg:mt-96">
       <StackingCards />
