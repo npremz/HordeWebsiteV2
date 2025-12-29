@@ -1,0 +1,32 @@
+---
+import Physics from '../ui/Physics.astro';
+
+interface Props {
+	label?: string;
+	headline?: string;
+	description?: string;
+}
+
+const {
+	label = 'L\'experience\nest la clé',
+	headline = 'Le design attire, l\'expérience retient.',
+	description = 'Nous créons des interfaces intuitives qui répondent aux intentions de vos utilisateurs.',
+} = Astro.props;
+---
+
+<span class="divider"></span>
+<div class="section-spacing">
+	<div class="flex-between">
+		<h3 class="section-label leading-[1.414]" set:html={label.replace(/\n/g, '<br>')} />
+		<svg width="27" height="18" viewBox="0 0 27 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+			<rect y="0.00012207" width="8.96048" height="8.96048" fill="#3A3737"/>
+			<rect x="17.9219" y="0.00012207" width="8.96048" height="8.96048" fill="#3A3737"/>
+			<rect x="8.95996" y="8.96033" width="8.96048" height="8.96048" fill="#3A3737"/>
+		</svg>
+	</div>
+	<div class="section-spacing heading-display-lg">
+		<p set:html={headline.replace(/\n/g, '<br class="lg:hidden">')} />
+		<p>{description}</p>
+	</div>
+</div>
+<Physics class='section-spacing' />

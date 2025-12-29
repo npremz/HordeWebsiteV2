@@ -8,8 +8,8 @@ interface Props {
 const { class: className = '', lineClass = '', dotClass = '' } = Astro.props;
 ---
 
-<div class:list={['relative w-screen left-1/2 -translate-x-1/2', className]}>
-  <div class:list={['absolute w-full h-px bg-lines', lineClass]}></div>
+<div class:list={['relative w-screen center-x', className]}>
+  <div class:list={['absolute divider-lines', lineClass]}></div>
 </div>
 <div class:list={['relative h-[7px] w-[7px] bg-black -left-[3px] -top-[3px]', dotClass]}></div>
 <div class:list={['relative h-[7px] w-[7px] bg-black left-full -ml-[3px] -top-[10px]', dotClass]}></div>
