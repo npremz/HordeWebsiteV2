@@ -4,6 +4,13 @@ import fs from 'node:fs';
 import path from 'node:path';
 import Wrapped from './ui/Wrapped.astro';
 
+interface Props {
+  variant?: 'light' | 'dark';
+}
+
+const { variant = 'light' } = Astro.props;
+const isDark = variant === 'dark';
+
 const navPath = path.join(process.cwd(), 'src/content/settings/navigation.yaml');
 const navContent = fs.readFileSync(navPath, 'utf8');
 const navigation = yaml.load(navContent) as {
@@ -14,15 +21,17 @@ const navigation = yaml.load(navContent) as {
 };
 
 const { logo, logoAlt = 'Logo', items = [], ctaButton } = navigation;
+const currentLogo = isDark ? '/images/logo_white.svg' : logo;
+const textColorClass = isDark ? 'text-bg-light' : 'text-black';
 ---
 
 <header class="fixed z-9999999 top-0 left-0 right-0 px-4 sm:px-8 md:px-4 lg:px-12 py-5 xl:py-12">
   <div class="flex-between">
     <a href="/" class="block">
-      {logo ? (
-        <img src={logo} alt={logoAlt} class="logo-size" />
+      {currentLogo ? (
+        <img src={currentLogo} alt={logoAlt} class="logo-size" />
       ) : (
-        <span class="text-black font-display text-xl">{logoAlt}</span>
+        <span class={`${textColorClass} font-display text-xl`}>{logoAlt}</span>
       )}
     </a>
 
@@ -30,13 +39,13 @@ const { logo, logoAlt = 'Logo', items = [], ctaButton } = navigation;
       <button
         type="button"
         id="menu-toggle"
-        class="flex-center gap-2 text-black"
+        class={`flex-center gap-2 ${textColorClass}`}
         aria-expanded="false"
         aria-controls="mobile-menu"
         aria-label="Ouvrir le menu"
       >
         <span id="menu-label" class="tracking-wide sm:text-[1.625rem] md:text-[2rem]">Menu</span>
-        <Wrapped padding="0.5rem" class='sm:mt-1 md:mt-2'>
+        <Wrapped padding="0.5rem" class='sm:mt-1 md:mt-2' variant={variant}>
           <span id="menu-icon" class="leading-none font-mono">+</span>
         </Wrapped>
       </button>

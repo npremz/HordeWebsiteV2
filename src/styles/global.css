@@ -61,9 +61,9 @@
 
   --color-bg: #D0CDCB;
   --color-bg-light: #F4F3F3;
-  --color-black: #3A3737;
+  --color-black: #222121;
   --color-lines: #B1B1B1;
-
+  --color-lines-dark: #4C4B4B;
   --spacing-lines: calc(100% + 2 * var(--gutter));
 
   --font-sans: 'PP Neue Montreal', system-ui, sans-serif;

@@ -3,12 +3,14 @@ interface Props {
   padding?: string;
   class?: string;
   svgClass?: string;
+  variant?: 'light' | 'dark';
 }
 
-const { padding = '0.5rem', class: className = '', svgClass = '' } = Astro.props;
+const { padding = '0.5rem', class: className = '', svgClass = '', variant = 'light' } = Astro.props;
+const colorVar = variant === 'dark' ? 'var(--color-bg-light)' : 'var(--color-black)';
 ---
 
-<div class:list={['wrapped', className]} style={`--wrapped-padding: ${padding}`}>
+<div class:list={['wrapped', className]} style={`--wrapped-padding: ${padding}; --wrapped-color: ${colorVar}`}>
   <svg
     class:list={['wrapped-svg', svgClass]}
     width="3"
@@ -43,7 +45,7 @@ const { padding = '0.5rem', class: className = '', svgClass = '' } = Astro.props
     display: inline-flex;
     align-items: center;
     gap: var(--wrapped-padding);
-    color: var(--color-black);
+    color: var(--wrapped-color);
   }
 
   .wrapped-svg {

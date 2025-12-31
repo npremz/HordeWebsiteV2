@@ -1,0 +1,27 @@
+---
+import Layout from '../layouts/Layout.astro';
+import ContactForm from '../components/ui/ContactForm';
+import Wrapped from '../components/ui/Wrapped.astro';
+import BackgroundCanvas from '../components/ui/BackgroundCanvas.astro';
+import Footer from '../components/Footer.astro';
+
+---
+
+<Layout title="Contact" headerVariant='dark' description="Contactez-nous pour votre projet digital">
+  	<BackgroundCanvas triggerDistanceBottom={500} bottomOffset={-550} color="#222121" />
+	<div id="page-content" class="text-bg-light">
+		<div class="flex flex-col">
+			<h1 class="mt-40 font-display uppercase leading-none text-[1.625rem] sm:text-[3.5rem] lg:text-[6.25rem] xl:text-[7.5rem]">
+			Toc, toc.<br />
+			On commence votre<br class="hidden md:block"> nouveau projet ?
+			</h1>
+			<Wrapped variant='dark' class="font-mono text-bg-light text-[1rem] relative self-end"><button>↓</button></Wrapped>
+		</div>
+		<hr class="mt-8 border-lines-dark" />
+
+		<ContactForm client:load />
+	</div>
+	
+	<Footer />
+
+</Layout>

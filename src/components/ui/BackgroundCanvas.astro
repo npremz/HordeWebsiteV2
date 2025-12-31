@@ -5,25 +5,28 @@ interface Props {
 	bottomOffset?: number;
 	triggerDistance?: number;
 	triggerDistanceBottom?: number;
+	color?: string;
 }
 
-const { 
+const {
 	targetId = 'page-content',
 	topOffset = 500,
 	bottomOffset = -450,
 	triggerDistance = 500,
-	triggerDistanceBottom = 500
+	triggerDistanceBottom = 500,
+	color = 'rgb(244, 243, 243)'
 } = Astro.props;
 ---
 
-<canvas 
-	id="bg-canvas" 
-	class="fixed top-0 left-0 w-full min-h-lvh pointer-events-none -z-1000" 
+<canvas
+	id="bg-canvas"
+	class="fixed top-0 left-0 w-full min-h-lvh pointer-events-none -z-1000"
 	data-target-id={targetId}
 	data-top-offset={topOffset}
 	data-bottom-offset={bottomOffset}
 	data-trigger-distance={triggerDistance}
 	data-trigger-distance-bottom={triggerDistanceBottom}
+	data-color={color}
 ></canvas>
 
 <script>
@@ -34,6 +37,7 @@ const {
   const bottomOffset = Number(canvas.getAttribute('data-bottom-offset')) || -450;
   const triggerDistance = Number(canvas.getAttribute('data-trigger-distance')) || 500;
   const triggerDistanceBottom = Number(canvas.getAttribute('data-trigger-distance-bottom')) || 500;
+  const pixelColor = canvas.getAttribute('data-color') || 'rgb(244, 243, 243)';
 
   let animationId: number | null = null;
   let resizeTimeout: number | undefined;
@@ -182,9 +186,9 @@ const {
   
   function draw() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    
+
     pixels.forEach(pixel => {
-      ctx.fillStyle = `rgb(244, 243, 243)`;
+      ctx.fillStyle = pixelColor;
       ctx.fillRect(pixel.x, pixel.y, pixelSize, pixelSize);
     });
   }

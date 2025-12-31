@@ -21,6 +21,8 @@ interface Props {
 
   // Layout props
   class?: string;
+  variant?: 'light' | 'dark';
+  headerVariant?: 'light' | 'dark';
 }
 
 const {
@@ -36,7 +38,13 @@ const {
   modifiedTime,
   author,
   class: className,
+  variant = 'light',
+  headerVariant,
 } = Astro.props;
+
+const isDark = variant === 'dark';
+const bodyClasses = isDark ? 'bg-black text-bg-light' : 'bg-bg text-black';
+const finalHeaderVariant = headerVariant ?? variant;
 
 // Get locale from site settings for lang attribute
 let lang = 'fr';
@@ -72,10 +80,10 @@ try {
     />
     <ClientRouter />
   </head>
-  <body class=`bg-bg ${className}`>
+  <body class={`${bodyClasses} ${className || ''}`}>
     <a href="#main-content" class="skip-link">Aller au contenu principal</a>
 
-    <Header />
+    <Header variant={finalHeaderVariant} />
     <Container>
       <main id="main-content">
         <slot />
