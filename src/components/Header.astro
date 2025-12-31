@@ -87,12 +87,10 @@ const textColorClass = isDark ? 'text-bg-light' : 'text-black';
 </header>
 
 <script>
-  const toggle = document.getElementById('menu-toggle');
-  const menu = document.getElementById('mobile-menu');
-  const label = document.getElementById('menu-label');
-  const icon = document.getElementById('menu-icon');
-  const links = document.querySelectorAll('.menu-link');
-
+  let toggle: HTMLElement | null;
+  let menu: HTMLElement | null;
+  let label: HTMLElement | null;
+  let icon: HTMLElement | null;
   let isOpen = false;
 
   function openMenu() {
@@ -119,21 +117,43 @@ const textColorClass = isDark ? 'text-bg-light' : 'text-black';
     document.body.style.overflow = '';
   }
 
-  toggle?.addEventListener('click', () => {
+  function handleToggleClick() {
     if (isOpen) {
       closeMenu();
     } else {
       openMenu();
     }
-  });
+  }
 
-  links.forEach(link => {
-    link.addEventListener('click', closeMenu);
-  });
-
-  document.addEventListener('keydown', (e) => {
+  function handleKeydown(e: KeyboardEvent) {
     if (e.key === 'Escape' && isOpen) {
       closeMenu();
     }
-  });
+  }
+
+  function init() {
+    // Reset state
+    isOpen = false;
+    document.body.style.overflow = '';
+
+    // Get fresh DOM references
+    toggle = document.getElementById('menu-toggle');
+    menu = document.getElementById('mobile-menu');
+    label = document.getElementById('menu-label');
+    icon = document.getElementById('menu-icon');
+    const links = document.querySelectorAll('.menu-link');
+
+    // Add event listeners
+    toggle?.addEventListener('click', handleToggleClick);
+    links.forEach(link => {
+      link.addEventListener('click', closeMenu);
+    });
+  }
+
+  // Initial setup
+  init();
+  document.addEventListener('keydown', handleKeydown);
+
+  // Re-init on view transitions
+  document.addEventListener('astro:after-swap', init);
 </script>

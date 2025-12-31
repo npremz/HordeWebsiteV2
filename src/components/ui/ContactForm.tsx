@@ -112,7 +112,7 @@ export default function ContactForm() {
           <legend className='section-label block md:w-36 md:shrink-0'>
             J'ai besoin de<span aria-hidden="true">*</span>
           </legend>
-          <div className="flex flex-wrap gap-5 mt-5 border-b pb-5 md:pb-10 border-lines-dark">
+          <div className="w-full flex flex-wrap gap-5 mt-5 border-b pb-5 md:pb-10 border-lines-dark">
             {besoinOptions.map((option) => (
               <label 
                 key={option.value} 

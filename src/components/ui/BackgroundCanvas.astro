@@ -30,104 +30,81 @@ const {
 ></canvas>
 
 <script>
-  const canvas = document.getElementById('bg-canvas') as HTMLCanvasElement;
-  const ctx = canvas.getContext('2d')!;
-  const targetId = canvas.getAttribute('data-target-id') || 'projects';
-  const topOffset = Number(canvas.getAttribute('data-top-offset')) || 500;
-  const bottomOffset = Number(canvas.getAttribute('data-bottom-offset')) || -450;
-  const triggerDistance = Number(canvas.getAttribute('data-trigger-distance')) || 500;
-  const triggerDistanceBottom = Number(canvas.getAttribute('data-trigger-distance-bottom')) || 500;
-  const pixelColor = canvas.getAttribute('data-color') || 'rgb(244, 243, 243)';
-
+  let canvas: HTMLCanvasElement;
+  let ctx: CanvasRenderingContext2D;
+  let targetId: string;
+  let topOffset: number;
+  let bottomOffset: number;
+  let triggerDistance: number;
+  let triggerDistanceBottom: number;
+  let pixelColor: string;
   let animationId: number | null = null;
   let resizeTimeout: number | undefined;
   let lastWidth = window.innerWidth;
-  
   let pixels: { x: number; y: number; alpha: number }[] = [];
+  let pixelSize = 20;
 
-  function getPixelSize(): number
-  {
-	const width = window.innerWidth;
-	
-	if (width < 640) return 40; // Mobile
-	if (width < 1024) return 80; // Tablette
-	if (width < 1512) return 128; // Tablette
-	if (width < 1920) return 190; // Tablette
-	if (width < 2560) return 240; // Tablette
-	return 320; // Desktop
+  function getPixelSize(): number {
+    const width = window.innerWidth;
+    if (width < 640) return 40;
+    if (width < 1024) return 80;
+    if (width < 1512) return 128;
+    if (width < 1920) return 190;
+    if (width < 2560) return 240;
+    return 320;
   }
 
-  let pixelSize = 20;
-  
   function resizeCanvas() {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
-	pixelSize = getPixelSize();
+    pixelSize = getPixelSize();
   }
-  
-  resizeCanvas();
-  
+
   function getProjectSectionPosition(): number | null {
     const projectSection = document.getElementById(targetId);
     if (!projectSection) return null;
-    
     const rect = projectSection.getBoundingClientRect();
     return rect.top + window.scrollY;
   }
-  
+
   function updatePixels() {
     const scrollY = window.scrollY;
     const viewportHeight = window.innerHeight;
-    const projectPos = getProjectSectionPosition() + topOffset;
-    
+    const projectPos = getProjectSectionPosition()! + topOffset;
+
     if (!projectPos) {
       pixels = [];
       return;
     }
-    
+
     const projectSection = document.getElementById(targetId);
     if (!projectSection) {
       pixels = [];
       return;
     }
-    
+
     const projectRect = projectSection.getBoundingClientRect();
     const projectEnd = projectRect.bottom + window.scrollY;
-    
     const distanceToProject = projectPos - (scrollY + viewportHeight);
-    
-    // Calculer la progression d'entrée (depuis le bas)
     const progressIn = Math.max(0, Math.min(1, 1 - distanceToProject / triggerDistance));
-    
-    // Calculer la progression de sortie (après la section)
     const distanceAfterProject = scrollY - (projectEnd + bottomOffset);
     const progressOut = Math.max(0, Math.min(1, distanceAfterProject / triggerDistanceBottom));
-    
-    // La progression finale combine entrée et sortie
     const finalProgress = progressIn * (1 - progressOut);
-    
-    // Déterminer si on est en train de sortir par le haut (remontant) ou par le bas (descendant)
     const isExitingTop = scrollY + viewportHeight < projectPos && progressIn < 1;
     const isExitingBottom = scrollY > (projectEnd + bottomOffset);
-    
+
     if (finalProgress === 0) {
       pixels = [];
       return;
     }
-    
-    // Calculer tous les pixels possibles pour remplir complètement l'écran
+
     const cols = Math.floor(canvas.width / pixelSize) + 1;
     const rows = Math.floor(canvas.height / pixelSize) + 1;
     const maxPixels = cols * rows;
-    
-    // À 100% de progression, on veut TOUS les pixels
     const targetPixelCount = Math.floor(maxPixels * finalProgress);
-    
-    // Créer un Set des positions déjà occupées
     const occupiedPositions = new Set(pixels.map(p => `${p.x},${p.y}`));
-    
-    // Générer toutes les positions possibles non occupées
     const availablePositions: {x: number, y: number}[] = [];
+
     for (let row = 0; row < rows; row++) {
       for (let col = 0; col < cols; col++) {
         const x = col * pixelSize;
@@ -137,24 +114,20 @@ const {
         }
       }
     }
-    
-    // Trier les positions avec une pondération : priorité selon la direction
+
     availablePositions.sort((a, b) => {
       const randomWeight = 200;
       if (isExitingBottom) {
-        // Si on est après la section et qu'on remonte, apparaître depuis le haut
         const scoreA = -a.y - Math.random() * randomWeight;
         const scoreB = -b.y - Math.random() * randomWeight;
         return scoreB - scoreA;
       } else {
-        // Sinon apparaître depuis le bas (comportement normal)
         const scoreA = a.y - Math.random() * randomWeight;
         const scoreB = b.y - Math.random() * randomWeight;
         return scoreB - scoreA;
       }
     });
-    
-    // Ajouter les pixels manquants
+
     const pixelsToAdd = targetPixelCount - pixels.length;
     if (pixelsToAdd > 0) {
       for (let i = 0; i < Math.min(pixelsToAdd, availablePositions.length); i++) {
@@ -165,16 +138,13 @@ const {
         });
       }
     } else if (pixelsToAdd < 0) {
-      // Supprimer avec variation aléatoire selon la direction
       pixels.sort((a, b) => {
         const randomWeight = 200;
         if (isExitingTop) {
-          // Supprimer depuis le haut (valeurs Y plus petites en premier)
           const scoreA = -a.y + Math.random() * randomWeight;
           const scoreB = -b.y + Math.random() * randomWeight;
           return scoreA - scoreB;
         } else {
-          // Supprimer depuis le bas (valeurs Y plus grandes en premier)
           const scoreA = a.y + Math.random() * randomWeight;
           const scoreB = b.y + Math.random() * randomWeight;
           return scoreA - scoreB;
@@ -183,37 +153,64 @@ const {
       pixels.length = targetPixelCount;
     }
   }
-  
+
   function draw() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-
     pixels.forEach(pixel => {
       ctx.fillStyle = pixelColor;
       ctx.fillRect(pixel.x, pixel.y, pixelSize, pixelSize);
     });
   }
-  
+
   function animate() {
     updatePixels();
     draw();
-    requestAnimationFrame(animate);
+    animationId = requestAnimationFrame(animate);
   }
-  
-	window.addEventListener('resize', () =>
-	{
-		const currentWidth = window.innerWidth;
-		if (currentWidth === lastWidth) return; // Ignore si la largeur n'a pas changé
-		
-		lastWidth = currentWidth;
-		clearTimeout(resizeTimeout);
-		
-		resizeTimeout = setTimeout(() =>
-		{
-			resizeCanvas();
-			pixels = [];
-		}, 200);
-	});
 
-  // Démarrer l'animation
-  animate();
+  function init() {
+    // Annuler l'animation précédente si elle existe
+    if (animationId !== null) {
+      cancelAnimationFrame(animationId);
+      animationId = null;
+    }
+
+    // Récupérer le nouveau canvas
+    canvas = document.getElementById('bg-canvas') as HTMLCanvasElement;
+    if (!canvas) return;
+
+    ctx = canvas.getContext('2d')!;
+    targetId = canvas.getAttribute('data-target-id') || 'projects';
+    topOffset = Number(canvas.getAttribute('data-top-offset')) || 500;
+    bottomOffset = Number(canvas.getAttribute('data-bottom-offset')) || -450;
+    triggerDistance = Number(canvas.getAttribute('data-trigger-distance')) || 500;
+    triggerDistanceBottom = Number(canvas.getAttribute('data-trigger-distance-bottom')) || 500;
+    pixelColor = canvas.getAttribute('data-color') || 'rgb(244, 243, 243)';
+
+    // Reset pixels
+    pixels = [];
+    lastWidth = window.innerWidth;
+
+    resizeCanvas();
+    animate();
+  }
+
+  window.addEventListener('resize', () => {
+    const currentWidth = window.innerWidth;
+    if (currentWidth === lastWidth) return;
+
+    lastWidth = currentWidth;
+    clearTimeout(resizeTimeout);
+
+    resizeTimeout = setTimeout(() => {
+      resizeCanvas();
+      pixels = [];
+    }, 200);
+  });
+
+  // Initialisation au chargement
+  init();
+
+  // Réinitialisation après une view transition
+  document.addEventListener('astro:after-swap', init);
 </script>
