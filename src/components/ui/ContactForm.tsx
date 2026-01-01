@@ -116,7 +116,7 @@ export default function ContactForm() {
             {besoinOptions.map((option) => (
               <label 
                 key={option.value} 
-                className={`uppercase font-mono py-5 px-4 border transition-all duration-300 ease-in-out cursor-pointer ${
+                className={`uppercase font-mono text-[1rem] py-5 px-4 border transition-all duration-300 ease-in-out cursor-pointer ${
                   formData.besoin === option.value 
                     ? 'bg-bg-light text-black border-bg-light' 
                     : 'border-lines-dark hover:border-bg/50'
