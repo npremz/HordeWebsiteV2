@@ -25,7 +25,7 @@ const currentLogo = isDark ? '/images/logo_white.svg' : logo;
 const textColorClass = isDark ? 'text-bg-light' : 'text-black';
 ---
 
-<header class="fixed z-9999999 top-0 left-0 right-0 px-4 sm:px-8 md:px-4 lg:px-12 py-5 xl:py-12">
+<header class="fixed z-9999999 top-0 left-0 right-0 px-4 sm:px-8 md:px-4 lg:px-12 py-5 xl:py-12" style="view-transition-name: header;">
   <div class="flex-between">
     <a href="/" class="block">
       {currentLogo ? (
@@ -39,7 +39,7 @@ const textColorClass = isDark ? 'text-bg-light' : 'text-black';
       <button
         type="button"
         id="menu-toggle"
-        class={`flex-center gap-2 ${textColorClass}`}
+        class={`flex-center gap-2 cursor-pointer ${textColorClass}`}
         aria-expanded="false"
         aria-controls="mobile-menu"
         aria-label="Ouvrir le menu"
@@ -52,16 +52,16 @@ const textColorClass = isDark ? 'text-bg-light' : 'text-black';
 
       <div
         id="mobile-menu"
-        class="absolute top-full right-0 mt-4 opacity-0 invisible"
+        class="absolute top-full right-0 mt-4 origin-top-right"
         aria-hidden="true"
       >
-        <nav class="px-5 py-5 bg-white flex-col-container gap-4">
+        <nav class="px-5 py-5 bg-white flex-col-container gap-4 shadow-xl">
           <ul class="flex-col-container gap-4">
-            {items.map((item) => (
-              <li>
+            {items.map((item, index) => (
+              <li class="menu-item" style={`--item-delay: ${0.05 + index * 0.04}s`}>
                 <a
                   href={item.url}
-                  class="menu-link text-black text-3xl font-sans link-hover whitespace-nowrap"
+                  class="menu-link text-black text-3xl font-sans link-hover whitespace-nowrap block"
                   target={item.isExternal ? '_blank' : undefined}
                   rel={item.isExternal ? 'noopener noreferrer' : undefined}
                 >
@@ -70,15 +70,17 @@ const textColorClass = isDark ? 'text-bg-light' : 'text-black';
               </li>
             ))}
           </ul>
-          <span class="divider-lines"></span>
+          <span class="divider-lines menu-item" style={`--item-delay: ${0.05 + items.length * 0.04}s`}></span>
 
           {ctaButton?.label && ctaButton?.url && (
-            <a
-              href={ctaButton.url}
-              class="menu-link tracking-wide link-hover-subtle"
-            >
-              {ctaButton.label}
-            </a>
+            <div class="menu-item" style={`--item-delay: ${0.05 + (items.length + 1) * 0.04}s`}>
+              <a
+                href={ctaButton.url}
+                class="menu-link tracking-wide link-hover-subtle"
+              >
+                {ctaButton.label}
+              </a>
+            </div>
           )}
         </nav>
       </div>
@@ -86,74 +88,71 @@ const textColorClass = isDark ? 'text-bg-light' : 'text-black';
   </div>
 </header>
 
+<style is:global>
+  #mobile-menu {
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(-8px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+  }
+
+  #mobile-menu.is-open {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
+  }
+
+  .menu-item {
+    opacity: 0;
+    transform: translateY(12px);
+    transition: opacity 0.25s ease, transform 0.3s ease;
+  }
+
+  #mobile-menu.is-open .menu-item {
+    opacity: 1;
+    transform: translateY(0);
+    transition-delay: var(--item-delay);
+  }
+</style>
+
 <script>
-  let toggle: HTMLElement | null;
-  let menu: HTMLElement | null;
-  let label: HTMLElement | null;
-  let icon: HTMLElement | null;
-  let isOpen = false;
-
-  function openMenu() {
-    isOpen = true;
-    menu?.classList.remove('opacity-0', 'invisible');
-    menu?.classList.add('opacity-100', 'visible');
-    menu?.setAttribute('aria-hidden', 'false');
-    toggle?.setAttribute('aria-expanded', 'true');
-    toggle?.setAttribute('aria-label', 'Fermer le menu');
-    if (label) label.textContent = 'Close';
-    if (icon) icon.textContent = '-';
-    document.body.style.overflow = 'hidden';
-  }
-
-  function closeMenu() {
-    isOpen = false;
-    menu?.classList.remove('opacity-100', 'visible');
-    menu?.classList.add('opacity-0', 'invisible');
-    menu?.setAttribute('aria-hidden', 'true');
-    toggle?.setAttribute('aria-expanded', 'false');
-    toggle?.setAttribute('aria-label', 'Ouvrir le menu');
-    if (label) label.textContent = 'Menu';
-    if (icon) icon.textContent = '+';
-    document.body.style.overflow = '';
-  }
-
-  function handleToggleClick() {
-    if (isOpen) {
-      closeMenu();
-    } else {
-      openMenu();
-    }
-  }
-
-  function handleKeydown(e: KeyboardEvent) {
-    if (e.key === 'Escape' && isOpen) {
-      closeMenu();
-    }
-  }
-
-  function init() {
-    // Reset state
-    isOpen = false;
-    document.body.style.overflow = '';
-
-    // Get fresh DOM references
-    toggle = document.getElementById('menu-toggle');
-    menu = document.getElementById('mobile-menu');
-    label = document.getElementById('menu-label');
-    icon = document.getElementById('menu-icon');
+  function initMenu() {
+    const toggle = document.getElementById('menu-toggle');
+    const menu = document.getElementById('mobile-menu');
+    const label = document.getElementById('menu-label');
+    const icon = document.getElementById('menu-icon');
     const links = document.querySelectorAll('.menu-link');
+    let isOpen = false;
 
-    // Add event listeners
-    toggle?.addEventListener('click', handleToggleClick);
-    links.forEach(link => {
-      link.addEventListener('click', closeMenu);
+    function open() {
+      isOpen = true;
+      menu?.classList.add('is-open');
+      menu?.setAttribute('aria-hidden', 'false');
+      toggle?.setAttribute('aria-expanded', 'true');
+      toggle?.setAttribute('aria-label', 'Fermer le menu');
+      if (label) label.textContent = 'Close';
+      if (icon) icon.textContent = '-';
+      document.body.style.overflow = 'hidden';
+    }
+
+    function close() {
+      isOpen = false;
+      menu?.classList.remove('is-open');
+      menu?.setAttribute('aria-hidden', 'true');
+      toggle?.setAttribute('aria-expanded', 'false');
+      toggle?.setAttribute('aria-label', 'Ouvrir le menu');
+      if (label) label.textContent = 'Menu';
+      if (icon) icon.textContent = '+';
+      document.body.style.overflow = '';
+    }
+
+    toggle?.addEventListener('click', () => isOpen ? close() : open());
+    links.forEach(link => link.addEventListener('click', close));
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && isOpen) close();
     });
   }
 
-  // Initial setup
-  init();
-  document.addEventListener('keydown', handleKeydown);
-
-  // Re-init on view transitions
-  document.addEventListener('astro:after-swap', init);
+  initMenu();
+  document.addEventListener('astro:after-swap', initMenu);
 </script>
