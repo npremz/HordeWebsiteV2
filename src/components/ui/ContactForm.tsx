@@ -152,7 +152,7 @@ export default function ContactForm() {
             type="text"
             id="objectif"
             name="objectif"
-            className='py-5 xl:py-8 w-full text-2xl sm:text-[2rem] lg:text-[2.5rem] xl:text-[3.125rem] border-lines-dark border-b bg-transparent'
+            className='py-5 xl:py-8 w-full text-2xl sm:text-[2rem] lg:text-[2.5rem] xl:text-[3.125rem] border-lines-dark border-b bg-transparent focus:outline-none focus-visible:outline-none focus:border-b-lines transition-colors'
             placeholder='Ce que vous avez en tête...'
             value={formData.objectif}
             onChange={(e) => handleChange('objectif', e.target.value)}
@@ -174,7 +174,7 @@ export default function ContactForm() {
           type="text"
           id="societe"
           name="societe"
-          className='py-5 xl:py-8 flex-1 text-2xl sm:text-[2rem] lg:text-[2.5rem] xl:text-[3.125rem] border-lines-dark border-b bg-transparent'
+          className='py-5 xl:py-8 flex-1 text-2xl sm:text-[2rem] lg:text-[2.5rem] xl:text-[3.125rem] border-lines-dark border-b bg-transparent focus:outline-none focus-visible:outline-none focus:border-b-lines transition-colors'
           placeholder='Nom de société'
           value={formData.societe}
           onChange={(e) => handleChange('societe', e.target.value)}
@@ -190,8 +190,8 @@ export default function ContactForm() {
             type="text"
             id="nom"
             name="nom"
-            className='py-5 xl:py-8 w-full text-2xl sm:text-[2rem] lg:text-[2.5rem] xl:text-[3.125rem] border-lines-dark border-b bg-transparent'
-            placeholder="Un autographe, s’il vous plaît"
+            className='py-5 xl:py-8 w-full text-2xl sm:text-[2rem] lg:text-[2.5rem] xl:text-[3.125rem] border-lines-dark border-b bg-transparent focus:outline-none focus-visible:outline-none focus:border-b-lines transition-colors'
+            placeholder="Un autographe, s'il vous plaît"
             value={formData.nom}
             onChange={(e) => handleChange('nom', e.target.value)}
             aria-required="true"
@@ -215,7 +215,7 @@ export default function ContactForm() {
             type="email"
             id="email"
             name="email"
-            className='py-5 xl:py-8 w-full text-2xl sm:text-[2rem] lg:text-[2.5rem] xl:text-[3.125rem] border-lines-dark border-b bg-transparent'
+            className='py-5 xl:py-8 w-full text-2xl sm:text-[2rem] lg:text-[2.5rem] xl:text-[3.125rem] border-lines-dark border-b bg-transparent focus:outline-none focus-visible:outline-none focus:border-b-lines transition-colors'
             placeholder="@"
             value={formData.email}
             onChange={(e) => handleChange('email', e.target.value)}
