@@ -245,7 +245,7 @@ export default function ContactForm() {
 
       <div className='flex flex-col md:flex-row md:gap-16'>
         <div className="block md:w-36 md:shrink-0"></div>
-        <button type="submit" disabled={isSubmitting} className='mt-5 sm:mt-10 xl:mt-16 uppercase font-mono py-5 xl:py-6 bg-bg-light text-black flex-1'>
+        <button type="submit" disabled={isSubmitting} className='leading-[0.75] mt-5 sm:mt-10 xl:mt-16 uppercase font-mono py-5 xl:py-6 bg-bg-light text-black flex-1'>
           {isSubmitting ? 'Envoi en cours...' : 'Transmettre'}
         </button>
       </div>
