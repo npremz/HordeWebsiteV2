@@ -17,7 +17,7 @@ interface FormErrors {
 
 export default function ContactForm() {
   const [formData, setFormData] = useState<FormData>({
-    besoin: '',
+    besoin: 'audit-performance',
     objectif: '',
     societe: '',
     nom: '',
@@ -108,7 +108,7 @@ export default function ContactForm() {
   return (
     <form className="mt-10 sm:mt-16 md:mt-24 lg:mt-30 flex flex-col gap-8" onSubmit={handleSubmit} noValidate>
       <fieldset className='flex flex-col gap-5 '>
-        <div className='flex flex-col md:flex-row gap-5 md:gap-16 md:items-center w-full'>
+        <div className='relative flex flex-col md:flex-row gap-5 md:gap-16 md:items-center w-full'>
           <legend className='section-label block md:w-36 md:shrink-0'>
             J'ai besoin de<span aria-hidden="true">*</span>
           </legend>
@@ -136,7 +136,7 @@ export default function ContactForm() {
             ))}
           </div>
           {errors.besoin && (
-            <span id="besoin-error" role="alert">
+            <span id="besoin-error" role="alert" className='section-label text-err absolute right-0 top-6 lg:top-8 xl:top-12'>
               {errors.besoin}
             </span>
           )}
@@ -147,12 +147,16 @@ export default function ContactForm() {
         <label htmlFor="objectif" className='section-label block md:w-36 md:shrink-0'>
           Objectif<span aria-hidden="true">*</span>
         </label>
-        <div className="flex-1">
+        <div className="relative flex-1">
           <input
             type="text"
             id="objectif"
             name="objectif"
-            className='py-5 xl:py-8 w-full text-2xl sm:text-[2rem] lg:text-[2.5rem] xl:text-[3.125rem] border-lines-dark border-b bg-transparent focus:outline-none focus-visible:outline-none focus:border-b-lines transition-colors'
+            className={`py-5 xl:py-8 w-full text-2xl sm:text-[2rem] lg:text-[2.5rem] xl:text-[3.125rem] border-b bg-transparent focus:outline-none focus-visible:outline-none transition-colors ${
+              errors.objectif
+                ? 'border-b-err placeholder:text-err'
+                : 'border-lines-dark focus:border-b-lines'
+            }`}
             placeholder='Ce que vous avez en tête...'
             value={formData.objectif}
             onChange={(e) => handleChange('objectif', e.target.value)}
@@ -161,7 +165,7 @@ export default function ContactForm() {
             aria-describedby={errors.objectif ? 'objectif-error' : undefined}
           />
           {errors.objectif && (
-            <span id="objectif-error" role="alert" className="block mt-1">
+            <span id="objectif-error" role="alert" className="section-label text-err block mt-1 absolute right-0 top-6 lg:top-8 xl:top-12">
               {errors.objectif}
             </span>
           )}
@@ -185,12 +189,16 @@ export default function ContactForm() {
         <label htmlFor="nom" className='section-label block md:w-36 md:shrink-0'>
           Nom<span aria-hidden="true">*</span>
         </label>
-        <div className="flex-1">
+        <div className="relative flex-1">
           <input
             type="text"
             id="nom"
             name="nom"
-            className='py-5 xl:py-8 w-full text-2xl sm:text-[2rem] lg:text-[2.5rem] xl:text-[3.125rem] border-lines-dark border-b bg-transparent focus:outline-none focus-visible:outline-none focus:border-b-lines transition-colors'
+            className={`py-5 xl:py-8 w-full text-2xl sm:text-[2rem] lg:text-[2.5rem] xl:text-[3.125rem] border-b bg-transparent focus:outline-none focus-visible:outline-none transition-colors ${
+              errors.nom
+                ? 'border-b-err placeholder:text-err'
+                : 'border-lines-dark focus:border-b-lines'
+            }`}
             placeholder="Un autographe, s'il vous plaît"
             value={formData.nom}
             onChange={(e) => handleChange('nom', e.target.value)}
@@ -199,7 +207,7 @@ export default function ContactForm() {
             aria-describedby={errors.nom ? 'nom-error' : undefined}
           />
           {errors.nom && (
-            <span id="nom-error" role="alert" className="block mt-1">
+            <span id="nom-error" role="alert" className="section-label text-err block mt-1 absolute right-0 top-6 lg:top-8 xl:top-12">
               {errors.nom}
             </span>
           )}
@@ -210,12 +218,16 @@ export default function ContactForm() {
         <label htmlFor="email" className='section-label block md:w-36 md:shrink-0'>
           Email<span aria-hidden="true">*</span>
         </label>
-        <div className="flex-1">
+        <div className="relative flex-1">
           <input
             type="email"
             id="email"
             name="email"
-            className='py-5 xl:py-8 w-full text-2xl sm:text-[2rem] lg:text-[2.5rem] xl:text-[3.125rem] border-lines-dark border-b bg-transparent focus:outline-none focus-visible:outline-none focus:border-b-lines transition-colors'
+            className={`py-5 xl:py-8 w-full text-2xl sm:text-[2rem] lg:text-[2.5rem] xl:text-[3.125rem] border-b bg-transparent focus:outline-none focus-visible:outline-none transition-colors ${
+              errors.email
+                ? 'border-b-err placeholder:text-err'
+                : 'border-lines-dark focus:border-b-lines'
+            }`}
             placeholder="@"
             value={formData.email}
             onChange={(e) => handleChange('email', e.target.value)}
@@ -224,7 +236,7 @@ export default function ContactForm() {
             aria-describedby={errors.email ? 'email-error' : undefined}
           />
           {errors.email && (
-            <span id="email-error" role="alert" className="block mt-1">
+            <span id="email-error" role="alert" className="section-label text-err block mt-1 absolute right-0 top-6 lg:top-8 xl:top-12">
               {errors.email}
             </span>
           )}
