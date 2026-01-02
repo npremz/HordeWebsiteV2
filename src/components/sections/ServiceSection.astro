@@ -1,0 +1,158 @@
+---
+import Wrapped from "../ui/Wrapped.astro";
+
+interface ServiceItem {
+  title: string;
+  subtitle: string;
+  content: string;
+  servicesList: string[];
+}
+
+const services: ServiceItem[] = [
+  {
+    title: "Audit &<br>performance",
+    subtitle: "Comprendre avant d'agir",
+    servicesList: [
+      "Audit UX/UI",
+      "Audit SEO technique",
+      "Analyse Core Web Vitals",
+      "Rapport de recommandations"
+    ],
+    content: "Vous voulez optimiser la conversion de votre site ? Nous réalisons un diagnostic complet (Vitesse de chargement, UX, SEO) pour identifier les points de friction qui bloquent vos utilisateurs. Une analyse factuelle pour des actions immédiates."
+  },
+  {
+    title: "Optimisation<br>& refonte",
+    subtitle: "Améliorer l'existant",
+    servicesList: [
+      "Optimisation des performances",
+      "Refonte UI/UX",
+      "Migration technique",
+      "Responsive & mobile-first"
+    ],
+    content: "Pas besoin de tout jeter. Nous intervenons sur votre site existant pour booster ses performances (Core Web Vitals), moderniser son interface et le rendre ultra-rapide sur mobile."
+  },
+  {
+    title: "Création \"from<br>scratch\" & MVP",
+    subtitle: "Construire sur des bases solides",
+    servicesList: [
+      "Site vitrine",
+      "Application web",
+      "MVP & prototypage",
+      "E-commerce"
+    ],
+    content: "Lancement de produit ou nouvelle identité ? Nous concevons des plateformes sur-mesure. Une architecture solide et pensée pour vos finances à long terme."
+  }
+];
+---
+
+<section class="py-24">
+  <div class="">
+    <h2 class="section-label">
+      J'ai besoin de
+    </h2>
+
+    <div class="">
+      {services.map((service, index) => (
+        <div class="service-item border-b border-lines">
+          <button
+            type="button"
+            class:list={[
+              "service-trigger w-full flex justify-between py-10 sm:py-16 lg:py-24 text-left cursor-pointer group",
+              index % 2 === 1 && "flex-row-reverse"
+            ]}
+            aria-expanded="false"
+            aria-controls={`service-content-${index}`}
+          >
+            <span class="font-display uppercase leading-none text-[1.625rem] sm:text-[2.5rem] md:text-[4rem] lg:text-[6rem] xl:text-[7.5rem] group-hover:opacity-70 transition-opacity" set:html={service.title} />
+            <Wrapped class="service-icon h-fit shrink-0 font-mono" aria-hidden="true">
+              <span class="icon-plus">+</span>
+              <span class="icon-minus hidden">-</span>
+            </Wrapped>
+          </button>
+          <div
+            id={`service-content-${index}`}
+            class="service-content overflow-hidden transition-all duration-300 ease-out"
+            style="max-height: 0;"
+          >
+            <div class="pb-10 sm:pb-16 lg:pb-24 flex flex-col gap-10 sm:gap-16 lg:gap-24 text-xl sm:text-[1.625rem] md:text-[2rem]">
+              <hr class="border-lines">
+			  <div class="flex flex-col gap-10 sm:gap-16 lg:flex-row lg:justify-between">
+				<div class="md:max-w-150 ">
+					<h3 class="section-label">Liste de services</h3>
+					<ul class="mt-4 sm:mt-9 flex flex-col gap-4 sm:gap-5 sm:flex-row sm:shrink-0 sm:flex-wrap">
+					{service.servicesList.map((item) => (
+						<li>{item}</li>
+					))}
+					</ul>
+				</div>
+				<div class="md:max-w-150 flex flex-col gap-10 sm:gap-16">
+					<div>
+						<h3 class="section-label">
+						{service.subtitle}
+						</h3>
+						<p class="mt-4 sm:mt-9 text-2xl">
+						{service.content}
+						</p>
+					</div>
+              		<a href="https://calendly.com/ni-premont/30min" class="font-mono text-[1rem] leading-none uppercase px-4 py-5 w-fit bg-bg-light">Réserver un call</a>
+				</div>
+			  </div>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .service-trigger[aria-expanded="true"] .icon-plus {
+    display: none;
+  }
+  .service-trigger[aria-expanded="true"] .icon-minus {
+    display: inline;
+  }
+</style>
+
+<script>
+  function initServiceAccordion() {
+    const triggers = document.querySelectorAll('.service-trigger');
+
+    triggers.forEach((trigger) => {
+      trigger.addEventListener('click', () => {
+        const isExpanded = trigger.getAttribute('aria-expanded') === 'true';
+        const contentId = trigger.getAttribute('aria-controls');
+        const content = document.getElementById(contentId!);
+
+        if (!content) return;
+
+        // Fermer tous les autres
+        triggers.forEach((otherTrigger) => {
+          if (otherTrigger !== trigger) {
+            otherTrigger.setAttribute('aria-expanded', 'false');
+            const otherId = otherTrigger.getAttribute('aria-controls');
+            const otherContent = document.getElementById(otherId!);
+            if (otherContent) {
+              otherContent.style.maxHeight = '0';
+            }
+          }
+        });
+
+        // Toggle l'élément actuel
+        if (isExpanded) {
+          trigger.setAttribute('aria-expanded', 'false');
+          content.style.maxHeight = '0';
+        } else {
+          trigger.setAttribute('aria-expanded', 'true');
+          content.style.maxHeight = content.scrollHeight + 'px';
+        }
+      });
+    });
+  }
+
+  // Init au chargement
+  initServiceAccordion();
+
+  // Re-init après les view transitions
+  document.addEventListener('astro:after-swap', initServiceAccordion);
+</script>
