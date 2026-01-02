@@ -35,10 +35,11 @@ const services: ServiceItem[] = [
     title: "Création \"from<br>scratch\" & MVP",
     subtitle: "Construire sur des bases solides",
     servicesList: [
-      "Site vitrine",
-      "Application web",
-      "MVP & prototypage",
-      "E-commerce"
+		"Identité Visuelle",
+		"Site vitrine",
+		"Application web",
+		"MVP & prototypage",
+		"E-commerce"
     ],
     content: "Lancement de produit ou nouvelle identité ? Nous concevons des plateformes sur-mesure. Une architecture solide et pensée pour vos finances à long terme."
   }
@@ -53,7 +54,7 @@ const services: ServiceItem[] = [
 
     <div class="">
       {services.map((service, index) => (
-        <div class="service-item border-b border-lines">
+        <div class="service-item border-b border-lines transition-colors duration-300">
           <button
             type="button"
             class:list={[
@@ -64,17 +65,17 @@ const services: ServiceItem[] = [
             aria-controls={`service-content-${index}`}
           >
             <span class="font-display uppercase leading-none text-[1.625rem] sm:text-[2.5rem] md:text-[4rem] lg:text-[6rem] xl:text-[7.5rem] group-hover:opacity-70 transition-opacity" set:html={service.title} />
-            <Wrapped class="service-icon h-fit shrink-0 font-mono" aria-hidden="true">
+            <Wrapped class="service-icon h-fit shrink-0 font-mono transition-colors duration-300" aria-hidden="true">
               <span class="icon-plus">+</span>
               <span class="icon-minus hidden">-</span>
             </Wrapped>
           </button>
           <div
             id={`service-content-${index}`}
-            class="service-content overflow-hidden transition-all duration-300 ease-out"
-            style="max-height: 0;"
+            class="service-content grid grid-rows-[0fr] transition-[grid-template-rows] duration-500 ease-out"
           >
-            <div class="pb-10 sm:pb-16 lg:pb-24 flex flex-col gap-10 sm:gap-16 lg:gap-24 text-xl sm:text-[1.625rem] md:text-[2rem]">
+            <div class="overflow-hidden">
+              <div class="service-content-inner pb-10 sm:pb-16 lg:pb-24 flex flex-col gap-10 sm:gap-16 lg:gap-24 text-xl sm:text-[1.625rem] md:text-[2rem] translate-y-[-20px] opacity-0 transition-all duration-500 ease-out delay-0">
               <hr class="border-lines">
 			  <div class="flex flex-col gap-10 sm:gap-16 lg:flex-row lg:justify-between">
 				<div class="md:max-w-150 ">
@@ -90,13 +91,14 @@ const services: ServiceItem[] = [
 						<h3 class="section-label">
 						{service.subtitle}
 						</h3>
-						<p class="mt-4 sm:mt-9 text-2xl">
+						<p class="mt-4 sm:mt-9 text-2xl leading-normal">
 						{service.content}
 						</p>
 					</div>
-              		<a href="https://calendly.com/ni-premont/30min" class="font-mono text-[1rem] leading-none uppercase px-4 py-5 w-fit bg-bg-light">Réserver un call</a>
+              		<a href="https://calendly.com/ni-premont/30min" class="font-mono text-[1rem] leading-none uppercase px-4 py-5 w-fit bg-bg-light text-black!">Réserver un call</a>
 				</div>
 			  </div>
+              </div>
             </div>
           </div>
         </div>
@@ -112,6 +114,53 @@ const services: ServiceItem[] = [
   .service-trigger[aria-expanded="true"] .icon-minus {
     display: inline;
   }
+
+  /* Fond pleine largeur */
+  .service-item {
+    position: relative;
+  }
+
+  .service-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100vw;
+    height: 100%;
+    background-color: var(--color-black);
+    z-index: -1;
+    opacity: 0;
+    transition: opacity 0.3s ease-out;
+  }
+
+  /* État ouvert */
+  .service-item.is-open {
+    color: var(--color-bg-light);
+    transition: color 0.3s ease-out;
+  }
+
+  .service-item.is-open::before {
+    opacity: 1;
+  }
+
+  .service-item.is-open .border-lines {
+    border-color: var(--color-bg-light);
+  }
+
+  .service-item.is-open :global(.service-icon.wrapped) {
+    color: var(--color-bg-light) !important;
+  }
+
+  .service-item.is-open .service-content {
+    grid-template-rows: 1fr;
+  }
+
+  .service-item.is-open .service-content-inner {
+    transform: translateY(0);
+    opacity: 1;
+    transition-delay: 150ms;
+  }
 </style>
 
 <script>
@@ -121,19 +170,17 @@ const services: ServiceItem[] = [
     triggers.forEach((trigger) => {
       trigger.addEventListener('click', () => {
         const isExpanded = trigger.getAttribute('aria-expanded') === 'true';
-        const contentId = trigger.getAttribute('aria-controls');
-        const content = document.getElementById(contentId!);
+        const serviceItem = trigger.closest('.service-item');
 
-        if (!content) return;
+        if (!serviceItem) return;
 
         // Fermer tous les autres
         triggers.forEach((otherTrigger) => {
           if (otherTrigger !== trigger) {
             otherTrigger.setAttribute('aria-expanded', 'false');
-            const otherId = otherTrigger.getAttribute('aria-controls');
-            const otherContent = document.getElementById(otherId!);
-            if (otherContent) {
-              otherContent.style.maxHeight = '0';
+            const otherItem = otherTrigger.closest('.service-item');
+            if (otherItem) {
+              otherItem.classList.remove('is-open');
             }
           }
         });
@@ -141,10 +188,10 @@ const services: ServiceItem[] = [
         // Toggle l'élément actuel
         if (isExpanded) {
           trigger.setAttribute('aria-expanded', 'false');
-          content.style.maxHeight = '0';
+          serviceItem.classList.remove('is-open');
         } else {
           trigger.setAttribute('aria-expanded', 'true');
-          content.style.maxHeight = content.scrollHeight + 'px';
+          serviceItem.classList.add('is-open');
         }
       });
     });
