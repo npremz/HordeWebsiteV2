@@ -75,8 +75,8 @@ const services: ServiceItem[] = [
             class="service-content grid grid-rows-[0fr] transition-[grid-template-rows] duration-500 ease-out"
           >
             <div class="overflow-hidden">
-              <div class="service-content-inner pb-10 sm:pb-16 lg:pb-24 flex flex-col gap-10 sm:gap-16 lg:gap-24 text-xl sm:text-[1.625rem] md:text-[2rem] translate-y-[-20px] opacity-0 transition-all duration-500 ease-out delay-0">
-              <hr class="border-lines">
+              <div class="service-content-inner pb-10 sm:pb-16 lg:pb-24 flex flex-col gap-10 sm:gap-16 lg:gap-24 text-xl sm:text-[1.625rem] md:text-[2rem] opacity-0 transition-all duration-500 ease-out delay-0">
+              <hr class="border-lines-dark">
 			  <div class="flex flex-col gap-10 sm:gap-16 lg:flex-row lg:justify-between">
 				<div class="md:max-w-150 ">
 					<h3 class="section-label">Liste de services</h3>
@@ -118,6 +118,7 @@ const services: ServiceItem[] = [
   /* Fond pleine largeur */
   .service-item {
     position: relative;
+    margin-bottom: -1px;
   }
 
   .service-item::before {
@@ -134,20 +135,20 @@ const services: ServiceItem[] = [
     transition: opacity 0.3s ease-out;
   }
 
-  /* État ouvert */
+  /* État hover et ouvert */
+  .service-item:hover,
   .service-item.is-open {
     color: var(--color-bg-light);
     transition: color 0.3s ease-out;
+    z-index: 1;
   }
 
+  .service-item:hover::before,
   .service-item.is-open::before {
     opacity: 1;
   }
 
-  .service-item.is-open .border-lines {
-    border-color: var(--color-bg-light);
-  }
-
+  .service-item:hover :global(.service-icon.wrapped),
   .service-item.is-open :global(.service-icon.wrapped) {
     color: var(--color-bg-light) !important;
   }
