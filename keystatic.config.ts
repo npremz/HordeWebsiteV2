@@ -108,7 +108,12 @@ export default config({
       schema: {
         siteName: fields.text({
           label: 'Nom du site',
-          description: 'Utilisé dans le template de titre (Page | Nom du site)',
+          description: 'Suffixe utilisé dans le template de titre (Page | Nom du site)',
+          validation: { isRequired: true },
+        }),
+        homepageTitle: fields.text({
+          label: "Titre de la page d'accueil",
+          description: 'Titre SEO affiché sur la landing (ex: Agence Web Performance & UX à Bruxelles)',
           validation: { isRequired: true },
         }),
         siteUrl: fields.url({
@@ -151,6 +156,12 @@ export default config({
         twitterSite: fields.text({
           label: 'Compte Twitter du site',
           description: 'Compte Twitter (ex: @monsite) - optionnel',
+        }),
+        favicon: fields.image({
+          label: 'Favicon',
+          description: 'Icône du site (format SVG ou PNG recommandé, 32x32px minimum)',
+          directory: 'public',
+          publicPath: '/',
         }),
       },
     }),

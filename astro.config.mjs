@@ -10,7 +10,7 @@ import node from '@astrojs/node';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://waf.hordagency.com', // TODO: Remplacer par l'URL du site
+  site: 'https://hordeagence.com', // TODO: Remplacer par l'URL du site
   output: 'static',
   adapter: node({ mode: 'standalone' }),
   server: {

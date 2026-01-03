@@ -6,11 +6,20 @@ import MethodSection from '../components/sections/MethodSection.astro';
 import ExperienceSection from '../components/sections/ExperienceSection.astro';
 import ServiceSection from '../components/sections/ServiceSection.astro';
 import Footer from '../components/Footer.astro';
+import { createReader } from '@keystatic/core/reader';
+import keystaticConfig from '../../keystatic.config';
+
+const reader = createReader(process.cwd(), keystaticConfig);
+const siteSettings = await reader.singletons.siteSettings.read();
+
+const title = siteSettings?.homepageTitle || 'Horde';
+const description = siteSettings?.defaultDescription || 'Agence web spécialisée en performance et UX.';
 ---
 
 <Layout
-  title="Accueil"
-  description="Bienvenue sur notre site. Découvrez nos services et notre expertise."
+  title={title}
+  description={description}
+  siteNameAsPrefix={true}
 >
   <BackgroundCanvas triggerDistance={500} topOffset={1100} triggerDistanceBottom={500} bottomOffset={-550} />
 
@@ -25,12 +34,12 @@ import Footer from '../components/Footer.astro';
   <div id="page-content">
     <section class="pt-128">
       <MethodSection
-        title="Notre\nMéthode"
+        title="<span>Nos 03</span><span>méthodes</span>"
         stepsCount="03"
         steps={[
-          'Retirer la friction',
-          'Maximiser la conversion',
-          'Soigner l\'expérience',
+          'Eliminer les frictions pénalisantes',
+          'Maximiser les conversions',
+          'Soigner l’expérience utilisateur',
         ]}
       />
       <ExperienceSection
