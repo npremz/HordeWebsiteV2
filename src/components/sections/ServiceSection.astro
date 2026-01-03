@@ -135,22 +135,36 @@ const services: ServiceItem[] = [
     transition: opacity 0.3s ease-out;
   }
 
-  /* État hover et ouvert */
-  .service-item:hover,
+  /* État ouvert */
   .service-item.is-open {
     color: var(--color-bg-light);
     transition: color 0.3s ease-out;
     z-index: 1;
   }
 
-  .service-item:hover::before,
   .service-item.is-open::before {
     opacity: 1;
   }
 
-  .service-item:hover :global(.service-icon.wrapped),
   .service-item.is-open :global(.service-icon.wrapped) {
     color: var(--color-bg-light) !important;
+  }
+
+  /* État hover (desktop uniquement) */
+  @media (hover: hover) {
+    .service-item:hover {
+      color: var(--color-bg-light);
+      transition: color 0.3s ease-out;
+      z-index: 1;
+    }
+
+    .service-item:hover::before {
+      opacity: 1;
+    }
+
+    .service-item:hover :global(.service-icon.wrapped) {
+      color: var(--color-bg-light) !important;
+    }
   }
 
   .service-item.is-open .service-content {
