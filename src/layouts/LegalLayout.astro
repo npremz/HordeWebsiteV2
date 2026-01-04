@@ -78,11 +78,31 @@ const { title, description, updatedAt } = Astro.props;
 
   /* Basic styling for the content within the slot */
   article section h2 {
-    @apply heading-display-sm mb-8 mt-24 first:mt-0;
+    font-family: var(--font-display);
+    @apply uppercase leading-[1.2] text-[1.625rem] mb-8 mt-24 first:mt-0;
+  }
+
+  @media (min-width: 640px) {
+    article section h2 {
+      @apply text-4xl;
+    }
+  }
+
+  @media (min-width: 1512px) {
+    article section h2 {
+      @apply text-5xl;
+    }
+  }
+
+  @media (min-width: 1920px) {
+    article section h2 {
+      @apply text-[3.5rem];
+    }
   }
   
   article section h3 {
-    @apply font-display uppercase text-2xl mb-6 mt-12;
+    font-family: var(--font-display);
+    @apply uppercase text-2xl mb-6 mt-12;
   }
   
   article section p {
