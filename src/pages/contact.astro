@@ -4,65 +4,33 @@ import ContactForm from '../components/ui/ContactForm';
 import Wrapped from '../components/ui/Wrapped.astro';
 import BackgroundCanvas from '../components/ui/BackgroundCanvas.astro';
 import Footer from '../components/Footer.astro';
-import Line from '../components/ui/Line.astro';
 
 ---
 
-<Layout title="Contact" variant="dark" description="Contactez-nous pour votre projet digital">
+<Layout title="Contact" headerVariant='dark' description="Contactez-nous pour votre projet digital">
   	<BackgroundCanvas triggerDistanceBottom={500} bottomOffset={-550} color="#222121" />
-	
-    <div id="page-content" class="relative mt-32 sm:mt-48 lg:mt-64 xl:mt-80">
-		<!-- Decorative circles -->
-        <div class="absolute -top-64 right-0 -z-10 w-1/2 opacity-20 pointer-events-none text-lines-dark">
-            <svg viewBox="0 0 500 500" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="250" cy="250" r="249.5" stroke="currentColor" />
-                <circle cx="250" cy="250" r="125" stroke="currentColor" />
-                <line x1="250" y1="0" x2="250" y2="500" stroke="currentColor" />
-                <line x1="0" y1="250" x2="500" y2="250" stroke="currentColor" />
-            </svg>
-        </div>
-
-        <div class="flex flex-col lg:grid lg:grid-cols-12 gap-16 lg:gap-0">
-			<div class="lg:col-span-8 flex flex-col gap-8 sm:gap-12">
-				<span class="section-label">Toc, toc.</span>
-				<h1 class="heading-display text-5xl sm:text-7xl lg:text-8xl xl:text-9xl max-w-5xl">
-					On commence quand votre nouveau projet ?
-				</h1>
+	<div id="page-content" class="text-bg-light">
+		<div class="mt-40 sm:mt-50 lg:mt-80 xl:mt-96 flex flex-col md:flex-row-reverse md:items-end gap-10 sm:gap-16">
+			<div class="md:w-full flex flex-col md:flex-row gap-10 sm:gap-16 md:gap-24 lg:gap-32 xl:gap-40">
+				<div class="flex flex-col gap-4 sm:gap-8">
+					<div class="section-label">Toc, toc.</div>
+					<h1 class="leading-tight text-[1.5rem] sm:text-[2rem] lg:text-[2.5rem] xl:text-[3rem]">
+						On commence quand <br >votre nouveau projet ?
+					</h1>
+				</div>
+				<div class="flex flex-col gap-4 sm:gap-8">
+					<div class="section-label">Contacts Alternatifs</div>
+					<ul class="flex flex-col gap-2.5 text-[1.25rem] sm:text-[1.5rem] xl:text-[2rem]">
+						<li><a href="mailto:hello@hordeagence.com" class="link-hover border-b border-b-lines">hello@hordeagence.com</a></li>
+						<li><a href="https://calendly.com/ni-premont/30min" class="link-hover border-b border-b-lines">Réserver un appel</a></li>
+					</ul>
+				</div>
 			</div>
-			
-			<div class="lg:col-span-4 lg:pl-16 flex flex-col justify-end gap-12">
-				<div>
-                    <span class="section-label mb-6 block">Contacts Alternatifs</span>
-                    <ul class="flex flex-col gap-6 text-xl sm:text-2xl xl:text-[2.5rem] leading-tight">
-                        <li>
-                            <a href="mailto:hello@hordeagence.com" class="link-hover border-b border-lines-dark pb-1 block w-fit">
-                                hello@hordeagence.com
-                            </a>
-                        </li>
-                        <li>
-                            <a href="https://calendly.com/ni-premont/30min" class="link-hover border-b border-lines-dark pb-1 block w-fit">
-                                Réserver un appel
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-                
-                <div class="flex flex-col gap-4">
-                    <span class="section-label">Localisation</span>
-                    <p class="font-mono text-xl uppercase">Bruxelles, Belgique</p>
-                </div>
-
-                <div class="mt-4">
-                    <Wrapped variant='dark' class="font-mono text-[1.25rem]">
-                        <span class="uppercase">Formulaire de contact</span>
-                    </Wrapped>
-                </div>
+			<div class="md:w-36 md:shrink-0">
+				<Wrapped variant='dark' class="font-mono text-bg-light text-[1rem] relative"><button>↓</button></Wrapped>
 			</div>
 		</div>
-
-		<div class="mt-24 sm:mt-32 lg:mt-48">
-            <Line lineClass="bg-lines-dark" dotClass="bg-bg-light" />
-        </div>
+		<hr class="mt-8 sm:mt-16 md:mt-24 border-lines-dark" />
 
 		<ContactForm client:load />
 	</div>
