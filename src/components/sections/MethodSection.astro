@@ -61,7 +61,7 @@ const svgs = [
 		<ul class="w-fit flex flex-row gap-5 -ml-px">
 			{steps.map((step, index) => (
 				<li class:list={[ 'h-80 w-64 sm:h-154 sm:w-112 md:h-160 md:w-136 lg:w-260 border border-lines p-5 flex flex-col justify-between lg:flex-row' ]}>
-					<div set:html={svgs[index]}>
+					<div class="w-full lg:h-full" set:html={svgs[index]}>
 					</div>
 					<div class="flex justify-between items-end lg:flex-col">
 						<div class="leading-[1.1] sm:text-[1.625rem] sm:max-w-45 lg:max-w-none lg:text-right">

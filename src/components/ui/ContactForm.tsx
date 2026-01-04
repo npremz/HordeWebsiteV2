@@ -106,20 +106,20 @@ export default function ContactForm() {
   };
 
   return (
-    <form className="mt-10 sm:mt-16 md:mt-24 lg:mt-30 flex flex-col gap-8" onSubmit={handleSubmit} noValidate>
-      <fieldset className='flex flex-col gap-5 '>
-        <div className='relative flex flex-col md:flex-row gap-5 md:gap-16 md:items-center w-full'>
-          <legend className='section-label block md:w-36 md:shrink-0'>
+    <form className="mt-16 sm:mt-24 md:mt-32 lg:mt-40 flex flex-col gap-12 sm:gap-20" onSubmit={handleSubmit} noValidate>
+      <fieldset className='flex flex-col gap-8'>
+        <div className='relative flex flex-col md:flex-row gap-8 md:gap-16 md:items-start w-full'>
+          <legend className='section-label block md:w-36 md:shrink-0 md:pt-6'>
             J'ai besoin de<span aria-hidden="true">*</span>
           </legend>
-          <div className="w-full flex flex-wrap gap-5 mt-5 border-b pb-5 md:pb-10 border-lines-dark">
+          <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 border-b pb-12 sm:pb-20 border-lines-dark">
             {besoinOptions.map((option) => (
               <label 
                 key={option.value} 
-                className={`uppercase font-mono text-[1rem] leading-[0.6] py-5 px-4 border transition-all duration-300 ease-in-out cursor-pointer ${
+                className={`uppercase font-mono text-sm leading-none p-6 border transition-all duration-500 ease-in-out cursor-pointer flex items-center justify-between group ${
                   formData.besoin === option.value 
                     ? 'bg-bg-light text-black border-bg-light' 
-                    : 'border-lines-dark hover:border-bg/50'
+                    : 'border-lines-dark hover:border-lines text-bg-light/60 hover:text-bg-light'
                 }`}
               >
                 <input
@@ -128,34 +128,37 @@ export default function ContactForm() {
                   value={option.value}
                   checked={formData.besoin === option.value}
                   onChange={(e) => handleChange('besoin', e.target.value)}
-                  className="sr-only "
+                  className="sr-only"
                   aria-describedby={errors.besoin ? 'besoin-error' : undefined}
                 />
-                {option.label}
+                <span>{option.label}</span>
+                <span className={`text-lg transition-transform duration-500 ${formData.besoin === option.value ? 'rotate-45' : 'group-hover:translate-x-1'}`}>
+                  {formData.besoin === option.value ? '×' : '→'}
+                </span>
               </label>
             ))}
           </div>
           {errors.besoin && (
-            <span id="besoin-error" role="alert" className='section-label text-err absolute right-0 top-6 lg:top-8 xl:top-12'>
+            <span id="besoin-error" role="alert" className='section-label text-err absolute right-0 top-0'>
               {errors.besoin}
             </span>
           )}
         </div>
       </fieldset>
 
-      <div className='flex flex-col md:flex-row md:items-center md:gap-16 gap-2.5 sm:gap-5 '>
+      <div className='flex flex-col md:flex-row md:items-center md:gap-16 gap-4'>
         <label htmlFor="objectif" className='section-label block md:w-36 md:shrink-0'>
           Objectif<span aria-hidden="true">*</span>
         </label>
-        <div className="relative flex-1">
+        <div className="relative flex-1 group">
           <input
             type="text"
             id="objectif"
             name="objectif"
-            className={`py-5 xl:py-8 w-full text-2xl sm:text-[2rem] lg:text-[2.5rem] xl:text-[3.125rem] border-b bg-transparent focus:outline-none focus-visible:outline-none transition-colors ${
+            className={`py-6 xl:py-10 w-full text-2xl sm:text-4xl lg:text-5xl xl:text-6xl border-b bg-transparent focus:outline-none focus-visible:outline-none transition-all duration-500 ${
               errors.objectif
-                ? 'border-b-err placeholder:text-err'
-                : 'border-lines-dark focus:border-b-lines'
+                ? 'border-b-err placeholder:text-err text-err'
+                : 'border-lines-dark focus:border-b-bg-light text-bg-light placeholder:text-lines-dark focus:placeholder:text-lines'
             }`}
             placeholder='Ce que vous avez en tête...'
             value={formData.objectif}
@@ -165,27 +168,27 @@ export default function ContactForm() {
             aria-describedby={errors.objectif ? 'objectif-error' : undefined}
           />
           {errors.objectif && (
-            <span id="objectif-error" role="alert" className="section-label text-err block mt-1 absolute right-0 top-6 lg:top-8 xl:top-12">
+            <span id="objectif-error" role="alert" className="section-label text-err block mt-2 absolute right-0 bottom-full mb-2">
               {errors.objectif}
             </span>
           )}
         </div>
       </div>
 
-      <div className='flex flex-col md:flex-row md:items-center md:gap-16 gap-2.5 sm:gap-5 '>
-        <label htmlFor="societe" className='section-label block md:w-36 md:shrink-0'>Societe</label>
+      <div className='flex flex-col md:flex-row md:items-center md:gap-16 gap-4'>
+        <label htmlFor="societe" className='section-label block md:w-36 md:shrink-0'>Société</label>
         <input
           type="text"
           id="societe"
           name="societe"
-          className='py-5 xl:py-8 flex-1 text-2xl sm:text-[2rem] lg:text-[2.5rem] xl:text-[3.125rem] border-lines-dark border-b bg-transparent focus:outline-none focus-visible:outline-none focus:border-b-lines transition-colors'
+          className='py-6 xl:py-10 flex-1 text-2xl sm:text-4xl lg:text-5xl xl:text-6xl border-lines-dark border-b bg-transparent text-bg-light placeholder:text-lines-dark focus:outline-none focus:border-b-bg-light transition-all duration-500'
           placeholder='Nom de société'
           value={formData.societe}
           onChange={(e) => handleChange('societe', e.target.value)}
         />
       </div>
 
-      <div className='flex flex-col md:flex-row md:items-center md:gap-16 gap-2.5 sm:gap-5 '>
+      <div className='flex flex-col md:flex-row md:items-center md:gap-16 gap-4'>
         <label htmlFor="nom" className='section-label block md:w-36 md:shrink-0'>
           Nom<span aria-hidden="true">*</span>
         </label>
@@ -194,10 +197,10 @@ export default function ContactForm() {
             type="text"
             id="nom"
             name="nom"
-            className={`py-5 xl:py-8 w-full text-2xl sm:text-[2rem] lg:text-[2.5rem] xl:text-[3.125rem] border-b bg-transparent focus:outline-none focus-visible:outline-none transition-colors ${
+            className={`py-6 xl:py-10 w-full text-2xl sm:text-4xl lg:text-5xl xl:text-6xl border-b bg-transparent transition-all duration-500 ${
               errors.nom
-                ? 'border-b-err placeholder:text-err'
-                : 'border-lines-dark focus:border-b-lines'
+                ? 'border-b-err placeholder:text-err text-err'
+                : 'border-lines-dark focus:border-b-bg-light text-bg-light placeholder:text-lines-dark'
             }`}
             placeholder="Un autographe, s'il vous plaît"
             value={formData.nom}
@@ -207,14 +210,14 @@ export default function ContactForm() {
             aria-describedby={errors.nom ? 'nom-error' : undefined}
           />
           {errors.nom && (
-            <span id="nom-error" role="alert" className="section-label text-err block mt-1 absolute right-0 top-6 lg:top-8 xl:top-12">
+            <span id="nom-error" role="alert" className="section-label text-err block mt-2 absolute right-0 bottom-full mb-2">
               {errors.nom}
             </span>
           )}
         </div>
       </div>
 
-      <div className='flex flex-col md:flex-row md:items-center md:gap-16 gap-2.5 sm:gap-5 '>
+      <div className='flex flex-col md:flex-row md:items-center md:gap-16 gap-4'>
         <label htmlFor="email" className='section-label block md:w-36 md:shrink-0'>
           Email<span aria-hidden="true">*</span>
         </label>
@@ -223,10 +226,10 @@ export default function ContactForm() {
             type="email"
             id="email"
             name="email"
-            className={`py-5 xl:py-8 w-full text-2xl sm:text-[2rem] lg:text-[2.5rem] xl:text-[3.125rem] border-b bg-transparent focus:outline-none focus-visible:outline-none transition-colors ${
+            className={`py-6 xl:py-10 w-full text-2xl sm:text-4xl lg:text-5xl xl:text-6xl border-b bg-transparent transition-all duration-500 ${
               errors.email
-                ? 'border-b-err placeholder:text-err'
-                : 'border-lines-dark focus:border-b-lines'
+                ? 'border-b-err placeholder:text-err text-err'
+                : 'border-lines-dark focus:border-b-bg-light text-bg-light placeholder:text-lines-dark'
             }`}
             placeholder="@"
             value={formData.email}
@@ -236,19 +239,41 @@ export default function ContactForm() {
             aria-describedby={errors.email ? 'email-error' : undefined}
           />
           {errors.email && (
-            <span id="email-error" role="alert" className="section-label text-err block mt-1 absolute right-0 top-6 lg:top-8 xl:top-12">
+            <span id="email-error" role="alert" className="section-label text-err block mt-2 absolute right-0 bottom-full mb-2">
               {errors.email}
             </span>
           )}
         </div>
       </div>
 
-      <div className='flex flex-col md:flex-row md:gap-16'>
-        <div className="block md:w-36 md:shrink-0"></div>
-        <button type="submit" disabled={isSubmitting} className='leading-[0.75] mt-5 sm:mt-10 xl:mt-16 uppercase font-mono py-5 xl:py-6 bg-bg-light text-black flex-1'>
-          {isSubmitting ? 'Envoi en cours...' : 'Transmettre'}
+      <div className='flex flex-col md:flex-row md:gap-16 mt-8 sm:mt-12'>
+        <div className="hidden md:block md:w-36 md:shrink-0"></div>
+        <button 
+          type="submit" 
+          disabled={isSubmitting} 
+          className='group relative flex-1 bg-bg-light text-black uppercase font-mono py-8 px-12 text-xl overflow-hidden transition-all duration-500 hover:bg-white active:scale-[0.98]'
+        >
+          <span className="relative z-10">{isSubmitting ? 'Envoi en cours...' : 'Transmettre le projet'}</span>
+          <div className="absolute inset-0 bg-white translate-y-full group-hover:translate-y-0 transition-transform duration-500"></div>
         </button>
       </div>
+
+      {submitStatus === 'success' && (
+        <div className="md:ml-52 p-6 bg-white/10 border border-bg-light/20 backdrop-blur-sm">
+          <p role="status" className="font-mono uppercase text-bg-light">
+            Message envoyé avec succès ! On revient vers vous très vite.
+          </p>
+        </div>
+      )}
+
+      {submitStatus === 'error' && (
+        <div className="md:ml-52 p-6 bg-err/10 border border-err/20 backdrop-blur-sm">
+          <p role="alert" className="font-mono uppercase text-err">
+            Une erreur est survenue. N'hésitez pas à nous contacter directement par email.
+          </p>
+        </div>
+      )}
+    </form>
 
       {submitStatus === 'success' && (
         <p role="status">Message envoye avec succes !</p>

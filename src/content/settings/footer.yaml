@@ -18,3 +18,5 @@ legalLinks:
     url: /cookies
   - label: Confidentialité
     url: /confidentialite
+  - label: Mentions Légales
+    url: /mentions-legales

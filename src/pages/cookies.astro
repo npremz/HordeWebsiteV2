@@ -1,85 +1,61 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import Footer from '../components/Footer.astro';
+import LegalLayout from '../layouts/LegalLayout.astro';
 ---
 
-<Layout
+<LegalLayout
   title="Politique des cookies"
   description="Politique d'utilisation des cookies sur le site Horde Agence. Découvrez comment nous utilisons les cookies."
+  updatedAt="Janvier 2025"
 >
-  <article class="mt-32 sm:mt-40 lg:mt-48 max-w-3xl">
-    <header class="mb-12 sm:mb-16">
-      <span class="section-label mb-4 block">Légal</span>
-      <h1 class="font-display uppercase text-4xl sm:text-5xl lg:text-6xl leading-tight">
-        Politique des cookies
-      </h1>
-      <p class="mt-6 text-lg text-lines-dark">Dernière mise à jour : Janvier 2025</p>
-    </header>
+  <section>
+    <h2>Qu'est-ce qu'un cookie ?</h2>
+    <p>
+      Un cookie est un petit fichier texte stocké sur votre appareil (ordinateur, tablette, smartphone)
+      lorsque vous visitez un site web. Les cookies permettent au site de mémoriser vos actions et
+      préférences pendant une période donnée.
+    </p>
+  </section>
 
-    <div class="prose prose-lg space-y-8">
-      <section>
-        <h2 class="font-display uppercase text-2xl sm:text-3xl mb-4">Qu'est-ce qu'un cookie ?</h2>
-        <p class="leading-relaxed">
-          Un cookie est un petit fichier texte stocké sur votre appareil (ordinateur, tablette, smartphone)
-          lorsque vous visitez un site web. Les cookies permettent au site de mémoriser vos actions et
-          préférences pendant une période donnée.
-        </p>
-      </section>
+  <section>
+    <h2>Cookies que nous utilisons</h2>
 
-      <section>
-        <h2 class="font-display uppercase text-2xl sm:text-3xl mb-4">Cookies que nous utilisons</h2>
+    <h3>Cookies essentiels</h3>
+    <p>
+      Ces cookies sont nécessaires au fonctionnement du site. Ils vous permettent de naviguer
+      et d'utiliser les fonctionnalités de base. Sans ces cookies, le site ne peut pas fonctionner correctement.
+    </p>
 
-        <h3 class="font-display uppercase text-xl mb-3 mt-6">Cookies essentiels</h3>
-        <p class="leading-relaxed">
-          Ces cookies sont nécessaires au fonctionnement du site. Ils vous permettent de naviguer
-          et d'utiliser les fonctionnalités de base. Sans ces cookies, le site ne peut pas fonctionner correctement.
-        </p>
+    <h3>Cookies analytiques</h3>
+    <p>
+      Nous utilisons des cookies analytiques pour comprendre comment les visiteurs interagissent avec
+      notre site. Ces informations nous aident à améliorer l'expérience utilisateur. Les données
+      collectées sont anonymes.
+    </p>
+  </section>
 
-        <h3 class="font-display uppercase text-xl mb-3 mt-6">Cookies analytiques</h3>
-        <p class="leading-relaxed">
-          Nous utilisons des cookies analytiques pour comprendre comment les visiteurs interagissent avec
-          notre site. Ces informations nous aident à améliorer l'expérience utilisateur. Les données
-          collectées sont anonymes.
-        </p>
-      </section>
+  <section>
+    <h2>Gestion des cookies</h2>
+    <p>
+      Vous pouvez contrôler et/ou supprimer les cookies comme vous le souhaitez. Vous pouvez
+      supprimer tous les cookies déjà présents sur votre appareil et paramétrer la plupart des
+      navigateurs pour qu'ils bloquent les cookies.
+    </p>
+    <p>
+      Pour gérer vos préférences de cookies dans votre navigateur :
+    </p>
+    <ul>
+      <li>Chrome : Paramètres → Confidentialité et sécurité → Cookies</li>
+      <li>Firefox : Options → Vie privée et sécurité → Cookies</li>
+      <li>Safari : Préférences → Confidentialité → Cookies</li>
+      <li>Edge : Paramètres → Cookies et autorisations de site</li>
+    </ul>
+  </section>
 
-      <section>
-        <h2 class="font-display uppercase text-2xl sm:text-3xl mb-4">Gestion des cookies</h2>
-        <p class="leading-relaxed">
-          Vous pouvez contrôler et/ou supprimer les cookies comme vous le souhaitez. Vous pouvez
-          supprimer tous les cookies déjà présents sur votre appareil et paramétrer la plupart des
-          navigateurs pour qu'ils bloquent les cookies.
-        </p>
-        <p class="leading-relaxed mt-4">
-          Pour gérer vos préférences de cookies dans votre navigateur :
-        </p>
-        <ul class="list-disc pl-6 mt-4 space-y-2">
-          <li>Chrome : Paramètres → Confidentialité et sécurité → Cookies</li>
-          <li>Firefox : Options → Vie privée et sécurité → Cookies</li>
-          <li>Safari : Préférences → Confidentialité → Cookies</li>
-          <li>Edge : Paramètres → Cookies et autorisations de site</li>
-        </ul>
-      </section>
-
-      <section>
-        <h2 class="font-display uppercase text-2xl sm:text-3xl mb-4">Contact</h2>
-        <p class="leading-relaxed">
-          Pour toute question concernant notre politique de cookies, vous pouvez nous contacter à
-          <a href="mailto:hello@hordeagence.com" class="border-b border-lines hover:border-black transition-colors">
-            hello@hordeagence.com
-          </a>.
-        </p>
-      </section>
-    </div>
-
-    <div class="mt-16 pt-8 border-t border-lines">
-      <a
-        href="/"
-        class="font-mono uppercase text-sm link-hover"
-      >
-        ← Retour à l'accueil
-      </a>
-    </div>
-  </article>
-  <Footer />
-</Layout>
+  <section>
+    <h2>Contact</h2>
+    <p>
+      Pour toute question concernant notre politique de cookies, vous pouvez nous contacter à
+      <a href="mailto:hello@hordeagence.com">hello@hordeagence.com</a>.
+    </p>
+  </section>
+</LegalLayout>
