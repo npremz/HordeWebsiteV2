@@ -11,7 +11,7 @@ const {
 	steps = [
 		'Eliminer les frictions pénalisantes',
 		'Maximiser les conversions',
-		'Soigner l’expérience utilisateur',
+		'Soigner l’exp&eacute;rience utilisateur',
 	],
 } = Astro.props;
 
@@ -72,7 +72,7 @@ const svgs = [
 					</div>
 				</li>
 			))}
-            <li class="carousel-spacer shrink-0 w-24 md:w-48 lg:w-96"></li>
+            <li class="carousel-spacer shrink-0 w-[50vw]"></li>
 		</ul>
 	</div>
 </div>
@@ -103,33 +103,35 @@ const svgs = [
 		let isAutoPlaying = true;
 		const AUTO_PLAY_DELAY = 4000;
 
-		function getNextScrollPosition() {
-			const scrollLeft = track.scrollLeft;
-			const itemWidths = Array.from(items).map(item => item.clientWidth + 20);
-			let accumulatedWidth = 0;
-			
-			for (let i = 0; i < items.length; i++) {
-                // If we are currently at this item (with a small buffer)
-				if (scrollLeft < accumulatedWidth + itemWidths[i] - 50) {
-					// Return the start of the NEXT item
-					return accumulatedWidth + itemWidths[i];
-				}
-				accumulatedWidth += itemWidths[i];
-			}
-			return 0; // Back to start
-		}
+		function getAccumulatedWidths() {
+            const widths = [0];
+            let sum = 0;
+            for (let i = 0; i < items.length - 1; i++) {
+                sum += items[i].clientWidth + 20; // 20 is the gap
+                widths.push(sum);
+            }
+            return widths;
+        }
 
 		function autoPlay() {
 			if (!isAutoPlaying) return;
 
-			const maxScroll = track.scrollWidth - track.clientWidth;
-			const nextPos = getNextScrollPosition();
+			const scrollLeft = Math.round(track.scrollLeft);
+            const widths = getAccumulatedWidths();
+            
+            // Find current item index (closest)
+            let currentIdx = 0;
+            let minDiff = Infinity;
+            widths.forEach((pos, idx) => {
+                const diff = Math.abs(scrollLeft - pos);
+                if (diff < minDiff) {
+                    minDiff = diff;
+                    currentIdx = idx;
+                }
+            });
 
-			if (nextPos >= maxScroll + 10 || nextPos === 0) {
-				track.scrollTo({ left: 0, behavior: 'smooth' });
-			} else {
-				track.scrollTo({ left: nextPos, behavior: 'smooth' });
-			}
+            const nextIdx = (currentIdx + 1) % items.length;
+            track.scrollTo({ left: widths[nextIdx], behavior: 'smooth' });
 		}
 
 		function startAutoPlay() {
@@ -171,8 +173,10 @@ const svgs = [
 		});
 
 		window.addEventListener('mouseup', () => {
-			isDown = false;
-            track.style.scrollBehavior = 'smooth';
+            if (isDown) {
+                isDown = false;
+                track.style.scrollBehavior = 'smooth';
+            }
 		});
 
 		track.addEventListener('mousemove', (e) => {
