@@ -170,3 +170,41 @@ const resolvedOgImageAlt = ogImageAlt || siteSettings.defaultOgImageAlt;
 <!-- Theme Color (light & dark mode) -->
 <meta name="theme-color" content={THEME_COLOR_LIGHT} media="(prefers-color-scheme: light)" />
 <meta name="theme-color" content={THEME_COLOR_DARK} media="(prefers-color-scheme: dark)" />
+
+<!-- Structured Data - Organization -->
+<script type="application/ld+json" set:html={JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": siteName,
+  "url": Astro.site?.href,
+  "logo": new URL("/images/logo.svg", Astro.site).href,
+  "contactPoint": {
+    "@type": "ContactPoint",
+    "contactType": "customer service",
+    "email": "hello@hordeagence.com",
+    "availableLanguage": ["French"]
+  }
+})} />
+
+<!-- Structured Data - WebSite -->
+<script type="application/ld+json" set:html={JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": siteName,
+  "url": Astro.site?.href
+})} />
+
+<!-- Structured Data - WebPage/Article -->
+<script type="application/ld+json" set:html={JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": ogType === "article" ? "Article" : "WebPage",
+  "name": title,
+  "description": description,
+  "url": canonicalURL,
+  "image": ogImageURL,
+  ...(ogType === "article" && publishedTime ? {
+    "datePublished": publishedTime,
+    "dateModified": modifiedTime || publishedTime,
+    "author": author ? { "@type": "Person", "name": author } : undefined
+  } : {})
+})} />

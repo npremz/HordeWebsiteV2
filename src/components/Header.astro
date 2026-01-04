@@ -29,7 +29,15 @@ const textColorClass = isDark ? 'text-bg-light' : 'text-black';
   <div class="flex-between">
     <a href="/" class="block">
       {currentLogo ? (
-        <img src={currentLogo} alt={logoAlt} class="logo-size" />
+        <img
+          src={currentLogo}
+          alt={logoAlt}
+          class="logo-size"
+          width="112"
+          height="40"
+          decoding="async"
+          fetchpriority="high"
+        />
       ) : (
         <span class={`${textColorClass} font-display text-xl`}>{logoAlt}</span>
       )}

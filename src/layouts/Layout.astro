@@ -146,17 +146,17 @@ try {
     top: 0;
   }
 
-  /* Respect reduced motion (exclude menu animations) */
-  /* @media (prefers-reduced-motion: reduce) {
-    *:not(#mobile-menu):not(.menu-item),
-    *:not(#mobile-menu):not(.menu-item)::before,
-    *:not(#mobile-menu):not(.menu-item)::after {
+  /* Respect reduced motion preference (WCAG 2.1 AA) */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
       animation-duration: 0.01ms !important;
       animation-iteration-count: 1 !important;
       transition-duration: 0.01ms !important;
       scroll-behavior: auto !important;
     }
-  } */
+  }
 
   /* Lenis */
   html.lenis, html.lenis body {
