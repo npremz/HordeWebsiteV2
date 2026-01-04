@@ -15,6 +15,6 @@ socialLinks: []
 copyright: ©2026 Horde Agence
 legalLinks:
   - label: Politique des cookies
-    url: '#'
-  - label: Confidentialite
-    url: '#'
+    url: /cookies
+  - label: Confidentialité
+    url: /confidentialite
