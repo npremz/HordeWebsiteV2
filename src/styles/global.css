@@ -103,6 +103,22 @@
     background-color: var(--color-black);
   }
 
+  /* Focus styles for accessibility (WCAG 2.1 AA) */
+  :focus {
+    outline: none;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-black);
+    outline-offset: 2px;
+  }
+
+  /* Dark mode focus style */
+  .bg-black :focus-visible,
+  [data-theme="dark"] :focus-visible {
+    outline-color: var(--color-bg-light);
+  }
+
   /* View Transitions */
   @keyframes fade-in {
     from { opacity: 0; }
