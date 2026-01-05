@@ -109,8 +109,11 @@ export default function ContactForm() {
     <form className="mt-10 sm:mt-16 md:mt-24 lg:mt-30 flex flex-col gap-8" onSubmit={handleSubmit} noValidate>
       <fieldset className='flex flex-col gap-5 '>
         <div className='relative flex flex-col md:flex-row gap-5 md:gap-16 md:items-center w-full'>
-          <legend className='section-label block md:w-36 md:shrink-0'>
+          <legend className='section-label block md:w-36 md:shrink-0 relative'>
             J'ai besoin de<span aria-hidden="true">*</span>
+            {errors.besoin && (
+              <span className="sm:hidden text-err absolute right-0 top-0">{errors.besoin}</span>
+            )}
           </legend>
           <div className="w-full flex flex-wrap gap-5 mt-5 border-b pb-5 md:pb-10 border-lines-dark">
             {besoinOptions.map((option) => (
@@ -136,7 +139,7 @@ export default function ContactForm() {
             ))}
           </div>
           {errors.besoin && (
-            <span id="besoin-error" role="alert" className='section-label text-err absolute right-0 top-6 lg:top-8 xl:top-12'>
+            <span id="besoin-error" role="alert" className='section-label text-err absolute right-0 top-6 lg:top-8 xl:top-12 hidden sm:block'>
               {errors.besoin}
             </span>
           )}
@@ -144,8 +147,11 @@ export default function ContactForm() {
       </fieldset>
 
       <div className='flex flex-col md:flex-row md:items-center md:gap-16 gap-2.5 sm:gap-5 '>
-        <label htmlFor="objectif" className='section-label block md:w-36 md:shrink-0'>
+        <label htmlFor="objectif" className='section-label block md:w-36 md:shrink-0 relative'>
           Objectif<span aria-hidden="true">*</span>
+          {errors.objectif && (
+            <span className="sm:hidden text-err absolute right-0 top-0">{errors.objectif}</span>
+          )}
         </label>
         <div className="relative flex-1">
           <input
@@ -165,7 +171,7 @@ export default function ContactForm() {
             aria-describedby={errors.objectif ? 'objectif-error' : undefined}
           />
           {errors.objectif && (
-            <span id="objectif-error" role="alert" className="section-label text-err block mt-1 absolute right-0 top-6 lg:top-8 xl:top-12">
+            <span id="objectif-error" role="alert" className="section-label text-err block mt-1 absolute right-0 top-6 lg:top-8 xl:top-12 hidden sm:block">
               {errors.objectif}
             </span>
           )}
@@ -186,8 +192,11 @@ export default function ContactForm() {
       </div>
 
       <div className='flex flex-col md:flex-row md:items-center md:gap-16 gap-2.5 sm:gap-5 '>
-        <label htmlFor="nom" className='section-label block md:w-36 md:shrink-0'>
+        <label htmlFor="nom" className='section-label block md:w-36 md:shrink-0 relative'>
           Nom<span aria-hidden="true">*</span>
+          {errors.nom && (
+            <span className="sm:hidden text-err absolute right-0 top-0">{errors.nom}</span>
+          )}
         </label>
         <div className="relative flex-1">
           <input
@@ -207,7 +216,7 @@ export default function ContactForm() {
             aria-describedby={errors.nom ? 'nom-error' : undefined}
           />
           {errors.nom && (
-            <span id="nom-error" role="alert" className="section-label text-err block mt-1 absolute right-0 top-6 lg:top-8 xl:top-12">
+            <span id="nom-error" role="alert" className="section-label text-err block mt-1 absolute right-0 top-6 lg:top-8 xl:top-12 hidden sm:block">
               {errors.nom}
             </span>
           )}
@@ -215,8 +224,11 @@ export default function ContactForm() {
       </div>
 
       <div className='flex flex-col md:flex-row md:items-center md:gap-16 gap-2.5 sm:gap-5 '>
-        <label htmlFor="email" className='section-label block md:w-36 md:shrink-0'>
+        <label htmlFor="email" className='section-label block md:w-36 md:shrink-0 relative'>
           Email<span aria-hidden="true">*</span>
+          {errors.email && (
+            <span className="sm:hidden text-err absolute right-0 top-0">{errors.email}</span>
+          )}
         </label>
         <div className="relative flex-1">
           <input
@@ -236,7 +248,7 @@ export default function ContactForm() {
             aria-describedby={errors.email ? 'email-error' : undefined}
           />
           {errors.email && (
-            <span id="email-error" role="alert" className="section-label text-err block mt-1 absolute right-0 top-6 lg:top-8 xl:top-12">
+            <span id="email-error" role="alert" className="section-label text-err block mt-1 absolute right-0 top-6 lg:top-8 xl:top-12 hidden sm:block">
               {errors.email}
             </span>
           )}
