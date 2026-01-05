@@ -187,9 +187,9 @@ const { logo, logoAlt = 'Logo', items: menuItems = [] } = navigation;
 			</div>
 
 			<!-- Logo -->
-			<div class="flex-col-container gap-5 md:gap-8 lg:grid lg:grid-cols-12 lg:gap-0 lg:col-span-12 lg:mt-24 xl:mt-48">
+			<div class="flex-col-container gap-5 md:gap-8 lg:grid lg:grid-cols-12 lg:items-end lg:gap-0 lg:col-span-12 lg:mt-24 xl:mt-48">
 				{logo ? (
-					<a href="/" class="lg:col-span-7">
+					<a href="/" class="lg:col-span-7 lg:self-end">
 						<img
 							src={logo}
 							alt={logoAlt}
@@ -201,18 +201,18 @@ const { logo, logoAlt = 'Logo', items: menuItems = [] } = navigation;
 						/>
 					</a>
 				) : (
-					<a href="/" class="text-xl font-display">{logoAlt}</a>
+					<a href="/" class="text-xl font-display lg:self-end">{logoAlt}</a>
 				)}
 				<!-- Copyright et liens légaux -->
-				<div class="flex-col-container gap-2 section-label sm:flex-row sm:justify-between sm:items-end lg:grid lg:grid-cols-5 lg:gap-0 lg:col-span-5">
-					<div class="flex-col-container gap-2 lg:col-span-3">
+				<div class="flex-col-container gap-2 section-label sm:flex-row sm:justify-between sm:items-end lg:grid lg:grid-cols-5 lg:gap-0 lg:col-span-5 lg:self-end">
+					<div class="flex-col-container gap-2 lg:col-span-3 lg:justify-end">
 					{legalLinks.map((link) => (
 						<a href={link.url} class="link-hover">
 							{link.label}
 						</a>
 					))}
 					</div>
-					{copyright && <span class="sm:max-w-[250px] md:max-w-[200px] sm:text-right lg:col-span-2 lg:justify-self-end">{copyright}</span>}
+					{copyright && <span class="sm:max-w-[250px] md:max-w-[200px] sm:text-right lg:col-span-2 lg:justify-self-end lg:self-end">{copyright}</span>}
 				</div>
 			</div>
 		</div>
