@@ -54,11 +54,17 @@ const { logo, logoAlt = 'Logo', items: menuItems = [] } = navigation;
 			left: 50%;
 			transform: translate(-50%, -50%) scaleX(0);
 			transform-origin: left center;
-			width: calc(100vw - 60px);
+			width: calc(100vw - 32px);
 			height: calc(100% + 60px);
 			background-color: white;
 			z-index: -1;
 			transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+		}
+
+		@media (min-width: 640px) {
+			.footer-logo-wrapper::before {
+				width: calc(100vw - 60px);
+			}
 		}
 
 		.footer-logo-wrapper:hover::before {
@@ -142,7 +148,7 @@ const { logo, logoAlt = 'Logo', items: menuItems = [] } = navigation;
 			{description && (
 				<div class="flex-col-container column-gap lg:col-span-7">
 					<h3 class="section-label">en résumé (on sait jamais)</h3>
-					<p class="text-2xl leading-tight sm:text-[32px] md:text-4xl lg:text-[2.5rem] xl:text-[3.25rem] sm:max-w-100 lg:max-w-124 xl:max-w-148">{description}</p>
+					<p class="text-2xl leading-tight sm:text-[32px] md:text-4xl lg:text-[2.5rem] xl:text-[3.25rem] max-w-[287px] sm:max-w-100 lg:max-w-124 xl:max-w-148">{description}</p>
 				</div>
 			)}
 
