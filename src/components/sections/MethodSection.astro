@@ -11,7 +11,7 @@ const {
 	steps = [
 		'Eliminer les frictions pénalisantes',
 		'Maximiser les conversions',
-		'Soigner l’exp&eacute;rience utilisateur',
+		"Soigner l'expérience utilisateur",
 	],
 } = Astro.props;
 
@@ -54,16 +54,16 @@ const svgs = [
 		<h2 class="heading-display-sm text-[1.625rem] sm:text-[2.5rem] md:text-[4rem] lg:text-[6rem] xl:text-[7.5rem] flex flex-col *:block *:w-fit [&>*:first-child]:self-start [&>*:last-child]:self-end" set:html={title.replace(/\n/g, '<br>')}/>
 		<span class="font-mono text-[14px] leading-none absolute bottom-0 left-0">({stepsCount})</span>
 	</div>
-	<div class="w-full border border-lines overflow-hidden py-12 sm:py-16 lg:pt-30">
-		<ul class="carousel-track flex flex-row gap-5 -ml-px overflow-x-auto scrollbar-hide snap-x snap-mandatory cursor-grab active:cursor-grabbing">
+	<div class="w-full border border-lines overflow-hidden py-12 sm:py-16 lg:pt-30 bg-[#D0CDCB]">
+		<ul class="carousel-track flex flex-row gap-[3.75rem] -ml-px overflow-x-auto scrollbar-hide snap-x snap-mandatory cursor-grab active:cursor-grabbing">
 			{steps.map((step, index) => (
 				<li class:list={[ 
-                    'carousel-item snap-start shrink-0 h-80 w-64 sm:h-154 sm:w-112 md:h-160 md:w-136 lg:w-260 border border-lines p-5 flex flex-col justify-between lg:flex-row' 
+                    'carousel-item snap-start shrink-0 h-80 w-64 sm:h-154 sm:w-112 md:h-160 md:w-136 lg:w-260 border border-lines p-[1.875rem] flex flex-col justify-between lg:flex-row bg-[#F4F3F3]' 
                 ]}> 
 					<div class="w-full lg:h-full" set:html={svgs[index]}>
 					</div>
 					<div class="flex justify-between items-end lg:flex-col">
-						<div class="leading-[1.1] sm:text-[1.625rem] sm:max-w-45 lg:max-w-none lg:text-right">
+						<div class="leading-[1.1] sm:text-[1.625rem] md:text-[2rem] sm:max-w-45 lg:max-w-none lg:text-right">
 							{step}
 						</div>
 						<div class="font-display leading-[0.7] text-[4rem] sm:text-[7.5rem] shrink-0">

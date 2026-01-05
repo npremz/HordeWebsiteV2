@@ -63,13 +63,13 @@ const textColorClass = isDark ? 'text-bg-light' : 'text-black';
         class="absolute top-full right-0 mt-4 origin-top-right"
         aria-hidden="true"
       >
-        <nav class="px-5 py-5 bg-white flex-col-container gap-4">
+        <nav class="px-5 py-5 bg-white flex-col-container gap-4 sm:w-[375px]">
           <ul class="flex-col-container gap-4">
             {items.map((item, index) => (
               <li class="menu-item" style={`--item-delay: ${0.05 + index * 0.04}s`}>
                 <a
                   href={item.url}
-                  class="menu-link text-black text-3xl font-sans link-hover whitespace-nowrap block"
+                  class="menu-link text-black text-3xl sm:text-[3.5625rem] font-sans link-hover whitespace-nowrap block"
                   target={item.isExternal ? '_blank' : undefined}
                   rel={item.isExternal ? 'noopener noreferrer' : undefined}
                 >
@@ -84,7 +84,7 @@ const textColorClass = isDark ? 'text-bg-light' : 'text-black';
             <div class="menu-item" style={`--item-delay: ${0.05 + (items.length + 1) * 0.04}s`}>
               <a
                 href={ctaButton.url}
-                class="menu-link tracking-wide link-hover-subtle"
+                class="menu-link tracking-wide link-hover-subtle sm:text-[1.625rem]"
               >
                 {ctaButton.label}
               </a>
