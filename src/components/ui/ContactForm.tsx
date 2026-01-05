@@ -17,7 +17,7 @@ interface FormErrors {
 
 export default function ContactForm() {
   const [formData, setFormData] = useState<FormData>({
-    besoin: 'audit-performance',
+    besoin: '',
     objectif: '',
     societe: '',
     nom: '',
@@ -108,12 +108,9 @@ export default function ContactForm() {
   return (
     <form className="mt-10 sm:mt-16 md:mt-24 lg:mt-30 flex flex-col gap-8" onSubmit={handleSubmit} noValidate>
       <fieldset className='flex flex-col gap-5 '>
-        <div className='relative flex flex-col md:flex-row gap-5 md:gap-16 md:items-center w-full'>
+        <div className='relative flex flex-col md:flex-row gap-5 md:gap-16 lg:gap-32 md:items-center w-full'>
           <legend className='section-label block md:w-36 md:shrink-0 relative'>
             J'ai besoin de<span aria-hidden="true">*</span>
-            {errors.besoin && (
-              <span className="sm:hidden text-err absolute right-0 top-0">{errors.besoin}</span>
-            )}
           </legend>
           <div className="w-full flex flex-wrap gap-5 mt-5 border-b pb-5 md:pb-10 border-lines-dark">
             {besoinOptions.map((option) => (
@@ -122,7 +119,9 @@ export default function ContactForm() {
                 className={`uppercase font-mono text-[1rem] leading-[0.6] py-5 px-4 border transition-all duration-300 ease-in-out cursor-pointer ${
                   formData.besoin === option.value 
                     ? 'bg-bg-light text-black border-bg-light' 
-                    : 'border-lines-dark hover:border-bg/50'
+                    : errors.besoin
+                      ? 'border-err text-err'
+                      : 'border-lines-dark hover:border-bg-light'
                 }`}
               >
                 <input
@@ -138,15 +137,10 @@ export default function ContactForm() {
               </label>
             ))}
           </div>
-          {errors.besoin && (
-            <span id="besoin-error" role="alert" className='section-label text-err absolute right-0 top-6 lg:top-8 xl:top-12 hidden sm:block'>
-              {errors.besoin}
-            </span>
-          )}
         </div>
       </fieldset>
 
-      <div className='flex flex-col md:flex-row md:items-center md:gap-16 gap-2.5 sm:gap-5 '>
+      <div className='flex flex-col md:flex-row md:items-center md:gap-16 lg:gap-32 gap-2.5 sm:gap-5 '>
         <label htmlFor="objectif" className='section-label block md:w-36 md:shrink-0 relative'>
           Objectif<span aria-hidden="true">*</span>
           {errors.objectif && (
@@ -154,18 +148,22 @@ export default function ContactForm() {
           )}
         </label>
         <div className="relative flex-1">
-          <input
-            type="text"
+          <textarea
             id="objectif"
             name="objectif"
-            className={`py-5 xl:py-8 w-full text-2xl sm:text-[2rem] lg:text-[2.5rem] xl:text-[3.125rem] border-b bg-transparent focus:outline-none focus-visible:outline-none transition-colors ${
+            rows={1}
+            className={`py-5 xl:py-8 w-full text-2xl sm:text-[2rem] lg:text-[2.5rem] xl:text-[3.125rem] border-b bg-transparent focus:outline-none focus-visible:outline-none transition-colors resize-none overflow-hidden ${
               errors.objectif
                 ? 'border-b-err placeholder:text-err'
                 : 'border-lines-dark focus:border-b-lines'
             }`}
             placeholder='Ce que vous avez en tête...'
             value={formData.objectif}
-            onChange={(e) => handleChange('objectif', e.target.value)}
+            onChange={(e) => {
+              handleChange('objectif', e.target.value);
+              e.target.style.height = 'auto';
+              e.target.style.height = e.target.scrollHeight + 'px';
+            }}
             aria-required="true"
             aria-invalid={!!errors.objectif}
             aria-describedby={errors.objectif ? 'objectif-error' : undefined}
@@ -178,20 +176,7 @@ export default function ContactForm() {
         </div>
       </div>
 
-      <div className='flex flex-col md:flex-row md:items-center md:gap-16 gap-2.5 sm:gap-5 '>
-        <label htmlFor="societe" className='section-label block md:w-36 md:shrink-0'>Societe</label>
-        <input
-          type="text"
-          id="societe"
-          name="societe"
-          className='py-5 xl:py-8 flex-1 text-2xl sm:text-[2rem] lg:text-[2.5rem] xl:text-[3.125rem] border-lines-dark border-b bg-transparent focus:outline-none focus-visible:outline-none focus:border-b-lines transition-colors'
-          placeholder='Nom de société'
-          value={formData.societe}
-          onChange={(e) => handleChange('societe', e.target.value)}
-        />
-      </div>
-
-      <div className='flex flex-col md:flex-row md:items-center md:gap-16 gap-2.5 sm:gap-5 '>
+      <div className='flex flex-col md:flex-row md:items-center md:gap-16 lg:gap-32 gap-2.5 sm:gap-5 '>
         <label htmlFor="nom" className='section-label block md:w-36 md:shrink-0 relative'>
           Nom<span aria-hidden="true">*</span>
           {errors.nom && (
@@ -223,7 +208,7 @@ export default function ContactForm() {
         </div>
       </div>
 
-      <div className='flex flex-col md:flex-row md:items-center md:gap-16 gap-2.5 sm:gap-5 '>
+      <div className='flex flex-col md:flex-row md:items-center md:gap-16 lg:gap-32 gap-2.5 sm:gap-5 '>
         <label htmlFor="email" className='section-label block md:w-36 md:shrink-0 relative'>
           Email<span aria-hidden="true">*</span>
           {errors.email && (
@@ -255,10 +240,23 @@ export default function ContactForm() {
         </div>
       </div>
 
-      <div className='flex flex-col md:flex-row md:gap-16'>
-        <div className="block md:w-36 md:shrink-0"></div>
-        <button type="submit" disabled={isSubmitting} className='leading-[0.75] mt-5 sm:mt-10 xl:mt-16 uppercase font-mono py-5 xl:py-6 bg-bg-light text-black flex-1'>
-          {isSubmitting ? 'Envoi en cours...' : 'Transmettre'}
+      <div className='flex flex-col md:flex-row md:items-center md:gap-16 lg:gap-32 gap-2.5 sm:gap-5 '>
+        <label htmlFor="societe" className='section-label block md:w-36 md:shrink-0'>Societe</label>
+        <input
+          type="text"
+          id="societe"
+          name="societe"
+          className='py-5 xl:py-8 flex-1 text-2xl sm:text-[2rem] lg:text-[2.5rem] xl:text-[3.125rem] border-lines-dark border-b bg-transparent focus:outline-none focus-visible:outline-none focus:border-b-lines transition-colors'
+          placeholder='Nom de société'
+          value={formData.societe}
+          onChange={(e) => handleChange('societe', e.target.value)}
+        />
+      </div>
+
+      <div className='flex flex-col md:flex-row md:gap-16 lg:gap-32 md:justify-end'>
+        <button type="submit" disabled={isSubmitting} className='group relative overflow-hidden mt-5 sm:mt-10 xl:mt-16 uppercase font-mono text-[1rem] leading-[0.6] py-5 px-4 border border-bg-light bg-transparent text-bg-light transition-colors duration-300 ease-in-out cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed self-end hover:text-black'>
+          <span className='absolute inset-0 bg-bg-light transform -translate-x-full group-hover:translate-x-0 transition-transform duration-400 ease-[cubic-bezier(0.25,0.46,0.45,0.94)]'></span>
+          <span className='relative z-10'>{isSubmitting ? 'Envoi en cours...' : 'Transmettre'}</span>
         </button>
       </div>
 
