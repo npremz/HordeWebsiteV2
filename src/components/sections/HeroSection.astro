@@ -104,7 +104,7 @@ const {
 			
 			const weatherEl = document.getElementById('hero-weather');
 			if (weatherEl) {
-				weatherEl.textContent = `${temp}° ${weatherInfo[0]} ${weatherInfo[1]}`;
+				weatherEl.innerHTML = `${temp}° ${weatherInfo[0]} <span class="text-[1.75rem] inline-block leading-[0] relative -top-[-4px]">${weatherInfo[1]}</span>`;
 			}
 		} catch (error) {
 			console.error('Erreur météo:', error);
