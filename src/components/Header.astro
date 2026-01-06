@@ -1,18 +1,21 @@
 ---
-import yaml from 'js-yaml';
-import fs from 'node:fs';
-import path from 'node:path';
-import Wrapped from './ui/Wrapped.astro';
+import yaml from "js-yaml";
+import fs from "node:fs";
+import path from "node:path";
+import Wrapped from "./ui/Wrapped.astro";
 
 interface Props {
-  variant?: 'light' | 'dark';
+  variant?: "light" | "dark";
 }
 
-const { variant = 'light' } = Astro.props;
-const isDark = variant === 'dark';
+const { variant = "light" } = Astro.props;
+const isDark = variant === "dark";
 
-const navPath = path.join(process.cwd(), 'src/content/settings/navigation.yaml');
-const navContent = fs.readFileSync(navPath, 'utf8');
+const navPath = path.join(
+  process.cwd(),
+  "src/content/settings/navigation.yaml",
+);
+const navContent = fs.readFileSync(navPath, "utf8");
 const navigation = yaml.load(navContent) as {
   logo?: string;
   logoAlt?: string;
@@ -20,27 +23,34 @@ const navigation = yaml.load(navContent) as {
   ctaButton?: { label?: string; url?: string };
 };
 
-const { logo, logoAlt = 'Logo', items = [], ctaButton } = navigation;
-const currentLogo = isDark ? '/images/logo_white.svg' : logo;
-const textColorClass = isDark ? 'text-bg-light' : 'text-black';
+const { logo, logoAlt = "Logo", items = [], ctaButton } = navigation;
+const currentLogo = isDark ? "/images/logo_white.svg" : logo;
+const textColorClass = isDark ? "text-bg-light" : "text-black";
 ---
 
-<header class="fixed z-9999999 top-0 left-0 right-0 px-4 sm:px-8 md:px-4 lg:px-12 py-5 xl:py-10 2xl:py-10" style="view-transition-name: header;">
+<header
+  class="fixed z-9999999 top-0 left-0 right-0 px-4 sm:px-8 md:px-4 lg:px-12 py-5 xl:py-10 2xl:py-10"
+  style="view-transition-name: header;"
+>
   <div class="flex-between">
     <a href="/" class="block">
-      {currentLogo ? (
-        <img
-          src={currentLogo}
-          alt={logoAlt}
-          class="logo-size"
-          width="112"
-          height="40"
-          decoding="async"
-          fetchpriority="high"
-        />
-      ) : (
-        <span class={`${textColorClass} font-display text-xl`}>{logoAlt}</span>
-      )}
+      {
+        currentLogo ? (
+          <img
+            src={currentLogo}
+            alt={logoAlt}
+            class="logo-size"
+            width="112"
+            height="40"
+            decoding="async"
+            fetchpriority="high"
+          />
+        ) : (
+          <span class={`${textColorClass} font-display text-xl`}>
+            {logoAlt}
+          </span>
+        )
+      }
     </a>
 
     <div class="relative">
@@ -52,8 +62,12 @@ const textColorClass = isDark ? 'text-bg-light' : 'text-black';
         aria-controls="mobile-menu"
         aria-label="Ouvrir le menu"
       >
-        <span id="menu-label" class="tracking-wide sm:text-[1.625rem] md:text-[2rem]" data-scramble>Menu</span>
-        <Wrapped padding="0.5rem" class='sm:mt-1 md:mt-2' variant={variant}>
+        <span
+          id="menu-label"
+          class="tracking-wide sm:text-[1.625rem] md:text-[2rem]"
+          data-scramble>Menu</span
+        >
+        <Wrapped padding="0.5rem" class="sm:mt-1 md:mt-2" variant={variant}>
           <span id="menu-icon" class="leading-none font-mono">+</span>
         </Wrapped>
       </button>
@@ -63,33 +77,47 @@ const textColorClass = isDark ? 'text-bg-light' : 'text-black';
         class="absolute top-full right-0 mt-4 origin-top-right"
         aria-hidden="true"
       >
-        <nav class="px-5 py-5 sm:p-[2.5rem] flex-col-container gap-4 sm:w-[450px]">
+        <nav
+          class="px-5 py-5 sm:p-[2.5rem] flex-col-container gap-4 sm:w-[450px]"
+        >
           <ul class="flex-col-container gap-4">
-            {items.map((item, index) => (
-              <li class="menu-item" style={`--item-delay: ${0.05 + index * 0.04}s`}>
-                <a
-                  href={item.url}
-                  class="menu-link nav-scramble text-black text-3xl sm:text-[3.5625rem] font-sans nav-link-hover whitespace-nowrap block tracking-[-0.02em] w-fit"
-                  target={item.isExternal ? '_blank' : undefined}
-                  rel={item.isExternal ? 'noopener noreferrer' : undefined}
-                  data-text={item.label}
+            {
+              items.map((item, index) => (
+                <li
+                  class="menu-item"
+                  style={`--item-delay: ${0.05 + index * 0.04}s`}
                 >
-                  {item.label}
-                </a>
-              </li>
-            ))}
+                  <a
+                    href={item.url}
+                    class="menu-link nav-scramble text-black text-3xl sm:text-[3.5625rem] font-sans nav-link-hover whitespace-nowrap block tracking-[-0.02em] w-fit"
+                    target={item.isExternal ? "_blank" : undefined}
+                    rel={item.isExternal ? "noopener noreferrer" : undefined}
+                    data-text={item.label}
+                  >
+                    {item.label}
+                  </a>
+                </li>
+              ))
+            }
           </ul>
-          <span class="divider-lines menu-item sm:my-[1.25rem]" style={`--item-delay: ${0.05 + items.length * 0.04}s`}></span>
+          <span
+            class="divider-lines menu-item sm:my-[1.25rem]"
+            style={`--item-delay: ${0.05 + items.length * 0.04}s`}></span>
 
-          <div class="menu-item flex flex-col gap-[0.625rem]" style={`--item-delay: ${0.05 + (items.length + 1) * 0.04}s`}>
-            {ctaButton?.label && ctaButton?.url && (
-              <a
-                href={ctaButton.url}
-                class="menu-link tracking-[-0.02em] nav-link-cta sm:text-[2rem] w-fit"
-              >
-                {ctaButton.label}
-              </a>
-            )}
+          <div
+            class="menu-item flex flex-col gap-[0.625rem]"
+            style={`--item-delay: ${0.05 + (items.length + 1) * 0.04}s`}
+          >
+            {
+              ctaButton?.label && ctaButton?.url && (
+                <a
+                  href={ctaButton.url}
+                  class="menu-link tracking-[-0.02em] nav-link-cta sm:text-[2rem] w-fit"
+                >
+                  {ctaButton.label}
+                </a>
+              )
+            }
             <button
               type="button"
               class="menu-link tracking-[-0.02em] nav-link-hover sm:text-[2rem] text-left w-fit"
@@ -111,7 +139,7 @@ const textColorClass = isDark ? 'text-bg-light' : 'text-black';
   }
 
   .nav-link-cta::after {
-    content: '';
+    content: "";
     position: absolute;
     bottom: -1px;
     left: 0;
@@ -133,7 +161,7 @@ const textColorClass = isDark ? 'text-bg-light' : 'text-black';
   }
 
   .nav-link-hover::after {
-    content: '';
+    content: "";
     position: absolute;
     bottom: 0;
     left: 0;
@@ -163,7 +191,7 @@ const textColorClass = isDark ? 'text-bg-light' : 'text-black';
   }
 
   #mobile-menu nav::before {
-    content: '';
+    content: "";
     position: absolute;
     top: 0;
     left: 0;
@@ -193,17 +221,17 @@ const textColorClass = isDark ? 'text-bg-light' : 'text-black';
 
 <script>
   function initMenu() {
-    const toggle = document.getElementById('menu-toggle');
-    const menu = document.getElementById('mobile-menu');
-    const label = document.getElementById('menu-label') as HTMLElement;
-    const icon = document.getElementById('menu-icon');
-    const links = document.querySelectorAll('.menu-link');
+    const toggle = document.getElementById("menu-toggle");
+    const menu = document.getElementById("mobile-menu");
+    const label = document.getElementById("menu-label") as HTMLElement;
+    const icon = document.getElementById("menu-icon");
+    const links = document.querySelectorAll(".menu-link");
     let isOpen = false;
 
     // Text scramble effect
     let scrambleInterval: number | null = null;
     const scrambleIntervals = new Map<HTMLElement, number>();
-    let currentText = 'Menu';
+    let currentText = "Menu";
 
     // Fonction pour mélanger un tableau
     function shuffleArray<T>(array: T[]): T[] {
@@ -222,7 +250,7 @@ const textColorClass = isDark ? 'text-bg-light' : 'text-black';
 
       let iteration = 0;
       const originalText = targetText;
-      const chars = originalText.split('');
+      const chars = originalText.split("");
 
       scrambleInterval = window.setInterval(() => {
         // Lettres déjà résolues (fixes)
@@ -231,7 +259,7 @@ const textColorClass = isDark ? 'text-bg-light' : 'text-black';
         const remaining = chars.slice(Math.floor(iteration));
         const shuffled = shuffleArray(remaining);
 
-        element.textContent = [...resolved, ...shuffled].join('');
+        element.textContent = [...resolved, ...shuffled].join("");
 
         if (iteration >= originalText.length) {
           if (scrambleInterval) clearInterval(scrambleInterval);
@@ -252,14 +280,14 @@ const textColorClass = isDark ? 'text-bg-light' : 'text-black';
 
       let iteration = 0;
       const originalText = targetText;
-      const chars = originalText.split('');
+      const chars = originalText.split("");
 
       const intervalId = window.setInterval(() => {
         const resolved = chars.slice(0, Math.floor(iteration));
         const remaining = chars.slice(Math.floor(iteration));
         const shuffled = shuffleArray(remaining);
 
-        element.textContent = [...resolved, ...shuffled].join('');
+        element.textContent = [...resolved, ...shuffled].join("");
 
         if (iteration >= originalText.length) {
           clearInterval(intervalId);
@@ -274,60 +302,65 @@ const textColorClass = isDark ? 'text-bg-light' : 'text-black';
     }
 
     // Hover effect on menu toggle
-    toggle?.addEventListener('mouseenter', () => {
+    toggle?.addEventListener("mouseenter", () => {
       if (label) {
         scrambleText(label, currentText);
       }
     });
 
     // Hover effect on nav links
-    const navScrambleLinks = document.querySelectorAll('.nav-scramble');
+    const navScrambleLinks = document.querySelectorAll(".nav-scramble");
     navScrambleLinks.forEach((link) => {
-      link.addEventListener('mouseenter', () => {
-        const text = (link as HTMLElement).dataset.text || link.textContent || '';
+      link.addEventListener("mouseenter", () => {
+        const text =
+          (link as HTMLElement).dataset.text || link.textContent || "";
         scrambleNavLink(link as HTMLElement, text);
       });
     });
 
     function open() {
       isOpen = true;
-      menu?.classList.add('is-open');
-      menu?.setAttribute('aria-hidden', 'false');
-      toggle?.setAttribute('aria-expanded', 'true');
-      toggle?.setAttribute('aria-label', 'Fermer le menu');
-      currentText = 'Close';
-      if (label) scrambleText(label, 'Close');
-      if (icon) icon.textContent = '-';
-      document.body.style.overflow = 'hidden';
+      menu?.classList.add("is-open");
+      menu?.setAttribute("aria-hidden", "false");
+      toggle?.setAttribute("aria-expanded", "true");
+      toggle?.setAttribute("aria-label", "Fermer le menu");
+      currentText = "Close";
+      if (label) scrambleText(label, "Close");
+      if (icon) icon.textContent = "-";
+      document.body.style.overflow = "hidden";
     }
 
     function close() {
       isOpen = false;
-      menu?.classList.remove('is-open');
-      menu?.setAttribute('aria-hidden', 'true');
-      toggle?.setAttribute('aria-expanded', 'false');
-      toggle?.setAttribute('aria-label', 'Ouvrir le menu');
-      currentText = 'Menu';
-      if (label) scrambleText(label, 'Menu');
-      if (icon) icon.textContent = '+';
-      document.body.style.overflow = '';
+      menu?.classList.remove("is-open");
+      menu?.setAttribute("aria-hidden", "true");
+      toggle?.setAttribute("aria-expanded", "false");
+      toggle?.setAttribute("aria-label", "Ouvrir le menu");
+      currentText = "Menu";
+      if (label) scrambleText(label, "Menu");
+      if (icon) icon.textContent = "+";
+      document.body.style.overflow = "";
     }
 
-    toggle?.addEventListener('click', (e) => {
+    toggle?.addEventListener("click", (e) => {
       e.stopPropagation();
       isOpen ? close() : open();
     });
-    links.forEach(link => link.addEventListener('click', close));
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && isOpen) close();
+    links.forEach((link) => link.addEventListener("click", close));
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && isOpen) close();
     });
-    document.addEventListener('click', (e) => {
-      if (isOpen && !menu?.contains(e.target as Node) && !toggle?.contains(e.target as Node)) {
+    document.addEventListener("click", (e) => {
+      if (
+        isOpen &&
+        !menu?.contains(e.target as Node) &&
+        !toggle?.contains(e.target as Node)
+      ) {
         close();
       }
     });
   }
 
   initMenu();
-  document.addEventListener('astro:after-swap', initMenu);
+  document.addEventListener("astro:after-swap", initMenu);
 </script>
