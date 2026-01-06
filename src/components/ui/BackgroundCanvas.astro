@@ -47,13 +47,7 @@ const {
   let pixelSize = 20;
 
   function getPixelSize(): number {
-    const width = window.innerWidth;
-    if (width < 640) return 40;
-    if (width < 1024) return 80;
-    if (width < 1512) return 128;
-    if (width < 1920) return 190;
-    if (width < 2560) return 240;
-    return 320;
+    return Math.floor(window.innerWidth / 5);
   }
 
   function resizeCanvas() {
