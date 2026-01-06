@@ -64,7 +64,7 @@ const services: ServiceItem[] = [
             aria-expanded="false"
             aria-controls={`service-content-${index}`}
           >
-            <span class="font-display uppercase leading-none text-[1.625rem] sm:text-[2.5rem] md:text-[4rem] lg:text-[6rem] xl:text-[7.5rem] group-hover:opacity-70 transition-opacity" set:html={service.title} />
+            <span class:list={["service-title font-display uppercase leading-none text-[1.625rem] sm:text-[2.5rem] md:text-[4rem] lg:text-[6rem] xl:text-[7.5rem] transition-opacity", index % 2 === 1 && "text-right"]} data-text={service.title} set:html={service.title} />
             <Wrapped class="service-icon h-fit shrink-0 font-mono transition-colors duration-300" aria-hidden="true">
               <span class="icon-plus">+</span>
               <span class="icon-minus hidden">-</span>
@@ -184,6 +184,67 @@ const services: ServiceItem[] = [
 <script>
   function initServiceAccordion() {
     const triggers = document.querySelectorAll('.service-trigger');
+    const scrambleIntervals = new Map<HTMLElement, number>();
+
+    // Fonction pour mélanger un tableau
+    function shuffleArray<T>(array: T[]): T[] {
+      const shuffled = [...array];
+      for (let i = shuffled.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+      }
+      return shuffled;
+    }
+
+    // Scramble pour les titres avec support HTML (br)
+    function scrambleServiceTitle(element: HTMLElement, originalHtml: string) {
+      const existingInterval = scrambleIntervals.get(element);
+      if (existingInterval) {
+        clearInterval(existingInterval);
+      }
+
+      // Séparer par lignes (br)
+      const lines = originalHtml.split(/<br\s*\/?>/gi);
+      let iteration = 0;
+      
+      // Calculer le nombre total de caractères (sans espaces de début/fin par ligne)
+      const totalChars = lines.reduce((sum, line) => sum + line.length, 0);
+
+      const intervalId = window.setInterval(() => {
+        const scrambledLines = lines.map((line) => {
+          const chars = line.split('');
+          const resolvedCount = Math.floor(iteration);
+          const resolved = chars.slice(0, resolvedCount);
+          const remaining = chars.slice(resolvedCount);
+          const shuffled = shuffleArray(remaining);
+          return [...resolved, ...shuffled].join('');
+        });
+
+        element.innerHTML = scrambledLines.join('<br>');
+
+        if (iteration >= Math.max(...lines.map(l => l.length))) {
+          clearInterval(intervalId);
+          scrambleIntervals.delete(element);
+          element.innerHTML = originalHtml;
+        }
+
+        iteration += 0.7;
+      }, 25);
+
+      scrambleIntervals.set(element, intervalId);
+    }
+
+    // Hover effect sur les sections de service
+    const serviceItems = document.querySelectorAll('.service-item');
+    serviceItems.forEach((item) => {
+      item.addEventListener('mouseenter', () => {
+        const title = item.querySelector('.service-title') as HTMLElement;
+        if (title) {
+          const originalHtml = title.dataset.text || title.innerHTML;
+          scrambleServiceTitle(title, originalHtml);
+        }
+      });
+    });
 
     triggers.forEach((trigger) => {
       trigger.addEventListener('click', () => {
