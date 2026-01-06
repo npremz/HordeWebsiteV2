@@ -144,7 +144,7 @@ export default function ContactForm() {
         <label htmlFor="objectif" className='section-label block md:w-36 md:shrink-0 relative'>
           Objectif<span aria-hidden="true">*</span>
           {errors.objectif && (
-            <span className="sm:hidden text-err absolute right-0 top-0">{errors.objectif}</span>
+            <span id="objectif-error" role="alert" className="sm:hidden text-err absolute right-0 top-0">{errors.objectif}</span>
           )}
         </label>
         <div className="relative flex-1">
