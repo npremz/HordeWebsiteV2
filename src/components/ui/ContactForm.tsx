@@ -241,7 +241,7 @@ export default function ContactForm() {
       </div>
 
       <div className='flex flex-col md:flex-row md:items-center md:gap-16 lg:gap-32 gap-2.5 sm:gap-5 '>
-        <label htmlFor="societe" className='section-label block md:w-36 md:shrink-0'>Societe</label>
+        <label htmlFor="societe" className='section-label block md:w-36 md:shrink-0'>Société</label>
         <input
           type="text"
           id="societe"
