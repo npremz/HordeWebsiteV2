@@ -2,7 +2,6 @@
 import Layout from '../layouts/Layout.astro';
 import ContactForm from '../components/ui/ContactForm';
 import Wrapped from '../components/ui/Wrapped.astro';
-import BackgroundCanvas from '../components/ui/BackgroundCanvas.astro';
 import Footer from '../components/Footer.astro';
 
 ---
@@ -32,9 +31,8 @@ import Footer from '../components/Footer.astro';
 	}
 </style>
 
-<Layout title="Contact" headerVariant='dark' description="Contactez-nous pour votre projet digital">
-  	<BackgroundCanvas triggerDistanceBottom={500} bottomOffset={-550} color="#222121" />
-	<div id="page-content" class="text-bg-light">
+<Layout title="Contact" variant="dark" description="Contactez-nous pour votre projet digital">
+	<div id="page-content">
 		<div class="mt-40 sm:mt-50 lg:mt-80 xl:mt-96 flex flex-col md:flex-row-reverse md:items-end gap-10 sm:gap-16 lg:gap-32">
 			<div class="md:w-full flex flex-col md:flex-row gap-10 sm:gap-16 md:gap-24 lg:gap-32 xl:gap-40">
 				<div class="flex flex-col gap-4 sm:gap-8 shrink-0">
@@ -60,6 +58,6 @@ import Footer from '../components/Footer.astro';
 		<ContactForm client:load />
 	</div>
 	
-	<Footer />
+	<Footer variant="dark" />
 
 </Layout>

@@ -4,6 +4,13 @@ import fs from 'node:fs';
 import path from 'node:path';
 import Line from "./ui/Line.astro"
 
+interface Props {
+  variant?: 'light' | 'dark';
+}
+
+const { variant = 'light' } = Astro.props;
+const isDark = variant === 'dark';
+
 // Charger le footer
 const footerPath = path.join(process.cwd(), 'src/content/settings/footer.yaml');
 const footerContent = fs.readFileSync(footerPath, 'utf8');
@@ -27,12 +34,19 @@ const navigation = yaml.load(navContent) as {
 const { description, columns = [], legalLinks = [], copyright } = footer;
 const ctaColumn = columns.find(col => col.title === 'CTAs');
 const { logo, logoAlt = 'Logo', items: menuItems = [] } = navigation;
+
+// Dark mode colors
+const currentLogo = isDark ? '/images/logo_white.svg' : logo;
+const strokeColor = isDark ? '#4C4B4B' : '#B1B1B1';
+const textColorClass = isDark ? 'text-bg-light' : 'text-black';
 ---
 
-<footer class="relative mt-128 pb-16 xl:mt-232" id="footer-parallax">
-	<div class="footer-line-parallax">
-		<Line />
-	</div>
+<footer class:list={['relative mt-32 lg:mt-48 xl:mt-64 pb-16', textColorClass]} id="footer-parallax" data-variant={variant}>
+	<!-- {!isDark && (
+		<div class="footer-line-parallax">
+			<Line variant={variant} />
+		</div>
+	)} -->
 
 	<div class="footer-logo-wrapper footer-svg-parallax z-9999">
 		<svg class="footer-logo relative w-full mt-10 sm:mt-16 lg:mt-24 md:w-[calc(100vw-8rem)] md:max-w-none! md:left-1/2 md:-translate-x-1/2" viewBox="0 0 281 43" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -40,106 +54,16 @@ const { logo, logoAlt = 'Logo', items: menuItems = [] } = navigation;
 		</svg>
 	</div>
 
-	<style>
-		.footer-logo-wrapper {
-			position: relative;
-			cursor: pointer;
-			overflow: visible;
-		}
-
-		.footer-logo-wrapper::before {
-			content: '';
-			position: absolute;
-			top: 50%;
-			left: 50%;
-			transform: translate(-50%, -50%) scaleX(0);
-			transform-origin: left center;
-			width: calc(100vw - 32px);
-			height: calc(100% + 60px);
-			background-color: white;
-			z-index: -1;
-			transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-		}
-
-		@media (min-width: 640px) {
-			.footer-logo-wrapper::before {
-				width: calc(100vw - 60px);
-			}
-		}
-
-		.footer-logo-wrapper:hover::before {
-			transform: translate(-50%, -50%) scaleX(1);
-		}
-
-		.footer-logo {
-			color: #222121;
-			transition: color 0.3s ease;
-			position: relative;
-			z-index: 1;
-		}
-
-		.footer-logo-wrapper:hover .footer-logo {
-			color: #222121;
-		}
-
-		/* Footer links avec underline animé */
-		.footer-link {
-			position: relative;
-			display: inline-block;
-		}
-
-		.footer-link::after {
-			content: '';
-			position: absolute;
-			bottom: 0;
-			left: 0;
-			width: 100%;
-			height: 1px;
-			background-color: currentColor;
-			transform: scaleX(0);
-			transform-origin: left center;
-			transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-		}
-
-		.footer-link:hover::after {
-			transform: scaleX(1);
-		}
-
-		/* Pour les liens CTA */
-		.footer-link-cta {
-			position: relative;
-			display: inline-block;
-			border-bottom: 1px solid var(--color-lines);
-		}
-
-		.footer-link-cta::after {
-			content: '';
-			position: absolute;
-			bottom: -1px;
-			left: 0;
-			width: 100%;
-			height: 1px;
-			background-color: currentColor;
-			transform: scaleX(0);
-			transform-origin: left center;
-			transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-		}
-
-		.footer-link-cta:hover::after {
-			transform: scaleX(1);
-		}
-	</style>
-
 	<svg class="hidden sm:block lg:hidden -z-10 absolute w-1/2 center-x bottom-0" viewBox="0 0 300 420" fill="none" xmlns="http://www.w3.org/2000/svg">
-		<rect x="-0.56875" y="0.56875" width="298.135" height="298.135" rx="149.068" transform="matrix(-1 -8.74228e-08 -8.74228e-08 1 298.135 314.887)" stroke="#B1B1B1" stroke-width="1.1375"/>
-		<rect x="-0.56875" y="0.56875" width="298.135" height="298.135" rx="149.068" transform="matrix(-1 -8.74228e-08 -8.74228e-08 1 298.135 1.30319e-05)" stroke="#B1B1B1" stroke-width="1.1375"/>
-		<rect x="298.704" y="463.955" width="298.135" height="312.448" transform="rotate(-180 298.704 463.955)" stroke="#B1B1B1" stroke-width="1.1375"/>
+		<rect x="-0.56875" y="0.56875" width="298.135" height="298.135" rx="149.068" transform="matrix(-1 -8.74228e-08 -8.74228e-08 1 298.135 314.887)" stroke={strokeColor} stroke-width="1.1375"/>
+		<rect x="-0.56875" y="0.56875" width="298.135" height="298.135" rx="149.068" transform="matrix(-1 -8.74228e-08 -8.74228e-08 1 298.135 1.30319e-05)" stroke={strokeColor} stroke-width="1.1375"/>
+		<rect x="298.704" y="463.955" width="298.135" height="312.448" transform="rotate(-180 298.704 463.955)" stroke={strokeColor} stroke-width="1.1375"/>
 	</svg>
 
 	<svg class="hidden lg:block -z-10 absolute w-[calc(100%-2.5rem)] center-x bottom-0" viewBox="0 0 1217 334" fill="none" xmlns="http://www.w3.org/2000/svg">
-		<rect x="0.5" y="0.5" width="591.661" height="591.661" rx="295.831" transform="matrix(-4.37114e-08 1 1 4.37114e-08 623.59 2.18557e-08)" stroke="#B1B1B1"/>
-		<rect x="0.5" y="0.5" width="591.661" height="591.661" rx="295.831" transform="matrix(-4.37114e-08 1 1 4.37114e-08 -2.18557e-08 2.18557e-08)" stroke="#B1B1B1"/>
-		<rect x="919.414" y="0.5" width="591.661" height="620.006" transform="rotate(90 919.414 0.5)" stroke="#B1B1B1"/>
+		<rect x="0.5" y="0.5" width="591.661" height="591.661" rx="295.831" transform="matrix(-4.37114e-08 1 1 4.37114e-08 623.59 2.18557e-08)" stroke={strokeColor}/>
+		<rect x="0.5" y="0.5" width="591.661" height="591.661" rx="295.831" transform="matrix(-4.37114e-08 1 1 4.37114e-08 -2.18557e-08 2.18557e-08)" stroke={strokeColor}/>
+		<rect x="919.414" y="0.5" width="591.661" height="620.006" transform="rotate(90 919.414 0.5)" stroke={strokeColor}/>
 	</svg>
 
 
@@ -197,10 +121,10 @@ const { logo, logoAlt = 'Logo', items: menuItems = [] } = navigation;
 
 			<!-- Logo -->
 			<div class="flex-col-container gap-5 md:gap-8 lg:grid lg:grid-cols-12 lg:items-end lg:gap-0 lg:col-span-12 lg:mt-24 xl:mt-48">
-				{logo ? (
+				{currentLogo ? (
 					<a href="/" class="lg:col-span-7 lg:self-end">
 						<img
-							src={logo}
+							src={currentLogo}
 							alt={logoAlt}
 							class="logo-size"
 							width="112"
@@ -227,3 +151,101 @@ const { logo, logoAlt = 'Logo', items: menuItems = [] } = navigation;
 		</div>
 	</div>
 </footer>
+
+<style>
+	.footer-logo-wrapper {
+		position: relative;
+		cursor: pointer;
+		overflow: visible;
+	}
+
+	.footer-logo-wrapper::before {
+		content: '';
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%) scaleX(0);
+		transform-origin: left center;
+		width: calc(100vw - 32px);
+		height: calc(100% + 60px);
+		background-color: white;
+		z-index: -1;
+		transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+	}
+
+	[data-variant="dark"] .footer-logo-wrapper::before {
+		background-color: var(--color-bg-light);
+	}
+
+	@media (min-width: 640px) {
+		.footer-logo-wrapper::before {
+			width: calc(100vw - 60px);
+		}
+	}
+
+	.footer-logo-wrapper:hover::before {
+		transform: translate(-50%, -50%) scaleX(1);
+	}
+
+	.footer-logo {
+		color: currentColor;
+		transition: color 0.3s ease;
+		position: relative;
+		z-index: 1;
+	}
+
+	.footer-logo-wrapper:hover .footer-logo {
+		color: #222121;
+	}
+
+	/* Footer links avec underline animé */
+	.footer-link {
+		position: relative;
+		display: inline-block;
+	}
+
+	.footer-link::after {
+		content: '';
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		width: 100%;
+		height: 1px;
+		background-color: currentColor;
+		transform: scaleX(0);
+		transform-origin: left center;
+		transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+	}
+
+	.footer-link:hover::after {
+		transform: scaleX(1);
+	}
+
+	/* Pour les liens CTA */
+	.footer-link-cta {
+		position: relative;
+		display: inline-block;
+		border-bottom: 1px solid var(--color-lines);
+	}
+
+	[data-variant="dark"] .footer-link-cta {
+		border-bottom-color: var(--color-lines-dark);
+	}
+
+	.footer-link-cta::after {
+		content: '';
+		position: absolute;
+		bottom: -1px;
+		left: 0;
+		width: 100%;
+		height: 1px;
+		background-color: currentColor;
+		transform: scaleX(0);
+		transform-origin: left center;
+		transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+	}
+
+	.footer-link-cta:hover::after {
+		transform: scaleX(1);
+	}
+</style>

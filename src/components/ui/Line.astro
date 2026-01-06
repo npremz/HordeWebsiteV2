@@ -3,13 +3,17 @@ interface Props {
   class?: string;
   lineClass?: string;
   dotClass?: string;
+  variant?: 'light' | 'dark';
 }
 
-const { class: className = '', lineClass = '', dotClass = '' } = Astro.props;
+const { class: className = '', lineClass = '', dotClass = '', variant = 'light' } = Astro.props;
+const isDark = variant === 'dark';
+const dotBg = isDark ? 'bg-bg-light' : 'bg-black';
+const lineColor = isDark ? 'bg-lines-dark' : 'bg-lines';
 ---
 
 <div class:list={['relative w-screen center-x', className]}>
-  <div class:list={['absolute divider-lines', lineClass]}></div>
+  <div class:list={['absolute h-px w-full', lineColor, lineClass]}></div>
 </div>
-<div class:list={['relative h-[7px] w-[7px] bg-black -left-[3px] -top-[3px]', dotClass]}></div>
-<div class:list={['relative h-[7px] w-[7px] bg-black left-full -ml-[3px] -top-[10px]', dotClass]}></div>
+<div class:list={['relative h-[7px] w-[7px] -left-[3px] -top-[3px]', dotBg, dotClass]}></div>
+<div class:list={['relative h-[7px] w-[7px] left-full -ml-[3px] -top-[10px]', dotBg, dotClass]}></div>

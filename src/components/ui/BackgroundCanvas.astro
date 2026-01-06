@@ -1,6 +1,7 @@
 ---
 interface Props {
 	targetId?: string;
+	stopTargetId?: string;
 	topOffset?: number;
 	bottomOffset?: number;
 	triggerDistance?: number;
@@ -10,6 +11,7 @@ interface Props {
 
 const {
 	targetId = 'page-content',
+	stopTargetId,
 	topOffset = 500,
 	bottomOffset = -450,
 	triggerDistance = 500,
@@ -22,6 +24,7 @@ const {
 	id="bg-canvas"
 	class="fixed top-0 left-0 w-full min-h-lvh pointer-events-none -z-1000"
 	data-target-id={targetId}
+	data-stop-target-id={stopTargetId}
 	data-top-offset={topOffset}
 	data-bottom-offset={bottomOffset}
 	data-trigger-distance={triggerDistance}
@@ -35,6 +38,7 @@ const {
   let canvas: HTMLCanvasElement;
   let ctx: CanvasRenderingContext2D;
   let targetId: string;
+  let stopTargetId: string | null;
   let topOffset: number;
   let bottomOffset: number;
   let triggerDistance: number;
@@ -45,6 +49,7 @@ const {
   let lastWidth = window.innerWidth;
   let pixels: { x: number; y: number; alpha: number }[] = [];
   let pixelSize = 20;
+  let isAnimating = false;
 
   function getPixelSize(): number {
     return Math.floor(window.innerWidth / 5);
@@ -61,6 +66,33 @@ const {
     if (!projectSection) return null;
     const rect = projectSection.getBoundingClientRect();
     return rect.top + window.scrollY;
+  }
+
+  function isInAnimationZone(): boolean {
+    const scrollY = window.scrollY;
+    const viewportHeight = window.innerHeight;
+    const projectPos = getProjectSectionPosition();
+    if (!projectPos) return false;
+
+    const projectSection = document.getElementById(targetId);
+    if (!projectSection) return false;
+
+    const projectRect = projectSection.getBoundingClientRect();
+    const projectEnd = projectRect.bottom + window.scrollY;
+    const startZone = projectPos + topOffset - triggerDistance;
+
+    // Si stopTargetId est défini, l'animation s'arrête quand cette section entre dans le viewport
+    let endZone = projectEnd + bottomOffset;
+    if (stopTargetId) {
+      const stopSection = document.getElementById(stopTargetId);
+      if (stopSection) {
+        const stopRect = stopSection.getBoundingClientRect();
+        const stopPos = stopRect.top + window.scrollY;
+        endZone = stopPos + bottomOffset - viewportHeight;
+      }
+    }
+
+    return (scrollY + viewportHeight) >= startZone && scrollY <= endZone;
   }
 
   function updatePixels() {
@@ -80,14 +112,10 @@ const {
     }
 
     const projectRect = projectSection.getBoundingClientRect();
-    const projectEnd = projectRect.bottom + window.scrollY;
     const distanceToProject = projectPos - (scrollY + viewportHeight);
     const progressIn = Math.max(0, Math.min(1, 1 - distanceToProject / triggerDistance));
-    const distanceAfterProject = scrollY - (projectEnd + bottomOffset);
-    const progressOut = Math.max(0, Math.min(1, distanceAfterProject / triggerDistanceBottom));
-    const finalProgress = progressIn * (1 - progressOut);
+    const finalProgress = progressIn;
     const isExitingTop = scrollY + viewportHeight < projectPos && progressIn < 1;
-    const isExitingBottom = scrollY > (projectEnd + bottomOffset);
 
     if (finalProgress === 0) {
       pixels = [];
@@ -113,15 +141,9 @@ const {
 
     availablePositions.sort((a, b) => {
       const randomWeight = 200;
-      if (isExitingBottom) {
-        const scoreA = -a.y - Math.random() * randomWeight;
-        const scoreB = -b.y - Math.random() * randomWeight;
-        return scoreB - scoreA;
-      } else {
-        const scoreA = a.y - Math.random() * randomWeight;
-        const scoreB = b.y - Math.random() * randomWeight;
-        return scoreB - scoreA;
-      }
+      const scoreA = a.y - Math.random() * randomWeight;
+      const scoreB = b.y - Math.random() * randomWeight;
+      return scoreB - scoreA;
     });
 
     const pixelsToAdd = targetPixelCount - pixels.length;
@@ -158,18 +180,44 @@ const {
     });
   }
 
+  function stopAnimation() {
+    if (animationId !== null) {
+      cancelAnimationFrame(animationId);
+      animationId = null;
+      isAnimating = false;
+    }
+  }
+
+  function startAnimation() {
+    if (!isAnimating) {
+      isAnimating = true;
+      animate();
+    }
+  }
+
   function animate() {
+    if (!isInAnimationZone()) {
+      // Clear canvas and stop animation when outside zone
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      pixels = [];
+      stopAnimation();
+      return;
+    }
+
     updatePixels();
     draw();
     animationId = requestAnimationFrame(animate);
   }
 
+  function checkAndToggleAnimation() {
+    if (isInAnimationZone()) {
+      startAnimation();
+    }
+  }
+
   function init() {
     // Annuler l'animation précédente si elle existe
-    if (animationId !== null) {
-      cancelAnimationFrame(animationId);
-      animationId = null;
-    }
+    stopAnimation();
 
     // Récupérer le nouveau canvas
     canvas = document.getElementById('bg-canvas') as HTMLCanvasElement;
@@ -177,6 +225,7 @@ const {
 
     ctx = canvas.getContext('2d')!;
     targetId = canvas.getAttribute('data-target-id') || 'projects';
+    stopTargetId = canvas.getAttribute('data-stop-target-id') || null;
     topOffset = Number(canvas.getAttribute('data-top-offset')) || 500;
     bottomOffset = Number(canvas.getAttribute('data-bottom-offset')) || -450;
     triggerDistance = Number(canvas.getAttribute('data-trigger-distance')) || 500;
@@ -188,7 +237,7 @@ const {
     lastWidth = window.innerWidth;
 
     resizeCanvas();
-    animate();
+    checkAndToggleAnimation();
   }
 
   window.addEventListener('resize', () => {
@@ -203,6 +252,13 @@ const {
       pixels = [];
     }, 200);
   });
+
+  // Scroll listener to restart animation when entering zone
+  window.addEventListener('scroll', () => {
+    if (!isAnimating) {
+      checkAndToggleAnimation();
+    }
+  }, { passive: true });
 
   // Initialisation au chargement
   init();

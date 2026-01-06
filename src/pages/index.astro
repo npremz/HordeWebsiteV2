@@ -21,13 +21,12 @@ const description = siteSettings?.defaultDescription || 'Agence web spécialisé
   description={description}
   siteNameAsPrefix={true}
 >
-  <BackgroundCanvas triggerDistance={500} topOffset={1100} triggerDistanceBottom={500} bottomOffset={-550} />
+  <BackgroundCanvas triggerDistance={500} topOffset={1100} bottomOffset={500} stopTargetId="services-section" />
 
   <HeroSection
     titleLine1="Nous\nconcevons"
     titleLine2="des"
     titleLine3="interfaces\nultra rapides"
-    subtitle="Agence Digitale & UX"
     ctaLabel="Notre methode"
   />
 
@@ -39,18 +38,37 @@ const description = siteSettings?.defaultDescription || 'Agence web spécialisé
         steps={[
           'Eliminer les frictions pénalisantes',
           'Maximiser les conversions',
-          'Soigner l’expérience utilisateur',
+          'Soigner l\'expérience utilisateur',
         ]}
       />
-      <ExperienceSection
-        label="L'experience\nest la clé"
-        headline="Le design attire,\nl'expérience retient."
-        description="Nous créons des interfaces intuitives qui répondent aux intentions de vos utilisateurs."
-      />
     </section>
-    <section class="mt-24 sm:mt-32 lg:mt-96">
+  </div>
+  <div id="white-section" class="full-bleed-bg">
+    <ExperienceSection
+      label="L'experience\nest la clé"
+      headline="Le design attire,\nl'expérience retient."
+      description="Nous créons des interfaces intuitives qui répondent aux intentions de vos utilisateurs."
+    />
+    <section id="services-section" class="mt-24 sm:mt-32 lg:mt-96">
       <ServiceSection />
     </section>
   </div>
+
+<style>
+  .full-bleed-bg {
+    position: relative;
+  }
+  .full-bleed-bg::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100vw;
+    height: 100%;
+    background-color: var(--color-bg-light);
+    z-index: -1;
+  }
+</style>
   <Footer />
 </Layout>

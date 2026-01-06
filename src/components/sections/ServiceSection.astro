@@ -46,7 +46,7 @@ const services: ServiceItem[] = [
 ];
 ---
 
-<section class="py-24">
+<section class="pt-24">
   <div class="">
     <h2 class="section-label mb-4 sm:mb-8 lg:mb-32">
       J'ai besoin de
@@ -54,7 +54,7 @@ const services: ServiceItem[] = [
 
     <div class="">
       {services.map((service, index) => (
-        <div class="service-item border-b border-lines transition-colors duration-300">
+        <div class="service-item border-b border-lines last:border-b-0 transition-colors duration-300">
           <button
             type="button"
             class:list={[
