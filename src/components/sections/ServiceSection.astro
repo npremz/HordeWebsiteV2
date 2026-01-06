@@ -234,16 +234,31 @@ const services: ServiceItem[] = [
       scrambleIntervals.set(element, intervalId);
     }
 
+    // Gestion centralisée du hover pour éviter les listeners multiples
+    function handleServiceItemMouseEnter(event: Event) {
+      const item = event.currentTarget as HTMLElement | null;
+      if (!item) return;
+
+      const title = item.querySelector('.service-title') as HTMLElement | null;
+      if (title) {
+        const originalHtml = title.dataset.text || title.innerHTML;
+        scrambleServiceTitle(title, originalHtml);
+      }
+    }
+
     // Hover effect sur les sections de service
     const serviceItems = document.querySelectorAll('.service-item');
     serviceItems.forEach((item) => {
-      item.addEventListener('mouseenter', () => {
-        const title = item.querySelector('.service-title') as HTMLElement;
-        if (title) {
-          const originalHtml = title.dataset.text || title.innerHTML;
-          scrambleServiceTitle(title, originalHtml);
-        }
-      });
+      const element = item as unknown as HTMLElement & {
+        _serviceMouseEnterHandler?: (event: Event) => void;
+      };
+
+      if (element._serviceMouseEnterHandler) {
+        element.removeEventListener('mouseenter', element._serviceMouseEnterHandler);
+      }
+
+      element.addEventListener('mouseenter', handleServiceItemMouseEnter);
+      element._serviceMouseEnterHandler = handleServiceItemMouseEnter;
     });
 
     triggers.forEach((trigger) => {
