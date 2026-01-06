@@ -80,9 +80,9 @@ const services: ServiceItem[] = [
 			  <div class="flex flex-col gap-10 sm:gap-16 lg:flex-row lg:justify-between">
 				<div class="md:max-w-150 ">
 					<h3 class="section-label">Liste de services</h3>
-					<ul class="mt-4 sm:mt-9 flex flex-col gap-4 sm:gap-5 sm:flex-row sm:shrink-0 sm:flex-wrap">
+					<ul class="mt-4 sm:mt-9 flex flex-col gap-4 sm:gap-x-5 sm:gap-y-0 sm:flex-row sm:shrink-0 sm:flex-wrap max-w-[35.25rem]">
 					{service.servicesList.map((item) => (
-						<li>{item}</li>
+						<li>{item} /</li>
 					))}
 					</ul>
 				</div>
@@ -129,13 +129,13 @@ const services: ServiceItem[] = [
     position: absolute;
     top: 0;
     left: 50%;
-    transform: translateX(-50%);
+    transform: translateX(-50%) scaleX(0);
+    transform-origin: left center;
     width: 100vw;
     height: 100%;
     background-color: var(--color-black);
     z-index: -1;
-    opacity: 0;
-    transition: opacity 0.3s ease-out;
+    transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   }
 
   /* État ouvert */
@@ -146,7 +146,7 @@ const services: ServiceItem[] = [
   }
 
   .service-item.is-open::before {
-    opacity: 1;
+    transform: translateX(-50%) scaleX(1);
   }
 
   .service-item.is-open :global(.service-icon.wrapped) {
@@ -162,7 +162,7 @@ const services: ServiceItem[] = [
     }
 
     .service-item:hover::before {
-      opacity: 1;
+      transform: translateX(-50%) scaleX(1);
     }
 
     .service-item:hover :global(.service-icon.wrapped) {
