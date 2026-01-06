@@ -1,13 +1,11 @@
 --- 
 import Line from '../ui/Line.astro';
 import Wrapped from '../ui/Wrapped.astro';
-import Weather from '../ui/Weather.astro';
 
 interface Props {
 	titleLine1?: string;
 	titleLine2?: string;
 	titleLine3?: string;
-	subtitle?: string;
 	ctaLabel?: string;
 }
 
@@ -15,13 +13,24 @@ const {
 	titleLine1 = 'Nous\nconcevons',
 	titleLine2 = 'des',
 	titleLine3 = 'interfaces\nultra rapides',
-	subtitle = 'Agence Digitale & UX',
 	ctaLabel = 'Notre methode',
 } = Astro.props;
 ---
 
 <section class="relative h-svh -z-9998">
 	<div class="relative top-1/2 -translate-y-1/2 sm:top-2/5 md:top-1/2">
+		<div class="hidden md:flex justify-end mb-6">
+			<div class="flex gap-8 md:gap-16 lg:gap-24 font-mono text-sm uppercase">
+				<div class="flex flex-col gap-1">
+					<span id="hero-time">MAR --:--:--</span>
+					<span id="hero-weather">Chargement...</span>
+				</div>
+				<div class="flex flex-col gap-1">
+					<span>Agence Digitale</span>
+					<span>UX à Bruxelles</span>
+				</div>
+			</div>
+		</div>
 		<h1 class="font-display uppercase leading-none text-4xl lg:text-9xl xl:text-[140px] sm:text-[3.25rem] md:text-[4.875rem]">
 			<span class="block mb-2" set:html={titleLine1.replace(/\n/g, '<br>')}/>
 			<svg class="hidden sm:block lg:hidden -z-10 absolute w-[calc(100%-2*1rem)] -translate-y-[51%] center-x" viewBox="0 0 531 883" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -39,10 +48,79 @@ const {
 			<Line dotClass="z-9999" /> 
 			<span class="block text-right" set:html={`${titleLine2}<br>${titleLine3.replace(/\n/g, '<br>')}`} />
 		</h1>
-	</div>
-	<div class="absolute bottom-8 md:bottom-16 w-full flex justify-center sm:justify-between md:grid md:grid-cols-3 md:items-end">
-		<Weather class='hidden md:flex lg:items-end lg:gap-2 font-mono text-sm uppercase md:justify-self-start'/>
-		<p class="hidden sm:block text-sm font-mono uppercase md:justify-self-center">{subtitle}</p>
-		<button class="font-mono uppercase text-sm md:justify-self-end">{ctaLabel} <Wrapped class='text-[1rem] relative'>↓</Wrapped></button>
+		<button class="font-mono uppercase text-sm mt-4 sm:mt-8">{ctaLabel} <Wrapped class='text-[1rem] relative'>↓</Wrapped></button>
 	</div>
 </section>
+
+<script>
+	const days = ['Dim', 'Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam'];
+	const weatherCodes: Record<number, [string, string]> = {
+		0: ['Ensoleillé', '☀'],
+		1: ['Peu nuageux', '⛅'],
+		2: ['Partiellement nuageux', '☁'],
+		3: ['Couvert', '☁'],
+		45: ['Brouillard', '☁'],
+		48: ['Brouillard givrant', '☁'],
+		51: ['Bruine légère', '☂'],
+		53: ['Bruine modérée', '☂'],
+		55: ['Bruine dense', '☂'],
+		61: ['Pluie légère', '☂'],
+		63: ['Pluie modérée', '☂'],
+		65: ['Pluie forte', '☂'],
+		71: ['Neige légère', '❄'],
+		73: ['Neige modérée', '❄'],
+		75: ['Neige forte', '❄'],
+		77: ['Grésil', '❄'],
+		80: ['Averses légères', '☂'],
+		81: ['Averses modérées', '☂'],
+		82: ['Averses violentes', '☂'],
+		95: ['Orage', '⚡'],
+		96: ['Orage avec grêle', '⚡'],
+		99: ['Orage violent', '⚡']
+	};
+
+	function formatTime(date: Date) {
+		const dayName = days[date.getDay()];
+		const hours = date.getHours().toString().padStart(2, '0');
+		const minutes = date.getMinutes().toString().padStart(2, '0');
+		const seconds = date.getSeconds().toString().padStart(2, '0');
+		return `${dayName}    (${hours}:${minutes}:${seconds})`;
+	}
+
+	function updateTime() {
+		const timeEl = document.getElementById('hero-time');
+		if (timeEl) {
+			timeEl.textContent = formatTime(new Date());
+		}
+	}
+
+	async function fetchWeather() {
+		try {
+			const response = await fetch('https://api.open-meteo.com/v1/forecast?latitude=50.8503&longitude=4.3517&current_weather=true');
+			const data = await response.json();
+			const temp = Math.round(data.current_weather.temperature);
+			const code = data.current_weather.weathercode;
+			const weatherInfo = weatherCodes[code] || ['Indisponible', ''];
+			
+			const weatherEl = document.getElementById('hero-weather');
+			if (weatherEl) {
+				weatherEl.textContent = `${temp}° ${weatherInfo[0]} ${weatherInfo[1]}`;
+			}
+		} catch (error) {
+			console.error('Erreur météo:', error);
+		}
+	}
+
+	function init() {
+		updateTime();
+		fetchWeather();
+		setInterval(updateTime, 1000);
+		setInterval(fetchWeather, 1000 * 60 * 15);
+	}
+
+	if (document.readyState === 'complete') {
+		init();
+	} else {
+		window.addEventListener('load', init, { once: true });
+	}
+</script>
