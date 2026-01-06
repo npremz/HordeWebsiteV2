@@ -29,12 +29,106 @@ const ctaColumn = columns.find(col => col.title === 'CTAs');
 const { logo, logoAlt = 'Logo', items: menuItems = [] } = navigation;
 ---
 
-<footer class="relative mt-128 pb-16 xl:mt-232">
-	<Line />
+<footer class="relative mt-128 pb-16 xl:mt-232" id="footer-parallax">
+	<div class="footer-line-parallax">
+		<Line />
+	</div>
 
-	<svg class="relative w-full mt-10 sm:mt-16 lg:mt-24 md:w-[calc(100vw-8rem)] md:max-w-none! md:left-1/2 md:-translate-x-1/2" viewBox="0 0 281 43" fill="none" xmlns="http://www.w3.org/2000/svg">
-		<path d="M3.11089 42.4164C2.13059 42.4541 1.35767 42.1902 0.792121 41.6246C0.264272 41.0591 0.000347299 40.2861 0.000347299 39.3058V1.97938H3.73299V39.2493L23.9232 38.6837V41.8508L3.11089 42.4164ZM52.4925 41.8508H28.5696V1.97938H52.4925V5.14647H32.3022V20.3033H49.6647V23.4704H32.3022V38.6837H52.4925V41.8508ZM56.5468 1.97938H88.2742V5.14647H74.3051V41.8508H70.5725V5.14647H56.5468V1.97938ZM91.7966 13.1208L95.303 -5.13511e-05L98.9225 0.961386L95.4161 14.0822L91.7966 13.1208ZM135.051 31.9537C135.051 35.1585 133.92 37.7034 131.657 39.5886C129.395 41.4738 125.531 42.4164 120.064 42.4164C113.541 42.4164 108.96 41.0968 106.321 38.4575C103.719 35.8183 102.418 32.0102 102.418 27.0334H106.151C106.151 30.2759 106.698 32.7831 107.791 34.5552C108.885 36.3273 110.43 37.5526 112.429 38.2313C114.465 38.91 117.01 39.2493 120.064 39.2493C123.759 39.2493 126.549 38.7214 128.434 37.6657C130.357 36.5723 131.318 34.7626 131.318 32.2364C131.318 30.389 130.771 28.8997 129.678 27.7686C128.622 26.5998 127.322 25.6949 125.776 25.0539C124.23 24.413 122.137 23.7343 119.498 23.0179C118.442 22.754 117.745 22.5655 117.406 22.4524C114.389 21.5852 111.957 20.7369 110.11 19.9074C108.3 19.0402 106.867 17.9091 105.812 16.5141C104.756 15.1191 104.228 13.3281 104.228 11.1413C104.228 8.04964 105.34 5.65547 107.565 3.95882C109.827 2.26216 113.315 1.41383 118.028 1.41383C121.685 1.41383 124.663 2.09249 126.963 3.44982C129.263 4.76944 130.903 6.44724 131.884 8.48323C132.902 10.5192 133.411 12.6872 133.411 14.9871H129.678C129.678 11.5938 128.585 9.01108 126.398 7.23902C124.211 5.46695 121.421 4.58092 118.028 4.58092C114.861 4.58092 112.391 5.07107 110.619 6.05136C108.847 6.99395 107.961 8.6152 107.961 10.9151C107.961 12.4232 108.357 13.6675 109.148 14.6478C109.978 15.628 111.109 16.4575 112.542 17.1362C114.012 17.7771 116.01 18.4935 118.537 19.2853L120.29 19.7943C123.608 20.8123 126.228 21.736 128.151 22.5655C130.074 23.395 131.695 24.5826 133.015 26.1285C134.372 27.6366 135.051 29.5783 135.051 31.9537ZM156.188 1.97938H187.915V5.14647H173.946V41.8508H170.214V5.14647H156.188V1.97938ZM217.462 41.8508H213.786L208.47 25.676H192.521L187.205 41.8508H183.529L196.65 1.97938H204.341L217.462 41.8508ZM199.93 3.11048L193.539 22.5089H207.452L201.061 3.11048H199.93ZM224.651 42.4164C223.67 42.4541 222.897 42.1902 222.332 41.6246C221.804 41.0591 221.54 40.2861 221.54 39.3058V1.97938H225.273V39.2493L245.463 38.6837V41.8508L224.651 42.4164ZM275.22 1.97938H280.593L256.217 21.8868L280.593 41.8508H275.22L253.842 24.3187V41.8508H250.109V1.97938H253.842V19.5115L275.22 1.97938Z" fill="#222121"/>
-	</svg>
+	<div class="footer-logo-wrapper footer-svg-parallax z-9999">
+		<svg class="footer-logo relative w-full mt-10 sm:mt-16 lg:mt-24 md:w-[calc(100vw-8rem)] md:max-w-none! md:left-1/2 md:-translate-x-1/2" viewBox="0 0 281 43" fill="none" xmlns="http://www.w3.org/2000/svg">
+			<path d="M3.11089 42.4164C2.13059 42.4541 1.35767 42.1902 0.792121 41.6246C0.264272 41.0591 0.000347299 40.2861 0.000347299 39.3058V1.97938H3.73299V39.2493L23.9232 38.6837V41.8508L3.11089 42.4164ZM52.4925 41.8508H28.5696V1.97938H52.4925V5.14647H32.3022V20.3033H49.6647V23.4704H32.3022V38.6837H52.4925V41.8508ZM56.5468 1.97938H88.2742V5.14647H74.3051V41.8508H70.5725V5.14647H56.5468V1.97938ZM91.7966 13.1208L95.303 -5.13511e-05L98.9225 0.961386L95.4161 14.0822L91.7966 13.1208ZM135.051 31.9537C135.051 35.1585 133.92 37.7034 131.657 39.5886C129.395 41.4738 125.531 42.4164 120.064 42.4164C113.541 42.4164 108.96 41.0968 106.321 38.4575C103.719 35.8183 102.418 32.0102 102.418 27.0334H106.151C106.151 30.2759 106.698 32.7831 107.791 34.5552C108.885 36.3273 110.43 37.5526 112.429 38.2313C114.465 38.91 117.01 39.2493 120.064 39.2493C123.759 39.2493 126.549 38.7214 128.434 37.6657C130.357 36.5723 131.318 34.7626 131.318 32.2364C131.318 30.389 130.771 28.8997 129.678 27.7686C128.622 26.5998 127.322 25.6949 125.776 25.0539C124.23 24.413 122.137 23.7343 119.498 23.0179C118.442 22.754 117.745 22.5655 117.406 22.4524C114.389 21.5852 111.957 20.7369 110.11 19.9074C108.3 19.0402 106.867 17.9091 105.812 16.5141C104.756 15.1191 104.228 13.3281 104.228 11.1413C104.228 8.04964 105.34 5.65547 107.565 3.95882C109.827 2.26216 113.315 1.41383 118.028 1.41383C121.685 1.41383 124.663 2.09249 126.963 3.44982C129.263 4.76944 130.903 6.44724 131.884 8.48323C132.902 10.5192 133.411 12.6872 133.411 14.9871H129.678C129.678 11.5938 128.585 9.01108 126.398 7.23902C124.211 5.46695 121.421 4.58092 118.028 4.58092C114.861 4.58092 112.391 5.07107 110.619 6.05136C108.847 6.99395 107.961 8.6152 107.961 10.9151C107.961 12.4232 108.357 13.6675 109.148 14.6478C109.978 15.628 111.109 16.4575 112.542 17.1362C114.012 17.7771 116.01 18.4935 118.537 19.2853L120.29 19.7943C123.608 20.8123 126.228 21.736 128.151 22.5655C130.074 23.395 131.695 24.5826 133.015 26.1285C134.372 27.6366 135.051 29.5783 135.051 31.9537ZM156.188 1.97938H187.915V5.14647H173.946V41.8508H170.214V5.14647H156.188V1.97938ZM217.462 41.8508H213.786L208.47 25.676H192.521L187.205 41.8508H183.529L196.65 1.97938H204.341L217.462 41.8508ZM199.93 3.11048L193.539 22.5089H207.452L201.061 3.11048H199.93ZM224.651 42.4164C223.67 42.4541 222.897 42.1902 222.332 41.6246C221.804 41.0591 221.54 40.2861 221.54 39.3058V1.97938H225.273V39.2493L245.463 38.6837V41.8508L224.651 42.4164ZM275.22 1.97938H280.593L256.217 21.8868L280.593 41.8508H275.22L253.842 24.3187V41.8508H250.109V1.97938H253.842V19.5115L275.22 1.97938Z" fill="currentColor"/>
+		</svg>
+	</div>
+
+	<style>
+		.footer-logo-wrapper {
+			position: relative;
+			cursor: pointer;
+			overflow: visible;
+		}
+
+		.footer-logo-wrapper::before {
+			content: '';
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%) scaleX(0);
+			transform-origin: left center;
+			width: calc(100vw - 32px);
+			height: calc(100% + 60px);
+			background-color: white;
+			z-index: -1;
+			transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+		}
+
+		@media (min-width: 640px) {
+			.footer-logo-wrapper::before {
+				width: calc(100vw - 60px);
+			}
+		}
+
+		.footer-logo-wrapper:hover::before {
+			transform: translate(-50%, -50%) scaleX(1);
+		}
+
+		.footer-logo {
+			color: #222121;
+			transition: color 0.3s ease;
+			position: relative;
+			z-index: 1;
+		}
+
+		.footer-logo-wrapper:hover .footer-logo {
+			color: #222121;
+		}
+
+		/* Footer links avec underline animé */
+		.footer-link {
+			position: relative;
+			display: inline-block;
+		}
+
+		.footer-link::after {
+			content: '';
+			position: absolute;
+			bottom: 0;
+			left: 0;
+			width: 100%;
+			height: 1px;
+			background-color: currentColor;
+			transform: scaleX(0);
+			transform-origin: left center;
+			transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+		}
+
+		.footer-link:hover::after {
+			transform: scaleX(1);
+		}
+
+		/* Pour les liens CTA */
+		.footer-link-cta {
+			position: relative;
+			display: inline-block;
+			border-bottom: 1px solid var(--color-lines);
+		}
+
+		.footer-link-cta::after {
+			content: '';
+			position: absolute;
+			bottom: -1px;
+			left: 0;
+			width: 100%;
+			height: 1px;
+			background-color: currentColor;
+			transform: scaleX(0);
+			transform-origin: left center;
+			transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+		}
+
+		.footer-link-cta:hover::after {
+			transform: scaleX(1);
+		}
+	</style>
 
 	<svg class="hidden sm:block lg:hidden -z-10 absolute w-1/2 center-x bottom-0" viewBox="0 0 300 420" fill="none" xmlns="http://www.w3.org/2000/svg">
 		<rect x="-0.56875" y="0.56875" width="298.135" height="298.135" rx="149.068" transform="matrix(-1 -8.74228e-08 -8.74228e-08 1 298.135 314.887)" stroke="#B1B1B1" stroke-width="1.1375"/>
@@ -54,7 +148,7 @@ const { logo, logoAlt = 'Logo', items: menuItems = [] } = navigation;
 			{description && (
 				<div class="flex-col-container column-gap lg:col-span-7">
 					<h3 class="section-label">en résumé (on sait jamais)</h3>
-					<p class="text-2xl leading-tight sm:text-[32px] md:text-4xl lg:text-[2.5rem] xl:text-[3.25rem] sm:max-w-100 lg:max-w-124 xl:max-w-148">{description}</p>
+					<p class="text-2xl leading-tight sm:text-[32px] md:text-4xl lg:text-[2.5rem] xl:text-[3.25rem] max-w-[287px] sm:max-w-100 lg:max-w-124 xl:max-w-148">{description}</p>
 				</div>
 			)}
 
@@ -66,14 +160,14 @@ const { logo, logoAlt = 'Logo', items: menuItems = [] } = navigation;
 						<ul class="flex-col-container gap-2 sm:gap-4 text-link-lg">
 							{ctaColumn.links.map((link) => (
 								<li>
-									<a
-										href={link.url}
-										class="link-hover border-b border-lines"
-										target={link.isExternal ? '_blank' : undefined}
-										rel={link.isExternal ? 'noopener noreferrer' : undefined}
-									>
-										{link.label}
-									</a>
+								<a
+									href={link.url}
+									class="footer-link-cta"
+									target={link.isExternal ? '_blank' : undefined}
+									rel={link.isExternal ? 'noopener noreferrer' : undefined}
+								>
+									{link.label}
+								</a>
 								</li>
 							))}
 						</ul>
@@ -87,14 +181,14 @@ const { logo, logoAlt = 'Logo', items: menuItems = [] } = navigation;
 					<ul class="flex-col-container gap-2 sm:gap-4 text-link-lg">
 						{menuItems.map((item) => (
 							<li>
-								<a
-									href={item.url}
-									class="link-hover"
-									target={item.isExternal ? '_blank' : undefined}
-									rel={item.isExternal ? 'noopener noreferrer' : undefined}
-								>
-									{item.label}
-								</a>
+							<a
+								href={item.url}
+								class="footer-link"
+								target={item.isExternal ? '_blank' : undefined}
+								rel={item.isExternal ? 'noopener noreferrer' : undefined}
+							>
+								{item.label}
+							</a>
 							</li>
 						))}
 					</ul>
@@ -102,9 +196,9 @@ const { logo, logoAlt = 'Logo', items: menuItems = [] } = navigation;
 			</div>
 
 			<!-- Logo -->
-			<div class="flex-col-container gap-5 md:gap-8 lg:grid lg:grid-cols-12 lg:gap-0 lg:col-span-12 lg:mt-24 xl:mt-48">
+			<div class="flex-col-container gap-5 md:gap-8 lg:grid lg:grid-cols-12 lg:items-end lg:gap-0 lg:col-span-12 lg:mt-24 xl:mt-48">
 				{logo ? (
-					<a href="/" class="lg:col-span-7">
+					<a href="/" class="lg:col-span-7 lg:self-end">
 						<img
 							src={logo}
 							alt={logoAlt}
@@ -116,18 +210,18 @@ const { logo, logoAlt = 'Logo', items: menuItems = [] } = navigation;
 						/>
 					</a>
 				) : (
-					<a href="/" class="text-xl font-display">{logoAlt}</a>
+					<a href="/" class="text-xl font-display lg:self-end">{logoAlt}</a>
 				)}
 				<!-- Copyright et liens légaux -->
-				<div class="flex-col-container gap-2 section-label sm:flex-row sm:justify-between sm:items-end lg:grid lg:grid-cols-5 lg:gap-0 lg:col-span-5">
-					<div class="flex-col-container gap-2 lg:col-span-3">
-						{legalLinks.map((link) => (
-							<a href={link.url} class="link-hover">
-								{link.label}
-							</a>
-						))}
+				<div class="flex-col-container gap-2 section-label sm:flex-row sm:justify-between sm:items-end lg:grid lg:grid-cols-5 lg:gap-0 lg:col-span-5 lg:self-end">
+					<div class="flex-col-container gap-2 lg:col-span-3 lg:justify-end">
+					{legalLinks.map((link) => (
+						<a href={link.url} class="link-hover">
+							{link.label}
+						</a>
+					))}
 					</div>
-					{copyright && <span class="sm:max-w-[250px] md:max-w-[200px] sm:text-right lg:col-span-2 lg:justify-self-end">{copyright}</span>}
+					{copyright && <span class="sm:max-w-[250px] md:max-w-[200px] sm:text-right lg:col-span-2 lg:justify-self-end lg:self-end">{copyright}</span>}
 				</div>
 			</div>
 		</div>
