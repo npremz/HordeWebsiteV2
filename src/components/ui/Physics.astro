@@ -181,29 +181,79 @@ const { class: className = '' } = Astro.props;
 
     // Créer les corps pour chaque lettre avec leurs dimensions propres
     const bodies: Matter.Body[] = [];
-    const dimensions: { width: number; height: number }[] = [];
+    const dimensions: { width: number; height: number; offsetX: number; offsetY: number }[] = [];
 
     letters.forEach((letter, index) => {
       // Lire les dimensions originales du SVG
       const originalWidth = parseFloat(letter.getAttribute('width') || '100');
       const originalHeight = parseFloat(letter.getAttribute('height') || '100');
 
+      // Détecter la forme en L (132x134) - comparaison arrondie pour éviter les problèmes de parsing
+      const isLShape = Math.round(originalWidth) === 132 && Math.round(originalHeight) === 134;
+
       // Appliquer le scale
       const letterWidth = originalWidth * scale;
       const letterHeight = originalHeight * scale;
 
-      dimensions.push({ width: letterWidth, height: letterHeight });
+      // Offset pour compenser le décalage du centre de masse (pour les formes en L)
+      // Le centre de masse du L est décalé vers le haut-droite, donc on compense
+      const offsetX = isLShape ? 11 * scale : 0;
+      const offsetY = isLShape ? 11 * scale : 0;
+
+      dimensions.push({ width: letterWidth, height: letterHeight, offsetX, offsetY });
 
       // Position initiale au-dessus du container, espacée
       const x = (width / 2) + (Math.random() - 0.5) * width * 0.6;
       const y = -letterHeight - (index * 80 * scale) - Math.random() * 100;
 
-      const body = Bodies.rectangle(x, y, letterWidth, letterHeight, {
-        restitution: 0.3,
-        friction: 0.5,
-        frictionAir: 0.01,
-        angle: (Math.random() - 0.5) * 0.5,
-      });
+      let body: Matter.Body;
+
+      if (isLShape) {
+        // Créer un compound body pour la forme en L
+        // Rectangle horizontal en haut: 132 x 67
+        const topWidth = 132 * scale;
+        const topHeight = 67 * scale;
+        // Rectangle vertical en bas à gauche: 66 x 67
+        const bottomWidth = 66 * scale;
+        const bottomHeight = 67 * scale;
+
+        // Positions relatives au centre du L
+        // Centre du L est approximativement à (66, 67)
+        const centerX = 66 * scale;
+        const centerY = 67 * scale;
+
+        const topPart = Bodies.rectangle(
+          (66 * scale) - centerX,  // centré horizontalement sur le rectangle du haut
+          (33.5 * scale) - centerY, // centré verticalement sur le rectangle du haut
+          topWidth,
+          topHeight
+        );
+
+        const bottomPart = Bodies.rectangle(
+          (33 * scale) - centerX,   // centré horizontalement sur le rectangle du bas
+          (100.5 * scale) - centerY, // centré verticalement sur le rectangle du bas
+          bottomWidth,
+          bottomHeight
+        );
+
+        body = Body.create({
+          parts: [topPart, bottomPart],
+          restitution: 0.3,
+          friction: 0.5,
+          frictionAir: 0.01,
+        });
+
+        Body.setPosition(body, { x, y });
+        Body.setAngle(body, (Math.random() - 0.5) * 0.5);
+      } else {
+        // Corps rectangle simple pour les autres formes
+        body = Bodies.rectangle(x, y, letterWidth, letterHeight, {
+          restitution: 0.3,
+          friction: 0.5,
+          frictionAir: 0.01,
+          angle: (Math.random() - 0.5) * 0.5,
+        });
+      }
 
       bodies.push(body);
       Composite.add(world, body);
@@ -221,9 +271,16 @@ const { class: className = '' } = Astro.props;
         const letter = letters[index];
         const dim = dimensions[index];
         if (letter && dim) {
-          const x = body.position.x - dim.width / 2;
-          const y = body.position.y - dim.height / 2;
           const angle = body.angle;
+
+          // Transformer l'offset selon l'angle du corps
+          const cos = Math.cos(angle);
+          const sin = Math.sin(angle);
+          const rotatedOffsetX = dim.offsetX * cos - dim.offsetY * sin;
+          const rotatedOffsetY = dim.offsetX * sin + dim.offsetY * cos;
+
+          const x = body.position.x - dim.width / 2 + rotatedOffsetX;
+          const y = body.position.y - dim.height / 2 + rotatedOffsetY;
 
           letter.style.transform = `translate(${x}px, ${y}px) rotate(${angle}rad)`;
         }
