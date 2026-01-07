@@ -54,25 +54,24 @@ const svgs = [
 		<h2 class="heading-display-sm text-[1.625rem] sm:text-[2.5rem] md:text-[4rem] lg:text-[6rem] xl:text-[7.5rem] flex flex-col *:block *:w-fit [&>*:first-child]:self-start [&>*:last-child]:self-end" set:html={title.replace(/\n/g, '<br>')}/>
 		<span class="font-mono text-[14px] leading-none absolute bottom-0 left-0">({stepsCount})</span>
 	</div>
-	<div class="w-full border border-lines overflow-hidden py-12 sm:py-16 lg:pt-30 bg-[#D0CDCB]">
-		<ul class="carousel-track flex flex-row gap-[3.75rem] -ml-px overflow-x-auto scrollbar-hide snap-x snap-mandatory cursor-grab active:cursor-grabbing">
+	<div class="embla w-full border border-lines overflow-hidden select-none">
+		<ul class="embla__container flex flex-row -ml-px scrollbar-hide">
 			{steps.map((step, index) => (
-				<li class:list={[ 
-                    'carousel-item snap-start shrink-0 h-80 w-64 sm:h-154 sm:w-112 md:h-160 md:w-136 lg:w-260 border border-lines p-[1.875rem] flex flex-col justify-between lg:flex-row bg-[#F4F3F3]' 
+				<li class:list={[
+                    'embla__slide shrink-0 w-3/4 m-5 mr-0 pr-5 sm:my-16 sm:ml-10 sm:pr-10 gap-10 sm:gap-16 md:gap-10 lg:gap-16 lg:ml-16 lg:pr-16 xl:my-24 flex flex-col md:flex-row justify-between border-lines lg:flex-row', `${index == 2 ? '' : 'border-r'}`
                 ]}> 
-					<div class="w-full lg:h-full" set:html={svgs[index]}>
-					</div>
-					<div class="flex justify-between items-end lg:flex-col">
-						<div class="leading-[1.1] sm:text-[1.625rem] md:text-[2rem] sm:max-w-45 lg:max-w-none lg:text-right">
+					<div class="flex flex-col gap-5 sm:flex-row sm:justify-between md:flex-col">
+						<div class="font-display leading-none text-[2rem] sm:text-[4rem] not-only:shrink-0">
+							/{String(index + 1).padStart(2, '0')}
+						</div>
+						<div class="uppercase text-sm font-mono text-justify leading-[1.7] sm:max-w-[200px]">
 							{step}
 						</div>
-						<div class="font-display leading-[0.7] text-[4rem] sm:text-[7.5rem] shrink-0">
-							{String(index + 1).padStart(2, '0')}
-						</div>
+					</div>
+					<div class="w-full lg:h-full max-h-215" set:html={svgs[index]}>
 					</div>
 				</li>
 			))}
-            <li class="carousel-spacer shrink-0 w-[50vw]"></li>
 		</ul>
 	</div>
 </div>
@@ -86,110 +85,33 @@ const svgs = [
 		scrollbar-width: none;
 	}
 
-    .carousel-track {
-        -webkit-overflow-scrolling: touch;
-        scroll-behavior: smooth;
-    }
+	.embla {
+		cursor: grab;
+	}
+	.embla:active {
+		cursor: grabbing;
+	}
 </style>
 
 <script>
-	function initCarousel() {
-		const track = document.querySelector('.carousel-track') as HTMLElement;
-		const items = document.querySelectorAll('.carousel-item');
-		
-		if (!track || items.length === 0) return;
+	import EmblaCarousel from 'embla-carousel';
 
-		let intervalId: number;
-		let isAutoPlaying = true;
-		const AUTO_PLAY_DELAY = 4000;
+	function initEmbla() {
+		const emblaNode = document.querySelector('.embla') as HTMLElement;
+		if (!emblaNode) return;
 
-		function getAccumulatedWidths() {
-            const widths = [0];
-            let sum = 0;
-            for (let i = 0; i < items.length - 1; i++) {
-                sum += items[i].clientWidth + 20; // 20 is the gap
-                widths.push(sum);
-            }
-            return widths;
-        }
-
-		function autoPlay() {
-			if (!isAutoPlaying) return;
-
-			const scrollLeft = Math.round(track.scrollLeft);
-            const widths = getAccumulatedWidths();
-            
-            // Find current item index (closest)
-            let currentIdx = 0;
-            let minDiff = Infinity;
-            widths.forEach((pos, idx) => {
-                const diff = Math.abs(scrollLeft - pos);
-                if (diff < minDiff) {
-                    minDiff = diff;
-                    currentIdx = idx;
-                }
-            });
-
-            const nextIdx = (currentIdx + 1) % items.length;
-            track.scrollTo({ left: widths[nextIdx], behavior: 'smooth' });
-		}
-
-		function startAutoPlay() {
-			stopAutoPlay();
-			intervalId = window.setInterval(autoPlay, AUTO_PLAY_DELAY);
-		}
-
-		function stopAutoPlay() {
-			if (intervalId) clearInterval(intervalId);
-		}
-
-		track.addEventListener('mouseenter', () => {
-			isAutoPlaying = false;
-			stopAutoPlay();
+		const embla = EmblaCarousel(emblaNode, {
+			dragFree: true,
+			containScroll: 'trimSnaps',
 		});
 
-		track.addEventListener('mouseleave', () => {
-			isAutoPlaying = true;
-			startAutoPlay();
-		});
-
-		track.addEventListener('touchstart', () => {
-			isAutoPlaying = false;
-			stopAutoPlay();
-		}, { passive: true });
-
-		// Drag to scroll (desktop)
-		let isDown = false;
-		let startX: number;
-		let scrollLeft: number;
-
-		track.addEventListener('mousedown', (e) => {
-			isDown = true;
-			isAutoPlaying = false;
-			stopAutoPlay();
-			startX = e.pageX - track.offsetLeft;
-			scrollLeft = track.scrollLeft;
-            track.style.scrollBehavior = 'auto';
-		});
-
-		window.addEventListener('mouseup', () => {
-            if (isDown) {
-                isDown = false;
-                track.style.scrollBehavior = 'smooth';
-            }
-		});
-
-		track.addEventListener('mousemove', (e) => {
-			if (!isDown) return;
-			e.preventDefault();
-			const x = e.pageX - track.offsetLeft;
-			const walk = (x - startX) * 2;
-			track.scrollLeft = scrollLeft - walk;
-		});
-
-		startAutoPlay();
+		// Cleanup on view transitions
+		document.addEventListener('astro:before-swap', () => {
+			embla.destroy();
+		}, { once: true });
 	}
 
-	document.addEventListener('astro:page-load', initCarousel);
-	initCarousel();
+	initEmbla();
+	document.addEventListener('astro:after-swap', initEmbla);
 </script>
+
