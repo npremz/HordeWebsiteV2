@@ -5,16 +5,23 @@ import Wrapped from '../ui/Wrapped.astro';
 interface Props {
 	titleLine1?: string;
 	titleLine2?: string;
-	titleLine3?: string;
+	titleLine3Prefix?: string;
 	ctaLabel?: string;
 }
 
 const {
 	titleLine1 = 'Nous\nconcevons',
 	titleLine2 = 'des',
-	titleLine3 = 'interfaces\nultra rapides',
+	titleLine3Prefix = 'interfaces',
 	ctaLabel = 'Notre methode',
 } = Astro.props;
+
+const typewriterWords = [
+	'ultra rapides',
+	'optimisees',
+	'user friendly',
+	'soignees',
+];
 ---
 
 <section class="relative h-svh -z-9998">
@@ -46,7 +53,18 @@ const {
 				<path d="M1217.5 0.5V673C1217.5 1009.07 945.065 1281.5 609 1281.5C272.935 1281.5 0.500003 1009.07 0.5 673V0.5H1217.5Z" stroke="#B1B1B1"/>
 			</svg>
 			<Line dotClass="z-9999" /> 
-			<span class="block text-right" set:html={`${titleLine2}<br>${titleLine3.replace(/\n/g, '<br>')}`} />
+			<span class="block text-right">
+				{titleLine2}<br>
+				{titleLine3Prefix}<br>
+				<span class="word-rotator">
+					<span class="word-rotator-inner">
+						{typewriterWords.map((word) => (
+							<span class="word-rotator-word">{word}</span>
+						))}
+						<span class="word-rotator-word">{typewriterWords[0]}</span>
+					</span>
+				</span>
+			</span>
 		</h1>
 		<button class="hidden md:block mt-4 sm:mt-8 font-mono uppercase text-sm ">{ctaLabel} <Wrapped class='text-[1rem] relative'>↓</Wrapped></button>
 	</div>
@@ -142,3 +160,79 @@ const {
 
 	document.addEventListener('astro:before-swap', cleanup, { once: true });
 </script>
+
+<script>
+	let rotatorIntervalId: number | null = null;
+	let currentIndex = 0;
+
+	function initWordRotator() {
+		const inner = document.querySelector('.word-rotator-inner') as HTMLElement;
+		const words = document.querySelectorAll('.word-rotator-word');
+
+		if (!inner || words.length === 0) return;
+
+		const totalWords = words.length - 1; // -1 car le dernier est un clone du premier
+		currentIndex = 0;
+		inner.style.transform = 'translateY(0)';
+
+		rotatorIntervalId = window.setInterval(() => {
+			currentIndex++;
+			inner.style.transform = `translateY(calc(-${currentIndex} * 0.9em))`;
+
+			// Quand on atteint le clone, reset instantané vers le vrai premier
+			if (currentIndex >= totalWords) {
+				setTimeout(() => {
+					inner.style.transition = 'none';
+					inner.style.transform = 'translateY(0)';
+					currentIndex = 0;
+					// Force reflow puis réactive la transition
+					inner.offsetHeight;
+					inner.style.transition = '';
+				}, 500); // Attendre la fin de la transition
+			}
+		}, 2500);
+	}
+
+	function cleanupWordRotator() {
+		if (rotatorIntervalId) {
+			clearInterval(rotatorIntervalId);
+			rotatorIntervalId = null;
+		}
+	}
+
+	// Initialize
+	if (document.readyState === 'complete') {
+		initWordRotator();
+	} else {
+		window.addEventListener('load', initWordRotator, { once: true });
+	}
+
+	// Cleanup on navigation
+	document.addEventListener('astro:before-swap', cleanupWordRotator, { once: true });
+
+	// Re-init after navigation
+	document.addEventListener('astro:after-swap', initWordRotator);
+</script>
+
+<style is:global>
+	.word-rotator {
+		display: inline-block;
+		height: 0.9em;
+		line-height: 0.9;
+		overflow: hidden;
+		vertical-align: bottom;
+	}
+
+	.word-rotator-inner {
+		display: flex;
+		flex-direction: column;
+		transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+	}
+
+	.word-rotator-word {
+		display: block;
+		height: 0.9em;
+		line-height: 0.9;
+		flex-shrink: 0;
+	}
+</style>
