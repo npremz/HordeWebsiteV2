@@ -202,13 +202,11 @@ const { class: className = '' } = Astro.props;
       const mouseConstraint = MouseConstraint.create(engine, {
         mouse: mouse,
         constraint: {
-          stiffness: 0.2,
+          stiffness: 0.05,
+          damping: 0.1,
           render: { visible: false }
         }
       });
-
-      // Limiter la force du drag pour éviter les explosions
-      mouseConstraint.constraint.damping = 0.5;
 
       Composite.add(world, mouseConstraint);
 

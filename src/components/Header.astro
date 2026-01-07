@@ -44,7 +44,7 @@ const textColorClass = isDark ? 'text-bg-light' : 'text-black';
     </a>
 
     <div class="flex gap-16"> 
-      <a href="/contact" class="hidden md:block tracking-wide sm:text-[1.625rem] md:text-[2rem] nav-scramble" data-text="Démarrer un projet">Démarrer un projet</a>
+      <a href="/contact" class="hidden md:block sm:text-[1.625rem] md:text-[2rem] nav-scramble" data-text="Démarrer un projet">Démarrer un projet</a>
       <div class="relative">
         <button
           type="button"
@@ -54,7 +54,7 @@ const textColorClass = isDark ? 'text-bg-light' : 'text-black';
           aria-controls="mobile-menu"
           aria-label="Ouvrir le menu"
         >
-          <span id="menu-label" class="tracking-wide sm:text-[1.625rem] md:text-[2rem]" data-scramble>Menu</span>
+          <span id="menu-label" class=" sm:text-[1.625rem] md:text-[2rem]" data-scramble>Menu</span>
           <Wrapped padding="0.5rem" class='sm:mt-1 md:mt-2' variant={variant}>
             <span id="menu-icon" class="leading-none font-mono">+</span>
           </Wrapped>
@@ -270,8 +270,8 @@ const textColorClass = isDark ? 'text-bg-light' : 'text-black';
           element.textContent = originalText;
         }
 
-        iteration += 1 / 3;
-      }, 30);
+        iteration += 1;
+      }, 20);
 
       scrambleIntervals.set(element, intervalId);
     }
