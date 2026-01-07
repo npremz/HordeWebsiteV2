@@ -112,6 +112,11 @@ const { class: className = '' } = Astro.props;
     position: absolute;
     will-change: transform;
     pointer-events: none;
+    opacity: 0;
+  }
+
+  .physics-letter.physics-ready {
+    opacity: 1;
   }
 </style>
 
@@ -128,6 +133,9 @@ const { class: className = '' } = Astro.props;
     const letters = document.querySelectorAll<SVGSVGElement>('.physics-letter');
 
     if (!container || letters.length === 0) return;
+
+    // Reset les classes et cacher les lettres
+    letters.forEach((letter) => letter.classList.remove('physics-ready'));
 
     // Nettoyer l'ancien canvas si existant
     const oldCanvas = container.querySelector('canvas');
@@ -313,6 +321,11 @@ const { class: className = '' } = Astro.props;
           const y = body.position.y - dim.height / 2 + rotatedOffsetY;
 
           letter.style.transform = `translate(${x}px, ${y}px) rotate(${angle}rad)`;
+          
+          // Rendre visible une fois positionné
+          if (!letter.classList.contains('physics-ready')) {
+            letter.classList.add('physics-ready');
+          }
         }
       });
 
@@ -322,15 +335,44 @@ const { class: className = '' } = Astro.props;
     update();
   }
 
+  // Observer pour déclencher quand le container est visible
+  let hasTriggered = false;
+  let observer: IntersectionObserver | null = null;
+
+  function setupObserver() {
+    const container = document.getElementById('physics-container');
+    if (!container) return;
+
+    hasTriggered = false;
+
+    // Cleanup ancien observer
+    if (observer) observer.disconnect();
+
+    observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && !hasTriggered) {
+            hasTriggered = true;
+            initPhysics();
+            observer?.disconnect();
+          }
+        });
+      },
+      { threshold: 0.1, rootMargin: '-400px 0px' }
+    );
+
+    observer.observe(container);
+  }
+
   // Init au chargement
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initPhysics);
+    document.addEventListener('DOMContentLoaded', setupObserver);
   } else {
-    initPhysics();
+    setupObserver();
   }
 
   // Re-init sur les view transitions
-  document.addEventListener('astro:after-swap', initPhysics);
+  document.addEventListener('astro:after-swap', setupObserver);
 
   // Re-init uniquement sur resize horizontal (évite les problèmes sur mobile)
   let lastWidth = window.innerWidth;
@@ -341,7 +383,10 @@ const { class: className = '' } = Astro.props;
     if (currentWidth !== lastWidth) {
       lastWidth = currentWidth;
       clearTimeout(resizeTimeout);
-      resizeTimeout = setTimeout(initPhysics, 150);
+      resizeTimeout = setTimeout(() => {
+        hasTriggered = false;
+        setupObserver();
+      }, 150);
     }
   });
 </script>
