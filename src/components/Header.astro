@@ -69,7 +69,7 @@ const textColorClass = isDark ? 'text-bg-light' : 'text-black';
               <li class="menu-item" style={`--item-delay: ${0.05 + index * 0.04}s`}>
                 <a
                   href={item.url}
-                  class="menu-link nav-scramble text-black text-3xl sm:text-[3.5625rem] font-sans nav-link-hover whitespace-nowrap block tracking-[-0.02em] w-fit"
+                  class="menu-link nav-scramble text-black! text-3xl sm:text-[3.5625rem] font-sans nav-link-hover whitespace-nowrap block tracking-[-0.02em] w-fit"
                   target={item.isExternal ? '_blank' : undefined}
                   rel={item.isExternal ? 'noopener noreferrer' : undefined}
                   data-text={item.label}
@@ -85,14 +85,14 @@ const textColorClass = isDark ? 'text-bg-light' : 'text-black';
             {ctaButton?.label && ctaButton?.url && (
               <a
                 href={ctaButton.url}
-                class="menu-link tracking-[-0.02em] nav-link-cta sm:text-[2rem] w-fit"
+                class="menu-link text-black! tracking-[-0.02em] nav-link-cta sm:text-[2rem] w-fit"
               >
                 {ctaButton.label}
               </a>
             )}
             <button
               type="button"
-              class="menu-link tracking-[-0.02em] nav-link-hover sm:text-[2rem] text-left w-fit"
+              class="menu-link text-black! tracking-[-0.02em] nav-link-hover sm:text-[2rem] text-left w-fit"
             >
               English version
             </button>
