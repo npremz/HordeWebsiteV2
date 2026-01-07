@@ -50,6 +50,8 @@ const {
   let pixels: { x: number; y: number; alpha: number }[] = [];
   let pixelSize = 20;
   let isAnimating = false;
+  let scrollHandler: (() => void) | null = null;
+  let resizeHandler: (() => void) | null = null;
 
   function getPixelSize(): number {
     return Math.floor(window.innerWidth / 5);
@@ -240,29 +242,57 @@ const {
     checkAndToggleAnimation();
   }
 
-  window.addEventListener('resize', () => {
-    const currentWidth = window.innerWidth;
-    if (currentWidth === lastWidth) return;
-
-    lastWidth = currentWidth;
+  function cleanup() {
+    stopAnimation();
     clearTimeout(resizeTimeout);
-
-    resizeTimeout = setTimeout(() => {
-      resizeCanvas();
-      pixels = [];
-    }, 200);
-  });
-
-  // Scroll listener to restart animation when entering zone
-  window.addEventListener('scroll', () => {
-    if (!isAnimating) {
-      checkAndToggleAnimation();
+    if (scrollHandler) {
+      window.removeEventListener('scroll', scrollHandler);
+      scrollHandler = null;
     }
-  }, { passive: true });
+    if (resizeHandler) {
+      window.removeEventListener('resize', resizeHandler);
+      resizeHandler = null;
+    }
+  }
+
+  function setupListeners() {
+    // Cleanup anciens listeners
+    if (scrollHandler) window.removeEventListener('scroll', scrollHandler);
+    if (resizeHandler) window.removeEventListener('resize', resizeHandler);
+
+    resizeHandler = () => {
+      const currentWidth = window.innerWidth;
+      if (currentWidth === lastWidth) return;
+
+      lastWidth = currentWidth;
+      clearTimeout(resizeTimeout);
+
+      resizeTimeout = setTimeout(() => {
+        resizeCanvas();
+        pixels = [];
+      }, 200);
+    };
+
+    scrollHandler = () => {
+      if (!isAnimating) {
+        checkAndToggleAnimation();
+      }
+    };
+
+    window.addEventListener('resize', resizeHandler);
+    window.addEventListener('scroll', scrollHandler, { passive: true });
+  }
 
   // Initialisation au chargement
   init();
+  setupListeners();
+
+  // Cleanup avant view transition
+  document.addEventListener('astro:before-swap', cleanup, { once: true });
 
   // Réinitialisation après une view transition
-  document.addEventListener('astro:after-swap', init);
+  document.addEventListener('astro:after-swap', () => {
+    init();
+    setupListeners();
+  });
 </script>

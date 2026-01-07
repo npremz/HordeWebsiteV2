@@ -128,11 +128,34 @@ const { class: className = '' } = Astro.props;
   // Détecter si c'est un device avec pointeur (souris)
   const hasPointer = window.matchMedia('(pointer: fine)').matches;
 
+  // Variables pour le cleanup
+  let currentEngine: Matter.Engine | null = null;
+  let animationFrameId: number | null = null;
+
+  function cleanupPhysics() {
+    // Arrêter l'animation
+    if (animationFrameId) {
+      cancelAnimationFrame(animationFrameId);
+      animationFrameId = null;
+    }
+    
+    // Nettoyer le moteur Matter.js
+    if (currentEngine) {
+      Matter.Events.off(currentEngine);
+      Composite.clear(currentEngine.world, false);
+      Engine.clear(currentEngine);
+      currentEngine = null;
+    }
+  }
+
   function initPhysics() {
     const container = document.getElementById('physics-container');
     const letters = document.querySelectorAll<SVGSVGElement>('.physics-letter');
 
     if (!container || letters.length === 0) return;
+
+    // Cleanup avant de réinitialiser
+    cleanupPhysics();
 
     // Reset les classes et cacher les lettres
     letters.forEach((letter) => letter.classList.remove('physics-ready'));
@@ -151,6 +174,7 @@ const { class: className = '' } = Astro.props;
 
     // Créer le moteur
     const engine = Engine.create();
+    currentEngine = engine;
     const world = engine.world;
 
     // Gravité
@@ -209,6 +233,36 @@ const { class: className = '' } = Astro.props;
       });
 
       Composite.add(world, mouseConstraint);
+
+      // Appliquer un torque continu basé sur le point de saisie
+      Matter.Events.on(mouseConstraint, 'startdrag', (event: { body: Matter.Body }) => {
+        const body = event.body;
+        if (!body) return;
+
+        const applyGravityTorque = () => {
+          // Arrêter si l'engine a été nettoyé ou si on ne tient plus ce body
+          if (!currentEngine || mouseConstraint.body !== body) return;
+          
+          // Point de saisie relatif au centre de masse
+          const grabPoint = mouseConstraint.constraint.pointA;
+          const bodyPos = body.position;
+          
+          if (grabPoint && bodyPos) {
+            // Vecteur du centre vers le point de saisie
+            const offsetX = grabPoint.x - bodyPos.x;
+            
+            // Torque proportionnel à la distance horizontale du point de saisie
+            // Si on attrape à droite, le côté gauche tombe (torque négatif)
+            // Si on attrape à gauche, le côté droit tombe (torque positif)
+            const torque = -offsetX * 0.000005 * body.mass;
+            Body.setAngularVelocity(body, body.angularVelocity + torque);
+          }
+          
+          requestAnimationFrame(applyGravityTorque);
+        };
+        
+        applyGravityTorque();
+      });
 
       // Changer le curseur au survol/drag
       canvas.addEventListener('mousedown', () => { canvas.style.cursor = 'grabbing'; });
@@ -327,7 +381,7 @@ const { class: className = '' } = Astro.props;
         }
       });
 
-      requestAnimationFrame(update);
+      animationFrameId = requestAnimationFrame(update);
     }
 
     update();

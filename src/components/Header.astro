@@ -75,6 +75,7 @@ const textColorClass = isDark ? 'text-bg-light' : 'text-black';
                     target={item.isExternal ? '_blank' : undefined}
                     rel={item.isExternal ? 'noopener noreferrer' : undefined}
                     data-text={item.label}
+                    tabindex="-1"
                   >
                     {item.label}
                   </a>
@@ -88,6 +89,7 @@ const textColorClass = isDark ? 'text-bg-light' : 'text-black';
                 <a
                   href={ctaButton.url}
                   class="menu-link text-black! tracking-[-0.02em] nav-link-cta sm:text-[2rem] w-fit"
+                  tabindex="-1"
                 >
                   {ctaButton.label}
                 </a>
@@ -95,6 +97,7 @@ const textColorClass = isDark ? 'text-bg-light' : 'text-black';
               <button
                 type="button"
                 class="menu-link text-black! tracking-[-0.02em] nav-link-hover sm:text-[2rem] text-left w-fit"
+                tabindex="-1"
               >
                 English version
               </button>
@@ -302,6 +305,8 @@ const textColorClass = isDark ? 'text-bg-light' : 'text-black';
       if (label) scrambleText(label, 'Close');
       if (icon) icon.textContent = '-';
       document.body.style.overflow = 'hidden';
+      // Rendre les liens focusables
+      links.forEach(link => link.setAttribute('tabindex', '0'));
     }
 
     function close() {
@@ -314,6 +319,8 @@ const textColorClass = isDark ? 'text-bg-light' : 'text-black';
       if (label) scrambleText(label, 'Menu');
       if (icon) icon.textContent = '+';
       document.body.style.overflow = '';
+      // Retirer les liens du focus quand menu fermé
+      links.forEach(link => link.setAttribute('tabindex', '-1'));
     }
 
     toggle?.addEventListener('click', (e) => {
@@ -329,6 +336,16 @@ const textColorClass = isDark ? 'text-bg-light' : 'text-black';
         close();
       }
     });
+
+    // Cleanup on view transitions
+    document.addEventListener('astro:before-swap', () => {
+      if (scrambleInterval) {
+        clearInterval(scrambleInterval);
+        scrambleInterval = null;
+      }
+      scrambleIntervals.forEach((id) => clearInterval(id));
+      scrambleIntervals.clear();
+    }, { once: true });
   }
 
   initMenu();

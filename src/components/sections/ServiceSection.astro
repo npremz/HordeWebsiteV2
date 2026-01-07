@@ -196,6 +196,14 @@ const services: ServiceItem[] = [
       return shuffled;
     }
 
+    // Cleanup tous les intervalles de scramble
+    function cleanupScrambleIntervals() {
+      scrambleIntervals.forEach((intervalId) => {
+        clearInterval(intervalId);
+      });
+      scrambleIntervals.clear();
+    }
+
     // Scramble pour les titres avec support HTML (br)
     function scrambleServiceTitle(element: HTMLElement, originalHtml: string) {
       const existingInterval = scrambleIntervals.get(element);
@@ -289,6 +297,9 @@ const services: ServiceItem[] = [
         }
       });
     });
+
+    // Cleanup on view transitions
+    document.addEventListener('astro:before-swap', cleanupScrambleIntervals, { once: true });
   }
 
   // Init au chargement
