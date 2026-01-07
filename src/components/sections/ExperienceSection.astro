@@ -3,14 +3,14 @@ import Physics from '../ui/Physics.astro';
 
 interface Props {
 	label?: string;
-	headline?: string;
-	description?: string;
+	text?: string;
+	second?: string;
 }
 
 const {
 	label = 'L\'experience\nest la clé',
-	headline = 'Le design attire, l\'expérience retient.',
-	description = 'Nous créons des interfaces intuitives qui répondent aux intentions de vos utilisateurs.',
+	text = '<span>Le design<br>attire,</span><span>l\'expérience<br>retient.</span>',
+	second = 'l\'expérience retient.',
 } = Astro.props;
 ---
 
@@ -25,8 +25,7 @@ const {
 		</svg>
 	</div>
 	<div class="section-spacing heading-display-lg">
-		<p set:html={headline.replace(/\n/g, '<br class="lg:hidden">')} />
-		<p>{description}</p>
+		<p class="heading-display-sm leading-none text-[1.625rem] sm:text-[2.5rem] md:text-[4rem] lg:text-[6rem] xl:text-[7.5rem] flex flex-col *:block *:w-fit  [&>*:first-child]:self-start [&>*:last-child]:self-end [&>*:last-child]:text-right" set:html={text.replace(/\n/g, '<br>')} />
 	</div>
 </div>
 <Physics class='section-spacing' />

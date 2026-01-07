@@ -24,6 +24,14 @@
   font-display: swap;
 }
 
+@font-face {
+  font-family: 'PP Neue Bit';
+  src: url('../assets/fonts/PPNeueBit-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
 :root{
   --gutter: 1rem;
 }
@@ -265,4 +273,8 @@ svg circle,
 svg rect,
 svg polygon {
   vector-effect: non-scaling-stroke;
+}
+
+.font-neuebit {
+  font-family: 'PP Neue Bit', system-ui, sans-serif;
 }

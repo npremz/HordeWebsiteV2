@@ -6,7 +6,7 @@ interface Props {
 const { class: className = '' } = Astro.props;
 ---
 
-<div id="physics-container" class:list={['physics-grid w-full aspect-square md:aspect-2/1 xl:aspect-3/1 xl:w-[calc(100vw-8rem)] xl:left-1/2 xl:-translate-x-1/2 relative overflow-hidden', className]}>
+<div id="physics-container" class:list={['physics-grid w-full aspect-square md:aspect-2/1 relative overflow-hidden', className]}>
   <div id="logo-letters" class="absolute inset-0" aria-hidden="true" role="presentation">
     <svg class="physics-letter" width="134" height="66" viewBox="0 0 134 66" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path d="M0 0L133.486 0V65.9931L0 65.9931L0 0Z" fill="#222121"/>
@@ -86,15 +86,15 @@ const { class: className = '' } = Astro.props;
   /* md: aspect-2/1 (2:1) */
   @media (min-width: 1024px) {
     .physics-grid {
-      --grid-cols: 12;
-      --grid-rows: 6;
+      --grid-cols: 13;
+      --grid-rows: 7;
     }
   }
 
   /* xl: aspect-3/1 (3:1) */
   @media (min-width: 1920px) {
     .physics-grid {
-      --grid-cols: 21;
+      --grid-cols: 13;
       --grid-rows: 7;
     }
   }
