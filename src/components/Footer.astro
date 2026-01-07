@@ -41,7 +41,7 @@ const strokeColor = isDark ? '#4C4B4B' : '#B1B1B1';
 const textColorClass = isDark ? 'text-bg-light' : 'text-black';
 ---
 
-<footer class:list={['relative mt-32 lg:mt-48 xl:mt-64 pb-16', textColorClass]} id="footer-parallax" data-variant={variant}>
+<footer class:list={['relative mt-32 lg:mt-48 xl:mt-88 pb-16', textColorClass]} id="footer-parallax" data-variant={variant}>
 	<!-- {!isDark && (
 		<div class="footer-line-parallax">
 			<Line variant={variant} />
@@ -168,7 +168,7 @@ const textColorClass = isDark ? 'text-bg-light' : 'text-black';
 		transform-origin: left center;
 		width: calc(100vw - 32px);
 		height: calc(100% + 60px);
-		background-color: white;
+		background-color: var(--color-bg-light);
 		z-index: -1;
 		transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 	}
