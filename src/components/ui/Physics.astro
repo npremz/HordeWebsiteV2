@@ -83,21 +83,16 @@ const { class: className = '' } = Astro.props;
     background-position: 0 0;
   }
 
-  @media (min-width: 768px) {
+  /* md: aspect-2/1 (2:1) */
+  @media (min-width: 1024px) {
     .physics-grid {
       --grid-cols: 12;
       --grid-rows: 6;
     }
   }
 
-  @media (min-width: 1024px) {
-    .physics-grid {
-      --grid-cols: 14;
-      --grid-rows: 7;
-    }
-  }
-
-  @media (min-width: 1280px) {
+  /* xl: aspect-3/1 (3:1) */
+  @media (min-width: 1920px) {
     .physics-grid {
       --grid-cols: 21;
       --grid-rows: 7;
@@ -123,13 +118,20 @@ const { class: className = '' } = Astro.props;
 <script>
   import Matter from 'matter-js';
 
-  const { Engine, Render, Runner, Bodies, Composite, Body } = Matter;
+  const { Engine, Bodies, Composite, Body, Mouse, MouseConstraint } = Matter;
+
+  // Détecter si c'est un device avec pointeur (souris)
+  const hasPointer = window.matchMedia('(pointer: fine)').matches;
 
   function initPhysics() {
     const container = document.getElementById('physics-container');
     const letters = document.querySelectorAll<SVGSVGElement>('.physics-letter');
 
     if (!container || letters.length === 0) return;
+
+    // Nettoyer l'ancien canvas si existant
+    const oldCanvas = container.querySelector('canvas');
+    if (oldCanvas) oldCanvas.remove();
 
     const rect = container.getBoundingClientRect();
     const width = rect.width;
@@ -146,26 +148,26 @@ const { class: className = '' } = Astro.props;
     // Gravité
     engine.gravity.y = 1;
 
-    // Épaisseur des murs
-    const wallThickness = 50;
+    // Épaisseur des murs (renforcés pour éviter les explosions)
+    const wallThickness = 200;
 
-    // Créer le bowl (murs gauche, droite, bas)
+    // Créer le bowl (murs gauche, droite, bas) - renforcés
     const walls = [
       // Mur gauche
       Bodies.rectangle(
         -wallThickness / 2,
         height / 2,
         wallThickness,
-        height * 2,
-        { isStatic: true }
+        height * 3,
+        { isStatic: true, friction: 1, restitution: 0.2 }
       ),
       // Mur droite
       Bodies.rectangle(
         width + wallThickness / 2,
         height / 2,
         wallThickness,
-        height * 2,
-        { isStatic: true }
+        height * 3,
+        { isStatic: true, friction: 1, restitution: 0.2 }
       ),
       // Mur bas
       Bodies.rectangle(
@@ -173,11 +175,39 @@ const { class: className = '' } = Astro.props;
         height + wallThickness / 2,
         width + wallThickness * 2,
         wallThickness,
-        { isStatic: true }
+        { isStatic: true, friction: 1, restitution: 0.2 }
       ),
     ];
 
     Composite.add(world, walls);
+
+    // Drag & drop pour devices avec souris
+    if (hasPointer) {
+      // Créer un canvas invisible pour le tracking de la souris
+      const canvas = document.createElement('canvas');
+      canvas.width = width;
+      canvas.height = height;
+      canvas.style.cssText = 'position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:auto;opacity:0;cursor:grab;';
+      container.appendChild(canvas);
+
+      const mouse = Mouse.create(canvas);
+      const mouseConstraint = MouseConstraint.create(engine, {
+        mouse: mouse,
+        constraint: {
+          stiffness: 0.2,
+          render: { visible: false }
+        }
+      });
+
+      // Limiter la force du drag pour éviter les explosions
+      mouseConstraint.constraint.damping = 0.5;
+
+      Composite.add(world, mouseConstraint);
+
+      // Changer le curseur au survol/drag
+      canvas.addEventListener('mousedown', () => { canvas.style.cursor = 'grabbing'; });
+      canvas.addEventListener('mouseup', () => { canvas.style.cursor = 'grab'; });
+    }
 
     // Créer les corps pour chaque lettre avec leurs dimensions propres
     const bodies: Matter.Body[] = [];
