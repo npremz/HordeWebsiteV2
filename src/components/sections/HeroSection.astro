@@ -177,7 +177,7 @@ const typewriterWords = [
 
 		rotatorIntervalId = window.setInterval(() => {
 			currentIndex++;
-			inner.style.transform = `translateY(calc(-${currentIndex} * 0.9em))`;
+			inner.style.transform = `translateY(calc(-${currentIndex} * 1em))`;
 
 			// Quand on atteint le clone, reset instantané vers le vrai premier
 			if (currentIndex >= totalWords) {
@@ -217,8 +217,8 @@ const typewriterWords = [
 <style is:global>
 	.word-rotator {
 		display: inline-block;
-		height: 0.9em;
-		line-height: 0.9;
+		height: 1em;
+		line-height: 1;
 		overflow: hidden;
 		vertical-align: bottom;
 	}
@@ -231,8 +231,8 @@ const typewriterWords = [
 
 	.word-rotator-word {
 		display: block;
-		height: 0.9em;
-		line-height: 0.9;
+		height: 1em;
+		line-height: 1;
 		flex-shrink: 0;
 	}
 </style>
