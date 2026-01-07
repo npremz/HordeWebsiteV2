@@ -331,4 +331,17 @@ const { class: className = '' } = Astro.props;
 
   // Re-init sur les view transitions
   document.addEventListener('astro:after-swap', initPhysics);
+
+  // Re-init uniquement sur resize horizontal (évite les problèmes sur mobile)
+  let lastWidth = window.innerWidth;
+  let resizeTimeout: ReturnType<typeof setTimeout>;
+  
+  window.addEventListener('resize', () => {
+    const currentWidth = window.innerWidth;
+    if (currentWidth !== lastWidth) {
+      lastWidth = currentWidth;
+      clearTimeout(resizeTimeout);
+      resizeTimeout = setTimeout(initPhysics, 150);
+    }
+  });
 </script>

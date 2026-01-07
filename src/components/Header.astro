@@ -43,61 +43,64 @@ const textColorClass = isDark ? 'text-bg-light' : 'text-black';
       )}
     </a>
 
-    <div class="relative">
-      <button
-        type="button"
-        id="menu-toggle"
-        class={`flex-center gap-2 cursor-pointer ${textColorClass}`}
-        aria-expanded="false"
-        aria-controls="mobile-menu"
-        aria-label="Ouvrir le menu"
-      >
-        <span id="menu-label" class="tracking-wide sm:text-[1.625rem] md:text-[2rem]" data-scramble>Menu</span>
-        <Wrapped padding="0.5rem" class='sm:mt-1 md:mt-2' variant={variant}>
-          <span id="menu-icon" class="leading-none font-mono">+</span>
-        </Wrapped>
-      </button>
+    <div class="flex gap-16"> 
+      <a href="/contact" class="hidden md:block tracking-wide sm:text-[1.625rem] md:text-[2rem] nav-scramble" data-text="Démarrer un projet">Démarrer un projet</a>
+      <div class="relative">
+        <button
+          type="button"
+          id="menu-toggle"
+          class={`flex-center gap-2 cursor-pointer ${textColorClass}`}
+          aria-expanded="false"
+          aria-controls="mobile-menu"
+          aria-label="Ouvrir le menu"
+        >
+          <span id="menu-label" class="tracking-wide sm:text-[1.625rem] md:text-[2rem]" data-scramble>Menu</span>
+          <Wrapped padding="0.5rem" class='sm:mt-1 md:mt-2' variant={variant}>
+            <span id="menu-icon" class="leading-none font-mono">+</span>
+          </Wrapped>
+        </button>
 
-      <div
-        id="mobile-menu"
-        class="absolute top-full right-0 mt-4 origin-top-right"
-        aria-hidden="true"
-      >
-        <nav class="px-5 py-5 sm:p-[2.5rem] flex-col-container gap-4 sm:w-[450px]">
-          <ul class="flex-col-container gap-4">
-            {items.map((item, index) => (
-              <li class="menu-item" style={`--item-delay: ${0.05 + index * 0.04}s`}>
+        <div
+          id="mobile-menu"
+          class="absolute top-full right-0 mt-4 origin-top-right"
+          aria-hidden="true"
+        >
+          <nav class="px-5 py-5 sm:p-[2.5rem] flex-col-container gap-4 sm:w-[450px]">
+            <ul class="flex-col-container gap-4">
+              {items.map((item, index) => (
+                <li class="menu-item" style={`--item-delay: ${0.05 + index * 0.04}s`}>
+                  <a
+                    href={item.url}
+                    class="menu-link nav-scramble text-black! text-3xl sm:text-[3.5625rem] font-sans nav-link-hover whitespace-nowrap block tracking-[-0.02em] w-fit"
+                    target={item.isExternal ? '_blank' : undefined}
+                    rel={item.isExternal ? 'noopener noreferrer' : undefined}
+                    data-text={item.label}
+                  >
+                    {item.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+            <span class="divider-lines menu-item sm:my-[1.25rem]" style={`--item-delay: ${0.05 + items.length * 0.04}s`}></span>
+
+            <div class="menu-item flex flex-col gap-[0.625rem]" style={`--item-delay: ${0.05 + (items.length + 1) * 0.04}s`}>
+              {ctaButton?.label && ctaButton?.url && (
                 <a
-                  href={item.url}
-                  class="menu-link nav-scramble text-black! text-3xl sm:text-[3.5625rem] font-sans nav-link-hover whitespace-nowrap block tracking-[-0.02em] w-fit"
-                  target={item.isExternal ? '_blank' : undefined}
-                  rel={item.isExternal ? 'noopener noreferrer' : undefined}
-                  data-text={item.label}
+                  href={ctaButton.url}
+                  class="menu-link text-black! tracking-[-0.02em] nav-link-cta sm:text-[2rem] w-fit"
                 >
-                  {item.label}
+                  {ctaButton.label}
                 </a>
-              </li>
-            ))}
-          </ul>
-          <span class="divider-lines menu-item sm:my-[1.25rem]" style={`--item-delay: ${0.05 + items.length * 0.04}s`}></span>
-
-          <div class="menu-item flex flex-col gap-[0.625rem]" style={`--item-delay: ${0.05 + (items.length + 1) * 0.04}s`}>
-            {ctaButton?.label && ctaButton?.url && (
-              <a
-                href={ctaButton.url}
-                class="menu-link text-black! tracking-[-0.02em] nav-link-cta sm:text-[2rem] w-fit"
+              )}
+              <button
+                type="button"
+                class="menu-link text-black! tracking-[-0.02em] nav-link-hover sm:text-[2rem] text-left w-fit"
               >
-                {ctaButton.label}
-              </a>
-            )}
-            <button
-              type="button"
-              class="menu-link text-black! tracking-[-0.02em] nav-link-hover sm:text-[2rem] text-left w-fit"
-            >
-              English version
-            </button>
-          </div>
-        </nav>
+                English version
+              </button>
+            </div>
+          </nav>
+        </div>
       </div>
     </div>
   </div>
