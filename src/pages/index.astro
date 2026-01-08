@@ -1,28 +1,31 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import BackgroundCanvas from '../components/ui/BackgroundCanvas.astro';
-import HeroSection from '../components/sections/HeroSection.astro';
-import MethodSection from '../components/sections/MethodSection.astro';
-import ExperienceSection from '../components/sections/ExperienceSection.astro';
-import ProjectSection from '../components/sections/ProjectSection.astro';
-import ServiceSection from '../components/sections/ServiceSection.astro';
-import Footer from '../components/Footer.astro';
-import { createReader } from '@keystatic/core/reader';
-import keystaticConfig from '../../keystatic.config';
+import Layout from "../layouts/Layout.astro";
+import BackgroundCanvas from "../components/ui/BackgroundCanvas.astro";
+import HeroSection from "../components/sections/HeroSection.astro";
+import MethodSection from "../components/sections/MethodSection.astro";
+import ExperienceSection from "../components/sections/ExperienceSection.astro";
+import ProjectSection from "../components/sections/ProjectSection.astro";
+import ServiceSection from "../components/sections/ServiceSection.astro";
+import Footer from "../components/Footer.astro";
+import { createReader } from "@keystatic/core/reader";
+import keystaticConfig from "../../keystatic.config";
 
 const reader = createReader(process.cwd(), keystaticConfig);
 const siteSettings = await reader.singletons.siteSettings.read();
 
-const title = siteSettings?.homepageTitle || 'Horde';
-const description = siteSettings?.defaultDescription || 'Agence web spécialisée en performance et UX.';
+const title = siteSettings?.homepageTitle || "Horde";
+const description =
+  siteSettings?.defaultDescription ||
+  "Agence web spécialisée en performance et UX.";
 ---
 
-<Layout
-  title={title}
-  description={description}
-  siteNameAsPrefix={true}
->
-  <BackgroundCanvas triggerDistance={500} topOffset={1100} bottomOffset={1400} stopTargetId="method-transition">
+<Layout title={title} description={description} siteNameAsPrefix={true}>
+  <BackgroundCanvas
+    triggerDistance={500}
+    topOffset={1100}
+    bottomOffset={1400}
+    stopTargetId="method-transition"
+  >
     <!-- <svg slot="overlay" width="532" height="540" viewBox="0 0 532 540" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path d="M211.359 67.1603C320.374 37.9499 433.026 104.796 462.956 216.495C492.885 328.194 428.748 442.41 319.734 471.62C210.719 500.83 98.0681 433.985 68.1382 322.286C38.2085 210.587 102.344 96.371 211.359 67.1603Z" stroke="#B1B1B1"/>
       <rect x="0.612372" y="112.139" width="430.907" height="441.429" transform="rotate(-15 0.612372 112.139)" stroke="#B1B1B1"/>
@@ -41,9 +44,9 @@ const description = siteSettings?.defaultDescription || 'Agence web spécialisé
         title="<span>Nos 03</span><span>méthodes</span>"
         stepsCount="03"
         steps={[
-          'Eliminer les frictions pénalisantes',
-          'Maximiser les conversions',
-          'Soigner l\'expérience utilisateur',
+          "Eliminer les frictions pénalisantes",
+          "Maximiser les conversions",
+          "Soigner l'expérience utilisateur",
         ]}
       />
     </section>
@@ -54,9 +57,14 @@ const description = siteSettings?.defaultDescription || 'Agence web spécialisé
     </section>
   </div>
   <div class="relative">
-    <svg class="absolute top-32 lg:top-64 px-4 sm:px-5 lg:px-9 left-1/2 -translate-x-1/2 -translate-y-full -z-99999 w-full aspect-square" viewBox="0 0 260 260" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <circle cx="129.852" cy="129.852" r="122.83" stroke="#B1B1B1"/>
-      <rect x="0.5" y="0.5" width="259" height="259" stroke="#B1B1B1"/>
+    <svg
+      class="absolute top-32 lg:top-64 px-4 sm:px-5 lg:px-9 left-1/2 -translate-x-1/2 -translate-y-full -z-99999 w-full aspect-square"
+      viewBox="0 0 260 260"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <circle cx="129.852" cy="129.852" r="122.83" stroke="#B1B1B1"></circle>
+      <rect x="0.5" y="0.5" width="259" height="259" stroke="#B1B1B1"></rect>
     </svg>
 
     <section class="pt-48 lg:pt-90">
@@ -64,21 +72,21 @@ const description = siteSettings?.defaultDescription || 'Agence web spécialisé
     </section>
   </div>
 
-<style>
-  .full-bleed-bg {
-    position: relative;
-  }
-  .full-bleed-bg::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 100vw;
-    height: 100%;
-    background-color: var(--color-bg-light);
-    z-index: -1;
-  }
-</style>
+  <style>
+    .full-bleed-bg {
+      position: relative;
+    }
+    .full-bleed-bg::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100vw;
+      height: 100%;
+      background-color: var(--color-bg-light);
+      z-index: -1;
+    }
+  </style>
   <Footer />
 </Layout>
