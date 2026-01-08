@@ -131,7 +131,9 @@ const { class: className = '' } = Astro.props;
 
     // Scale proportionnel au container
     const baseScale = width / 1200;
-    const scale = Math.max(0.3, Math.min(1, baseScale));
+    const isMobile = width < 768;
+    const mobileMultiplier = isMobile ? 2 : 1;
+    const scale = Math.max(0.3, Math.min(1, baseScale)) * mobileMultiplier;
 
     // Créer le moteur
     const engine = Engine.create();
@@ -231,7 +233,7 @@ const { class: className = '' } = Astro.props;
     }
 
     // DEBUG: Activer pour voir les hitboxes
-    const DEBUG = false;
+    const DEBUG = true;
     let debugCanvas: HTMLCanvasElement | null = null;
     let debugCtx: CanvasRenderingContext2D | null = null;
 
@@ -373,9 +375,9 @@ const { class: className = '' } = Astro.props;
 
       // Offsets de rendu pour aligner SVG avec hitbox (ajuster ici)
       if (index === 3) {
-        renderOffsets.push({ x: 14, y: -14 }); // Ajuster pour forme L index 3
+        renderOffsets.push({ x: 14 * scale, y: -14 * scale }); // Ajuster pour forme L index 3
       } else if (index === 4) {
-        renderOffsets.push({ x: 20, y: -20 }); // Ajuster pour forme L index 4
+        renderOffsets.push({ x: 20 * scale, y: -20 * scale }); // Ajuster pour forme L index 4
       } else {
         renderOffsets.push({ x: 0, y: 0 }); // Pas d'offset pour les autres
       }
