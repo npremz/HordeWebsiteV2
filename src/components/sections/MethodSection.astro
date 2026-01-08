@@ -11,7 +11,7 @@ const methods = [
 		number: '002',
 		eyebrow: 'La performance comme standard',
 		title: 'le moteur horde',
-		quote: 'On se pose avec vous, on parle vrai, sans jargon technique inutile.',
+		quote: 'On s\'occupe de la complexité technique pour que vous restiez concentré sur votre vision.',
 		description: 'On utilise notre propre architecture technique pour construire des interfaces ultra-rapides. Pas de bricolage, mais un produit robuste qui nous permet de livrer plus vite et mieux.',
 	},
 	{
@@ -25,9 +25,14 @@ const methods = [
 ---
 
 <div class:list={['flex flex-col']}}>
-	<ol class="flex flex-col gap-10 sm:gap-16">
+	<ol class="flex flex-col pt-64">
 		{methods.map((method, index) => (
-			<li class:list={[index != 2 && 'border-b border-lines pb-10 sm:pb-16', '']}>
+			<li class:list={[
+				index != 2 && 'border-b border-lines',
+				index == 2 && 'pb-10 sm:pb-32',
+				index >= 1 && 'method-white-bg',
+				'py-10 sm:py-16 -mt-px'
+			]} id={index === 1 ? 'method-transition' : undefined}>
 				<article class="flex flex-col md:flex-row md:justify-between">
 					<header class="flex flex-col gap-2 sm:gap-8">
 						<div class:list={["section-label max-w-[210px] text-justify", index === 2 && "md:min-h-[2lh]"]}>
@@ -44,5 +49,24 @@ const methods = [
 			</li>
 		))}
 	</ol>
-	<a href="/contact" class="leading-none text-[1rem] block border border-lines font-mono uppercase py-6 px-5 text-center mt-10 sm:mt-32 md:w-fit md:self-end">Prendre Contact</a>
+	<div class="method-white-bg pt-10 sm:pt-32">
+		<a href="/contact" class="leading-none text-[1rem] block outline outline-lines font-mono uppercase py-6 px-5 text-center md:w-fit md:ml-auto">Prendre Contact</a>
+	</div>
 </div>
+
+<style>
+	.method-white-bg {
+		position: relative;
+	}
+	.method-white-bg::before {
+		content: '';
+		position: absolute;
+		top: 0;
+		left: 50%;
+		transform: translateX(-50%);
+		width: 100vw;
+		height: 100%;
+		background-color: var(--color-bg-light);
+		z-index: -1;
+	}
+</style>

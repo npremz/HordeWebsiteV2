@@ -158,7 +158,9 @@ const typewriterWords = [
 		window.addEventListener('load', init, { once: true });
 	}
 
-	document.addEventListener('astro:before-swap', cleanup, { once: true });
+	document.addEventListener('astro:after-swap', () => {
+		setTimeout(init, 50);
+	});
 </script>
 
 <script>

@@ -7,6 +7,7 @@ interface Props {
 	triggerDistance?: number;
 	triggerDistanceBottom?: number;
 	color?: string;
+	parallaxSpeed?: number;
 }
 
 const {
@@ -16,8 +17,11 @@ const {
 	bottomOffset = -450,
 	triggerDistance = 500,
 	triggerDistanceBottom = 500,
-	color = 'rgb(244, 243, 243)'
+	color = 'rgb(244, 243, 243)',
+	parallaxSpeed = 0.3
 } = Astro.props;
+
+const hasOverlay = Astro.slots.has('overlay');
 ---
 
 <canvas
@@ -30,13 +34,25 @@ const {
 	data-trigger-distance={triggerDistance}
 	data-trigger-distance-bottom={triggerDistanceBottom}
 	data-color={color}
+	data-parallax-speed={parallaxSpeed}
 	aria-hidden="true"
 	role="presentation"
 ></canvas>
 
+{hasOverlay && (
+	<div
+		id="bg-canvas-overlay"
+		class="fixed inset-0 pointer-events-none z-99999 opacity-0 transition-opacity duration-500 flex items-center justify-center"
+		aria-hidden="true"
+	>
+		<slot name="overlay" />
+	</div>
+)}
+
 <script>
   let canvas: HTMLCanvasElement;
   let ctx: CanvasRenderingContext2D;
+  let overlay: HTMLElement | null;
   let targetId: string;
   let stopTargetId: string | null;
   let topOffset: number;
@@ -44,6 +60,7 @@ const {
   let triggerDistance: number;
   let triggerDistanceBottom: number;
   let pixelColor: string;
+  let parallaxSpeed: number;
   let animationId: number | null = null;
   let resizeTimeout: number | undefined;
   let lastWidth = window.innerWidth;
@@ -52,15 +69,40 @@ const {
   let isAnimating = false;
   let scrollHandler: (() => void) | null = null;
   let resizeHandler: (() => void) | null = null;
+  let isFullyCovered = false;
+  let overlayStartScrollY = 0;
 
   function getPixelSize(): number {
-    return Math.floor(window.innerWidth / 5);
+    return Math.floor(window.innerWidth / 8);
   }
 
   function resizeCanvas() {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
     pixelSize = getPixelSize();
+  }
+
+  function updateOverlay(progress: number, scrollY: number) {
+    if (!overlay) return;
+
+    const wasFullyCovered = isFullyCovered;
+    isFullyCovered = progress >= 0.98;
+
+    // Quand on devient complètement couvert, mémoriser la position de scroll
+    if (isFullyCovered && !wasFullyCovered) {
+      overlayStartScrollY = scrollY;
+    }
+
+    if (isFullyCovered) {
+      overlay.style.opacity = '1';
+      // Effet parallax: l'overlay monte plus lentement que le scroll
+      const scrollDelta = scrollY - overlayStartScrollY;
+      const parallaxOffset = scrollDelta * parallaxSpeed;
+      overlay.style.transform = `translateY(${-parallaxOffset}px)`;
+    } else {
+      overlay.style.opacity = '0';
+      overlay.style.transform = 'translateY(0)';
+    }
   }
 
   function getProjectSectionPosition(): number | null {
@@ -118,6 +160,9 @@ const {
     const progressIn = Math.max(0, Math.min(1, 1 - distanceToProject / triggerDistance));
     const finalProgress = progressIn;
     const isExitingTop = scrollY + viewportHeight < projectPos && progressIn < 1;
+
+    // Gérer l'overlay parallax
+    updateOverlay(finalProgress, scrollY);
 
     if (finalProgress === 0) {
       pixels = [];
@@ -226,6 +271,7 @@ const {
     if (!canvas) return;
 
     ctx = canvas.getContext('2d')!;
+    overlay = document.getElementById('bg-canvas-overlay');
     targetId = canvas.getAttribute('data-target-id') || 'projects';
     stopTargetId = canvas.getAttribute('data-stop-target-id') || null;
     topOffset = Number(canvas.getAttribute('data-top-offset')) || 500;
@@ -233,10 +279,13 @@ const {
     triggerDistance = Number(canvas.getAttribute('data-trigger-distance')) || 500;
     triggerDistanceBottom = Number(canvas.getAttribute('data-trigger-distance-bottom')) || 500;
     pixelColor = canvas.getAttribute('data-color') || 'rgb(244, 243, 243)';
+    parallaxSpeed = Number(canvas.getAttribute('data-parallax-speed')) || 0.3;
 
-    // Reset pixels
+    // Reset state
     pixels = [];
     lastWidth = window.innerWidth;
+    isFullyCovered = false;
+    overlayStartScrollY = 0;
 
     resizeCanvas();
     checkAndToggleAnimation();
@@ -287,12 +336,12 @@ const {
   init();
   setupListeners();
 
-  // Cleanup avant view transition
-  document.addEventListener('astro:before-swap', cleanup, { once: true });
-
   // Réinitialisation après une view transition
   document.addEventListener('astro:after-swap', () => {
-    init();
-    setupListeners();
+    cleanup();
+    setTimeout(() => {
+      init();
+      setupListeners();
+    }, 50);
   });
 </script>

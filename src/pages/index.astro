@@ -22,7 +22,12 @@ const description = siteSettings?.defaultDescription || 'Agence web spécialisé
   description={description}
   siteNameAsPrefix={true}
 >
-  <BackgroundCanvas triggerDistance={500} topOffset={1100} bottomOffset={500} stopTargetId="services-section" />
+  <BackgroundCanvas triggerDistance={500} topOffset={1100} bottomOffset={1400} stopTargetId="method-transition">
+    <!-- <svg slot="overlay" width="532" height="540" viewBox="0 0 532 540" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M211.359 67.1603C320.374 37.9499 433.026 104.796 462.956 216.495C492.885 328.194 428.748 442.41 319.734 471.62C210.719 500.83 98.0681 433.985 68.1382 322.286C38.2085 210.587 102.344 96.371 211.359 67.1603Z" stroke="#B1B1B1"/>
+      <rect x="0.612372" y="112.139" width="430.907" height="441.429" transform="rotate(-15 0.612372 112.139)" stroke="#B1B1B1"/>
+    </svg> -->
+  </BackgroundCanvas>
 
   <HeroSection
     titleLine1="Nous\nconcevons"
@@ -44,13 +49,20 @@ const description = siteSettings?.defaultDescription || 'Agence web spécialisé
     </section>
   </div>
   <div id="white-section" class="full-bleed-bg">
-    <section id="services-section" class="mt-24 sm:mt-32 lg:mt-96">
+    <section id="services-section" class="pt-24 sm:pt-32 lg:pt-96">
       <ServiceSection />
     </section>
   </div>
-  <section class="mt-24 sm:mt-48 2xl:mt-72">
-    <ProjectSection />
-  </section>
+  <div class="relative">
+    <svg class="absolute top-32 lg:top-64 px-4 sm:px-5 lg:px-9 left-1/2 -translate-x-1/2 -translate-y-full -z-99999 w-full aspect-square" viewBox="0 0 260 260" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="129.852" cy="129.852" r="122.83" stroke="#B1B1B1"/>
+      <rect x="0.5" y="0.5" width="259" height="259" stroke="#B1B1B1"/>
+    </svg>
+
+    <section class="pt-48 lg:pt-90">
+      <ProjectSection />
+    </section>
+  </div>
 
 <style>
   .full-bleed-bg {

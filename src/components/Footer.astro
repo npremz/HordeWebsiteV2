@@ -42,7 +42,7 @@ const textColorClass = isDark ? 'text-bg-light' : 'text-black';
 ---
 
 <footer class:list={['relative pb-16 ', textColorClass]} id="footer-parallax" data-variant={variant}>
-	<Physics />
+	<Physics dark={variant == 'dark' && true} />
 
 	<a href="/contact" class="footer-logo-wrapper footer-svg-parallax z-9999 block" aria-label="Contacter Let's Talk">
 		<svg class="footer-logo relative w-full mt-10 sm:mt-16 lg:mt-24 md:w-[calc(100vw-8rem)] md:max-w-none! md:left-1/2 md:-translate-x-1/2" viewBox="0 0 281 43" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
