@@ -468,6 +468,11 @@ const { class: className = '', dark: dark = false } = Astro.props;
     // Cleanup ancien observer
     if (observer) observer.disconnect();
 
+    // Adapter rootMargin selon la taille de l'écran
+    // Sur mobile, utiliser une marge plus petite pour éviter de bloquer le trigger
+    const isMobile = window.innerWidth < 768;
+    const rootMargin = isMobile ? '-100px 0px' : '-400px 0px';
+
     observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -478,7 +483,7 @@ const { class: className = '', dark: dark = false } = Astro.props;
           }
         });
       },
-      { threshold: 0.1, rootMargin: '-400px 0px' }
+      { threshold: 0.1, rootMargin }
     );
 
     observer.observe(container);
