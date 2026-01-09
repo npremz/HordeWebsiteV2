@@ -24,32 +24,41 @@ const methods = [
 ];
 ---
 
-<div class:list={['flex flex-col']}}>
-	<ol class="flex flex-col pt-64">
+<div id="methods-container" class="flex flex-col">
+	<ol class="methods-stack flex flex-col pt-64">
 		{methods.map((method, index) => (
-			<li class:list={[
-				index != 2 && 'border-b border-lines',
-				index == 2 && 'pb-10 sm:pb-32',
-				index >= 1 && 'method-white-bg',
-				'py-10 sm:py-16 -mt-px'
-			]} id={index === 1 ? 'method-transition' : undefined}>
-				<article class="flex flex-col md:flex-row md:justify-between">
-					<header class="flex flex-col gap-2 sm:gap-8">
-						<div class:list={["section-label max-w-[210px] text-justify", index === 2 && "md:min-h-[2lh]"]}>
-							<span class='inline before:content-["/_"]'>{method.number}</span>
-							<p class="inline">{method.eyebrow}</p>
+			<li
+				class:list={[
+					'method-card',
+					index >= 1 && 'method-white-bg',
+					'py-10 sm:py-16'
+				]}
+				data-index={index}
+				id={index === 1 ? 'method-transition' : undefined}
+			>
+				<div class="method-card-inner">
+					<article class:list={[
+						"flex flex-col md:flex-row md:justify-between",
+						index != 2 && 'border-b border-lines pb-10 sm:pb-16',
+						index == 2 && 'pb-10 sm:pb-32',
+					]}>
+						<header class="flex flex-col gap-2 sm:gap-8">
+							<div class:list={["section-label max-w-[210px] text-justify", index === 2 && "md:min-h-[2lh]"]}>
+								<span class='inline before:content-["/_"]'>{method.number}</span>
+								<p class="inline">{method.eyebrow}</p>
+							</div>
+							<h3 class="font-display leading-none text-[1.625rem] sm:text-[2.5rem] md:text-[4rem] xl:text-[4.5rem] sm:max-w-[250px] md:max-w-[350px] uppercase" set:html={method.title}></h3>
+						</header>
+						<div class="flex flex-col md:w-1/2">
+							<blockquote class='section-label mt-16 max-w-90 self-end sm:mt-24 md:self-start md:mt-0'>"{method.quote}"</blockquote>
+							<p class="text-2xl sm:text-[2rem] md:text-[2.5rem] mt-4 sm:mt-8 ">{method.description}</p>
 						</div>
-						<h3 class="font-display leading-none text-[1.625rem] sm:text-[2.5rem] md:text-[4rem] xl:text-[4.5rem] sm:max-w-[250px] md:max-w-[350px] uppercase" set:html={method.title}></h3>
-					</header>
-					<div class="flex flex-col md:w-1/2">
-						<blockquote class='section-label mt-16 max-w-90 self-end sm:mt-24 md:self-start md:mt-0'>"{method.quote}"</blockquote>
-						<p class="text-2xl sm:text-[2rem] md:text-[2.5rem] mt-4 sm:mt-8 ">{method.description}</p>
-					</div>
-				</article>
+					</article>
+				</div>
 			</li>
 		))}
 	</ol>
-	<div class="method-white-bg pt-10 sm:pt-32">
+	<div class="method-white-bg">
 		<a href="/contact" class="leading-none text-[1rem] block outline outline-lines font-mono uppercase py-6 px-5 text-center md:w-fit md:ml-auto">Prendre Contact</a>
 	</div>
 </div>
@@ -69,4 +78,79 @@ const methods = [
 		background-color: var(--color-bg-light);
 		z-index: -1;
 	}
+
+	.method-card {
+		will-change: transform;
+	}
+
+	.method-card-inner {
+		will-change: transform;
+	}
 </style>
+
+<script>
+	function initMethodsParallax() {
+		const cards = document.querySelectorAll('.method-card');
+		if (cards.length === 0) return;
+
+		// Offset initial par carte (en pixels) - plus grand = plus de retard
+		const initialOffsets = [150, 300, 450];
+
+		// Fonction d'easing (ease-out cubic)
+		function easeOutCubic(t: number): number {
+			return 1 - Math.pow(1 - t, 3);
+		}
+
+		function updateCards() {
+			const viewportHeight = window.innerHeight;
+
+			cards.forEach((card, index) => {
+				const initialOffset = initialOffsets[index] || 0;
+				if (initialOffset === 0) return;
+
+				const cardElement = card as HTMLElement;
+				const rect = cardElement.getBoundingClientRect();
+
+				// Quand la carte entre dans le viewport par le bas
+				// Progress: 0 = carte en bas du viewport, 1 = carte en haut
+				const distanceFromBottom = viewportHeight - rect.top;
+				const travelDistance = viewportHeight + rect.height;
+				const rawProgress = Math.max(0, Math.min(1, distanceFromBottom / travelDistance));
+
+				// Appliquer easing
+				const progress = easeOutCubic(rawProgress);
+
+				// L'offset diminue de initialOffset à 0 au fur et à mesure du scroll
+				const currentOffset = initialOffset * (1 - progress);
+
+				const inner = cardElement.querySelector('.method-card-inner') as HTMLElement;
+				if (inner) {
+					inner.style.transform = `translateY(${currentOffset}px)`;
+				}
+			});
+		}
+
+		// Écouter le scroll
+		let ticking = false;
+		function onScroll() {
+			if (!ticking) {
+				requestAnimationFrame(() => {
+					updateCards();
+					ticking = false;
+				});
+				ticking = true;
+			}
+		}
+
+		window.addEventListener('scroll', onScroll, { passive: true });
+		updateCards();
+
+		// Cleanup pour les view transitions
+		document.addEventListener('astro:before-swap', () => {
+			window.removeEventListener('scroll', onScroll);
+		}, { once: true });
+	}
+
+	initMethodsParallax();
+	document.addEventListener('astro:after-swap', initMethodsParallax);
+</script>
