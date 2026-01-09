@@ -50,14 +50,34 @@ import Footer from '../components/Footer.astro';
 				</div>
 			</div>
 			<div class="md:w-36 md:shrink-0">
-				<Wrapped variant='dark' class="font-mono text-bg-light text-[1rem] relative"><button>↓</button></Wrapped>
+				<button class="cursor-pointer scroll-to-btn" data-scroll-target="#contact-form" data-scroll-offset="-100"><Wrapped variant='dark' class="font-mono text-bg-light text-[1rem]">↓</Wrapped></button>
 			</div>
 		</div>
 		<hr class="mt-8 sm:mt-16 md:mt-24 border-lines-dark" />
 
-		<ContactForm client:load />
+		<div id="contact-form">
+			<ContactForm client:load />
+		</div>
 	</div>
 	
 	<Footer variant="dark" />
-
 </Layout>
+
+<script>
+	function initScrollButtons() {
+		const scrollButtons = document.querySelectorAll('.scroll-to-btn');
+
+		scrollButtons.forEach(btn => {
+			btn.addEventListener('click', () => {
+				const target = btn.getAttribute('data-scroll-target');
+				const offset = Number(btn.getAttribute('data-scroll-offset')) || 0;
+				if (target && (window as any).lenis) {
+					(window as any).lenis.scrollTo(target, { duration: 1.2, offset });
+				}
+			});
+		});
+	}
+
+	initScrollButtons();
+	document.addEventListener('astro:after-swap', initScrollButtons);
+</script>

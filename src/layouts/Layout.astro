@@ -189,6 +189,9 @@ try {
     touchMultiplier: isMobile ? 3.5 : 1,
   });
 
+  // Exposer Lenis globalement pour le smooth scroll
+  (window as any).lenis = lenis;
+
   function raf(time: number) {
     lenis.raf(time);
     requestAnimationFrame(raf);

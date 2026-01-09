@@ -5,7 +5,7 @@ columns:
       - label: hello@hordeagence.com
         url: mailto:hello@hordeagence.com
         isExternal: true
-      - label: Reserver un appel
+      - label: Réserver un appel
         url: https://calendly.com/ni-premont/30min
         isExternal: true
       - label: Linkedin

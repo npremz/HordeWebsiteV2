@@ -4,11 +4,11 @@ items:
   - label: Accueil
     url: /
     isExternal: false
-  - label: À Propos
-    url: '#about'
+  - label: Méthode
+    url: '/#page-content'
     isExternal: false
   - label: Services
-    url: '#services'
+    url: '/#services-section'
     isExternal: false
   - label: Contact
     url: /contact
