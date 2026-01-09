@@ -16,9 +16,10 @@ const services: ServiceItem[] = [
       "Audit UX/UI",
       "Audit SEO technique",
       "Analyse Core Web Vitals",
-      "Rapport de recommandations"
+      "Rapport de recommandations",
     ],
-    content: "Vous voulez optimiser la conversion de votre site ? Nous réalisons un diagnostic complet (Vitesse de chargement, UX, SEO) pour identifier les points de friction qui bloquent vos utilisateurs. Une analyse factuelle pour des actions immédiates."
+    content:
+      "Vous voulez optimiser la conversion de votre site ? Nous réalisons un diagnostic complet (Vitesse de chargement, UX, SEO) pour identifier les points de friction qui bloquent vos utilisateurs. Une analyse factuelle pour des actions immédiates.",
   },
   {
     title: "Optimisation<br>& refonte",
@@ -27,85 +28,100 @@ const services: ServiceItem[] = [
       "Optimisation des performances",
       "Refonte UI/UX",
       "Migration technique",
-      "Responsive & mobile-first"
+      "Responsive & mobile-first",
     ],
-    content: "Pas besoin de tout jeter. Nous intervenons sur votre site existant pour booster ses performances (Core Web Vitals), moderniser son interface et le rendre ultra-rapide sur mobile."
+    content:
+      "Pas besoin de tout jeter. Nous intervenons sur votre site existant pour booster ses performances (Core Web Vitals), moderniser son interface et le rendre ultra-rapide sur mobile.",
   },
   {
-    title: "Création \"from<br>scratch\" & MVP",
+    title: 'Création "from<br>scratch" & MVP',
     subtitle: "Construire sur des bases solides",
     servicesList: [
-		"Identité Visuelle",
-		"Site vitrine",
-		"Application web",
-		"MVP & prototypage",
-		"E-commerce"
+      "Identité Visuelle",
+      "Site vitrine",
+      "Application web",
+      "MVP & prototypage",
+      "E-commerce",
     ],
-    content: "Lancement de produit ou nouvelle identité ? Nous concevons des plateformes sur-mesure. Une architecture solide et pensée pour vos finances à long terme."
-  }
+    content:
+      "Lancement de produit ou nouvelle identité ? Nous concevons des plateformes sur-mesure. Une architecture solide et pensée pour vos finances à long terme.",
+  },
 ];
 ---
 
-<section>
+<section class="pb-24 sm:pb-32 lg:pb-[12.5rem]">
   <div class="">
-    <h2 class="text-2xl mb-4 sm:mb-8">
-      Ce qu'on propose
-    </h2>
+    <h2 class="text-2xl mb-4 sm:mb-8">Ce qu'on propose</h2>
 
     <div class="">
-      {services.map((service, index) => (
-        <div class="service-item border-b border-lines last:border-b-0 transition-colors duration-300">
-          <button
-            type="button"
-            class:list={[
-              "service-trigger w-full flex justify-between py-10 sm:py-16 text-left cursor-pointer group",
-              index % 2 === 1 && "flex-row-reverse"
-            ]}
-            aria-expanded="false"
-            aria-controls={`service-content-${index}`}
-          >
-            <span class:list={["service-title font-display uppercase leading-none text-[1.625rem] sm:text-[2.5rem] md:text-[4rem] transition-opacity", index % 2 === 1 && "text-right"]} data-text={service.title} set:html={service.title} />
-            <Wrapped class="service-icon h-fit shrink-0 font-mono transition-colors duration-300" aria-hidden="true">
-              <span class="icon-plus">+</span>
-              <span class="icon-minus hidden">-</span>
-            </Wrapped>
-          </button>
-          <div
-            id={`service-content-${index}`}
-            class="service-content grid grid-rows-[0fr] transition-[grid-template-rows] duration-500 ease-out"
-          >
-            <div class="overflow-hidden">
-              <div class="service-content-inner pb-10 sm:pb-16 flex flex-col gap-10 sm:gap-16 text-xl sm:text-[1.625rem] md:text-[2rem] opacity-0 transition-all duration-500 ease-out delay-0">
-              <hr class="border-lines-dark">
-			  <div class="flex flex-col gap-10 sm:gap-16 lg:flex-row lg:justify-between">
-				<div class="md:max-w-150 ">
-					<h3 class="section-label">Liste de services</h3>
-					<ul class="mt-4 sm:mt-9 flex flex-col gap-4 sm:gap-x-5 sm:gap-y-0 sm:flex-row sm:shrink-0 sm:flex-wrap max-w-[35.25rem]">
-					{service.servicesList.map((item) => (
-						<li>{item} /</li>
-					))}
-					</ul>
-				</div>
-				<div class="md:max-w-150 flex flex-col gap-10 sm:gap-16">
-					<div>
-						<h3 class="section-label">
-						{service.subtitle}
-						</h3>
-						<p class="mt-4 sm:mt-9 text-2xl leading-normal">
-						{service.content}
-						</p>
-					</div>
-            <a href="/contact" class="service-cta group relative overflow-hidden font-mono text-[1rem] leading-[0.6] uppercase py-6 px-5 w-fit border border-bg-light bg-transparent text-bg-light transition-colors duration-300 ease-in-out cursor-pointer">
-						  <span class="absolute inset-0 bg-bg-light transform -translate-x-full group-hover:translate-x-0 transition-transform duration-400 ease-[cubic-bezier(0.25,0.46,0.45,0.94)]"></span>
-						  <span class="relative z-10 group-hover:text-black transition-colors duration-300">Prendre Contact</span>
-						</a>
-				</div>
-			  </div>
+      {
+        services.map((service, index) => (
+          <div class="service-item border-b border-lines last:border-b-0 transition-colors duration-300">
+            <button
+              type="button"
+              class:list={[
+                "service-trigger w-full flex justify-between py-10 sm:py-16 text-left cursor-pointer group",
+                index % 2 === 1 && "flex-row-reverse",
+              ]}
+              aria-expanded="false"
+              aria-controls={`service-content-${index}`}
+            >
+              <span
+                class:list={[
+                  "service-title font-display uppercase leading-none text-[1.625rem] sm:text-[2.5rem] md:text-[4rem] transition-opacity",
+                  index % 2 === 1 && "text-right",
+                ]}
+                data-text={service.title}
+                set:html={service.title}
+              />
+              <Wrapped
+                class="service-icon h-fit shrink-0 font-mono transition-colors duration-300"
+                aria-hidden="true"
+              >
+                <span class="icon-plus">+</span>
+                <span class="icon-minus hidden">-</span>
+              </Wrapped>
+            </button>
+            <div
+              id={`service-content-${index}`}
+              class="service-content grid grid-rows-[0fr] transition-[grid-template-rows] duration-500 ease-out"
+            >
+              <div class="overflow-hidden">
+                <div class="service-content-inner pb-10 sm:pb-16 flex flex-col gap-10 sm:gap-16 text-xl sm:text-[1.625rem] md:text-[2rem] opacity-0 transition-all duration-500 ease-out delay-0">
+                  <hr class="border-lines-dark" />
+                  <div class="flex flex-col gap-10 sm:gap-16 lg:flex-row lg:justify-between">
+                    <div class="md:max-w-150 ">
+                      <h3 class="section-label">Liste de services</h3>
+                      <ul class="mt-4 sm:mt-9 flex flex-col gap-4 sm:gap-x-5 sm:gap-y-0 sm:flex-row sm:shrink-0 sm:flex-wrap max-w-[35.25rem]">
+                        {service.servicesList.map((item) => (
+                          <li>{item} /</li>
+                        ))}
+                      </ul>
+                    </div>
+                    <div class="md:max-w-150 flex flex-col gap-10 sm:gap-16">
+                      <div>
+                        <h3 class="section-label">{service.subtitle}</h3>
+                        <p class="mt-4 sm:mt-9 text-2xl leading-normal">
+                          {service.content}
+                        </p>
+                      </div>
+                      <a
+                        href="/contact"
+                        class="service-cta group relative overflow-hidden font-mono text-[1rem] leading-[0.6] uppercase py-6 px-5 flex justify-center w-full md:w-fit border border-bg-light bg-transparent text-bg-light transition-colors duration-300 ease-in-out cursor-pointer"
+                      >
+                        <span class="absolute inset-0 bg-bg-light transform -translate-x-full group-hover:translate-x-0 transition-transform duration-400 ease-[cubic-bezier(0.25,0.46,0.45,0.94)]" />
+                        <span class="relative z-10 group-hover:text-black transition-colors duration-300">
+                          Démarrer un projet
+                        </span>
+                      </a>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      ))}
+        ))
+      }
     </div>
   </div>
 </section>
@@ -125,7 +141,7 @@ const services: ServiceItem[] = [
   }
 
   .service-item::before {
-    content: '';
+    content: "";
     position: absolute;
     top: 0;
     left: 50%;
@@ -183,7 +199,7 @@ const services: ServiceItem[] = [
 
 <script>
   function initServiceAccordion() {
-    const triggers = document.querySelectorAll('.service-trigger');
+    const triggers = document.querySelectorAll(".service-trigger");
     const scrambleIntervals = new Map<HTMLElement, number>();
 
     // Fonction pour mélanger un tableau
@@ -214,23 +230,23 @@ const services: ServiceItem[] = [
       // Séparer par lignes (br)
       const lines = originalHtml.split(/<br\s*\/?>/gi);
       let iteration = 0;
-      
+
       // Calculer le nombre total de caractères (sans espaces de début/fin par ligne)
       const totalChars = lines.reduce((sum, line) => sum + line.length, 0);
 
       const intervalId = window.setInterval(() => {
         const scrambledLines = lines.map((line) => {
-          const chars = line.split('');
+          const chars = line.split("");
           const resolvedCount = Math.floor(iteration);
           const resolved = chars.slice(0, resolvedCount);
           const remaining = chars.slice(resolvedCount);
           const shuffled = shuffleArray(remaining);
-          return [...resolved, ...shuffled].join('');
+          return [...resolved, ...shuffled].join("");
         });
 
-        element.innerHTML = scrambledLines.join('<br>');
+        element.innerHTML = scrambledLines.join("<br>");
 
-        if (iteration >= Math.max(...lines.map(l => l.length))) {
+        if (iteration >= Math.max(...lines.map((l) => l.length))) {
           clearInterval(intervalId);
           scrambleIntervals.delete(element);
           element.innerHTML = originalHtml;
@@ -247,7 +263,7 @@ const services: ServiceItem[] = [
       const item = event.currentTarget as HTMLElement | null;
       if (!item) return;
 
-      const title = item.querySelector('.service-title') as HTMLElement | null;
+      const title = item.querySelector(".service-title") as HTMLElement | null;
       if (title) {
         const originalHtml = title.dataset.text || title.innerHTML;
         scrambleServiceTitle(title, originalHtml);
@@ -255,56 +271,61 @@ const services: ServiceItem[] = [
     }
 
     // Hover effect sur les sections de service
-    const serviceItems = document.querySelectorAll('.service-item');
+    const serviceItems = document.querySelectorAll(".service-item");
     serviceItems.forEach((item) => {
       const element = item as unknown as HTMLElement & {
         _serviceMouseEnterHandler?: (event: Event) => void;
       };
 
       if (element._serviceMouseEnterHandler) {
-        element.removeEventListener('mouseenter', element._serviceMouseEnterHandler);
+        element.removeEventListener(
+          "mouseenter",
+          element._serviceMouseEnterHandler,
+        );
       }
 
-      element.addEventListener('mouseenter', handleServiceItemMouseEnter);
+      element.addEventListener("mouseenter", handleServiceItemMouseEnter);
       element._serviceMouseEnterHandler = handleServiceItemMouseEnter;
     });
 
     triggers.forEach((trigger) => {
-      trigger.addEventListener('click', () => {
-        const isExpanded = trigger.getAttribute('aria-expanded') === 'true';
-        const serviceItem = trigger.closest('.service-item');
+      trigger.addEventListener("click", () => {
+        const isExpanded = trigger.getAttribute("aria-expanded") === "true";
+        const serviceItem = trigger.closest(".service-item");
 
         if (!serviceItem) return;
 
         // Fermer tous les autres
         triggers.forEach((otherTrigger) => {
           if (otherTrigger !== trigger) {
-            otherTrigger.setAttribute('aria-expanded', 'false');
-            const otherItem = otherTrigger.closest('.service-item');
+            otherTrigger.setAttribute("aria-expanded", "false");
+            const otherItem = otherTrigger.closest(".service-item");
             if (otherItem) {
-              otherItem.classList.remove('is-open');
+              otherItem.classList.remove("is-open");
             }
           }
         });
 
         // Toggle l'élément actuel
         if (isExpanded) {
-          trigger.setAttribute('aria-expanded', 'false');
-          serviceItem.classList.remove('is-open');
+          trigger.setAttribute("aria-expanded", "false");
+          serviceItem.classList.remove("is-open");
         } else {
-          trigger.setAttribute('aria-expanded', 'true');
-          serviceItem.classList.add('is-open');
+          trigger.setAttribute("aria-expanded", "true");
+          serviceItem.classList.add("is-open");
         }
       });
     });
 
     // Cleanup on view transitions
-    document.addEventListener('astro:before-swap', cleanupScrambleIntervals, { once: true });
+    document.addEventListener("astro:before-swap", cleanupScrambleIntervals, {
+      once: true,
+    });
   }
 
   // Init au chargement
   initServiceAccordion();
 
   // Re-init après les view transitions
-  document.addEventListener('astro:after-swap', initServiceAccordion);
+  document.addEventListener("astro:after-swap", initServiceAccordion);
 </script>
