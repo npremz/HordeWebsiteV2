@@ -114,15 +114,14 @@ export default function ContactForm() {
           </legend>
           <div className="w-full flex flex-wrap gap-[1.25rem] lg:gap-[2.5rem] mt-5 border-b pb-5 md:pb-10 border-lines-dark">
             {besoinOptions.map((option) => (
-              <label 
-                key={option.value} 
-                className={`uppercase font-mono text-[1rem] leading-[0.6] py-6 px-5 border transition-all duration-300 ease-in-out cursor-pointer ${
-                  formData.besoin === option.value 
-                    ? 'bg-bg-light text-black border-bg-light' 
+              <label
+                key={option.value}
+                className={`uppercase font-mono text-[1rem] leading-[0.6] py-6 px-5 border transition-all duration-300 ease-in-out cursor-pointer ${formData.besoin === option.value
+                    ? 'bg-bg-light text-black border-bg-light'
                     : errors.besoin
                       ? 'border-err text-err'
                       : 'border-lines-dark hover:border-bg-light'
-                }`}
+                  }`}
               >
                 <input
                   type="radio"
@@ -152,11 +151,10 @@ export default function ContactForm() {
             id="objectif"
             name="objectif"
             rows={1}
-            className={`py-5 xl:py-8 w-full text-2xl sm:text-[2rem] lg:text-[2.5rem] xl:text-[3.125rem] border-b bg-transparent focus:outline-none focus-visible:outline-none transition-colors resize-none overflow-hidden ${
-              errors.objectif
+            className={`py-5 xl:py-8 w-full text-2xl sm:text-[2rem] lg:text-[2.5rem] xl:text-[3.125rem] border-b bg-transparent focus:outline-none focus-visible:outline-none transition-colors resize-none overflow-hidden ${errors.objectif
                 ? 'border-b-err placeholder:text-err'
                 : 'border-lines-dark focus:border-b-lines'
-            }`}
+              }`}
             placeholder='Ce que vous avez en tête...'
             value={formData.objectif}
             onChange={(e) => {
@@ -188,11 +186,10 @@ export default function ContactForm() {
             type="text"
             id="nom"
             name="nom"
-            className={`py-5 xl:py-8 w-full text-2xl sm:text-[2rem] lg:text-[2.5rem] xl:text-[3.125rem] border-b bg-transparent focus:outline-none focus-visible:outline-none transition-colors ${
-              errors.nom
+            className={`py-5 xl:py-8 w-full text-2xl sm:text-[2rem] lg:text-[2.5rem] xl:text-[3.125rem] border-b bg-transparent focus:outline-none focus-visible:outline-none transition-colors ${errors.nom
                 ? 'border-b-err placeholder:text-err'
                 : 'border-lines-dark focus:border-b-lines'
-            }`}
+              }`}
             placeholder="Un autographe, s'il vous plaît"
             value={formData.nom}
             onChange={(e) => handleChange('nom', e.target.value)}
@@ -220,11 +217,10 @@ export default function ContactForm() {
             type="email"
             id="email"
             name="email"
-            className={`py-5 xl:py-8 w-full text-2xl sm:text-[2rem] lg:text-[2.5rem] xl:text-[3.125rem] border-b bg-transparent focus:outline-none focus-visible:outline-none transition-colors ${
-              errors.email
+            className={`py-5 xl:py-8 w-full text-2xl sm:text-[2rem] lg:text-[2.5rem] xl:text-[3.125rem] border-b bg-transparent focus:outline-none focus-visible:outline-none transition-colors ${errors.email
                 ? 'border-b-err placeholder:text-err'
                 : 'border-lines-dark focus:border-b-lines'
-            }`}
+              }`}
             placeholder="@"
             value={formData.email}
             onChange={(e) => handleChange('email', e.target.value)}
@@ -254,7 +250,7 @@ export default function ContactForm() {
       </div>
 
       <div className='flex flex-col md:flex-row md:gap-16 lg:gap-32 md:justify-end'>
-        <button type="submit" disabled={isSubmitting} className='group relative overflow-hidden mt-5 sm:mt-10 xl:mt-16 uppercase font-mono text-[1rem] leading-[0.6] py-6 px-5 border border-bg-light bg-transparent text-bg-light transition-colors duration-300 ease-in-out cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed self-end hover:text-black'>
+        <button type="submit" disabled={isSubmitting} className='group relative overflow-hidden mt-5 sm:mt-10 xl:mt-16 uppercase font-mono text-[1rem] leading-[0.6] py-6 px-5 flex justify-center w-full md:w-fit border border-bg-light bg-transparent text-bg-light transition-colors duration-300 ease-in-out cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed self-center md:self-end hover:text-black'>
           <span className='absolute inset-0 bg-bg-light transform -translate-x-full group-hover:translate-x-0 transition-transform duration-400 ease-[cubic-bezier(0.25,0.46,0.45,0.94)]'></span>
           <span className='relative z-10'>{isSubmitting ? 'Envoi en cours...' : 'Transmettre'}</span>
         </button>
