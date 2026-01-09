@@ -43,7 +43,7 @@ const methods = [
 			<li
 				class:list={[
 					'method-card',
-					index >= 1 && 'method-white-bg',
+					index >= 1 && 'full-width-bg',
 					'py-10 sm:py-16',
 					'relative'
 				]}
@@ -76,7 +76,7 @@ const methods = [
 			</li>
 		))}
 	</ol>
-	<div class="method-white-bg relative z-10">
+	<div class="full-width-bg relative z-10">
 		<a
 			href="/contact"
 			class="group relative overflow-hidden font-mono text-[1rem] leading-none uppercase py-6 px-5 flex justify-center w-full md:w-fit md:ml-auto border border-lines bg-transparent text-black transition-colors duration-300 ease-in-out cursor-pointer"
@@ -90,21 +90,6 @@ const methods = [
 </div>
 
 <style>
-	.method-white-bg {
-		position: relative;
-	}
-	.method-white-bg::before {
-		content: "";
-		position: absolute;
-		top: 0;
-		left: 50%;
-		transform: translateX(-50%);
-		width: 100vw;
-		height: 100%;
-		background-color: var(--color-bg-light);
-		z-index: -1;
-	}
-
 	.method-card {
 		will-change: transform;
 	}

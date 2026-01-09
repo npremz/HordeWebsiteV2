@@ -48,12 +48,6 @@
   }
 }
 
-@media only screen and (min-width: 1024px){
-	:root{
-		--gutter: 6rem
-  }
-}
-
 @media only screen and (min-width: 1512px){
 	:root{
 		--gutter: 8rem
@@ -246,6 +240,16 @@ body {
   /* Absolute center horizontally */
   .center-x {
     @apply left-1/2 -translate-x-1/2;
+  }
+
+  /* Full-width background via ::before pseudo-element */
+  .full-width-bg {
+    @apply relative;
+  }
+  .full-width-bg::before {
+    content: "";
+    @apply absolute top-0 left-1/2 -translate-x-1/2 w-screen h-full -z-1;
+    background-color: var(--color-bg-light);
   }
 
   /* -----------------------------------------

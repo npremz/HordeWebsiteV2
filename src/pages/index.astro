@@ -3,7 +3,6 @@ import Layout from "../layouts/Layout.astro";
 import BackgroundCanvas from "../components/ui/BackgroundCanvas.astro";
 import HeroSection from "../components/sections/HeroSection.astro";
 import MethodSection from "../components/sections/MethodSection.astro";
-import ExperienceSection from "../components/sections/ExperienceSection.astro";
 import ProjectSection from "../components/sections/ProjectSection.astro";
 import ServiceSection from "../components/sections/ServiceSection.astro";
 import Footer from "../components/Footer.astro";
@@ -35,18 +34,10 @@ const description =
 
   <div id="page-content">
     <section class="pt-64">
-      <MethodSection
-        title="<span>Nos 03</span><span>méthodes</span>"
-        stepsCount="03"
-        steps={[
-          "Eliminer les frictions pénalisantes",
-          "Maximiser les conversions",
-          "Soigner l'expérience utilisateur",
-        ]}
-      />
+      <MethodSection />
     </section>
   </div>
-  <div id="white-section" class="full-bleed-bg">
+  <div id="white-section" class="full-width-bg">
     <section id="services-section" class="pt-24 sm:pt-32 lg:pt-96">
       <ServiceSection />
     </section>
@@ -120,21 +111,5 @@ const description =
     document.addEventListener('astro:after-swap', initProjectsSvgParallax);
   </script>
 
-  <style>
-    .full-bleed-bg {
-      position: relative;
-    }
-    .full-bleed-bg::before {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 100vw;
-      height: 100%;
-      background-color: var(--color-bg-light);
-      z-index: -1;
-    }
-  </style>
   <Footer />
 </Layout>

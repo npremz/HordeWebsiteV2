@@ -104,6 +104,9 @@ const projects = [
 
 <script>
 	function initProjectHoverImage() {
+		// Désactiver sur mobile/touch
+		if (!window.matchMedia('(hover: hover)').matches) return;
+
 		const container = document.getElementById('project-hover-image');
 		const img = document.getElementById('project-hover-img') as HTMLImageElement;
 		const placeholder = document.getElementById('project-hover-placeholder');
