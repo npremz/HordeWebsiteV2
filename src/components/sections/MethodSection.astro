@@ -27,15 +27,20 @@ const methods = [
 ];
 ---
 
-<div id="methods-container" class="flex flex-col">
-	<ol class="methods-stack flex flex-col pt-64">
+<div id="methods-container" class="flex flex-col pt-64">
+	<h2 class="methods-title font-display uppercase leading-none text-4xl sm:text-[3.25rem] md:text-[4.875rem] lg:text-[6.875rem] xl:text-[7.5rem] text-right">
+		Nos<br>Méthodes
+	</h2>
+	<ol class="methods-stack flex flex-col mt-10 sm:mt-16 xl:mt-24">
 		{methods.map((method, index) => (
 			<li
 				class:list={[
 					'method-card',
 					index >= 1 && 'method-white-bg',
-					'py-10 sm:py-16'
+					'py-10 sm:py-16',
+					'relative'
 				]}
+				style={`z-index: ${methods.length - index}`}
 				data-index={index}
 				id={index === 1 ? 'method-transition' : undefined}
 			>
@@ -64,8 +69,16 @@ const methods = [
 			</li>
 		))}
 	</ol>
-	<div class="method-white-bg">
-		<a href="/contact" class="leading-none text-[1rem] block outline outline-lines font-mono uppercase py-6 px-5 text-center md:w-fit md:ml-auto">Prendre Contact</a>
+	<div class="method-white-bg relative z-10">
+		<a
+			href="/contact"
+			class="group relative overflow-hidden font-mono text-[1rem] leading-none uppercase py-6 px-5 flex justify-center w-full md:w-fit md:ml-auto border border-lines bg-transparent text-black transition-colors duration-300 ease-in-out cursor-pointer"
+		>
+			<span class="absolute inset-0 bg-black transform -translate-x-full group-hover:translate-x-0 transition-transform duration-400 ease-[cubic-bezier(0.25,0.46,0.45,0.94)]" />
+			<span class="relative z-10 group-hover:text-bg-light transition-colors duration-300">
+				Prendre Contact
+			</span>
+		</a>
 	</div>
 </div>
 
@@ -96,6 +109,10 @@ const methods = [
 	.method-line {
 		will-change: transform;
 	}
+
+	.methods-title {
+		will-change: transform;
+	}
 </style>
 
 <script>
@@ -104,9 +121,9 @@ const methods = [
 		if (cards.length === 0) return;
 
 		// Offset initial par carte (en pixels) - plus grand = plus de retard
-		const initialOffsets = [0, 100, 180];
+		const initialOffsets = [100, 200, 280];
 		// Offset pour les lignes - valeurs positives = ligne commence plus bas
-		const lineOffsets = [150, 200, 0]; // La dernière carte n'a pas de ligne
+		const lineOffsets = [250, 300, 0]; // La dernière carte n'a pas de ligne
 
 		// Fonction d'easing (ease-out cubic)
 		function easeOutCubic(t: number): number {

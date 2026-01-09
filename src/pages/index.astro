@@ -25,10 +25,9 @@ const description =
   siteNameAsPrefix={true}
 >
   <BackgroundCanvas triggerDistance={500} topOffset={900} bottomOffset={1400} stopTargetId="method-transition">
-    <!-- <svg slot="overlay" width="532" height="540" viewBox="0 0 532 540" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M211.359 67.1603C320.374 37.9499 433.026 104.796 462.956 216.495C492.885 328.194 428.748 442.41 319.734 471.62C210.719 500.83 98.0681 433.985 68.1382 322.286C38.2085 210.587 102.344 96.371 211.359 67.1603Z" stroke="#B1B1B1"/>
-      <rect x="0.612372" y="112.139" width="430.907" height="441.429" transform="rotate(-15 0.612372 112.139)" stroke="#B1B1B1"/>
-    </svg> -->
+    <svg width="583" height="583" viewBox="0 0 583 583" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M9 3.99902H574.001V0H583.001V9H578.621V574H583.001V583H574.001V578.594H9V583H0V574H4.02637V9H0V0H9V3.99902ZM9 9H5.02637V574H9V577.594H574.001V574H577.621V9H574.001V4.99902H9V9ZM290.996 18.4141C441.524 18.4141 563.552 140.441 563.552 290.97C563.552 441.498 441.524 563.525 290.996 563.525C140.468 563.525 18.4407 441.498 18.4404 290.97C18.4404 140.441 140.468 18.4141 290.996 18.4141ZM290.996 19.4141C141.02 19.4141 19.4404 140.994 19.4404 290.97C19.4407 440.946 141.02 562.525 290.996 562.525C440.972 562.525 562.552 440.946 562.552 290.97C562.552 140.994 440.972 19.4141 290.996 19.4141Z" fill="#B1B1B1"/>
+    </svg>
   </BackgroundCanvas>
 
   <HeroSection
@@ -57,7 +56,8 @@ const description =
   </div>
   <div class="relative">
     <svg
-      class="absolute top-32 lg:top-64 px-4 sm:px-5 lg:px-9 left-1/2 -translate-x-1/2 -translate-y-full -z-99999 w-full aspect-square"
+      id="projects-parallax-svg"
+      class="absolute top-32 lg:top-64 px-4 sm:px-5 lg:px-9 left-1/2 -translate-x-1/2 -translate-y-full -z-99999 w-full aspect-square will-change-transform"
       viewBox="0 0 260 260"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
@@ -70,6 +70,58 @@ const description =
       <ProjectSection />
     </section>
   </div>
+
+  <script>
+    function initProjectsSvgParallax() {
+      const svg = document.getElementById('projects-parallax-svg') as HTMLElement;
+      if (!svg) return;
+
+      const speed = 0.2;
+
+      function updateSvg() {
+        const rect = svg.getBoundingClientRect();
+        const viewportHeight = window.innerHeight;
+
+        // Le trigger point est à 80% de la hauteur du viewport
+        const triggerPoint = viewportHeight * 0.25;
+
+        // Distance parcourue après le trigger point (positive quand on scroll vers le bas)
+        const distancePastTrigger = triggerPoint - rect.top;
+
+        if (distancePastTrigger <= 0) {
+          // Pas encore au trigger point
+          svg.style.transform = ``;
+          return;
+        }
+
+        // Calculer le déplacement basé sur la distance après le trigger
+        const translateY = -distancePastTrigger * speed;
+
+        svg.style.transform = `translateY(${translateY}px)`;
+      }
+
+      let ticking = false;
+      function onScroll() {
+        if (!ticking) {
+          requestAnimationFrame(() => {
+            updateSvg();
+            ticking = false;
+          });
+          ticking = true;
+        }
+      }
+
+      window.addEventListener('scroll', onScroll, { passive: true });
+      updateSvg();
+
+      document.addEventListener('astro:before-swap', () => {
+        window.removeEventListener('scroll', onScroll);
+      }, { once: true });
+    }
+
+    initProjectsSvgParallax();
+    document.addEventListener('astro:after-swap', initProjectsSvgParallax);
+  </script>
 
   <style>
     .full-bleed-bg {
