@@ -151,7 +151,7 @@ export default function ContactForm() {
             id="objectif"
             name="objectif"
             rows={1}
-            className={`py-5 xl:py-8 w-full text-2xl sm:text-[2rem] lg:text-[2.5rem] xl:text-[3.125rem] border-b bg-transparent focus:outline-none focus-visible:outline-none transition-colors resize-none overflow-hidden ${errors.objectif
+            className={`py-5 xl:py-8 w-full text-2xl sm:text-[2rem] lg:text-[2.5rem] border-b bg-transparent focus:outline-none focus-visible:outline-none transition-colors resize-none overflow-hidden ${errors.objectif
                 ? 'border-b-err placeholder:text-err'
                 : 'border-lines-dark focus:border-b-lines'
               }`}
@@ -186,7 +186,7 @@ export default function ContactForm() {
             type="text"
             id="nom"
             name="nom"
-            className={`py-5 xl:py-8 w-full text-2xl sm:text-[2rem] lg:text-[2.5rem] xl:text-[3.125rem] border-b bg-transparent focus:outline-none focus-visible:outline-none transition-colors ${errors.nom
+            className={`py-5 xl:py-8 w-full text-2xl sm:text-[2rem] lg:text-[2.5rem] border-b bg-transparent focus:outline-none focus-visible:outline-none transition-colors ${errors.nom
                 ? 'border-b-err placeholder:text-err'
                 : 'border-lines-dark focus:border-b-lines'
               }`}
@@ -217,7 +217,7 @@ export default function ContactForm() {
             type="email"
             id="email"
             name="email"
-            className={`py-5 xl:py-8 w-full text-2xl sm:text-[2rem] lg:text-[2.5rem] xl:text-[3.125rem] border-b bg-transparent focus:outline-none focus-visible:outline-none transition-colors ${errors.email
+            className={`py-5 xl:py-8 w-full text-2xl sm:text-[2rem] lg:text-[2.5rem] border-b bg-transparent focus:outline-none focus-visible:outline-none transition-colors ${errors.email
                 ? 'border-b-err placeholder:text-err'
                 : 'border-lines-dark focus:border-b-lines'
               }`}
@@ -242,7 +242,7 @@ export default function ContactForm() {
           type="text"
           id="societe"
           name="societe"
-          className='py-5 xl:py-8 flex-1 text-2xl sm:text-[2rem] lg:text-[2.5rem] xl:text-[3.125rem] border-lines-dark border-b bg-transparent focus:outline-none focus-visible:outline-none focus:border-b-lines transition-colors'
+          className='py-5 xl:py-8 flex-1 text-2xl sm:text-[2rem] lg:text-[2.5rem] border-lines-dark border-b bg-transparent focus:outline-none focus-visible:outline-none focus:border-b-lines transition-colors'
           placeholder='Nom de société'
           value={formData.societe}
           onChange={(e) => handleChange('societe', e.target.value)}

@@ -1,25 +1,232 @@
 ---
 import Wrapped from "../ui/Wrapped.astro"
+
+const projects = [
+	{
+		name: "Café Belga",
+		href: "https://belga.nicolas-premont.be",
+		image: "/images/projects/belga.jpg",
+		inProgress: false,
+	},
+	{
+		name: "Merly",
+		href: null,
+		image: null,
+		inProgress: true,
+	},
+	{
+		name: "E-Putch",
+		href: null,
+		image: null,
+		inProgress: true,
+	},
+]
 ---
 
 <div class="flex flex-col">
 	<div class="flex justify-between font-display leading-none px-4 sm:px-5 lg:px-9 items-end sm:items-start lg:items-end text-[1.625rem] sm:text-[2.5rem] md:text-[4rem] uppercase lg:w-3/4">
-		<h2 class="">Projets<br>selectioné</h2>
-		<span class="block">(03)</span>
+		<h2 class="">Projets<br>selectionnés</h2>
+		<span class="block">({String(projects.length).padStart(2, '0')})</span>
 	</div>
 	<a href="/projects" class="section-label text-[1rem] px-4 sm:px-5 lg:px-9 leading-none self-end mt-10 sm:mt-0 lg:-mt-[1lh]"><Wrapped>Autres projets →</Wrapped></a>
+
+	<!-- Image flottante qui suit la souris -->
+	<div id="project-hover-image" class="pointer-events-none fixed z-50 overflow-visible" style="transform: translate(-50%, -50%) scale(0); will-change: transform;">
+		<div class="w-[315px] h-[315px] overflow-hidden">
+			<img id="project-hover-img" src="" alt="" class="w-full h-full object-cover" />
+			<div id="project-hover-placeholder" class="hidden w-full h-full bg-bg-light border border-lines flex items-center justify-center">
+				<span class="section-label">( on y travaille )</span>
+			</div>
+		</div>
+	</div>
+
 	<ol class="mt-10 sm:mt-16 text-[2rem] lg:text-[2.5rem]">
-		<li>
-			<a href="https://belga.nicolas-premont.be" class="flex justify-between py-5 px-4 lg:py-8 lg:px-9 outline outline-lines">
-				<p>Café Belga</p>
-				<Wrapped class="text-[1rem]">→</Wrapped>
-			</a>
-		</li>
-		<li class="flex justify-between py-5 px-4 lg:py-8 lg:px-9 border-b border-t border-lines">
-			<p>Merly <span class="section-label">( on y travaille )</span></p>
-		</li>
-		<li class="flex justify-between py-5 px-4 lg:py-8 lg:px-9 border-b border-lines">
-			<p>E-Putch <span class="section-label">( on y travaille )</span></p>
-		</li>
+		{projects.map((project, index) => (
+			<li class="project-item" data-image={project.image || ''} data-in-progress={project.inProgress}>
+				{project.href ? (
+					<a href={project.href} class:list={["project-link flex justify-between py-5 px-4 lg:py-8 lg:px-9", index === 0 ? "border border-lines" : "border-b border-x border-lines"]}>
+						<p>{project.name}</p>
+						<Wrapped class="text-[1rem] font-mono">→</Wrapped>
+					</a>
+				) : (
+					<div class:list={["project-link flex justify-between py-5 px-4 lg:py-8 lg:px-9", index === 0 ? "border border-lines" : "border-b border-x border-lines"]}>
+						<p>{project.name} <span class="section-label">( on y travaille )</span></p>
+						<Wrapped class="text-[1rem] font-mono">→</Wrapped>
+					</div>
+				)}
+			</li>
+		))}
 	</ol>
 </div>
+
+<style>
+	.project-item {
+		position: relative;
+	}
+
+	.project-link {
+		position: relative;
+		transition: color 0.3s ease-out;
+	}
+
+	.project-link::before {
+		content: "";
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		background-color: var(--color-black);
+		z-index: -1;
+		transform: scaleX(0);
+		transform-origin: left center;
+		transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+	}
+
+	@media (hover: hover) {
+		.project-link:hover {
+			color: var(--color-bg-light);
+		}
+
+		.project-link:hover::before {
+			transform: scaleX(1);
+		}
+
+		.project-link :global(.wrapped) {
+			transition: color 0.3s ease-out 0.2s;
+		}
+
+		.project-link:hover :global(.wrapped) {
+			color: var(--color-bg-light) !important;
+		}
+	}
+</style>
+
+<script>
+	function initProjectHoverImage() {
+		const container = document.getElementById('project-hover-image');
+		const img = document.getElementById('project-hover-img') as HTMLImageElement;
+		const placeholder = document.getElementById('project-hover-placeholder');
+		const projectItems = document.querySelectorAll('.project-item');
+
+		if (!container || !img || !placeholder) return;
+
+		let mouseX = 0;
+		let mouseY = 0;
+		let currentX = 0;
+		let currentY = 0;
+		let velocityX = 0;
+		let currentRotation = 0;
+		let targetRotation = 0;
+		let currentScale = 0;
+		let targetScale = 0;
+		let isHovering = false;
+		let animationId: number | null = null;
+
+		function animate() {
+			const posEase = 0.1;
+			const scaleEase = 0.08;
+			const rotEase = 0.06;
+
+			// Position
+			const prevX = currentX;
+			currentX += (mouseX - currentX) * posEase;
+			currentY += (mouseY - currentY) * posEase;
+
+			// Vélocité pour l'inertie
+			velocityX = currentX - prevX;
+
+			// Inertie : rotation basée sur la vélocité (max ±12deg)
+			const inertiaRotation = Math.max(-12, Math.min(12, velocityX * 2.5));
+			targetRotation = isHovering ? inertiaRotation : 0;
+
+			// Scale
+			currentScale += (targetScale - currentScale) * scaleEase;
+
+			// Rotation avec inertie
+			currentRotation += (targetRotation - currentRotation) * rotEase;
+
+			container.style.left = `${currentX}px`;
+			container.style.top = `${currentY}px`;
+			container.style.transform = `translate(-50%, -50%) scale(${currentScale}) rotate(${currentRotation}deg)`;
+
+			const isAnimating =
+				Math.abs(currentX - mouseX) > 0.1 ||
+				Math.abs(currentY - mouseY) > 0.1 ||
+				Math.abs(currentScale - targetScale) > 0.01 ||
+				Math.abs(currentRotation - targetRotation) > 0.1;
+
+			if (isAnimating) {
+				animationId = requestAnimationFrame(animate);
+			} else {
+				animationId = null;
+			}
+		}
+
+		function startAnimation() {
+			if (!animationId) {
+				animationId = requestAnimationFrame(animate);
+			}
+		}
+
+		let currentElement: HTMLElement | null = null;
+
+		function showImage(element: HTMLElement) {
+			const imageSrc = element.dataset.image;
+			const inProgress = element.dataset.inProgress === 'true';
+
+			if (inProgress || !imageSrc) {
+				img.classList.add('hidden');
+				placeholder.classList.remove('hidden');
+			} else {
+				img.src = imageSrc;
+				img.classList.remove('hidden');
+				placeholder.classList.add('hidden');
+			}
+		}
+
+		projectItems.forEach((item) => {
+			const element = item as HTMLElement;
+
+			element.addEventListener('mouseenter', () => {
+				isHovering = true;
+
+				// Si on change d'élément, reset l'animation
+				if (currentElement !== element) {
+					currentX = mouseX;
+					currentY = mouseY;
+					currentScale = 0;
+					currentRotation = 0;
+				}
+
+				currentElement = element;
+				showImage(element);
+				targetScale = 1;
+				startAnimation();
+			});
+
+			element.addEventListener('mouseleave', () => {
+				isHovering = false;
+				currentElement = null;
+				targetScale = 0;
+				startAnimation();
+			});
+
+			element.addEventListener('mousemove', (e) => {
+				mouseX = e.clientX;
+				mouseY = e.clientY;
+				startAnimation();
+			});
+		});
+
+		// Cleanup
+		document.addEventListener('astro:before-swap', () => {
+			if (animationId) {
+				cancelAnimationFrame(animationId);
+			}
+		}, { once: true });
+	}
+
+	initProjectHoverImage();
+	document.addEventListener('astro:after-swap', initProjectHoverImage);
+</script>

@@ -68,7 +68,7 @@ const textColorClass = isDark ? 'text-bg-light' : 'text-black';
 			{description && (
 				<div class="flex-col-container column-gap lg:col-span-7">
 					<h3 class="section-label">en résumé (on sait jamais)</h3>
-					<p class="text-2xl leading-tight sm:text-[32px] md:text-4xl lg:text-[2.5rem] xl:text-[3.25rem] max-w-[287px] sm:max-w-100 lg:max-w-124 xl:max-w-148">{description}</p>
+					<p class="text-2xl leading-tight sm:text-[32px] md:text-4xl lg:text-[2.5rem] max-w-[287px] sm:max-w-100 lg:max-w-124 xl:max-w-148">{description}</p>
 				</div>
 			)}
 
@@ -164,7 +164,7 @@ const textColorClass = isDark ? 'text-bg-light' : 'text-black';
 		transform-origin: left center;
 		width: calc(100vw - 32px);
 		height: calc(100% + 60px);
-		background-color: var(--color-bg-light);
+		background-color: var(--color-black);
 		z-index: -1;
 		transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 	}
@@ -185,13 +185,17 @@ const textColorClass = isDark ? 'text-bg-light' : 'text-black';
 
 	.footer-logo {
 		color: currentColor;
-		transition: color 0.3s ease;
+		transition: color 0.15s ease-out 0.15s;
 		position: relative;
 		z-index: 1;
 	}
 
 	.footer-logo-wrapper:hover .footer-logo {
-		color: #222121;
+		color: var(--color-bg-light);
+	}
+
+	[data-variant="dark"] .footer-logo-wrapper:hover .footer-logo {
+		color: var(--color-black);
 	}
 
 	/* Footer links avec underline animé */
