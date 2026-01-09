@@ -18,7 +18,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## Development Commands
 
 ```bash
-npm run dev      # Start dev server at localhost:4321
+npm run dev      # Start dev server at localhost:4328
 npm run build    # Build production site to ./dist/
 npm run preview  # Preview production build locally
 npm run astro    # Run Astro CLI commands
@@ -357,7 +357,7 @@ import myImage from '../assets/image.jpg';
 ### Content Management
 
 **Keystatic Admin:**
-- Access at `http://localhost:4321/keystatic` during dev
+- Access at `http://localhost:4328/keystatic` during dev
 - Create/edit posts, pages, testimonials
 - Manage site settings, navigation, footer
 - WYSIWYG Markdoc editor with content blocks

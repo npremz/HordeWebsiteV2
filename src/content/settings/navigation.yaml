@@ -5,7 +5,7 @@ items:
     url: /
     isExternal: false
   - label: Méthode
-    url: '/#page-content'
+    url: '/#methods-container'
     isExternal: false
   - label: Services
     url: '/#services-section'
