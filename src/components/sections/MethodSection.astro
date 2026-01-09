@@ -42,8 +42,8 @@ const methods = [
 				<div class="method-card-inner">
 					<article class:list={[
 						"flex flex-col md:flex-row md:justify-between",
-						index != 2 && 'border-b border-lines pb-10 sm:pb-16',
 						index == 2 && 'pb-10 sm:pb-32',
+						index != 2 && 'pb-10 sm:pb-16',
 					]}>
 						<header class="flex flex-col gap-2 sm:gap-8">
 							<div class:list={["section-label max-w-[210px] text-justify", index === 2 && "md:min-h-[2lh]"]}>
@@ -58,6 +58,9 @@ const methods = [
 						</div>
 					</article>
 				</div>
+				{index != 2 && (
+					<div class="method-line border-b border-lines"></div>
+				)}
 			</li>
 		))}
 	</ol>
@@ -89,6 +92,10 @@ const methods = [
 	.method-card-inner {
 		will-change: transform;
 	}
+
+	.method-line {
+		will-change: transform;
+	}
 </style>
 
 <script>
@@ -97,7 +104,9 @@ const methods = [
 		if (cards.length === 0) return;
 
 		// Offset initial par carte (en pixels) - plus grand = plus de retard
-		const initialOffsets = [150, 300, 450];
+		const initialOffsets = [0, 100, 180];
+		// Offset pour les lignes - valeurs positives = ligne commence plus bas
+		const lineOffsets = [150, 200, 0]; // La dernière carte n'a pas de ligne
 
 		// Fonction d'easing (ease-out cubic)
 		function easeOutCubic(t: number): number {
@@ -108,9 +117,6 @@ const methods = [
 			const viewportHeight = window.innerHeight;
 
 			cards.forEach((card, index) => {
-				const initialOffset = initialOffsets[index] || 0;
-				if (initialOffset === 0) return;
-
 				const cardElement = card as HTMLElement;
 				const rect = cardElement.getBoundingClientRect();
 
@@ -123,12 +129,24 @@ const methods = [
 				// Appliquer easing
 				const progress = easeOutCubic(rawProgress);
 
-				// L'offset diminue de initialOffset à 0 au fur et à mesure du scroll
-				const currentOffset = initialOffset * (1 - progress);
+				// Animer le contenu
+				const initialOffset = initialOffsets[index] || 0;
+				if (initialOffset > 0) {
+					const currentOffset = initialOffset * (1 - progress);
+					const inner = cardElement.querySelector('.method-card-inner') as HTMLElement;
+					if (inner) {
+						inner.style.transform = `translateY(${currentOffset}px)`;
+					}
+				}
 
-				const inner = cardElement.querySelector('.method-card-inner') as HTMLElement;
-				if (inner) {
-					inner.style.transform = `translateY(${currentOffset}px)`;
+				// Animer la ligne
+				const lineOffset = lineOffsets[index] || 0;
+				if (lineOffset !== 0) {
+					const currentLineOffset = lineOffset * (1 - progress);
+					const line = cardElement.querySelector('.method-line') as HTMLElement;
+					if (line) {
+						line.style.transform = `translateY(${currentLineOffset}px)`;
+					}
 				}
 			});
 		}

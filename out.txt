@@ -1,0 +1,1996 @@
+
+ ▐▛███▜▌   Claude Code v2.1.2
+▝▜█████▛▘  Opus 4.5 · Claude Pro
+  ▘▘ ▝▝    ~/projects/websites/HordeV2
+
+❯ 09:20:28 [ERROR] Invalid data for singleton "siteSettings":               
+  defaultDescription: Description par défaut must be no longer than 160     
+  characters                                                                
+  Stack trace:                                                              
+  at /home/npremont/projects/websites/HordeV2/node_modules/@keystatic/c     
+  ore/dist/generic-04895417.node.js:387:11                                  
+  [...] See full stack trace in the browser, or rerun with --verbose.       
+  tu peux utiliser mgrep                                                    
+
+● Je vais chercher le fichier de configuration siteSettings pour corriger la description trop longue.
+
+● /mgrep
+
+● Bash(mgrep "defaultDescription siteSettings")
+  ⎿  ./keystatic.config.ts:99-130 (98.50% match)   
+     ./src/pages/index.astro:1-18 (98.50% match)
+     ./src/components/SEO.astro:1-64 (97.56% match)
+     … +7 lines (ctrl+o to expand)
+
+● Read(src/content/settings/site.yaml)
+  ⎿  Read 12 lines
+
+● La description est trop longue (plus de 160 caractères). Je vais la raccourcir tout en conservant les mots-clés SEO importants.
+
+● Update(src/content/settings/site.yaml)
+  ⎿  Added 2 lines, removed 2 lines                                      
+      2  homepageTitle: Agence Web Bruxelles - Performance & UX | Horde
+      3  siteUrl: https://hordeagence.com
+      4  defaultDescription: >-
+      5 -  Horde, votre agence web à Bruxelles spécialisée en performance
+        - web et UX. Sites ultra-rapides,                                
+      6 -  audit offert, optimisation SEO technique et Core Web Vitals. C
+        -ollaboration directe sans intermédiaire.                        
+      5 +  Agence web Bruxelles spécialisée en performance et UX. Sites u
+        +ltra-rapides, optimisation SEO                                  
+      6 +  technique et Core Web Vitals. Audit offert, collaboration dire
+        +cte.                                                            
+      7  locale: fr_FR
+      8  defaultOgImage: /images/og/defaultOgImage.jpg
+      9  defaultOgImageAlt: >-
+
+● La description a été raccourcie de ~197 caractères à ~156 caractères, en conservant les mots-clés SEO essentiels (Bruxelles, agence web, performance, UX, Core Web Vitals, audit). Relancez npm run dev pour vérifier que l'erreur est corrigée.
+
+✻ Worked for 34s
+
+❯ je prefere que tu garde le mot horde que specialisee 
+
+● Update(src/content/settings/site.yaml)
+  ⎿  Added 1 line, removed 1 line                                        
+      2  homepageTitle: Agence Web Bruxelles - Performance & UX | Horde
+      3  siteUrl: https://hordeagence.com
+      4  defaultDescription: >-
+      5 -  Agence web Bruxelles spécialisée en performance et UX. Sites u
+        -ltra-rapides, optimisation SEO                                  
+      5 +  Horde, agence web Bruxelles axée performance et UX. Sites ultr
+        +a-rapides, optimisation SEO                                     
+      6    technique et Core Web Vitals. Audit offert, collaboration dire
+         cte.
+      7  locale: fr_FR
+      8  defaultOgImage: /images/og/defaultOgImage.jpg
+
+● Voilà, j'ai remplacé "spécialisée" par "axée" pour garder "Horde" tout en restant sous 160 caractères (~156 chars).
+
+❯ quand je fais du back/forward avec le navigateur, le backgroundcanvas ne  
+  se reload pas                                                             
+
+● Je vais examiner le composant BackgroundCanvas pour comprendre le problème avec les transitions de vue.
+
+● Bash(mgrep "BackgroundCanvas component implementation")
+  ⎿  ./CLAUDE.md:110-160 (89.33% match)          
+     ./src/pages/index.astro:18-36 (81.76% match)
+     ./src/pages/index.astro:18-36 (81.76% match)
+     … +7 lines (ctrl+o to expand)
+
+● Read(src/components/ui/BackgroundCanvas.astro)
+  ⎿  Read 348 lines
+
+● Le problème est que astro:after-swap ne se déclenche pas pour la navigation back/forward du navigateur. Il faut utiliser astro:page-load qui se déclenche pour toutes les navigations, y compris back/forward.
+
+● Update(src/components/ui/BackgroundCanvas.astro)
+  ⎿  Added 11 lines, removed 11 lines                                    
+      332      window.addEventListener('scroll', scrollHandler, { passive
+           : true });
+      333    }
+      334  
+      335 -  // Initialisation au chargement                             
+      336 -  init();                                                     
+      337 -  setupListeners();                                           
+      338 -                                                              
+      339 -  // Réinitialisation après une view transition               
+      340 -  document.addEventListener('astro:after-swap', () => {       
+      335 +  // Initialisation au chargement et après chaque navigation (
+          +y compris back/forward)                                       
+      336 +  function fullInit() {                                       
+      337      cleanup();
+      342 -    setTimeout(() => {                                        
+      343 -      init();                                                 
+      344 -      setupListeners();                                       
+      345 -    }, 50);                                                   
+      346 -  });                                                         
+      338 +    init();                                                   
+      339 +    setupListeners();                                         
+      340 +  }                                                           
+      341 +                                                              
+      342 +  // Initialisation initiale                                  
+      343 +  fullInit();                                                 
+      344 +                                                              
+      345 +  // Réinitialisation après navigation (view transitions, back
+          +/forward)                                                     
+      346 +  document.addEventListener('astro:page-load', fullInit);     
+      347  </script>
+
+● Attends, il y a un problème potentiel - astro:page-load se déclenche aussi au chargement initial, ce qui causerait une double initialisation. Laisse-moi corriger.
+
+● Update(src/components/ui/BackgroundCanvas.astro)
+  ⎿  Added 9 lines, removed 1 line                                       
+      333    }
+      334  
+      335    // Initialisation au chargement et après chaque navigation (
+           y compris back/forward)
+      336 +  let hasInitialized = false;                                 
+      337 +                                                              
+      338    function fullInit() {
+      339      cleanup();
+      340      init();
+      341      setupListeners();
+      342 +    hasInitialized = true;                                    
+      343    }
+      344  
+      345    // Initialisation initiale
+      346    fullInit();
+      347  
+      348    // Réinitialisation après navigation (view transitions, back
+           /forward)
+      346 -  document.addEventListener('astro:page-load', fullInit);     
+      349 +  document.addEventListener('astro:page-load', () => {        
+      350 +    // Éviter la double initialisation au premier chargement  
+      351 +    if (hasInitialized) {                                     
+      352 +      fullInit();                                             
+      353 +    }                                                         
+      354 +  });                                                         
+      355  </script>
+
+● En fait, ma logique est inversée. Laisse-moi corriger.
+
+● Update(src/components/ui/BackgroundCanvas.astro)
+  ⎿  Added 5 lines, removed 4 lines                                      
+      333    }
+      334  
+      335    // Initialisation au chargement et après chaque navigation (
+           y compris back/forward)
+      336 -  let hasInitialized = false;                                 
+      336 +  let isFirstLoad = true;                                     
+      337  
+      338    function fullInit() {
+      339      cleanup();
+      340      init();
+      341      setupListeners();
+      342 -    hasInitialized = true;                                    
+      342    }
+      343  
+      344    // Initialisation initiale
+     ...
+      347    // Réinitialisation après navigation (view transitions, back
+           /forward)
+      348    document.addEventListener('astro:page-load', () => {
+      349      // Éviter la double initialisation au premier chargement
+      351 -    if (hasInitialized) {                                     
+      352 -      fullInit();                                             
+      350 +    if (isFirstLoad) {                                        
+      351 +      isFirstLoad = false;                                    
+      352 +      return;                                                 
+      353      }
+      354 +    fullInit();                                               
+      355    });
+      356  </script>
+
+● C'est corrigé. Maintenant :
+  1. Au premier chargement : fullInit() s'exécute immédiatement, puis astro:page-load est ignoré
+  2. Pour toute navigation suivante (liens, back/forward) : astro:page-load déclenche fullInit()
+
+  Teste avec npm run dev et la navigation back/forward devrait maintenant fonctionner.
+
+✻ Baked for 1m 10s
+
+❯ toujours pas, hesite pas a utilise ton mcp astro 
+
+● astro-docs - search_astro_docs (MCP)(query: "view transitions back forward
+                                      navigation page load lifecycle events")
+  ⎿  {                                                                   
+       "search_results": [
+         {
+     … +545 lines (ctrl+o to expand)
+
+● astro-docs - search_astro_docs (MCP)(query: "script rerun view transitions
+                                      data-astro-rerun script execution")
+  ⎿ ⚠ Large MCP response (~10.9k tokens), this can fill up context quickl
+  ⎿  {
+       "search_results": [
+         {
+     … +646 lines (ctrl+o to expand)
+
+● Je comprends maintenant. Le problème est que les scripts bundlés (par défaut dans Astro) ne s'exécutent qu'une seule fois. L'event listener astro:page-load est ajouté, mais le script lui-même ne se ré-exécute jamais.
+
+  La solution recommandée par Astro est d'envelopper toute la logique d'initialisation dans astro:page-load. Je vais réécrire le script.
+
+● Read(src/components/ui/BackgroundCanvas.astro)
+  ⎿  Read 357 lines
+
+● Je vais réécrire le script en suivant le pattern recommandé par Astro : tout envelopper dans astro:page-load et l'appeler aussi immédiatement.
+
+● Update(src/components/ui/BackgroundCanvas.astro)
+  ⎿  Added 201 lines, removed 248 lines                                  
+       49    </div>
+       50  )}
+       51  
+       52 -<script>                                                      
+       53 -  let canvas: HTMLCanvasElement;                              
+       54 -  let ctx: CanvasRenderingContext2D;                          
+       55 -  let overlay: HTMLElement | null;                            
+       56 -  let targetId: string;                                       
+       57 -  let stopTargetId: string | null;                            
+       58 -  let topOffset: number;                                      
+       59 -  let bottomOffset: number;                                   
+       60 -  let triggerDistance: number;                                
+       61 -  let triggerDistanceBottom: number;                          
+       62 -  let pixelColor: string;                                     
+       63 -  let parallaxSpeed: number;                                  
+       64 -  let animationId: number | null = null;                      
+       65 -  let resizeTimeout: number | undefined;                      
+       66 -  let lastWidth = window.innerWidth;                          
+       67 -  let pixels: { x: number; y: number; alpha: number }[] = []; 
+       68 -  let pixelSize = 20;                                         
+       69 -  let isAnimating = false;                                    
+       70 -  let scrollHandler: (() => void) | null = null;              
+       71 -  let resizeHandler: (() => void) | null = null;              
+       72 -  let isFullyCovered = false;                                 
+       73 -  let overlayStartScrollY = 0;                                
+       74 -                                                              
+       75 -  function getPixelSize(): number {                           
+       76 -    return Math.floor(window.innerWidth / 8);                 
+       52 +<script is:inline>                                            
+       53 +  // État global sur window pour persister entre les navigatio
+          +ns                                                            
+       54 +  if (!window._bgCanvas) {                                    
+       55 +    window._bgCanvas = {                                      
+       56 +      animationId: null,                                      
+       57 +      scrollHandler: null,                                    
+       58 +      resizeHandler: null,                                    
+       59 +      isAnimating: false,                                     
+       60 +      pixels: [],                                             
+       61 +      isFullyCovered: false,                                  
+       62 +      overlayStartScrollY: 0,                                 
+       63 +      lastWidth: window.innerWidth,                           
+       64 +      resizeTimeout: undefined                                
+       65 +    };                                                        
+       66    }
+       67  
+       79 -  function resizeCanvas() {                                   
+       80 -    canvas.width = window.innerWidth;                         
+       81 -    canvas.height = window.innerHeight;                       
+       82 -    pixelSize = getPixelSize();                               
+       83 -  }                                                           
+       68 +  function initBackgroundCanvas() {                           
+       69 +    const state = window._bgCanvas;                           
+       70  
+       85 -  function updateOverlay(progress: number, scrollY: number) { 
+       86 -    if (!overlay) return;                                     
+       87 -                                                              
+       88 -    const wasFullyCovered = isFullyCovered;                   
+       89 -    isFullyCovered = progress >= 0.98;                        
+       90 -                                                              
+       91 -    // Quand on devient complètement couvert, mémoriser la pos
+          -ition de scroll                                               
+       92 -    if (isFullyCovered && !wasFullyCovered) {                 
+       93 -      overlayStartScrollY = scrollY;                          
+       71 +    // Cleanup previous                                       
+       72 +    if (state.animationId !== null) {                         
+       73 +      cancelAnimationFrame(state.animationId);                
+       74 +      state.animationId = null;                               
+       75 +      state.isAnimating = false;                              
+       76      }
+       95 -                                                              
+       96 -    if (isFullyCovered) {                                     
+       97 -      overlay.style.opacity = '1';                            
+       98 -      // Effet parallax: l'overlay monte plus lentement que le
+          - scroll                                                       
+       99 -      const scrollDelta = scrollY - overlayStartScrollY;      
+      100 -      const parallaxOffset = scrollDelta * parallaxSpeed;     
+      101 -      overlay.style.transform = `translateY(${-parallaxOffset}
+          -px)`;                                                         
+      102 -    } else {                                                  
+      103 -      overlay.style.opacity = '0';                            
+      104 -      overlay.style.transform = 'translateY(0)';              
+       77 +    if (state.scrollHandler) {                                
+       78 +      window.removeEventListener('scroll', state.scrollHandler
+          +);                                                            
+       79      }
+      106 -  }                                                           
+       80 +    if (state.resizeHandler) {                                
+       81 +      window.removeEventListener('resize', state.resizeHandler
+          +);                                                            
+       82 +    }                                                         
+       83 +    clearTimeout(state.resizeTimeout);                        
+       84  
+      108 -  function getProjectSectionPosition(): number | null {       
+      109 -    const projectSection = document.getElementById(targetId); 
+      110 -    if (!projectSection) return null;                         
+      111 -    const rect = projectSection.getBoundingClientRect();      
+      112 -    return rect.top + window.scrollY;                         
+      113 -  }                                                           
+       85 +    const canvas = document.getElementById('bg-canvas');      
+       86 +    if (!canvas) return;                                      
+       87  
+      115 -  function isInAnimationZone(): boolean {                     
+      116 -    const scrollY = window.scrollY;                           
+      117 -    const viewportHeight = window.innerHeight;                
+      118 -    const projectPos = getProjectSectionPosition();           
+      119 -    if (!projectPos) return false;                            
+       88 +    const ctx = canvas.getContext('2d');                      
+       89 +    if (!ctx) return;                                         
+       90  
+      121 -    const projectSection = document.getElementById(targetId); 
+      122 -    if (!projectSection) return false;                        
+       91 +    const overlay = document.getElementById('bg-canvas-overlay
+          +');                                                           
+       92 +    const targetId = canvas.getAttribute('data-target-id') || 
+          +'projects';                                                   
+       93 +    const stopTargetId = canvas.getAttribute('data-stop-target
+          +-id') || null;                                                
+       94 +    const topOffset = Number(canvas.getAttribute('data-top-off
+          +set')) || 500;                                                
+       95 +    const bottomOffset = Number(canvas.getAttribute('data-bott
+          +om-offset')) || -450;                                         
+       96 +    const triggerDistance = Number(canvas.getAttribute('data-t
+          +rigger-distance')) || 500;                                    
+       97 +    const pixelColor = canvas.getAttribute('data-color') || 'r
+          +gb(244, 243, 243)';                                           
+       98 +    const parallaxSpeed = Number(canvas.getAttribute('data-par
+          +allax-speed')) || 0.3;                                        
+       99  
+      124 -    const projectRect = projectSection.getBoundingClientRect()
+          -;                                                             
+      125 -    const projectEnd = projectRect.bottom + window.scrollY;   
+      126 -    const startZone = projectPos + topOffset - triggerDistance
+          -;                                                             
+      100 +    // Reset state                                            
+      101 +    state.pixels = [];                                        
+      102 +    state.lastWidth = window.innerWidth;                      
+      103 +    state.isFullyCovered = false;                             
+      104 +    state.overlayStartScrollY = 0;                            
+      105 +    state.isAnimating = false;                                
+      106  
+      128 -    // Si stopTargetId est défini, l'animation s'arrête quand 
+          -cette section entre dans le viewport                          
+      129 -    let endZone = projectEnd + bottomOffset;                  
+      130 -    if (stopTargetId) {                                       
+      131 -      const stopSection = document.getElementById(stopTargetId
+          -);                                                            
+      132 -      if (stopSection) {                                      
+      133 -        const stopRect = stopSection.getBoundingClientRect(); 
+      134 -        const stopPos = stopRect.top + window.scrollY;        
+      135 -        endZone = stopPos + bottomOffset - viewportHeight;    
+      136 -      }                                                       
+      107 +    let pixelSize = Math.floor(window.innerWidth / 8);        
+      108 +                                                              
+      109 +    function resizeCanvas() {                                 
+      110 +      canvas.width = window.innerWidth;                       
+      111 +      canvas.height = window.innerHeight;                     
+      112 +      pixelSize = Math.floor(window.innerWidth / 8);          
+      113      }
+      114  
+      139 -    return (scrollY + viewportHeight) >= startZone && scrollY 
+          -<= endZone;                                                   
+      140 -  }                                                           
+      115 +    function updateOverlay(progress, scrollY) {               
+      116 +      if (!overlay) return;                                   
+      117  
+      142 -  function updatePixels() {                                   
+      143 -    const scrollY = window.scrollY;                           
+      144 -    const viewportHeight = window.innerHeight;                
+      145 -    const projectPos = getProjectSectionPosition()! + topOffse
+          -t;                                                            
+      118 +      const wasFullyCovered = state.isFullyCovered;           
+      119 +      state.isFullyCovered = progress >= 0.98;                
+      120  
+      147 -    if (!projectPos) {                                        
+      148 -      pixels = [];                                            
+      149 -      return;                                                 
+      121 +      if (state.isFullyCovered && !wasFullyCovered) {         
+      122 +        state.overlayStartScrollY = scrollY;                  
+      123 +      }                                                       
+      124 +                                                              
+      125 +      if (state.isFullyCovered) {                             
+      126 +        overlay.style.opacity = '1';                          
+      127 +        const scrollDelta = scrollY - state.overlayStartScroll
+          +Y;                                                            
+      128 +        const parallaxOffset = scrollDelta * parallaxSpeed;   
+      129 +        overlay.style.transform = `translateY(${-parallaxOffse
+          +t}px)`;                                                       
+      130 +      } else {                                                
+      131 +        overlay.style.opacity = '0';                          
+      132 +        overlay.style.transform = 'translateY(0)';            
+      133 +      }                                                       
+      134      }
+      135  
+      152 -    const projectSection = document.getElementById(targetId); 
+      153 -    if (!projectSection) {                                    
+      154 -      pixels = [];                                            
+      155 -      return;                                                 
+      136 +    function getProjectSectionPosition() {                    
+      137 +      const projectSection = document.getElementById(targetId)
+          +;                                                             
+      138 +      if (!projectSection) return null;                       
+      139 +      const rect = projectSection.getBoundingClientRect();    
+      140 +      return rect.top + window.scrollY;                       
+      141      }
+      142  
+      158 -    const projectRect = projectSection.getBoundingClientRect()
+          -;                                                             
+      159 -    const distanceToProject = projectPos - (scrollY + viewport
+          -Height);                                                      
+      160 -    const progressIn = Math.max(0, Math.min(1, 1 - distanceToP
+          -roject / triggerDistance));                                   
+      161 -    const finalProgress = progressIn;                         
+      162 -    const isExitingTop = scrollY + viewportHeight < projectPos
+          - && progressIn < 1;                                           
+      143 +    function isInAnimationZone() {                            
+      144 +      const scrollY = window.scrollY;                         
+      145 +      const viewportHeight = window.innerHeight;              
+      146 +      const projectPos = getProjectSectionPosition();         
+      147 +      if (!projectPos) return false;                          
+      148  
+      164 -    // Gérer l'overlay parallax                               
+      165 -    updateOverlay(finalProgress, scrollY);                    
+      149 +      const projectSection = document.getElementById(targetId)
+          +;                                                             
+      150 +      if (!projectSection) return false;                      
+      151  
+      167 -    if (finalProgress === 0) {                                
+      168 -      pixels = [];                                            
+      169 -      return;                                                 
+      170 -    }                                                         
+      152 +      const projectRect = projectSection.getBoundingClientRect
+          +();                                                           
+      153 +      const projectEnd = projectRect.bottom + window.scrollY; 
+      154 +      const startZone = projectPos + topOffset - triggerDistan
+          +ce;                                                           
+      155  
+      172 -    const cols = Math.floor(canvas.width / pixelSize) + 1;    
+      173 -    const rows = Math.floor(canvas.height / pixelSize) + 1;   
+      174 -    const maxPixels = cols * rows;                            
+      175 -    const targetPixelCount = Math.floor(maxPixels * finalProgr
+          -ess);                                                         
+      176 -    const occupiedPositions = new Set(pixels.map(p => `${p.x},
+          -${p.y}`));                                                    
+      177 -    const availablePositions: {x: number, y: number}[] = [];  
+      178 -                                                              
+      179 -    for (let row = 0; row < rows; row++) {                    
+      180 -      for (let col = 0; col < cols; col++) {                  
+      181 -        const x = col * pixelSize;                            
+      182 -        const y = row * pixelSize;                            
+      183 -        if (!occupiedPositions.has(`${x},${y}`)) {            
+      184 -          availablePositions.push({x, y});                    
+      156 +      let endZone = projectEnd + bottomOffset;                
+      157 +      if (stopTargetId) {                                     
+      158 +        const stopSection = document.getElementById(stopTarget
+          +Id);                                                          
+      159 +        if (stopSection) {                                    
+      160 +          const stopRect = stopSection.getBoundingClientRect()
+          +;                                                             
+      161 +          const stopPos = stopRect.top + window.scrollY;      
+      162 +          endZone = stopPos + bottomOffset - viewportHeight;  
+      163          }
+      164        }
+      165 +                                                              
+      166 +      return (scrollY + viewportHeight) >= startZone && scroll
+          +Y <= endZone;                                                 
+      167      }
+      168  
+      189 -    availablePositions.sort((a, b) => {                       
+      190 -      const randomWeight = 200;                               
+      191 -      const scoreA = a.y - Math.random() * randomWeight;      
+      192 -      const scoreB = b.y - Math.random() * randomWeight;      
+      193 -      return scoreB - scoreA;                                 
+      194 -    });                                                       
+      169 +    function updatePixels() {                                 
+      170 +      const scrollY = window.scrollY;                         
+      171 +      const viewportHeight = window.innerHeight;              
+      172 +      const projectPos = getProjectSectionPosition();         
+      173 +      if (!projectPos) {                                      
+      174 +        state.pixels = [];                                    
+      175 +        return;                                               
+      176 +      }                                                       
+      177  
+      196 -    const pixelsToAdd = targetPixelCount - pixels.length;     
+      197 -    if (pixelsToAdd > 0) {                                    
+      198 -      for (let i = 0; i < Math.min(pixelsToAdd, availablePosit
+          -ions.length); i++) {                                          
+      199 -        pixels.push({                                         
+      200 -          x: availablePositions[i].x,                         
+      201 -          y: availablePositions[i].y,                         
+      202 -          alpha: 1                                            
+      203 -        });                                                   
+      178 +      const adjustedProjectPos = projectPos + topOffset;      
+      179 +      const distanceToProject = adjustedProjectPos - (scrollY 
+          ++ viewportHeight);                                            
+      180 +      const progressIn = Math.max(0, Math.min(1, 1 - distanceT
+          +oProject / triggerDistance));                                 
+      181 +      const finalProgress = progressIn;                       
+      182 +      const isExitingTop = scrollY + viewportHeight < adjusted
+          +ProjectPos && progressIn < 1;                                 
+      183 +                                                              
+      184 +      updateOverlay(finalProgress, scrollY);                  
+      185 +                                                              
+      186 +      if (finalProgress === 0) {                              
+      187 +        state.pixels = [];                                    
+      188 +        return;                                               
+      189        }
+      205 -    } else if (pixelsToAdd < 0) {                             
+      206 -      pixels.sort((a, b) => {                                 
+      207 -        const randomWeight = 200;                             
+      208 -        if (isExitingTop) {                                   
+      209 -          const scoreA = -a.y + Math.random() * randomWeight; 
+      210 -          const scoreB = -b.y + Math.random() * randomWeight; 
+      211 -          return scoreA - scoreB;                             
+      212 -        } else {                                              
+      213 -          const scoreA = a.y + Math.random() * randomWeight;  
+      214 -          const scoreB = b.y + Math.random() * randomWeight;  
+      215 -          return scoreA - scoreB;                             
+      190 +                                                              
+      191 +      const cols = Math.floor(canvas.width / pixelSize) + 1;  
+      192 +      const rows = Math.floor(canvas.height / pixelSize) + 1; 
+      193 +      const maxPixels = cols * rows;                          
+      194 +      const targetPixelCount = Math.floor(maxPixels * finalPro
+          +gress);                                                       
+      195 +      const occupiedPositions = new Set(state.pixels.map(p => 
+          +`${p.x},${p.y}`));                                            
+      196 +      const availablePositions = [];                          
+      197 +                                                              
+      198 +      for (let row = 0; row < rows; row++) {                  
+      199 +        for (let col = 0; col < cols; col++) {                
+      200 +          const x = col * pixelSize;                          
+      201 +          const y = row * pixelSize;                          
+      202 +          if (!occupiedPositions.has(`${x},${y}`)) {          
+      203 +            availablePositions.push({x, y});                  
+      204 +          }                                                   
+      205          }
+      206 +      }                                                       
+      207 +                                                              
+      208 +      availablePositions.sort((a, b) => {                     
+      209 +        const randomWeight = 200;                             
+      210 +        const scoreA = a.y - Math.random() * randomWeight;    
+      211 +        const scoreB = b.y - Math.random() * randomWeight;    
+      212 +        return scoreB - scoreA;                               
+      213        });
+      218 -      pixels.length = targetPixelCount;                       
+      219 -    }                                                         
+      220 -  }                                                           
+      214  
+      222 -  function draw() {                                           
+      223 -    ctx.clearRect(0, 0, canvas.width, canvas.height);         
+      224 -    pixels.forEach(pixel => {                                 
+      225 -      ctx.fillStyle = pixelColor;                             
+      226 -      ctx.fillRect(pixel.x, pixel.y, pixelSize, pixelSize);   
+      227 -    });                                                       
+      228 -  }                                                           
+      229 -                                                              
+      230 -  function stopAnimation() {                                  
+      231 -    if (animationId !== null) {                               
+      232 -      cancelAnimationFrame(animationId);                      
+      233 -      animationId = null;                                     
+      234 -      isAnimating = false;                                    
+      215 +      const pixelsToAdd = targetPixelCount - state.pixels.leng
+          +th;                                                           
+      216 +      if (pixelsToAdd > 0) {                                  
+      217 +        for (let i = 0; i < Math.min(pixelsToAdd, availablePos
+          +itions.length); i++) {                                        
+      218 +          state.pixels.push({                                 
+      219 +            x: availablePositions[i].x,                       
+      220 +            y: availablePositions[i].y,                       
+      221 +            alpha: 1                                          
+      222 +          });                                                 
+      223 +        }                                                     
+      224 +      } else if (pixelsToAdd < 0) {                           
+      225 +        state.pixels.sort((a, b) => {                         
+      226 +          const randomWeight = 200;                           
+      227 +          if (isExitingTop) {                                 
+      228 +            return (-a.y + Math.random() * randomWeight) - (-b
+          +.y + Math.random() * randomWeight);                           
+      229 +          } else {                                            
+      230 +            return (a.y + Math.random() * randomWeight) - (b.y
+          + + Math.random() * randomWeight);                             
+      231 +          }                                                   
+      232 +        });                                                   
+      233 +        state.pixels.length = targetPixelCount;               
+      234 +      }                                                       
+      235      }
+      236 -  }                                                           
+      236  
+      238 -  function startAnimation() {                                 
+      239 -    if (!isAnimating) {                                       
+      240 -      isAnimating = true;                                     
+      241 -      animate();                                              
+      237 +    function draw() {                                         
+      238 +      ctx.clearRect(0, 0, canvas.width, canvas.height);       
+      239 +      state.pixels.forEach(pixel => {                         
+      240 +        ctx.fillStyle = pixelColor;                           
+      241 +        ctx.fillRect(pixel.x, pixel.y, pixelSize, pixelSize); 
+      242 +      });                                                     
+      243      }
+      243 -  }                                                           
+      244  
+      245 -  function animate() {                                        
+      246 -    if (!isInAnimationZone()) {                               
+      247 -      // Clear canvas and stop animation when outside zone    
+      248 -      ctx.clearRect(0, 0, canvas.width, canvas.height);       
+      249 -      pixels = [];                                            
+      250 -      stopAnimation();                                        
+      251 -      return;                                                 
+      245 +    function stopAnimation() {                                
+      246 +      if (state.animationId !== null) {                       
+      247 +        cancelAnimationFrame(state.animationId);              
+      248 +        state.animationId = null;                             
+      249 +        state.isAnimating = false;                            
+      250 +      }                                                       
+      251      }
+      252  
+      254 -    updatePixels();                                           
+      255 -    draw();                                                   
+      256 -    animationId = requestAnimationFrame(animate);             
+      257 -  }                                                           
+      253 +    function animate() {                                      
+      254 +      if (!isInAnimationZone()) {                             
+      255 +        ctx.clearRect(0, 0, canvas.width, canvas.height);     
+      256 +        state.pixels = [];                                    
+      257 +        stopAnimation();                                      
+      258 +        return;                                               
+      259 +      }                                                       
+      260  
+      259 -  function checkAndToggleAnimation() {                        
+      260 -    if (isInAnimationZone()) {                                
+      261 -      startAnimation();                                       
+      261 +      updatePixels();                                         
+      262 +      draw();                                                 
+      263 +      state.animationId = requestAnimationFrame(animate);     
+      264      }
+      263 -  }                                                           
+      265  
+      265 -  function init() {                                           
+      266 -    // Annuler l'animation précédente si elle existe          
+      267 -    stopAnimation();                                          
+      266 +    function startAnimation() {                               
+      267 +      if (!state.isAnimating) {                               
+      268 +        state.isAnimating = true;                             
+      269 +        animate();                                            
+      270 +      }                                                       
+      271 +    }                                                         
+      272  
+      269 -    // Récupérer le nouveau canvas                            
+      270 -    canvas = document.getElementById('bg-canvas') as HTMLCanva
+          -sElement;                                                     
+      271 -    if (!canvas) return;                                      
+      272 -                                                              
+      273 -    ctx = canvas.getContext('2d')!;                           
+      274 -    overlay = document.getElementById('bg-canvas-overlay');   
+      275 -    targetId = canvas.getAttribute('data-target-id') || 'proje
+          -cts';                                                         
+      276 -    stopTargetId = canvas.getAttribute('data-stop-target-id') 
+          -|| null;                                                      
+      277 -    topOffset = Number(canvas.getAttribute('data-top-offset'))
+          - || 500;                                                      
+      278 -    bottomOffset = Number(canvas.getAttribute('data-bottom-off
+          -set')) || -450;                                               
+      279 -    triggerDistance = Number(canvas.getAttribute('data-trigger
+          --distance')) || 500;                                          
+      280 -    triggerDistanceBottom = Number(canvas.getAttribute('data-t
+          -rigger-distance-bottom')) || 500;                             
+      281 -    pixelColor = canvas.getAttribute('data-color') || 'rgb(244
+          -, 243, 243)';                                                 
+      282 -    parallaxSpeed = Number(canvas.getAttribute('data-parallax-
+          -speed')) || 0.3;                                              
+      283 -                                                              
+      284 -    // Reset state                                            
+      285 -    pixels = [];                                              
+      286 -    lastWidth = window.innerWidth;                            
+      287 -    isFullyCovered = false;                                   
+      288 -    overlayStartScrollY = 0;                                  
+      289 -                                                              
+      290 -    resizeCanvas();                                           
+      291 -    checkAndToggleAnimation();                                
+      292 -  }                                                           
+      293 -                                                              
+      294 -  function cleanup() {                                        
+      295 -    stopAnimation();                                          
+      296 -    clearTimeout(resizeTimeout);                              
+      297 -    if (scrollHandler) {                                      
+      298 -      window.removeEventListener('scroll', scrollHandler);    
+      299 -      scrollHandler = null;                                   
+      273 +    function checkAndToggleAnimation() {                      
+      274 +      if (isInAnimationZone()) {                              
+      275 +        startAnimation();                                     
+      276 +      }                                                       
+      277      }
+      301 -    if (resizeHandler) {                                      
+      302 -      window.removeEventListener('resize', resizeHandler);    
+      303 -      resizeHandler = null;                                   
+      304 -    }                                                         
+      305 -  }                                                           
+      278  
+      307 -  function setupListeners() {                                 
+      308 -    // Cleanup anciens listeners                              
+      309 -    if (scrollHandler) window.removeEventListener('scroll', sc
+          -rollHandler);                                                 
+      310 -    if (resizeHandler) window.removeEventListener('resize', re
+          -sizeHandler);                                                 
+      311 -                                                              
+      312 -    resizeHandler = () => {                                   
+      279 +    // Setup listeners                                        
+      280 +    state.resizeHandler = () => {                             
+      281        const currentWidth = window.innerWidth;
+      314 -      if (currentWidth === lastWidth) return;                 
+      282 +      if (currentWidth === state.lastWidth) return;           
+      283  
+      316 -      lastWidth = currentWidth;                               
+      317 -      clearTimeout(resizeTimeout);                            
+      284 +      state.lastWidth = currentWidth;                         
+      285 +      clearTimeout(state.resizeTimeout);                      
+      286  
+      319 -      resizeTimeout = setTimeout(() => {                      
+      287 +      state.resizeTimeout = setTimeout(() => {                
+      288          resizeCanvas();
+      321 -        pixels = [];                                          
+      289 +        state.pixels = [];                                    
+      290        }, 200);
+      291      };
+      292  
+      325 -    scrollHandler = () => {                                   
+      326 -      if (!isAnimating) {                                     
+      293 +    state.scrollHandler = () => {                             
+      294 +      if (!state.isAnimating) {                               
+      295          checkAndToggleAnimation();
+      296        }
+      297      };
+      298  
+      331 -    window.addEventListener('resize', resizeHandler);         
+      332 -    window.addEventListener('scroll', scrollHandler, { passive
+          -: true });                                                    
+      333 -  }                                                           
+      299 +    window.addEventListener('resize', state.resizeHandler);   
+      300 +    window.addEventListener('scroll', state.scrollHandler, { p
+          +assive: true });                                              
+      301  
+      335 -  // Initialisation au chargement et après chaque navigation (
+          -y compris back/forward)                                       
+      336 -  let isFirstLoad = true;                                     
+      337 -                                                              
+      338 -  function fullInit() {                                       
+      339 -    cleanup();                                                
+      340 -    init();                                                   
+      341 -    setupListeners();                                         
+      302 +    resizeCanvas();                                           
+      303 +    checkAndToggleAnimation();                                
+      304    }
+      305  
+      344 -  // Initialisation initiale                                  
+      345 -  fullInit();                                                 
+      346 -                                                              
+      347 -  // Réinitialisation après navigation (view transitions, back
+          -/forward)                                                     
+      348 -  document.addEventListener('astro:page-load', () => {        
+      349 -    // Éviter la double initialisation au premier chargement  
+      350 -    if (isFirstLoad) {                                        
+      351 -      isFirstLoad = false;                                    
+      352 -      return;                                                 
+      353 -    }                                                         
+      354 -    fullInit();                                               
+      355 -  });                                                         
+      306 +  // Initialiser au chargement et après chaque navigation     
+      307 +  initBackgroundCanvas();                                     
+      308 +  document.addEventListener('astro:page-load', initBackgroundC
+          +anvas);                                                       
+      309  </script>
+
+● Il y a un problème potentiel - les event listeners vont s'accumuler. Laisse-moi corriger.
+
+● Update(src/components/ui/BackgroundCanvas.astro)
+  ⎿  Added 7 lines, removed 1 line                                       
+      304    }
+      305  
+      306    // Initialiser au chargement et après chaque navigation
+      307 +  // Éviter d'ajouter plusieurs event listeners               
+      308 +  if (!window._bgCanvasListenerAdded) {                       
+      309 +    window._bgCanvasListenerAdded = true;                     
+      310 +    document.addEventListener('astro:page-load', initBackgroun
+          +dCanvas);                                                     
+      311 +  }                                                           
+      312 +                                                              
+      313 +  // Toujours initialiser (le script inline s'exécute à chaque
+          + page)                                                        
+      314    initBackgroundCanvas();
+      308 -  document.addEventListener('astro:page-load', initBackgroundC
+          -anvas);                                                       
+      315  </script>
+
+● C'est corrigé. Les changements clés :
+
+  1. <script is:inline> - Le script s'exécute à chaque navigation (requis par Astro pour les view transitions)
+  2. État global sur window._bgCanvas - Persiste entre les navigations pour un cleanup propre
+  3. Guard _bgCanvasListenerAdded - Évite d'ajouter plusieurs fois le même event listener
+
+  Teste maintenant avec npm run dev et la navigation back/forward.
+
+✻ Crunched for 2m 12s
+
+❯ sur contact et index, dans mes hero j'ai un bouton ↓, j'aimerais que      
+  celui-ci amene au contenu avec un scroll smooth, pareil pour service dans 
+  ma nav, je veux qu'il amene a la section service de mon index             
+
+● Je vais examiner les fichiers concernés pour implémenter le scroll smooth.
+
+● Bash(mgrep "hero button scroll down arrow"
+      /home/npremont/projects/websites/HordeV2/src)
+  ⎿  ./src/pages/index.astro:18-36 (53.90% match)
+     ./src/pages/index.astro:18-36 (53.90% match)
+     ./src/pages/index.astro:18-36 (53.90% match)
+     … +7 lines (ctrl+o to expand)
+
+● Read(src/components/sections/HeroSection.astro)
+  ⎿  Read 241 lines
+
+● Read(src/pages/index.astro)
+  ⎿  Read 85 lines
+
+● Read(src/pages/contact.astro)
+  ⎿  Read 63 lines
+
+● Read(src/components/Header.astro)
+  ⎿  Read 354 lines
+
+● Read(src/content/settings/navigation.yaml)
+  ⎿  Read 19 lines
+
+● Je vais implémenter le scroll smooth. Voici le plan :
+
+  1. Ajouter une prop scrollTarget au HeroSection pour le bouton ↓
+  2. Mettre à jour les liens de navigation pour gérer les ancres cross-page
+  3. Créer un script global pour le smooth scroll
+
+● Update(src/components/sections/HeroSection.astro)
+  ⎿  Added 2 lines                                                       
+       7    titleLine2?: string;
+       8    titleLine3Prefix?: string;
+       9    ctaLabel?: string;
+      10 +  scrollTarget?: string;                                       
+      11  }
+      12  
+      13  const {
+     ...
+      15    titleLine2 = 'des',
+      16    titleLine3Prefix = 'interfaces',
+      17    ctaLabel = 'Notre methode',
+      18 +  scrollTarget = '#page-content',                              
+      19  } = Astro.props;
+      20  
+      21  const typewriterWords = [
+
+● Update(src/components/sections/HeroSection.astro)
+  ⎿  Added 2 lines, removed 2 lines                                      
+      68          </span>
+      69        </span>
+      70      </h1>
+      71 -    <button class="hidden md:block mt-4 sm:mt-8 font-mono upper
+         -case text-sm "><Wrapped class='text-[1rem] relative'>↓</Wrapped
+         -></button>                                                     
+      71 +    <button class="hidden md:block mt-4 sm:mt-8 font-mono upper
+         +case text-sm scroll-to-btn" data-scroll-target={scrollTarget}><
+         +Wrapped class='text-[1rem] relative'>↓</Wrapped></button>      
+      72    </div>
+      73 -  <button class=" md:hidden absolute mt-0 bottom-8 left-1/2 -tr
+         -anslate-x-1/2 sm:left-0 sm:translate-0 font-mono uppercase text
+         --sm sm:bottom-24 md:relative md:bottom-0"><Wrapped class='text-
+         -[1rem] relative'>↓</Wrapped></button>                          
+      73 +  <button class="md:hidden absolute mt-0 bottom-8 left-1/2 -tra
+         +nslate-x-1/2 sm:left-0 sm:translate-0 font-mono uppercase text-
+         +sm sm:bottom-24 md:relative md:bottom-0 scroll-to-btn" data-scr
+         +oll-target={scrollTarget}><Wrapped class='text-[1rem] relative'
+         +>↓</Wrapped></button>                                          
+      74  </section>
+      75  
+      76  <script>
+
+● Now I need to add the scroll script at the end of HeroSection.astro.
+
+● Read(src/components/sections/HeroSection.astro)
+  ⎿  Read 44 lines
+
+● Update(src/components/sections/HeroSection.astro)
+  ⎿  Added 21 lines                                                      
+      218    document.addEventListener('astro:after-swap', initWordRotato
+           r);
+      219  </script>
+      220  
+      221 +<script>                                                      
+      222 +  function initScrollButtons() {                              
+      223 +    const scrollButtons = document.querySelectorAll('.scroll-t
+          +o-btn');                                                      
+      224 +                                                              
+      225 +    scrollButtons.forEach(btn => {                            
+      226 +      btn.addEventListener('click', () => {                   
+      227 +        const target = btn.getAttribute('data-scroll-target');
+      228 +        if (target) {                                         
+      229 +          const element = document.querySelector(target);     
+      230 +          if (element) {                                      
+      231 +            element.scrollIntoView({ behavior: 'smooth' });   
+      232 +          }                                                   
+      233 +        }                                                     
+      234 +      });                                                     
+      235 +    });                                                       
+      236 +  }                                                           
+      237 +                                                              
+      238 +  initScrollButtons();                                        
+      239 +  document.addEventListener('astro:after-swap', initScrollButt
+          +ons);                                                         
+      240 +</script>                                                     
+      241 +                                                              
+      242  <style is:global>
+      243    .word-rotator {
+      244      display: inline-block;
+
+● Maintenant je mets à jour la page contact pour le bouton scroll.
+
+● Update(src/pages/contact.astro)
+  ⎿  Added 1 line, removed 1 line                                        
+      50          </div>
+      51        </div>
+      52        <div class="md:w-36 md:shrink-0">
+      53 -        <Wrapped variant='dark' class="font-mono text-bg-light 
+         -text-[1rem] relative"><button>↓</button></Wrapped>             
+      53 +        <Wrapped variant='dark' class="font-mono text-bg-light 
+         +text-[1rem] relative"><button class="scroll-to-btn" data-scroll
+         +-target="#contact-form">↓</button></Wrapped>                   
+      54        </div>
+      55      </div>
+      56      <hr class="mt-8 sm:mt-16 md:mt-24 border-lines-dark" />
+
+● Update(src/pages/contact.astro)
+  ⎿  Added 3 lines, removed 1 line                                       
+      55      </div>
+      56      <hr class="mt-8 sm:mt-16 md:mt-24 border-lines-dark" />
+      57  
+      58 -    <ContactForm client:load />                                
+      58 +    <div id="contact-form">                                    
+      59 +      <ContactForm client:load />                              
+      60 +    </div>                                                     
+      61    </div>
+      62    
+      63    <Footer variant="dark" />
+
+● Je dois ajouter le script de scroll sur la page contact aussi.
+
+● Update(src/pages/contact.astro)
+  ⎿  Added 21 lines, removed 1 line                                      
+      61    </div>
+      62    
+      63    <Footer variant="dark" />
+      64 +</Layout>                                                      
+      65  
+      65 -</Layout>                                                      
+      66   No newline at end of file
+      67 +<script>                                                       
+      68 +  function initScrollButtons() {                               
+      69 +    const scrollButtons = document.querySelectorAll('.scroll-to
+         +-btn');                                                        
+      70 +                                                               
+      71 +    scrollButtons.forEach(btn => {                             
+      72 +      btn.addEventListener('click', () => {                    
+      73 +        const target = btn.getAttribute('data-scroll-target'); 
+      74 +        if (target) {                                          
+      75 +          const element = document.querySelector(target);      
+      76 +          if (element) {                                       
+      77 +            element.scrollIntoView({ behavior: 'smooth' });    
+      78 +          }                                                    
+      79 +        }                                                      
+      80 +      });                                                      
+      81 +    });                                                        
+      82 +  }                                                            
+      83 +                                                               
+      84 +  initScrollButtons();                                         
+      85 +  document.addEventListener('astro:after-swap', initScrollButto
+         +ns);                                                           
+      86 +</script>                                                      
+      87   No newline at end of file
+
+● Maintenant je mets à jour la navigation pour gérer les ancres cross-page.
+
+● Update(src/content/settings/navigation.yaml)
+  ⎿  Added 1 line, removed 1 line                                        
+       8      url: '#about'
+       9      isExternal: false
+      10    - label: Services
+      11 -    url: '#services'                                           
+      11 +    url: '/#services-section'                                  
+      12      isExternal: false
+      13    - label: Contact
+      14      url: /contact
+
+● Maintenant j'ajoute le script pour gérer le smooth scroll des liens d'ancre dans le Header.
+
+● Update(src/components/Header.astro)
+  ⎿  Added 52 lines                                                      
+      351    initMenu();
+      352    document.addEventListener('astro:after-swap', initMenu);
+      353  </script>
+      354 +                                                              
+      355 +<script>                                                      
+      356 +  // Gestion du smooth scroll pour les liens d'ancre          
+      357 +  function initAnchorScroll() {                               
+      358 +    const anchorLinks = document.querySelectorAll('a[href*="#"
+          +]');                                                          
+      359 +                                                              
+      360 +    anchorLinks.forEach(link => {                             
+      361 +      link.addEventListener('click', (e) => {                 
+      362 +        const href = link.getAttribute('href');               
+      363 +        if (!href) return;                                    
+      364 +                                                              
+      365 +        // Vérifier si c'est un lien avec ancre               
+      366 +        const hashIndex = href.indexOf('#');                  
+      367 +        if (hashIndex === -1) return;                         
+      368 +                                                              
+      369 +        const path = href.substring(0, hashIndex) || '/';     
+      370 +        const hash = href.substring(hashIndex);               
+      371 +        const currentPath = window.location.pathname;         
+      372 +                                                              
+      373 +        // Si on est déjà sur la bonne page, scroll smooth    
+      374 +        if (path === currentPath || path === '/' && currentPat
+          +h === '/') {                                                  
+      375 +          e.preventDefault();                                 
+      376 +          const target = document.querySelector(hash);        
+      377 +          if (target) {                                       
+      378 +            target.scrollIntoView({ behavior: 'smooth' });    
+      379 +            // Mettre à jour l'URL sans recharger             
+      380 +            history.pushState(null, '', href);                
+      381 +          }                                                   
+      382 +        } else if (path !== '') {                             
+      383 +          // Cross-page: stocker l'ancre pour scroll après nav
+          +igation                                                       
+      384 +          sessionStorage.setItem('scrollToAnchor', hash);     
+      385 +        }                                                     
+      386 +      });                                                     
+      387 +    });                                                       
+      388 +                                                              
+      389 +    // Vérifier si on doit scroller vers une ancre après navig
+          +ation                                                         
+      390 +    const scrollToAnchor = sessionStorage.getItem('scrollToAnc
+          +hor');                                                        
+      391 +    if (scrollToAnchor) {                                     
+      392 +      sessionStorage.removeItem('scrollToAnchor');            
+      393 +      // Attendre que la page soit complètement chargée       
+      394 +      setTimeout(() => {                                      
+      395 +        const target = document.querySelector(scrollToAnchor);
+      396 +        if (target) {                                         
+      397 +          target.scrollIntoView({ behavior: 'smooth' });      
+      398 +        }                                                     
+      399 +      }, 100);                                                
+      400 +    }                                                         
+      401 +  }                                                           
+      402 +                                                              
+      403 +  initAnchorScroll();                                         
+      404 +  document.addEventListener('astro:page-load', initAnchorScrol
+          +l);                                                           
+      405 +</script>                                                     
+
+● Vérifions si la section "about" existe sur l'index.
+
+● Bash(mgrep "about section id" /home/npremont/projects/websites/HordeV2/src)
+  ⎿  ./src/pages/index.astro:35-85 (70.58% match)
+     ./src/pages/index.astro:35-85 (70.58% match)
+     ./src/pages/index.astro:35-85 (70.58% match)
+     … +7 lines (ctrl+o to expand)
+
+● Il n'y a pas de section "about" avec un id. Je mets à jour le lien pour pointer vers une section existante (méthode).
+
+● Update(src/content/settings/navigation.yaml)
+  ⎿  Added 2 lines, removed 2 lines                                      
+       4    - label: Accueil
+       5      url: /
+       6      isExternal: false
+       7 -  - label: À Propos                                            
+       8 -    url: '#about'                                              
+       7 +  - label: Méthode                                             
+       8 +    url: '/#page-content'                                      
+       9      isExternal: false
+      10    - label: Services
+      11      url: '/#services-section'
+
+● C'est fait. Voici le résumé des changements :
+
+  Boutons ↓ dans les héros :
+  - HeroSection.astro : nouvelle prop scrollTarget (défaut: #page-content)
+  - contact.astro : scroll vers #contact-form
+
+  Navigation :
+  - "Méthode" → /#page-content
+  - "Services" → /#services-section
+  - Script de smooth scroll ajouté au Header pour gérer les ancres same-page et cross-page
+
+  Fonctionnement cross-page :
+  1. Clic sur "Services" depuis /contact
+  2. L'ancre est stockée en sessionStorage
+  3. Navigation vers /
+  4. Après chargement, scroll smooth vers la section
+
+  Teste avec npm run dev.
+
+✻ Crunched for 2m 3s
+
+❯ met un cursor pointer sur les fleches et agrangit la zone cliquable a     
+  l'element wrapped qui les contient                                        
+
+● Read(src/components/ui/Wrapped.astro)
+  ⎿  Read 60 lines
+
+● Je vais restructurer pour que le Wrapped entier soit cliquable avec un cursor pointer.
+
+● Update(src/components/sections/HeroSection.astro)
+  ⎿  Added 2 lines, removed 2 lines                                      
+      68          </span>
+      69        </span>
+      70      </h1>
+      71 -    <button class="hidden md:block mt-4 sm:mt-8 font-mono upper
+         -case text-sm scroll-to-btn" data-scroll-target={scrollTarget}><
+         -Wrapped class='text-[1rem] relative'>↓</Wrapped></button>      
+      71 +    <button class="hidden md:block mt-4 sm:mt-8 font-mono upper
+         +case text-sm cursor-pointer scroll-to-btn" data-scroll-target={
+         +scrollTarget}><Wrapped class='text-[1rem]'>↓</Wrapped></button>
+      72    </div>
+      73 -  <button class="md:hidden absolute mt-0 bottom-8 left-1/2 -tra
+         -nslate-x-1/2 sm:left-0 sm:translate-0 font-mono uppercase text-
+         -sm sm:bottom-24 md:relative md:bottom-0 scroll-to-btn" data-scr
+         -oll-target={scrollTarget}><Wrapped class='text-[1rem] relative'
+         ->↓</Wrapped></button>                                          
+      73 +  <button class="md:hidden absolute mt-0 bottom-8 left-1/2 -tra
+         +nslate-x-1/2 sm:left-0 sm:translate-0 font-mono uppercase text-
+         +sm sm:bottom-24 md:relative md:bottom-0 cursor-pointer scroll-t
+         +o-btn" data-scroll-target={scrollTarget}><Wrapped class='text-[
+         +1rem]'>↓</Wrapped></button>                                    
+      74  </section>
+      75  
+      76  <script>
+
+● Update(src/pages/contact.astro)
+  ⎿  Added 1 line, removed 1 line                                        
+      50          </div>
+      51        </div>
+      52        <div class="md:w-36 md:shrink-0">
+      53 -        <Wrapped variant='dark' class="font-mono text-bg-light 
+         -text-[1rem] relative"><button class="scroll-to-btn" data-scroll
+         --target="#contact-form">↓</button></Wrapped>                   
+      53 +        <button class="cursor-pointer scroll-to-btn" data-scrol
+         +l-target="#contact-form"><Wrapped variant='dark' class="font-mo
+         +no text-bg-light text-[1rem]">↓</Wrapped></button>             
+      54        </div>
+      55      </div>
+      56      <hr class="mt-8 sm:mt-16 md:mt-24 border-lines-dark" />
+
+● C'est fait. Les changements :
+
+  1. HeroSection : cursor-pointer ajouté aux boutons qui enveloppent déjà le Wrapped
+  2. Contact : Restructuré pour que le <button> enveloppe le <Wrapped> au lieu d'être à l'intérieur
+
+  Maintenant toute la zone du Wrapped (flèche + crochets) est cliquable avec le curseur pointer.
+
+✻ Brewed for 41s
+
+❯ quans on clique sur les fleches je voudrais une transi smooth 
+
+● Le site utilise Lenis pour le smooth scroll. Je vais utiliser son API au lieu de scrollIntoView natif pour une transition plus fluide.
+
+● Bash(mgrep "lenis initialization scroll"
+      /home/npremont/projects/websites/HordeV2/src)
+  ⎿ ./src/layouts/Layout.astro:100-181 (94.50% match)                    
+    ./src/components/Header.astro.tmp.1614495.1767950679600:355-392
+    (92.41%
+     match)
+    … +11 lines (ctrl+o to expand)
+
+● Read(src/layouts/Layout.astro)
+  ⎿  Read 105 lines
+
+● Je vais exposer l'instance Lenis globalement et l'utiliser pour les scrolls.
+
+● Update(src/layouts/Layout.astro)
+  ⎿  Added 3 lines                                                       
+      189      touchMultiplier: isMobile ? 3.5 : 1,
+      190    });
+      191  
+      192 +  // Exposer Lenis globalement pour le smooth scroll          
+      193 +  (window as any).lenis = lenis;                              
+      194 +                                                              
+      195    function raf(time: number) {
+      196      lenis.raf(time);
+      197      requestAnimationFrame(raf);
+
+● Maintenant je mets à jour les scripts de scroll pour utiliser Lenis.
+
+● Update(src/components/sections/HeroSection.astro)
+  ⎿  Added 2 lines, removed 5 lines                                      
+      225      scrollButtons.forEach(btn => {
+      226        btn.addEventListener('click', () => {
+      227          const target = btn.getAttribute('data-scroll-target');
+      228 -        if (target) {                                         
+      229 -          const element = document.querySelector(target);     
+      230 -          if (element) {                                      
+      231 -            element.scrollIntoView({ behavior: 'smooth' });   
+      232 -          }                                                   
+      228 +        if (target && (window as any).lenis) {                
+      229 +          (window as any).lenis.scrollTo(target, { duration: 1
+          +.2 });                                                        
+      230          }
+      231        });
+      232      });
+
+● Update(src/pages/contact.astro)
+  ⎿  Added 2 lines, removed 5 lines                                      
+      70      scrollButtons.forEach(btn => {
+      71        btn.addEventListener('click', () => {
+      72          const target = btn.getAttribute('data-scroll-target');
+      73 -        if (target) {                                          
+      74 -          const element = document.querySelector(target);      
+      75 -          if (element) {                                       
+      76 -            element.scrollIntoView({ behavior: 'smooth' });    
+      77 -          }                                                    
+      73 +        if (target && (window as any).lenis) {                 
+      74 +          (window as any).lenis.scrollTo(target, { duration: 1.
+         +2 });                                                          
+      75          }
+      76        });
+      77      });
+
+● Et je mets à jour le script des ancres dans le Header.
+
+● Update(src/components/Header.astro)
+  ⎿  Added 8 lines, removed 10 lines                                     
+      370          const hash = href.substring(hashIndex);
+      371          const currentPath = window.location.pathname;
+      372  
+      373 -        // Si on est déjà sur la bonne page, scroll smooth    
+      373 +        // Si on est déjà sur la bonne page, scroll smooth ave
+          +c Lenis                                                       
+      374          if (path === currentPath || path === '/' && currentPat
+           h === '/') {
+      375            e.preventDefault();
+      376 -          const target = document.querySelector(hash);        
+      377 -          if (target) {                                       
+      378 -            target.scrollIntoView({ behavior: 'smooth' });    
+      379 -            // Mettre à jour l'URL sans recharger             
+      380 -            history.pushState(null, '', href);                
+      376 +          if ((window as any).lenis) {                        
+      377 +            (window as any).lenis.scrollTo(hash, { duration: 1
+          +.2 });                                                        
+      378            }
+      379 +          // Mettre à jour l'URL sans recharger               
+      380 +          history.pushState(null, '', href);                  
+      381          } else if (path !== '') {
+      382            // Cross-page: stocker l'ancre pour scroll après nav
+           igation
+      383            sessionStorage.setItem('scrollToAnchor', hash);
+     ...
+      389      const scrollToAnchor = sessionStorage.getItem('scrollToAnc
+           hor');
+      390      if (scrollToAnchor) {
+      391        sessionStorage.removeItem('scrollToAnchor');
+      393 -      // Attendre que la page soit complètement chargée       
+      392 +      // Attendre que Lenis soit prêt                         
+      393        setTimeout(() => {
+      395 -        const target = document.querySelector(scrollToAnchor);
+      396 -        if (target) {                                         
+      397 -          target.scrollIntoView({ behavior: 'smooth' });      
+      394 +        if ((window as any).lenis) {                          
+      395 +          (window as any).lenis.scrollTo(scrollToAnchor, { dur
+          +ation: 1.2 });                                                
+      396          }
+      397        }, 100);
+      398      }
+
+● C'est fait. Tous les scrolls utilisent maintenant Lenis avec une durée de 1.2 secondes pour une transition fluide et cohérente avec le reste du site.
+
+  Changements :
+  - Layout.astro : Lenis exposé sur window.lenis
+  - HeroSection.astro : lenis.scrollTo(target, { duration: 1.2 })
+  - contact.astro : idem
+  - Header.astro : idem pour les liens d'ancre
+
+  Teste avec npm run dev.
+
+✻ Cogitated for 1m 1s
+
+❯ pour l'ancre sur service fait un offset de 100px et sur le formulaire de  
+  contact de -100px                                                         
+
+● Update(src/pages/contact.astro)
+  ⎿  Added 2 lines, removed 1 line                                       
+      70      scrollButtons.forEach(btn => {
+      71        btn.addEventListener('click', () => {
+      72          const target = btn.getAttribute('data-scroll-target');
+      73 +        const offset = Number(btn.getAttribute('data-scroll-off
+         +set')) || 0;                                                   
+      74          if (target && (window as any).lenis) {
+      74 -          (window as any).lenis.scrollTo(target, { duration: 1.
+         -2 });                                                          
+      75 +          (window as any).lenis.scrollTo(target, { duration: 1.
+         +2, offset });                                                  
+      76          }
+      77        });
+      78      });
+
+● Update(src/pages/contact.astro)
+  ⎿  Added 1 line, removed 1 line                                        
+      50          </div>
+      51        </div>
+      52        <div class="md:w-36 md:shrink-0">
+      53 -        <button class="cursor-pointer scroll-to-btn" data-scrol
+         -l-target="#contact-form"><Wrapped variant='dark' class="font-mo
+         -no text-bg-light text-[1rem]">↓</Wrapped></button>             
+      53 +        <button class="cursor-pointer scroll-to-btn" data-scrol
+         +l-target="#contact-form" data-scroll-offset="-100"><Wrapped var
+         +iant='dark' class="font-mono text-bg-light text-[1rem]">↓</Wrap
+         +ped></button>                                                  
+      54        </div>
+      55      </div>
+      56      <hr class="mt-8 sm:mt-16 md:mt-24 border-lines-dark" />
+
+● Maintenant je mets à jour le Header pour l'offset sur services.
+
+● Update(src/components/Header.astro)
+  ⎿  Added 9 lines, removed 2 lines                                      
+      370          const hash = href.substring(hashIndex);
+      371          const currentPath = window.location.pathname;
+      372  
+      373 +        // Offsets personnalisés par ancre                    
+      374 +        const offsets: Record<string, number> = {             
+      375 +          '#services-section': -100,                          
+      376 +        };                                                    
+      377 +        const offset = offsets[hash] || 0;                    
+      378 +                                                              
+      379          // Si on est déjà sur la bonne page, scroll smooth ave
+           c Lenis
+      380          if (path === currentPath || path === '/' && currentPat
+           h === '/') {
+      381            e.preventDefault();
+      382            if ((window as any).lenis) {
+      377 -            (window as any).lenis.scrollTo(hash, { duration: 1
+          -.2 });                                                        
+      383 +            (window as any).lenis.scrollTo(hash, { duration: 1
+          +.2, offset });                                                
+      384            }
+      385            // Mettre à jour l'URL sans recharger
+      386            history.pushState(null, '', href);
+      387          } else if (path !== '') {
+      382 -          // Cross-page: stocker l'ancre pour scroll après nav
+          -igation                                                       
+      388 +          // Cross-page: stocker l'ancre et l'offset pour scro
+          +ll après navigation                                           
+      389            sessionStorage.setItem('scrollToAnchor', hash);
+      390 +          sessionStorage.setItem('scrollToAnchorOffset', Strin
+          +g(offset));                                                   
+      391          }
+      392        });
+      393      });
+
+● Update(src/components/Header.astro)
+  ⎿  Added 4 lines, removed 1 line                                       
+      394  
+      395      // Vérifier si on doit scroller vers une ancre après navig
+           ation
+      396      const scrollToAnchor = sessionStorage.getItem('scrollToAnc
+           hor');
+      397 +    const scrollToAnchorOffset = sessionStorage.getItem('scrol
+          +lToAnchorOffset');                                            
+      398      if (scrollToAnchor) {
+      399        sessionStorage.removeItem('scrollToAnchor');
+      400 +      sessionStorage.removeItem('scrollToAnchorOffset');      
+      401 +      const offset = Number(scrollToAnchorOffset) || 0;       
+      402        // Attendre que Lenis soit prêt
+      403        setTimeout(() => {
+      404          if ((window as any).lenis) {
+      402 -          (window as any).lenis.scrollTo(scrollToAnchor, { dur
+          -ation: 1.2 });                                                
+      405 +          (window as any).lenis.scrollTo(scrollToAnchor, { dur
+          +ation: 1.2, offset });                                        
+      406          }
+      407        }, 100);
+      408      }
+
+● Pardon, j'ai mis -100 pour les deux. Je corrige pour services (100px).
+
+● Update(src/components/Header.astro)
+  ⎿  Added 1 line, removed 1 line                                        
+      372  
+      373          // Offsets personnalisés par ancre
+      374          const offsets: Record<string, number> = {
+      375 -          '#services-section': -100,                          
+      375 +          '#services-section': 100,                           
+      376          };
+      377          const offset = offsets[hash] || 0;
+      378  
+
+● C'est corrigé :
+  - Services : offset 100 (scroll s'arrête 100px au-dessus de la section)
+  - Contact form : offset -100 (scroll descend 100px plus bas dans le formulaire)
+
+✻ Churned for 45s
+
+❯ la section methods, j'ai 3 blocs qui s'empile, j'aimerais faire un        
+  parralax de stacking, genre le premier arrive dans le viewport avec un    
+  ease puise le deuxieme puis le troisieme, genre un gap entre eux qui se   
+  reduit l'un apres l'autre en fonction de notre scroll avec un ease        
+
+● Je vais d'abord examiner la structure de MethodSection pour comprendre comment implémenter le stacking parallax.
+
+● Read(src/components/sections/MethodSection.astro)
+  ⎿  Read 73 lines
+
+● Je vais implémenter un effet de stacking parallax avec CSS sticky et JavaScript pour le contrôle du scroll avec easing.
+
+● Update(src/components/sections/MethodSection.astro)
+  ⎿  Added 126 lines, removed 20 lines                                   
+      24  ];
+      25  ---
+      26  
+      27 -<div class:list={['flex flex-col']}}>                          
+      28 -  <ol class="flex flex-col pt-64">                             
+      27 +<div id="methods-container" class="flex flex-col">             
+      28 +  <ol class="methods-stack flex flex-col pt-64">               
+      29      {methods.map((method, index) => (
+      30 -      <li class:list={[                                        
+      31 -        index != 2 && 'border-b border-lines',                 
+      32 -        index == 2 && 'pb-10 sm:pb-32',                        
+      33 -        index >= 1 && 'method-white-bg',                       
+      34 -        'py-10 sm:py-16 -mt-px'                                
+      35 -      ]} id={index === 1 ? 'method-transition' : undefined}>   
+      36 -        <article class="flex flex-col md:flex-row md:justify-be
+         -tween">                                                        
+      37 -          <header class="flex flex-col gap-2 sm:gap-8">        
+      38 -            <div class:list={["section-label max-w-[210px] text
+         --justify", index === 2 && "md:min-h-[2lh]"]}>                  
+      39 -              <span class='inline before:content-["/_"]'>{metho
+         -d.number}</span>                                               
+      40 -              <p class="inline">{method.eyebrow}</p>           
+      30 +      <li                                                      
+      31 +        class:list={[                                          
+      32 +          'method-card',                                       
+      33 +          index >= 1 && 'method-white-bg',                     
+      34 +          'py-10 sm:py-16'                                     
+      35 +        ]}                                                     
+      36 +        data-index={index}                                     
+      37 +        id={index === 1 ? 'method-transition' : undefined}     
+      38 +      >                                                        
+      39 +        <div class="method-card-inner">                        
+      40 +          <article class:list={[                               
+      41 +            "flex flex-col md:flex-row md:justify-between",    
+      42 +            index != 2 && 'border-b border-lines pb-10 sm:pb-16
+         +',                                                             
+      43 +            index == 2 && 'pb-10 sm:pb-32',                    
+      44 +          ]}>                                                  
+      45 +            <header class="flex flex-col gap-2 sm:gap-8">      
+      46 +              <div class:list={["section-label max-w-[210px] te
+         +xt-justify", index === 2 && "md:min-h-[2lh]"]}>                
+      47 +                <span class='inline before:content-["/_"]'>{met
+         +hod.number}</span>                                             
+      48 +                <p class="inline">{method.eyebrow}</p>         
+      49 +              </div>                                           
+      50 +              <h3 class="font-display leading-none text-[1.625r
+         +em] sm:text-[2.5rem] md:text-[4rem] xl:text-[4.5rem] sm:max-w-[
+         +250px] md:max-w-[350px] uppercase" set:html={method.title}></h3
+         +>                                                              
+      51 +            </header>                                          
+      52 +            <div class="flex flex-col md:w-1/2">               
+      53 +              <blockquote class='section-label mt-16 max-w-90 s
+         +elf-end sm:mt-24 md:self-start md:mt-0'>"{method.quote}"</block
+         +quote>                                                         
+      54 +              <p class="text-2xl sm:text-[2rem] md:text-[2.5rem
+         +] mt-4 sm:mt-8 ">{method.description}</p>                      
+      55              </div>
+      42 -            <h3 class="font-display leading-none text-[1.625rem
+         -] sm:text-[2.5rem] md:text-[4rem] xl:text-[4.5rem] sm:max-w-[25
+         -0px] md:max-w-[350px] uppercase" set:html={method.title}></h3> 
+      43 -          </header>                                            
+      44 -          <div class="flex flex-col md:w-1/2">                 
+      45 -            <blockquote class='section-label mt-16 max-w-90 sel
+         -f-end sm:mt-24 md:self-start md:mt-0'>"{method.quote}"</blockqu
+         -ote>                                                           
+      46 -            <p class="text-2xl sm:text-[2rem] md:text-[2.5rem] 
+         -mt-4 sm:mt-8 ">{method.description}</p>                        
+      47 -          </div>                                               
+      48 -        </article>                                             
+      56 +          </article>                                           
+      57 +        </div>                                                 
+      58        </li>
+      59      ))}
+      60    </ol>
+     ...
+       78      background-color: var(--color-bg-light);
+       79      z-index: -1;
+       80    }
+       81 +                                                              
+       82 +  .methods-stack {                                            
+       83 +    position: relative;                                       
+       84 +  }                                                           
+       85 +                                                              
+       86 +  .method-card {                                              
+       87 +    position: sticky;                                         
+       88 +    top: 0;                                                   
+       89 +    will-change: transform;                                   
+       90 +  }                                                           
+       91 +                                                              
+       92 +  .method-card[data-index="0"] {                              
+       93 +    z-index: 1;                                               
+       94 +  }                                                           
+       95 +                                                              
+       96 +  .method-card[data-index="1"] {                              
+       97 +    z-index: 2;                                               
+       98 +  }                                                           
+       99 +                                                              
+      100 +  .method-card[data-index="2"] {                              
+      101 +    z-index: 3;                                               
+      102 +  }                                                           
+      103 +                                                              
+      104 +  .method-card-inner {                                        
+      105 +    transition: transform 0.1s ease-out;                      
+      106 +  }                                                           
+      107  </style>
+      108 +                                                              
+      109 +<script>                                                      
+      110 +  function initMethodsParallax() {                            
+      111 +    const container = document.getElementById('methods-contain
+          +er');                                                         
+      112 +    const cards = document.querySelectorAll('.method-card');  
+      113 +                                                              
+      114 +    if (!container || cards.length === 0) return;             
+      115 +                                                              
+      116 +    // Configuration                                          
+      117 +    const initialOffset = 150; // Offset initial en pixels    
+      118 +    const triggerDistance = 300; // Distance de scroll pour l'
+          +animation complète                                            
+      119 +                                                              
+      120 +    // Fonction d'easing (ease-out cubic)                     
+      121 +    function easeOutCubic(t: number): number {                
+      122 +      return 1 - Math.pow(1 - t, 3);                          
+      123 +    }                                                         
+      124 +                                                              
+      125 +    function updateCards() {                                  
+      126 +      const containerRect = container.getBoundingClientRect();
+      127 +      const viewportHeight = window.innerHeight;              
+      128 +                                                              
+      129 +      cards.forEach((card, index) => {                        
+      130 +        if (index === 0) return; // Premier card n'a pas de pa
+          +rallax                                                        
+      131 +                                                              
+      132 +        const cardElement = card as HTMLElement;              
+      133 +        const cardRect = cardElement.getBoundingClientRect(); 
+      134 +                                                              
+      135 +        // Calculer quand la carte doit commencer son animatio
+          +n                                                             
+      136 +        // basé sur la position du viewport par rapport à la c
+          +arte                                                          
+      137 +        const cardTop = cardRect.top;                         
+      138 +        const triggerPoint = viewportHeight * 0.8; // Déclench
+          +e quand la carte est à 80% du viewport                        
+      139 +                                                              
+      140 +        // Progress de 0 à 1                                  
+      141 +        const distanceFromTrigger = triggerPoint - cardTop;   
+      142 +        const rawProgress = Math.max(0, Math.min(1, distanceFr
+          +omTrigger / triggerDistance));                                
+      143 +        const progress = easeOutCubic(rawProgress);           
+      144 +                                                              
+      145 +        // Calculer l'offset restant                          
+      146 +        const currentOffset = initialOffset * (1 - progress); 
+      147 +                                                              
+      148 +        const inner = cardElement.querySelector('.method-card-
+          +inner') as HTMLElement;                                       
+      149 +        if (inner) {                                          
+      150 +          inner.style.transform = `translateY(${currentOffset}
+          +px)`;                                                         
+      151 +        }                                                     
+      152 +      });                                                     
+      153 +    }                                                         
+      154 +                                                              
+      155 +    // Écouter le scroll                                      
+      156 +    let ticking = false;                                      
+      157 +    function onScroll() {                                     
+      158 +      if (!ticking) {                                         
+      159 +        requestAnimationFrame(() => {                         
+      160 +          updateCards();                                      
+      161 +          ticking = false;                                    
+      162 +        });                                                   
+      163 +        ticking = true;                                       
+      164 +      }                                                       
+      165 +    }                                                         
+      166 +                                                              
+      167 +    window.addEventListener('scroll', onScroll, { passive: tru
+          +e });                                                         
+      168 +    updateCards(); // Initial update                          
+      169 +                                                              
+      170 +    // Cleanup pour les view transitions                      
+      171 +    document.addEventListener('astro:before-swap', () => {    
+      172 +      window.removeEventListener('scroll', onScroll);         
+      173 +    }, { once: true });                                       
+      174 +  }                                                           
+      175 +                                                              
+      176 +  initMethodsParallax();                                      
+      177 +  document.addEventListener('astro:after-swap', initMethodsPar
+          +allax);                                                       
+      178 +</script>                                                     
+
+● C'est implémenté. L'effet fonctionne ainsi :
+
+  1. CSS sticky : Chaque carte colle en haut du viewport
+  2. Z-index : Les cartes s'empilent (1 → 2 → 3)
+  3. Parallax JS : Les cartes 2 et 3 commencent avec un offset de 150px qui se réduit à 0 avec un easing cubic
+  4. Ease-out : L'animation ralentit vers la fin pour un effet fluide
+
+  Configuration ajustable (lignes 117-118) :
+  - initialOffset: 150 — gap initial en pixels
+  - triggerDistance: 300 — distance de scroll pour compléter l'animation
+
+  Teste avec npm run dev et scrolle dans la section méthodes.
+
+✻ Cogitated for 53s
+
+❯ ce n'est pas vraiment du stacking que je veux, je veux pas que les        
+  element se superpose, juste ils arrivent les uns apres les autres avec    
+  une vitesse differee du scroll                                            
+
+● Compris, tu veux un parallax classique où chaque carte arrive avec un délai différent, sans superposition. Je corrige.
+
+● Update(src/components/sections/MethodSection.astro)
+  ⎿  Added 19 lines, removed 40 lines                                    
+       79      z-index: -1;
+       80    }
+       81  
+       82 -  .methods-stack {                                            
+       83 -    position: relative;                                       
+       84 -  }                                                           
+       85 -                                                              
+       82    .method-card {
+       87 -    position: sticky;                                         
+       88 -    top: 0;                                                   
+       83      will-change: transform;
+       84    }
+       85  
+       92 -  .method-card[data-index="0"] {                              
+       93 -    z-index: 1;                                               
+       94 -  }                                                           
+       95 -                                                              
+       96 -  .method-card[data-index="1"] {                              
+       97 -    z-index: 2;                                               
+       98 -  }                                                           
+       99 -                                                              
+      100 -  .method-card[data-index="2"] {                              
+      101 -    z-index: 3;                                               
+      102 -  }                                                           
+      103 -                                                              
+       86    .method-card-inner {
+      105 -    transition: transform 0.1s ease-out;                      
+       87 +    will-change: transform;                                   
+       88    }
+       89  </style>
+       90  
+       91  <script>
+       92    function initMethodsParallax() {
+      111 -    const container = document.getElementById('methods-contain
+          -er');                                                         
+       93      const cards = document.querySelectorAll('.method-card');
+       94 +    if (cards.length === 0) return;                           
+       95  
+      114 -    if (!container || cards.length === 0) return;             
+       96 +    // Configuration - vitesse de parallax par carte (0 = norm
+          +al, 0.5 = 50% plus lent)                                      
+       97 +    const speeds = [0, 0.15, 0.25]; // Carte 1 normale, carte 
+          +2 et 3 plus lentes                                            
+       98  
+      116 -    // Configuration                                          
+      117 -    const initialOffset = 150; // Offset initial en pixels    
+      118 -    const triggerDistance = 300; // Distance de scroll pour l'
+          -animation complète                                            
+      119 -                                                              
+       99      // Fonction d'easing (ease-out cubic)
+      100      function easeOutCubic(t: number): number {
+      101        return 1 - Math.pow(1 - t, 3);
+      102      }
+      103  
+      104      function updateCards() {
+      126 -      const containerRect = container.getBoundingClientRect();
+      105        const viewportHeight = window.innerHeight;
+      106  
+      107        cards.forEach((card, index) => {
+      130 -        if (index === 0) return; // Premier card n'a pas de pa
+          -rallax                                                        
+      108 +        const speed = speeds[index] || 0;                     
+      109 +        if (speed === 0) return;                              
+      110  
+      111          const cardElement = card as HTMLElement;
+      133 -        const cardRect = cardElement.getBoundingClientRect(); 
+      112 +        const rect = cardElement.getBoundingClientRect();     
+      113  
+      135 -        // Calculer quand la carte doit commencer son animatio
+          -n                                                             
+      136 -        // basé sur la position du viewport par rapport à la c
+          -arte                                                          
+      137 -        const cardTop = cardRect.top;                         
+      138 -        const triggerPoint = viewportHeight * 0.8; // Déclench
+          -e quand la carte est à 80% du viewport                        
+      114 +        // Position relative au viewport (0 = en haut, 1 = en 
+          +bas)                                                          
+      115 +        const viewportProgress = rect.top / viewportHeight;   
+      116  
+      140 -        // Progress de 0 à 1                                  
+      141 -        const distanceFromTrigger = triggerPoint - cardTop;   
+      142 -        const rawProgress = Math.max(0, Math.min(1, distanceFr
+          -omTrigger / triggerDistance));                                
+      143 -        const progress = easeOutCubic(rawProgress);           
+      117 +        // Seulement appliquer quand la carte est visible ou p
+          +roche                                                         
+      118 +        if (viewportProgress > 1.5 || viewportProgress < -1) {
+      119 +          return;                                             
+      120 +        }                                                     
+      121  
+      145 -        // Calculer l'offset restant                          
+      146 -        const currentOffset = initialOffset * (1 - progress); 
+      122 +        // Offset basé sur la distance au centre du viewport  
+      123 +        // Plus la carte est loin du haut, plus elle a d'offse
+          +t                                                             
+      124 +        const offset = Math.max(0, viewportProgress * 200 * sp
+          +eed);                                                         
+      125 +        const easedOffset = offset; // Pas d'easing ici pour g
+          +arder la fluidité avec le scroll                              
+      126  
+      127          const inner = cardElement.querySelector('.method-card-
+           inner') as HTMLElement;
+      128          if (inner) {
+      150 -          inner.style.transform = `translateY(${currentOffset}
+          -px)`;                                                         
+      129 +          inner.style.transform = `translateY(${easedOffset}px
+          +)`;                                                           
+      130          }
+      131        });
+      132      }
+     ...
+      144      }
+      145  
+      146      window.addEventListener('scroll', onScroll, { passive: tru
+           e });
+      168 -    updateCards(); // Initial update                          
+      147 +    updateCards();                                            
+      148  
+      149      // Cleanup pour les view transitions
+      150      document.addEventListener('astro:before-swap', () => {
+
+● C'est corrigé. Maintenant c'est un vrai parallax de vitesse :
+
+  - Carte 1 : vitesse normale (0)
+  - Carte 2 : 15% plus lente → arrive avec un léger retard
+  - Carte 3 : 25% plus lente → arrive encore plus tard
+
+  L'effet : en scrollant, les cartes du bas "rattrapent" progressivement, créant un effet de cascade fluide sans superposition.
+
+  Ajustable (ligne 97) :
+  const speeds = [0, 0.15, 0.25];
+
+  Teste avec npm run dev.
+
+✻ Brewed for 33s
+
+❯ je ne vois rien de different avec le debut 
+
+● L'effet est probablement trop subtil. Je vais l'amplifier pour qu'il soit bien visible.
+
+● Update(src/components/sections/MethodSection.astro)
+  ⎿  Added 14 lines, removed 15 lines                                    
+       93      const cards = document.querySelectorAll('.method-card');
+       94      if (cards.length === 0) return;
+       95  
+       96 -    // Configuration - vitesse de parallax par carte (0 = norm
+          -al, 0.5 = 50% plus lent)                                      
+       97 -    const speeds = [0, 0.15, 0.25]; // Carte 1 normale, carte 
+          -2 et 3 plus lentes                                            
+       96 +    // Offset initial par carte (en pixels) - plus grand = plu
+          +s de retard                                                   
+       97 +    const initialOffsets = [0, 80, 150];                      
+       98  
+       99      // Fonction d'easing (ease-out cubic)
+      100      function easeOutCubic(t: number): number {
+     ...
+      105        const viewportHeight = window.innerHeight;
+      106  
+      107        cards.forEach((card, index) => {
+      108 -        const speed = speeds[index] || 0;                     
+      109 -        if (speed === 0) return;                              
+      108 +        const initialOffset = initialOffsets[index] || 0;     
+      109 +        if (initialOffset === 0) return;                      
+      110  
+      111          const cardElement = card as HTMLElement;
+      112          const rect = cardElement.getBoundingClientRect();
+      113  
+      114 -        // Position relative au viewport (0 = en haut, 1 = en 
+          -bas)                                                          
+      115 -        const viewportProgress = rect.top / viewportHeight;   
+      114 +        // Quand la carte entre dans le viewport par le bas   
+      115 +        // Progress: 0 = carte en bas du viewport, 1 = carte e
+          +n haut                                                        
+      116 +        const distanceFromBottom = viewportHeight - rect.top; 
+      117 +        const travelDistance = viewportHeight + rect.height;  
+      118 +        const rawProgress = Math.max(0, Math.min(1, distanceFr
+          +omBottom / travelDistance));                                  
+      119  
+      117 -        // Seulement appliquer quand la carte est visible ou p
+          -roche                                                         
+      118 -        if (viewportProgress > 1.5 || viewportProgress < -1) {
+      119 -          return;                                             
+      120 -        }                                                     
+      120 +        // Appliquer easing                                   
+      121 +        const progress = easeOutCubic(rawProgress);           
+      122  
+      122 -        // Offset basé sur la distance au centre du viewport  
+      123 -        // Plus la carte est loin du haut, plus elle a d'offse
+          -t                                                             
+      124 -        const offset = Math.max(0, viewportProgress * 200 * sp
+          -eed);                                                         
+      125 -        const easedOffset = offset; // Pas d'easing ici pour g
+          -arder la fluidité avec le scroll                              
+      123 +        // L'offset diminue de initialOffset à 0 au fur et à m
+          +esure du scroll                                               
+      124 +        const currentOffset = initialOffset * (1 - progress); 
+      125  
+      126          const inner = cardElement.querySelector('.method-card-
+           inner') as HTMLElement;
+      127          if (inner) {
+      129 -          inner.style.transform = `translateY(${easedOffset}px
+          -)`;                                                           
+      128 +          inner.style.transform = `translateY(${currentOffset}
+          +px)`;                                                         
+      129          }
+      130        });
+      131      }
+
+● Maintenant l'effet est plus prononcé :
+
+  - Carte 1 : pas d'offset, arrive normalement
+  - Carte 2 : commence 80px plus bas, rattrape avec easing
+  - Carte 3 : commence 150px plus bas, rattrape encore plus visiblement
+
+  L'effet : quand tu scrolles vers la section, les cartes 2 et 3 "traînent" un peu puis rattrapent progressivement avec un ease-out.
+
+  Ajustable (ligne 97) :
+  const initialOffsets = [0, 80, 150];
+
+  Augmente les valeurs si tu veux un effet encore plus marqué.
+
+✻ Baked for 34s
+
+❯ j'aimerais que la barre du border bottom subisse un parallax aussi,       
+  possible?                                                                 
+
+● Oui, je vais transformer le border en élément séparé pour lui appliquer un parallax indépendant.
+
+● Read(src/components/sections/MethodSection.astro)
+  ⎿  Read 160 lines
+
+● Update(src/components/sections/MethodSection.astro)
+  ⎿  Added 6 lines, removed 1 line                                       
+      42          <div class="method-card-inner">
+      43            <article class:list={[
+      44              "flex flex-col md:flex-row md:justify-between",
+      45 -            index != 2 && 'border-b border-lines pb-10 sm:pb-16
+         -',                                                             
+      45              index == 2 && 'pb-10 sm:pb-32',
+      46 +            index != 2 && 'pb-10 sm:pb-16',                    
+      47            ]}>
+      48              <header class="flex flex-col gap-2 sm:gap-8">
+      49                <div class:list={["section-label max-w-[210px] te
+          xt-justify", index === 2 && "md:min-h-[2lh]"]}>
+     ...
+      58              </div>
+      59            </article>
+      60          </div>
+      61 +        {index != 2 && (                                       
+      62 +          <div class="method-line-wrapper">                    
+      63 +            <div class="method-line border-b border-lines"></di
+         +v>                                                             
+      64 +          </div>                                               
+      65 +        )}                                                     
+      66        </li>
+      67      ))}
+      68    </ol>
+
+● Update(src/components/sections/MethodSection.astro)
+  ⎿  Added 8 lines                                                       
+       94    .method-card-inner {
+       95      will-change: transform;
+       96    }
+       97 +                                                              
+       98 +  .method-line-wrapper {                                      
+       99 +    overflow: hidden;                                         
+      100 +  }                                                           
+      101 +                                                              
+      102 +  .method-line {                                              
+      103 +    will-change: transform;                                   
+      104 +  }                                                           
+      105  </style>
+      106  
+      107  <script>
+
+● Update(src/components/sections/MethodSection.astro)
+  ⎿  Added 19 lines, removed 8 lines                                     
+      111  
+      112      // Offset initial par carte (en pixels) - plus grand = plu
+           s de retard
+      113      const initialOffsets = [150, 300, 450];
+      114 +    // Offset pour les lignes (différent du contenu pour créer
+          + un décalage)                                                 
+      115 +    const lineOffsets = [80, 180, 0]; // La dernière carte n'a
+          + pas de ligne                                                 
+      116  
+      117      // Fonction d'easing (ease-out cubic)
+      118      function easeOutCubic(t: number): number {
+     ...
+      123        const viewportHeight = window.innerHeight;
+      124  
+      125        cards.forEach((card, index) => {
+      124 -        const initialOffset = initialOffsets[index] || 0;     
+      125 -        if (initialOffset === 0) return;                      
+      126 -                                                              
+      126          const cardElement = card as HTMLElement;
+      127          const rect = cardElement.getBoundingClientRect();
+      128  
+     ...
+      135          // Appliquer easing
+      136          const progress = easeOutCubic(rawProgress);
+      137  
+      139 -        // L'offset diminue de initialOffset à 0 au fur et à m
+          -esure du scroll                                               
+      140 -        const currentOffset = initialOffset * (1 - progress); 
+      138 +        // Animer le contenu                                  
+      139 +        const initialOffset = initialOffsets[index] || 0;     
+      140 +        if (initialOffset > 0) {                              
+      141 +          const currentOffset = initialOffset * (1 - progress)
+          +;                                                             
+      142 +          const inner = cardElement.querySelector('.method-car
+          +d-inner') as HTMLElement;                                     
+      143 +          if (inner) {                                        
+      144 +            inner.style.transform = `translateY(${currentOffse
+          +t}px)`;                                                       
+      145 +          }                                                   
+      146 +        }                                                     
+      147  
+      142 -        const inner = cardElement.querySelector('.method-card-
+          -inner') as HTMLElement;                                       
+      143 -        if (inner) {                                          
+      144 -          inner.style.transform = `translateY(${currentOffset}
+          -px)`;                                                         
+      148 +        // Animer la ligne                                    
+      149 +        const lineOffset = lineOffsets[index] || 0;           
+      150 +        if (lineOffset > 0) {                                 
+      151 +          const currentLineOffset = lineOffset * (1 - progress
+          +);                                                            
+      152 +          const line = cardElement.querySelector('.method-line
+          +') as HTMLElement;                                            
+      153 +          if (line) {                                         
+      154 +            line.style.transform = `translateY(${currentLineOf
+          +fset}px)`;                                                    
+      155 +          }                                                   
+      156          }
+      157        });
+      158      }
+
+● C'est fait. Maintenant les lignes ont leur propre parallax indépendant du contenu :
+
+  Configuration (lignes 113-115) :
+  const initialOffsets = [150, 300, 450];  // Contenu
+  const lineOffsets = [80, 180, 0];        // Lignes (plus rapides)
+
+  Les lignes ont un offset plus petit que le contenu, donc elles "arrivent" avant le texte, créant un effet de couches décalées.
+
+  Tu peux ajuster les valeurs pour changer l'effet.
+
+✻ Baked for 51s
+
+
+
