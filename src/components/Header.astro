@@ -351,3 +351,63 @@ const textColorClass = isDark ? 'text-bg-light' : 'text-black';
   initMenu();
   document.addEventListener('astro:after-swap', initMenu);
 </script>
+
+<script>
+  // Gestion du smooth scroll pour les liens d'ancre
+  function initAnchorScroll() {
+    const anchorLinks = document.querySelectorAll('a[href*="#"]');
+
+    anchorLinks.forEach(link => {
+      link.addEventListener('click', (e) => {
+        const href = link.getAttribute('href');
+        if (!href) return;
+
+        // Vérifier si c'est un lien avec ancre
+        const hashIndex = href.indexOf('#');
+        if (hashIndex === -1) return;
+
+        const path = href.substring(0, hashIndex) || '/';
+        const hash = href.substring(hashIndex);
+        const currentPath = window.location.pathname;
+
+        // Offsets personnalisés par ancre
+        const offsets: Record<string, number> = {
+          '#services-section': 150,
+        };
+        const offset = offsets[hash] || 0;
+
+        // Si on est déjà sur la bonne page, scroll smooth avec Lenis
+        if (path === currentPath || path === '/' && currentPath === '/') {
+          e.preventDefault();
+          if ((window as any).lenis) {
+            (window as any).lenis.scrollTo(hash, { duration: 1.2, offset });
+          }
+          // Mettre à jour l'URL sans recharger
+          history.pushState(null, '', href);
+        } else if (path !== '') {
+          // Cross-page: stocker l'ancre et l'offset pour scroll après navigation
+          sessionStorage.setItem('scrollToAnchor', hash);
+          sessionStorage.setItem('scrollToAnchorOffset', String(offset));
+        }
+      });
+    });
+
+    // Vérifier si on doit scroller vers une ancre après navigation
+    const scrollToAnchor = sessionStorage.getItem('scrollToAnchor');
+    const scrollToAnchorOffset = sessionStorage.getItem('scrollToAnchorOffset');
+    if (scrollToAnchor) {
+      sessionStorage.removeItem('scrollToAnchor');
+      sessionStorage.removeItem('scrollToAnchorOffset');
+      const offset = Number(scrollToAnchorOffset) || 0;
+      // Attendre que Lenis soit prêt
+      setTimeout(() => {
+        if ((window as any).lenis) {
+          (window as any).lenis.scrollTo(scrollToAnchor, { duration: 1.2, offset });
+        }
+      }, 100);
+    }
+  }
+
+  initAnchorScroll();
+  document.addEventListener('astro:page-load', initAnchorScroll);
+</script>

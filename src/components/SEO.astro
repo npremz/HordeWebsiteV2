@@ -171,19 +171,54 @@ const resolvedOgImageAlt = ogImageAlt || siteSettings.defaultOgImageAlt;
 <meta name="theme-color" content={THEME_COLOR_LIGHT} media="(prefers-color-scheme: light)" />
 <meta name="theme-color" content={THEME_COLOR_DARK} media="(prefers-color-scheme: dark)" />
 
-<!-- Structured Data - Organization -->
+<!-- Structured Data - LocalBusiness (SEO Local Bruxelles) -->
 <script type="application/ld+json" set:html={JSON.stringify({
   "@context": "https://schema.org",
-  "@type": "Organization",
+  "@type": "ProfessionalService",
   "name": siteName,
+  "alternateName": "Horde Agency",
+  "description": "Agence web spécialisée en performance et UX à Bruxelles",
   "url": Astro.site?.href,
   "logo": new URL("/images/logo.svg", Astro.site).href,
+  "image": new URL(siteSettings.defaultOgImage, Astro.site).href,
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Bruxelles",
+    "addressRegion": "Bruxelles-Capitale",
+    "addressCountry": "BE"
+  },
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": 50.8503,
+    "longitude": 4.3517
+  },
+  "areaServed": {
+    "@type": "City",
+    "name": "Bruxelles"
+  },
+  "priceRange": "$$",
+  "telephone": "+32",
+  "email": "hello@hordeagence.com",
   "contactPoint": {
     "@type": "ContactPoint",
     "contactType": "customer service",
     "email": "hello@hordeagence.com",
-    "availableLanguage": ["French"]
-  }
+    "availableLanguage": ["French", "English"]
+  },
+  "openingHours": "Mo-Fr 09:00-18:00",
+  "sameAs": [
+    "https://www.linkedin.com/company/horde-agency"
+  ],
+  "knowsAbout": [
+    "Web Performance",
+    "User Experience",
+    "UX Design",
+    "Web Development",
+    "Core Web Vitals",
+    "SEO",
+    "Interface Design"
+  ],
+  "slogan": "Interfaces ultra-rapides qui convertissent"
 })} />
 
 <!-- Structured Data - WebSite -->
