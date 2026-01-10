@@ -10,9 +10,12 @@ import node from '@astrojs/node';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://hordeagence.com', // TODO: Remplacer par l'URL du site
+  site: 'https://hordeagence.com',
   output: 'server',
   adapter: node({ mode: 'standalone' }),
+  build: {
+    inlineStylesheets: 'always',
+  },
   server: {
     host: '0.0.0.0',
     port: 4328
