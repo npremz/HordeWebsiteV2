@@ -4,6 +4,7 @@ services:
     container_name: hordenew
     restart: unless-stopped
     ports:
-      - "${PORT}:${PORT}"
+      - "${PORT:-4328}:${PORT:-4328}"
     environment:
+      - PORT=${PORT:-4328}
       - RESEND_API_KEY=${RESEND_API_KEY}
