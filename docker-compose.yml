@@ -1,7 +1,7 @@
 services:
   hordev2:
     build: .
-    container_name: hordenew
+    container_name: ${CONTAINER_NAME:-hordenew}
     restart: unless-stopped
     ports:
       - "${PORT:-4328}:${PORT:-4328}"
