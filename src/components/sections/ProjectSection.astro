@@ -24,11 +24,11 @@ const projects = [
 ---
 
 <div class="flex flex-col">
-	<div class="flex justify-between font-display leading-none px-4 sm:px-5 lg:px-9 items-end sm:items-start lg:items-end text-[1.625rem] sm:text-[2.5rem] md:text-[4rem] uppercase lg:w-3/4">
+	<div class="flex justify-between font-display leading-none items-end sm:items-start lg:items-end text-[1.625rem] sm:text-[2.5rem] md:text-[4rem] uppercase lg:w-3/4">
 		<h2 class="">Projets<br>selectionnés</h2>
 		<span class="block">({String(projects.length).padStart(2, '0')})</span>
 	</div>
-	<a href="/projects" class="section-label text-[1rem] px-4 sm:px-5 lg:px-9 leading-none self-end mt-10 sm:mt-0 lg:-mt-[1lh]"><Wrapped>Autres projets →</Wrapped></a>
+	<a href="/projects" class="section-label text-[1rem] leading-none self-end mt-10 sm:mt-0 lg:-mt-[1lh]"><Wrapped>Autres projets →</Wrapped></a>
 
 	<!-- Image flottante qui suit la souris -->
 	<div id="project-hover-image" class="pointer-events-none fixed z-50 overflow-visible" style="transform: translate(-50%, -50%) scale(0); will-change: transform;">
@@ -66,6 +66,7 @@ const projects = [
 
 	.project-link {
 		position: relative;
+		isolation: isolate;
 		transition: color 0.3s ease-out;
 	}
 
