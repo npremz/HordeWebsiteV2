@@ -5,6 +5,10 @@ import '../styles/global.css';
 import Header from '../components/Header.astro';
 import Container from '../components/ui/Container.astro';
 
+// Preload critical fonts
+import fontDisplay from '../assets/fonts/PPNeueMachina-Light.woff2';
+import fontBody from '../assets/fonts/PPNeueMontreal-Regular.woff2';
+
 interface Props {
   // SEO props
   title: string;
@@ -67,6 +71,10 @@ try {
 <!doctype html>
 <html lang={lang}>
   <head>
+    <!-- Preload critical fonts for faster LCP -->
+    <link rel="preload" href={fontDisplay} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={fontBody} as="font" type="font/woff2" crossorigin />
+
     <SEO
       title={title}
       description={description}
@@ -181,26 +189,43 @@ try {
 </style>
 
 <script>
-  import Lenis from 'lenis';
+  // Lenis chargé dynamiquement après première interaction (scroll/touch/wheel)
+  let lenisLoaded = false;
 
-  const isMobile = window.matchMedia('(max-width: 768px)').matches;
+  async function initLenis() {
+    if (lenisLoaded) return;
+    lenisLoaded = true;
 
-  const lenis = new Lenis({
-    touchMultiplier: isMobile ? 3.5 : 1,
-  });
+    const { default: Lenis } = await import('lenis');
+    const isMobile = window.matchMedia('(max-width: 768px)').matches;
 
-  // Exposer Lenis globalement pour le smooth scroll
-  (window as any).lenis = lenis;
+    const lenis = new Lenis({
+      touchMultiplier: isMobile ? 3.5 : 1,
+    });
 
-  function raf(time: number) {
-    lenis.raf(time);
+    (window as any).lenis = lenis;
+
+    function raf(time: number) {
+      lenis.raf(time);
+      requestAnimationFrame(raf);
+    }
     requestAnimationFrame(raf);
+
+    document.addEventListener('astro:after-swap', () => {
+      lenis.scrollTo(0, { immediate: true });
+    });
+
+    // Cleanup listeners
+    window.removeEventListener('wheel', initLenis);
+    window.removeEventListener('touchstart', initLenis);
   }
 
-  requestAnimationFrame(raf);
+  // Charger Lenis au premier scroll/touch
+  window.addEventListener('wheel', initLenis, { once: true, passive: true });
+  window.addEventListener('touchstart', initLenis, { once: true, passive: true });
 
-  // Re-init on view transitions
-  document.addEventListener('astro:after-swap', () => {
-    lenis.scrollTo(0, { immediate: true });
-  });
+  // Ou après idle si pas d'interaction
+  if ('requestIdleCallback' in window) {
+    requestIdleCallback(() => initLenis(), { timeout: 3000 });
+  }
 </script>
