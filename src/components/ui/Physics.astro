@@ -123,9 +123,17 @@ const { class: className = '', dark: dark = false } = Astro.props;
 </style>
 
 <script>
-  import Matter from 'matter-js';
+  // Matter.js sera importé dynamiquement quand le composant devient visible
+  type MatterType = typeof import('matter-js');
+  let Matter: MatterType;
 
-  const { Engine, Bodies, Composite, Body, Mouse, MouseConstraint } = Matter;
+  // Destructuring sera fait après l'import dynamique
+  let Engine: MatterType['Engine'];
+  let Bodies: MatterType['Bodies'];
+  let Composite: MatterType['Composite'];
+  let Body: MatterType['Body'];
+  let Mouse: MatterType['Mouse'];
+  let MouseConstraint: MatterType['MouseConstraint'];
 
   // Détecter si c'est un device avec pointeur (souris)
   const hasPointer = window.matchMedia('(pointer: fine)').matches;
@@ -230,11 +238,23 @@ const { class: className = '', dark: dark = false } = Astro.props;
     document.addEventListener('mousemove', updateCTAPosition);
   }
 
-  function initPhysics() {
+  async function initPhysics() {
     const container = document.getElementById('physics-container');
     const letters = document.querySelectorAll<SVGSVGElement>('.physics-letter');
 
     if (!container || letters.length === 0) return;
+
+    // Import dynamique de Matter.js (lazy loading)
+    if (!Matter) {
+      const MatterModule = await import('matter-js');
+      Matter = MatterModule.default || MatterModule;
+      Engine = Matter.Engine;
+      Bodies = Matter.Bodies;
+      Composite = Matter.Composite;
+      Body = Matter.Body;
+      Mouse = Matter.Mouse;
+      MouseConstraint = Matter.MouseConstraint;
+    }
 
     // Cleanup avant de réinitialiser
     cleanupPhysics();
