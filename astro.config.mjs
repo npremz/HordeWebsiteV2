@@ -8,6 +8,8 @@ import keystatic from '@keystatic/astro';
 import sitemap from '@astrojs/sitemap';
 import node from '@astrojs/node';
 
+const PORT = parseInt(process.env.PORT || '4328', 10);
+
 // https://astro.build/config
 export default defineConfig({
   site: 'https://hordeagence.com',
@@ -18,7 +20,7 @@ export default defineConfig({
   },
   server: {
     host: '0.0.0.0',
-    port: 4328
+    port: PORT
   },
   integrations: [react(), markdoc(), keystatic(), sitemap()],
   prefetch: true,

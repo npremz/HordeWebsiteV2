@@ -17,6 +17,6 @@ COPY package*.json ./
 ENV HOST=0.0.0.0
 ENV PORT=4328
 
-EXPOSE 4328
+EXPOSE ${PORT}
 
 CMD ["node", "dist/server/entry.mjs"]

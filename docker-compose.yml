@@ -1,9 +1,10 @@
 services:
   hordev2:
     build: .
-    container_name: hordenew
+    container_name: ${CONTAINER_NAME:-hordenew}
     restart: unless-stopped
     ports:
-      - "${PORT}:${PORT}"
+      - "${PORT:-4328}:${PORT:-4328}"
     environment:
+      - PORT=${PORT:-4328}
       - RESEND_API_KEY=${RESEND_API_KEY}
