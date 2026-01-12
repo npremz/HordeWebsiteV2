@@ -1,6 +1,6 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import Footer from '../components/Footer.astro';
+import Layout from "../layouts/Layout.astro";
+import Footer from "../components/Footer.astro";
 ---
 
 <Layout
@@ -8,9 +8,13 @@ import Footer from '../components/Footer.astro';
   description="La page que vous recherchez n'existe pas ou a été déplacée."
   robots="noindex, nofollow"
 >
-  <section class="mt-32 min-h-[70vh] flex flex-col justify-center items-center text-center">
+  <section
+    class="mt-32 min-h-[70vh] flex flex-col justify-center items-center text-center"
+  >
     <span class="section-label mb-4">Erreur 404</span>
-    <h1 class="font-display uppercase text-2xl sm:text-8xl lg:text-9xl leading-none mb-8">
+    <h1
+      class="font-display uppercase text-2xl sm:text-8xl lg:text-9xl leading-none mb-8"
+    >
       Page<br />introuvable
     </h1>
     <p class="text-xl sm:text-2xl max-w-md mb-10">
@@ -18,7 +22,7 @@ import Footer from '../components/Footer.astro';
     </p>
     <a
       href="/"
-      class="font-mono uppercase text-sm border border-black px-6 py-4 hover:bg-black hover:text-bg-light! transition-colors duration-300"
+      class="font-mono uppercase text-[1rem] border border-black px-6 py-4 hover:bg-black hover:text-bg-light! transition-colors duration-300"
     >
       Retour à l'accueil
     </a>

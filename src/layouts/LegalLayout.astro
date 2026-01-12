@@ -1,27 +1,30 @@
 ---
-import Layout from './Layout.astro';
-import Footer from '../components/Footer.astro';
-import Line from '../components/ui/Line.astro';
+import Layout from "./Layout.astro";
+import Footer from "../components/Footer.astro";
+import Line from "../components/ui/Line.astro";
 
 interface Props {
-	title: string;
-	description: string;
+  title: string;
+  description: string;
   updatedAt: string;
 }
 
 const { title, description, updatedAt } = Astro.props;
 ---
 
-<Layout
-  title={title}
-  description={description}
->
+<Layout title={title} description={description}>
   <div class="relative mt-32 sm:mt-40 lg:mt-64 xl:mt-80">
     <!-- Decorative background element -->
-    <div class="absolute -top-32 left-1/2 -translate-x-1/2 -z-10 w-full max-w-7xl opacity-10 pointer-events-none">
-      <svg viewBox="0 0 1000 1000" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <circle cx="500" cy="500" r="499.5" stroke="currentColor" />
-        <circle cx="500" cy="500" r="250" stroke="currentColor" />
+    <div
+      class="absolute -top-32 left-1/2 -translate-x-1/2 -z-10 w-full max-w-7xl opacity-10 pointer-events-none"
+    >
+      <svg
+        viewBox="0 0 1000 1000"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <circle cx="500" cy="500" r="499.5" stroke="currentColor"></circle>
+        <circle cx="500" cy="500" r="250" stroke="currentColor"></circle>
       </svg>
     </div>
 
@@ -35,7 +38,7 @@ const { title, description, updatedAt } = Astro.props;
         </div>
         <div class="md:text-right">
           <p class="section-label text-lines-dark">Dernière mise à jour</p>
-          <p class="font-mono text-xl">{updatedAt}</p>
+          <p class="font-mono text-[1rem]">{updatedAt}</p>
         </div>
       </div>
     </header>
@@ -46,9 +49,14 @@ const { title, description, updatedAt } = Astro.props;
       <aside class="hidden lg:block lg:col-span-3">
         <div class="sticky top-32">
           <p class="section-label mb-8">Navigation</p>
-          <ul class="space-y-4 font-mono text-sm uppercase">
-            <li><a href="/mentions-legales" class="link-hover">Mentions Légales</a></li>
-            <li><a href="/confidentialite" class="link-hover">Confidentialité</a></li>
+          <ul class="space-y-4 font-mono text-[1rem] uppercase">
+            <li>
+              <a href="/mentions-legales" class="link-hover">Mentions Légales</a
+              >
+            </li>
+            <li>
+              <a href="/confidentialite" class="link-hover">Confidentialité</a>
+            </li>
             <li><a href="/cookies" class="link-hover">Cookies</a></li>
           </ul>
         </div>
@@ -60,12 +68,9 @@ const { title, description, updatedAt } = Astro.props;
     </div>
 
     <Line />
-    
+
     <div class="mt-16 mb-32">
-      <a
-        href="/"
-        class="section-label link-hover flex items-center gap-2"
-      >
+      <a href="/" class="section-label link-hover flex items-center gap-2">
         <span>←</span> Retour à l'accueil
       </a>
     </div>
@@ -99,33 +104,33 @@ const { title, description, updatedAt } = Astro.props;
       @apply text-[3.5rem];
     }
   }
-  
+
   article section h3 {
     font-family: var(--font-display);
     @apply uppercase text-2xl mb-6 mt-12;
   }
-  
+
   article section p {
     @apply text-lg sm:text-xl leading-relaxed mb-8 text-lines-dark;
   }
-  
+
   article section ul {
     @apply list-none space-y-6 mb-10;
   }
-  
+
   article section li {
     @apply text-lg sm:text-xl text-lines-dark flex gap-4;
   }
-  
+
   article section li::before {
     content: "—";
     @apply text-black shrink-0;
   }
-  
+
   article section a {
     @apply border-b border-lines hover:border-black transition-colors;
   }
-  
+
   article section strong {
     @apply text-black font-medium;
   }
