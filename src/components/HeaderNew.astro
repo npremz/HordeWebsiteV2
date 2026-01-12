@@ -88,7 +88,7 @@ const email = 'hello@hordeagence.com';
   <!-- Menu panel -->
   <div
     id="menu-panel"
-    class="menu-panel max-w-[1350px] mx-auto bg-black text-bg-light max-h-0 overflow-hidden transition-[max-height] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] border-x border-b border-lines-dark"
+    class="menu-panel max-w-[1350px] mx-auto bg-black text-bg-light max-h-0 overflow-hidden transition-[max-height,border-color] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] border-x border-b border-transparent"
     aria-hidden="true"
   >
     <div class="p-5 md:p-6 sm:flex sm:flex-row-reverse sm:justify-between">
@@ -99,12 +99,13 @@ const email = 'hello@hordeagence.com';
             <li class="menu-item opacity-0 transition-all duration-300 ease-out text-right" style={`--item-delay: ${index * 0.05}s`}>
               <a
                 href={item.url}
-                class="menu-link inline-block relative text-[2.5rem] leading-none text-black no-underline
+                class="menu-link nav-scramble inline-block relative text-[2.5rem] leading-none text-black no-underline
                        after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-current after:scale-x-0 after:origin-left after:transition-transform after:duration-400 after:ease-[cubic-bezier(0.25,0.46,0.45,0.94)]
                        hover:after:scale-x-100"
                 target={item.isExternal ? '_blank' : undefined}
                 rel={item.isExternal ? 'noopener noreferrer' : undefined}
                 tabindex="-1"
+                data-text={item.label}
               >
                 {item.label}
               </a>
@@ -114,12 +115,12 @@ const email = 'hello@hordeagence.com';
       </nav>
 
       <!-- Footer info -->
-      <div class="pt-5 md:pt-0 border-t border-lines-dark sm:border-0 sm:flex sm:flex-col sm:justify-between sm:mt-0">
+      <div class="pt-5 mt-5 md:mt-0 md:pt-0 border-t border-lines-dark sm:border-0 sm:flex sm:flex-col sm:justify-between sm:mt-0">
 		<a href="/contact" class="hidden sm:flex text-[1.375rem] leading-none justify-end sm:justify-start items-center gap-2.5">
 			<svg width="11" height="10" viewBox="0 0 11 10" fill="none" xmlns="http://www.w3.org/2000/svg">
 				<path d="M7.38206 10L6.60058 9.24904L9.13314 6.39847L0 6.39847V0H1V5.32567H9.13314L6.60058 2.4751L7.38206 1.72414L11 5.86207L7.38206 10Z" fill="#F4F3F3"/>
 			</svg>
-			Démarrer un projet
+			<span class="nav-scramble" data-text={t.nav.startProject}>{t.nav.startProject}</span>
 		</a>
         <div class="flex flex-col gap-4 text-right sm:text-left">
           <!-- Email -->
@@ -132,7 +133,7 @@ const email = 'hello@hordeagence.com';
 			<svg class="mt-1" width="11" height="10" viewBox="0 0 11 10" fill="none" xmlns="http://www.w3.org/2000/svg">
 				<path d="M7.38206 10L6.60058 9.24904L9.13314 6.39847L0 6.39847V0H1V5.32567H9.13314L6.60058 2.4751L7.38206 1.72414L11 5.86207L7.38206 10Z" fill="#F4F3F3"/>
 			</svg>
-            {email}
+            <span class="nav-scramble" data-text={email}>{email}</span>
           </a>
 
           <!-- Language switch -->
@@ -146,8 +147,7 @@ const email = 'hello@hordeagence.com';
 		  	<svg class="mt-1" width="11" height="10" viewBox="0 0 11 10" fill="none" xmlns="http://www.w3.org/2000/svg">
 				<path d="M7.38206 10L6.60058 9.24904L9.13314 6.39847L0 6.39847V0H1V5.32567H9.13314L6.60058 2.4751L7.38206 1.72414L11 5.86207L7.38206 10Z" fill="#F4F3F3"/>
 			</svg>
-
-            {t.nav.switchLang}
+            <span class="nav-scramble" data-text={t.nav.switchLang}>{t.nav.switchLang}</span>
           </a>
         </div>
       </div>
@@ -178,6 +178,7 @@ const email = 'hello@hordeagence.com';
   /* Menu panel open */
   .header-new.is-open .menu-panel {
     max-height: 100vh;
+    border-color: var(--color-lines-dark);
   }
 
   /* Menu items animation */
@@ -205,6 +206,7 @@ const email = 'hello@hordeagence.com';
 
     // Text scramble effect
     let scrambleInterval: number | null = null;
+    const scrambleIntervals = new Map<HTMLElement, number>();
     let currentText = toggle?.dataset.menuText || 'Menu';
 
     function shuffleArray<T>(array: T[]): T[] {
@@ -242,11 +244,49 @@ const email = 'hello@hordeagence.com';
       }, 30);
     }
 
+    function scrambleNavLink(element: HTMLElement, targetText: string) {
+      const existingInterval = scrambleIntervals.get(element);
+      if (existingInterval) {
+        clearInterval(existingInterval);
+      }
+
+      let iteration = 0;
+      const originalText = targetText;
+      const chars = originalText.split('');
+
+      const intervalId = window.setInterval(() => {
+        const resolved = chars.slice(0, Math.floor(iteration));
+        const remaining = chars.slice(Math.floor(iteration));
+        const shuffled = shuffleArray(remaining);
+
+        element.textContent = [...resolved, ...shuffled].join('');
+
+        if (iteration >= originalText.length) {
+          clearInterval(intervalId);
+          scrambleIntervals.delete(element);
+          element.textContent = originalText;
+        }
+
+        iteration += 1;
+      }, 20);
+
+      scrambleIntervals.set(element, intervalId);
+    }
+
     // Hover effect on menu toggle
     toggle?.addEventListener('mouseenter', () => {
       if (label) {
         scrambleText(label, currentText);
       }
+    });
+
+    // Hover effect on nav links
+    const navScrambleLinks = document.querySelectorAll('#menu-panel .nav-scramble');
+    navScrambleLinks.forEach((link) => {
+      link.addEventListener('mouseenter', () => {
+        const text = (link as HTMLElement).dataset.text || link.textContent || '';
+        scrambleNavLink(link as HTMLElement, text);
+      });
     });
 
     function openMenu() {
@@ -342,6 +382,8 @@ const email = 'hello@hordeagence.com';
         clearInterval(scrambleInterval);
         scrambleInterval = null;
       }
+      scrambleIntervals.forEach((id) => clearInterval(id));
+      scrambleIntervals.clear();
       if ((window as any).lenis) {
         (window as any).lenis.off('scroll', onScroll);
       } else {
