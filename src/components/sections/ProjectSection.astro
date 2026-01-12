@@ -166,7 +166,7 @@ const projects = [
 			container.style.left = `${currentX}px`;
 			container.style.top = `${currentY}px`;
 			container.style.transform = `translate(-50%, -50%) scale(${currentScale}) rotate(${currentRotation}deg)`;
-			container.style.opacity = currentScale < 0.01 ? '0' : '1';
+			container.style.opacity = (targetScale === 0 && currentScale < 0.01) ? '0' : '1';
 
 			const isAnimating =
 				Math.abs(currentX - mouseX) > 0.1 ||
