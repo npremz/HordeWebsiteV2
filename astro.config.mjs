@@ -3,6 +3,7 @@ import { defineConfig } from 'astro/config';
 import tailwindcss from '@tailwindcss/vite';
 
 import react from '@astrojs/react';
+import preact from '@astrojs/preact';
 import markdoc from '@astrojs/markdoc';
 import keystatic from '@keystatic/astro';
 import sitemap from '@astrojs/sitemap';
@@ -22,7 +23,13 @@ export default defineConfig({
     host: '0.0.0.0',
     port: PORT
   },
-  integrations: [react(), markdoc(), keystatic(), sitemap()],
+  integrations: [
+    react({ include: ['**/keystatic/**'] }),
+    preact({ include: ['**/components/**/*.tsx'] }),
+    markdoc(),
+    keystatic(),
+    sitemap()
+  ],
   prefetch: true,
   compressHTML: true,
   vite: {
