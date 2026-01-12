@@ -14,7 +14,7 @@ const PORT = parseInt(process.env.PORT || '4328', 10);
 // https://astro.build/config
 export default defineConfig({
   site: 'https://hordeagence.com',
-  output: 'server',
+  output: 'static',
   adapter: node({ mode: 'standalone' }),
   build: {
     inlineStylesheets: 'always',

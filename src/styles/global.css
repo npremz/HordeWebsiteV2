@@ -26,10 +26,11 @@
 
 @font-face {
   font-family: 'PP Neue Bit';
-  src: url('../assets/fonts/PPNeueBit-Regular.woff2') format('woff2');
+  src: url('../assets/fonts/PPNeueBit-Weather.woff2') format('woff2');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
+  unicode-range: U+0030-0039, U+00B0, U+2600-2602, U+26A1, U+26C5, U+2744;
 }
 
 :root{

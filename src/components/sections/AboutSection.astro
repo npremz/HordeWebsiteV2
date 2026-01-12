@@ -46,10 +46,13 @@ const t = useTranslations(lang);
 		if (window.innerWidth < 640) return;
 		//if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
-		function updateParallax() {
-			var images = document.querySelectorAll('.parallax-img');
-			var viewportHeight = window.innerHeight;
+		var images = document.querySelectorAll('.parallax-img');
+		if (!images.length) return;
 
+		var viewportHeight = window.innerHeight;
+		var ticking = false;
+
+		function updateParallax() {
 			images.forEach(function(img) {
 				var rect = img.getBoundingClientRect();
 				if (rect.bottom < 0 || rect.top > viewportHeight) return;
@@ -60,11 +63,27 @@ const t = useTranslations(lang);
 
 				img.style.transform = 'translateY(' + translateY + 'px)';
 			});
-
-			requestAnimationFrame(updateParallax);
+			ticking = false;
 		}
 
-		requestAnimationFrame(updateParallax);
+		function onScroll() {
+			if (!ticking) {
+				requestAnimationFrame(updateParallax);
+				ticking = true;
+			}
+		}
+
+		// Initial position
+		updateParallax();
+
+		// Throttled scroll listener
+		window.addEventListener('scroll', onScroll, { passive: true });
+
+		// Cleanup on view transitions
+		document.addEventListener('astro:before-swap', function cleanup() {
+			window.removeEventListener('scroll', onScroll);
+			document.removeEventListener('astro:before-swap', cleanup);
+		});
 	})();
 </script>
 
