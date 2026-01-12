@@ -3,22 +3,44 @@ import yaml from 'js-yaml';
 import fs from 'node:fs';
 import path from 'node:path';
 import Wrapped from './ui/Wrapped.astro';
+import { DEFAULT_LOCALE, type Locale, useTranslations, getLocalizedPath, getPathWithoutLocale } from '../i18n';
 
 interface Props {
+  lang?: Locale;
   variant?: 'light' | 'dark';
 }
 
-const { variant = 'light' } = Astro.props;
+const { lang = DEFAULT_LOCALE, variant = 'light' } = Astro.props;
+const t = useTranslations(lang);
 const isDark = variant === 'dark';
 
-const navPath = path.join(process.cwd(), 'src/content/settings/navigation.yaml');
-const navContent = fs.readFileSync(navPath, 'utf8');
-const navigation = yaml.load(navContent) as {
+// Get current path for language switcher
+const currentPath = getPathWithoutLocale(Astro.url.pathname);
+const switchLang = lang === 'fr' ? 'en' : 'fr';
+const switchUrl = getLocalizedPath(currentPath, switchLang);
+
+// Load navigation from localized settings
+const navPath = path.join(process.cwd(), `src/content/settings_${lang}/navigation.yaml`);
+let navigation: {
   logo?: string;
   logoAlt?: string;
   items?: { label: string; url: string; isExternal?: boolean }[];
   ctaButton?: { label?: string; url?: string };
-};
+} = { items: [] };
+
+try {
+  const navContent = fs.readFileSync(navPath, 'utf8');
+  navigation = yaml.load(navContent) as typeof navigation;
+} catch {
+  // Fallback to fr if localized file doesn't exist
+  try {
+    const fallbackPath = path.join(process.cwd(), 'src/content/settings_fr/navigation.yaml');
+    const navContent = fs.readFileSync(fallbackPath, 'utf8');
+    navigation = yaml.load(navContent) as typeof navigation;
+  } catch {
+    // Use defaults
+  }
+}
 
 const { logo, logoAlt = 'Logo', items = [], ctaButton } = navigation;
 const currentLogo = isDark ? '/images/logo_white.svg' : logo;
@@ -27,7 +49,7 @@ const textColorClass = isDark ? 'text-bg-light' : 'text-black';
 
 <header class="fixed z-9999999 top-0 left-0 right-0 px-4 sm:px-8 md:px-4 lg:px-12 py-5 xl:py-10 2xl:py-10" style="view-transition-name: header;">
   <div class="flex-between">
-    <a href="/" class="block">
+    <a href={`/${lang}`} class="block">
       {currentLogo ? (
         <img
           src={currentLogo}
@@ -43,8 +65,8 @@ const textColorClass = isDark ? 'text-bg-light' : 'text-black';
       )}
     </a>
 
-    <div class="flex gap-16"> 
-      <a href="/contact" class="sm:text-[1.625rem] md:text-[2rem] nav-scramble nav-link-hover hidden! md:inline-block!" data-text="Démarrer un projet">Démarrer un projet</a>
+    <div class="flex gap-16">
+      <a href={`/${lang}/contact`} class="sm:text-[1.625rem] md:text-[2rem] nav-scramble nav-link-hover hidden! md:inline-block!" data-text={t.nav.startProject}>{t.nav.startProject}</a>
       <div class="relative">
         <button
           type="button"
@@ -52,9 +74,13 @@ const textColorClass = isDark ? 'text-bg-light' : 'text-black';
           class={`flex-center gap-2 cursor-pointer ${textColorClass}`}
           aria-expanded="false"
           aria-controls="mobile-menu"
-          aria-label="Ouvrir le menu"
+          aria-label={t.nav.openMenu}
+          data-open-label={t.nav.openMenu}
+          data-close-label={t.nav.closeMenu}
+          data-menu-text={t.nav.menu}
+          data-close-text={t.nav.close}
         >
-          <span id="menu-label" class=" sm:text-[1.625rem] md:text-[2rem]" data-scramble>Menu</span>
+          <span id="menu-label" class=" sm:text-[1.625rem] md:text-[2rem]" data-scramble>{t.nav.menu}</span>
           <Wrapped padding="0.5rem" class='sm:mt-1 md:mt-2' variant={variant}>
             <span id="menu-icon" class="leading-none font-mono">+</span>
           </Wrapped>
@@ -94,15 +120,14 @@ const textColorClass = isDark ? 'text-bg-light' : 'text-black';
                   {ctaButton.label}
                 </a>
               )}
-              <!-- English version - à activer plus tard
-              <button
-                type="button"
-                class="menu-link text-black! tracking-[-0.02em] nav-link-hover sm:text-[2rem] text-left w-fit"
+              <a
+                href={switchUrl}
+                class="menu-link text-black! tracking-[-0.02em] nav-link-cta sm:text-[2rem] w-fit"
                 tabindex="-1"
+                hreflang={switchLang}
               >
-                English version
-              </button>
-              -->
+                {t.nav.switchLang}
+              </a>
             </div>
           </nav>
         </div>
@@ -211,7 +236,7 @@ const textColorClass = isDark ? 'text-bg-light' : 'text-black';
     // Text scramble effect
     let scrambleInterval: number | null = null;
     const scrambleIntervals = new Map<HTMLElement, number>();
-    let currentText = 'Menu';
+    let currentText = toggle?.dataset.menuText || 'Menu';
 
     // Fonction pour mélanger un tableau
     function shuffleArray<T>(array: T[]): T[] {
@@ -302,9 +327,11 @@ const textColorClass = isDark ? 'text-bg-light' : 'text-black';
       menu?.classList.add('is-open');
       menu?.setAttribute('aria-hidden', 'false');
       toggle?.setAttribute('aria-expanded', 'true');
-      toggle?.setAttribute('aria-label', 'Fermer le menu');
-      currentText = 'Close';
-      if (label) scrambleText(label, 'Close');
+      const closeLabel = toggle?.dataset.closeLabel || 'Close menu';
+      const closeText = toggle?.dataset.closeText || 'Close';
+      toggle?.setAttribute('aria-label', closeLabel);
+      currentText = closeText;
+      if (label) scrambleText(label, closeText);
       if (icon) icon.textContent = '-';
       document.body.style.overflow = 'hidden';
       // Rendre les liens focusables
@@ -316,9 +343,11 @@ const textColorClass = isDark ? 'text-bg-light' : 'text-black';
       menu?.classList.remove('is-open');
       menu?.setAttribute('aria-hidden', 'true');
       toggle?.setAttribute('aria-expanded', 'false');
-      toggle?.setAttribute('aria-label', 'Ouvrir le menu');
-      currentText = 'Menu';
-      if (label) scrambleText(label, 'Menu');
+      const openLabel = toggle?.dataset.openLabel || 'Open menu';
+      const menuText = toggle?.dataset.menuText || 'Menu';
+      toggle?.setAttribute('aria-label', openLabel);
+      currentText = menuText;
+      if (label) scrambleText(label, menuText);
       if (icon) icon.textContent = '+';
       document.body.style.overflow = '';
       // Retirer les liens du focus quand menu fermé

@@ -1,0 +1,140 @@
+---
+import LegalLayout from '../../layouts/LegalLayout.astro';
+import { SUPPORTED_LOCALES, type Locale } from '../../i18n';
+
+export const prerender = true;
+
+export function getStaticPaths() {
+  return SUPPORTED_LOCALES.map((lang) => ({
+    params: { lang },
+  }));
+}
+
+const { lang } = Astro.params as { lang: Locale };
+---
+
+<LegalLayout
+  lang={lang}
+  title={lang === 'fr' ? 'Politique de confidentialité' : 'Privacy Policy'}
+  description={lang === 'fr'
+    ? "Politique de confidentialité de Horde Agence. Découvrez comment nous protégeons vos données personnelles."
+    : "Horde Agency Privacy Policy. Discover how we protect your personal data."}
+  updatedAt={lang === 'fr' ? 'Janvier 2025' : 'January 2025'}
+>
+  {lang === 'fr' ? (
+    <>
+      <section>
+        <h2>Introduction</h2>
+        <p>
+          Horde Agence s'engage à protéger la vie privée des utilisateurs de son site web.
+          Cette politique de confidentialité explique comment nous collectons, utilisons et
+          protégeons vos informations personnelles conformément au Règlement Général sur la
+          Protection des Données (RGPD).
+        </p>
+      </section>
+
+      <section>
+        <h2>Responsable du traitement</h2>
+        <p>
+          Le responsable du traitement des données est :<br />
+          <strong>Horde Agence</strong><br />
+          Bruxelles, Belgique<br />
+          Email : <a href="mailto:hello@hordeagence.com">hello@hordeagence.com</a>
+        </p>
+      </section>
+
+      <section>
+        <h2>Données collectées</h2>
+        <p>Nous collectons les données suivantes :</p>
+        <ul>
+          <li><strong>Données de contact</strong> : nom, email, société (via le formulaire de contact)</li>
+          <li><strong>Données de navigation</strong> : adresse IP, type de navigateur, pages visitées</li>
+          <li><strong>Cookies</strong> : voir notre <a href={`/${lang}/cookies`}>politique des cookies</a></li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Finalités du traitement</h2>
+        <p>Vos données sont utilisées pour :</p>
+        <ul>
+          <li>Répondre à vos demandes de contact</li>
+          <li>Améliorer notre site web et nos services</li>
+          <li>Analyser l'utilisation du site (statistiques anonymes)</li>
+          <li>Respecter nos obligations légales</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Vos droits</h2>
+        <p>Conformément au RGPD, vous disposez des droits suivants :</p>
+        <ul>
+          <li><strong>Droit d'accès</strong> : obtenir une copie de vos données</li>
+          <li><strong>Droit de rectification</strong> : corriger vos données</li>
+          <li><strong>Droit à l'effacement</strong> : supprimer vos données</li>
+          <li><strong>Droit à la portabilité</strong> : recevoir vos données dans un format structuré</li>
+          <li><strong>Droit d'opposition</strong> : vous opposer au traitement</li>
+        </ul>
+        <p>
+          Pour exercer ces droits, contactez-nous à <a href="mailto:hello@hordeagence.com">hello@hordeagence.com</a>.
+        </p>
+      </section>
+    </>
+  ) : (
+    <>
+      <section>
+        <h2>Introduction</h2>
+        <p>
+          Horde Agency is committed to protecting the privacy of users of its website.
+          This privacy policy explains how we collect, use and protect your personal
+          information in accordance with the General Data Protection Regulation (GDPR).
+        </p>
+      </section>
+
+      <section>
+        <h2>Data Controller</h2>
+        <p>
+          The data controller is:<br />
+          <strong>Horde Agency</strong><br />
+          Brussels, Belgium<br />
+          Email: <a href="mailto:hello@hordeagence.com">hello@hordeagence.com</a>
+        </p>
+      </section>
+
+      <section>
+        <h2>Data Collected</h2>
+        <p>We collect the following data:</p>
+        <ul>
+          <li><strong>Contact data</strong>: name, email, company (via the contact form)</li>
+          <li><strong>Navigation data</strong>: IP address, browser type, pages visited</li>
+          <li><strong>Cookies</strong>: see our <a href={`/${lang}/cookies`}>cookie policy</a></li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Purposes of Processing</h2>
+        <p>Your data is used to:</p>
+        <ul>
+          <li>Respond to your contact requests</li>
+          <li>Improve our website and services</li>
+          <li>Analyze site usage (anonymous statistics)</li>
+          <li>Comply with our legal obligations</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Your Rights</h2>
+        <p>Under the GDPR, you have the following rights:</p>
+        <ul>
+          <li><strong>Right of access</strong>: obtain a copy of your data</li>
+          <li><strong>Right to rectification</strong>: correct your data</li>
+          <li><strong>Right to erasure</strong>: delete your data</li>
+          <li><strong>Right to portability</strong>: receive your data in a structured format</li>
+          <li><strong>Right to object</strong>: object to processing</li>
+        </ul>
+        <p>
+          To exercise these rights, contact us at <a href="mailto:hello@hordeagence.com">hello@hordeagence.com</a>.
+        </p>
+      </section>
+    </>
+  )}
+</LegalLayout>

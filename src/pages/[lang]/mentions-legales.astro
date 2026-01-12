@@ -1,0 +1,124 @@
+---
+import LegalLayout from '../../layouts/LegalLayout.astro';
+import { SUPPORTED_LOCALES, type Locale, useTranslations } from '../../i18n';
+
+export const prerender = true;
+
+export function getStaticPaths() {
+  return SUPPORTED_LOCALES.map((lang) => ({
+    params: { lang },
+  }));
+}
+
+const { lang } = Astro.params as { lang: Locale };
+const t = useTranslations(lang);
+---
+
+<LegalLayout
+  lang={lang}
+  title={lang === 'fr' ? 'Mentions Légales' : 'Legal Notices'}
+  description={lang === 'fr'
+    ? "Mentions légales de Horde Agence. Retrouvez les informations juridiques concernant notre société."
+    : "Legal notices of Horde Agency. Find the legal information about our company."}
+  updatedAt={lang === 'fr' ? 'Janvier 2026' : 'January 2026'}
+>
+  {lang === 'fr' ? (
+    <>
+      <section>
+        <h2>Éditeur du site</h2>
+        <p>
+          Le présent site est édité par :<br />
+          <strong>Horde Agence</strong><br />
+          Forme juridique : [VOTRE FORME JURIDIQUE]<br />
+          Siège social : Bruxelles, Belgique<br />
+          Numéro d'entreprise / TVA : [VOTRE NUMÉRO]<br />
+          Email : <a href="mailto:hello@hordeagence.com">hello@hordeagence.com</a>
+        </p>
+      </section>
+
+      <section>
+        <h2>Hébergement</h2>
+        <p>
+          Le site est hébergé par :<br />
+          <strong>Vercel Inc.</strong><br />
+          440 N Barranca Ave #4133<br />
+          Covina, CA 91723<br />
+          États-Unis
+        </p>
+      </section>
+
+      <section>
+        <h2>Propriété intellectuelle</h2>
+        <p>
+          L'ensemble de ce site relève de la législation belge et internationale sur le droit d'auteur et la propriété intellectuelle. Tous les droits de reproduction sont réservés, y compris pour les documents téléchargeables et les représentations iconographiques et photographiques.
+        </p>
+        <p>
+          La reproduction de tout ou partie de ce site sur quelque support que ce soit est formellement interdite sauf autorisation expresse de Horde Agence.
+        </p>
+      </section>
+
+      <section>
+        <h2>Données personnelles</h2>
+        <p>
+          Pour toute information concernant la collecte et le traitement de vos données personnelles, nous vous invitons à consulter notre <a href={`/${lang}/confidentialite`}>Politique de confidentialité</a>.
+        </p>
+      </section>
+
+      <section>
+        <h2>Droit applicable</h2>
+        <p>
+          Les présentes mentions légales sont soumises au droit belge. En cas de litige, les tribunaux de Bruxelles seront seuls compétents.
+        </p>
+      </section>
+    </>
+  ) : (
+    <>
+      <section>
+        <h2>Site Publisher</h2>
+        <p>
+          This site is published by:<br />
+          <strong>Horde Agency</strong><br />
+          Legal form: [YOUR LEGAL FORM]<br />
+          Head office: Brussels, Belgium<br />
+          Company number / VAT: [YOUR NUMBER]<br />
+          Email: <a href="mailto:hello@hordeagence.com">hello@hordeagence.com</a>
+        </p>
+      </section>
+
+      <section>
+        <h2>Hosting</h2>
+        <p>
+          The site is hosted by:<br />
+          <strong>Vercel Inc.</strong><br />
+          440 N Barranca Ave #4133<br />
+          Covina, CA 91723<br />
+          United States
+        </p>
+      </section>
+
+      <section>
+        <h2>Intellectual Property</h2>
+        <p>
+          All content on this site is subject to Belgian and international copyright and intellectual property law. All reproduction rights are reserved, including for downloadable documents and iconographic and photographic representations.
+        </p>
+        <p>
+          Reproduction of all or part of this site on any medium whatsoever is strictly prohibited without the express authorization of Horde Agency.
+        </p>
+      </section>
+
+      <section>
+        <h2>Personal Data</h2>
+        <p>
+          For information regarding the collection and processing of your personal data, please see our <a href={`/${lang}/confidentialite`}>Privacy Policy</a>.
+        </p>
+      </section>
+
+      <section>
+        <h2>Applicable Law</h2>
+        <p>
+          These legal notices are governed by Belgian law. In the event of a dispute, the courts of Brussels shall have sole jurisdiction.
+        </p>
+      </section>
+    </>
+  )}
+</LegalLayout>

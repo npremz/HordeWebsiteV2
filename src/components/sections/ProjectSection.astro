@@ -1,5 +1,13 @@
 ---
 import Wrapped from "../ui/Wrapped.astro"
+import { DEFAULT_LOCALE, type Locale, useTranslations } from '../../i18n';
+
+interface Props {
+	lang?: Locale;
+}
+
+const { lang = DEFAULT_LOCALE } = Astro.props;
+const t = useTranslations(lang);
 
 const projects = [
 	{
@@ -25,17 +33,17 @@ const projects = [
 
 <div class="flex flex-col">
 	<div class="flex justify-between font-display leading-none items-end sm:items-start lg:items-end text-[1.625rem] sm:text-[2.5rem] md:text-[4rem] uppercase lg:w-3/4">
-		<h2 class="">Projets<br>selectionnés</h2>
+		<h2 set:html={t.projects.title.replace(/\n/g, '<br>')} />
 		<span class="block">({String(projects.length).padStart(2, '0')})</span>
 	</div>
-	<a href="/projects" class="section-label text-[1rem] leading-none self-end mt-10 sm:mt-0 lg:-mt-[1lh]"><Wrapped>Autres projets →</Wrapped></a>
+	<a href={`/${lang}/projects`} class="section-label text-[1rem] leading-none self-end mt-10 sm:mt-0 lg:-mt-[1lh]"><Wrapped>{t.projects.otherProjects} →</Wrapped></a>
 
 	<!-- Image flottante qui suit la souris -->
 	<div id="project-hover-image" class="pointer-events-none fixed z-50 overflow-visible" style="transform: translate(-50%, -50%) scale(0); will-change: transform;">
 		<div class="w-[315px] h-[315px] overflow-hidden">
 			<img id="project-hover-img" src="" alt="" class="w-full h-full object-cover" />
 			<div id="project-hover-placeholder" class="hidden w-full h-full bg-bg-light border border-lines flex items-center justify-center">
-				<span class="section-label">( on y travaille )</span>
+				<span class="section-label">{t.projects.inProgress}</span>
 			</div>
 		</div>
 	</div>
@@ -50,7 +58,7 @@ const projects = [
 					</a>
 				) : (
 					<div class:list={["project-link flex justify-between py-5 px-4 lg:py-8 lg:px-9", index === 0 ? "border border-lines" : "border-b border-x border-lines"]}>
-						<p>{project.name} <span class="section-label">( on y travaille )</span></p>
+						<p>{project.name} <span class="section-label">{t.projects.inProgress}</span></p>
 						<Wrapped class="text-[1rem] font-mono">→</Wrapped>
 					</div>
 				)}
@@ -147,12 +155,18 @@ const projects = [
 			// Scale
 			currentScale += (targetScale - currentScale) * scaleEase;
 
+			// Force scale to 0 when very small and target is 0
+			if (targetScale === 0 && currentScale < 0.01) {
+				currentScale = 0;
+			}
+
 			// Rotation avec inertie
 			currentRotation += (targetRotation - currentRotation) * rotEase;
 
 			container.style.left = `${currentX}px`;
 			container.style.top = `${currentY}px`;
 			container.style.transform = `translate(-50%, -50%) scale(${currentScale}) rotate(${currentRotation}deg)`;
+			container.style.opacity = currentScale < 0.01 ? '0' : '1';
 
 			const isAnimating =
 				Math.abs(currentX - mouseX) > 0.1 ||

@@ -1,10 +1,17 @@
 ---
-// Global 404 fallback - redirects to default locale's 404
-import Layout from '../layouts/Layout.astro';
-import Footer from '../components/Footer.astro';
-import { DEFAULT_LOCALE, useTranslations } from '../i18n';
+import Layout from '../../layouts/Layout.astro';
+import Footer from '../../components/Footer.astro';
+import { SUPPORTED_LOCALES, type Locale, useTranslations } from '../../i18n';
 
-const lang = DEFAULT_LOCALE;
+export const prerender = true;
+
+export function getStaticPaths() {
+  return SUPPORTED_LOCALES.map((lang) => ({
+    params: { lang },
+  }));
+}
+
+const { lang } = Astro.params as { lang: Locale };
 const t = useTranslations(lang);
 ---
 

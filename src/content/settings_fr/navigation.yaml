@@ -1,0 +1,18 @@
+logo: /images/logo.svg
+logoAlt: Logo Horde - Agence web Bruxelles
+items:
+  - label: Accueil
+    url: /fr
+    isExternal: false
+  - label: Méthode
+    url: '/fr/#methods-container'
+    isExternal: false
+  - label: Services
+    url: '/fr/#services-section'
+    isExternal: false
+  - label: Contact
+    url: /fr/contact
+    isExternal: false
+ctaButton:
+  label: hello@hordeagence.com
+  url: mailto:hello@hordeagence.com
