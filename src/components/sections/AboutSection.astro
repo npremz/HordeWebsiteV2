@@ -51,18 +51,21 @@ const t = useTranslations(lang);
 
 		var viewportHeight = window.innerHeight;
 		var ticking = false;
+		var useLenis = false;
+		var checkLenisInterval = null;
 
 		function updateParallax() {
-			images.forEach(function(img) {
+			for (var i = 0; i < images.length; i++) {
+				var img = images[i];
 				var rect = img.getBoundingClientRect();
-				if (rect.bottom < 0 || rect.top > viewportHeight) return;
+				if (rect.bottom < 0 || rect.top > viewportHeight) continue;
 
 				var centerOffset = rect.top + rect.height / 2 - viewportHeight / 2;
 				var speed = parseFloat(img.dataset.speed || '0.05');
 				var translateY = centerOffset * speed * -1;
 
 				img.style.transform = 'translateY(' + translateY + 'px)';
-			});
+			}
 			ticking = false;
 		}
 
@@ -73,17 +76,43 @@ const t = useTranslations(lang);
 			}
 		}
 
+		function attachLenis() {
+			if (window.lenis && !useLenis) {
+				useLenis = true;
+				window.removeEventListener('scroll', onScroll);
+				window.lenis.on('scroll', onScroll);
+				if (checkLenisInterval) clearInterval(checkLenisInterval);
+			}
+		}
+
+		function cleanup() {
+			if (useLenis && window.lenis) {
+				window.lenis.off('scroll', onScroll);
+			} else {
+				window.removeEventListener('scroll', onScroll);
+			}
+			if (checkLenisInterval) clearInterval(checkLenisInterval);
+			document.removeEventListener('astro:before-swap', cleanup);
+		}
+
 		// Initial position
 		updateParallax();
 
-		// Throttled scroll listener
-		window.addEventListener('scroll', onScroll, { passive: true });
+		// Utiliser Lenis si disponible, sinon scroll natif
+		if (window.lenis) {
+			useLenis = true;
+			window.lenis.on('scroll', onScroll);
+		} else {
+			window.addEventListener('scroll', onScroll, { passive: true });
+			// Essayer d'attacher à Lenis quand il sera prêt
+			checkLenisInterval = setInterval(attachLenis, 500);
+			setTimeout(function() {
+				if (checkLenisInterval) clearInterval(checkLenisInterval);
+			}, 5000);
+		}
 
 		// Cleanup on view transitions
-		document.addEventListener('astro:before-swap', function cleanup() {
-			window.removeEventListener('scroll', onScroll);
-			document.removeEventListener('astro:before-swap', cleanup);
-		});
+		document.addEventListener('astro:before-swap', cleanup);
 	})();
 </script>
 
