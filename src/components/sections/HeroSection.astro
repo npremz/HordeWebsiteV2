@@ -1,8 +1,10 @@
---- 
+---
 import Line from '../ui/Line.astro';
 import Wrapped from '../ui/Wrapped.astro';
+import { DEFAULT_LOCALE, type Locale, useTranslations } from '../../i18n';
 
 interface Props {
+	lang?: Locale;
 	titleLine1?: string;
 	titleLine2?: string;
 	titleLine3Prefix?: string;
@@ -10,20 +12,13 @@ interface Props {
 	scrollTarget?: string;
 }
 
-const {
-	titleLine1 = 'Nous\nconcevons',
-	titleLine2 = 'des',
-	titleLine3Prefix = 'interfaces',
-	ctaLabel = 'Notre methode',
-	scrollTarget = '#page-content',
-} = Astro.props;
+const { lang = DEFAULT_LOCALE, scrollTarget = '#page-content' } = Astro.props;
+const t = useTranslations(lang);
 
-const typewriterWords = [
-	'ultra rapides',
-	'optimisees',
-	'user friendly',
-	'soignees',
-];
+const titleLine1 = Astro.props.titleLine1 ?? t.hero.titleLine1;
+const titleLine2 = Astro.props.titleLine2 ?? t.hero.titleLine2;
+const titleLine3Prefix = Astro.props.titleLine3Prefix ?? t.hero.titleLine3Prefix;
+const typewriterWords = t.hero.typewriterWords;
 ---
 
 <section class="relative h-svh -z-9998">
@@ -31,12 +26,12 @@ const typewriterWords = [
 		<div class="hidden md:flex justify-end mb-6">
 			<div class="flex gap-8 md:gap-16 lg:gap-24 font-mono text-sm uppercase">
 				<div class="flex flex-col gap-1">
-					<span id="hero-time">MAR --:--:--</span>
-					<span id="hero-weather">BXL --° <span class="font-neuebit text-[1.75rem] inline-block leading-[0] relative -top-[-3px]">☁</span></span>
+					<span id="hero-time" data-days={JSON.stringify(t.hero.days)}>{t.hero.days[2]} --:--:--</span>
+					<span id="hero-weather" data-weather-codes={JSON.stringify(t.hero.weatherCodes)}>BXL --° <span class="font-neuebit text-[1.75rem] inline-block leading-[0] relative -top-[-3px]">☁</span></span>
 				</div>
 				<div class="flex flex-col gap-1">
-					<span>Agence Digitale</span>
-					<span>UX à Bruxelles</span>
+					<span>{t.hero.agency}</span>
+					<span>{t.hero.location}</span>
 				</div>
 			</div>
 		</div>
@@ -56,7 +51,7 @@ const typewriterWords = [
 			</svg>
 			<Line dotClass="z-9999" /> 
 			<span class="block text-right">
-				{titleLine2}<br>
+				{titleLine2}{titleLine2 && <br />}
 				{titleLine3Prefix}<br>
 				<span class="word-rotator">
 					<span class="word-rotator-inner">
@@ -74,36 +69,21 @@ const typewriterWords = [
 </section>
 
 <script>
-	const days = ['Dim', 'Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam'];
-	const weatherCodes: Record<number, [string, string]> = {
-		0: ['Ensoleillé', '☀'],
-		1: ['Peu nuageux', '⛅'],
-		2: ['Partiellement nuageux', '☁'],
-		3: ['Couvert', '☁'],
-		45: ['Brouillard', '☁'],
-		48: ['Brouillard givrant', '☁'],
-		51: ['Bruine légère', '☂'],
-		53: ['Bruine modérée', '☂'],
-		55: ['Bruine dense', '☂'],
-		61: ['Pluie légère', '☂'],
-		63: ['Pluie modérée', '☂'],
-		65: ['Pluie forte', '☂'],
-		71: ['Neige légère', '❄'],
-		73: ['Neige modérée', '❄'],
-		75: ['Neige forte', '❄'],
-		77: ['Grésil', '❄'],
-		80: ['Averses légères', '☂'],
-		81: ['Averses modérées', '☂'],
-		82: ['Averses violentes', '☂'],
-		95: ['Orage', '⚡'],
-		96: ['Orage avec grêle', '⚡'],
-		99: ['Orage violent', '⚡']
+	// Weather icons mapping (language-independent)
+	const weatherIcons: Record<number, string> = {
+		0: '☀', 1: '⛅', 2: '☁', 3: '☁',
+		45: '☁', 48: '☁',
+		51: '☂', 53: '☂', 55: '☂',
+		61: '☂', 63: '☂', 65: '☂',
+		71: '❄', 73: '❄', 75: '❄', 77: '❄',
+		80: '☂', 81: '☂', 82: '☂',
+		95: '⚡', 96: '⚡', 99: '⚡'
 	};
 
 	let timeIntervalId: number | null = null;
 	let weatherIntervalId: number | null = null;
 
-	function formatTime(date: Date) {
+	function formatTime(date: Date, days: string[]) {
 		const dayName = days[date.getDay()];
 		const hours = date.getHours().toString().padStart(2, '0');
 		const minutes = date.getMinutes().toString().padStart(2, '0');
@@ -114,13 +94,19 @@ const typewriterWords = [
 	function updateTime() {
 		const timeEl = document.getElementById('hero-time');
 		if (timeEl) {
-			timeEl.textContent = formatTime(new Date());
+			const daysData = timeEl.dataset.days;
+			const days = daysData ? JSON.parse(daysData) : ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+			timeEl.textContent = formatTime(new Date(), days);
 		}
 	}
 
 	async function fetchWeather() {
 		const weatherEl = document.getElementById('hero-weather');
 		if (!weatherEl) return;
+
+		// Parse weather codes from data attribute
+		const weatherCodesData = weatherEl.dataset.weatherCodes;
+		const weatherCodes: Record<number, string> = weatherCodesData ? JSON.parse(weatherCodesData) : {};
 
 		try {
 			const controller = new AbortController();
@@ -135,11 +121,12 @@ const typewriterWords = [
 			const data = await response.json();
 			const temp = Math.round(data.current_weather.temperature);
 			const code = data.current_weather.weathercode;
-			const weatherInfo = weatherCodes[code] || ['--', '☁'];
+			const weatherLabel = weatherCodes[code] || '--';
+			const weatherIcon = weatherIcons[code] || '☁';
 
-			weatherEl.innerHTML = `${temp}° ${weatherInfo[0]} <span class="font-neuebit text-[1.75rem] inline-block leading-[0] relative -top-[-3px]">${weatherInfo[1]}</span>`;
+			weatherEl.innerHTML = `${temp}° ${weatherLabel} <span class="font-neuebit text-[1.75rem] inline-block leading-[0] relative -top-[-3px]">${weatherIcon}</span>`;
 		} catch {
-			// Garder le placeholder en cas d'erreur - pas de console.error pour éviter le bruit
+			// Keep placeholder on error - no console.error to avoid noise
 		}
 	}
 

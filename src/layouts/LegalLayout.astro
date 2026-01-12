@@ -2,17 +2,21 @@
 import Layout from './Layout.astro';
 import Footer from '../components/Footer.astro';
 import Line from '../components/ui/Line.astro';
+import { DEFAULT_LOCALE, type Locale, useTranslations } from '../i18n';
 
 interface Props {
+  lang?: Locale;
 	title: string;
 	description: string;
   updatedAt: string;
 }
 
-const { title, description, updatedAt } = Astro.props;
+const { lang = DEFAULT_LOCALE, title, description, updatedAt } = Astro.props;
+const t = useTranslations(lang);
 ---
 
 <Layout
+  lang={lang}
   title={title}
   description={description}
 >
@@ -28,13 +32,13 @@ const { title, description, updatedAt } = Astro.props;
     <header class="mb-16 sm:mb-24 lg:mb-32">
       <div class="flex flex-col md:flex-row md:items-end justify-between gap-8">
         <div class="max-w-4xl">
-          <span class="section-label mb-8 block">Légal</span>
+          <span class="section-label mb-8 block">{t.legal.label}</span>
           <h1 class="heading-display text-4xl sm:text-6xl lg:text-7xl">
             {title}
           </h1>
         </div>
         <div class="md:text-right">
-          <p class="section-label text-lines-dark">Dernière mise à jour</p>
+          <p class="section-label text-lines-dark">{t.legal.lastUpdate}</p>
           <p class="font-mono text-xl">{updatedAt}</p>
         </div>
       </div>
@@ -47,9 +51,9 @@ const { title, description, updatedAt } = Astro.props;
         <div class="sticky top-32">
           <p class="section-label mb-8">Navigation</p>
           <ul class="space-y-4 font-mono text-sm uppercase">
-            <li><a href="/mentions-legales" class="link-hover">Mentions Légales</a></li>
-            <li><a href="/confidentialite" class="link-hover">Confidentialité</a></li>
-            <li><a href="/cookies" class="link-hover">Cookies</a></li>
+            <li><a href={`/${lang}/mentions-legales`} class="link-hover">{t.legal.mentionsLegales}</a></li>
+            <li><a href={`/${lang}/confidentialite`} class="link-hover">{t.legal.confidentialite}</a></li>
+            <li><a href={`/${lang}/cookies`} class="link-hover">{t.legal.cookies}</a></li>
           </ul>
         </div>
       </aside>
@@ -63,14 +67,14 @@ const { title, description, updatedAt } = Astro.props;
     
     <div class="mt-16 mb-32">
       <a
-        href="/"
+        href={`/${lang}`}
         class="section-label link-hover flex items-center gap-2"
       >
-        <span>←</span> Retour à l'accueil
+        <span>←</span> {t.legal.backHome}
       </a>
     </div>
   </div>
-  <Footer />
+  <Footer lang={lang} />
 </Layout>
 
 <style is:global>

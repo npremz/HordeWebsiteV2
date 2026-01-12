@@ -2,28 +2,36 @@
 import { Image } from 'astro:assets';
 import keyboardImg from '../../assets/images/keybord.jpg';
 import foundersImg from '../../assets/images/nous-opti.jpg';
+import { DEFAULT_LOCALE, type Locale, useTranslations } from '../../i18n';
+
+interface Props {
+	lang?: Locale;
+}
+
+const { lang = DEFAULT_LOCALE } = Astro.props;
+const t = useTranslations(lang);
 ---
 
-<div class="relative pb-10 sm:pb-24 border-b border-lines">
+<div class="relative pb-10 sm:pb-24 border-b border-lines overflow-hidden">
 	<svg class="hidden sm:block absolute w-full p-5 -z-9999 bottom-0" viewBox="0 0 801 1526" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="presentation">
 		<rect x="0.5" y="0.5" width="800" height="1525" rx="400" stroke="#B1B1B1"/>
 	</svg>
 	<div class="flex flex-col gap-4 max-w-162.5 lg:max-w-175 sm:gap-8">
-		<h2 class="section-label">La horde c'est quoi?</h2>
-		<p class="text-2xl sm:text-[2rem] lg:text-[2.5rem]">On est deux passionnés: un designer, un développeur. 9 ans d'expérience dans le web. Pas de prise de tête, pas de chefs de projet, pas de réunions inutiles. Juste nous deux et votre projet.</p>
+		<h2 class="section-label">{t.about.question}</h2>
+		<p class="text-2xl sm:text-[2rem] lg:text-[2.5rem]">{t.about.description}</p>
 	</div>
 	<div class="mt-10 sm:mt-16 md:mt-24 lg:mt-0 sm:flex sm:w-full sm:items-end sm:justify-end md:items-center sm:gap-16">
 		<Image
 			src={keyboardImg}
-			alt="Clavier de la Horde"
+			alt={t.about.keyboardAlt}
 			class="hidden sm:block sm:w-50 lg:w-60 sm:h-fit parallax-img"
-			data-speed="0.15"
+			data-speed="0.25"
 			loading="lazy"
 			decoding="async"
 		/>
 		<Image
 			src={foundersImg}
-			alt="Les cofondateurs de Horde Agence"
+			alt={t.about.foundersAlt}
 			class="object-contain sm:w-80 lg:w-95 xl:w-108 parallax-img"
 			data-speed="0.12"
 			loading="lazy"
@@ -36,7 +44,7 @@ import foundersImg from '../../assets/images/nous-opti.jpg';
 	(function() {
 		// Désactiver sur mobile (< 640px) et si prefers-reduced-motion
 		if (window.innerWidth < 640) return;
-		if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+		//if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
 		function updateParallax() {
 			var images = document.querySelectorAll('.parallax-img');

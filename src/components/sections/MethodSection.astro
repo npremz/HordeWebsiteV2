@@ -1,30 +1,13 @@
 ---
-const methods = [
-	{
-		number: "001",
-		eyebrow: "Comprendre avant d'agir",
-		title: "l'audit offert",
-		quote: "On se pose avec vous, on parle vrai, sans jargon technique inutile.",
-		description:
-			"Tout commence par un diagnostic. On analyse vos performances (SEO, vitesse, UX) pour identifier vos réels blocages. Vous repartez avec des réponses claires, sans engagement.",
-	},
-	{
-		number: "002",
-		eyebrow: "La performance comme standard",
-		title: "le moteur horde",
-		quote: "On s'occupe de la complexité technique pour que vous restiez concentré sur votre vision.",
-		description:
-			"On utilise notre propre architecture technique pour construire des interfaces ultra-rapides. Pas de bricolage, mais un produit robuste qui nous permet de livrer plus vite et mieux.",
-	},
-	{
-		number: "003",
-		eyebrow: "Zéro intermédiaire",
-		title: "collabo-<br>ration directe",
-		quote: "On ne gère pas un dossier. On rejoint votre équipe le temps d'une mission.",
-		description:
-			"Oubliez les chaînes de mails infinies. On travaille en direct via Slack ou WhatsApp. Vous voyez l'évolution en temps réel.",
-	},
-];
+import { DEFAULT_LOCALE, type Locale, useTranslations } from '../../i18n';
+
+interface Props {
+	lang?: Locale;
+}
+
+const { lang = DEFAULT_LOCALE } = Astro.props;
+const t = useTranslations(lang);
+const methods = t.method.methods;
 ---
 
 <div id="methods-container" class="flex flex-col pt-64 scroll-mt-[150px]">
@@ -35,16 +18,14 @@ const methods = [
 		</svg>
 
 	</div>
-	<h2 class="methods-title font-display uppercase leading-none text-4xl sm:text-[3.25rem] md:text-[4.875rem] lg:text-[6.875rem] xl:text-[7.5rem]">
-		Notre<br>Approche
-	</h2>
+	<h2 class="methods-title font-display uppercase leading-none text-4xl sm:text-[3.25rem] md:text-[4.875rem] lg:text-[6.875rem] xl:text-[7.5rem]" set:html={t.method.title.replace(/\n/g, '<br>')} />
 	<ol class="methods-stack flex flex-col mt-10 sm:mt-16 xl:mt-24">
 		{methods.map((method, index) => (
 			<li
 				class:list={[
 					'method-card',
 					index >= 1 && 'full-width-bg',
-					'py-10 sm:py-16',
+					'py-10 sm:py-16 -mt-px',
 					'relative'
 				]}
 				style={`z-index: ${methods.length - index}`}
@@ -76,14 +57,14 @@ const methods = [
 			</li>
 		))}
 	</ol>
-	<div class="full-width-bg relative z-10">
+	<div class="full-width-bg relative z-10 -mt-px">
 		<a
-			href="/contact"
-			class="group relative overflow-hidden font-mono text-[1rem] leading-none uppercase py-6 px-5 flex justify-center w-full md:w-fit md:ml-auto border border-lines bg-transparent text-black transition-colors duration-300 ease-in-out cursor-pointer"
+			href={`/${lang}/contact`}
+			class="group relative overflow-hidden font-mono text-[1rem] leading-none uppercase py-6 px-5 flex justify-center w-full md:w-fit md:ml-auto border border-lines-dark bg-transparent text-black transition-colors duration-300 ease-in-out cursor-pointer"
 		>
-			<span class="absolute inset-0 bg-black transform -translate-x-full group-hover:translate-x-0 transition-transform duration-400 ease-[cubic-bezier(0.25,0.46,0.45,0.94)]" />
+			<span class="absolute inset-0 bg-black translate-x-[calc(-100%-1px)] group-hover:translate-x-0 transition-transform duration-400 ease-[cubic-bezier(0.25,0.46,0.45,0.94)]" />
 			<span class="relative z-10 group-hover:text-bg-light transition-colors duration-300">
-				Prendre Contact
+				{t.method.contact}
 			</span>
 		</a>
 	</div>

@@ -4,12 +4,16 @@ import SEO from '../components/SEO.astro';
 import '../styles/global.css';
 import Header from '../components/Header.astro';
 import Container from '../components/ui/Container.astro';
+import { DEFAULT_LOCALE, type Locale, useTranslations } from '../i18n';
 
 // Preload critical fonts
 import fontDisplay from '../assets/fonts/PPNeueMachina-Light.woff2';
 import fontBody from '../assets/fonts/PPNeueMontreal-Regular.woff2';
 
 interface Props {
+  // i18n
+  lang?: Locale;
+
   // SEO props
   title: string;
   description: string;
@@ -31,6 +35,7 @@ interface Props {
 }
 
 const {
+  lang = DEFAULT_LOCALE,
   title,
   description,
   robots,
@@ -48,24 +53,10 @@ const {
   headerVariant,
 } = Astro.props;
 
+const t = useTranslations(lang);
 const isDark = variant === 'dark';
 const bodyClasses = isDark ? 'bg-black text-bg-light' : 'bg-bg text-black';
 const finalHeaderVariant = headerVariant ?? variant;
-
-// Get locale from site settings for lang attribute
-let lang = 'fr';
-try {
-  const reader = await import('../../keystatic.config').then(async (mod) => {
-    const { createReader } = await import('@keystatic/core/reader');
-    return createReader({ config: mod.default });
-  });
-  const settings = await reader.singletons.siteSettings.read();
-  if (settings?.locale) {
-    lang = settings.locale.split('_')[0];
-  }
-} catch {
-  // Use default lang
-}
 ---
 
 <!doctype html>
@@ -76,6 +67,7 @@ try {
     <link rel="preload" href={fontBody} as="font" type="font/woff2" crossorigin />
 
     <SEO
+      lang={lang}
       title={title}
       description={description}
       robots={robots}
@@ -92,9 +84,9 @@ try {
     <ClientRouter />
   </head>
   <body class={`${bodyClasses} ${className || ''}`}>
-    <a href="#main-content" class="skip-link">Aller au contenu principal</a>
+    <a href="#main-content" class="skip-link">{t.a11y.skipToContent}</a>
 
-    <Header variant={finalHeaderVariant} />
+    <Header lang={lang} variant={finalHeaderVariant} />
     <Container variant={variant}>
       <main id="main-content">
         <slot />

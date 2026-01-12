@@ -1,0 +1,70 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import BackgroundCanvas from "../../components/ui/BackgroundCanvas.astro";
+import HeroSection from "../../components/sections/HeroSection.astro";
+import MethodSection from "../../components/sections/MethodSection.astro";
+import ProjectSection from "../../components/sections/ProjectSection.astro";
+import ServiceSection from "../../components/sections/ServiceSection.astro";
+import Footer from "../../components/Footer.astro";
+import AboutSection from "../../components/sections/AboutSection.astro";
+import { SUPPORTED_LOCALES, type Locale, useTranslations } from "../../i18n";
+import { createReader } from "@keystatic/core/reader";
+import keystaticConfig from "../../../keystatic.config";
+
+export const prerender = true;
+
+export function getStaticPaths() {
+  return SUPPORTED_LOCALES.map((lang) => ({
+    params: { lang },
+  }));
+}
+
+const { lang } = Astro.params as { lang: Locale };
+const t = useTranslations(lang);
+
+const reader = createReader(process.cwd(), keystaticConfig);
+const siteSettings = await reader.singletons[`siteSettings_${lang}`]?.read();
+
+const title = siteSettings?.homepageTitle || "Horde";
+const description =
+  siteSettings?.defaultDescription ||
+  (lang === 'fr' ? "Agence web spécialisée en performance et UX." : "Web agency specialized in performance and UX.");
+---
+
+<Layout
+  lang={lang}
+  title={title}
+  description={description}
+  siteNameAsPrefix={true}
+>
+  <BackgroundCanvas triggerDistance={500} topOffset={900} bottomOffset={1400} stopTargetId="method-transition">
+  </BackgroundCanvas>
+
+  <HeroSection
+    lang={lang}
+    titleLine1={t.hero.titleLine1}
+    titleLine2={t.hero.titleLine2}
+    titleLine3Prefix={t.hero.titleLine3Prefix}
+    ctaLabel={t.hero.ctaLabel}
+  />
+
+  <div id="page-content">
+    <section class="pt-64">
+      <MethodSection lang={lang} />
+    </section>
+  </div>
+  <div id="white-section" class="full-width-bg">
+    <section id="services-section" class="pt-24 sm:pt-32 lg:pt-96">
+      <ServiceSection lang={lang} />
+    </section>
+  </div>
+  <div id="projects-section" class="full-width-bg bg-bg-light">
+    <section class="py-24 sm:py-32 lg:py-48">
+      <ProjectSection lang={lang} />
+    </section>
+  </div>
+  <section class="pt-24 sm:pt-32 lg:pt-48">
+    <AboutSection lang={lang} />
+  </section>
+  <Footer lang={lang} />
+</Layout>

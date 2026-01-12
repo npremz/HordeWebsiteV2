@@ -1,0 +1,22 @@
+description: Digital UX & Performance Agency in Brussels
+columns:
+  - title: CTAs
+    links:
+      - label: hello@hordeagence.com
+        url: mailto:hello@hordeagence.com
+        isExternal: true
+      - label: Book a call
+        url: https://calendly.com/ni-premont/30min
+        isExternal: true
+      - label: Linkedin
+        url: https://www.linkedin.com/company/horde-agence/
+        isExternal: true
+socialLinks: []
+copyright: ©2026 Horde Agency
+legalLinks:
+  - label: Cookie Policy
+    url: /en/cookies
+  - label: Privacy
+    url: /en/confidentialite
+  - label: Legal Notices
+    url: /en/mentions-legales

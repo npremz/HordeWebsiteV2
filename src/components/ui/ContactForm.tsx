@@ -15,7 +15,34 @@ interface FormErrors {
   email?: string;
 }
 
-export default function ContactForm() {
+interface FormTranslations {
+  needLabel: string;
+  objectifLabel: string;
+  objectifPlaceholder: string;
+  nameLabel: string;
+  namePlaceholder: string;
+  emailLabel: string;
+  companyLabel: string;
+  companyPlaceholder: string;
+  submit: string;
+  submitting: string;
+  successMessage: string;
+  errorMessage: string;
+  requiredField: string;
+  invalidEmail: string;
+  options: {
+    auditPerformance: string;
+    optimisationRefonte: string;
+    fromScratchMvp: string;
+    autre: string;
+  };
+}
+
+interface ContactFormProps {
+  translations: FormTranslations;
+}
+
+export default function ContactForm({ translations: t }: ContactFormProps) {
   const [formData, setFormData] = useState<FormData>({
     besoin: '',
     objectif: '',
@@ -29,31 +56,31 @@ export default function ContactForm() {
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
 
   const besoinOptions = [
-    { value: 'audit-performance', label: 'Audit & performance' },
-    { value: 'optimisation-refonte', label: 'Optimisation & refonte' },
-    { value: 'from-scratch-mvp', label: 'From scratch & MVP' },
-    { value: 'autre', label: 'Autre' },
+    { value: 'audit-performance', label: t.options.auditPerformance },
+    { value: 'optimisation-refonte', label: t.options.optimisationRefonte },
+    { value: 'from-scratch-mvp', label: t.options.fromScratchMvp },
+    { value: 'autre', label: t.options.autre },
   ];
 
   const validateForm = (): boolean => {
     const newErrors: FormErrors = {};
 
     if (!formData.besoin) {
-      newErrors.besoin = 'Ce champ est obligatoire';
+      newErrors.besoin = t.requiredField;
     }
 
     if (!formData.objectif.trim()) {
-      newErrors.objectif = 'Ce champ est obligatoire';
+      newErrors.objectif = t.requiredField;
     }
 
     if (!formData.nom.trim()) {
-      newErrors.nom = 'Ce champ est obligatoire';
+      newErrors.nom = t.requiredField;
     }
 
     if (!formData.email.trim()) {
-      newErrors.email = 'Ce champ est obligatoire';
+      newErrors.email = t.requiredField;
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-      newErrors.email = 'Adresse email invalide';
+      newErrors.email = t.invalidEmail;
     }
 
     setErrors(newErrors);
@@ -110,7 +137,7 @@ export default function ContactForm() {
       <fieldset className='flex flex-col gap-5 '>
         <div className='relative flex flex-col md:flex-row gap-5 md:gap-16 lg:gap-32 md:items-center w-full'>
           <legend className='section-label block md:w-36 md:shrink-0 relative'>
-            J'ai besoin de<span aria-hidden="true">*</span>
+            {t.needLabel}<span aria-hidden="true">*</span>
           </legend>
           <div className="w-full flex flex-wrap gap-[1.25rem] lg:gap-[2.5rem] mt-5 border-b pb-5 md:pb-10 border-lines-dark">
             {besoinOptions.map((option) => (
@@ -141,7 +168,7 @@ export default function ContactForm() {
 
       <div className='flex flex-col md:flex-row md:items-center md:gap-16 lg:gap-32 gap-2.5 sm:gap-5 '>
         <label htmlFor="objectif" className='section-label block md:w-36 md:shrink-0 relative'>
-          Objectif<span aria-hidden="true">*</span>
+          {t.objectifLabel}<span aria-hidden="true">*</span>
           {errors.objectif && (
             <span id="objectif-error" role="alert" className="sm:hidden text-err absolute right-0 top-0">{errors.objectif}</span>
           )}
@@ -155,7 +182,7 @@ export default function ContactForm() {
                 ? 'border-b-err placeholder:text-err'
                 : 'border-lines-dark focus:border-b-lines'
               }`}
-            placeholder='Ce que vous avez en tête...'
+            placeholder={t.objectifPlaceholder}
             value={formData.objectif}
             onChange={(e) => {
               handleChange('objectif', e.target.value);
@@ -176,7 +203,7 @@ export default function ContactForm() {
 
       <div className='flex flex-col md:flex-row md:items-center md:gap-16 lg:gap-32 gap-2.5 sm:gap-5 '>
         <label htmlFor="nom" className='section-label block md:w-36 md:shrink-0 relative'>
-          Nom<span aria-hidden="true">*</span>
+          {t.nameLabel}<span aria-hidden="true">*</span>
           {errors.nom && (
             <span className="sm:hidden text-err absolute right-0 top-0">{errors.nom}</span>
           )}
@@ -190,7 +217,7 @@ export default function ContactForm() {
                 ? 'border-b-err placeholder:text-err'
                 : 'border-lines-dark focus:border-b-lines'
               }`}
-            placeholder="Un autographe, s'il vous plaît"
+            placeholder={t.namePlaceholder}
             value={formData.nom}
             onChange={(e) => handleChange('nom', e.target.value)}
             aria-required="true"
@@ -207,7 +234,7 @@ export default function ContactForm() {
 
       <div className='flex flex-col md:flex-row md:items-center md:gap-16 lg:gap-32 gap-2.5 sm:gap-5 '>
         <label htmlFor="email" className='section-label block md:w-36 md:shrink-0 relative'>
-          Email<span aria-hidden="true">*</span>
+          {t.emailLabel}<span aria-hidden="true">*</span>
           {errors.email && (
             <span className="sm:hidden text-err absolute right-0 top-0">{errors.email}</span>
           )}
@@ -237,13 +264,13 @@ export default function ContactForm() {
       </div>
 
       <div className='flex flex-col md:flex-row md:items-center md:gap-16 lg:gap-32 gap-2.5 sm:gap-5 '>
-        <label htmlFor="societe" className='section-label block md:w-36 md:shrink-0'>Société</label>
+        <label htmlFor="societe" className='section-label block md:w-36 md:shrink-0'>{t.companyLabel}</label>
         <input
           type="text"
           id="societe"
           name="societe"
           className='py-5 xl:py-8 flex-1 text-2xl sm:text-[2rem] lg:text-[2.5rem] border-lines-dark border-b bg-transparent focus:outline-none focus-visible:outline-none focus:border-b-lines transition-colors'
-          placeholder='Nom de société'
+          placeholder={t.companyPlaceholder}
           value={formData.societe}
           onChange={(e) => handleChange('societe', e.target.value)}
         />
@@ -252,16 +279,16 @@ export default function ContactForm() {
       <div className='flex flex-col md:flex-row md:gap-16 lg:gap-32 md:justify-end'>
         <button type="submit" disabled={isSubmitting} className='group relative overflow-hidden mt-5 sm:mt-10 xl:mt-16 uppercase font-mono text-[1rem] leading-[0.6] py-6 px-5 flex justify-center w-full md:w-fit border border-bg-light bg-transparent text-bg-light transition-colors duration-300 ease-in-out cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed self-center md:self-end hover:text-black'>
           <span className='absolute inset-0 bg-bg-light transform -translate-x-full group-hover:translate-x-0 transition-transform duration-400 ease-[cubic-bezier(0.25,0.46,0.45,0.94)]'></span>
-          <span className='relative z-10'>{isSubmitting ? 'Envoi en cours...' : 'Transmettre'}</span>
+          <span className='relative z-10'>{isSubmitting ? t.submitting : t.submit}</span>
         </button>
       </div>
 
       {submitStatus === 'success' && (
-        <p role="status">Message envoye avec succes !</p>
+        <p role="status">{t.successMessage}</p>
       )}
 
       {submitStatus === 'error' && (
-        <p role="alert">Une erreur est survenue. Veuillez reessayer.</p>
+        <p role="alert">{t.errorMessage}</p>
       )}
     </form>
   );

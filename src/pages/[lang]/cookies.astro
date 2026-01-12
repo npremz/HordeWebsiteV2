@@ -1,0 +1,103 @@
+---
+import LegalLayout from '../../layouts/LegalLayout.astro';
+import { SUPPORTED_LOCALES, type Locale } from '../../i18n';
+
+export const prerender = true;
+
+export function getStaticPaths() {
+  return SUPPORTED_LOCALES.map((lang) => ({
+    params: { lang },
+  }));
+}
+
+const { lang } = Astro.params as { lang: Locale };
+---
+
+<LegalLayout
+  lang={lang}
+  title={lang === 'fr' ? 'Politique des cookies' : 'Cookie Policy'}
+  description={lang === 'fr'
+    ? "Politique d'utilisation des cookies sur le site Horde Agence."
+    : "Cookie usage policy on the Horde Agency website."}
+  updatedAt={lang === 'fr' ? 'Janvier 2025' : 'January 2025'}
+>
+  {lang === 'fr' ? (
+    <>
+      <section>
+        <h2>Qu'est-ce qu'un cookie ?</h2>
+        <p>
+          Un cookie est un petit fichier texte stocké sur votre appareil (ordinateur, tablette, smartphone)
+          lorsque vous visitez un site web. Les cookies permettent au site de mémoriser vos actions et
+          préférences pendant une période donnée.
+        </p>
+      </section>
+
+      <section>
+        <h2>Cookies que nous utilisons</h2>
+        <h3>Cookies essentiels</h3>
+        <p>
+          Ces cookies sont nécessaires au fonctionnement du site. Ils vous permettent de naviguer
+          et d'utiliser les fonctionnalités de base.
+        </p>
+        <h3>Cookies analytiques</h3>
+        <p>
+          Nous utilisons des cookies analytiques pour comprendre comment les visiteurs interagissent avec
+          notre site. Les données collectées sont anonymes.
+        </p>
+      </section>
+
+      <section>
+        <h2>Gestion des cookies</h2>
+        <p>
+          Vous pouvez contrôler et/ou supprimer les cookies comme vous le souhaitez dans les paramètres de votre navigateur.
+        </p>
+      </section>
+
+      <section>
+        <h2>Contact</h2>
+        <p>
+          Pour toute question, contactez-nous à <a href="mailto:hello@hordeagence.com">hello@hordeagence.com</a>.
+        </p>
+      </section>
+    </>
+  ) : (
+    <>
+      <section>
+        <h2>What is a cookie?</h2>
+        <p>
+          A cookie is a small text file stored on your device (computer, tablet, smartphone)
+          when you visit a website. Cookies allow the site to remember your actions and
+          preferences for a given period.
+        </p>
+      </section>
+
+      <section>
+        <h2>Cookies we use</h2>
+        <h3>Essential cookies</h3>
+        <p>
+          These cookies are necessary for the site to function. They allow you to navigate
+          and use basic features.
+        </p>
+        <h3>Analytical cookies</h3>
+        <p>
+          We use analytical cookies to understand how visitors interact with our site.
+          The data collected is anonymous.
+        </p>
+      </section>
+
+      <section>
+        <h2>Managing cookies</h2>
+        <p>
+          You can control and/or delete cookies as you wish in your browser settings.
+        </p>
+      </section>
+
+      <section>
+        <h2>Contact</h2>
+        <p>
+          For any questions, contact us at <a href="mailto:hello@hordeagence.com">hello@hordeagence.com</a>.
+        </p>
+      </section>
+    </>
+  )}
+</LegalLayout>
