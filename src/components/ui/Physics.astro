@@ -102,8 +102,8 @@ const { class: className = '', dark: dark = false } = Astro.props;
   }
 
   .physics-cta {
-    position: fixed;
-    z-index: 9999;
+    position: absolute;
+    z-index: 100;
     padding: 0.75rem 1.5rem;
     background: var(--color-black);
     color: var(--color-bg-light);
@@ -205,8 +205,12 @@ const { class: className = '', dark: dark = false } = Astro.props;
   }
 
   function updateCTAPosition(e: MouseEvent) {
-    mouseX = e.clientX;
-    mouseY = e.clientY;
+    const container = document.getElementById('physics-container');
+    if (!container) return;
+
+    const rect = container.getBoundingClientRect();
+    mouseX = e.clientX - rect.left;
+    mouseY = e.clientY - rect.top;
 
     if (ctaVisible) {
       const cta = document.getElementById('physics-cta');
@@ -575,38 +579,9 @@ const { class: className = '', dark: dark = false } = Astro.props;
       letter.style.height = `${letterHeight}px`;
     });
 
-    // Boucle de rendu avec frame-skipping adaptatif
-    const TARGET_FRAME_TIME = 1000 / 60; // 16.67ms pour 60fps
-    const MAX_DELTA = 50; // Skip si frame > 50ms (20fps)
-    let lastTime = performance.now();
-    let accumulator = 0;
-
-    function update(currentTime: number) {
-      const delta = currentTime - lastTime;
-      lastTime = currentTime;
-
-      // Frame-skipping: si trop lent, ne pas accumuler de retard
-      if (delta > MAX_DELTA) {
-        // Device trop lent, on skip cette frame pour éviter l'accumulation
-        animationFrameId = requestAnimationFrame(update);
-        return;
-      }
-
-      // Accumulate time et update physics à pas fixe
-      accumulator += delta;
-
-      // Limiter les updates physics par frame pour éviter spiral of death
-      let updates = 0;
-      while (accumulator >= TARGET_FRAME_TIME && updates < 2) {
-        Engine.update(engine, TARGET_FRAME_TIME);
-        accumulator -= TARGET_FRAME_TIME;
-        updates++;
-      }
-
-      // Si on a trop de retard, reset l'accumulator
-      if (accumulator > TARGET_FRAME_TIME * 2) {
-        accumulator = 0;
-      }
+    // Boucle de rendu
+    function update() {
+      Engine.update(engine, 1000 / 60);
 
       // DEBUG: Dessiner les hitboxes
       if (DEBUG && debugCtx && debugCanvas) {
@@ -642,7 +617,6 @@ const { class: className = '', dark: dark = false } = Astro.props;
         });
       }
 
-      // Rendu visuel (toujours, même si physics skipped)
       bodies.forEach((body, index) => {
         const letter = letters[index];
         const dim = dimensions[index];
@@ -669,8 +643,7 @@ const { class: className = '', dark: dark = false } = Astro.props;
       animationFrameId = requestAnimationFrame(update);
     }
 
-    // Démarrer avec le timestamp actuel
-    animationFrameId = requestAnimationFrame(update);
+    update();
   }
 
   // Observer pour déclencher quand le container est visible
