@@ -63,25 +63,37 @@ const email = 'hello@hordeagence.com';
         />
       </a>
 
-      <!-- Menu button -->
-      <button
-        type="button"
-        id="menu-toggle-new"
-        class="flex-center gap-4 cursor-pointer"
-        aria-expanded="false"
-        aria-controls="menu-panel"
-        aria-label={t.nav.openMenu}
-        data-open-label={t.nav.openMenu}
-        data-close-label={t.nav.closeMenu}
-        data-menu-text={t.nav.menu}
-        data-close-text={t.nav.close}
-      >
-        <span id="menu-label-new" class="text-[1.375rem]">{t.nav.menu}</span>
-        <div class="flex flex-col justify-center gap-2 w-[36px] h-4" aria-hidden="true">
-          <span class="burger-line block w-full h-px bg-[#9C9C9C] transition-all duration-300 ease-out origin-center"></span>
-          <span class="burger-line block w-full h-px bg-[#9C9C9C] transition-all duration-300 ease-out origin-center"></span>
-        </div>
-      </button>
+      <div class="flex-center gap-17.5">
+        <!-- Start project link (md+) -->
+        <a
+          href={`/${lang}/contact`}
+          id="header-start-project"
+          class="hidden md:block text-[1.375rem]"
+          data-text={t.nav.startProject}
+        >
+          <span class="nav-scramble-header">{t.nav.startProject}</span>
+        </a>
+
+        <!-- Menu button -->
+        <button
+          type="button"
+          id="menu-toggle-new"
+          class="flex-center gap-4 cursor-pointer"
+          aria-expanded="false"
+          aria-controls="menu-panel"
+          aria-label={t.nav.openMenu}
+          data-open-label={t.nav.openMenu}
+          data-close-label={t.nav.closeMenu}
+          data-menu-text={t.nav.menu}
+          data-close-text={t.nav.close}
+        >
+          <span id="menu-label-new" class="text-[1.375rem]">{t.nav.menu}</span>
+          <div class="flex flex-col justify-center gap-2 w-[36px] h-4" aria-hidden="true">
+            <span class="burger-line block w-full h-px bg-[#9C9C9C] transition-all duration-300 ease-out origin-center"></span>
+            <span class="burger-line block w-full h-px bg-[#9C9C9C] transition-all duration-300 ease-out origin-center"></span>
+          </div>
+        </button>
+      </div>
     </div>
   </div>
 
@@ -298,6 +310,16 @@ const email = 'hello@hordeagence.com';
         const text = (link as HTMLElement).dataset.text || link.textContent || '';
         scrambleNavLink(link as HTMLElement, text);
       });
+    });
+
+    // Hover effect on header start project link
+    const headerStartProject = document.getElementById('header-start-project');
+    const headerStartProjectText = headerStartProject?.querySelector('.nav-scramble-header');
+    headerStartProject?.addEventListener('mouseenter', () => {
+      if (headerStartProjectText) {
+        const text = headerStartProject.dataset.text || headerStartProjectText.textContent || '';
+        scrambleNavLink(headerStartProjectText as HTMLElement, text);
+      }
     });
 
     function openMenu() {
