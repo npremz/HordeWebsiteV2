@@ -36,7 +36,7 @@ const projects = [
 		<h2 set:html={t.projects.title.replace(/\n/g, '<br>')} />
 		<span class="block">({String(projects.length).padStart(2, '0')})</span>
 	</div>
-	<a href={`/${lang}/projects`} class="section-label text-[1rem] leading-none self-end mt-10 sm:mt-0 lg:-mt-[1lh]"><Wrapped>{t.projects.otherProjects} →</Wrapped></a>
+	<a href={`/${lang}/projects`} class="hidden section-label text-[1rem] leading-none self-end mt-10 sm:mt-0 lg:-mt-[1lh]"><Wrapped>{t.projects.otherProjects} →</Wrapped></a>
 
 	<!-- Image flottante qui suit la souris -->
 	<div id="project-hover-image" class="pointer-events-none fixed z-50 overflow-visible" style="transform: translate(-50%, -50%) scale(0); will-change: transform;">
