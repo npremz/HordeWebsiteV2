@@ -8,3 +8,8 @@ services:
     environment:
       - PORT=${PORT:-4328}
       - RESEND_API_KEY=${RESEND_API_KEY}
+    labels:
+      - "traefik.http.middlewares.hordev2-redirect-root.redirectregex.regex=^(https?://[^/]+)/?$$"
+      - "traefik.http.middlewares.hordev2-redirect-root.redirectregex.replacement=$${1}/fr"
+      - "traefik.http.middlewares.hordev2-redirect-root.redirectregex.permanent=false"
+      - "traefik.http.routers.hordev2.middlewares=hordev2-redirect-root"
