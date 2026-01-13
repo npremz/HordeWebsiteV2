@@ -165,7 +165,7 @@ body {
 
   /* Section headers - monospace uppercase labels */
   .section-label {
-    @apply font-mono text-sm uppercase;
+    @apply font-mono text-[1rem] uppercase;
   }
 
   /* Display headings - large decorative titles */
