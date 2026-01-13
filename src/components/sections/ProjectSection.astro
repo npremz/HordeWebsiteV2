@@ -34,7 +34,7 @@ const projects = [
 <div class="flex flex-col">
 	<div class="flex font-display gap-4 leading-none items-end text-[1.625rem] sm:text-[2.5rem] md:text-[4rem] uppercase">
 		<h2 set:html={t.projects.title.replace(/\n/g, '<br>')} />
-		<span class="block font-mono text-[1rem] uppercase -translate-y-2">({String(projects.length).padStart(2, '0')})</span>
+		<span class="block font-mono text-[1rem] uppercase -translate-y-1 md:-translate-y-2">({String(projects.length).padStart(2, '0')})</span>
 	</div>
 	<a href={`/${lang}/projects`} class="hidden section-label text-[1rem] leading-none self-end mt-10 sm:mt-0 lg:-mt-[1lh]"><Wrapped>{t.projects.otherProjects} →</Wrapped></a>
 
