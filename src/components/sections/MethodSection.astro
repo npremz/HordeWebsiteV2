@@ -12,12 +12,15 @@ const methods = t.method.methods;
 
 <div id="methods-container" class="flex flex-col pt-64 scroll-mt-[150px]">
 	<!-- SVG flottant qui suit la souris -->
-	<div id="methods-hover-svg" class="pointer-events-none fixed z-50 overflow-visible" style="transform: translate(-50%, -50%) scale(0) rotate(-180deg); will-change: transform;">
+	<div id="methods-hover-svg" class="pointer-events-none fixed z-[200] overflow-visible" style="transform: translate(-50%, -50%) scale(0) rotate(-180deg); will-change: transform;">
 		<svg class="overflow-visible min-w-[500px] min-h-[500px]" width="516" height="516" viewBox="0 0 516 516" fill="none" xmlns="http://www.w3.org/2000/svg">
 			<path d="M7.96289 3.53809H507.845V0.000976562H515.808V7.96289H511.935V507.846H515.808V515.809H507.845V511.91H7.96289V515.808H0V507.845H3.5625V7.96289H0V0H7.96289V3.53809ZM7.96289 7.96289H4.5625V507.845H7.96289V510.91H507.845V507.846H510.935V7.96289H507.845V4.53809H7.96289V7.96289ZM259.018 16.2969C391.479 17.136 498.601 124.776 498.601 257.436L498.596 258.995C497.757 391.457 390.117 498.578 257.458 498.578L255.898 498.573C123.956 497.738 17.1551 390.938 16.3193 258.995L16.3145 257.436C16.3145 124.256 124.278 16.292 257.458 16.292L259.018 16.2969ZM257.458 17.292C124.831 17.292 17.3145 124.808 17.3145 257.436C17.3146 390.063 124.831 497.578 257.458 497.578C390.085 497.578 497.6 390.063 497.601 257.436C497.601 124.808 390.085 17.2921 257.458 17.292ZM267.667 249.373L264.417 252.623C265.544 254.053 266.194 255.874 266.194 257.78C266.194 259.774 265.587 261.593 264.547 263.066L267.667 266.187L265.761 268.05L262.641 264.974C261.167 266.1 259.304 266.75 257.268 266.75C255.274 266.75 253.498 266.1 252.024 264.974L248.947 268.05L247.084 266.187L250.204 263.066C249.121 261.55 248.514 259.73 248.514 257.78C248.514 255.83 249.164 254.053 250.291 252.58L247.084 249.373L248.947 247.467L252.197 250.717C253.627 249.677 255.404 249.07 257.268 249.07C259.217 249.07 261.037 249.677 262.511 250.717L265.761 247.467L267.667 249.373ZM257.268 251.627C253.931 251.627 251.07 254.444 251.07 257.78C251.07 261.377 253.888 264.193 257.268 264.193C260.777 264.193 263.638 261.377 263.638 257.78C263.638 254.444 260.777 251.627 257.268 251.627Z" fill="#B1B1B1"/>
 		</svg>
 	</div>
-	<h2 class="methods-title font-display uppercase leading-none text-4xl sm:text-[3.25rem] md:text-[4.875rem] lg:text-[6.875rem] xl:text-[7.5rem]" set:html={t.method.title.replace(/\n/g, '<br>')} />
+	<div class="flex justify-between items-end">
+		<h2 class="methods-title font-display uppercase leading-none text-4xl sm:text-[3.25rem] md:text-[4.875rem] lg:text-[6.875rem] xl:text-[7.5rem]" set:html={t.method.title.replace(/\n/g, '<br>')} />
+		<div class="font-display text-[1.625rem] sm:text-[2.5rem] md:text-[4rem]">(↓)</div>
+	</div>
 	<ol class="methods-stack flex flex-col mt-10 sm:mt-16 xl:mt-24">
 		{methods.map((method, index) => (
 			<li
@@ -56,7 +59,7 @@ const methods = t.method.methods;
 			</li>
 		))}
 	</ol>
-	<div class="full-width-bg relative z-[100] -mt-px">
+	<div class="full-width-bg relative z-[100] -mt-px flex">
 		<a
 			href={`/${lang}/contact`}
 			class="group relative overflow-hidden font-mono text-[1rem] leading-none uppercase py-6 px-5 flex justify-center w-full md:w-fit md:ml-auto border border-lines-dark bg-transparent text-black transition-colors duration-300 ease-in-out cursor-pointer"
@@ -138,6 +141,7 @@ const methods = t.method.methods;
 					}
 				}
 			});
+
 		}
 
 		// Écouter le scroll

@@ -21,18 +21,12 @@ const services = t.services.items;
           <div class="service-item border-b border-lines last:border-b-0 transition-colors duration-300">
             <button
               type="button"
-              class:list={[
-                "service-trigger w-full flex justify-between py-10 sm:py-16 text-left cursor-pointer group",
-                index % 2 === 1 && "flex-row-reverse",
-              ]}
+              class="service-trigger w-full flex justify-between py-10 sm:py-16 text-left cursor-pointer group"
               aria-expanded="false"
               aria-controls={`service-content-${index}`}
             >
               <span
-                class:list={[
-                  "service-title font-display uppercase leading-none text-[1.625rem] sm:text-[2.5rem] md:text-[4rem] transition-opacity",
-                  index % 2 === 1 && "text-right",
-                ]}
+                class="service-title font-display uppercase leading-none text-[1.625rem] sm:text-[2.5rem] md:text-[4rem] transition-opacity"
                 data-text={service.title}
                 set:html={service.title}
               />
