@@ -1,4 +1,5 @@
-import { useState, type FormEvent } from 'react';
+import { useState } from 'preact/hooks';
+import type { JSX } from 'preact';
 
 interface FormData {
   besoin: string;
@@ -87,7 +88,7 @@ export default function ContactForm({ translations: t }: ContactFormProps) {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = async (e: FormEvent) => {
+  const handleSubmit = async (e: JSX.TargetedEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (!validateForm()) {

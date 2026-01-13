@@ -16,7 +16,7 @@ const t = useTranslations(lang);
 	<svg class="hidden sm:block absolute w-full p-5 -z-9999 bottom-0" viewBox="0 0 801 1526" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="presentation">
 		<rect x="0.5" y="0.5" width="800" height="1525" rx="400" stroke="#B1B1B1"/>
 	</svg>
-	<div class="flex flex-col gap-4 max-w-162.5 lg:max-w-175 sm:gap-8">
+	<div class="pt-24 sm:pt-32 lg:pt-48 flex flex-col gap-4 max-w-162.5 lg:max-w-175 sm:gap-8">
 		<h2 class="section-label">{t.about.question}</h2>
 		<p class="text-2xl sm:text-[2rem] lg:text-[2.5rem]">{t.about.description}</p>
 	</div>
@@ -46,25 +46,73 @@ const t = useTranslations(lang);
 		if (window.innerWidth < 640) return;
 		//if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
-		function updateParallax() {
-			var images = document.querySelectorAll('.parallax-img');
-			var viewportHeight = window.innerHeight;
+		var images = document.querySelectorAll('.parallax-img');
+		if (!images.length) return;
 
-			images.forEach(function(img) {
+		var viewportHeight = window.innerHeight;
+		var ticking = false;
+		var useLenis = false;
+		var checkLenisInterval = null;
+
+		function updateParallax() {
+			for (var i = 0; i < images.length; i++) {
+				var img = images[i];
 				var rect = img.getBoundingClientRect();
-				if (rect.bottom < 0 || rect.top > viewportHeight) return;
+				if (rect.bottom < 0 || rect.top > viewportHeight) continue;
 
 				var centerOffset = rect.top + rect.height / 2 - viewportHeight / 2;
 				var speed = parseFloat(img.dataset.speed || '0.05');
 				var translateY = centerOffset * speed * -1;
 
 				img.style.transform = 'translateY(' + translateY + 'px)';
-			});
-
-			requestAnimationFrame(updateParallax);
+			}
+			ticking = false;
 		}
 
-		requestAnimationFrame(updateParallax);
+		function onScroll() {
+			if (!ticking) {
+				requestAnimationFrame(updateParallax);
+				ticking = true;
+			}
+		}
+
+		function attachLenis() {
+			if (window.lenis && !useLenis) {
+				useLenis = true;
+				window.removeEventListener('scroll', onScroll);
+				window.lenis.on('scroll', onScroll);
+				if (checkLenisInterval) clearInterval(checkLenisInterval);
+			}
+		}
+
+		function cleanup() {
+			if (useLenis && window.lenis) {
+				window.lenis.off('scroll', onScroll);
+			} else {
+				window.removeEventListener('scroll', onScroll);
+			}
+			if (checkLenisInterval) clearInterval(checkLenisInterval);
+			document.removeEventListener('astro:before-swap', cleanup);
+		}
+
+		// Initial position
+		updateParallax();
+
+		// Utiliser Lenis si disponible, sinon scroll natif
+		if (window.lenis) {
+			useLenis = true;
+			window.lenis.on('scroll', onScroll);
+		} else {
+			window.addEventListener('scroll', onScroll, { passive: true });
+			// Essayer d'attacher à Lenis quand il sera prêt
+			checkLenisInterval = setInterval(attachLenis, 500);
+			setTimeout(function() {
+				if (checkLenisInterval) clearInterval(checkLenisInterval);
+			}, 5000);
+		}
+
+		// Cleanup on view transitions
+		document.addEventListener('astro:before-swap', cleanup);
 	})();
 </script>
 

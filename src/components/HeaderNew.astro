@@ -44,11 +44,11 @@ const email = 'hello@hordeagence.com';
 
 <header
   id="header-new"
-  class="header-new fixed z-9999999 top-0 left-0 right-0 pt-(--gutter) sm:pt-5 px-(--gutter) lg:px-0 transition-transform duration-400 ease-[cubic-bezier(0.16,1,0.3,1)]"
+  class="header-new fixed z-9999999 top-0 left-0 right-0 md:max-w-[1350px] md:mx-auto pt-(--gutter) sm:pt-4 px-(--gutter) lg:px-0 transition-transform duration-400 ease-[cubic-bezier(0.16,1,0.3,1)] pointer-events-none"
   data-state="visible"
 >
   <!-- Header bar -->
-  <div class="header-bar max-w-[1350px] mx-auto bg-black border border-lines-dark text-bg-light px-5 py-4 md:px-6 md:py-5">
+  <div class="header-bar max-w-[1350px] mx-auto bg-black border border-lines-dark text-bg-light px-5 py-4 md:px-6 md:py-5 pointer-events-auto">
     <div class="flex-between">
       <!-- Logo -->
       <a href={`/${lang}`} class="block">
@@ -63,32 +63,44 @@ const email = 'hello@hordeagence.com';
         />
       </a>
 
-      <!-- Menu button -->
-      <button
-        type="button"
-        id="menu-toggle-new"
-        class="flex-center gap-4 cursor-pointer"
-        aria-expanded="false"
-        aria-controls="menu-panel"
-        aria-label={t.nav.openMenu}
-        data-open-label={t.nav.openMenu}
-        data-close-label={t.nav.closeMenu}
-        data-menu-text={t.nav.menu}
-        data-close-text={t.nav.close}
-      >
-        <span id="menu-label-new" class="text-[1.375rem]">{t.nav.menu}</span>
-        <div class="flex flex-col justify-center gap-2 w-[36px] h-4" aria-hidden="true">
-          <span class="burger-line block w-full h-px bg-[#9C9C9C] transition-all duration-300 ease-out origin-center"></span>
-          <span class="burger-line block w-full h-px bg-[#9C9C9C] transition-all duration-300 ease-out origin-center"></span>
-        </div>
-      </button>
+      <div class="flex-center gap-17.5">
+        <!-- Start project link (md+) -->
+        <a
+          href={`/${lang}/contact`}
+          id="header-start-project"
+          class="hidden md:block text-[1.375rem]"
+          data-text={t.nav.startProject}
+        >
+          <span class="nav-scramble-header">{t.nav.startProject}</span>
+        </a>
+
+        <!-- Menu button -->
+        <button
+          type="button"
+          id="menu-toggle-new"
+          class="flex-center gap-4 cursor-pointer"
+          aria-expanded="false"
+          aria-controls="menu-panel"
+          aria-label={t.nav.openMenu}
+          data-open-label={t.nav.openMenu}
+          data-close-label={t.nav.closeMenu}
+          data-menu-text={t.nav.menu}
+          data-close-text={t.nav.close}
+        >
+          <span id="menu-label-new" class="text-[1.375rem]">{t.nav.menu}</span>
+          <div class="flex flex-col justify-center gap-2 w-[36px] h-4" aria-hidden="true">
+            <span class="burger-line block w-full h-px bg-[#9C9C9C] transition-all duration-300 ease-out origin-center"></span>
+            <span class="burger-line block w-full h-px bg-[#9C9C9C] transition-all duration-300 ease-out origin-center"></span>
+          </div>
+        </button>
+      </div>
     </div>
   </div>
 
   <!-- Menu panel -->
   <div
     id="menu-panel"
-    class="menu-panel max-w-[1350px] mx-auto bg-black text-bg-light max-h-0 overflow-hidden transition-[max-height,border-color] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] border-x border-b border-transparent"
+    class="menu-panel max-w-[1350px] mx-auto bg-black text-bg-light overflow-hidden border-x border-b border-transparent"
     aria-hidden="true"
   >
     <div class="p-5 md:p-6 sm:flex sm:flex-row-reverse sm:justify-between">
@@ -115,8 +127,8 @@ const email = 'hello@hordeagence.com';
       </nav>
 
       <!-- Footer info -->
-      <div class="pt-5 mt-5 md:mt-0 md:pt-0 border-t border-lines-dark sm:border-0 sm:flex sm:flex-col sm:justify-between sm:mt-0">
-		<a href="/contact" class="hidden sm:flex text-[1.375rem] leading-none justify-end sm:justify-start items-center gap-2.5">
+      <div class="pt-5 mt-5 sm:mt-0 sm:pt-0 border-t border-lines-dark sm:border-0 sm:flex sm:flex-col sm:justify-between sm:mt-0">
+		<a href={`/${lang}/contact`} class="menu-link menu-item opacity-0 hidden sm:flex text-[1.375rem] leading-none justify-end sm:justify-start items-center gap-2.5 transition-all duration-300 ease-out" style="--item-delay: 0.15s" tabindex="-1">
 			<svg width="11" height="10" viewBox="0 0 11 10" fill="none" xmlns="http://www.w3.org/2000/svg">
 				<path d="M7.38206 10L6.60058 9.24904L9.13314 6.39847L0 6.39847V0H1V5.32567H9.13314L6.60058 2.4751L7.38206 1.72414L11 5.86207L7.38206 10Z" fill="#F4F3F3"/>
 			</svg>
@@ -126,7 +138,7 @@ const email = 'hello@hordeagence.com';
           <!-- Email -->
           <a
             href={`mailto:${email}`}
-            class="menu-item opacity-0 flex justify-end sm:justify-start items-center gap-2.5 transition-all duration-300 ease-out leading-none text-lg font-mono uppercase no-underline hover:opacity-70"
+            class="menu-item opacity-0 flex justify-end sm:justify-start items-center gap-2.5 transition-all duration-300 ease-out leading-none text-[1rem] font-mono uppercase no-underline hover:opacity-70"
             style="--item-delay: 0.2s"
             tabindex="-1"
           >
@@ -139,7 +151,7 @@ const email = 'hello@hordeagence.com';
           <!-- Language switch -->
           <a
             href={switchUrl}
-            class="menu-item opacity-0 flex justify-end sm:justify-start items-center gap-2.5 transition-all duration-300 ease-out leading-none text-lg font-mono uppercase no-underline hover:opacity-70"
+            class="menu-item opacity-0 flex justify-end sm:justify-start items-center gap-2.5 transition-all duration-300 ease-out leading-none text-[1rem] font-mono uppercase no-underline hover:opacity-70"
             style="--item-delay: 0.25s"
             hreflang={switchLang}
             tabindex="-1"
@@ -175,10 +187,21 @@ const email = 'hello@hordeagence.com';
     transform: translateY(-5px);
   }
 
+  /* Menu panel closed */
+  .menu-panel {
+    clip-path: inset(0 0 100% 0);
+    pointer-events: none;
+    visibility: hidden;
+    transition: clip-path 0.3s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s cubic-bezier(0.16, 1, 0.3, 1), visibility 0s 0.3s;
+  }
+
   /* Menu panel open */
   .header-new.is-open .menu-panel {
-    max-height: 100vh;
+    clip-path: inset(0);
     border-color: var(--color-lines-dark);
+    pointer-events: auto;
+    visibility: visible;
+    transition: clip-path 0.3s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s cubic-bezier(0.16, 1, 0.3, 1), visibility 0s 0s;
   }
 
   /* Menu items animation */
@@ -287,6 +310,16 @@ const email = 'hello@hordeagence.com';
         const text = (link as HTMLElement).dataset.text || link.textContent || '';
         scrambleNavLink(link as HTMLElement, text);
       });
+    });
+
+    // Hover effect on header start project link
+    const headerStartProject = document.getElementById('header-start-project');
+    const headerStartProjectText = headerStartProject?.querySelector('.nav-scramble-header');
+    headerStartProject?.addEventListener('mouseenter', () => {
+      if (headerStartProjectText) {
+        const text = headerStartProject.dataset.text || headerStartProjectText.textContent || '';
+        scrambleNavLink(headerStartProjectText as HTMLElement, text);
+      }
     });
 
     function openMenu() {

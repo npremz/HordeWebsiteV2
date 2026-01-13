@@ -32,11 +32,11 @@ const projects = [
 ---
 
 <div class="flex flex-col">
-	<div class="flex justify-between font-display leading-none items-end sm:items-start lg:items-end text-[1.625rem] sm:text-[2.5rem] md:text-[4rem] uppercase lg:w-3/4">
+	<div class="flex font-display gap-4 leading-none items-end text-[1.625rem] sm:text-[2.5rem] md:text-[4rem] uppercase">
 		<h2 set:html={t.projects.title.replace(/\n/g, '<br>')} />
-		<span class="block">({String(projects.length).padStart(2, '0')})</span>
+		<span class="block font-mono text-[1rem] uppercase -translate-y-1 md:-translate-y-2">({String(projects.length).padStart(2, '0')})</span>
 	</div>
-	<a href={`/${lang}/projects`} class="section-label text-[1rem] leading-none self-end mt-10 sm:mt-0 lg:-mt-[1lh]"><Wrapped>{t.projects.otherProjects} →</Wrapped></a>
+	<a href={`/${lang}/projects`} class="hidden section-label text-[1rem] leading-none self-end mt-10 sm:mt-0 lg:-mt-[1lh]"><Wrapped>{t.projects.otherProjects} →</Wrapped></a>
 
 	<!-- Image flottante qui suit la souris -->
 	<div id="project-hover-image" class="pointer-events-none fixed z-50 overflow-visible" style="transform: translate(-50%, -50%) scale(0); will-change: transform;">
