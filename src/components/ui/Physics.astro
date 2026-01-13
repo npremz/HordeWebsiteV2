@@ -1,14 +1,15 @@
 ---
 interface Props {
   class?: string;
-  dark?: boolean
+  dark?: boolean;
+  hideOverflow?: boolean;
 }
 
-const { class: className = '', dark: dark = false } = Astro.props;
+const { class: className = '', dark = false, hideOverflow = true } = Astro.props;
 ---
 
 <div id="physics-container" class:list={['physics-full-border w-full aspect-square md:aspect-2/1 relative', className]}>
-  <div class:list={['absolute inset-0', !dark && 'overflow-hidden']}>
+  <div class:list={['absolute inset-0', hideOverflow && 'overflow-hidden']}>
     <div id="physics-cta" class="physics-cta" aria-hidden="true">
       Assez joué, viens discuter
     </div>

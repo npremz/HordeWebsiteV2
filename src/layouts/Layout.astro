@@ -223,3 +223,59 @@ const finalHeaderVariant = headerVariant ?? variant;
     requestIdleCallback(() => initLenis(), { timeout: 3000 });
   }
 </script>
+
+<script>
+  // Smooth scroll pour les liens d'ancre
+  function initAnchorScroll() {
+    document.addEventListener('click', (e) => {
+      const link = (e.target as HTMLElement).closest('a[href*="#"]');
+      if (!link) return;
+
+      const href = link.getAttribute('href');
+      if (!href) return;
+
+      const hashIndex = href.indexOf('#');
+      if (hashIndex === -1) return;
+
+      const path = href.substring(0, hashIndex);
+      const hash = href.substring(hashIndex);
+      const currentPath = window.location.pathname;
+
+      // Vérifier si on est sur la bonne page (ou lien relatif)
+      const isCurrentPage = !path || path === currentPath ||
+        (path.endsWith('/') && currentPath === path.slice(0, -1)) ||
+        (currentPath.endsWith('/') && path === currentPath.slice(0, -1));
+
+      if (isCurrentPage && hash) {
+        e.preventDefault();
+        const target = document.querySelector(hash);
+        if (target && (window as any).lenis) {
+          (window as any).lenis.scrollTo(target, { duration: 1.2, offset: -100 });
+        } else if (target) {
+          target.scrollIntoView({ behavior: 'smooth' });
+        }
+        history.pushState(null, '', hash);
+      } else if (path && hash) {
+        // Navigation vers autre page avec ancre - stocker pour après
+        sessionStorage.setItem('scrollToAnchor', hash);
+      }
+    });
+
+    // Scroll vers ancre après navigation
+    const scrollToAnchor = sessionStorage.getItem('scrollToAnchor');
+    if (scrollToAnchor) {
+      sessionStorage.removeItem('scrollToAnchor');
+      setTimeout(() => {
+        const target = document.querySelector(scrollToAnchor);
+        if (target && (window as any).lenis) {
+          (window as any).lenis.scrollTo(target, { duration: 1.2, offset: -100 });
+        } else if (target) {
+          target.scrollIntoView({ behavior: 'smooth' });
+        }
+      }, 100);
+    }
+  }
+
+  initAnchorScroll();
+  document.addEventListener('astro:after-swap', initAnchorScroll);
+</script>

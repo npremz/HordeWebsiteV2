@@ -8,7 +8,7 @@ interface Props {
 
 const { class: className = '', lineClass = '', dotClass = '', variant = 'light' } = Astro.props;
 const isDark = variant === 'dark';
-const dotBg = isDark ? 'bg-bg-light' : 'bg-black';
+const dotBg = isDark ? 'bg-bg-light' : 'bg-lines';
 const lineColor = isDark ? 'bg-lines-dark' : 'bg-lines';
 ---
 

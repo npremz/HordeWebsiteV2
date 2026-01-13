@@ -56,7 +56,7 @@ const methods = t.method.methods;
 			</li>
 		))}
 	</ol>
-	<div class="full-width-bg relative z-10 -mt-px">
+	<div class="full-width-bg relative z-[100] -mt-px">
 		<a
 			href={`/${lang}/contact`}
 			class="group relative overflow-hidden font-mono text-[1rem] leading-none uppercase py-6 px-5 flex justify-center w-full md:w-fit md:ml-auto border border-lines-dark bg-transparent text-black transition-colors duration-300 ease-in-out cursor-pointer"
@@ -180,6 +180,7 @@ const methods = t.method.methods;
 		let currentScale = 0;
 		let targetScale = 0;
 		let targetRotation = -180;
+		let exitRotation = -180;
 		let isHovering = false;
 		let animationId: number | null = null;
 
@@ -198,7 +199,7 @@ const methods = t.method.methods;
 
 			// Inertie : rotation basée sur la vélocité (max ±15deg)
 			const inertiaRotation = Math.max(-15, Math.min(15, velocityX * 3));
-			targetRotation = isHovering ? inertiaRotation : currentRotation - 180;
+			targetRotation = isHovering ? inertiaRotation : exitRotation;
 
 			// Scale
 			currentScale += (targetScale - currentScale) * scaleEase;
@@ -209,6 +210,13 @@ const methods = t.method.methods;
 			container.style.left = `${currentX}px`;
 			container.style.top = `${currentY}px`;
 			container.style.transform = `translate(-50%, -50%) scale(${currentScale}) rotate(${currentRotation}deg)`;
+
+			// Stop animation when scale is nearly 0 and not hovering
+			if (!isHovering && currentScale < 0.01) {
+				currentScale = 0;
+				animationId = null;
+				return;
+			}
 
 			const isAnimating =
 				Math.abs(currentX - mouseX) > 0.1 ||
@@ -251,6 +259,8 @@ const methods = t.method.methods;
 				currentScale = 0;
 				document.body.style.cursor = 'none';
 			} else if (!isHovering && wasHovering) {
+				// Fixer la rotation de sortie à la rotation actuelle - 180
+				exitRotation = currentRotation - 180;
 				document.body.style.cursor = '';
 			}
 
@@ -261,6 +271,7 @@ const methods = t.method.methods;
 		document.addEventListener('mouseleave', () => {
 			isHovering = false;
 			targetScale = 0;
+			exitRotation = currentRotation - 180;
 			document.body.style.cursor = '';
 			startAnimation();
 		});

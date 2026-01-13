@@ -44,11 +44,11 @@ const email = 'hello@hordeagence.com';
 
 <header
   id="header-new"
-  class="header-new fixed z-9999999 top-0 left-0 right-0 pt-(--gutter) sm:pt-4 px-(--gutter) lg:px-0 transition-transform duration-400 ease-[cubic-bezier(0.16,1,0.3,1)]"
+  class="header-new fixed z-9999999 top-0 left-0 right-0 md:max-w-[1350px] md:mx-auto pt-(--gutter) sm:pt-4 px-(--gutter) lg:px-0 transition-transform duration-400 ease-[cubic-bezier(0.16,1,0.3,1)] pointer-events-none"
   data-state="visible"
 >
   <!-- Header bar -->
-  <div class="header-bar max-w-[1350px] mx-auto bg-black border border-lines-dark text-bg-light px-5 py-4 md:px-6 md:py-5">
+  <div class="header-bar max-w-[1350px] mx-auto bg-black border border-lines-dark text-bg-light px-5 py-4 md:px-6 md:py-5 pointer-events-auto">
     <div class="flex-between">
       <!-- Logo -->
       <a href={`/${lang}`} class="block">
@@ -179,7 +179,8 @@ const email = 'hello@hordeagence.com';
   .menu-panel {
     clip-path: inset(0 0 100% 0);
     pointer-events: none;
-    transition: clip-path 0.3s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    visibility: hidden;
+    transition: clip-path 0.3s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s cubic-bezier(0.16, 1, 0.3, 1), visibility 0s 0.3s;
   }
 
   /* Menu panel open */
@@ -187,6 +188,8 @@ const email = 'hello@hordeagence.com';
     clip-path: inset(0);
     border-color: var(--color-lines-dark);
     pointer-events: auto;
+    visibility: visible;
+    transition: clip-path 0.3s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s cubic-bezier(0.16, 1, 0.3, 1), visibility 0s 0s;
   }
 
   /* Menu items animation */
