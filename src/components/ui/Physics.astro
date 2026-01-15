@@ -8,7 +8,7 @@ interface Props {
 const { class: className = '', dark = false, hideOverflow = true } = Astro.props;
 ---
 
-<div id="physics-container" class:list={['physics-full-border w-full aspect-square md:aspect-2/1 relative', className]}>
+<div id="physics-container" class:list={['physics-full-border w-full aspect-square md:aspect-2/1 relative', className, dark && 'physics-dark']}>
   <div class:list={['absolute inset-0', hideOverflow && 'overflow-hidden']}>
     <div id="physics-cta" class="physics-cta uppercase" aria-hidden="true">
       Assez joué, viens discuter
@@ -62,6 +62,10 @@ const { class: className = '', dark = false, hideOverflow = true } = Astro.props
     width: 100vw;
     height: 1px;
     background-color: var(--color-lines);
+  }
+
+  .physics-full-border.physics-dark::after {
+    background-color: var(--color-lines-dark);
   }
 
   .physics-grid {
