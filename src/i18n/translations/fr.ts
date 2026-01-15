@@ -137,7 +137,7 @@ export const fr = {
   projects: {
     title: 'Projets\nselectionnés',
     otherProjects: 'Autres projets',
-    inProgress: '( on y travaille )',
+    inProgress: '(en cours...)',
   },
 
   // Footer
