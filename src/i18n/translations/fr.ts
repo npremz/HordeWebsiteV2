@@ -150,7 +150,7 @@ export const fr = {
 
   // Contact Page
   contact: {
-    title: 'Contact |',
+    title: 'Contact',
     description: 'Contactez-nous pour votre projet digital',
     knockKnock: 'Toc, toc.',
     startWhen: 'On commence quand\nvotre nouveau projet ?',

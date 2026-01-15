@@ -151,7 +151,7 @@ export const en: Translations = {
 
   // Contact Page
   contact: {
-    title: 'Contact | Let\'s make your project real',
+    title: 'Contact',
     description: 'Contact us about your digital project',
     knockKnock: 'Knock, knock.',
     startWhen: 'When do we start\nyour new project?',
