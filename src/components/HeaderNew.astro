@@ -358,7 +358,39 @@ const email = 'hello@hordeagence.com';
     });
 
     menuLinks?.forEach(link => {
-      link.addEventListener('click', closeMenu);
+      link.addEventListener('click', (e) => {
+        const href = link.getAttribute('href');
+        if (href && href.includes('#')) {
+          const hashIndex = href.indexOf('#');
+          const hash = href.substring(hashIndex);
+          const pathBeforeHash = href.substring(0, hashIndex);
+          const currentPath = window.location.pathname;
+
+          // Check if we're on the same page (or navigating to home with hash)
+          const isSamePage = pathBeforeHash === currentPath ||
+                            pathBeforeHash === currentPath + '/' ||
+                            pathBeforeHash + '/' === currentPath;
+
+          if (isSamePage) {
+            e.preventDefault();
+            closeMenu();
+
+            const targetElement = document.querySelector(hash);
+            if (targetElement) {
+              // Use Lenis if available, otherwise native scroll
+              if ((window as any).lenis) {
+                (window as any).lenis.scrollTo(targetElement, { offset: 0 });
+              } else {
+                targetElement.scrollIntoView({ behavior: 'smooth' });
+              }
+              // Update URL hash without triggering navigation
+              history.pushState(null, '', href);
+            }
+            return;
+          }
+        }
+        closeMenu();
+      });
     });
 
     document.addEventListener('keydown', (e) => {

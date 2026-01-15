@@ -170,6 +170,10 @@ const methods = t.method.methods;
 
 	// SVG hover follow
 	function initMethodsSvgHover() {
+		// Disable on mobile/touch devices
+		const isMobile = window.matchMedia('(max-width: 768px)').matches || 'ontouchstart' in window;
+		if (isMobile) return;
+
 		const container = document.getElementById('methods-hover-svg');
 		const methodsStack = document.querySelector('.methods-stack');
 
