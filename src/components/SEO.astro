@@ -44,6 +44,11 @@ let siteSettings = {
   defaultOgImageAlt: 'Image par défaut du site',
   twitterSite: '',
   locale: 'fr_FR',
+  // SEO Multi-moteurs
+  googleVerification: '',
+  bingVerification: '',
+  yandexVerification: '',
+  indexNowKey: '',
 };
 
 // Get lang from props, default to 'fr'
@@ -66,6 +71,11 @@ try {
       defaultOgImageAlt: settings.defaultOgImageAlt || siteSettings.defaultOgImageAlt,
       twitterSite: settings.twitterSite || siteSettings.twitterSite,
       locale: settings.locale || siteSettings.locale,
+      // SEO Multi-moteurs
+      googleVerification: (settings as any).googleVerification || siteSettings.googleVerification,
+      bingVerification: (settings as any).bingVerification || siteSettings.bingVerification,
+      yandexVerification: (settings as any).yandexVerification || siteSettings.yandexVerification,
+      indexNowKey: (settings as any).indexNowKey || siteSettings.indexNowKey,
     };
   }
 } catch {
@@ -118,6 +128,17 @@ const resolvedOgImageAlt = ogImageAlt || siteSettings.defaultOgImageAlt;
 <meta name="description" content={description} />
 <meta name="robots" content={robots} />
 <link rel="canonical" href={canonicalURL} />
+
+<!-- Search Engine Verification (Multi-moteurs) -->
+{siteSettings.googleVerification && (
+  <meta name="google-site-verification" content={siteSettings.googleVerification} />
+)}
+{siteSettings.bingVerification && (
+  <meta name="msvalidate.01" content={siteSettings.bingVerification} />
+)}
+{siteSettings.yandexVerification && (
+  <meta name="yandex-verification" content={siteSettings.yandexVerification} />
+)}
 
 <!-- Hreflang for internationalization -->
 {SUPPORTED_LOCALES.map((locale) => (

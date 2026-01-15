@@ -112,6 +112,26 @@ const siteSettingsSchema = {
     description: 'Suffixe utilisé dans le template de titre (Page | Nom du site)',
     validation: { isRequired: true },
   }),
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // SEO MULTI-MOTEURS - Codes de vérification (optionnels)
+  // ═══════════════════════════════════════════════════════════════════════════
+  googleVerification: fields.text({
+    label: 'Google Search Console',
+    description: 'Code de vérification Google (google-site-verification). Obtenez-le sur search.google.com/search-console',
+  }),
+  bingVerification: fields.text({
+    label: 'Bing Webmaster Tools',
+    description: 'Code de vérification Bing (msvalidate.01). Obtenez-le sur bing.com/webmasters',
+  }),
+  yandexVerification: fields.text({
+    label: 'Yandex Webmaster',
+    description: 'Code de vérification Yandex. Obtenez-le sur webmaster.yandex.com',
+  }),
+  indexNowKey: fields.text({
+    label: 'Clé IndexNow',
+    description: 'Clé API IndexNow pour indexation instantanée sur Bing/Yandex/DuckDuckGo. Générez une clé unique (ex: uuid)',
+  }),
   homepageTitle: fields.text({
     label: "Titre de la page d'accueil",
     description: 'Titre SEO affiché sur la landing (ex: Agence Web Performance & UX à Bruxelles)',
