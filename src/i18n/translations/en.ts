@@ -138,7 +138,7 @@ export const en: Translations = {
   projects: {
     title: 'Selected\nprojects',
     otherProjects: 'Other projects',
-    inProgress: '( work in progress )',
+    inProgress: '(on it...)',
   },
 
   // Footer
