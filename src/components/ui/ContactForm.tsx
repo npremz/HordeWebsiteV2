@@ -145,10 +145,10 @@ export default function ContactForm({ translations: t }: ContactFormProps) {
               <label
                 key={option.value}
                 className={`uppercase font-mono text-[1rem] leading-[0.6] py-6 px-5 border transition-all duration-300 ease-in-out cursor-pointer ${formData.besoin === option.value
-                    ? 'bg-bg-light text-black border-bg-light'
-                    : errors.besoin
-                      ? 'border-err text-err'
-                      : 'border-lines-dark hover:border-bg-light'
+                  ? 'bg-bg-light text-black border-bg-light'
+                  : errors.besoin
+                    ? 'border-err text-err'
+                    : 'border-lines-dark hover:border-bg-light'
                   }`}
               >
                 <input
@@ -171,7 +171,7 @@ export default function ContactForm({ translations: t }: ContactFormProps) {
         <label htmlFor="objectif" className='section-label block md:w-36 md:shrink-0 relative'>
           {t.objectifLabel}<span aria-hidden="true">*</span>
           {errors.objectif && (
-            <span id="objectif-error" role="alert" className="sm:hidden text-err absolute right-0 top-0">{errors.objectif}</span>
+            <span id="objectif-error" role="alert" className="md:hidden text-err absolute right-0 top-0">{errors.objectif}</span>
           )}
         </label>
         <div className="relative flex-1">
@@ -180,8 +180,8 @@ export default function ContactForm({ translations: t }: ContactFormProps) {
             name="objectif"
             rows={1}
             className={`py-5 xl:py-8 w-full text-2xl sm:text-[2rem] lg:text-[2.5rem] border-b bg-transparent focus:outline-none focus-visible:outline-none transition-colors resize-none overflow-hidden ${errors.objectif
-                ? 'border-b-err placeholder:text-err'
-                : 'border-lines-dark focus:border-b-lines'
+              ? 'border-b-err placeholder:text-err'
+              : 'border-lines-dark focus:border-b-lines'
               }`}
             placeholder={t.objectifPlaceholder}
             value={formData.objectif}
@@ -195,7 +195,7 @@ export default function ContactForm({ translations: t }: ContactFormProps) {
             aria-describedby={errors.objectif ? 'objectif-error' : undefined}
           />
           {errors.objectif && (
-            <span id="objectif-error" role="alert" className="section-label text-err block mt-1 absolute right-0 top-6 lg:top-8 xl:top-12 hidden sm:block">
+            <span id="objectif-error" role="alert" className="section-label text-err block mt-1 absolute right-0 top-6 lg:top-8 xl:top-12 hidden md:block">
               {errors.objectif}
             </span>
           )}
@@ -206,7 +206,7 @@ export default function ContactForm({ translations: t }: ContactFormProps) {
         <label htmlFor="nom" className='section-label block md:w-36 md:shrink-0 relative'>
           {t.nameLabel}<span aria-hidden="true">*</span>
           {errors.nom && (
-            <span className="sm:hidden text-err absolute right-0 top-0">{errors.nom}</span>
+            <span className="md:hidden text-err absolute right-0 top-0">{errors.nom}</span>
           )}
         </label>
         <div className="relative flex-1">
@@ -215,8 +215,8 @@ export default function ContactForm({ translations: t }: ContactFormProps) {
             id="nom"
             name="nom"
             className={`py-5 xl:py-8 w-full text-2xl sm:text-[2rem] lg:text-[2.5rem] border-b bg-transparent focus:outline-none focus-visible:outline-none transition-colors ${errors.nom
-                ? 'border-b-err placeholder:text-err'
-                : 'border-lines-dark focus:border-b-lines'
+              ? 'border-b-err placeholder:text-err'
+              : 'border-lines-dark focus:border-b-lines'
               }`}
             placeholder={t.namePlaceholder}
             value={formData.nom}
@@ -226,7 +226,7 @@ export default function ContactForm({ translations: t }: ContactFormProps) {
             aria-describedby={errors.nom ? 'nom-error' : undefined}
           />
           {errors.nom && (
-            <span id="nom-error" role="alert" className="section-label text-err block mt-1 absolute right-0 top-6 lg:top-8 xl:top-12 hidden sm:block">
+            <span id="nom-error" role="alert" className="section-label text-err block mt-1 absolute right-0 top-6 lg:top-8 xl:top-12 hidden md:block">
               {errors.nom}
             </span>
           )}
@@ -237,7 +237,7 @@ export default function ContactForm({ translations: t }: ContactFormProps) {
         <label htmlFor="email" className='section-label block md:w-36 md:shrink-0 relative'>
           {t.emailLabel}<span aria-hidden="true">*</span>
           {errors.email && (
-            <span className="sm:hidden text-err absolute right-0 top-0">{errors.email}</span>
+            <span className="md:hidden text-err absolute right-0 top-0">{errors.email}</span>
           )}
         </label>
         <div className="relative flex-1">
@@ -246,8 +246,8 @@ export default function ContactForm({ translations: t }: ContactFormProps) {
             id="email"
             name="email"
             className={`py-5 xl:py-8 w-full text-2xl sm:text-[2rem] lg:text-[2.5rem] border-b bg-transparent focus:outline-none focus-visible:outline-none transition-colors ${errors.email
-                ? 'border-b-err placeholder:text-err'
-                : 'border-lines-dark focus:border-b-lines'
+              ? 'border-b-err placeholder:text-err'
+              : 'border-lines-dark focus:border-b-lines'
               }`}
             placeholder="@"
             value={formData.email}
@@ -257,7 +257,7 @@ export default function ContactForm({ translations: t }: ContactFormProps) {
             aria-describedby={errors.email ? 'email-error' : undefined}
           />
           {errors.email && (
-            <span id="email-error" role="alert" className="section-label text-err block mt-1 absolute right-0 top-6 lg:top-8 xl:top-12 hidden sm:block">
+            <span id="email-error" role="alert" className="section-label text-err block mt-1 absolute right-0 top-6 lg:top-8 xl:top-12 hidden md:block">
               {errors.email}
             </span>
           )}
