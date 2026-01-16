@@ -63,6 +63,13 @@ export default function ContactForm({ translations: t }: ContactFormProps) {
     { value: 'autre', label: t.options.autre },
   ];
 
+  const MAX_LENGTHS = {
+    objectif: 2000,
+    nom: 100,
+    email: 254,
+    societe: 200,
+  };
+
   const validateForm = (): boolean => {
     const newErrors: FormErrors = {};
 
@@ -72,16 +79,22 @@ export default function ContactForm({ translations: t }: ContactFormProps) {
 
     if (!formData.objectif.trim()) {
       newErrors.objectif = t.requiredField;
+    } else if (formData.objectif.length > MAX_LENGTHS.objectif) {
+      newErrors.objectif = `Max ${MAX_LENGTHS.objectif} caractères`;
     }
 
     if (!formData.nom.trim()) {
       newErrors.nom = t.requiredField;
+    } else if (formData.nom.length > MAX_LENGTHS.nom) {
+      newErrors.nom = `Max ${MAX_LENGTHS.nom} caractères`;
     }
 
     if (!formData.email.trim()) {
       newErrors.email = t.requiredField;
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
       newErrors.email = t.invalidEmail;
+    } else if (formData.email.length > MAX_LENGTHS.email) {
+      newErrors.email = `Max ${MAX_LENGTHS.email} caractères`;
     }
 
     setErrors(newErrors);
@@ -179,6 +192,7 @@ export default function ContactForm({ translations: t }: ContactFormProps) {
             id="objectif"
             name="objectif"
             rows={1}
+            maxLength={MAX_LENGTHS.objectif}
             className={`py-5 xl:py-8 w-full text-2xl sm:text-[2rem] lg:text-[2.5rem] border-b bg-transparent focus:outline-none focus-visible:outline-none transition-colors resize-none overflow-hidden ${errors.objectif
               ? 'border-b-err placeholder:text-err'
               : 'border-lines-dark focus:border-b-lines'
@@ -214,6 +228,7 @@ export default function ContactForm({ translations: t }: ContactFormProps) {
             type="text"
             id="nom"
             name="nom"
+            maxLength={MAX_LENGTHS.nom}
             className={`py-5 xl:py-8 w-full text-2xl sm:text-[2rem] lg:text-[2.5rem] border-b bg-transparent focus:outline-none focus-visible:outline-none transition-colors ${errors.nom
               ? 'border-b-err placeholder:text-err'
               : 'border-lines-dark focus:border-b-lines'
@@ -245,6 +260,7 @@ export default function ContactForm({ translations: t }: ContactFormProps) {
             type="email"
             id="email"
             name="email"
+            maxLength={MAX_LENGTHS.email}
             className={`py-5 xl:py-8 w-full text-2xl sm:text-[2rem] lg:text-[2.5rem] border-b bg-transparent focus:outline-none focus-visible:outline-none transition-colors ${errors.email
               ? 'border-b-err placeholder:text-err'
               : 'border-lines-dark focus:border-b-lines'
@@ -270,6 +286,7 @@ export default function ContactForm({ translations: t }: ContactFormProps) {
           type="text"
           id="societe"
           name="societe"
+          maxLength={MAX_LENGTHS.societe}
           className='py-5 xl:py-8 flex-1 text-2xl sm:text-[2rem] lg:text-[2.5rem] border-lines-dark border-b bg-transparent focus:outline-none focus-visible:outline-none focus:border-b-lines transition-colors'
           placeholder={t.companyPlaceholder}
           value={formData.societe}
