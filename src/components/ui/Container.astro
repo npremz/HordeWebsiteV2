@@ -1,23 +1,53 @@
 ---
 interface Props {
   class?: string;
-  as?: 'div' | 'section' | 'article' | 'main';
-  variant?: 'light' | 'dark';
+  as?: "div" | "section" | "article" | "main";
+  variant?: "light" | "dark";
 }
 
-const { class: className = '', as: Tag = 'div', variant = 'light' } = Astro.props;
-const isDark = variant === 'dark';
+const {
+  class: className = "",
+  as: Tag = "div",
+  variant = "light",
+} = Astro.props;
+const isDark = variant === "dark";
 const showLines = !isDark;
 ---
 
-<Tag class:list={['container -mt-10 mx-auto px-(--gutter) max-w-[1350px] lg:px-0', className]}>
-  {showLines && <span class="hidden lg:block fixed h-full w-px bg-lines left-6 top-0 -z-9999"></span>}
-  {showLines && <span class="hidden lg:block fixed h-full w-px bg-lines left-12 top-0 -z-9999"></span>}
+<Tag
+  class:list={[
+    "container -mt-10 mx-auto px-(--gutter) max-w-[1350px] sm:max-w-[80%] md:max-w-[1350px] lg:px-0",
+    className,
+  ]}
+>
+  {
+    showLines && (
+      <span class="hidden lg:block fixed h-full w-px bg-lines left-6 top-0 -z-9999" />
+    )
+  }
+  {
+    showLines && (
+      <span class="hidden lg:block fixed h-full w-px bg-lines left-12 top-0 -z-9999" />
+    )
+  }
 
-  <div class:list={['w-full relative z-9998', { 'border-l border-r border-lines': showLines }]}>
+  <div
+    class:list={[
+      "w-full relative z-9998",
+      { "border-l border-r border-lines": showLines },
+    ]}
+  >
     <slot />
   </div>
 
-  {showLines && <span class="hidden lg:block fixed h-full w-px bg-lines right-12 top-0 -z-9999"></span>}
-  {showLines && <span class="hidden lg:block fixed h-full w-px bg-lines right-6 top-0 -z-9999"></span>}
+  {
+    showLines && (
+      <span class="hidden lg:block fixed h-full w-px bg-lines right-12 top-0 -z-9999" />
+    )
+  }
+  {
+    showLines && (
+      <span class="hidden lg:block fixed h-full w-px bg-lines right-6 top-0 -z-9999" />
+    )
+  }
 </Tag>
