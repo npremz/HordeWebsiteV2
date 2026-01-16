@@ -1,8 +1,14 @@
 ---
-import yaml from 'js-yaml';
-import fs from 'node:fs';
-import path from 'node:path';
-import { DEFAULT_LOCALE, type Locale, useTranslations, getLocalizedPath, getPathWithoutLocale } from '../i18n';
+import yaml from "js-yaml";
+import fs from "node:fs";
+import path from "node:path";
+import {
+  DEFAULT_LOCALE,
+  type Locale,
+  useTranslations,
+  getLocalizedPath,
+  getPathWithoutLocale,
+} from "../i18n";
 
 interface Props {
   lang?: Locale;
@@ -13,11 +19,14 @@ const t = useTranslations(lang);
 
 // Get current path for language switcher
 const currentPath = getPathWithoutLocale(Astro.url.pathname);
-const switchLang = lang === 'fr' ? 'en' : 'fr';
+const switchLang = lang === "fr" ? "en" : "fr";
 const switchUrl = getLocalizedPath(currentPath, switchLang);
 
 // Load navigation from localized settings
-const navPath = path.join(process.cwd(), `src/content/settings_${lang}/navigation.yaml`);
+const navPath = path.join(
+  process.cwd(),
+  `src/content/settings_${lang}/navigation.yaml`,
+);
 let navigation: {
   logo?: string;
   logoAlt?: string;
@@ -26,29 +35,33 @@ let navigation: {
 } = { items: [] };
 
 try {
-  const navContent = fs.readFileSync(navPath, 'utf8');
+  const navContent = fs.readFileSync(navPath, "utf8");
   navigation = yaml.load(navContent) as typeof navigation;
 } catch {
   try {
-    const fallbackPath = path.join(process.cwd(), 'src/content/settings_fr/navigation.yaml');
-    const navContent = fs.readFileSync(fallbackPath, 'utf8');
+    const fallbackPath = path.join(
+      process.cwd(),
+      "src/content/settings_fr/navigation.yaml",
+    );
+    const navContent = fs.readFileSync(fallbackPath, "utf8");
     navigation = yaml.load(navContent) as typeof navigation;
   } catch {
     // Use defaults
   }
 }
 
-const { logo, logoAlt = 'Logo', items = [], ctaButton } = navigation;
-const email = 'hello@hordeagence.com';
+const { logo, logoAlt = "Logo", items = [], ctaButton } = navigation;
+const email = "hello@hordeagence.com";
 ---
 
 <header
   id="header-new"
-  class="header-new fixed z-9999999 top-0 left-0 right-0 md:max-w-[1350px] md:mx-auto pt-(--gutter) sm:pt-4 px-(--gutter) lg:px-0 transition-transform duration-400 ease-[cubic-bezier(0.16,1,0.3,1)] pointer-events-none"
-  data-state="visible"
+  class="header-new fixed z-9999999 top-0 left-0 right-0 md:max-w-[1350px] md:mx-auto pt-(--gutter) sm:pt-4 px-(--gutter) lg:px-0 pointer-events-none"
 >
   <!-- Header bar -->
-  <div class="header-bar max-w-[1350px] mx-auto bg-black border border-lines-dark text-bg-light px-5 py-4 md:px-6 md:py-5 pointer-events-auto">
+  <div
+    class="header-bar max-w-[1350px] mx-auto bg-black border border-lines-dark text-bg-light px-5 py-4 md:px-6 md:py-5 pointer-events-auto"
+  >
     <div class="flex-between">
       <!-- Logo -->
       <a href={`/${lang}`} class="block">
@@ -88,9 +101,16 @@ const email = 'hello@hordeagence.com';
           data-close-text={t.nav.close}
         >
           <span id="menu-label-new" class="text-[1.375rem]">{t.nav.menu}</span>
-          <div class="flex flex-col justify-center gap-2 w-[36px] h-4" aria-hidden="true">
-            <span class="burger-line block w-full h-px bg-[#9C9C9C] transition-all duration-300 ease-out origin-center"></span>
-            <span class="burger-line block w-full h-px bg-[#9C9C9C] transition-all duration-300 ease-out origin-center"></span>
+          <div
+            class="flex flex-col justify-center gap-2 w-[36px] h-4"
+            aria-hidden="true"
+          >
+            <span
+              class="burger-line block w-full h-px bg-[#9C9C9C] transition-all duration-300 ease-out origin-center"
+            ></span>
+            <span
+              class="burger-line block w-full h-px bg-[#9C9C9C] transition-all duration-300 ease-out origin-center"
+            ></span>
           </div>
         </button>
       </div>
@@ -107,33 +127,55 @@ const email = 'hello@hordeagence.com';
       <!-- Navigation links -->
       <nav class="sm:w-1/2">
         <ul class="flex flex-col gap-6">
-          {items.map((item, index) => (
-            <li class="menu-item opacity-0 transition-all duration-300 ease-out text-right" style={`--item-delay: ${index * 0.05}s`}>
-              <a
-                href={item.url}
-                class="menu-link nav-scramble inline-block relative text-[2.5rem] leading-none text-black no-underline
+          {
+            items.map((item, index) => (
+              <li
+                class="menu-item opacity-0 transition-all duration-300 ease-out text-right"
+                style={`--item-delay: ${index * 0.05}s`}
+              >
+                <a
+                  href={item.url}
+                  class="menu-link nav-scramble inline-block relative text-[2.5rem] leading-none text-black no-underline
                        after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-current after:scale-x-0 after:origin-left after:transition-transform after:duration-400 after:ease-[cubic-bezier(0.25,0.46,0.45,0.94)]
                        hover:after:scale-x-100"
-                target={item.isExternal ? '_blank' : undefined}
-                rel={item.isExternal ? 'noopener noreferrer' : undefined}
-                tabindex="-1"
-                data-text={item.label}
-              >
-                {item.label}
-              </a>
-            </li>
-          ))}
+                  target={item.isExternal ? "_blank" : undefined}
+                  rel={item.isExternal ? "noopener noreferrer" : undefined}
+                  tabindex="-1"
+                  data-text={item.label}
+                >
+                  {item.label}
+                </a>
+              </li>
+            ))
+          }
         </ul>
       </nav>
 
       <!-- Footer info -->
-      <div class="pt-5 mt-5 sm:mt-0 sm:pt-0 border-t border-lines-dark sm:border-0 sm:flex sm:flex-col sm:justify-between sm:mt-0">
-		<a href={`/${lang}/contact`} class="menu-link menu-item opacity-0 hidden sm:flex text-[1.375rem] leading-none justify-end sm:justify-start items-center gap-2.5 transition-all duration-300 ease-out" style="--item-delay: 0.15s" tabindex="-1">
-			<svg width="11" height="10" viewBox="0 0 11 10" fill="none" xmlns="http://www.w3.org/2000/svg">
-				<path d="M7.38206 10L6.60058 9.24904L9.13314 6.39847L0 6.39847V0H1V5.32567H9.13314L6.60058 2.4751L7.38206 1.72414L11 5.86207L7.38206 10Z" fill="#F4F3F3"/>
-			</svg>
-			<span class="nav-scramble" data-text={t.nav.startProject}>{t.nav.startProject}</span>
-		</a>
+      <div
+        class="pt-5 mt-5 sm:mt-0 sm:pt-0 border-t border-lines-dark sm:border-0 sm:flex sm:flex-col sm:justify-between sm:mt-0"
+      >
+        <a
+          href={`/${lang}/contact`}
+          class="menu-link menu-item opacity-0 hidden sm:flex text-[1.375rem] leading-none justify-end sm:justify-start items-center gap-2.5 transition-all duration-300 ease-out"
+          style="--item-delay: 0.15s"
+          tabindex="-1"
+        >
+          <svg
+            width="11"
+            height="10"
+            viewBox="0 0 11 10"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M7.38206 10L6.60058 9.24904L9.13314 6.39847L0 6.39847V0H1V5.32567H9.13314L6.60058 2.4751L7.38206 1.72414L11 5.86207L7.38206 10Z"
+              fill="#F4F3F3"></path>
+          </svg>
+          <span class="nav-scramble" data-text={t.nav.startProject}
+            >{t.nav.startProject}</span
+          >
+        </a>
         <div class="flex flex-col gap-4 text-right sm:text-left">
           <!-- Email -->
           <a
@@ -142,9 +184,18 @@ const email = 'hello@hordeagence.com';
             style="--item-delay: 0.2s"
             tabindex="-1"
           >
-			<svg class="mt-1" width="11" height="10" viewBox="0 0 11 10" fill="none" xmlns="http://www.w3.org/2000/svg">
-				<path d="M7.38206 10L6.60058 9.24904L9.13314 6.39847L0 6.39847V0H1V5.32567H9.13314L6.60058 2.4751L7.38206 1.72414L11 5.86207L7.38206 10Z" fill="#F4F3F3"/>
-			</svg>
+            <svg
+              class="mt-1"
+              width="11"
+              height="10"
+              viewBox="0 0 11 10"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M7.38206 10L6.60058 9.24904L9.13314 6.39847L0 6.39847V0H1V5.32567H9.13314L6.60058 2.4751L7.38206 1.72414L11 5.86207L7.38206 10Z"
+                fill="#F4F3F3"></path>
+            </svg>
             <span class="nav-scramble" data-text={email}>{email}</span>
           </a>
 
@@ -156,10 +207,21 @@ const email = 'hello@hordeagence.com';
             hreflang={switchLang}
             tabindex="-1"
           >
-		  	<svg class="mt-1" width="11" height="10" viewBox="0 0 11 10" fill="none" xmlns="http://www.w3.org/2000/svg">
-				<path d="M7.38206 10L6.60058 9.24904L9.13314 6.39847L0 6.39847V0H1V5.32567H9.13314L6.60058 2.4751L7.38206 1.72414L11 5.86207L7.38206 10Z" fill="#F4F3F3"/>
-			</svg>
-            <span class="nav-scramble" data-text={t.nav.switchLang}>{t.nav.switchLang}</span>
+            <svg
+              class="mt-1"
+              width="11"
+              height="10"
+              viewBox="0 0 11 10"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M7.38206 10L6.60058 9.24904L9.13314 6.39847L0 6.39847V0H1V5.32567H9.13314L6.60058 2.4751L7.38206 1.72414L11 5.86207L7.38206 10Z"
+                fill="#F4F3F3"></path>
+            </svg>
+            <span class="nav-scramble" data-text={t.nav.switchLang}
+              >{t.nav.switchLang}</span
+            >
           </a>
         </div>
       </div>
@@ -167,15 +229,19 @@ const email = 'hello@hordeagence.com';
   </div>
 </header>
 
-<style>
+<style is:global>
   /* Header visibility states */
-  .header-new[data-state="hidden"] {
-    transform: translateY(calc(-100% - var(--gutter)));
+  .header-new {
+    transform: translateY(0);
+    transition: transform 0.35s ease-out;
   }
 
-  .header-new[data-state="visible"] {
-    transform: translateY(0);
+  .header-new.header-hidden {
+    transform: translateY(-100%);
   }
+</style>
+
+<style>
 
   /* Burger animation - 2 lines converge to single centered line */
   .header-new.is-open .burger-line:first-child {
@@ -192,7 +258,10 @@ const email = 'hello@hordeagence.com';
     clip-path: inset(0 0 100% 0);
     pointer-events: none;
     visibility: hidden;
-    transition: clip-path 0.3s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s cubic-bezier(0.16, 1, 0.3, 1), visibility 0s 0.3s;
+    transition:
+      clip-path 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+      border-color 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+      visibility 0s 0.3s;
   }
 
   /* Menu panel open */
@@ -201,7 +270,10 @@ const email = 'hello@hordeagence.com';
     border-color: var(--color-lines-dark);
     pointer-events: auto;
     visibility: visible;
-    transition: clip-path 0.3s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s cubic-bezier(0.16, 1, 0.3, 1), visibility 0s 0s;
+    transition:
+      clip-path 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+      border-color 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+      visibility 0s 0s;
   }
 
   /* Menu items animation */
@@ -217,11 +289,11 @@ const email = 'hello@hordeagence.com';
 
 <script>
   function initHeaderNew() {
-    const header = document.getElementById('header-new');
-    const toggle = document.getElementById('menu-toggle-new');
-    const label = document.getElementById('menu-label-new') as HTMLElement;
-    const panel = document.getElementById('menu-panel');
-    const menuLinks = panel?.querySelectorAll('a');
+    const header = document.getElementById("header-new");
+    const toggle = document.getElementById("menu-toggle-new");
+    const label = document.getElementById("menu-label-new") as HTMLElement;
+    const panel = document.getElementById("menu-panel");
+    const menuLinks = panel?.querySelectorAll("a");
 
     let isOpen = false;
     let lastScrollY = 0;
@@ -230,7 +302,7 @@ const email = 'hello@hordeagence.com';
     // Text scramble effect
     let scrambleInterval: number | null = null;
     const scrambleIntervals = new Map<HTMLElement, number>();
-    let currentText = toggle?.dataset.menuText || 'Menu';
+    let currentText = toggle?.dataset.menuText || "Menu";
 
     function shuffleArray<T>(array: T[]): T[] {
       const shuffled = [...array];
@@ -248,14 +320,14 @@ const email = 'hello@hordeagence.com';
 
       let iteration = 0;
       const originalText = targetText;
-      const chars = originalText.split('');
+      const chars = originalText.split("");
 
       scrambleInterval = window.setInterval(() => {
         const resolved = chars.slice(0, Math.floor(iteration));
         const remaining = chars.slice(Math.floor(iteration));
         const shuffled = shuffleArray(remaining);
 
-        element.textContent = [...resolved, ...shuffled].join('');
+        element.textContent = [...resolved, ...shuffled].join("");
 
         if (iteration >= originalText.length) {
           if (scrambleInterval) clearInterval(scrambleInterval);
@@ -275,14 +347,14 @@ const email = 'hello@hordeagence.com';
 
       let iteration = 0;
       const originalText = targetText;
-      const chars = originalText.split('');
+      const chars = originalText.split("");
 
       const intervalId = window.setInterval(() => {
         const resolved = chars.slice(0, Math.floor(iteration));
         const remaining = chars.slice(Math.floor(iteration));
         const shuffled = shuffleArray(remaining);
 
-        element.textContent = [...resolved, ...shuffled].join('');
+        element.textContent = [...resolved, ...shuffled].join("");
 
         if (iteration >= originalText.length) {
           clearInterval(intervalId);
@@ -297,79 +369,88 @@ const email = 'hello@hordeagence.com';
     }
 
     // Hover effect on menu toggle
-    toggle?.addEventListener('mouseenter', () => {
+    toggle?.addEventListener("mouseenter", () => {
       if (label) {
         scrambleText(label, currentText);
       }
     });
 
     // Hover effect on nav links
-    const navScrambleLinks = document.querySelectorAll('#menu-panel .nav-scramble');
+    const navScrambleLinks = document.querySelectorAll(
+      "#menu-panel .nav-scramble",
+    );
     navScrambleLinks.forEach((link) => {
-      link.addEventListener('mouseenter', () => {
-        const text = (link as HTMLElement).dataset.text || link.textContent || '';
+      link.addEventListener("mouseenter", () => {
+        const text =
+          (link as HTMLElement).dataset.text || link.textContent || "";
         scrambleNavLink(link as HTMLElement, text);
       });
     });
 
     // Hover effect on header start project link
-    const headerStartProject = document.getElementById('header-start-project');
-    const headerStartProjectText = headerStartProject?.querySelector('.nav-scramble-header');
-    headerStartProject?.addEventListener('mouseenter', () => {
+    const headerStartProject = document.getElementById("header-start-project");
+    const headerStartProjectText = headerStartProject?.querySelector(
+      ".nav-scramble-header",
+    );
+    headerStartProject?.addEventListener("mouseenter", () => {
       if (headerStartProjectText) {
-        const text = headerStartProject.dataset.text || headerStartProjectText.textContent || '';
+        const text =
+          headerStartProject.dataset.text ||
+          headerStartProjectText.textContent ||
+          "";
         scrambleNavLink(headerStartProjectText as HTMLElement, text);
       }
     });
 
     function openMenu() {
       isOpen = true;
-      header?.classList.add('is-open');
-      panel?.setAttribute('aria-hidden', 'false');
-      toggle?.setAttribute('aria-expanded', 'true');
-      const closeLabel = toggle?.dataset.closeLabel || 'Close menu';
-      const closeText = toggle?.dataset.closeText || 'Close';
-      toggle?.setAttribute('aria-label', closeLabel);
+      header?.classList.add("is-open");
+      panel?.setAttribute("aria-hidden", "false");
+      toggle?.setAttribute("aria-expanded", "true");
+      const closeLabel = toggle?.dataset.closeLabel || "Close menu";
+      const closeText = toggle?.dataset.closeText || "Close";
+      toggle?.setAttribute("aria-label", closeLabel);
       currentText = closeText;
       if (label) scrambleText(label, closeText);
-      menuLinks?.forEach(link => link.setAttribute('tabindex', '0'));
-      document.body.style.overflow = 'hidden';
+      menuLinks?.forEach((link) => link.setAttribute("tabindex", "0"));
+      document.body.style.overflow = "hidden";
     }
 
     function closeMenu() {
       isOpen = false;
-      header?.classList.remove('is-open');
-      panel?.setAttribute('aria-hidden', 'true');
-      toggle?.setAttribute('aria-expanded', 'false');
-      const openLabel = toggle?.dataset.openLabel || 'Open menu';
-      const menuText = toggle?.dataset.menuText || 'Menu';
-      toggle?.setAttribute('aria-label', openLabel);
+      header?.classList.remove("is-open");
+      panel?.setAttribute("aria-hidden", "true");
+      toggle?.setAttribute("aria-expanded", "false");
+      const openLabel = toggle?.dataset.openLabel || "Open menu";
+      const menuText = toggle?.dataset.menuText || "Menu";
+      toggle?.setAttribute("aria-label", openLabel);
       currentText = menuText;
       if (label) scrambleText(label, menuText);
-      menuLinks?.forEach(link => link.setAttribute('tabindex', '-1'));
-      document.body.style.overflow = '';
+      menuLinks?.forEach((link) => link.setAttribute("tabindex", "-1"));
+      document.body.style.overflow = "";
       // Reset scroll state for hide/show detection
       ticking = false;
       lastScrollY = (window as any).lenis?.scroll ?? window.scrollY;
     }
 
-    toggle?.addEventListener('click', () => {
+    toggle?.addEventListener("click", () => {
       isOpen ? closeMenu() : openMenu();
     });
 
-    menuLinks?.forEach(link => {
-      link.addEventListener('click', (e) => {
-        const href = link.getAttribute('href');
-        if (href && href.includes('#')) {
-          const hashIndex = href.indexOf('#');
+    menuLinks?.forEach((link) => {
+      link.addEventListener("click", (e) => {
+        const href = link.getAttribute("href");
+        if (href && href.includes("#")) {
+          const hashIndex = href.indexOf("#");
           const hash = href.substring(hashIndex);
           const pathBeforeHash = href.substring(0, hashIndex);
           const currentPath = window.location.pathname;
 
           // Check if we're on the same page (or navigating to home with hash)
-          const isSamePage = pathBeforeHash === currentPath ||
-                            pathBeforeHash === currentPath + '/' ||
-                            pathBeforeHash + '/' === currentPath;
+          const isSamePage =
+            pathBeforeHash === currentPath ||
+            pathBeforeHash === currentPath + "/" ||
+            pathBeforeHash + "/" === currentPath;
 
           if (isSamePage) {
             e.preventDefault();
@@ -381,10 +462,10 @@ const email = 'hello@hordeagence.com';
               if ((window as any).lenis) {
                 (window as any).lenis.scrollTo(targetElement, { offset: 0 });
               } else {
-                targetElement.scrollIntoView({ behavior: 'smooth' });
+                targetElement.scrollIntoView({ behavior: "smooth" });
               }
               // Update URL hash without triggering navigation
-              history.pushState(null, '', href);
+              history.pushState(null, "", href);
             }
             return;
           }
@@ -393,11 +474,11 @@ const email = 'hello@hordeagence.com';
       });
     });
 
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && isOpen) closeMenu();
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && isOpen) closeMenu();
     });
 
-    document.addEventListener('click', (e) => {
+    document.addEventListener("click", (e) => {
       if (isOpen && !header?.contains(e.target as Node)) {
         closeMenu();
       }
@@ -411,16 +492,16 @@ const email = 'hello@hordeagence.com';
       const currentScrollY = getScrollY();
 
       if (isOpen) {
-        header?.setAttribute('data-state', 'visible');
+        header?.classList.remove('header-hidden');
         return;
       }
 
       if (currentScrollY < 50) {
-        header?.setAttribute('data-state', 'visible');
+        header?.classList.remove('header-hidden');
       } else if (currentScrollY > lastScrollY + 5 && currentScrollY > 100) {
-        header?.setAttribute('data-state', 'hidden');
+        header?.classList.add('header-hidden');
       } else if (currentScrollY < lastScrollY - 5) {
-        header?.setAttribute('data-state', 'visible');
+        header?.classList.remove('header-hidden');
       }
 
       lastScrollY = currentScrollY;
@@ -436,28 +517,32 @@ const email = 'hello@hordeagence.com';
 
     // Use Lenis scroll event if available, fallback to native
     if ((window as any).lenis) {
-      (window as any).lenis.on('scroll', onScroll);
+      (window as any).lenis.on("scroll", onScroll);
     } else {
-      window.addEventListener('scroll', onScroll, { passive: true });
+      window.addEventListener("scroll", onScroll, { passive: true });
     }
 
     // Cleanup on navigation
-    document.addEventListener('astro:before-swap', () => {
-      if (scrambleInterval) {
-        clearInterval(scrambleInterval);
-        scrambleInterval = null;
-      }
-      scrambleIntervals.forEach((id) => clearInterval(id));
-      scrambleIntervals.clear();
-      if ((window as any).lenis) {
-        (window as any).lenis.off('scroll', onScroll);
-      } else {
-        window.removeEventListener('scroll', onScroll);
-      }
-      closeMenu();
-    }, { once: true });
+    document.addEventListener(
+      "astro:before-swap",
+      () => {
+        if (scrambleInterval) {
+          clearInterval(scrambleInterval);
+          scrambleInterval = null;
+        }
+        scrambleIntervals.forEach((id) => clearInterval(id));
+        scrambleIntervals.clear();
+        if ((window as any).lenis) {
+          (window as any).lenis.off("scroll", onScroll);
+        } else {
+          window.removeEventListener("scroll", onScroll);
+        }
+        closeMenu();
+      },
+      { once: true },
+    );
   }
 
   initHeaderNew();
-  document.addEventListener('astro:after-swap', initHeaderNew);
+  document.addEventListener("astro:after-swap", initHeaderNew);
 </script>

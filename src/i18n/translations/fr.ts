@@ -85,7 +85,7 @@ export const fr = {
     startProject: 'Démarrer un projet',
     items: [
       {
-        title: 'Audit &<br>performance',
+        title: 'Audit et<br>performance',
         subtitle: "Comprendre avant d'agir",
         servicesList: [
           'Audit UX/UI',
@@ -97,25 +97,25 @@ export const fr = {
           'Vous voulez optimiser la conversion de votre site ? Nous réalisons un diagnostic complet (Vitesse de chargement, UX, SEO) pour identifier les points de friction qui bloquent vos utilisateurs. Une analyse factuelle pour des actions immédiates.',
       },
       {
-        title: 'Optimisation<br>& refonte',
+        title: 'Optimisation<br>et refonte',
         subtitle: "Améliorer l'existant",
         servicesList: [
           'Optimisation des performances',
           'Refonte UI/UX',
           'Migration technique',
-          'Responsive & mobile-first',
+          'Responsive et mobile-first',
         ],
         content:
           'Pas besoin de tout jeter. Nous intervenons sur votre site existant pour booster ses performances (Core Web Vitals), moderniser son interface et le rendre ultra-rapide sur mobile.',
       },
       {
-        title: 'Création "from<br>scratch" & MVP',
+        title: 'Création "from<br>scratch" et MVP',
         subtitle: 'Construire sur des bases solides',
         servicesList: [
           'Identité Visuelle',
           'Site vitrine',
           'Application web',
-          'MVP & prototypage',
+          'MVP et prototypage',
           'E-commerce',
         ],
         content:
@@ -137,7 +137,7 @@ export const fr = {
   projects: {
     title: 'Projets\nselectionnés',
     otherProjects: 'Autres projets',
-    inProgress: '( on y travaille )',
+    inProgress: '(en cours...)',
   },
 
   // Footer

@@ -1,7 +1,7 @@
 ---
-import Line from '../ui/Line.astro';
-import Wrapped from '../ui/Wrapped.astro';
-import { DEFAULT_LOCALE, type Locale, useTranslations } from '../../i18n';
+import Line from "../ui/Line.astro";
+import Wrapped from "../ui/Wrapped.astro";
+import { DEFAULT_LOCALE, type Locale, useTranslations } from "../../i18n";
 
 interface Props {
 	lang?: Locale;
@@ -12,22 +12,34 @@ interface Props {
 	scrollTarget?: string;
 }
 
-const { lang = DEFAULT_LOCALE, scrollTarget = '#page-content' } = Astro.props;
+const { lang = DEFAULT_LOCALE, scrollTarget = "#page-content" } = Astro.props;
 const t = useTranslations(lang);
 
 const titleLine1 = Astro.props.titleLine1 ?? t.hero.titleLine1;
 const titleLine2 = Astro.props.titleLine2 ?? t.hero.titleLine2;
-const titleLine3Prefix = Astro.props.titleLine3Prefix ?? t.hero.titleLine3Prefix;
+const titleLine3Prefix =
+	Astro.props.titleLine3Prefix ?? t.hero.titleLine3Prefix;
 const typewriterWords = t.hero.typewriterWords;
 ---
 
 <section class="relative h-svh -z-9998">
 	<div class="relative top-1/2 -translate-y-1/2 mt-10">
 		<div class="hidden md:flex justify-end mb-6">
-			<div class="flex gap-8 md:gap-16 lg:gap-24 font-mono text-[1rem] uppercase">
+			<div
+				class="flex gap-8 md:gap-16 lg:gap-24 font-mono text-[1rem] uppercase"
+			>
 				<div class="flex flex-col gap-1">
-					<span id="hero-time" data-days={JSON.stringify(t.hero.days)}>{t.hero.days[2]} --:--:--</span>
-					<span id="hero-weather" data-weather-codes={JSON.stringify(t.hero.weatherCodes)}>BXL --° <span class="font-neuebit text-[1.75rem] inline-block leading-[0] relative -top-[-3px]">☁</span></span>
+					<span id="hero-time" data-days={JSON.stringify(t.hero.days)}
+						>{t.hero.days[2]} --:--:--</span
+					>
+					<span
+						id="hero-weather"
+						data-weather-codes={JSON.stringify(t.hero.weatherCodes)}
+						>BXL --° <span
+							class="font-neuebit text-[1.75rem] inline-block leading-[0] relative -top-[-3px]"
+							>☁</span
+						></span
+					>
 				</div>
 				<div class="flex flex-col gap-1">
 					<span>{t.hero.agency}</span>
@@ -35,49 +47,136 @@ const typewriterWords = t.hero.typewriterWords;
 				</div>
 			</div>
 		</div>
-		<h1 class="font-display uppercase leading-[0.9] text-4xl sm:text-[3.25rem] md:text-[4.875rem] lg:text-[6.875rem] xl:text-[7.5rem]">
-			<span class="block mb-2" set:html={titleLine1.replace(/\n/g, '<br>')}/>
-			<svg class="hidden sm:block lg:hidden -z-10 absolute w-[calc(100%-2*1rem)] -translate-y-[51%] center-x" viewBox="0 0 531 883" fill="none" xmlns="http://www.w3.org/2000/svg">
-				<rect x="-0.5" y="0.5" width="298.273" height="298.273" rx="149.136" transform="matrix(-1 -8.74228e-08 -8.74228e-08 1 414.272 457.887)" stroke="#B1B1B1"/>
-				<rect x="-0.5" y="0.5" width="298.273" height="298.273" rx="149.136" transform="matrix(-1 -8.74228e-08 -8.74228e-08 1 414.272 143)" stroke="#B1B1B1"/>
-				<rect x="414.772" y="607.023" width="298.273" height="312.586" transform="rotate(-180 414.772 607.023)" stroke="#B1B1B1"/>
-				<path d="M530.5 0.5V617.5C530.5 763.855 411.855 882.5 265.5 882.5C119.145 882.5 0.500002 763.855 0.5 617.5V0.5H530.5Z" stroke="#B1B1B1"/>
+		<h1
+			class="font-display uppercase leading-[0.9] text-4xl sm:text-[3.25rem] md:text-[4.875rem] lg:text-[6.875rem] xl:text-[7.5rem]"
+		>
+			<span
+				class="block mb-2"
+				set:html={titleLine1.replace(/\n/g, "<br>")}
+			/>
+			<svg
+				class="block lg:hidden -z-10 absolute w-[calc(100%-2*1rem)] -translate-y-[65.1%] center-x"
+				viewBox="0 0 531 1243"
+				fill="none"
+				xmlns="http://www.w3.org/2000/svg"
+			>
+				<rect
+					x="-0.5"
+					y="0.5"
+					width="298.273"
+					height="298.273"
+					rx="149.136"
+					transform="matrix(-1 -8.74228e-08 -8.74228e-08 1 414.272 817.887)"
+					stroke="#B1B1B1"></rect>
+				<rect
+					x="-0.5"
+					y="0.5"
+					width="298.273"
+					height="298.273"
+					rx="149.136"
+					transform="matrix(-1 -8.74228e-08 -8.74228e-08 1 414.272 503)"
+					stroke="#B1B1B1"></rect>
+				<rect
+					x="414.772"
+					y="967.023"
+					width="298.273"
+					height="312.586"
+					transform="rotate(-180 414.772 967.023)"
+					stroke="#B1B1B1"></rect>
+				<path
+					d="M530.5 0.5V977.5C530.5 1123.86 411.855 1242.5 265.5 1242.5C119.145 1242.5 0.5 1123.86 0.5 977.5V0.5H530.5Z"
+					stroke="#B1B1B1"></path>
 			</svg>
-			<svg class="hidden lg:block -z-10 absolute w-[calc(100%-2*1.5rem)] -translate-y-[54%] center-x" viewBox="0 0 1218 1282" fill="none" xmlns="http://www.w3.org/2000/svg">
-				<rect x="0.5" y="0.5" width="379.504" height="379.504" rx="189.752" transform="matrix(-4.37114e-08 1 1 4.37114e-08 619.356 498.087)" stroke="#B1B1B1"/>
-				<rect x="0.5" y="0.5" width="379.504" height="379.504" rx="189.752" transform="matrix(-4.37114e-08 1 1 4.37114e-08 219 498.087)" stroke="#B1B1B1"/>
-				<rect x="809.108" y="498.587" width="379.504" height="397.702" transform="rotate(90 809.108 498.587)" stroke="#B1B1B1"/>
-				<path d="M1217.5 0.5V673C1217.5 1009.07 945.065 1281.5 609 1281.5C272.935 1281.5 0.500003 1009.07 0.5 673V0.5H1217.5Z" stroke="#B1B1B1"/>
+
+			<svg
+				class="hidden lg:block -z-10 absolute w-[calc(100%-2*1.5rem)] -translate-y-[54%] center-x"
+				viewBox="0 0 1218 1282"
+				fill="none"
+				xmlns="http://www.w3.org/2000/svg"
+			>
+				<rect
+					x="0.5"
+					y="0.5"
+					width="379.504"
+					height="379.504"
+					rx="189.752"
+					transform="matrix(-4.37114e-08 1 1 4.37114e-08 619.356 498.087)"
+					stroke="#B1B1B1"></rect>
+				<rect
+					x="0.5"
+					y="0.5"
+					width="379.504"
+					height="379.504"
+					rx="189.752"
+					transform="matrix(-4.37114e-08 1 1 4.37114e-08 219 498.087)"
+					stroke="#B1B1B1"></rect>
+				<rect
+					x="809.108"
+					y="498.587"
+					width="379.504"
+					height="397.702"
+					transform="rotate(90 809.108 498.587)"
+					stroke="#B1B1B1"></rect>
+				<path
+					d="M1217.5 0.5V673C1217.5 1009.07 945.065 1281.5 609 1281.5C272.935 1281.5 0.500003 1009.07 0.5 673V0.5H1217.5Z"
+					stroke="#B1B1B1"></path>
 			</svg>
-			<Line dotClass="z-9999" /> 
+			<Line dotClass="z-9999" />
 			<span class="block text-right">
 				{titleLine2}{titleLine2 && <br />}
-				{titleLine3Prefix}<br>
+				{titleLine3Prefix}<br />
 				<span class="word-rotator">
 					<span class="word-rotator-inner">
-						{typewriterWords.map((word) => (
-							<span class="word-rotator-word">{word}</span>
-						))}
-						<span class="word-rotator-word">{typewriterWords[0]}</span>
+						{
+							typewriterWords.map((word) => (
+								<span class="word-rotator-word">{word}</span>
+							))
+						}
+						<span class="word-rotator-word"
+							>{typewriterWords[0]}</span
+						>
 					</span>
 				</span>
 			</span>
 		</h1>
-		<button class="hidden md:block mt-4 sm:mt-8 font-mono uppercase text-sm cursor-pointer scroll-to-btn" data-scroll-target={scrollTarget}><Wrapped class='text-[1rem]'>↓</Wrapped></button>
+		<button
+			class="hidden md:block mt-4 sm:mt-8 font-mono uppercase text-sm cursor-pointer scroll-to-btn"
+			data-scroll-target={scrollTarget}
+			><Wrapped class="text-[1rem]">↓</Wrapped></button
+		>
 	</div>
-	<button class="md:hidden absolute mt-0 bottom-8 left-1/2 -translate-x-1/2 sm:left-0 sm:translate-0 font-mono uppercase text-sm sm:bottom-24 md:relative md:bottom-0 cursor-pointer scroll-to-btn" data-scroll-target={scrollTarget}><Wrapped class='text-[1rem]'>↓</Wrapped></button>
+	<button
+		class="md:hidden absolute mt-0 bottom-8 left-1/2 -translate-x-1/2 sm:left-0 sm:translate-0 font-mono uppercase text-sm sm:bottom-24 md:relative md:bottom-0 cursor-pointer scroll-to-btn"
+		data-scroll-target={scrollTarget}
+		><Wrapped class="text-[1rem]">↓</Wrapped></button
+	>
 </section>
 
 <script>
 	// Weather icons mapping (language-independent)
 	const weatherIcons: Record<number, string> = {
-		0: '☀', 1: '⛅', 2: '☁', 3: '☁',
-		45: '☁', 48: '☁',
-		51: '☂', 53: '☂', 55: '☂',
-		61: '☂', 63: '☂', 65: '☂',
-		71: '❄', 73: '❄', 75: '❄', 77: '❄',
-		80: '☂', 81: '☂', 82: '☂',
-		95: '⚡', 96: '⚡', 99: '⚡'
+		0: "☀",
+		1: "⛅",
+		2: "☁",
+		3: "☁",
+		45: "☁",
+		48: "☁",
+		51: "☂",
+		53: "☂",
+		55: "☂",
+		61: "☂",
+		63: "☂",
+		65: "☂",
+		71: "❄",
+		73: "❄",
+		75: "❄",
+		77: "❄",
+		80: "☂",
+		81: "☂",
+		82: "☂",
+		95: "⚡",
+		96: "⚡",
+		99: "⚡",
 	};
 
 	let timeIntervalId: number | null = null;
@@ -85,44 +184,48 @@ const typewriterWords = t.hero.typewriterWords;
 
 	function formatTime(date: Date, days: string[]) {
 		const dayName = days[date.getDay()];
-		const hours = date.getHours().toString().padStart(2, '0');
-		const minutes = date.getMinutes().toString().padStart(2, '0');
-		const seconds = date.getSeconds().toString().padStart(2, '0');
+		const hours = date.getHours().toString().padStart(2, "0");
+		const minutes = date.getMinutes().toString().padStart(2, "0");
+		const seconds = date.getSeconds().toString().padStart(2, "0");
 		return `${dayName}    (${hours}:${minutes}:${seconds})`;
 	}
 
 	function updateTime() {
-		const timeEl = document.getElementById('hero-time');
+		const timeEl = document.getElementById("hero-time");
 		if (timeEl) {
 			const daysData = timeEl.dataset.days;
-			const days = daysData ? JSON.parse(daysData) : ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+			const days = daysData
+				? JSON.parse(daysData)
+				: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 			timeEl.textContent = formatTime(new Date(), days);
 		}
 	}
 
 	async function fetchWeather() {
-		const weatherEl = document.getElementById('hero-weather');
+		const weatherEl = document.getElementById("hero-weather");
 		if (!weatherEl) return;
 
 		// Parse weather codes from data attribute
 		const weatherCodesData = weatherEl.dataset.weatherCodes;
-		const weatherCodes: Record<number, string> = weatherCodesData ? JSON.parse(weatherCodesData) : {};
+		const weatherCodes: Record<number, string> = weatherCodesData
+			? JSON.parse(weatherCodesData)
+			: {};
 
 		try {
 			const controller = new AbortController();
 			const timeoutId = setTimeout(() => controller.abort(), 5000); // 5s timeout
 
 			const response = await fetch(
-				'https://api.open-meteo.com/v1/forecast?latitude=50.8503&longitude=4.3517&current_weather=true',
-				{ signal: controller.signal }
+				"https://api.open-meteo.com/v1/forecast?latitude=50.8503&longitude=4.3517&current_weather=true",
+				{ signal: controller.signal },
 			);
 			clearTimeout(timeoutId);
 
 			const data = await response.json();
 			const temp = Math.round(data.current_weather.temperature);
 			const code = data.current_weather.weathercode;
-			const weatherLabel = weatherCodes[code] || '--';
-			const weatherIcon = weatherIcons[code] || '☁';
+			const weatherLabel = weatherCodes[code] || "--";
+			const weatherIcon = weatherIcons[code] || "☁";
 
 			weatherEl.innerHTML = `${temp}° ${weatherLabel} <span class="font-neuebit text-[1.75rem] inline-block leading-[0] relative -top-[-3px]">${weatherIcon}</span>`;
 		} catch {
@@ -147,29 +250,38 @@ const typewriterWords = t.hero.typewriterWords;
 		timeIntervalId = window.setInterval(updateTime, 1000);
 
 		// Fetch météo uniquement sur desktop (md: 1024px+) où c'est affiché
-		const isDesktop = window.matchMedia('(min-width: 1024px)').matches;
+		const isDesktop = window.matchMedia("(min-width: 1024px)").matches;
 		if (isDesktop) {
-			if ('requestIdleCallback' in window) {
-				requestIdleCallback(() => {
-					fetchWeather();
-					weatherIntervalId = window.setInterval(fetchWeather, 1000 * 60 * 15);
-				}, { timeout: 3000 });
+			if ("requestIdleCallback" in window) {
+				requestIdleCallback(
+					() => {
+						fetchWeather();
+						weatherIntervalId = window.setInterval(
+							fetchWeather,
+							1000 * 60 * 15,
+						);
+					},
+					{ timeout: 3000 },
+				);
 			} else {
 				setTimeout(() => {
 					fetchWeather();
-					weatherIntervalId = window.setInterval(fetchWeather, 1000 * 60 * 15);
+					weatherIntervalId = window.setInterval(
+						fetchWeather,
+						1000 * 60 * 15,
+					);
 				}, 1500);
 			}
 		}
 	}
 
-	if (document.readyState === 'complete') {
+	if (document.readyState === "complete") {
 		init();
 	} else {
-		window.addEventListener('load', init, { once: true });
+		window.addEventListener("load", init, { once: true });
 	}
 
-	document.addEventListener('astro:after-swap', () => {
+	document.addEventListener("astro:after-swap", () => {
 		setTimeout(init, 50);
 	});
 </script>
@@ -179,14 +291,16 @@ const typewriterWords = t.hero.typewriterWords;
 	let currentIndex = 0;
 
 	function initWordRotator() {
-		const inner = document.querySelector('.word-rotator-inner') as HTMLElement;
-		const words = document.querySelectorAll('.word-rotator-word');
+		const inner = document.querySelector(
+			".word-rotator-inner",
+		) as HTMLElement;
+		const words = document.querySelectorAll(".word-rotator-word");
 
 		if (!inner || words.length === 0) return;
 
 		const totalWords = words.length - 1; // -1 car le dernier est un clone du premier
 		currentIndex = 0;
-		inner.style.transform = 'translateY(0)';
+		inner.style.transform = "translateY(0)";
 
 		rotatorIntervalId = window.setInterval(() => {
 			currentIndex++;
@@ -195,12 +309,12 @@ const typewriterWords = t.hero.typewriterWords;
 			// Quand on atteint le clone, reset instantané vers le vrai premier
 			if (currentIndex >= totalWords) {
 				setTimeout(() => {
-					inner.style.transition = 'none';
-					inner.style.transform = 'translateY(0)';
+					inner.style.transition = "none";
+					inner.style.transform = "translateY(0)";
 					currentIndex = 0;
 					// Force reflow puis réactive la transition
 					inner.offsetHeight;
-					inner.style.transition = '';
+					inner.style.transition = "";
 				}, 500); // Attendre la fin de la transition
 			}
 		}, 2500);
@@ -214,26 +328,28 @@ const typewriterWords = t.hero.typewriterWords;
 	}
 
 	// Initialize
-	if (document.readyState === 'complete') {
+	if (document.readyState === "complete") {
 		initWordRotator();
 	} else {
-		window.addEventListener('load', initWordRotator, { once: true });
+		window.addEventListener("load", initWordRotator, { once: true });
 	}
 
 	// Cleanup on navigation
-	document.addEventListener('astro:before-swap', cleanupWordRotator, { once: true });
+	document.addEventListener("astro:before-swap", cleanupWordRotator, {
+		once: true,
+	});
 
 	// Re-init after navigation
-	document.addEventListener('astro:after-swap', initWordRotator);
+	document.addEventListener("astro:after-swap", initWordRotator);
 </script>
 
 <script>
 	function initScrollButtons() {
-		const scrollButtons = document.querySelectorAll('.scroll-to-btn');
+		const scrollButtons = document.querySelectorAll(".scroll-to-btn");
 
-		scrollButtons.forEach(btn => {
-			btn.addEventListener('click', () => {
-				const target = btn.getAttribute('data-scroll-target');
+		scrollButtons.forEach((btn) => {
+			btn.addEventListener("click", () => {
+				const target = btn.getAttribute("data-scroll-target");
 				if (target && (window as any).lenis) {
 					(window as any).lenis.scrollTo(target, { duration: 1.2 });
 				}
@@ -242,7 +358,7 @@ const typewriterWords = t.hero.typewriterWords;
 	}
 
 	initScrollButtons();
-	document.addEventListener('astro:after-swap', initScrollButtons);
+	document.addEventListener("astro:after-swap", initScrollButtons);
 </script>
 
 <style is:global>

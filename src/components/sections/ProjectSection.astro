@@ -38,8 +38,8 @@ const projects = [
 	</div>
 	<a href={`/${lang}/projects`} class="hidden section-label text-[1rem] leading-none self-end mt-10 sm:mt-0 lg:-mt-[1lh]"><Wrapped>{t.projects.otherProjects} →</Wrapped></a>
 
-	<!-- Image flottante qui suit la souris -->
-	<div id="project-hover-image" class="pointer-events-none fixed z-50 overflow-visible" style="transform: translate(-50%, -50%) scale(0); will-change: transform;">
+	<!-- Image flottante qui suit la souris (desktop only) -->
+	<div id="project-hover-image" class="hidden md:block pointer-events-none fixed z-50 overflow-visible" style="transform: translate(-50%, -50%) scale(0); will-change: transform;">
 		<div class="w-[315px] h-[315px] overflow-hidden">
 			<img id="project-hover-img" src="" alt="" class="w-full h-full object-cover" />
 			<div id="project-hover-placeholder" class="hidden w-full h-full bg-bg-light border border-lines flex items-center justify-center">
@@ -114,7 +114,8 @@ const projects = [
 <script>
 	function initProjectHoverImage() {
 		// Désactiver sur mobile/touch
-		if (!window.matchMedia('(hover: hover)').matches) return;
+		const isMobile = window.matchMedia('(max-width: 768px)').matches || 'ontouchstart' in window;
+		if (isMobile || !window.matchMedia('(hover: hover)').matches) return;
 
 		const container = document.getElementById('project-hover-image');
 		const img = document.getElementById('project-hover-img') as HTMLImageElement;
