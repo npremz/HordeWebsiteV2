@@ -56,7 +56,7 @@ const email = "hello@hordeagence.com";
 
 <header
   id="header-new"
-  class="header-new fixed z-9999999 top-0 left-0 right-0 md:max-w-[1350px] md:mx-auto pt-(--gutter) sm:pt-4 px-(--gutter) lg:px-0 pointer-events-none"
+  class="header-new fixed z-9999999 top-0 left-0 right-0 sm:max-w-[85%] sm:mx-auto md:max-w-[1350px] md:mx-auto pt-(--gutter) sm:pt-4 px-(--gutter) lg:px-0 pointer-events-none"
 >
   <!-- Header bar -->
   <div
@@ -242,7 +242,6 @@ const email = "hello@hordeagence.com";
 </style>
 
 <style>
-
   /* Burger animation - 2 lines converge to single centered line */
   .header-new.is-open .burger-line:first-child {
     transform: translateY(5px);
@@ -492,16 +491,16 @@ const email = "hello@hordeagence.com";
       const currentScrollY = getScrollY();
 
       if (isOpen) {
-        header?.classList.remove('header-hidden');
+        header?.classList.remove("header-hidden");
         return;
       }
 
       if (currentScrollY < 50) {
-        header?.classList.remove('header-hidden');
+        header?.classList.remove("header-hidden");
       } else if (currentScrollY > lastScrollY + 5 && currentScrollY > 100) {
-        header?.classList.add('header-hidden');
+        header?.classList.add("header-hidden");
       } else if (currentScrollY < lastScrollY - 5) {
-        header?.classList.remove('header-hidden');
+        header?.classList.remove("header-hidden");
       }
 
       lastScrollY = currentScrollY;
