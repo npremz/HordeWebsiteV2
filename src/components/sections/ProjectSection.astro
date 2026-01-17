@@ -69,7 +69,7 @@ const projects = [
 		</div>
 	</div>
 
-	<ol class="mt-10 sm:mt-16 text-[2rem] lg:text-[2.5rem]">
+	<ol class="mt-10 sm:mt-16 text-2xl sm:text-[2rem] lg:text-[2.5rem]">
 		{
 			projects.map((project, index) => (
 				<li
@@ -82,7 +82,7 @@ const projects = [
 							href={project.href}
 							target="_blank"
 							class:list={[
-								"project-link flex justify-between py-8 px-9",
+								"project-link flex justify-between py-5 xl:py-8 px-8 lg:px-9",
 								index === 0
 									? "border border-lines"
 									: "border-b border-x border-lines",
@@ -94,7 +94,7 @@ const projects = [
 					) : (
 						<div
 							class:list={[
-								"project-link flex justify-between py-8 px-9",
+								"project-link flex justify-between py-5 xl:py-8 px-8 lg:px-9",
 								index === 0
 									? "border border-lines"
 									: "border-b border-x border-lines",
