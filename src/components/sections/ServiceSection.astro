@@ -1,6 +1,6 @@
 ---
 import Wrapped from "../ui/Wrapped.astro";
-import { DEFAULT_LOCALE, type Locale, useTranslations } from '../../i18n';
+import { DEFAULT_LOCALE, type Locale, useTranslations } from "../../i18n";
 
 interface Props {
   lang?: Locale;
@@ -26,7 +26,7 @@ const services = t.services.items;
               aria-controls={`service-content-${index}`}
             >
               <span
-                class="service-title font-display uppercase leading-none text-[1.625rem] sm:text-[2.5rem] md:text-[4rem] transition-opacity"
+                class="service-title font-display uppercase leading-none text-[1.625rem] sm:text-[2.5rem] md:text-[3.125rem] lg:text-[4rem] transition-opacity"
                 data-text={service.title}
                 set:html={service.title}
               />
