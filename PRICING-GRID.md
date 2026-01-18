@@ -130,16 +130,6 @@ Pour les projets nécessitant une approche globale et stratégique.
 | Illustrations custom (lot de 5) | Illustrations sur-mesure pour le site | 400€ - 800€ |
 | Icônes personnalisées (set 20) | Pack d'icônes cohérent | 200€ - 400€ |
 
-### Contenu & Copywriting
-
-| Option | Description | Prix |
-|--------|-------------|------|
-| Rédaction page simple | ~300-500 mots optimisés SEO | 80€ - 120€/page |
-| Rédaction page complexe | ~800-1200 mots + structure | 150€ - 250€/page |
-| Pack 5 articles blog | Articles 800 mots optimisés SEO | 450€ - 700€ |
-| Pack 10 articles blog | Articles 800 mots optimisés SEO | 800€ - 1 200€ |
-| Traduction FR/EN ou FR/NL | Par page | 50€ - 80€/page |
-
 ### SEO & Visibilité (avancé)
 
 *Le SEO technique est déjà inclus dans toutes nos offres. Ces options sont pour aller plus loin.*
@@ -212,8 +202,7 @@ Pour les projets nécessitant une approche globale et stratégique.
 
 ### Indépendant / Thérapeute - Budget serré
 - Template+ Starter: 890€
-- Rédaction 3 pages: 300€
-- **Total: 1 190€** *(SEO technique inclus)*
+- **Total: 890€** *(SEO technique inclus)*
 
 ### PME - Site vitrine classique
 - Sur-Mesure Essentiel (7 pages): 4 500€
@@ -232,9 +221,8 @@ Pour les projets nécessitant une approche globale et stratégique.
 ### E-commerce PME
 - Boutique Pro: 12 000€
 - Identité visuelle: 1 500€
-- Pack 10 articles blog: 1 000€
 - Stratégie mots-clés: 350€
-- **Total: 14 850€** *(SEO technique inclus)*
+- **Total: 13 850€** *(SEO technique inclus)*
 
 ---
 
