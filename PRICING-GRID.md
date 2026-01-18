@@ -12,6 +12,8 @@
 | **Sur-Mesure Light** | PME, projets modulaires | 150€ - 400€/page | 2-4 semaines |
 | **Sur-Mesure Premium** | PME/ETI, projets complexes | 3 500€ - 15 000€+ | 4-8 semaines |
 
+> **SEO technique inclus dans toutes nos offres** : Optimisation Core Web Vitals, structure HTML sémantique, meta tags, sitemap, robots.txt, données structurées Schema.org, et performance optimale.
+
 ---
 
 ## 1. TEMPLATE+ (Entrée de gamme intelligente)
@@ -24,8 +26,8 @@ Sites basés sur des templates premium (Framer/Webflow) personnalisés par Horde
 
 | Pack | Inclus | Prix |
 |------|--------|------|
-| **Starter** | Landing page (1 page), template premium, personnalisation couleurs/typo, formulaire contact, responsive, déploiement | **890€** |
-| **Vitrine** | 3-5 pages, template premium personnalisé, CMS basique (blog ou news), SEO technique de base, analytics | **1 490€** |
+| **Starter** | Landing page (1 page), template premium, personnalisation couleurs/typo, formulaire contact, responsive, SEO technique, déploiement | **890€** |
+| **Vitrine** | 3-5 pages, template premium personnalisé, CMS basique (blog ou news), SEO technique, analytics | **1 490€** |
 | **Business** | 5-8 pages, template premium personnalisé, CMS complet, intégrations (Calendly, CRM...), SEO technique, analytics avancés | **2 290€** |
 
 ### Avantages Template+
@@ -60,6 +62,7 @@ Facturation transparente à la page pour un contrôle total du budget.
 | Footer | 100€ |
 | Page 404 personnalisée | 50€ |
 | Responsive mobile | Inclus |
+| SEO technique complet | Inclus |
 
 ### Exemples de devis
 
@@ -137,15 +140,16 @@ Pour les projets nécessitant une approche globale et stratégique.
 | Pack 10 articles blog | Articles 800 mots optimisés SEO | 800€ - 1 200€ |
 | Traduction FR/EN ou FR/NL | Par page | 50€ - 80€/page |
 
-### SEO & Visibilité
+### SEO & Visibilité (avancé)
+
+*Le SEO technique est déjà inclus dans toutes nos offres. Ces options sont pour aller plus loin.*
 
 | Option | Description | Prix |
 |--------|-------------|------|
-| Audit SEO complet | Analyse technique + contenu + concurrence | 500€ - 1 000€ |
-| Optimisation SEO on-page | Meta, structure, performance | Inclus Premium / 300€ |
-| Stratégie mots-clés | Recherche + recommandations | 250€ - 400€ |
-| SEO local (Google Business) | Configuration + optimisation | 200€ - 350€ |
-| Accompagnement SEO mensuel | Suivi + optimisations continues | 300€ - 600€/mois |
+| Audit SEO concurrentiel | Analyse positionnement + concurrence + opportunités | 500€ - 1 000€ |
+| Stratégie mots-clés | Recherche sémantique + recommandations éditoriales | 250€ - 400€ |
+| SEO local (Google Business) | Configuration profil, optimisation, avis | 200€ - 350€ |
+| Accompagnement SEO mensuel | Suivi positions, optimisations continues, rapports | 300€ - 600€/mois |
 
 ### Fonctionnalités
 
@@ -181,15 +185,6 @@ Pour les projets nécessitant une approche globale et stratégique.
 | Documentation personnalisée | Guide d'utilisation PDF | 150€ - 250€ |
 | Support prioritaire (1 mois) | Réponse < 24h, modifications mineures | 200€/mois |
 
-### Maintenance & Hébergement
-
-| Option | Description | Prix |
-|--------|-------------|------|
-| Maintenance basique | Mises à jour, sauvegardes, monitoring | 50€ - 80€/mois |
-| Maintenance premium | + Modifications mineures (2h/mois) | 150€ - 250€/mois |
-| Hébergement managé | Serveur optimisé, SSL, CDN | 15€ - 40€/mois |
-| Pack annuel maintenance | 12 mois maintenance basique | 500€/an |
-
 ---
 
 ## 5. SERVICES COMPLÉMENTAIRES (Audit & Optimisation)
@@ -200,8 +195,7 @@ Pour les projets nécessitant une approche globale et stratégique.
 |---------|-------------|------|
 | Audit découverte | Diagnostic rapide (30min call) | **Gratuit** |
 | Audit UX/UI | Analyse ergonomie + recommandations | 400€ - 800€ |
-| Audit SEO technique | Core Web Vitals + technique + contenu | 500€ - 1 000€ |
-| Audit complet | UX + SEO + Performance + Rapport | 1 200€ - 2 000€ |
+| Audit complet | UX + Performance + Concurrence + Rapport détaillé | 1 200€ - 2 000€ |
 
 ### Optimisation site existant
 
@@ -219,29 +213,28 @@ Pour les projets nécessitant une approche globale et stratégique.
 ### Indépendant / Thérapeute - Budget serré
 - Template+ Starter: 890€
 - Rédaction 3 pages: 300€
-- SEO local: 250€
-- **Total: 1 440€**
+- **Total: 1 190€** *(SEO technique inclus)*
 
 ### PME - Site vitrine classique
 - Sur-Mesure Essentiel (7 pages): 4 500€
 - Blog: 500€
 - Pack animations avancées: 500€
 - Formation 2h: 150€
-- **Total: 5 650€**
+- **Total: 5 650€** *(SEO technique inclus)*
 
 ### Startup - MVP + Landing
 - Template+ Business: 2 290€
 - 3 pages custom supplémentaires: 900€
 - Animation hero: 400€
 - Newsletter: 150€
-- **Total: 3 740€**
+- **Total: 3 740€** *(SEO technique inclus)*
 
 ### E-commerce PME
 - Boutique Pro: 12 000€
 - Identité visuelle: 1 500€
-- Pack 10 articles: 1 000€
-- SEO accompagnement 6 mois: 2 400€
-- **Total: 16 900€**
+- Pack 10 articles blog: 1 000€
+- Stratégie mots-clés: 350€
+- **Total: 14 850€** *(SEO technique inclus)*
 
 ---
 
