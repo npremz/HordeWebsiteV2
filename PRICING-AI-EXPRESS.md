@@ -6,15 +6,15 @@
 
 ## Le concept
 
-**AI Express** = L'IA fait le gros du travail, Horde supervise et peaufine.
+**AI Express** = L'IA accélère, l'expertise Horde garantit la qualité.
 
-- Design généré par IA (Midjourney, DALL-E, Figma AI)
-- Code assisté IA (Cursor, v0.dev, Claude)
+- Design généré par IA, **validé et ajusté par nos designers**
+- Code assisté IA, **reviewé par nos développeurs**
 - Templates intelligents pré-optimisés
-- Livraison ultra-rapide (3-7 jours)
-- **Prix divisés par 2 à 3**
+- Livraison rapide (5-10 jours)
+- **Prix accessibles sans sacrifier la qualité**
 
-> **Ce qu'on garantit** : Un site fonctionnel, rapide, responsive et SEO-ready. Ce qu'on ne fait pas : du sur-mesure pixel-perfect ou des animations complexes.
+> **Pas du vibe coding** : On ne balance pas du code IA à l'aveugle. Chaque ligne est vérifiée, chaque design est peaufiné. L'IA nous fait gagner du temps, pas baisser nos standards.
 
 ---
 
@@ -22,23 +22,24 @@
 
 | Formule | Idéal pour | Prix | Délai |
 |---------|------------|------|-------|
-| **Landing** | Lancement produit, événement, test marché | **390€** | 3-5 jours |
-| **Vitrine** | Indépendants, TPE, artisans | **690€** | 5-7 jours |
-| **Pro** | PME, startups, associations | **990€** | 7-10 jours |
+| **Landing** | Lancement produit, événement, test marché | **490€** | 5-7 jours |
+| **Vitrine** | Indépendants, TPE, artisans | **890€** | 7-10 jours |
+| **Pro** | PME, startups, associations | **1 290€** | 10-14 jours |
 
 ---
 
-## 1. LANDING (390€)
+## 1. LANDING (490€)
 
 *"Testez votre idée sans vous ruiner"*
 
 ### Inclus
 - 1 page longue (sections scrollables)
-- Template IA personnalisé (couleurs, typo, logo intégré)
+- Template IA personnalisé + **review design Horde**
 - 3-5 sections au choix (hero, features, témoignages, FAQ, CTA)
 - Formulaire de contact
-- Responsive mobile
-- SEO technique de base
+- Responsive mobile (testé sur vrais devices)
+- SEO technique complet
+- Code propre et maintenable
 - Hébergement Vercel/Netlify (gratuit)
 - Livraison fichiers sources
 
@@ -50,21 +51,22 @@
 
 ---
 
-## 2. VITRINE (690€)
+## 2. VITRINE (890€)
 
-*"Votre présence web pro en une semaine"*
+*"Votre présence web pro, bien faite"*
 
 ### Inclus
 - 3-5 pages (Accueil, À propos, Services, Contact + 1 au choix)
-- Template IA personnalisé
+- Template IA personnalisé + **ajustements design sur-mesure**
 - Visuels IA générés (5 images custom)
 - Formulaire de contact avancé
 - Google Maps intégré
-- Responsive mobile
+- Responsive mobile (testé multi-devices)
 - SEO technique complet
+- Code reviewé et optimisé
 - Analytics (Google Analytics 4)
 - Hébergement 1 an inclus
-- 1 tour de révisions
+- 2 tours de révisions
 
 ### Parfait pour
 - Artisans, thérapeutes, coachs
@@ -74,23 +76,24 @@
 
 ---
 
-## 3. PRO (990€)
+## 3. PRO (1 290€)
 
 *"Le meilleur rapport qualité/prix du marché"*
 
 ### Inclus
 - 5-8 pages
-- Template IA premium personnalisé
+- Template IA premium + **personnalisation poussée**
 - Visuels IA générés (10 images custom)
 - CMS simple (blog ou actualités)
 - Formulaires multiples
 - Intégrations basiques (Calendly, réseaux sociaux)
-- Responsive mobile
+- Responsive mobile (testé multi-devices)
 - SEO technique complet
+- Code reviewé, optimisé, documenté
 - Analytics avancés
 - Hébergement 1 an inclus
 - 2 tours de révisions
-- Formation CMS 30min (visio)
+- Formation CMS 45min (visio)
 
 ### Parfait pour
 - PME en lancement
@@ -106,18 +109,18 @@
 
 | Option | Description | Prix |
 |--------|-------------|------|
-| **+1 page** | Page supplémentaire standard | +80€ |
-| **+1 page complexe** | Page avec sections custom | +150€ |
-| **Visuels IA (+5)** | 5 images générées supplémentaires | +50€ |
-| **Logo IA** | Logo généré + 3 variations | +90€ |
-| **Favicon pack** | Favicon + icônes PWA | +30€ |
-| **Blog setup** | Système blog avec 1 article exemple | +120€ |
-| **Newsletter** | Intégration Mailchimp/Brevo | +60€ |
-| **Chat widget** | Intégration Crisp/Tawk.to | +40€ |
-| **Calendly/Cal.com** | Intégration réservation | +50€ |
-| **Multilingue (+1)** | Ajout d'une langue | +150€/langue |
-| **Révision express** | Tour de révision supplémentaire | +80€ |
-| **Livraison 48h** | Priorité de traitement | +150€ |
+| **+1 page** | Page supplémentaire standard | +100€ |
+| **+1 page complexe** | Page avec sections custom | +180€ |
+| **Visuels IA (+5)** | 5 images générées + sélection qualité | +60€ |
+| **Logo IA** | Logo généré + review + 3 variations | +120€ |
+| **Favicon pack** | Favicon + icônes PWA | +40€ |
+| **Blog setup** | Système blog avec 1 article exemple | +150€ |
+| **Newsletter** | Intégration Mailchimp/Brevo | +80€ |
+| **Chat widget** | Intégration Crisp/Tawk.to | +50€ |
+| **Calendly/Cal.com** | Intégration réservation | +60€ |
+| **Multilingue (+1)** | Ajout d'une langue | +180€/langue |
+| **Révision supplémentaire** | Tour de révision en plus | +100€ |
+| **Livraison prioritaire** | -3 jours sur le délai | +200€ |
 
 ---
 
@@ -125,12 +128,13 @@
 
 | Critère | AI Express | Standard |
 |---------|------------|----------|
-| **Prix site vitrine** | 690€ | 1 850€+ |
-| **Délai** | 5-7 jours | 2-4 semaines |
-| **Design** | Template IA personnalisé | Sur-mesure |
+| **Prix site vitrine** | 890€ | 1 850€+ |
+| **Délai** | 7-10 jours | 2-4 semaines |
+| **Design** | Template IA + ajustements experts | 100% sur-mesure |
+| **Code** | IA + review humain | 100% artisanal |
 | **Animations** | Basiques (hover, fade) | Avancées possibles |
-| **Révisions** | 1-2 tours | 2-3 tours |
-| **Personnalisation** | Couleurs, typo, contenu | Illimitée |
+| **Révisions** | 2 tours | 2-3 tours |
+| **Personnalisation** | Couleurs, typo, contenu, layout | Illimitée |
 | **Support** | Email | Email + Slack/WhatsApp |
 
 ---
@@ -161,46 +165,46 @@
 ## Exemples de prix finaux
 
 ### Thérapeute - Ultra budget
-- Formule Landing: 390€
-- **Total: 390€** — *Livré en 3-5 jours*
+- Formule Landing: 490€
+- **Total: 490€** — *Livré en 5-7 jours*
 
 ### Artisan - Présence web complète
-- Formule Vitrine: 690€
-- Logo IA: 90€
-- +1 page (réalisations): 80€
-- **Total: 860€** — *Livré en 7 jours*
+- Formule Vitrine: 890€
+- Logo IA: 120€
+- +1 page (réalisations): 100€
+- **Total: 1 110€** — *Livré en 10 jours*
 
 ### Startup - MVP web
-- Formule Pro: 990€
-- Blog setup: 120€
-- Newsletter: 60€
-- Calendly: 50€
-- **Total: 1 220€** — *Livré en 10 jours*
+- Formule Pro: 1 290€
+- Blog setup: 150€
+- Newsletter: 80€
+- Calendly: 60€
+- **Total: 1 580€** — *Livré en 14 jours*
 
 ### Association - Site complet
-- Formule Pro: 990€
-- +2 pages: 160€
-- Multilingue FR/EN: 150€
-- **Total: 1 300€** — *Livré en 10-12 jours*
+- Formule Pro: 1 290€
+- +2 pages: 200€
+- Multilingue FR/EN: 180€
+- **Total: 1 670€** — *Livré en 14-16 jours*
 
 ---
 
 ## Process simplifié
 
 ```
-1. BRIEF (Jour 1)
-   └─ Formulaire en ligne + call 15min
+1. BRIEF (Jour 1-2)
+   └─ Formulaire en ligne + call 20min
 
-2. GÉNÉRATION IA (Jour 2-3)
-   └─ Design + code générés
+2. GÉNÉRATION IA (Jour 2-4)
+   └─ Design + code générés par IA
 
-3. PERSONNALISATION (Jour 3-5)
-   └─ Ajustements Horde + vos contenus
+3. REVIEW & AJUSTEMENTS (Jour 4-7)
+   └─ Validation qualité + personnalisation Horde
 
-4. RÉVISION (Jour 5-6)
+4. RÉVISIONS (Jour 7-9)
    └─ Vos retours intégrés
 
-5. LIVRAISON (Jour 7)
+5. LIVRAISON (Jour 10)
    └─ Mise en ligne + formation
 ```
 
@@ -242,8 +246,8 @@
 **Q: Je peux évoluer vers du sur-mesure après ?**
 > Absolument. Votre site AI Express peut servir de base pour une refonte sur-mesure plus tard. On reprend le projet là où il en est.
 
-**Q: C'est vraiment si rapide ?**
-> Oui. L'IA nous permet de générer en heures ce qui prenait des jours. Le temps restant, c'est la personnalisation et la qualité.
+**Q: C'est vraiment de la qualité pro ?**
+> Oui. L'IA génère une base solide, mais chaque site passe par nos designers et développeurs. On ne livre rien qu'on n'assumerait pas publiquement.
 
 ---
 
