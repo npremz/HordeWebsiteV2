@@ -107,7 +107,6 @@ Templates premium personnalisés par nos designers. Code optimisé et reviewé p
 | Newsletter (Mailchimp/Brevo) | +80€ |
 | Chat widget (Crisp/Tawk.to) | +50€ |
 | Calendly/Cal.com | +60€ |
-| Multilingue (+1 langue) | +180€ |
 | Révision supplémentaire | +100€ |
 | Livraison prioritaire (-3 jours) | +200€ |
 
@@ -151,12 +150,11 @@ Design créé from scratch par nos designers. Code écrit à la main par nos dé
 - Design unique + système de design
 - CMS complet
 - Blog intégré
-- Multilingue (2 langues)
 - Animations avancées
 - SEO technique complet
 - Formation 2h
 
-**Idéal pour :** PME ambitieuses, scale-ups, marques internationales
+**Idéal pour :** PME ambitieuses, scale-ups
 
 ---
 
@@ -168,7 +166,6 @@ Design créé from scratch par nos designers. Code écrit à la main par nos dé
 - CMS avancé
 - Animations premium (scroll, transitions, micro-interactions)
 - Intégrations avancées (API, CRM, ERP...)
-- Multilingue (3 langues)
 - Stratégie SEO
 - SEO technique complet
 - Formation complète
@@ -237,7 +234,6 @@ Design créé from scratch par nos designers. Code écrit à la main par nos dé
 | Option | Prix |
 |--------|------|
 | Blog/Actualités | 400€ - 800€ |
-| Multilingue (+1 langue) | 300€ - 600€ |
 | Formulaire avancé | 150€ - 300€ |
 | Newsletter | 150€ - 250€ |
 | Chat en direct | 100€ - 200€ |
@@ -256,34 +252,14 @@ Design créé from scratch par nos designers. Code écrit à la main par nos dé
 | Micro-interactions | 200€ - 400€ |
 | Animation Canvas/WebGL | 600€ - 1 500€ |
 
-### Support & Formation
-
-| Option | Prix |
-|--------|------|
-| Formation CMS (1h) | 80€ |
-| Formation CMS (2h) | 150€ |
-| Formation avancée (demi-journée) | 350€ |
-| Documentation personnalisée | 150€ - 250€ |
-| Support prioritaire (1 mois) | 200€/mois |
-
----
-
 # SERVICES COMPLÉMENTAIRES
-
-## Audits
-
-| Service | Prix |
-|---------|------|
-| Audit découverte (30min call) | **Gratuit** |
-| Audit UX/UI | 400€ - 800€ |
-| Audit complet (UX + Perf + Concurrence) | 1 200€ - 2 000€ |
 
 ## Optimisation site existant
 
 | Service | Prix |
 |---------|------|
-| Optimisation performance | 500€ - 1 500€ |
-| Refonte légère | 1 500€ - 3 000€ |
+| Optimisation performance | 300€ - 800€ |
+| Refonte légère | 500€ - 1 500€ |
 | Migration technique | 800€ - 2 500€ |
 | Mise en conformité RGPD | 300€ - 600€ |
 
@@ -300,7 +276,6 @@ Design créé from scratch par nos designers. Code écrit à la main par nos dé
 | **Animations** | Basiques | Illimitées |
 | **Révisions** | 2 tours | 2-3 tours |
 | **Personnalisation** | Couleurs, typo, layout | Totale |
-| **Support** | Email | Email + Slack/WhatsApp |
 
 ---
 
@@ -328,11 +303,11 @@ Design créé from scratch par nos designers. Code écrit à la main par nos dé
 - Animations avancées: 500€
 - **Total: 5 500€**
 
-### Scale-up - Plateforme internationale
+### Scale-up - Plateforme avancée
 - Sur-Mesure Professionnel: 7 000€
-- +2 langues: 1 000€
 - Espace membres: 1 000€
-- **Total: 9 000€**
+- Animations avancées: 600€
+- **Total: 8 600€**
 
 ### E-commerce PME
 - Boutique Pro: 12 000€
@@ -346,7 +321,8 @@ Design créé from scratch par nos designers. Code écrit à la main par nos dé
 ## Paiement
 
 **Express :**
-- 100% à la commande
+- 50% à la commande
+- 50% à la livraison
 
 **Sur-Mesure :**
 - 30% à la signature
