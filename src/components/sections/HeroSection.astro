@@ -28,7 +28,7 @@ const typewriterWords = t.hero.typewriterWords;
 			<div
 				class="flex gap-8 md:gap-16 lg:gap-24 font-mono text-[1rem] uppercase"
 			>
-				<div class="flex flex-col gap-1">
+				<div class="flex flex-col gap-1 leading-[18px]">
 					<span id="hero-time" data-days={JSON.stringify(t.hero.days)}
 						>{t.hero.days[2]} --:--:--</span
 					>
@@ -41,7 +41,7 @@ const typewriterWords = t.hero.typewriterWords;
 						></span
 					>
 				</div>
-				<div class="flex flex-col gap-1">
+				<div class="flex flex-col gap-1 leading-[18px]">
 					<span>{t.hero.agency}</span>
 					<span>{t.hero.location}</span>
 				</div>
@@ -122,7 +122,7 @@ const typewriterWords = t.hero.typewriterWords;
 					stroke="#B1B1B1"></path>
 			</svg>
 			<Line dotClass="z-9999" />
-			<span class="block text-right">
+			<span class="block text-right pt-[5px] md:pt-[13px]">
 				{titleLine2}{titleLine2 && <br />}
 				{titleLine3Prefix}<br />
 				<span class="word-rotator">

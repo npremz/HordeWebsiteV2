@@ -11,6 +11,9 @@ columns:
       - label: Linkedin
         url: https://www.linkedin.com/company/horde-agence/
         isExternal: true
+      - label: Instagram
+        url: https://www.instagram.com/hordeagencebxl/
+        isExternal: true
 socialLinks: []
 copyright: ©2026 Horde Agency
 legalLinks:

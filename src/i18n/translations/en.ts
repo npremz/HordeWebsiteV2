@@ -86,7 +86,7 @@ export const en: Translations = {
     startProject: 'Start a project',
     items: [
       {
-        title: 'Audit &<br>performance',
+        title: 'Audit and<br>performance',
         subtitle: 'Understand before acting',
         servicesList: [
           'UX/UI Audit',
@@ -98,25 +98,25 @@ export const en: Translations = {
           "Want to optimize your site's conversion? We perform a complete diagnosis (Loading speed, UX, SEO) to identify friction points blocking your users. A factual analysis for immediate action.",
       },
       {
-        title: 'Optimization<br>& redesign',
+        title: 'Optimization<br>and redesign',
         subtitle: 'Improve what exists',
         servicesList: [
           'Performance optimization',
           'UI/UX Redesign',
           'Technical migration',
-          'Responsive & mobile-first',
+          'Responsive and mobile-first',
         ],
         content:
           "No need to throw everything away. We work on your existing site to boost its performance (Core Web Vitals), modernize its interface and make it ultra-fast on mobile.",
       },
       {
-        title: 'From scratch<br>& MVP',
+        title: 'From scratch<br>and MVP',
         subtitle: 'Build on solid foundations',
         servicesList: [
           'Visual Identity',
           'Showcase website',
           'Web application',
-          'MVP & prototyping',
+          'MVP and prototyping',
           'E-commerce',
         ],
         content:
@@ -169,8 +169,8 @@ export const en: Translations = {
     emailLabel: 'Email',
     companyLabel: 'Company',
     companyPlaceholder: 'Company name',
-    submit: 'Send',
-    submitting: 'Sending...',
+    submit: 'Transmit',
+    submitting: 'Transmitting...',
     successMessage: 'Message sent successfully!',
     errorMessage: 'An error occurred. Please try again.',
     requiredField: 'This field is required',

@@ -295,9 +295,9 @@ export default function ContactForm({ translations: t }: ContactFormProps) {
       </div>
 
       <div className='flex flex-col md:flex-row md:gap-16 lg:gap-32 md:justify-end'>
-        <button type="submit" disabled={isSubmitting} className='group relative overflow-hidden mt-5 sm:mt-10 xl:mt-16 uppercase font-mono text-[1rem] leading-[0.6] py-6 px-5 flex justify-center w-full md:w-fit border border-bg-light bg-transparent text-bg-light transition-colors duration-300 ease-in-out cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed self-center md:self-end hover:text-black'>
-          <span className='absolute inset-0 bg-bg-light transform -translate-x-full group-hover:translate-x-0 transition-transform duration-400 ease-[cubic-bezier(0.25,0.46,0.45,0.94)]'></span>
-          <span className='relative z-10'>{isSubmitting ? t.submitting : t.submit}</span>
+        <button type="submit" disabled={isSubmitting} className='group relative overflow-hidden mt-5 sm:mt-10 xl:mt-16 uppercase font-mono text-[1rem] leading-[0.6] py-6 px-5 flex justify-center w-full md:w-fit border border-bg-light bg-bg-light text-black transition-colors duration-300 ease-in-out cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed self-center md:self-end'>
+          <span className='absolute inset-0 bg-black transform -translate-x-full group-hover:translate-x-0 transition-transform duration-400 ease-[cubic-bezier(0.25,0.46,0.45,0.94)]'></span>
+          <span className='relative z-10 text-black group-hover:text-bg-light'>{isSubmitting ? t.submitting : t.submit}</span>
         </button>
       </div>
 

@@ -56,11 +56,11 @@ const email = "hello@hordeagence.com";
 
 <header
   id="header-new"
-  class="header-new fixed z-9999999 top-0 left-0 right-0 md:max-w-[1350px] md:mx-auto pt-(--gutter) sm:pt-4 px-(--gutter) lg:px-0 pointer-events-none"
+  class="header-new fixed z-9999999 top-0 left-0 right-0 sm:max-w-[85%] sm:mx-auto md:max-w-[1350px] md:mx-auto pt-(--gutter) sm:pt-4 px-(--gutter) lg:px-0 pointer-events-none"
 >
   <!-- Header bar -->
   <div
-    class="header-bar max-w-[1350px] mx-auto bg-black border border-lines-dark text-bg-light px-5 py-4 md:px-6 md:py-5 pointer-events-auto"
+    class="header-bar max-w-[1350px] mx-auto bg-black border border-lines-dark text-bg-light px-5 py-4 md:px-6 pointer-events-auto"
   >
     <div class="flex-between">
       <!-- Logo -->
@@ -76,14 +76,26 @@ const email = "hello@hordeagence.com";
         />
       </a>
 
-      <div class="flex-center gap-17.5">
+      <div class="flex-center gap-16 lg:gap-24">
         <!-- Start project link (md+) -->
         <a
           href={`/${lang}/contact`}
           id="header-start-project"
-          class="hidden md:block text-[1.375rem]"
+          class="hidden md:flex items-center gap-2.5 text-[1.375rem]"
           data-text={t.nav.startProject}
         >
+          <svg
+            class="hidden md:block"
+            width="11"
+            height="10"
+            viewBox="0 0 11 10"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M7.38206 10L6.60058 9.24904L9.13314 6.39847L0 6.39847V0H1V5.32567H9.13314L6.60058 2.4751L7.38206 1.72414L11 5.86207L7.38206 10Z"
+              fill="#F4F3F3"></path>
+          </svg>
           <span class="nav-scramble-header">{t.nav.startProject}</span>
         </a>
 
@@ -157,7 +169,7 @@ const email = "hello@hordeagence.com";
       >
         <a
           href={`/${lang}/contact`}
-          class="menu-link menu-item opacity-0 hidden sm:flex text-[1.375rem] leading-none justify-end sm:justify-start items-center gap-2.5 transition-all duration-300 ease-out"
+          class="menu-link menu-item opacity-0 hidden sm:flex md:hidden text-[1.375rem] leading-none justify-end sm:justify-start items-center gap-2.5 transition-all duration-300 ease-out"
           style="--item-delay: 0.15s"
           tabindex="-1"
         >
@@ -242,7 +254,6 @@ const email = "hello@hordeagence.com";
 </style>
 
 <style>
-
   /* Burger animation - 2 lines converge to single centered line */
   .header-new.is-open .burger-line:first-child {
     transform: translateY(5px);
@@ -492,16 +503,16 @@ const email = "hello@hordeagence.com";
       const currentScrollY = getScrollY();
 
       if (isOpen) {
-        header?.classList.remove('header-hidden');
+        header?.classList.remove("header-hidden");
         return;
       }
 
       if (currentScrollY < 50) {
-        header?.classList.remove('header-hidden');
+        header?.classList.remove("header-hidden");
       } else if (currentScrollY > lastScrollY + 5 && currentScrollY > 100) {
-        header?.classList.add('header-hidden');
+        header?.classList.add("header-hidden");
       } else if (currentScrollY < lastScrollY - 5) {
-        header?.classList.remove('header-hidden');
+        header?.classList.remove("header-hidden");
       }
 
       lastScrollY = currentScrollY;

@@ -33,25 +33,25 @@
   unicode-range: U+0030-0039, U+00B0, U+2600-2602, U+26A1, U+26C5, U+2744;
 }
 
-:root{
+:root {
   --gutter: 1rem;
 }
 
-@media only screen and (min-width: 640px){
-	:root{
-		--gutter: 2rem
+@media only screen and (min-width: 640px) {
+  :root {
+    --gutter: 2rem
   }
 }
 
-@media only screen and (min-width: 1024px){
-	:root{
-		--gutter: 6rem
+@media only screen and (min-width: 1024px) {
+  :root {
+    --gutter: 6rem
   }
 }
 
-@media only screen and (min-width: 1512px){
-	:root{
-		--gutter: 8rem
+@media only screen and (min-width: 1512px) {
+  :root {
+    --gutter: 8rem
   }
 }
 
@@ -124,19 +124,27 @@
 
   /* View Transitions */
   @keyframes fade-in {
-    from { opacity: 0; }
+    from {
+      opacity: 0;
+    }
   }
 
   @keyframes fade-out {
-    to { opacity: 0; }
+    to {
+      opacity: 0;
+    }
   }
 
   @keyframes slide-from-right {
-    from { transform: translateX(30px); }
+    from {
+      transform: translateX(30px);
+    }
   }
 
   @keyframes slide-to-left {
-    to { transform: translateX(-30px); }
+    to {
+      transform: translateX(-30px);
+    }
   }
 
   ::view-transition-old(root) {
@@ -247,6 +255,7 @@ body {
   .full-width-bg {
     @apply relative;
   }
+
   .full-width-bg::before {
     content: "";
     @apply absolute top-0 left-1/2 -translate-x-1/2 w-screen h-full -z-1;
