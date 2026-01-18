@@ -8,20 +8,20 @@
 
 | Offre | Approche | Fourchette | Délai |
 |-------|----------|------------|-------|
-| **Template** | IA supervisée par nos experts | 490€ - 1 690€ | 5-14 jours |
-| **Sur-Mesure** | 100% artisanal, zéro template | 1 850€ - 15 000€+ | 2-8 semaines |
+| **Express** | Templates optimisés + personnalisation | 490€ - 1 290€ | 5-14 jours |
+| **Sur-Mesure** | 100% custom, zéro template | 1 850€ - 15 000€+ | 2-8 semaines |
 
 > **SEO technique inclus dans toutes nos offres** : Core Web Vitals, structure HTML sémantique, meta tags, sitemap, robots.txt, Schema.org, performance optimale.
 
 ---
 
-# OFFRE TEMPLATE
+# OFFRE EXPRESS
 
-*L'IA accélère, l'expertise Horde garantit la qualité*
+*Rapidité et efficacité, qualité Horde*
 
-Design généré par IA et validé par nos designers. Code assisté IA et reviewé par nos développeurs. Pas du vibe coding : chaque ligne est vérifiée, chaque design est peaufiné.
+Templates premium personnalisés par nos designers. Code optimisé et reviewé par nos développeurs. Livraison rapide sans compromis sur la qualité.
 
-## Formules Template
+## Formules Express
 
 | Formule | Pages | Prix | Délai |
 |---------|-------|------|-------|
@@ -37,7 +37,7 @@ Design généré par IA et validé par nos designers. Code assisté IA et review
 
 **Inclus :**
 - 1 page longue (sections scrollables)
-- Template IA + review design Horde
+- Template personnalisé aux couleurs de votre marque
 - 3-5 sections au choix (hero, features, témoignages, FAQ, CTA)
 - Formulaire de contact
 - Responsive mobile (testé sur vrais devices)
@@ -56,8 +56,8 @@ Design généré par IA et validé par nos designers. Code assisté IA et review
 
 **Inclus :**
 - 3-5 pages (Accueil, À propos, Services, Contact + 1 au choix)
-- Template IA + ajustements design sur-mesure
-- 5 visuels IA générés
+- Template personnalisé + ajustements design
+- 5 visuels inclus
 - Formulaire de contact avancé
 - Google Maps intégré
 - Responsive mobile (testé multi-devices)
@@ -77,8 +77,8 @@ Design généré par IA et validé par nos designers. Code assisté IA et review
 
 **Inclus :**
 - 5-8 pages
-- Template IA premium + personnalisation poussée
-- 10 visuels IA générés
+- Template premium + personnalisation poussée
+- 10 visuels inclus
 - CMS simple (blog ou actualités)
 - Formulaires multiples
 - Intégrations basiques (Calendly, réseaux sociaux)
@@ -94,14 +94,14 @@ Design généré par IA et validé par nos designers. Code assisté IA et review
 
 ---
 
-## Options Template
+## Options Express
 
 | Option | Prix |
 |--------|------|
 | +1 page standard | +100€ |
 | +1 page complexe | +180€ |
-| +5 visuels IA | +60€ |
-| Logo IA (+ review + 3 variations) | +120€ |
+| +5 visuels | +60€ |
+| Logo (+ 3 variations) | +120€ |
 | Favicon pack | +40€ |
 | Blog setup | +150€ |
 | Newsletter (Mailchimp/Brevo) | +80€ |
@@ -115,7 +115,7 @@ Design généré par IA et validé par nos designers. Code assisté IA et review
 
 # OFFRE SUR-MESURE
 
-*100% artisanal, zéro template, zéro IA*
+*100% artisanal, zéro template*
 
 Design créé from scratch par nos designers. Code écrit à la main par nos développeurs. Chaque pixel est pensé, chaque interaction est craftée.
 
@@ -291,12 +291,12 @@ Design créé from scratch par nos designers. Code écrit à la main par nos dé
 
 # COMPARATIF
 
-| Critère | Template | Sur-Mesure |
-|---------|----------|------------|
+| Critère | Express | Sur-Mesure |
+|---------|---------|------------|
 | **Prix entrée** | 490€ | 1 850€ |
 | **Délai** | 5-14 jours | 2-8 semaines |
-| **Design** | IA + ajustements experts | 100% créé pour vous |
-| **Code** | IA + review humain | 100% artisanal |
+| **Design** | Template + personnalisation | 100% créé pour vous |
+| **Code** | Optimisé et reviewé | 100% artisanal |
 | **Animations** | Basiques | Illimitées |
 | **Révisions** | 2 tours | 2-3 tours |
 | **Personnalisation** | Couleurs, typo, layout | Totale |
@@ -307,17 +307,17 @@ Design créé from scratch par nos designers. Code écrit à la main par nos dé
 # EXEMPLES DE PROJETS
 
 ### Thérapeute - Budget mini
-- Template Landing: 490€
+- Express Landing: 490€
 - **Total: 490€**
 
 ### Artisan - Présence complète
-- Template Vitrine: 890€
-- Logo IA: 120€
+- Express Vitrine: 890€
+- Logo: 120€
 - +1 page: 100€
 - **Total: 1 110€**
 
 ### Startup - MVP rapide
-- Template Pro: 1 290€
+- Express Pro: 1 290€
 - Blog: 150€
 - Newsletter: 80€
 - **Total: 1 520€**
@@ -345,7 +345,7 @@ Design créé from scratch par nos designers. Code écrit à la main par nos dé
 
 ## Paiement
 
-**Template :**
+**Express :**
 - 100% à la commande
 
 **Sur-Mesure :**
@@ -354,7 +354,7 @@ Design créé from scratch par nos designers. Code écrit à la main par nos dé
 - 30% à la livraison
 
 ## Révisions
-- Template : 2 tours inclus
+- Express : 2 tours inclus
 - Sur-Mesure : 2-3 tours selon formule
 - Révisions = ajustements (pas de refonte)
 
