@@ -16,18 +16,18 @@ const showLines = !isDark;
 
 <Tag
   class:list={[
-    "container -mt-10 mx-auto px-(--gutter) max-w-[1350px] sm:max-w-[85%] md:max-w-[1350px] lg:px-0",
+    "container -mt-10 mx-auto px-(--gutter) max-w-[1350px] sm:max-w-[85%] md:max-w-[1350px] lg:max-w-[1215px] lg:px-0",
     className,
   ]}
 >
   {
     showLines && (
-      <span class="hidden lg:block fixed h-full w-px bg-lines left-6 top-0 -z-9999" />
+      <span class="hidden xl:block fixed h-full w-px bg-lines left-6 top-0 -z-9999" />
     )
   }
   {
     showLines && (
-      <span class="hidden lg:block fixed h-full w-px bg-lines left-12 top-0 -z-9999" />
+      <span class="hidden xl:block fixed h-full w-px bg-lines left-12 top-0 -z-9999" />
     )
   }
 
@@ -42,12 +42,12 @@ const showLines = !isDark;
 
   {
     showLines && (
-      <span class="hidden lg:block fixed h-full w-px bg-lines right-12 top-0 -z-9999" />
+      <span class="hidden xl:block fixed h-full w-px bg-lines right-12 top-0 -z-9999" />
     )
   }
   {
     showLines && (
-      <span class="hidden lg:block fixed h-full w-px bg-lines right-6 top-0 -z-9999" />
+      <span class="hidden xl:block fixed h-full w-px bg-lines right-6 top-0 -z-9999" />
     )
   }
 </Tag>
