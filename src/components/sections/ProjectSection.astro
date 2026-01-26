@@ -2,6 +2,10 @@
 import Wrapped from "../ui/Wrapped.astro";
 import { DEFAULT_LOCALE, type Locale, useTranslations } from "../../i18n";
 
+// Import des images pour l'effet hover
+import belgaImg from "../../assets/images/projects/belga.jpg";
+import merlyImg from "../../assets/images/projects/merly.jpg";
+
 interface Props {
 	lang?: Locale;
 }
@@ -13,14 +17,14 @@ const projects = [
 	{
 		name: "Café Belga",
 		href: "https://belga.hordagency.com",
-		image: "/images/projects/belga.jpg",
+		image: belgaImg.src,
 		inProgress: false,
 	},
 	{
 		name: "Merly",
-		href: null,
-		image: null,
-		inProgress: true,
+		href: "https://merly.hordagency.com",
+		image: merlyImg.src,
+		inProgress: false,
 	},
 	{
 		name: "E-Putch",

@@ -183,19 +183,18 @@ const finalHeaderVariant = headerVariant ?? variant;
 </style>
 
 <script>
-  // Lenis chargé dynamiquement après première interaction (scroll/touch/wheel)
+  // Lenis désactivé sur mobile pour alléger le chargement
+  const isMobile = window.matchMedia('(max-width: 768px)').matches;
   let lenisLoaded = false;
 
   async function initLenis() {
-    if (lenisLoaded) return;
+    // Ne pas charger Lenis sur mobile
+    if (isMobile || lenisLoaded) return;
     lenisLoaded = true;
 
     const { default: Lenis } = await import('lenis');
-    const isMobile = window.matchMedia('(max-width: 768px)').matches;
 
-    const lenis = new Lenis({
-      touchMultiplier: isMobile ? 3.5 : 1,
-    });
+    const lenis = new Lenis();
 
     (window as any).lenis = lenis;
 
@@ -211,16 +210,16 @@ const finalHeaderVariant = headerVariant ?? variant;
 
     // Cleanup listeners
     window.removeEventListener('wheel', initLenis);
-    window.removeEventListener('touchstart', initLenis);
   }
 
-  // Charger Lenis au premier scroll/touch
-  window.addEventListener('wheel', initLenis, { once: true, passive: true });
-  window.addEventListener('touchstart', initLenis, { once: true, passive: true });
+  // Charger Lenis uniquement sur desktop au premier scroll
+  if (!isMobile) {
+    window.addEventListener('wheel', initLenis, { once: true, passive: true });
 
-  // Ou après idle si pas d'interaction
-  if ('requestIdleCallback' in window) {
-    requestIdleCallback(() => initLenis(), { timeout: 3000 });
+    // Ou après idle si pas d'interaction
+    if ('requestIdleCallback' in window) {
+      requestIdleCallback(() => initLenis(), { timeout: 3000 });
+    }
   }
 </script>
 

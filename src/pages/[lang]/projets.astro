@@ -2,7 +2,13 @@
 import Layout from '../../layouts/Layout.astro';
 import Footer from '../../components/Footer.astro';
 import Wrapped from '../../components/ui/Wrapped.astro';
+import { Image } from 'astro:assets';
 import { SUPPORTED_LOCALES, type Locale, useTranslations } from '../../i18n';
+
+// Import des images pour optimisation Astro
+import belgaImg from '../../assets/images/projects/belga.jpg';
+import merlyImg from '../../assets/images/projects/merly.jpg';
+import eputchImg from '../../assets/images/projects/eputch.jpg';
 
 export const prerender = true;
 
@@ -18,7 +24,7 @@ const t = useTranslations(lang);
 interface Project {
 	name: string;
 	href: string | null;
-	image: string | null;
+	image: ImageMetadata | null;
 	description: string | null;
 	inProgress: boolean;
 }
@@ -27,21 +33,21 @@ const projects: Project[] = [
 	{
 		name: "Café Belga",
 		href: "https://belga.hordagency.com",
-		image: "/images/projects/belga.jpg",
+		image: belgaImg,
 		description: "Horde Agence | Étude de cas pour le Café Belga place Flagey",
 		inProgress: false,
 	},
 	{
 		name: "Merly",
 		href: "https://merly.hordagency.com",
-		image: "/images/projects/merly.jpg",
+		image: merlyImg,
 		description: "Horde Agence | Merly, Site vitrine pour un service d'investissement",
 		inProgress: false,
 	},
 	{
 		name: "E-Putch",
 		href: null,
-		image: "/images/projects/eputch.jpg",
+		image: eputchImg,
 		description: null,
 		inProgress: true,
 	},
@@ -88,20 +94,25 @@ const projectCount = projects.length;
 		<!-- Vue Grille -->
 		<ol id="projects-grid" class="mt-10 sm:mt-16 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10 sm:gap-5 md:gap-16 lg:gap-24 sm:gap-y-24 text-2xl sm:text-[2rem] lg:text-[2.5rem]">
 			{projects.flatMap((project, index) => [
-				<li class="project-item-grid" data-image={project.image || ""} data-in-progress={project.inProgress}>
+				<li class="project-item-grid" data-image={project.image?.src || ""} data-in-progress={project.inProgress}>
 					{project.href ? (
 						<a
 							href={project.href}
 							target="_blank"
 						>
 							{project.image && (
-								<div class="overflow-hidden mb-8">
-									<img
+								<div class="overflow-hidden mb-8 aspect-square">
+									<Image
 										src={project.image}
 										alt={project.description || project.name}
-										class="w-full h-auto project-img"
-										loading="lazy"
+										class="w-full h-full object-cover project-img"
+										widths={[250, 400, 600]}
+										sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+										loading={index === 0 ? "eager" : "lazy"}
+										fetchpriority={index === 0 ? "high" : "auto"}
 										decoding="async"
+										format="webp"
+										quality={75}
 									/>
 								</div>
 							)}
@@ -112,13 +123,18 @@ const projectCount = projects.length;
 					) : (
 						<div>
 							{project.image && (
-								<div class="overflow-hidden mb-8">
-									<img
+								<div class="overflow-hidden mb-8 aspect-square">
+									<Image
 										src={project.image}
 										alt={project.description || project.name}
-										class="w-full h-auto project-img"
-										loading="lazy"
+										class="w-full h-full object-cover project-img"
+										widths={[250, 400, 600]}
+										sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+										loading={index === 0 ? "eager" : "lazy"}
+										fetchpriority={index === 0 ? "high" : "auto"}
 										decoding="async"
+										format="webp"
+										quality={75}
 									/>
 								</div>
 							)}
@@ -162,7 +178,7 @@ const projectCount = projects.length;
 			{projects.map((project, index) => (
 				<li
 					class="project-item-list"
-					data-image={project.image || ""}
+					data-image={project.image?.src || ""}
 					data-in-progress={project.inProgress}
 				>
 					{project.href ? (
