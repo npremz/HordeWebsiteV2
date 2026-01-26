@@ -37,15 +37,24 @@ const projects = [
 	>
 		<h2 set:html={t.projects.title.replace(/\n/g, "<br>")} />
 		<span
-			class="block font-mono text-[1rem] uppercase -translate-y-1 md:-translate-y-2"
+			class="block font-mono text-[1rem] uppercase -translate-y-1 md:-translate-y-3"
 			>({String(projects.length).padStart(2, "0")})</span
 		>
+		<!-- Bouton desktop (lg+) -->
+		<a
+			href={`/${lang}/projets`}
+			class="hidden lg:flex group relative overflow-hidden font-mono text-[1rem] leading-none uppercase py-6 px-5 justify-center w-fit ml-auto border border-lines bg-black text-white transition-colors duration-300 ease-in-out cursor-pointer self-end -mt-[1lh]"
+		>
+			<span
+				class="absolute inset-0 bg-bg-light translate-x-[calc(-100%-1px)] group-hover:translate-x-0 transition-transform duration-400 ease-[cubic-bezier(0.25,0.46,0.45,0.94)]"
+			></span>
+			<span
+				class="relative z-10 text-white group-hover:text-black transition-colors duration-300"
+			>
+				{t.projects.otherProjects} →
+			</span>
+		</a>
 	</div>
-	<a
-		href={`/${lang}/projects`}
-		class="hidden section-label text-[1rem] leading-none self-end mt-10 sm:mt-0 lg:-mt-[1lh]"
-		><Wrapped>{t.projects.otherProjects} →</Wrapped></a
-	>
 
 	<!-- Image flottante qui suit la souris (desktop only) -->
 	<div
@@ -113,6 +122,21 @@ const projects = [
 			))
 		}
 	</ol>
+
+	<!-- Bouton mobile (<lg) -->
+	<a
+		href={`/${lang}/projets`}
+		class="lg:hidden group relative overflow-hidden font-mono text-[1rem] leading-none uppercase py-6 px-5 flex justify-center w-full border border-lines bg-black text-white transition-colors duration-300 ease-in-out cursor-pointer mt-10 sm:mt-16"
+	>
+		<span
+			class="absolute inset-0 bg-bg-light translate-x-[calc(-100%-1px)] group-hover:translate-x-0 transition-transform duration-400 ease-[cubic-bezier(0.25,0.46,0.45,0.94)]"
+		></span>
+		<span
+			class="relative z-10 text-white group-hover:text-black transition-colors duration-300"
+		>
+			{t.projects.otherProjects} →
+		</span>
+	</a>
 </div>
 
 <style>

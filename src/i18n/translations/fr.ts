@@ -140,6 +140,16 @@ export const fr = {
     inProgress: '(en cours...)',
   },
 
+  // Projects Page
+  projectsPage: {
+    title: 'Projets',
+    description: 'Découvrez nos dernières réalisations : sites vitrines, applications web et plateformes e-commerce conçus avec performance et design.',
+    heading: 'Nos derniers\nprojets',
+    projectCount: 'Nombre projets',
+    viewGrid: 'Grille',
+    viewList: 'Liste',
+  },
+
   // Footer
   footer: {
     summary: 'en résumé (on sait jamais)',

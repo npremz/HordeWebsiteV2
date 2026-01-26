@@ -10,6 +10,9 @@ items:
   - label: Services
     url: '/en/#services-section'
     isExternal: false
+  - label: Projects
+    url: /en/projets
+    isExternal: false
   - label: Contact
     url: /en/contact
     isExternal: false

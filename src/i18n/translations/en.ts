@@ -141,6 +141,16 @@ export const en: Translations = {
     inProgress: '(on it...)',
   },
 
+  // Projects Page
+  projectsPage: {
+    title: 'Projects',
+    description: 'Discover our latest work: showcase websites, web applications and e-commerce platforms designed with performance and design in mind.',
+    heading: 'Our latest\nprojects',
+    projectCount: 'Project count',
+    viewGrid: 'Grid',
+    viewList: 'List',
+  },
+
   // Footer
   footer: {
     summary: 'in a nutshell (just in case)',
