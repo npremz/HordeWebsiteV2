@@ -1,10 +1,7 @@
 ---
 import Wrapped from "../ui/Wrapped.astro";
 import { DEFAULT_LOCALE, type Locale, useTranslations } from "../../i18n";
-
-// Import des images pour l'effet hover
-import belgaImg from "../../assets/images/projects/belga.jpg";
-import merlyImg from "../../assets/images/projects/merly.jpg";
+import { getCollection } from "astro:content";
 
 interface Props {
 	lang?: Locale;
@@ -13,26 +10,19 @@ interface Props {
 const { lang = DEFAULT_LOCALE } = Astro.props;
 const t = useTranslations(lang);
 
-const projects = [
-	{
-		name: "Café Belga",
-		href: "https://belga.hordagency.com",
-		image: belgaImg.src,
-		inProgress: false,
-	},
-	{
-		name: "Merly",
-		href: "https://merly.hordagency.com",
-		image: merlyImg.src,
-		inProgress: false,
-	},
-	{
-		name: "E-Putch",
-		href: null,
-		image: null,
-		inProgress: true,
-	},
-];
+// Récupérer les projets depuis Keystatic (collection unique multilingue)
+const rawProjects = await getCollection('projects');
+
+// Transformer et trier les projets (limité aux 3 premiers pour l'index)
+const projects = rawProjects
+	.sort((a, b) => (a.data.order || 0) - (b.data.order || 0))
+	.slice(0, 3)
+	.map((project) => ({
+		name: lang === 'fr' ? project.data.shortTitle_fr : project.data.shortTitle_en,
+		href: project.data.externalUrl || null,
+		image: project.data.featuredImage.src,
+		inProgress: project.data.inProgress,
+	}));
 ---
 
 <div class="flex flex-col">

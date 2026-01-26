@@ -381,6 +381,160 @@ const testimonialsSchema = {
   }),
 };
 
+
+const projectsSchema = {
+  slug: fields.slug({
+    name: {
+      label: 'Identifiant (slug)',
+      description: 'Identifiant unique du projet (ex: cafe-belga)',
+      validation: { isRequired: true },
+    },
+  }),
+  // === CHAMPS LOCALISÉS ===
+  shortTitle_fr: fields.text({
+    label: 'Titre court (FR)',
+    description: 'Titre affiché dans les listes',
+    validation: { isRequired: true },
+  }),
+  shortTitle_en: fields.text({
+    label: 'Titre court (EN)',
+    validation: { isRequired: true },
+  }),
+  fullTitle_fr: fields.text({
+    label: 'Titre complet (FR)',
+    description: 'Titre affiché sur la page du projet',
+    validation: { isRequired: true },
+  }),
+  fullTitle_en: fields.text({
+    label: 'Titre complet (EN)',
+    validation: { isRequired: true },
+  }),
+  description_fr: fields.text({
+    label: 'Description (FR)',
+    description: 'Description détaillée du projet',
+    multiline: true,
+  }),
+  description_en: fields.text({
+    label: 'Description (EN)',
+    description: 'Detailed project description',
+    multiline: true,
+  }),
+  // SEO localisé
+  seoDescription_fr: fields.text({
+    label: 'Description SEO (FR)',
+    description: 'Description pour les moteurs de recherche (150-160 caractères)',
+    validation: { isRequired: true, length: { min: 50, max: 160 } },
+    multiline: true,
+  }),
+  seoDescription_en: fields.text({
+    label: 'Description SEO (EN)',
+    validation: { isRequired: true, length: { min: 50, max: 160 } },
+    multiline: true,
+  }),
+  featuredImageAlt_fr: fields.text({
+    label: "Alt image principale (FR)",
+    validation: { isRequired: true },
+  }),
+  featuredImageAlt_en: fields.text({
+    label: "Alt image principale (EN)",
+    validation: { isRequired: true },
+  }),
+  // === CHAMPS PARTAGÉS ===
+  featuredImage: fields.image({
+    label: 'Image principale',
+    description: 'Image affichée dans les listes et en haut du projet',
+    directory: 'src/assets/images/projects',
+    publicPath: '/src/assets/images/projects',
+    validation: { isRequired: true },
+  }),
+  gallery: fields.array(
+    fields.object({
+      layout: fields.select({
+        label: 'Disposition',
+        options: [
+          { label: '1 image (pleine largeur)', value: 'full' },
+          { label: '2 images (côte à côte)', value: 'half' },
+        ],
+        defaultValue: 'full',
+      }),
+      image1: fields.image({
+        label: 'Image 1',
+        directory: 'src/assets/images/projects/gallery',
+        publicPath: '/src/assets/images/projects/gallery',
+        validation: { isRequired: true },
+      }),
+      alt1_fr: fields.text({
+        label: 'Alt image 1 (FR)',
+        description: 'Laisser vide pour utiliser: "[Nom projet] - Horde, agence web UX Bruxelles"',
+      }),
+      alt1_en: fields.text({
+        label: 'Alt image 1 (EN)',
+        description: 'Laisser vide pour utiliser: "[Project name] - Horde, Brussels UX web agency"',
+      }),
+      image2: fields.image({
+        label: 'Image 2 (si disposition 2 images)',
+        directory: 'src/assets/images/projects/gallery',
+        publicPath: '/src/assets/images/projects/gallery',
+      }),
+      alt2_fr: fields.text({
+        label: 'Alt image 2 (FR)',
+        description: 'Laisser vide pour utiliser le alt par défaut',
+      }),
+      alt2_en: fields.text({
+        label: 'Alt image 2 (EN)',
+        description: 'Laisser vide pour utiliser le alt par défaut',
+      }),
+    }),
+    {
+      label: 'Galerie',
+      itemLabel: (props) => {
+        const layout = props.fields.layout.value === 'full' ? '1 image' : '2 images';
+        return `Rangée - ${layout}`;
+      },
+    }
+  ),
+  projectTypes: fields.array(
+    fields.text({ label: 'Tag', validation: { isRequired: true } }),
+    {
+      label: 'Types de projet',
+      itemLabel: (props) => props.value || 'Nouveau tag',
+    }
+  ),
+  externalUrl: fields.url({
+    label: 'URL du projet',
+    description: 'Lien vers le site en ligne (optionnel)',
+  }),
+  inProgress: fields.checkbox({
+    label: 'En cours de réalisation',
+    description: 'Cocher si le projet n\'est pas encore terminé',
+    defaultValue: false,
+  }),
+  publishedDate: fields.date({
+    label: 'Date de publication',
+    validation: { isRequired: true },
+  }),
+  order: fields.integer({
+    label: 'Ordre d\'affichage',
+    description: 'Les projets sont triés par ordre croissant (1 = premier)',
+    defaultValue: 0,
+  }),
+  seoRobots: fields.select({
+    label: 'Indexation',
+    options: [
+      { label: 'Indexer et suivre les liens', value: 'index, follow' },
+      { label: 'Ne pas indexer, suivre les liens', value: 'noindex, follow' },
+      { label: 'Ne pas indexer, ne pas suivre', value: 'noindex, nofollow' },
+    ],
+    defaultValue: 'index, follow',
+  }),
+  ogImage: fields.image({
+    label: 'Image Open Graph',
+    description: "Image pour les réseaux sociaux (1200x630px)",
+    directory: 'public/images/og',
+    publicPath: '/images/og',
+  }),
+};
+
 // Build localized singletons
 const singletons: Record<string, ReturnType<typeof singleton>> = {};
 
@@ -438,6 +592,14 @@ for (const locale of LOCALES) {
     schema: testimonialsSchema,
   });
 }
+
+// Collection projets unique (multilingue)
+collections['projects'] = collection({
+  label: 'Projets',
+  slugField: 'slug',
+  path: 'src/content/projects/*',
+  schema: projectsSchema,
+});
 
 export default config({
   storage: {

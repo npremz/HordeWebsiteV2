@@ -4,11 +4,7 @@ import Footer from '../../components/Footer.astro';
 import Wrapped from '../../components/ui/Wrapped.astro';
 import { Image } from 'astro:assets';
 import { SUPPORTED_LOCALES, type Locale, useTranslations } from '../../i18n';
-
-// Import des images pour optimisation Astro
-import belgaImg from '../../assets/images/projects/belga.jpg';
-import merlyImg from '../../assets/images/projects/merly.jpg';
-import eputchImg from '../../assets/images/projects/eputch.jpg';
+import { getCollection } from 'astro:content';
 
 export const prerender = true;
 
@@ -21,37 +17,22 @@ export function getStaticPaths() {
 const { lang } = Astro.params as { lang: Locale };
 const t = useTranslations(lang);
 
-interface Project {
-	name: string;
-	href: string | null;
-	image: ImageMetadata | null;
-	description: string | null;
-	inProgress: boolean;
-}
+// Récupérer les projets depuis Keystatic (collection unique multilingue)
+const rawProjects = await getCollection('projects');
 
-const projects: Project[] = [
-	{
-		name: "Café Belga",
-		href: "https://belga.hordagency.com",
-		image: belgaImg,
-		description: "Horde Agence | Étude de cas pour le Café Belga place Flagey",
-		inProgress: false,
-	},
-	{
-		name: "Merly",
-		href: "https://merly.hordagency.com",
-		image: merlyImg,
-		description: "Horde Agence | Merly, Site vitrine pour un service d'investissement",
-		inProgress: false,
-	},
-	{
-		name: "E-Putch",
-		href: null,
-		image: eputchImg,
-		description: null,
-		inProgress: true,
-	},
-];
+// Transformer et trier les projets avec les champs localisés
+const projects = rawProjects
+  .sort((a, b) => (a.data.order || 0) - (b.data.order || 0))
+  .map((project) => ({
+    slug: project.data.slug,
+    name: lang === 'fr' ? project.data.shortTitle_fr : project.data.shortTitle_en,
+    fullTitle: lang === 'fr' ? project.data.fullTitle_fr : project.data.fullTitle_en,
+    href: project.data.externalUrl || null,
+    image: project.data.featuredImage,
+    imageAlt: lang === 'fr' ? project.data.featuredImageAlt_fr : project.data.featuredImageAlt_en,
+    inProgress: project.data.inProgress,
+    projectTypes: project.data.projectTypes || [],
+  }));
 
 const projectCount = projects.length;
 ---
@@ -94,50 +75,46 @@ const projectCount = projects.length;
 		<!-- Vue Grille -->
 		<ol id="projects-grid" class="mt-10 sm:mt-16 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10 sm:gap-5 md:gap-16 lg:gap-24 sm:gap-y-24 text-2xl sm:text-[2rem] lg:text-[2.5rem]">
 			{projects.flatMap((project, index) => [
-				<li class="project-item-grid" data-image={project.image?.src || ""} data-in-progress={project.inProgress}>
+				<li class="project-item-grid" data-image={project.image.src || ""} data-in-progress={project.inProgress}>
 					{project.href ? (
 						<a
 							href={project.href}
 							target="_blank"
 						>
-							{project.image && (
-								<div class="overflow-hidden mb-8 aspect-square">
-									<Image
-										src={project.image}
-										alt={project.description || project.name}
-										class="w-full h-full object-cover project-img"
-										widths={[250, 400, 600]}
-										sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-										loading={index === 0 ? "eager" : "lazy"}
-										fetchpriority={index === 0 ? "high" : "auto"}
-										decoding="async"
-										format="webp"
-										quality={75}
-									/>
-								</div>
-							)}
+							<div class="overflow-hidden mb-8 aspect-square">
+								<Image
+									src={project.image}
+									alt={project.imageAlt}
+									class="w-full h-full object-cover project-img"
+									widths={[250, 400, 600]}
+									sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+									loading={index === 0 ? "eager" : "lazy"}
+									fetchpriority={index === 0 ? "high" : "auto"}
+									decoding="async"
+									format="webp"
+									quality={75}
+								/>
+							</div>
 							<div class="flex gap-2 items-end text-[2rem]">
 								<h2>{project.name}</h2>
 							</div>
 						</a>
 					) : (
 						<div>
-							{project.image && (
-								<div class="overflow-hidden mb-8 aspect-square">
-									<Image
-										src={project.image}
-										alt={project.description || project.name}
-										class="w-full h-full object-cover project-img"
-										widths={[250, 400, 600]}
-										sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-										loading={index === 0 ? "eager" : "lazy"}
-										fetchpriority={index === 0 ? "high" : "auto"}
-										decoding="async"
-										format="webp"
-										quality={75}
-									/>
-								</div>
-							)}
+							<div class="overflow-hidden mb-8 aspect-square">
+								<Image
+									src={project.image}
+									alt={project.imageAlt}
+									class="w-full h-full object-cover project-img"
+									widths={[250, 400, 600]}
+									sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+									loading={index === 0 ? "eager" : "lazy"}
+									fetchpriority={index === 0 ? "high" : "auto"}
+									decoding="async"
+									format="webp"
+									quality={75}
+								/>
+							</div>
 							<div class="flex gap-2 items-end">
 								<h2 class="text-[2rem]">{project.name}</h2>
 								<span class="section-label -translate-y-2">{t.projects.inProgress}</span>
@@ -178,7 +155,7 @@ const projectCount = projects.length;
 			{projects.map((project, index) => (
 				<li
 					class="project-item-list"
-					data-image={project.image?.src || ""}
+					data-image={project.image.src || ""}
 					data-in-progress={project.inProgress}
 				>
 					{project.href ? (
