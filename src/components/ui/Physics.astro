@@ -463,11 +463,16 @@ const {
       let isDragging = false;
 
       const updateMousePosition = (e: MouseEvent) => {
-        if (!isDragging) return;
-        const containerRect = container.getBoundingClientRect();
-        const x = e.clientX - containerRect.left;
-        const y = e.clientY - containerRect.top;
-        Mouse.setPosition(mouse, { x, y });
+        if (!isDragging || !currentEngine || !mouse) return;
+        try {
+          const containerRect = container.getBoundingClientRect();
+          const x = e.clientX - containerRect.left;
+          const y = e.clientY - containerRect.top;
+          mouse.position.x = x;
+          mouse.position.y = y;
+        } catch {
+          // Ignorer si l'objet mouse n'est plus valide
+        }
       };
 
       const onMouseDown = () => {
@@ -476,19 +481,15 @@ const {
         document.body.style.cursor = "grabbing";
       };
 
-      const onMouseUp = (e: MouseEvent) => {
+      const onMouseUp = () => {
         if (!isDragging) return;
         isDragging = false;
         canvas.style.cursor = "grab";
         document.body.style.cursor = "";
-        // Forcer Matter.js à détecter le mouseup en mettant à jour l'état du bouton
-        mouse.button = -1;
-        // Mettre à jour la position finale
-        const containerRect = container.getBoundingClientRect();
-        Mouse.setPosition(mouse, {
-          x: e.clientX - containerRect.left,
-          y: e.clientY - containerRect.top,
-        });
+        // Forcer Matter.js à détecter le mouseup
+        if (mouse) {
+          mouse.button = -1;
+        }
       };
 
       canvas.addEventListener("mousedown", onMouseDown);
