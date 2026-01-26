@@ -66,11 +66,11 @@ const projectCount = projects.length;
 		</div>
 
 		<!-- Switch vue grille/liste -->
-		<div class="mt-10 sm:mt-16 flex justify-end items-center">
+		<div class="mt-10 sm:mt-16 flex items-center md:justify-end">
 			<button
 				id="view-grid"
 				type="button"
-				class="view-switch active text-[1rem] font-mono uppercase flex items-center gap-2 px-5 py-6 leading-none border border-lines transition-colors duration-300"
+				class="view-switch active text-[1rem] font-mono uppercase flex flex-1 md:flex-none items-center justify-center gap-2 px-5 py-6 leading-none border border-lines transition-colors duration-300"
 				aria-pressed="true"
 			>
 				{t.projectsPage.viewGrid}
@@ -78,7 +78,7 @@ const projectCount = projects.length;
 			<button
 				id="view-list"
 				type="button"
-				class="view-switch text-[1rem] font-mono uppercase flex items-center gap-2 px-5 py-6 leading-none border border-lines transition-colors duration-300"
+				class="view-switch text-[1rem] font-mono uppercase flex flex-1 md:flex-none items-center justify-center gap-2 px-5 py-6 leading-none border border-lines transition-colors duration-300"
 				aria-pressed="false"
 			>
 				{t.projectsPage.viewList}
@@ -86,7 +86,7 @@ const projectCount = projects.length;
 		</div>
 
 		<!-- Vue Grille -->
-		<ol id="projects-grid" class="mt-10 sm:mt-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 sm:gap-5 md:gap-16 lg:gap-24 sm:gap-y-24 text-2xl sm:text-[2rem] lg:text-[2.5rem]">
+		<ol id="projects-grid" class="mt-10 sm:mt-16 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10 sm:gap-5 md:gap-16 lg:gap-24 sm:gap-y-24 text-2xl sm:text-[2rem] lg:text-[2.5rem]">
 			{projects.flatMap((project, index) => [
 				<li class="project-item-grid" data-image={project.image || ""} data-in-progress={project.inProgress}>
 					{project.href ? (
@@ -105,7 +105,7 @@ const projectCount = projects.length;
 									/>
 								</div>
 							)}
-							<div class="flex gap-2 items-end">
+							<div class="flex gap-2 items-end text-[2rem]">
 								<h2>{project.name}</h2>
 							</div>
 						</a>
@@ -123,8 +123,8 @@ const projectCount = projects.length;
 								</div>
 							)}
 							<div class="flex gap-2 items-end">
-								<h2>{project.name}</h2>
-								<span class="section-label -translate-y-1">{t.projects.inProgress}</span>
+								<h2 class="text-[2rem]">{project.name}</h2>
+								<span class="section-label -translate-y-2">{t.projects.inProgress}</span>
 							</div>
 						</div>
 					)}
@@ -196,7 +196,7 @@ const projectCount = projects.length;
 		</ol>
 	</div>
 
-	<Footer lang={lang} />
+	<Footer lang={lang} hideOverflow={false} />
 </Layout>
 
 <style>
@@ -204,12 +204,17 @@ const projectCount = projects.length;
 		position: relative;
 	}
 
+	.project-item-grid[data-in-progress="true"] .project-img {
+		filter: grayscale(100%);
+		opacity: 0.7;
+	}
+
 	.project-item-grid .project-img {
 		transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 	}
 
 	@media (hover: hover) {
-		.project-item-grid:hover .project-img {
+		.project-item-grid:not([data-in-progress="true"]):hover .project-img {
 			transform: scale(1.05);
 		}
 	}
