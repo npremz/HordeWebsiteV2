@@ -51,6 +51,8 @@ const projectCount = projects.length;
 ---
 
 <Layout lang={lang} title={t.projectsPage.title} description={t.projectsPage.description}>
+	<!-- Fond fixe derrière tout le contenu -->
+	<div class="fixed inset-0 bg-bg-light -z-10" aria-hidden="true"></div>
 	<div id="page-content">
 		<div class="pt-80 xl:pt-96">
 			<div class="flex flex-col sm:flex-row sm:justify-between font-display gap-5 leading-none">
@@ -71,7 +73,7 @@ const projectCount = projects.length;
 				class="view-switch active text-[1rem] font-mono uppercase flex items-center gap-2 px-5 py-6 leading-none border border-lines transition-colors duration-300"
 				aria-pressed="true"
 			>
-				<span class="hidden sm:inline">{t.projectsPage.viewGrid}</span>
+				{t.projectsPage.viewGrid}
 			</button>
 			<button
 				id="view-list"
@@ -79,7 +81,7 @@ const projectCount = projects.length;
 				class="view-switch text-[1rem] font-mono uppercase flex items-center gap-2 px-5 py-6 leading-none border border-lines transition-colors duration-300"
 				aria-pressed="false"
 			>
-				<span class="hidden sm:inline">{t.projectsPage.viewList}</span>
+				{t.projectsPage.viewList}
 			</button>
 		</div>
 
