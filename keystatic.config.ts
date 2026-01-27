@@ -409,15 +409,33 @@ const projectsSchema = {
     label: 'Titre complet (EN)',
     validation: { isRequired: true },
   }),
-  description_fr: fields.text({
+  titleDisplay_fr: fields.text({
+    label: 'Titre display (FR)',
+    description: 'Titre stylisé avec HTML (ex: Café belga<br>web branding)',
+  }),
+  titleDisplay_en: fields.text({
+    label: 'Titre display (EN)',
+    description: 'Stylized title with HTML (e.g. Café belga<br>web branding)',
+  }),
+  description_fr: fields.mdx({
     label: 'Description (FR)',
     description: 'Description détaillée du projet',
-    multiline: true,
+    options: {
+      image: {
+        directory: 'src/assets/images/projects/content',
+        publicPath: '/src/assets/images/projects/content',
+      },
+    },
   }),
-  description_en: fields.text({
+  description_en: fields.mdx({
     label: 'Description (EN)',
     description: 'Detailed project description',
-    multiline: true,
+    options: {
+      image: {
+        directory: 'src/assets/images/projects/content',
+        publicPath: '/src/assets/images/projects/content',
+      },
+    },
   }),
   // SEO localisé
   seoDescription_fr: fields.text({

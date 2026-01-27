@@ -77,6 +77,13 @@ npm run astro    # Run Astro CLI commands
 - FAQ accordion
 - Image gallery
 
+**IMPORTANT - Ajouter un nouveau champ Keystatic:**
+Quand tu ajoutes un nouveau champ dans `keystatic.config.ts`, tu DOIS aussi l'ajouter dans `src/content.config.ts` (schema Zod d'Astro). Sinon le champ ne sera pas accessible via `getCollection()`.
+
+1. Ajouter le champ dans `keystatic.config.ts` (pour l'admin CMS)
+2. Ajouter le champ dans `src/content.config.ts` (pour Astro Content Collections)
+3. Redémarrer le serveur de dev
+
 ### SEO System
 
 **SEO Component (`src/components/SEO.astro`):**

@@ -73,15 +73,20 @@ const projectCount = projects.length;
 		</div>
 
 		<!-- Vue Grille -->
-		<ol id="projects-grid" class="mt-10 sm:mt-16 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10 sm:gap-5 md:gap-16 lg:gap-24 sm:gap-y-24 text-2xl sm:text-[2rem] lg:text-[2.5rem]">
-			{projects.flatMap((project, index) => [
-				<li class="project-item-grid" data-image={project.image.src || ""} data-in-progress={project.inProgress}>
-					{project.href ? (
-						<a
-							href={project.href}
-							target="_blank"
-						>
-							<div class="overflow-hidden mb-8 aspect-square">
+		<ol id="projects-grid" class="mt-10 sm:mt-16 grid grid-cols-1 sm:grid-cols-2 slg:grid-cols-[320px_1fr_320px] gap-10 sm:gap-5 md:gap-16 slg:gap-8 sm:gap-y-24 text-2xl sm:text-[2rem] lg:text-[2.5rem]">
+			{projects.map((project, index) => {
+				// Mode 2 colonnes (sm)
+				const sm = index % 2 === 0 ? "sm:justify-self-start" : "sm:justify-self-end";
+				// Mode 3 colonnes (slg) : col1=start, col3=end, col2=alterne end/start
+				const col = index % 3;
+				const slg = col === 0 ? "slg:justify-self-start"
+					: col === 2 ? "slg:justify-self-end"
+					: Math.floor(index / 3) % 2 === 0 ? "slg:justify-self-end" : "slg:justify-self-start";
+				return (
+				<li class:list={["project-item-grid", sm, slg]} data-image={project.image.src || ""} data-in-progress={project.inProgress}>
+					{!project.inProgress ? (
+						<a href={`/${lang}/projets/${project.slug}`}>
+							<div class="overflow-hidden mb-8 sm:max-w-70! slg:max-w-80! sm:aspect-square">
 								<Image
 									src={project.image}
 									alt={project.imageAlt}
@@ -101,31 +106,17 @@ const projectCount = projects.length;
 						</a>
 					) : (
 						<div>
-							<div class="overflow-hidden mb-8 aspect-square">
-								<Image
-									src={project.image}
-									alt={project.imageAlt}
-									class="w-full h-full object-cover project-img"
-									widths={[250, 400, 600]}
-									sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-									loading={index === 0 ? "eager" : "lazy"}
-									fetchpriority={index === 0 ? "high" : "auto"}
-									decoding="async"
-									format="webp"
-									quality={75}
-								/>
+							<div class="w-full mb-8 sm:w-70! slg:w-80! aspect-square bg-bg-light border border-lines flex items-center justify-center">
+								<span class="section-label">{t.projects.inProgress}</span>
 							</div>
 							<div class="flex gap-2 items-end">
 								<h2 class="text-[2rem]">{project.name}</h2>
-								<span class="section-label -translate-y-2">{t.projects.inProgress}</span>
 							</div>
 						</div>
 					)}
-				</li>,
-				(index + 1) % 2 === 0 && index < projects.length - 1 && (
-					<li class="hidden sm:block" aria-hidden="true"></li>
-				)
-			])}
+				</li>
+			);
+			})}
 		</ol>
 
 		<!-- Image flottante qui suit la souris (desktop only, vue liste) -->
@@ -158,10 +149,9 @@ const projectCount = projects.length;
 					data-image={project.image.src || ""}
 					data-in-progress={project.inProgress}
 				>
-					{project.href ? (
+					{!project.inProgress ? (
 						<a
-							href={project.href}
-							target="_blank"
+							href={`/${lang}/projets/${project.slug}`}
 							class:list={[
 								"project-link flex justify-between py-5 xl:py-8 px-8 lg:px-9",
 								index === 0 ? "border border-lines" : "border-b border-x border-lines",
