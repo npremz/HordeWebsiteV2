@@ -263,124 +263,6 @@ const footerSchema = {
   ),
 };
 
-const postsSchema = {
-  title: fields.slug({
-    name: {
-      label: 'Titre',
-      validation: { isRequired: true },
-    },
-  }),
-  excerpt: fields.text({
-    label: 'Extrait',
-    description: "Court résumé de l'article affiché dans les listes",
-    multiline: true,
-    validation: { isRequired: true, length: { max: 300 } },
-  }),
-  featuredImage: fields.image({
-    label: 'Image à la une',
-    directory: 'public/images/posts',
-    publicPath: '/images/posts',
-    validation: { isRequired: true },
-  }),
-  featuredImageAlt: fields.text({
-    label: "Texte alternatif de l'image à la une",
-    validation: { isRequired: true },
-  }),
-  publishedDate: fields.date({
-    label: 'Date de publication',
-    validation: { isRequired: true },
-  }),
-  modifiedDate: fields.date({
-    label: 'Date de modification',
-    description: 'Dernière modification (optionnel)',
-  }),
-  author: fields.text({
-    label: 'Auteur',
-    validation: { isRequired: true },
-  }),
-  ...seoFields,
-  content: fields.markdoc({
-    label: 'Contenu',
-    options: {
-      image: {
-        directory: 'public/images/content',
-        publicPath: '/images/content',
-      },
-    },
-  }),
-};
-
-const pagesSchema = {
-  title: fields.slug({
-    name: {
-      label: 'Titre',
-      validation: { isRequired: true },
-    },
-  }),
-  excerpt: fields.text({
-    label: 'Extrait',
-    description: 'Court résumé de la page',
-    multiline: true,
-    validation: { length: { max: 300 } },
-  }),
-  featuredImage: fields.image({
-    label: 'Image à la une',
-    directory: 'public/images/pages',
-    publicPath: '/images/pages',
-  }),
-  featuredImageAlt: fields.text({
-    label: "Texte alternatif de l'image à la une",
-  }),
-  ogType: fields.select({
-    label: 'Type Open Graph',
-    options: [
-      { label: 'Site web', value: 'website' },
-      { label: 'Article', value: 'article' },
-    ],
-    defaultValue: 'website',
-  }),
-  ...seoFields,
-  content: fields.markdoc({
-    label: 'Contenu',
-    options: {
-      image: {
-        directory: 'public/images/content',
-        publicPath: '/images/content',
-      },
-    },
-  }),
-};
-
-const testimonialsSchema = {
-  author: fields.slug({
-    name: {
-      label: 'Nom',
-      validation: { isRequired: true },
-    },
-  }),
-  role: fields.text({
-    label: 'Rôle / Entreprise',
-  }),
-  avatar: fields.image({
-    label: 'Photo',
-    directory: 'public/images/testimonials',
-    publicPath: '/images/testimonials',
-  }),
-  quote: fields.text({
-    label: 'Témoignage',
-    multiline: true,
-    validation: { isRequired: true },
-  }),
-  rating: fields.integer({
-    label: 'Note (1-5)',
-    validation: { min: 1, max: 5 },
-  }),
-  featured: fields.checkbox({
-    label: 'Mis en avant',
-    defaultValue: false,
-  }),
-};
-
 // Schema pour les auteurs du blog
 const authorsSchema = {
   slug: fields.slug({
@@ -792,37 +674,10 @@ for (const locale of LOCALES) {
   });
 }
 
-// Build localized collections
+// Collections
 const collections: Record<string, ReturnType<typeof collection>> = {};
 
-for (const locale of LOCALES) {
-  const label = localeLabels[locale];
-
-  collections[`posts_${locale}`] = collection({
-    label: `Articles (${label})`,
-    slugField: 'title',
-    path: `src/content/posts_${locale}/*`,
-    format: { contentField: 'content' },
-    schema: postsSchema,
-  });
-
-  collections[`pages_${locale}`] = collection({
-    label: `Pages (${label})`,
-    slugField: 'title',
-    path: `src/content/pages_${locale}/*`,
-    format: { contentField: 'content' },
-    schema: pagesSchema,
-  });
-
-  collections[`testimonials_${locale}`] = collection({
-    label: `Témoignages (${label})`,
-    slugField: 'author',
-    path: `src/content/testimonials_${locale}/*`,
-    schema: testimonialsSchema,
-  });
-}
-
-// Collection projets unique (multilingue)
+// Collection projets (multilingue)
 collections['projects'] = collection({
   label: 'Projets',
   slugField: 'slug',
