@@ -1,0 +1,34 @@
+slug: optimiser-core-web-vitals
+title_fr: >-
+  Comment optimiser vos Core Web Vitals en 2026 : guide complet
+title_en: >-
+  How to optimize your Core Web Vitals in 2026: complete guide
+excerpt_fr: >-
+  Les Core Web Vitals sont devenus essentiels pour le SEO. Découvrez les techniques
+  concrètes pour améliorer LCP, INP et CLS sur votre site web.
+excerpt_en: >-
+  Core Web Vitals have become essential for SEO. Discover concrete techniques
+  to improve LCP, INP and CLS on your website.
+seoDescription_fr: >-
+  Guide complet pour optimiser vos Core Web Vitals (LCP, INP, CLS) en 2026.
+  Techniques concrètes et outils pour améliorer la performance de votre site.
+seoDescription_en: >-
+  Complete guide to optimize your Core Web Vitals (LCP, INP, CLS) in 2026.
+  Concrete techniques and tools to improve your website performance.
+featuredImageAlt_fr: Graphique montrant l'amélioration des Core Web Vitals
+featuredImageAlt_en: Graph showing Core Web Vitals improvement
+featuredImage: /src/assets/images/blog/core-web-vitals.jpg
+author: nicolas-premont
+category: performance-web
+tags:
+  - Performance
+  - SEO
+  - Core Web Vitals
+  - LCP
+  - INP
+  - CLS
+publishedDate: 2026-01-27
+readingTime: 8
+featured: true
+draft: false
+seoRobots: index, follow

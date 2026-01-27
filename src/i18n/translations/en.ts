@@ -151,6 +151,28 @@ export const en: Translations = {
     viewList: 'List',
   },
 
+  // Blog Page
+  blogPage: {
+    title: 'Blog',
+    description: 'Articles and tips on web development, UX design and performance. By Horde, digital agency in Brussels.',
+    heading: 'Our latest\narticles',
+    articleCount: 'Article count',
+    viewGrid: 'Grid',
+    viewList: 'List',
+    readMore: 'Read article',
+    minRead: 'min read',
+    publishedOn: 'Published on',
+    updatedOn: 'Updated on',
+    by: 'By',
+    category: 'Category',
+    tags: 'Tags',
+    relatedArticles: 'Related articles',
+    allArticles: 'All articles',
+    shareArticle: 'Share',
+    tableOfContents: 'Table of contents',
+    about: 'About the author',
+  },
+
   // Footer
   footer: {
     summary: 'in a nutshell (just in case)',

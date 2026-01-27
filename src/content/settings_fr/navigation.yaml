@@ -13,6 +13,9 @@ items:
   - label: Projets
     url: /fr/projets
     isExternal: false
+  - label: Blog
+    url: /fr/blog
+    isExternal: false
   - label: Contact
     url: /fr/contact
     isExternal: false

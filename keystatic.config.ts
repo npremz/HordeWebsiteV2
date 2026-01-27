@@ -381,6 +381,217 @@ const testimonialsSchema = {
   }),
 };
 
+// Schema pour les auteurs du blog
+const authorsSchema = {
+  slug: fields.slug({
+    name: {
+      label: 'Identifiant (slug)',
+      description: 'Identifiant unique de l\'auteur (ex: nicolas-premont)',
+      validation: { isRequired: true },
+    },
+  }),
+  name: fields.text({
+    label: 'Nom complet',
+    validation: { isRequired: true },
+  }),
+  role_fr: fields.text({
+    label: 'Rôle (FR)',
+    description: 'Ex: Co-fondateur & Développeur',
+    validation: { isRequired: true },
+  }),
+  role_en: fields.text({
+    label: 'Rôle (EN)',
+    description: 'Ex: Co-founder & Developer',
+    validation: { isRequired: true },
+  }),
+  bio_fr: fields.text({
+    label: 'Bio courte (FR)',
+    multiline: true,
+    validation: { length: { max: 300 } },
+  }),
+  bio_en: fields.text({
+    label: 'Bio courte (EN)',
+    multiline: true,
+    validation: { length: { max: 300 } },
+  }),
+  avatar: fields.image({
+    label: 'Photo',
+    directory: 'src/assets/images/authors',
+    publicPath: '/src/assets/images/authors',
+    validation: { isRequired: true },
+  }),
+  social: fields.object({
+    twitter: fields.text({ label: 'Twitter/X (username sans @)' }),
+    linkedin: fields.url({ label: 'LinkedIn URL' }),
+    github: fields.text({ label: 'GitHub (username)' }),
+  }),
+};
+
+// Schema pour les catégories du blog
+const categoriesSchema = {
+  slug: fields.slug({
+    name: {
+      label: 'Identifiant (slug)',
+      description: 'Identifiant unique (ex: ux-design)',
+      validation: { isRequired: true },
+    },
+  }),
+  name_fr: fields.text({
+    label: 'Nom (FR)',
+    validation: { isRequired: true },
+  }),
+  name_en: fields.text({
+    label: 'Nom (EN)',
+    validation: { isRequired: true },
+  }),
+  description_fr: fields.text({
+    label: 'Description (FR)',
+    multiline: true,
+  }),
+  description_en: fields.text({
+    label: 'Description (EN)',
+    multiline: true,
+  }),
+  color: fields.text({
+    label: 'Couleur (hex)',
+    description: 'Couleur d\'accent pour la catégorie (ex: #FF5733)',
+  }),
+};
+
+// Schema pour les articles de blog (multilingue)
+const blogPostsSchema = {
+  slug: fields.slug({
+    name: {
+      label: 'Identifiant (slug)',
+      description: 'Identifiant unique de l\'article (ex: optimiser-core-web-vitals)',
+      validation: { isRequired: true },
+    },
+  }),
+  // === CHAMPS LOCALISÉS ===
+  title_fr: fields.text({
+    label: 'Titre (FR)',
+    validation: { isRequired: true },
+  }),
+  title_en: fields.text({
+    label: 'Titre (EN)',
+    validation: { isRequired: true },
+  }),
+  excerpt_fr: fields.text({
+    label: 'Extrait (FR)',
+    description: 'Résumé affiché dans les listes (max 200 caractères)',
+    multiline: true,
+    validation: { isRequired: true, length: { max: 200 } },
+  }),
+  excerpt_en: fields.text({
+    label: 'Extrait (EN)',
+    description: 'Summary shown in lists (max 200 characters)',
+    multiline: true,
+    validation: { isRequired: true, length: { max: 200 } },
+  }),
+  seoDescription_fr: fields.text({
+    label: 'Description SEO (FR)',
+    description: 'Description pour les moteurs de recherche (150-160 caractères)',
+    validation: { isRequired: true, length: { min: 50, max: 160 } },
+    multiline: true,
+  }),
+  seoDescription_en: fields.text({
+    label: 'Description SEO (EN)',
+    validation: { isRequired: true, length: { min: 50, max: 160 } },
+    multiline: true,
+  }),
+  featuredImageAlt_fr: fields.text({
+    label: 'Alt image principale (FR)',
+    validation: { isRequired: true },
+  }),
+  featuredImageAlt_en: fields.text({
+    label: 'Alt image principale (EN)',
+    validation: { isRequired: true },
+  }),
+  // === CHAMPS PARTAGÉS ===
+  featuredImage: fields.image({
+    label: 'Image principale',
+    description: 'Image affichée dans les listes et en haut de l\'article',
+    directory: 'src/assets/images/blog',
+    publicPath: '/src/assets/images/blog',
+    validation: { isRequired: true },
+  }),
+  author: fields.relationship({
+    label: 'Auteur',
+    collection: 'authors',
+    validation: { isRequired: true },
+  }),
+  category: fields.relationship({
+    label: 'Catégorie',
+    collection: 'categories',
+    validation: { isRequired: true },
+  }),
+  tags: fields.array(
+    fields.text({ label: 'Tag', validation: { isRequired: true } }),
+    {
+      label: 'Tags',
+      itemLabel: (props) => props.value || 'Nouveau tag',
+    }
+  ),
+  publishedDate: fields.date({
+    label: 'Date de publication',
+    validation: { isRequired: true },
+  }),
+  modifiedDate: fields.date({
+    label: 'Date de modification',
+    description: 'Dernière modification (optionnel)',
+  }),
+  readingTime: fields.integer({
+    label: 'Temps de lecture (minutes)',
+    description: 'Estimé automatiquement si vide',
+  }),
+  featured: fields.checkbox({
+    label: 'Article mis en avant',
+    description: 'Afficher cet article en priorité',
+    defaultValue: false,
+  }),
+  draft: fields.checkbox({
+    label: 'Brouillon',
+    description: 'Ne pas publier cet article',
+    defaultValue: false,
+  }),
+  seoRobots: fields.select({
+    label: 'Indexation',
+    options: [
+      { label: 'Indexer et suivre les liens', value: 'index, follow' },
+      { label: 'Ne pas indexer, suivre les liens', value: 'noindex, follow' },
+      { label: 'Ne pas indexer, ne pas suivre', value: 'noindex, nofollow' },
+    ],
+    defaultValue: 'index, follow',
+  }),
+  ogImage: fields.image({
+    label: 'Image Open Graph',
+    description: 'Image pour les réseaux sociaux (1200x630px). Utilise l\'image principale si vide.',
+    directory: 'public/images/og',
+    publicPath: '/images/og',
+  }),
+  // === CONTENU ===
+  content_fr: fields.mdx({
+    label: 'Contenu (FR)',
+    description: 'Contenu de l\'article en français',
+    options: {
+      image: {
+        directory: 'src/assets/images/blog/content',
+        publicPath: '/src/assets/images/blog/content',
+      },
+    },
+  }),
+  content_en: fields.mdx({
+    label: 'Contenu (EN)',
+    description: 'Article content in English',
+    options: {
+      image: {
+        directory: 'src/assets/images/blog/content',
+        publicPath: '/src/assets/images/blog/content',
+      },
+    },
+  }),
+};
+
 
 const projectsSchema = {
   slug: fields.slug({
@@ -617,6 +828,28 @@ collections['projects'] = collection({
   slugField: 'slug',
   path: 'src/content/projects/*',
   schema: projectsSchema,
+});
+
+// Collections blog
+collections['authors'] = collection({
+  label: 'Auteurs',
+  slugField: 'slug',
+  path: 'src/content/authors/*',
+  schema: authorsSchema,
+});
+
+collections['categories'] = collection({
+  label: 'Catégories Blog',
+  slugField: 'slug',
+  path: 'src/content/categories/*',
+  schema: categoriesSchema,
+});
+
+collections['posts'] = collection({
+  label: 'Articles Blog',
+  slugField: 'slug',
+  path: 'src/content/posts/*',
+  schema: blogPostsSchema,
 });
 
 export default config({

@@ -150,6 +150,28 @@ export const fr = {
     viewList: 'Liste',
   },
 
+  // Blog Page
+  blogPage: {
+    title: 'Blog',
+    description: 'Articles et conseils sur le développement web, l\'UX design et les performances. Par Horde, agence digitale à Bruxelles.',
+    heading: 'Nos derniers\narticles',
+    articleCount: 'Nombre articles',
+    viewGrid: 'Grille',
+    viewList: 'Liste',
+    readMore: 'Lire l\'article',
+    minRead: 'min de lecture',
+    publishedOn: 'Publié le',
+    updatedOn: 'Mis à jour le',
+    by: 'Par',
+    category: 'Catégorie',
+    tags: 'Tags',
+    relatedArticles: 'Articles similaires',
+    allArticles: 'Tous les articles',
+    shareArticle: 'Partager',
+    tableOfContents: 'Sommaire',
+    about: 'À propos de l\'auteur',
+  },
+
   // Footer
   footer: {
     summary: 'en résumé (on sait jamais)',

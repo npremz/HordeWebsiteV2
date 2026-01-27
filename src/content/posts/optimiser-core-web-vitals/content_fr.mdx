@@ -1,0 +1,73 @@
+## Pourquoi les Core Web Vitals sont cruciaux en 2026
+
+Google utilise les Core Web Vitals comme facteur de classement depuis 2021. En 2026, leur importance n'a fait que croître. Un site avec de bons scores voit son trafic organique augmenter significativement.
+
+Les trois métriques principales sont :
+- **LCP (Largest Contentful Paint)** : temps d'affichage du plus grand élément visible
+- **INP (Interaction to Next Paint)** : réactivité aux interactions utilisateur
+- **CLS (Cumulative Layout Shift)** : stabilité visuelle de la page
+
+## Optimiser le LCP : l'élément le plus visible
+
+Le LCP mesure le temps nécessaire pour afficher le plus grand élément visible dans le viewport. L'objectif est d'atteindre moins de 2,5 secondes.
+
+### Techniques d'optimisation
+
+Voici les actions les plus efficaces pour améliorer votre LCP :
+- Précharger l'image hero avec `<link rel="preload">`
+- Utiliser le format WebP ou AVIF pour les images
+- Implémenter un CDN pour réduire la latence
+- Optimiser le Time to First Byte (TTFB)
+- Éviter les polices bloquantes avec `font-display: swap`
+
+### Code exemple
+
+```html
+<link rel="preload" as="image" href="/hero.webp" fetchpriority="high">
+```
+
+## Améliorer l'INP : la réactivité utilisateur
+
+L'INP a remplacé le FID en 2024. Cette métrique mesure la latence des interactions sur toute la durée de visite, pas seulement la première interaction.
+
+### Bonnes pratiques
+
+Pour un INP optimal (moins de 200ms) :
+- Éviter les tâches JavaScript longues (>50ms)
+- Utiliser `requestIdleCallback` pour les opérations non critiques
+- Implémenter le code splitting
+- Différer les scripts non essentiels
+
+## Stabiliser le CLS : éviter les décalages
+
+Le CLS mesure les mouvements inattendus des éléments. Un score inférieur à 0,1 est considéré comme bon.
+
+### Les causes principales
+
+Les décalages de layout sont souvent causés par :
+- Images sans dimensions explicites
+- Publicités ou embeds dynamiques
+- Polices qui changent de taille au chargement
+- Contenu injecté dynamiquement
+
+### Solution
+
+Toujours spécifier width et height sur vos images :
+
+```html
+<img src="photo.jpg" width="800" height="600" alt="Description">
+```
+
+## Outils de mesure recommandés
+
+Pour monitorer vos Core Web Vitals :
+- **PageSpeed Insights** : analyse ponctuelle
+- **Search Console** : données terrain agrégées
+- **Lighthouse** : audits détaillés en développement
+- **Web Vitals Extension** : mesure en temps réel
+
+## Conclusion
+
+Optimiser les Core Web Vitals demande une approche méthodique. Commencez par mesurer, identifiez les problèmes prioritaires, et implémentez les corrections une par une. Les gains en SEO et en expérience utilisateur valent largement l'investissement.
+
+Chez Horde, nous intégrons ces optimisations dès la conception. Notre moteur technique est pensé pour atteindre des scores parfaits sans compromis sur le design.

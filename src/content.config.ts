@@ -40,6 +40,73 @@ const projectsCollection = defineCollection({
   }),
 });
 
+// Schema pour les auteurs
+const authorsCollection = defineCollection({
+  loader: glob({ pattern: '**/*.yaml', base: './src/content/authors' }),
+  schema: ({ image }) => z.object({
+    slug: z.string(),
+    name: z.string(),
+    role_fr: z.string(),
+    role_en: z.string(),
+    bio_fr: z.string().optional(),
+    bio_en: z.string().optional(),
+    avatar: image(),
+    social: z.object({
+      twitter: z.string().optional(),
+      linkedin: z.string().url().optional(),
+      github: z.string().optional(),
+    }).optional(),
+  }),
+});
+
+// Schema pour les catégories blog
+const categoriesCollection = defineCollection({
+  loader: glob({ pattern: '**/*.yaml', base: './src/content/categories' }),
+  schema: z.object({
+    slug: z.string(),
+    name_fr: z.string(),
+    name_en: z.string(),
+    description_fr: z.string().optional(),
+    description_en: z.string().optional(),
+    color: z.string().optional(),
+  }),
+});
+
+// Schema pour les articles de blog (multilingue)
+const postsCollection = defineCollection({
+  loader: glob({ pattern: '**/*.yaml', base: './src/content/posts' }),
+  schema: ({ image }) => z.object({
+    slug: z.string(),
+    // Champs localisés
+    title_fr: z.string(),
+    title_en: z.string(),
+    excerpt_fr: z.string(),
+    excerpt_en: z.string(),
+    seoDescription_fr: z.string(),
+    seoDescription_en: z.string(),
+    featuredImageAlt_fr: z.string(),
+    featuredImageAlt_en: z.string(),
+    // Champs partagés
+    featuredImage: image(),
+    author: z.string(), // slug de l'auteur (relation)
+    category: z.string(), // slug de la catégorie (relation)
+    tags: z.array(z.string()).default([]),
+    publishedDate: z.coerce.date(),
+    modifiedDate: z.coerce.date().optional(),
+    readingTime: z.number().optional(),
+    featured: z.boolean().default(false),
+    draft: z.boolean().default(false),
+    seoRobots: z.string().optional(),
+    ogImage: z.string().optional(),
+    // Contenu
+    content_fr: z.string().optional(),
+    content_en: z.string().optional(),
+  }),
+});
+
 export const collections = {
   projects: projectsCollection,
+  authors: authorsCollection,
+  categories: categoriesCollection,
+  posts: postsCollection,
 };
