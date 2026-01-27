@@ -19,7 +19,7 @@ const projects = rawProjects
 	.slice(0, 3)
 	.map((project) => ({
 		name: lang === 'fr' ? project.data.shortTitle_fr : project.data.shortTitle_en,
-		href: project.data.externalUrl || null,
+		slug: project.data.slug,
 		image: project.data.featuredImage.src,
 		inProgress: project.data.inProgress,
 	}));
@@ -80,10 +80,9 @@ const projects = rawProjects
 					data-image={project.image || ""}
 					data-in-progress={project.inProgress}
 				>
-					{project.href ? (
+					{!project.inProgress ? (
 						<a
-							href={project.href}
-							target="_blank"
+							href={`/${lang}/projets/${project.slug}`}
 							class:list={[
 								"project-link flex justify-between py-5 xl:py-8 px-8 lg:px-9",
 								index === 0
