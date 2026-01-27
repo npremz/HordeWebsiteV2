@@ -1,6 +1,7 @@
 ---
 import Layout from '../../../layouts/Layout.astro';
 import Footer from '../../../components/Footer.astro';
+import Wrapped from '../../../components/ui/Wrapped.astro';
 import { Image } from 'astro:assets';
 import { SUPPORTED_LOCALES, type Locale, useTranslations } from '../../../i18n';
 import { getCollection } from 'astro:content';
@@ -43,6 +44,9 @@ const gallery = project.data.gallery || [];
 // Types de projet
 const projectTypes = project.data.projectTypes || [];
 
+// URL externe du projet
+const externalUrl = project.data.externalUrl;
+
 // Autres projets (pour le bouton)
 const allProjects = await getCollection('projects');
 const otherProjects = allProjects
@@ -75,16 +79,32 @@ const otherProjects = allProjects
 			)}
 
 			<!-- Types de projet -->
-			{projectTypes.length > 0 && (
-				<div class="hidden sm:flex flex-col gap-6 items-end mb-32 lg:mb-0 lg:gap-8">
-					<h2 class="section-label ">Type de projet</h2>
-					<ul class="flex flex-col text-[1.25rem] leading-none gap-4 text-right">
-						{projectTypes.map((type: string) => (
-							<li>{type}</li>
-						))}
-					</ul>
+			<div class="lg:flex lg:flex-col lg: justify-between">
+				{projectTypes.length > 0 && (
+					<div class="hidden sm:flex flex-col gap-6 items-end lg:mb-0 lg:gap-8">
+						<h2 class="section-label ">Type de projet</h2>
+						<ul class="flex flex-col text-[1.25rem] leading-none gap-4 text-right">
+							{projectTypes.map((type: string) => (
+								<li>{type}</li>
+							))}
+						</ul>
+					</div>
+				)}
+				<div class="mb-10 sm:mb-32 sm:-mt-[1.414rem] lg:mt-0 lg:mb-10">
+					<Wrapped>
+						{externalUrl && (
+							<a
+								href={externalUrl}
+								target="_blank"
+								rel="noopener noreferrer"
+								class="cursor-pointer uppercase font-mono text-[1rem]"
+							>
+									{lang === 'fr' ? 'Voir le site' : 'View website'} →
+							</a>
+						)}
+					</Wrapped>
 				</div>
-			)}
+			</div>
 		</div>
 
 		<!-- Galerie -->
@@ -146,8 +166,8 @@ const otherProjects = allProjects
 			</section>
 		)}
 
-		<!-- Bouton autres projets -->
-		<nav class="mb-10">
+		<!-- Boutons -->
+		<nav class="mb-10 flex flex-col sm:flex-row gap-4">
 			<a
 				href={`/${lang}/projets`}
 				class="group relative overflow-hidden font-mono text-[1rem] leading-none uppercase py-6 px-5 flex justify-center w-full md:w-fit border border-lines-dark bg-black text-white transition-colors duration-300 ease-in-out cursor-pointer"
