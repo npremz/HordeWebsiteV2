@@ -1,7 +1,6 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import Footer from '../../components/Footer.astro';
-import Wrapped from '../../components/ui/Wrapped.astro';
 import { Image } from 'astro:assets';
 import { SUPPORTED_LOCALES, type Locale, useTranslations } from '../../i18n';
 import { getCollection } from 'astro:content';
@@ -50,15 +49,6 @@ const posts = rawPosts
   });
 
 const articleCount = posts.length;
-
-// Formater la date
-function formatDate(date: Date, locale: string): string {
-  return new Intl.DateTimeFormat(locale === 'fr' ? 'fr-FR' : 'en-US', {
-    day: 'numeric',
-    month: 'short',
-    year: 'numeric',
-  }).format(date);
-}
 ---
 
 <Layout lang={lang} title={t.blogPage.title} description={t.blogPage.description}>
@@ -75,27 +65,7 @@ function formatDate(date: Date, locale: string): string {
 			</div>
 		</div>
 
-		<!-- Switch vue grille/liste -->
-		<div class="mt-10 sm:mt-16 flex items-center md:justify-end">
-			<button
-				id="view-grid"
-				type="button"
-				class="view-switch active text-[1rem] font-mono uppercase flex flex-1 md:flex-none items-center justify-center gap-2 px-5 py-6 leading-none border border-lines transition-colors duration-300"
-				aria-pressed="true"
-			>
-				{t.blogPage.viewGrid}
-			</button>
-			<button
-				id="view-list"
-				type="button"
-				class="view-switch text-[1rem] font-mono uppercase flex flex-1 md:flex-none items-center justify-center gap-2 px-5 py-6 leading-none border border-lines transition-colors duration-300"
-				aria-pressed="false"
-			>
-				{t.blogPage.viewList}
-			</button>
-		</div>
-
-		<!-- Vue Grille -->
+		<!-- Grille des articles -->
 		<ol id="posts-grid" class="mt-10 sm:mt-16 grid grid-cols-1 sm:grid-cols-2 slg:grid-cols-[320px_1fr_320px] gap-10 sm:gap-5 md:gap-16 slg:gap-8 sm:gap-y-24 text-2xl sm:text-[2rem] lg:text-[2.5rem]">
 			{posts.map((post, index) => {
 				// Mode 2 colonnes (sm)
@@ -108,7 +78,7 @@ function formatDate(date: Date, locale: string): string {
 				return (
 				<li class:list={["post-item-grid", sm, slg]} data-image={post.image.src || ""}>
 					<a href={`/${lang}/blog/${post.slug}`}>
-						<div class="overflow-hidden mb-8 sm:max-w-70! slg:max-w-80! sm:aspect-square">
+						<div class="overflow-hidden mb-8 sm:max-w-70! slg:max-w-80! aspect-square">
 							<Image
 								src={post.image}
 								alt={post.imageAlt}
@@ -136,45 +106,6 @@ function formatDate(date: Date, locale: string): string {
 			})}
 		</ol>
 
-		<!-- Image flottante qui suit la souris (desktop only, vue liste) -->
-		<div
-			id="post-hover-image"
-			class="hidden md:block pointer-events-none fixed z-50 overflow-visible"
-			style="transform: translate(-50%, -50%) scale(0); will-change: transform;"
-		>
-			<div class="w-[315px] h-[315px] overflow-hidden">
-				<img
-					id="post-hover-img"
-					src=""
-					alt=""
-					class="w-full h-full object-cover"
-				/>
-			</div>
-		</div>
-
-		<!-- Vue Liste -->
-		<ol id="posts-list" class="hidden mt-10 sm:mt-16 text-2xl sm:text-[2rem] lg:text-[2.5rem]">
-			{posts.map((post, index) => (
-				<li
-					class="post-item-list"
-					data-image={post.image.src || ""}
-				>
-					<a
-						href={`/${lang}/blog/${post.slug}`}
-						class:list={[
-							"post-link flex justify-between py-5 xl:py-8 px-8 lg:px-9",
-							index === 0 ? "border border-lines" : "border-b border-x border-lines",
-						]}
-					>
-						<div class="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-6">
-							<p>{post.title}</p>
-							<span class="text-[0.875rem] font-mono uppercase text-black/60">{post.readingTime} {t.blogPage.minRead}</span>
-						</div>
-						<Wrapped class="text-[1rem] font-mono">→</Wrapped>
-					</a>
-				</li>
-			))}
-		</ol>
 	</div>
 
 	<Footer lang={lang} hideOverflow={false} />
@@ -195,232 +126,4 @@ function formatDate(date: Date, locale: string): string {
 		}
 	}
 
-	.post-item-list {
-		position: relative;
-	}
-
-	.post-link {
-		position: relative;
-		isolation: isolate;
-		transition: color 0.3s ease-out;
-	}
-
-	.post-link::before {
-		content: "";
-		position: absolute;
-		top: 0;
-		left: 0;
-		width: 100%;
-		height: 100%;
-		background-color: var(--color-black);
-		z-index: -1;
-		transform: scaleX(0);
-		transform-origin: left center;
-		transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-	}
-
-	@media (hover: hover) {
-		.post-link:hover {
-			color: var(--color-bg-light);
-		}
-
-		.post-link:hover::before {
-			transform: scaleX(1);
-		}
-
-		.post-link :global(.wrapped) {
-			transition: color 0.3s ease-out 0.2s;
-		}
-
-		.post-link:hover :global(.wrapped) {
-			color: var(--color-bg-light) !important;
-		}
-	}
-
-	/* Switch buttons */
-	.view-switch {
-		cursor: pointer;
-		background: transparent;
-	}
-
-	.view-switch.active {
-		background: var(--color-black);
-		color: var(--color-bg-light);
-	}
-
-	@media (hover: hover) {
-		.view-switch:not(.active):hover {
-			background: var(--color-lines);
-		}
-	}
 </style>
-
-<script>
-	function initViewSwitch() {
-		const gridBtn = document.getElementById('view-grid');
-		const listBtn = document.getElementById('view-list');
-		const gridView = document.getElementById('posts-grid');
-		const listView = document.getElementById('posts-list');
-
-		if (!gridBtn || !listBtn || !gridView || !listView) return;
-
-		function showGrid() {
-			gridBtn.classList.add('active');
-			gridBtn.setAttribute('aria-pressed', 'true');
-			listBtn.classList.remove('active');
-			listBtn.setAttribute('aria-pressed', 'false');
-			gridView.classList.remove('hidden');
-			listView.classList.add('hidden');
-		}
-
-		function showList() {
-			listBtn.classList.add('active');
-			listBtn.setAttribute('aria-pressed', 'true');
-			gridBtn.classList.remove('active');
-			gridBtn.setAttribute('aria-pressed', 'false');
-			listView.classList.remove('hidden');
-			gridView.classList.add('hidden');
-		}
-
-		gridBtn.addEventListener('click', showGrid);
-		listBtn.addEventListener('click', showList);
-	}
-
-	initViewSwitch();
-	document.addEventListener('astro:after-swap', initViewSwitch);
-
-	function initPostHoverImage() {
-		// Désactiver sur mobile/touch
-		const isMobile =
-			window.matchMedia("(max-width: 768px)").matches ||
-			"ontouchstart" in window;
-		if (isMobile || !window.matchMedia("(hover: hover)").matches) return;
-
-		const container = document.getElementById("post-hover-image");
-		const img = document.getElementById("post-hover-img") as HTMLImageElement;
-		const postItems = document.querySelectorAll(".post-item-list");
-
-		if (!container || !img) return;
-
-		let mouseX = 0;
-		let mouseY = 0;
-		let currentX = 0;
-		let currentY = 0;
-		let velocityX = 0;
-		let currentRotation = 0;
-		let targetRotation = 0;
-		let currentScale = 0;
-		let targetScale = 0;
-		let isHovering = false;
-		let animationId: number | null = null;
-
-		function animate() {
-			const posEase = 0.1;
-			const scaleEase = 0.08;
-			const rotEase = 0.06;
-
-			// Position
-			const prevX = currentX;
-			currentX += (mouseX - currentX) * posEase;
-			currentY += (mouseY - currentY) * posEase;
-
-			// Vélocité pour l'inertie
-			velocityX = currentX - prevX;
-
-			// Inertie : rotation basée sur la vélocité (max ±12deg)
-			const inertiaRotation = Math.max(-12, Math.min(12, velocityX * 2.5));
-			targetRotation = isHovering ? inertiaRotation : 0;
-
-			// Scale
-			currentScale += (targetScale - currentScale) * scaleEase;
-
-			// Force scale to 0 when very small and target is 0
-			if (targetScale === 0 && currentScale < 0.01) {
-				currentScale = 0;
-			}
-
-			// Rotation avec inertie
-			currentRotation += (targetRotation - currentRotation) * rotEase;
-
-			container.style.left = `${currentX}px`;
-			container.style.top = `${currentY}px`;
-			container.style.transform = `translate(-50%, -50%) scale(${currentScale}) rotate(${currentRotation}deg)`;
-			container.style.opacity = targetScale === 0 && currentScale < 0.01 ? "0" : "1";
-
-			const isAnimating =
-				Math.abs(currentX - mouseX) > 0.1 ||
-				Math.abs(currentY - mouseY) > 0.1 ||
-				Math.abs(currentScale - targetScale) > 0.01 ||
-				Math.abs(currentRotation - targetRotation) > 0.1;
-
-			if (isAnimating) {
-				animationId = requestAnimationFrame(animate);
-			} else {
-				animationId = null;
-			}
-		}
-
-		function startAnimation() {
-			if (!animationId) {
-				animationId = requestAnimationFrame(animate);
-			}
-		}
-
-		let currentElement: HTMLElement | null = null;
-
-		function showImage(element: HTMLElement) {
-			const imageSrc = element.dataset.image;
-			if (imageSrc) {
-				img.src = imageSrc;
-			}
-		}
-
-		postItems.forEach((item) => {
-			const element = item as HTMLElement;
-
-			element.addEventListener("mouseenter", () => {
-				isHovering = true;
-
-				// Si on change d'élément, reset l'animation
-				if (currentElement !== element) {
-					currentX = mouseX;
-					currentY = mouseY;
-					currentScale = 0;
-					currentRotation = 0;
-				}
-
-				currentElement = element;
-				showImage(element);
-				targetScale = 1;
-				startAnimation();
-			});
-
-			element.addEventListener("mouseleave", () => {
-				isHovering = false;
-				currentElement = null;
-				targetScale = 0;
-				startAnimation();
-			});
-
-			element.addEventListener("mousemove", (e) => {
-				mouseX = e.clientX;
-				mouseY = e.clientY;
-				startAnimation();
-			});
-		});
-
-		// Cleanup
-		document.addEventListener(
-			"astro:before-swap",
-			() => {
-				if (animationId) {
-					cancelAnimationFrame(animationId);
-				}
-			},
-			{ once: true },
-		);
-	}
-
-	initPostHoverImage();
-	document.addEventListener("astro:after-swap", initPostHoverImage);
-</script>
