@@ -3,13 +3,12 @@ name: Nicolas Prémont
 role_fr: Co-fondateur & Développeur
 role_en: Co-founder & Developer
 bio_fr: >-
-  Développeur web passionné par la performance et l'expérience utilisateur.
-  9 ans d'expérience dans la création d'interfaces ultra-rapides.
+  Développeur web passionné par la performance et l'expérience utilisateur. 9
+  ans d'expérience dans la création d'interfaces ultra-rapides.
 bio_en: >-
-  Web developer passionate about performance and user experience.
-  9 years of experience building ultra-fast interfaces.
-avatar: /src/assets/images/authors/nicolas-premont.jpg
+  Web developer passionate about performance and user experience. 9 years of
+  experience building ultra-fast interfaces.
+avatar: /src/assets/images/authors/nicolas-premont/avatar.jpg
 social:
-  twitter: npremont
-  linkedin: https://www.linkedin.com/in/nicolas-premont
-  github: npremont
+  linkedin: https://www.linkedin.com/in/nicolas-pr%C3%A9mont-90326b1aa/
+  github: npremz

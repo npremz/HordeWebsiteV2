@@ -20,7 +20,7 @@ const {
     dark && "physics-dark",
   ]}
 >
-  <div class:list={["absolute inset-0", hideOverflow && "overflow-hidden"]}>
+  <div class:list={["absolute inset-0", hideOverflow ? "overflow-hidden" : "pointer-events-none z-5"]}>
     <div
       id="logo-letters"
       class="absolute inset-0"

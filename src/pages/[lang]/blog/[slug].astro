@@ -64,6 +64,17 @@ if (allContents[contentPath]) {
 	articleContent = await allContents[contentPath]() as string;
 }
 
+// Générer un slug à partir d'un texte (gère les accents français)
+function slugify(text: string): string {
+	return text
+		.toLowerCase()
+		.normalize('NFD')                     // Décompose les accents (é → e + ́)
+		.replace(/[\u0300-\u036f]/g, '')      // Supprime les diacritiques
+		.replace(/[^a-z0-9]+/g, '-')          // Remplace les non-alphanumériques par -
+		.replace(/-+/g, '-')                  // Fusionne les tirets multiples
+		.replace(/(^-|-$)/g, '');             // Supprime les - en début/fin
+}
+
 // Extraire les titres H2 pour le sommaire (rendu côté serveur pour SEO)
 function extractHeadings(content: string): { id: string; text: string }[] {
 	const headingRegex = /^## (.+)$/gm;
@@ -71,7 +82,7 @@ function extractHeadings(content: string): { id: string; text: string }[] {
 	let match;
 	while ((match = headingRegex.exec(content)) !== null) {
 		const text = match[1];
-		const id = text.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+		const id = slugify(text);
 		headings.push({ id, text });
 	}
 	return headings;
@@ -111,9 +122,9 @@ function parseMarkdown(content: string): string {
 	// Code inline
 	html = html.replace(/`([^`]+)`/g, '<code class="px-1.5 py-0.5">$1</code>');
 
-	// Titres H2 avec id pour TOC
+	// Titres H2 avec id pour TOC (utilise slugify pour cohérence avec le sommaire)
 	html = html.replace(/^## (.+)$/gm, (_, title) => {
-		const id = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+		const id = slugify(title);
 		return `<h2 class="text-[2rem] leading-tight max-w-[400px] mt-16 sm:mt-32 mb-10 sm:mb-16 scroll-mt-24" id="${id}">${title}</h2>`;
 	});
 
@@ -236,7 +247,7 @@ const schemaOrg = {
 	<script type="application/ld+json" set:html={JSON.stringify(schemaOrg)} />
 
 	<div class="fixed inset-0 bg-bg -z-10" aria-hidden="true"></div>
-	<article id="page-content" class="relative z-10 bg-bg">
+	<article id="page-content" class="relative z-10">
 		<!-- Header Article -->
 		<header class="pt-50 sm:pt-78 mb-10 sm:mb-16">
 			<!-- Catégorie + Temps de lecture -->
@@ -247,7 +258,7 @@ const schemaOrg = {
 			</div>
 
 			<!-- Titre -->
-			<h1 class="font-display text-[2rem] md:text-[3rem] lg:text-[4rem] leading-[1.1] uppercase mb-8 sm:mb-16 max-w-[520px] md:max-w-[720px]">
+			<h1 class="font-display text-[2rem] md:text-[2.5rem] lg:text-[3rem] leading-[1.1] uppercase mb-8 sm:mb-16 max-w-130 md:max-w-180 lg:">
 				{title}
 			</h1>
 
@@ -342,7 +353,7 @@ const schemaOrg = {
 			</div>
 			<div class="max-w-3xl mx-auto lg:max-w-none">
 				<!-- Tags + Partage (2 colonnes sur lg) -->
-				<div class="lg:flex lg:gap-16 pt-10 sm:pt-16 lg:pt-24 sm:mt-24 border-t border-lines mb-10 sm:mb-16 lg:pb-24 lg:mb-0">
+				<div class="lg:flex lg:gap-16 pt-10 sm:pt-16 lg:pt-24 sm:mt-24 border-t border-lines mb-10 sm:mb-16 lg:pb-24 lg:mb-0 bg-bg">
 					<!-- Tags -->
 					{tags.length > 0 && (
 						<div class="mb-10 lg:mb-0 lg:flex-1">
@@ -390,6 +401,7 @@ const schemaOrg = {
 
 				<!-- Bio Auteur -->
 				{author && (
+					<div class="bg-bg">
 					<h2 class="section-label mb-8">{t.blogPage.about}</h2>
 					<div class="mb-16 p-6 md:p-8 border border-lines">
 						{/* Mobile: photo + nom/rôle côte à côte, description en dessous */}
@@ -473,6 +485,7 @@ const schemaOrg = {
 								</div>
 							</div>
 						</div>
+					</div>
 					</div>
 				)}
 				</div>

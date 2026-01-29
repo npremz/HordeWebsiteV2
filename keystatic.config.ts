@@ -707,14 +707,14 @@ collections['posts'] = collection({
   schema: blogPostsSchema,
 });
 
-// Configuration storage conditionnelle: local en dev, GitHub en prod
-const isProd = import.meta.env.PROD;
+// Configuration storage conditionnelle: GitHub uniquement si KEYSTATIC_GITHUB=true
+const useGitHub = import.meta.env.KEYSTATIC_GITHUB === 'true';
 
 export default config({
-  storage: isProd
+  storage: useGitHub
     ? {
         kind: 'github',
-        repo: 'npremz/HordeWebsiteV2', // TODO: Remplacer par ton repo
+        repo: 'npremz/HordeWebsiteV2',
       }
     : {
         kind: 'local',
