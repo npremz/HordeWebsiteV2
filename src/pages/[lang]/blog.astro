@@ -65,8 +65,17 @@ function formatDate(date: Date, locale: string): string {
 	<div class="fixed inset-0 bg-bg-light -z-10" aria-hidden="true"></div>
 	<div id="page-content" class="relative z-10">
 		<div class="pt-52 sm:pt-80 xl:pt-96">
+			<!-- Breadcrumbs -->
+			<nav aria-label="Breadcrumb" class="mb-8">
+				<ol class="flex items-center gap-2 section-label flex-wrap">
+					<li><a href={`/${lang}`} class="hover:text-black transition-colors">{lang === 'fr' ? 'Accueil' : 'Home'}</a></li>
+					<li><span class="mx-1">/</span></li>
+					<li aria-current="page" class="text-black">Blog</li>
+				</ol>
+			</nav>
+
 			<div class="flex flex-col leading-none">
-				<span class="section-label mb-8">Un petit café avec la lecture ?</span>
+				<span class="section-label mb-8">{lang === 'fr' ? 'Un petit café avec la lecture ?' : 'A coffee with your reading?'}</span>
 				<h1 class="leading-none font-display text-[2rem] md:text-[2.5rem] lg:text-[3rem] uppercase" set:html={t.blogPage.heading.replace(/\n/g, '<br>')} />
 			</div>
 		</div>

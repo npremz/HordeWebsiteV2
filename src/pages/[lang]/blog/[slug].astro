@@ -71,7 +71,6 @@ function slugify(text: string): string {
 		.normalize('NFD')                     // Décompose les accents (é → e + ́)
 		.replace(/[\u0300-\u036f]/g, '')      // Supprime les diacritiques
 		.replace(/[^a-z0-9]+/g, '-')          // Remplace les non-alphanumériques par -
-		.replace(/-+/g, '-')                  // Fusionne les tirets multiples
 		.replace(/(^-|-$)/g, '');             // Supprime les - en début/fin
 }
 
@@ -247,20 +246,33 @@ const schemaOrg = {
 	<script type="application/ld+json" set:html={JSON.stringify(schemaOrg)} />
 
 	<div class="fixed inset-0 bg-bg -z-10" aria-hidden="true"></div>
-	<article id="page-content" class="relative z-10">
+	<article id="page-content" class="relative z-10 bg-bg">
 		<!-- Header Article -->
 		<header class="pt-50 sm:pt-78 mb-10 sm:mb-16">
-			<!-- Catégorie + Temps de lecture -->
-			<div class="flex items-center gap-3 section-label mb-8 leading-none">
-				<a href={`/${lang}/blog`} class="hover:text-black transition-colors">{categoryName}</a>
-				<span>-</span>
-				<span>{readingTime} {t.blogPage.minRead}</span>
-			</div>
+			<!-- Breadcrumbs -->
+			<nav aria-label="Breadcrumb" class="mb-8">
+				<ol class="flex items-center gap-2 section-label flex-wrap">
+					<li><a href={`/${lang}`} class="hover:text-black transition-colors">{lang === 'fr' ? 'Accueil' : 'Home'}</a></li>
+					<li><span class="mx-1">/</span></li>
+					<li class="hidden sm:block"><a href={`/${lang}/blog`} class="hover:text-black transition-colors">Blog</a></li>
+					<li class="hidden sm:block"><span class="mx-1">/</span></li>
+					<li><a href={`/${lang}/blog/category/${post.data.category}`} class="hover:text-black transition-colors">{categoryName}</a></li>
+					<li><span class="mx-1">/</span></li>
+					<li aria-current="page" class="text-black truncate max-w-[150px] sm:max-w-[250px] md:max-w-[350px]">{title}</li>
+				</ol>
+			</nav>
 
-			<!-- Titre -->
-			<h1 class="font-display text-[2rem] md:text-[2.5rem] lg:text-[3rem] leading-[1.1] uppercase mb-8 sm:mb-16 max-w-130 md:max-w-180 lg:">
-				{title}
-			</h1>
+			<div class="md:flex md:flex-row-reverse md:justify-between md:items-end md:mb-16">
+				<!-- Catégorie + Temps de lecture -->
+				<div class="flex items-center gap-3 section-label mb-8 leading-none md:mb-0">
+					<span>{readingTime} {t.blogPage.minRead}</span>
+				</div>
+
+				<!-- Titre -->
+				<h1 class="font-display text-[2rem] md:text-[2.5rem] lg:text-[3rem] leading-[1.1] uppercase mb-8 sm:mb-16 md:mb-0 max-w-130 md:max-w-180 ">
+					{title}
+				</h1>
+			</div>
 
 			<!-- Meta: Auteur + Date -->
 			<div class="flex flex-col p-5 sm:p-8 border border-lines sm:flex-row sm:justify-between sm:items-end gap-4 sm:gap-8 mb-10 sm:mb-24">
@@ -281,7 +293,7 @@ const schemaOrg = {
 					</div>
 				</div>
 				<!-- Dates -->
-				<div class="section-label sm:max-w-32">
+				<div class="section-label sm:max-w-30">
 					<p>
 						<span >{t.blogPage.publishedOn}</span>{" "}
 						<time datetime={publishedDate.toISOString()}>{formatDate(publishedDate, lang)}</time>
@@ -353,16 +365,20 @@ const schemaOrg = {
 			</div>
 			<div class="max-w-3xl mx-auto lg:max-w-none">
 				<!-- Tags + Partage (2 colonnes sur lg) -->
-				<div class="lg:flex lg:gap-16 pt-10 sm:pt-16 lg:pt-24 sm:mt-24 border-t border-lines mb-10 sm:mb-16 lg:pb-24 lg:mb-0 bg-bg">
+				<div class="lg:flex lg:gap-16 pt-10 sm:pt-16 lg:pt-24 sm:mt-24 border-t border-lines mb-10 sm:mb-16 lg:pb-24 lg:mb-0">
 					<!-- Tags -->
 					{tags.length > 0 && (
 						<div class="mb-10 lg:mb-0 lg:flex-1">
 							<h2 class="section-label mb-4">{t.blogPage.tags}</h2>
 							<div class="flex flex-wrap gap-2 md:gap-4">
 								{tags.map((tag: string) => (
-									<span class="px-5 py-3 border border-lines text-[0.875rem] font-mono uppercase">
-										{tag}
-									</span>
+									<a
+										href={`/${lang}/blog/tag/${slugify(tag)}`}
+										class="group relative overflow-hidden px-5 py-3 border border-lines text-[0.875rem] font-mono uppercase"
+									>
+										<span class="absolute inset-0 bg-black translate-x-[calc(-100%-1px)] group-hover:translate-x-0 transition-transform duration-400 ease-[cubic-bezier(0.25,0.46,0.45,0.94)]"></span>
+										<span class="relative z-10 transition-colors duration-300 group-hover:text-white">{tag}</span>
+									</a>
 								))}
 							</div>
 						</div>
@@ -376,24 +392,27 @@ const schemaOrg = {
 								href={`https://twitter.com/intent/tweet?url=${encodeURIComponent(shareUrl)}&text=${encodeURIComponent(title)}`}
 								target="_blank"
 								rel="noopener noreferrer"
-								class="px-5 py-3 border border-lines font-mono text-[0.875rem] uppercase hover:bg-black hover:text-white transition-colors"
+								class="group relative overflow-hidden px-5 py-3 border border-lines font-mono text-[0.875rem] uppercase"
 							>
-								Twitter
+								<span class="absolute inset-0 bg-black translate-x-[calc(-100%-1px)] group-hover:translate-x-0 transition-transform duration-400 ease-[cubic-bezier(0.25,0.46,0.45,0.94)]"></span>
+								<span class="relative z-10 transition-colors duration-300 group-hover:text-white">Twitter</span>
 							</a>
 							<a
 								href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(shareUrl)}`}
 								target="_blank"
 								rel="noopener noreferrer"
-								class="px-5 py-3 border border-lines font-mono text-[0.875rem] uppercase hover:bg-black hover:text-white transition-colors"
+								class="group relative overflow-hidden px-5 py-3 border border-lines font-mono text-[0.875rem] uppercase"
 							>
-								LinkedIn
+								<span class="absolute inset-0 bg-black translate-x-[calc(-100%-1px)] group-hover:translate-x-0 transition-transform duration-400 ease-[cubic-bezier(0.25,0.46,0.45,0.94)]"></span>
+								<span class="relative z-10 transition-colors duration-300 group-hover:text-white">LinkedIn</span>
 							</a>
 							<button
 								type="button"
-								class="copy-link px-5 py-3 border border-lines font-mono text-[0.875rem] uppercase hover:bg-black hover:text-white transition-colors"
+								class="copy-link group relative overflow-hidden px-5 py-3 border border-lines font-mono text-[0.875rem] uppercase cursor-pointer"
 								data-url={shareUrl}
 							>
-								{lang === 'fr' ? 'Copier le lien' : 'Copy link'}
+								<span class="absolute inset-0 bg-black translate-x-[calc(-100%-1px)] group-hover:translate-x-0 transition-transform duration-400 ease-[cubic-bezier(0.25,0.46,0.45,0.94)]"></span>
+								<span class="relative z-10 transition-colors duration-300 group-hover:text-white">{lang === 'fr' ? 'Copier le lien' : 'Copy link'}</span>
 							</button>
 						</div>
 					</div>
@@ -401,7 +420,6 @@ const schemaOrg = {
 
 				<!-- Bio Auteur -->
 				{author && (
-					<div class="bg-bg">
 					<h2 class="section-label mb-8">{t.blogPage.about}</h2>
 					<div class="mb-16 p-6 md:p-8 border border-lines">
 						{/* Mobile: photo + nom/rôle côte à côte, description en dessous */}
@@ -485,7 +503,6 @@ const schemaOrg = {
 								</div>
 							</div>
 						</div>
-					</div>
 					</div>
 				)}
 				</div>
@@ -653,11 +670,14 @@ const schemaOrg = {
 				const url = (btn as HTMLElement).dataset.url;
 				if (url) {
 					await navigator.clipboard.writeText(url);
-					const originalText = btn.textContent;
-					btn.textContent = '✓';
-					setTimeout(() => {
-						btn.textContent = originalText;
-					}, 2000);
+					const textSpan = btn.querySelector('span:last-child');
+					if (textSpan) {
+						const originalText = textSpan.textContent;
+						textSpan.textContent = '✓';
+						setTimeout(() => {
+							textSpan.textContent = originalText;
+						}, 2000);
+					}
 				}
 			});
 		});

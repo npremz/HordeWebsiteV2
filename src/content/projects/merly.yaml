@@ -4,12 +4,14 @@ shortTitle_en: Merly
 fullTitle_fr: Merly - Site vitrine UX par Horde, agence web à Bruxelles
 fullTitle_en: Merly - UX showcase website by Horde, Brussels web agency
 seoDescription_fr: >-
-  Horde, agence web UX à Bruxelles, a créé le site vitrine de Merly. Interface élégante et UX optimisée.
+  Horde, agence web UX à Bruxelles, a créé le site vitrine de Merly. Interface
+  élégante et UX optimisée.
 seoDescription_en: >-
-  Horde, UX web agency in Brussels, created the Merly showcase website. Elegant interface and optimized UX.
+  Horde, UX web agency in Brussels, created the Merly showcase website. Elegant
+  interface and optimized UX.
 featuredImageAlt_fr: Site web Merly créé par Horde, agence web UX Bruxelles
 featuredImageAlt_en: Merly website created by Horde, Brussels UX web agency
-featuredImage: ../../assets/images/projects/merly.jpg
+featuredImage: /src/assets/images/projects/merly/featuredImage.jpg
 gallery: []
 projectTypes:
   - Site vitrine
@@ -17,7 +19,7 @@ projectTypes:
   - Web Design
   - Bruxelles
 externalUrl: https://merly.hordagency.com
-inProgress: false
+inProgress: true
 publishedDate: 2024-02-01
 order: 2
 seoRobots: index, follow

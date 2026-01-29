@@ -1,0 +1,201 @@
+---
+import Layout from '../../../../layouts/Layout.astro';
+import Footer from '../../../../components/Footer.astro';
+import Wrapped from '../../../../components/ui/Wrapped.astro';
+import { Image } from 'astro:assets';
+import { SUPPORTED_LOCALES, type Locale, useTranslations } from '../../../../i18n';
+import { getCollection } from 'astro:content';
+
+export const prerender = true;
+
+// Fonction pour générer un slug à partir d'un tag
+function slugifyTag(tag: string): string {
+	return tag
+		.toLowerCase()
+		.normalize('NFD')
+		.replace(/[\u0300-\u036f]/g, '')
+		.replace(/[^a-z0-9]+/g, '-')
+		.replace(/-+/g, '-')
+		.replace(/(^-|-$)/g, '');
+}
+
+export async function getStaticPaths() {
+	// Fonction locale pour éviter les problèmes de scope
+	function slugify(tag: string): string {
+		return tag
+			.toLowerCase()
+			.normalize('NFD')
+			.replace(/[\u0300-\u036f]/g, '')
+			.replace(/[^a-z0-9]+/g, '-')
+			.replace(/-+/g, '-')
+			.replace(/(^-|-$)/g, '');
+	}
+
+	const posts = await getCollection('posts');
+
+	// Extraire tous les tags uniques
+	const allTags = new Set<string>();
+	posts.forEach((post) => {
+		if (post.data.tags) {
+			post.data.tags.forEach((tag: string) => allTags.add(tag));
+		}
+	});
+
+	return SUPPORTED_LOCALES.flatMap((lang) =>
+		Array.from(allTags).map((tag) => ({
+			params: { lang, slug: slugify(tag) },
+			props: { tag, lang },
+		}))
+	);
+}
+
+const { tag, lang } = Astro.props as { tag: string; lang: Locale };
+const t = useTranslations(lang);
+
+// Récupérer les articles avec ce tag
+const rawPosts = await getCollection('posts');
+const rawAuthors = await getCollection('authors');
+const rawCategories = await getCollection('categories');
+
+const authorsMap = new Map(rawAuthors.map((a) => [a.data.slug, a.data]));
+const categoriesMap = new Map(rawCategories.map((c) => [c.data.slug, c.data]));
+
+const posts = rawPosts
+	.filter((post) => !post.data.draft && post.data.tags?.includes(tag))
+	.sort((a, b) => new Date(b.data.publishedDate).getTime() - new Date(a.data.publishedDate).getTime())
+	.map((post) => {
+		const author = authorsMap.get(post.data.author);
+		const category = categoriesMap.get(post.data.category);
+		return {
+			slug: post.data.slug,
+			title: lang === 'fr' ? post.data.title_fr : post.data.title_en,
+			excerpt: lang === 'fr' ? post.data.excerpt_fr : post.data.excerpt_en,
+			image: post.data.featuredImage,
+			imageAlt: lang === 'fr' ? post.data.featuredImageAlt_fr : post.data.featuredImageAlt_en,
+			publishedDate: post.data.publishedDate,
+			readingTime: post.data.readingTime || 5,
+			authorName: author?.name || 'Horde',
+			categoryName: category ? (lang === 'fr' ? category.name_fr : category.name_en) : '',
+		};
+	});
+
+const articleCount = posts.length;
+
+function formatDate(date: Date, locale: string): string {
+	return new Intl.DateTimeFormat(locale === 'fr' ? 'fr-FR' : 'en-US', {
+		day: '2-digit',
+		month: 'short',
+		year: '2-digit',
+	}).format(date);
+}
+
+const pageTitle = `${tag} - Blog`;
+const pageDescription = `${lang === 'fr' ? 'Articles tagués' : 'Articles tagged'} ${tag}`;
+---
+
+<Layout lang={lang} title={pageTitle} description={pageDescription}>
+	<div class="fixed inset-0 bg-bg-light -z-10" aria-hidden="true"></div>
+	<div id="page-content" class="relative z-10">
+		<div class="pt-52 sm:pt-80 xl:pt-96">
+			<!-- Breadcrumbs -->
+			<nav aria-label="Breadcrumb" class="mb-8">
+				<ol class="flex items-center gap-2 section-label flex-wrap">
+					<li><a href={`/${lang}`} class="hover:text-black transition-colors">{lang === 'fr' ? 'Accueil' : 'Home'}</a></li>
+					<li><span class="mx-1">/</span></li>
+					<li><a href={`/${lang}/blog`} class="hover:text-black transition-colors">Blog</a></li>
+					<li><span class="mx-1">/</span></li>
+					<li aria-current="page" class="text-black truncate max-w-[150px] sm:max-w-none">#{tag}</li>
+				</ol>
+			</nav>
+
+			<div class="flex flex-col leading-none md:flex-row md:justify-between md:items-end">
+				<div>
+					<span class="section-label block mb-4">{lang === 'fr' ? 'Tag' : 'Tag'}</span>
+					<h1 class="leading-none font-display text-[2rem] md:text-[2.5rem] lg:text-[3rem] uppercase mb-6 md:mb-0">
+						#{tag}
+					</h1>
+				</div>
+				<p class="section-label mt-4">
+					{articleCount} {articleCount > 1 ? (lang === 'fr' ? 'articles' : 'articles') : (lang === 'fr' ? 'article' : 'article')}
+				</p>
+			</div>
+		</div>
+
+		<!-- Grille des articles -->
+		{posts.length > 0 ? (
+			<ol id="posts-grid" class="mt-10 sm:mt-32 grid grid-cols-1 sm:grid-cols-2 slg:grid-cols-[320px_1fr_320px] gap-10 sm:gap-5 md:gap-16 slg:gap-8 sm:gap-y-24 text-2xl sm:text-[2rem] lg:text-[2.5rem]">
+				{posts.map((post, index) => {
+					const sm = index % 2 === 0 ? "sm:justify-self-start" : "sm:justify-self-end";
+					const col = index % 3;
+					const slg = col === 0 ? "slg:justify-self-start"
+						: col === 2 ? "slg:justify-self-end"
+						: Math.floor(index / 3) % 2 === 0 ? "slg:justify-self-end" : "slg:justify-self-start";
+					return (
+					<li class:list={["post-item-grid", sm, slg]} data-image={post.image.src || ""}>
+						<a href={`/${lang}/blog/${post.slug}`}>
+							<div class="overflow-hidden mb-8 sm:max-w-70! slg:max-w-80! aspect-square">
+								<Image
+									src={post.image}
+									alt={post.imageAlt}
+									class="w-full h-full object-cover post-img"
+									widths={[250, 400, 600]}
+									sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+									loading={index === 0 ? "eager" : "lazy"}
+									fetchpriority={index === 0 ? "high" : "auto"}
+									decoding="async"
+									format="webp"
+									quality={75}
+								/>
+							</div>
+							<div class="flex flex-col gap-3 sm:max-w-70 slg:max-w-80">
+								<h2 class="text-[1.25rem] leading-normal mb-4">{post.title}</h2>
+								<div class="section-label flex justify-between">
+									<span>{post.categoryName} - {formatDate(new Date(post.publishedDate), lang)}</span>
+									<Wrapped>→</Wrapped>
+								</div>
+							</div>
+						</a>
+					</li>
+				);
+				})}
+			</ol>
+		) : (
+			<div class="mt-16 py-16 text-center">
+				<p class="text-xl text-black/60">
+					{lang === 'fr' ? 'Aucun article avec ce tag pour le moment.' : 'No articles with this tag yet.'}
+				</p>
+			</div>
+		)}
+
+		<!-- Bouton retour -->
+		<nav class="mt-16 mb-10 flex justify-start md:justify-end">
+			<a
+				href={`/${lang}/blog`}
+				class="group relative overflow-hidden font-mono text-[1rem] leading-none uppercase py-6 px-5 flex justify-center w-full md:w-fit border border-lines-dark bg-black text-white transition-colors duration-300 ease-in-out cursor-pointer"
+			>
+				<span class="absolute inset-0 bg-bg-light translate-x-[calc(-100%-1px)] group-hover:translate-x-0 transition-transform duration-400 ease-[cubic-bezier(0.25,0.46,0.45,0.94)]"></span>
+				<span class="relative z-10 text-white group-hover:text-black transition-colors duration-300">
+					← {lang === 'fr' ? 'Tous les articles' : 'All articles'}
+				</span>
+			</a>
+		</nav>
+	</div>
+
+	<Footer lang={lang} hideOverflow={false} />
+</Layout>
+
+<style>
+	.post-item-grid {
+		position: relative;
+	}
+
+	.post-item-grid .post-img {
+		transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+	}
+
+	@media (hover: hover) {
+		.post-item-grid:hover .post-img {
+			transform: scale(1.05);
+		}
+	}
+</style>
