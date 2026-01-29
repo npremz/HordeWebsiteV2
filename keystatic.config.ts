@@ -707,10 +707,18 @@ collections['posts'] = collection({
   schema: blogPostsSchema,
 });
 
+// Configuration storage conditionnelle: local en dev, GitHub en prod
+const isProd = import.meta.env.PROD;
+
 export default config({
-  storage: {
-    kind: 'local',
-  },
+  storage: isProd
+    ? {
+        kind: 'github',
+        repo: 'npremz/HordeWebsiteV2', // TODO: Remplacer par ton repo
+      }
+    : {
+        kind: 'local',
+      },
   singletons,
   collections,
 });
