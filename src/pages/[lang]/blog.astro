@@ -1,6 +1,7 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import Footer from '../../components/Footer.astro';
+import Wrapped from '../../components/ui/Wrapped.astro';
 import { Image } from 'astro:assets';
 import { SUPPORTED_LOCALES, type Locale, useTranslations } from '../../i18n';
 import { getCollection } from 'astro:content';
@@ -49,24 +50,29 @@ const posts = rawPosts
   });
 
 const articleCount = posts.length;
+
+// Formater la date en "DD month YY"
+function formatDate(date: Date, locale: string): string {
+  return new Intl.DateTimeFormat(locale === 'fr' ? 'fr-FR' : 'en-US', {
+    day: '2-digit',
+    month: 'short',
+    year: '2-digit',
+  }).format(date);
+}
 ---
 
 <Layout lang={lang} title={t.blogPage.title} description={t.blogPage.description}>
 	<div class="fixed inset-0 bg-bg-light -z-10" aria-hidden="true"></div>
 	<div id="page-content" class="relative z-10 bg-bg-light">
-		<div class="pt-80 xl:pt-96">
-			<div class="flex flex-col sm:flex-row sm:justify-between font-display gap-5 leading-none">
-				<h1 class="leading-none text-[2rem] md:text-[2.5rem] lg:text-[3rem] uppercase" set:html={t.blogPage.heading.replace(/\n/g, '<br>')} />
-				<span class="hidden sm:block self-stretch w-px bg-lines"></span>
-				<div class="flex flex-col items-end gap-4 sm:gap-0 sm:justify-between">
-					<p>{t.blogPage.articleCount}</p>
-					<span class="text-[2rem] md:text-[2.5rem] lg:text-[3rem] leading-none">({String(articleCount).padStart(2, "0")})</span>
-				</div>
+		<div class="pt-52 sm:pt-80 xl:pt-96">
+			<div class="flex flex-col leading-none">
+				<span class="section-label mb-8">Un petit café avec la lecture ?</span>
+				<h1 class="leading-none font-display text-[2rem] md:text-[2.5rem] lg:text-[3rem] uppercase" set:html={t.blogPage.heading.replace(/\n/g, '<br>')} />
 			</div>
 		</div>
 
 		<!-- Grille des articles -->
-		<ol id="posts-grid" class="mt-10 sm:mt-16 grid grid-cols-1 sm:grid-cols-2 slg:grid-cols-[320px_1fr_320px] gap-10 sm:gap-5 md:gap-16 slg:gap-8 sm:gap-y-24 text-2xl sm:text-[2rem] lg:text-[2.5rem]">
+		<ol id="posts-grid" class="mt-10 sm:mt-32 grid grid-cols-1 sm:grid-cols-2 slg:grid-cols-[320px_1fr_320px] gap-10 sm:gap-5 md:gap-16 slg:gap-8 sm:gap-y-24 text-2xl sm:text-[2rem] lg:text-[2.5rem]">
 			{posts.map((post, index) => {
 				// Mode 2 colonnes (sm)
 				const sm = index % 2 === 0 ? "sm:justify-self-start" : "sm:justify-self-end";
@@ -92,13 +98,12 @@ const articleCount = posts.length;
 								quality={75}
 							/>
 						</div>
-						<div class="flex flex-col gap-3">
-							<div class="flex items-center gap-3 text-[0.875rem] font-mono uppercase text-black/60">
-								<span>{post.categoryName}</span>
-								<span>—</span>
-								<span>{post.readingTime} {t.blogPage.minRead}</span>
+						<div class="flex flex-col gap-3 sm:max-w-70 slg:max-w-80">
+							<h2 class="text-[1.25rem] leading-normal mb-4">{post.title}</h2>
+							<div class="section-label flex justify-between">
+								<span>{post.categoryName} - {formatDate(new Date(post.publishedDate), lang)}</span>
+								<Wrapped>→</Wrapped>
 							</div>
-							<h2 class="text-[1.5rem] sm:text-[1.75rem] leading-tight">{post.title}</h2>
 						</div>
 					</a>
 				</li>

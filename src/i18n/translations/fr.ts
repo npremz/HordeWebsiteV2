@@ -154,7 +154,7 @@ export const fr = {
   blogPage: {
     title: 'Blog',
     description: 'Articles et conseils sur le développement web, l\'UX design et les performances. Par Horde, agence digitale à Bruxelles.',
-    heading: 'Nos derniers\narticles',
+    heading: 'Nos derniers\narticles rien que\npour vous',
     articleCount: 'Nombre articles',
     viewGrid: 'Grille',
     viewList: 'Liste',

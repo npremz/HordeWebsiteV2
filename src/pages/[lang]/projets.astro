@@ -85,7 +85,7 @@ const projectCount = projects.length;
 				<li class:list={["project-item-grid", sm, slg]} data-image={project.image.src || ""} data-in-progress={project.inProgress}>
 					{!project.inProgress ? (
 						<a href={`/${lang}/projets/${project.slug}`}>
-							<div class="overflow-hidden mb-8 sm:max-w-70! slg:max-w-80! sm:aspect-square">
+							<div class="overflow-hidden mb-8 sm:max-w-70! slg:max-w-80! aspect-square">
 								<Image
 									src={project.image}
 									alt={project.imageAlt}
