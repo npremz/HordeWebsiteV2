@@ -64,6 +64,21 @@ if (allContents[contentPath]) {
 	articleContent = await allContents[contentPath]() as string;
 }
 
+// Extraire les titres H2 pour le sommaire (rendu côté serveur pour SEO)
+function extractHeadings(content: string): { id: string; text: string }[] {
+	const headingRegex = /^## (.+)$/gm;
+	const headings: { id: string; text: string }[] = [];
+	let match;
+	while ((match = headingRegex.exec(content)) !== null) {
+		const text = match[1];
+		const id = text.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+		headings.push({ id, text });
+	}
+	return headings;
+}
+
+const tableOfContents = extractHeadings(articleContent);
+
 // Articles connexes (même catégorie, excluant l'article actuel)
 const rawPosts = await getCollection('posts');
 const relatedPosts = rawPosts
@@ -90,34 +105,41 @@ function parseMarkdown(content: string): string {
 			.replace(/&/g, '&amp;')
 			.replace(/</g, '&lt;')
 			.replace(/>/g, '&gt;');
-		return `<pre class="bg-black text-bg-light p-6 overflow-x-auto my-8 text-[0.875rem] leading-relaxed"><code class="language-${lang || 'text'}">${escaped}</code></pre>`;
+		return `<div class="pb-10 sm:pb-16 border-b border-lines"><pre class="bg-bg-light p-4 overflow-x-auto text-[1rem]"><code class="language-${lang || 'text'}">${escaped}</code></pre></div>`;
 	});
 
 	// Code inline
-	html = html.replace(/`([^`]+)`/g, '<code class="bg-lines px-1.5 py-0.5 text-[0.875em]">$1</code>');
+	html = html.replace(/`([^`]+)`/g, '<code class="px-1.5 py-0.5">$1</code>');
 
 	// Titres H2 avec id pour TOC
 	html = html.replace(/^## (.+)$/gm, (_, title) => {
 		const id = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
-		return `<h2 class="font-display text-[1.75rem] md:text-[2rem] uppercase mt-16 mb-6 scroll-mt-24" id="${id}">${title}</h2>`;
+		return `<h2 class="text-[2rem] leading-tight max-w-[400px] mt-16 sm:mt-32 mb-10 sm:mb-16 scroll-mt-24" id="${id}">${title}</h2>`;
 	});
 
 	// Titres H3
-	html = html.replace(/^### (.+)$/gm, '<h3 class="font-display text-[1.25rem] md:text-[1.5rem] uppercase mt-12 mb-4">$1</h3>');
+	html = html.replace(/^### (.+)$/gm, '<h3 class="text-[1.5rem] mt-12 mb-10">$1</h3>');
 
 	// Listes à puces
 	html = html.replace(/^- (.+)$/gm, '<li class="ml-4">$1</li>');
-	html = html.replace(/(<li.*<\/li>\n?)+/g, '<ul class="list-disc list-outside space-y-2 mb-6 pl-4">$&</ul>');
+	html = html.replace(/(<li.*<\/li>\n?)+/g, (match) => {
+		// Nettoyer les espaces/retours de ligne en fin de match
+		const cleanMatch = match.replace(/\s+$/, '');
+		return `<ul class="list-disc list-outside flex flex-col gap-10  py-10 sm:py-16 border-t border-b border-lines mb-6 pl-4">${cleanMatch}</ul>`;
+	});
 
 	// Gras et italique
-	html = html.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+	html = html.replace(/\*\*([^*]+)\*\*/g, '<strong class="font-normal">$1</strong>');
 	html = html.replace(/\*([^*]+)\*/g, '<em>$1</em>');
 
 	// Liens
 	html = html.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" class="underline underline-offset-2 hover:opacity-70 transition-opacity">$1</a>');
 
-	// Paragraphes (lignes non vides qui ne sont pas déjà des éléments HTML)
-	html = html.replace(/^(?!<[a-z]|$)(.+)$/gm, '<p class="mb-6 leading-relaxed">$1</p>');
+	// Paragraphes (lignes non vides qui ne sont pas déjà des éléments HTML ou des lignes blanches)
+	html = html.replace(/^(?!<[a-z]|\s*$)(.+)$/gm, '<p class="mb-10 sm:mb-16 leading-relaxed">$1</p>');
+
+	// Nettoyer les <p> vides ou ne contenant que des espaces (partout dans le HTML)
+	html = html.replace(/<p[^>]*>\s*<\/p>/g, '');
 
 	// Nettoyer les sauts de ligne multiples
 	html = html.replace(/\n{3,}/g, '\n\n');
@@ -213,61 +235,61 @@ const schemaOrg = {
 	<!-- Schema.org JSON-LD -->
 	<script type="application/ld+json" set:html={JSON.stringify(schemaOrg)} />
 
-	<div class="fixed inset-0 bg-bg-light -z-10" aria-hidden="true"></div>
-	<article id="page-content" class="relative z-10 bg-bg-light">
+	<div class="fixed inset-0 bg-bg -z-10" aria-hidden="true"></div>
+	<article id="page-content" class="relative z-10 bg-bg">
 		<!-- Header Article -->
-		<header class="pt-50 md:pt-78 mb-10 md:mb-16">
+		<header class="pt-50 sm:pt-78 mb-10 sm:mb-16">
 			<!-- Catégorie + Temps de lecture -->
-			<div class="flex items-center gap-3 mb-6 text-[0.875rem] font-mono uppercase text-black/60">
+			<div class="flex items-center gap-3 section-label mb-8 leading-none">
 				<a href={`/${lang}/blog`} class="hover:text-black transition-colors">{categoryName}</a>
 				<span>—</span>
 				<span>{readingTime} {t.blogPage.minRead}</span>
 			</div>
 
 			<!-- Titre -->
-			<h1 class="font-display text-[2rem] md:text-[3rem] lg:text-[4rem] leading-[1.1] uppercase mb-8 max-w-4xl">
+			<h1 class="font-display text-[2rem] md:text-[3rem] lg:text-[4rem] leading-[1.1] uppercase mb-8 sm:mb-16 max-w-[520px] md:max-w-[720px]">
 				{title}
 			</h1>
 
 			<!-- Meta: Auteur + Date -->
-			<div class="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-8 mb-10">
+			<div class="flex flex-col p-5 sm:p-8 border border-lines sm:flex-row sm:justify-between sm:items-end gap-4 sm:gap-8 mb-10 sm:mb-24">
 				<!-- Auteur -->
 				<div class="flex items-center gap-4">
 					{authorAvatar && (
 						<Image
 							src={authorAvatar}
 							alt={authorName}
-							class="w-12 h-12 rounded-full object-cover"
-							width={48}
-							height={48}
+							class="h-full aspect-square object-cover"
+							widths={[72, 100]}
+							height={100}
 						/>
 					)}
 					<div>
-						<p class="font-medium">{authorName}</p>
-						{authorRole && <p class="text-[0.875rem] text-black/60">{authorRole}</p>}
+						<p class="text-[1.375rem]">{authorName}</p>
+						{authorRole && <p class="section-label max-w-[170px]">{authorRole}</p>}
 					</div>
 				</div>
-
-				<span class="hidden sm:block w-px h-10 bg-lines"></span>
-
 				<!-- Dates -->
-				<div class="text-[0.875rem]">
+				<div class="section-label sm:max-w-32">
 					<p>
-						<span class="text-black/60">{t.blogPage.publishedOn}</span>{" "}
+						<span >{t.blogPage.publishedOn}</span>{" "}
 						<time datetime={publishedDate.toISOString()}>{formatDate(publishedDate, lang)}</time>
 					</p>
 					{modifiedDate && (
-						<p>
-							<span class="text-black/60">{t.blogPage.updatedOn}</span>{" "}
+						<p >
+							<span >{t.blogPage.updatedOn}</span>{" "}
 							<time datetime={modifiedDate.toISOString()}>{formatDate(modifiedDate, lang)}</time>
 						</p>
 					)}
 				</div>
 			</div>
+			<div class="flex justify-end">
+				<Wrapped class:list={"font-mono leading-none text-[1rem] align-"}>↓</Wrapped>
+			</div>
 		</header>
 
 		<!-- Image principale -->
-		<figure class="mb-10 md:mb-16">
+		<figure class="py-10 sm:py-24 border-t border-b border-lines mb-10 sm:mb-24">
 			<Image
 				src={post.data.featuredImage}
 				alt={featuredImageAlt}
@@ -283,128 +305,177 @@ const schemaOrg = {
 		</figure>
 
 		<!-- Layout 2 colonnes: Contenu + Sidebar -->
-		<div class="lg:flex lg:gap-16 xl:gap-24">
+		<div>
 			<!-- Contenu principal -->
-			<div class="lg:flex-1 lg:max-w-3xl">
+			<div class="lg:flex-1 max-w-3xl mx-auto">
 				<!-- Extrait / Chapô -->
-				<p class="text-[1.25rem] md:text-[1.5rem] leading-relaxed mb-10 md:mb-16 font-medium">
+				<p class="text-[1.625rem] sm:text-[2rem] md:text-[2.5rem] leading-relaxed pb-10 sm:pb-24 border-b border-lines font-medium">
 					{excerpt}
 				</p>
 
+				<!-- Sommaire (rendu côté serveur pour SEO) -->
+				{tableOfContents.length > 0 && (
+					<nav class="mt-10 sm:mt-24 pb-10" aria-label={lang === 'fr' ? 'Sommaire' : 'Table of contents'}>
+						<h2 class="section-label mb-8">{lang === 'fr' ? 'Sommaire' : 'Table of contents'}</h2>
+						<ol class="flex flex-col gap-2.5">
+							{tableOfContents.map((heading, index) => (
+								<li class="pb-2.5 border-b border-lines">
+									<a
+										href={`#${heading.id}`}
+										class="flex items-baseline gap-3 hover:text-black/60 transition-colors"
+									>
+										<span class="section-label">{String(index + 1).padStart(2, '0')}</span>
+										<span>{heading.text}</span>
+									</a>
+								</li>
+							))}
+						</ol>
+					</nav>
+				)}
+
 				<!-- Contenu de l'article -->
-				<div class="prose prose-lg max-w-none mb-16" set:html={parseMarkdown(articleContent)} />
+				<div class="prose prose-lg text-[1.375rem] max-w-none mb-16" set:html={parseMarkdown(articleContent)} />
 				{!articleContent && (
 					<p class="text-black/60 italic">Contenu de l'article à venir...</p>
 				)}
 
-				<!-- Tags -->
-				{tags.length > 0 && (
-					<div class="mb-10 md:mb-16">
-						<h2 class="section-label mb-4">{t.blogPage.tags}</h2>
-						<div class="flex flex-wrap gap-2">
-							{tags.map((tag: string) => (
-								<span class="px-4 py-2 border border-lines text-[0.875rem] font-mono uppercase">
-									{tag}
-								</span>
-							))}
+			</div>
+			<div class="max-w-3xl mx-auto lg:max-w-none">
+				<!-- Tags + Partage (2 colonnes sur lg) -->
+				<div class="lg:flex lg:gap-16 pt-10 sm:pt-16 lg:pt-24 sm:mt-24 border-t border-lines mb-10 sm:mb-16 lg:pb-24 lg:mb-0">
+					<!-- Tags -->
+					{tags.length > 0 && (
+						<div class="mb-10 lg:mb-0 lg:flex-1">
+							<h2 class="section-label mb-4">{t.blogPage.tags}</h2>
+							<div class="flex flex-wrap gap-2 md:gap-4">
+								{tags.map((tag: string) => (
+									<span class="px-5 py-3 border border-lines text-[0.875rem] font-mono uppercase">
+										{tag}
+									</span>
+								))}
+							</div>
 						</div>
-					</div>
-				)}
+					)}
 
-				<!-- Partage -->
-				<div class="mb-10 md:mb-16 py-6 border-y border-lines">
-					<h2 class="section-label mb-4">{t.blogPage.shareArticle}</h2>
-					<div class="flex gap-4">
-						<a
-							href={`https://twitter.com/intent/tweet?url=${encodeURIComponent(shareUrl)}&text=${encodeURIComponent(title)}`}
-							target="_blank"
-							rel="noopener noreferrer"
-							class="px-5 py-3 border border-lines font-mono text-[0.875rem] uppercase hover:bg-black hover:text-white transition-colors"
-						>
-							Twitter
-						</a>
-						<a
-							href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(shareUrl)}`}
-							target="_blank"
-							rel="noopener noreferrer"
-							class="px-5 py-3 border border-lines font-mono text-[0.875rem] uppercase hover:bg-black hover:text-white transition-colors"
-						>
-							LinkedIn
-						</a>
-						<button
-							type="button"
-							class="copy-link px-5 py-3 border border-lines font-mono text-[0.875rem] uppercase hover:bg-black hover:text-white transition-colors"
-							data-url={shareUrl}
-						>
-							{lang === 'fr' ? 'Copier le lien' : 'Copy link'}
-						</button>
+					<!-- Partage -->
+					<div class="lg:flex-1">
+						<h2 class="section-label mb-4">{t.blogPage.shareArticle}</h2>
+						<div class="flex flex-wrap gap-2 md:gap-4">
+							<a
+								href={`https://twitter.com/intent/tweet?url=${encodeURIComponent(shareUrl)}&text=${encodeURIComponent(title)}`}
+								target="_blank"
+								rel="noopener noreferrer"
+								class="px-5 py-3 border border-lines font-mono text-[0.875rem] uppercase hover:bg-black hover:text-white transition-colors"
+							>
+								Twitter
+							</a>
+							<a
+								href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(shareUrl)}`}
+								target="_blank"
+								rel="noopener noreferrer"
+								class="px-5 py-3 border border-lines font-mono text-[0.875rem] uppercase hover:bg-black hover:text-white transition-colors"
+							>
+								LinkedIn
+							</a>
+							<button
+								type="button"
+								class="copy-link px-5 py-3 border border-lines font-mono text-[0.875rem] uppercase hover:bg-black hover:text-white transition-colors"
+								data-url={shareUrl}
+							>
+								{lang === 'fr' ? 'Copier le lien' : 'Copy link'}
+							</button>
+						</div>
 					</div>
 				</div>
 
 				<!-- Bio Auteur -->
 				{author && (
+					<h2 class="section-label mb-8">{t.blogPage.about}</h2>
 					<div class="mb-16 p-6 md:p-8 border border-lines">
-						<h2 class="section-label mb-6">{t.blogPage.about}</h2>
-						<div class="flex flex-col sm:flex-row gap-6">
+						{/* Mobile: photo + nom/rôle côte à côte, description en dessous */}
+						<div class="flex gap-4 mb-5 md:hidden">
 							{authorAvatar && (
 								<Image
 									src={authorAvatar}
 									alt={authorName}
-									class="w-20 h-20 rounded-full object-cover shrink-0"
+									class="w-20 h-20 aspect-square object-cover shrink-0"
 									width={80}
 									height={80}
 								/>
 							)}
-							<div>
-								<p class="font-display text-[1.25rem] uppercase mb-1">{authorName}</p>
-								{authorRole && <p class="text-[0.875rem] text-black/60 mb-3">{authorRole}</p>}
-								{authorBio && <p class="leading-relaxed">{authorBio}</p>}
-								{author.social && (
-									<div class="flex gap-4 mt-4">
-										{author.social.twitter && (
-											<a href={`https://twitter.com/${author.social.twitter}`} target="_blank" rel="noopener noreferrer" class="text-black/60 hover:text-black transition-colors">
-												Twitter
-											</a>
-										)}
-										{author.social.linkedin && (
-											<a href={author.social.linkedin} target="_blank" rel="noopener noreferrer" class="text-black/60 hover:text-black transition-colors">
-												LinkedIn
-											</a>
-										)}
-										{author.social.github && (
-											<a href={`https://github.com/${author.social.github}`} target="_blank" rel="noopener noreferrer" class="text-black/60 hover:text-black transition-colors">
-												GitHub
-											</a>
-										)}
-									</div>
-								)}
+							<div class="flex flex-col">
+								<p class="text-[1.375rem]">{authorName}</p>
+								{authorRole && <p class="section-label">{authorRole}</p>}
+							</div>
+						</div>
+						<div class="md:hidden">
+							{authorBio && <p class="leading-relaxed">{authorBio}</p>}
+							{author.social && (
+								<div class="flex gap-4 mt-8">
+									{author.social.twitter && (
+										<a href={`https://twitter.com/${author.social.twitter}`} target="_blank" rel="noopener noreferrer" class="text-black/60 hover:text-black transition-colors">
+											Twitter
+										</a>
+									)}
+									{author.social.linkedin && (
+										<a href={author.social.linkedin} target="_blank" rel="noopener noreferrer" class="text-black/60 hover:text-black transition-colors">
+											LinkedIn
+										</a>
+									)}
+									{author.social.github && (
+										<a href={`https://github.com/${author.social.github}`} target="_blank" rel="noopener noreferrer" class="text-black/60 hover:text-black transition-colors">
+											GitHub
+										</a>
+									)}
+								</div>
+							)}
+						</div>
+						{/* Desktop (md+): photo à gauche, nom/rôle inline + description à droite */}
+						<div class="hidden md:flex md:gap-8">
+							{authorAvatar && (
+								<div class="shrink-0">
+									<Image
+										src={authorAvatar}
+										alt={authorName}
+										class="w-auto h-full aspect-square object-cover"
+										width={160}
+										height={160}
+									/>
+								</div>
+							)}
+							<div class="flex-1">
+								<div class="flex items-baseline gap-4 mb-4">
+									<p class="text-[1.375rem]">{authorName}</p>
+									{authorRole && <p class="section-label">{authorRole}</p>}
+								</div>
+								<div class="lg:flex lg:justify-between lg:gap-8">
+									{authorBio && <p class="leading-relaxed lg:max-w-135">{authorBio}</p>}
+									{/* Liens réseaux - en ligne avec bio sur lg+ */}
+									{author.social && (
+										<div class="flex lg:flex-col gap-4 mt-8 lg:mt-0 shrink-0">
+											{author.social.twitter && (
+												<a href={`https://twitter.com/${author.social.twitter}`} target="_blank" rel="noopener noreferrer" class="text-black/60 hover:text-black transition-colors">
+													Twitter
+												</a>
+											)}
+											{author.social.linkedin && (
+												<a href={author.social.linkedin} target="_blank" rel="noopener noreferrer" class="text-black/60 hover:text-black transition-colors">
+													LinkedIn
+												</a>
+											)}
+											{author.social.github && (
+												<a href={`https://github.com/${author.social.github}`} target="_blank" rel="noopener noreferrer" class="text-black/60 hover:text-black transition-colors">
+													GitHub
+												</a>
+											)}
+										</div>
+									)}
+								</div>
 							</div>
 						</div>
 					</div>
 				)}
-			</div>
-
-			<!-- Sidebar (desktop) -->
-			<aside class="hidden lg:block lg:w-72 xl:w-80 shrink-0">
-				<div class="sticky top-32">
-					<!-- Table des matières -->
-					<nav class="mb-10">
-						<h2 class="section-label mb-4">{t.blogPage.tableOfContents}</h2>
-						<ol id="toc" class="space-y-2 text-[0.875rem]">
-							<!-- Généré dynamiquement par JS -->
-						</ol>
-					</nav>
-
-					<!-- Retour au blog -->
-					<div class="pt-6 border-t border-lines">
-						<Wrapped>
-							<a href={`/${lang}/blog`} class="font-mono text-[0.875rem] uppercase">
-								← {t.blogPage.allArticles}
-							</a>
-						</Wrapped>
-					</div>
 				</div>
-			</aside>
 		</div>
 
 		<!-- Articles connexes -->
@@ -436,7 +507,7 @@ const schemaOrg = {
 		)}
 
 		<!-- Bouton retour -->
-		<nav class="mt-16 mb-10">
+		<nav class="mt-16 mb-10 flex justify-end max-w-3xl mx-auto lg:max-w-none">
 			<a
 				href={`/${lang}/blog`}
 				class="group relative overflow-hidden font-mono text-[1rem] leading-none uppercase py-6 px-5 flex justify-center w-full md:w-fit border border-lines-dark bg-black text-white transition-colors duration-300 ease-in-out cursor-pointer"
@@ -494,6 +565,10 @@ const schemaOrg = {
 	.prose pre code {
 		background: none;
 		padding: 0;
+	}
+
+	.prose li > p:last-child {
+		margin-bottom: 0;
 	}
 
 	.prose img {
