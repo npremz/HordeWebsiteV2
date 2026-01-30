@@ -1,0 +1,253 @@
+---
+title: "JavaScript et Performance Web : Comment Optimiser sans Sacrifier les Fonctionnalités"
+excerpt: >-
+  JavaScript peut rendre votre site interactif ou le ralentir dramatiquement.
+  Voici les bonnes pratiques pour une interactivité performante.
+featuredImage: /images/posts/javascript-performance.jpg
+featuredImageAlt: Balance illustrant le compromis entre JavaScript et performance
+publishedDate: '2026-01-30'
+author: Horde Agence
+seoDescription: >-
+  Optimisez le JavaScript de votre site web sans sacrifier l'interactivité.
+  Techniques avancées par une agence web performance Bruxelles.
+seoRobots: 'index, follow'
+---
+
+## Le paradoxe JavaScript
+
+JavaScript est nécessaire pour l'interactivité moderne. Mais c'est aussi la principale cause de sites lents et non réactifs.
+
+En 2026, les données sont claires :
+- Un site Astro charge **40% plus vite** avec **90% moins de JavaScript** qu'un site React équivalent
+- L'INP (réactivité) est directement impacté par le JavaScript sur le thread principal
+- Les utilisateurs mobiles souffrent davantage : processeurs moins puissants, connexions instables
+
+## Le coût réel du JavaScript
+
+### Téléchargement
+
+100 Ko de JavaScript = 100 Ko de données à télécharger. Sur 3G, c'est plusieurs secondes.
+
+### Parsing et compilation
+
+Contrairement aux images, JavaScript doit être parsé et compilé. 100 Ko de JS coûte plus cher que 100 Ko d'images.
+
+### Exécution
+
+Le JavaScript s'exécute sur le thread principal, bloquant toute interaction utilisateur pendant ce temps.
+
+### Hydration
+
+Les frameworks comme React "hydratent" le HTML côté client. C'est une phase coûteuse où le site est visible mais non interactif.
+
+## Mesurer l'impact JavaScript
+
+### Chrome DevTools Coverage
+
+1. Ouvrez DevTools (F12)
+2. Cmd+Shift+P > "Coverage"
+3. Rechargez la page
+4. Observez le pourcentage de code non utilisé
+
+Un score de 60% unused JavaScript est courant... et problématique.
+
+### Analyse de bundle
+
+```bash
+# Avec webpack-bundle-analyzer
+npm run build --stats
+npx webpack-bundle-analyzer dist/stats.json
+
+# Avec source-map-explorer
+npx source-map-explorer dist/main.js.map
+```
+
+## Techniques d'optimisation
+
+### 1. Code splitting
+
+Ne chargez que le JavaScript nécessaire à la page actuelle.
+
+```javascript
+// Mauvais : tout dans un bundle
+import { Component1, Component2, Component3 } from './components';
+
+// Bon : chargement dynamique
+const Component1 = lazy(() => import('./Component1'));
+```
+
+### 2. Tree shaking
+
+Importez uniquement ce que vous utilisez.
+
+```javascript
+// Mauvais : importe toute la librairie (500 Ko)
+import _ from 'lodash';
+_.map(arr, fn);
+
+// Bon : importe uniquement map (5 Ko)
+import map from 'lodash/map';
+map(arr, fn);
+
+// Encore mieux : natif (0 Ko)
+arr.map(fn);
+```
+
+### 3. Différer le non-essentiel
+
+```html
+<!-- Bloquant : attend avant d'afficher la page -->
+<script src="analytics.js"></script>
+
+<!-- Defer : exécute après le parsing HTML -->
+<script src="analytics.js" defer></script>
+
+<!-- Async : télécharge en parallèle, exécute dès que prêt -->
+<script src="tracking.js" async></script>
+```
+
+### 4. Islands Architecture
+
+L'approche popularisée par Astro : le HTML est statique par défaut, seuls les composants interactifs sont hydratés.
+
+```astro
+---
+// Statique : 0 Ko de JS
+import Header from './Header.astro';
+import Footer from './Footer.astro';
+
+// Interactif : JS uniquement pour ce composant
+import SearchBar from './SearchBar.tsx';
+---
+
+<Header />
+<main>
+  <!-- S'hydrate uniquement quand visible -->
+  <SearchBar client:visible />
+</main>
+<Footer />
+```
+
+### 5. Préférer les APIs natives
+
+En 2026, les navigateurs offrent des APIs puissantes :
+
+| Avant (librairie) | Après (natif) |
+|-------------------|---------------|
+| jQuery | querySelector, fetch |
+| Moment.js (70 Ko) | Intl.DateTimeFormat |
+| Lodash (70 Ko) | Méthodes Array natives |
+| Scroll libraries | CSS scroll-behavior |
+
+### 6. Web Workers pour le calcul lourd
+
+Déplacez les calculs intensifs hors du thread principal :
+
+```javascript
+// main.js
+const worker = new Worker('calculation.js');
+worker.postMessage(data);
+worker.onmessage = (e) => updateUI(e.data);
+
+// calculation.js
+onmessage = (e) => {
+  const result = heavyCalculation(e.data);
+  postMessage(result);
+};
+```
+
+## Frameworks et performance
+
+### React
+
+React n'est pas lent par nature, mais :
+- Le Virtual DOM a un coût
+- L'hydration est coûteuse
+- Les re-renders excessifs tuent l'INP
+
+**Optimisations :** React.memo, useMemo, useCallback, lazy loading, React Server Components
+
+### Vue
+
+Vue 3 avec la Composition API est plus léger que Vue 2.
+
+**Optimisations :** defineAsyncComponent, suspense, script setup
+
+### Svelte
+
+Svelte compile en JavaScript vanilla sans runtime. Très performant par défaut.
+
+### Solid.js
+
+Réactivité fine sans Virtual DOM. Excellentes performances out of the box.
+
+### Astro (recommandé)
+
+Pas de JavaScript par défaut. Ajoutez l'interactivité composant par composant.
+
+## Auditer vos dépendances
+
+### Bundlephobia
+
+Avant d'ajouter une dépendance, vérifiez son poids sur [bundlephobia.com](https://bundlephobia.com).
+
+| Librairie | Taille | Alternative légère |
+|-----------|--------|-------------------|
+| moment | 72 Ko | date-fns (tree-shakable) |
+| lodash | 70 Ko | lodash-es + imports ciblés |
+| axios | 13 Ko | fetch natif |
+| jQuery | 87 Ko | vanilla JS |
+
+### Auditer les dépendances existantes
+
+```bash
+npx depcheck                    # Dépendances non utilisées
+npx npm-check-updates           # Versions outdated
+npx bundlesize-stats            # Impact sur le bundle
+```
+
+## Lazy loading des fonctionnalités
+
+### Charger au scroll
+
+```javascript
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      import('./heavy-feature.js').then(module => {
+        module.init(entry.target);
+      });
+    }
+  });
+});
+
+observer.observe(document.querySelector('#feature-section'));
+```
+
+### Charger à l'interaction
+
+```javascript
+document.querySelector('#search-input').addEventListener('focus', async () => {
+  const { initSearch } = await import('./search.js');
+  initSearch();
+}, { once: true });
+```
+
+## Checklist optimisation JavaScript
+
+- [ ] Bundle total < 200 Ko (idéalement < 100 Ko)
+- [ ] Code unused < 30%
+- [ ] Pas de scripts bloquants dans le head
+- [ ] Code splitting par route
+- [ ] Tree shaking actif
+- [ ] Dépendances auditées (alternatives légères)
+- [ ] Calculs lourds dans Web Workers
+- [ ] Hydration partielle ou différée
+
+## Conclusion
+
+En 2026, la meilleure optimisation JavaScript est souvent d'en utiliser moins. Les solutions comme Astro prouvent qu'on peut avoir des sites interactifs avec une fraction du JavaScript habituel.
+
+Chaque kilo-octet de JavaScript a un coût. Chaque milliseconde sur le thread principal bloque vos utilisateurs. Mesurez, auditez, optimisez.
+
+Chez Horde, nous concevons des interfaces ultra-rapides en questionnant chaque ligne de JavaScript. Contactez-nous pour un audit de votre frontend.

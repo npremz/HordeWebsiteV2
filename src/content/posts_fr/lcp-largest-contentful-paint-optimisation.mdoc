@@ -1,0 +1,151 @@
+---
+title: "LCP (Largest Contentful Paint) : Comment Passer sous les 2,5 Secondes"
+excerpt: >-
+  Le LCP est la métrique Core Web Vitals la plus visible. Voici les techniques
+  concrètes pour optimiser le temps d'affichage de votre contenu principal.
+featuredImage: /images/posts/lcp-optimisation.jpg
+featuredImageAlt: Illustration du Largest Contentful Paint montrant le chargement progressif d'une page
+publishedDate: '2026-01-30'
+author: Horde Agence
+seoDescription: >-
+  Optimisez votre LCP pour passer sous 2,5s. Guide technique complet avec
+  solutions concrètes. Expertise agence web performance Bruxelles.
+seoRobots: 'index, follow'
+---
+
+## Qu'est-ce que le LCP exactement ?
+
+Le Largest Contentful Paint mesure le temps nécessaire pour afficher le plus grand élément de contenu visible dans le viewport. Concrètement, c'est le moment où l'utilisateur voit "quelque chose d'utile" sur votre page.
+
+Les éléments considérés pour le LCP :
+- Images `<img>`
+- Images de fond dans un `<div>` (via `background-image`)
+- Éléments `<video>` avec poster
+- Blocs de texte (`<h1>`, `<p>`, etc.)
+
+## Les seuils Google
+
+- **Bon** : moins de 2,5 secondes
+- **À améliorer** : entre 2,5 et 4 secondes
+- **Mauvais** : plus de 4 secondes
+
+Google évalue au **75e percentile** de vos visiteurs réels. Si 25% de vos utilisateurs ont un LCP supérieur à 2,5s, vous êtes en zone orange ou rouge.
+
+## Identifier votre élément LCP
+
+Avant d'optimiser, identifiez l'élément LCP de votre page :
+
+1. Ouvrez Chrome DevTools (F12)
+2. Allez dans l'onglet "Performance"
+3. Cochez "Web Vitals"
+4. Enregistrez un chargement de page
+5. Cherchez le marqueur "LCP" dans la timeline
+
+Souvent, c'est une image hero, un carrousel, ou un titre principal.
+
+## Les 4 phases du LCP
+
+Le LCP se décompose en 4 phases, chacune optimisable :
+
+### 1. Time to First Byte (TTFB)
+Le temps entre la requête et le premier octet reçu.
+
+**Optimisations :**
+- Serveur performant ou edge computing
+- Cache serveur (Redis, Varnish)
+- CDN géographiquement proche
+- Réduire les redirections
+
+### 2. Resource Load Delay
+Le temps avant que le navigateur commence à charger l'élément LCP.
+
+**Optimisations :**
+- Précharger l'image LCP : `<link rel="preload" as="image" href="hero.webp">`
+- Éviter le lazy loading sur l'élément LCP
+- Supprimer les chaînes de requêtes critiques
+
+### 3. Resource Load Duration
+Le temps pour télécharger la ressource LCP.
+
+**Optimisations :**
+- Compresser les images (WebP, AVIF)
+- Utiliser des images responsive avec `srcset`
+- Servir depuis un CDN
+- Activer la compression Brotli
+
+### 4. Element Render Delay
+Le temps entre le téléchargement et l'affichage.
+
+**Optimisations :**
+- Supprimer le CSS et JS bloquants
+- Inliner le CSS critique
+- Différer les scripts non essentiels
+
+## Techniques avancées
+
+### Preload l'image hero
+
+```html
+<head>
+  <link
+    rel="preload"
+    as="image"
+    href="/images/hero.webp"
+    fetchpriority="high"
+  >
+</head>
+```
+
+### Images responsive optimisées
+
+```html
+<img
+  src="hero-800.webp"
+  srcset="hero-400.webp 400w, hero-800.webp 800w, hero-1200.webp 1200w"
+  sizes="(max-width: 600px) 400px, (max-width: 1000px) 800px, 1200px"
+  alt="Description"
+  width="1200"
+  height="630"
+  fetchpriority="high"
+  decoding="async"
+>
+```
+
+### Inliner le CSS critique
+
+Le CSS nécessaire au rendu above-the-fold doit être inline dans le `<head>`. Le reste peut être chargé de manière asynchrone.
+
+### Éviter les web fonts bloquantes
+
+```css
+@font-face {
+  font-family: 'MaPolice';
+  src: url('police.woff2') format('woff2');
+  font-display: swap;
+}
+```
+
+Le `font-display: swap` affiche immédiatement le texte avec une police fallback.
+
+## Erreurs courantes
+
+1. **Lazy loading sur l'image LCP** : Ne jamais mettre `loading="lazy"` sur l'élément principal
+2. **Images non dimensionnées** : Toujours spécifier `width` et `height`
+3. **CSS externe volumineux** : Bloque le rendu de toute la page
+4. **Redirections multiples** : Chaque redirect ajoute du TTFB
+5. **Hébergement lent** : Un serveur mutualisé bon marché coûte cher en performance
+
+## Mesurer vos progrès
+
+- **PageSpeed Insights** : Données réelles + recommandations
+- **Search Console** : Historique et tendances
+- **WebPageTest** : Tests détaillés multi-localisations
+- **Lighthouse** : Audit local complet
+
+## Conclusion
+
+Le LCP est souvent le premier Quick Win en optimisation performance. Une image hero correctement préchargée et compressée peut faire passer votre score de rouge à vert en quelques heures.
+
+C'est aussi la métrique la plus visible pour vos utilisateurs : elle définit leur première impression de vitesse.
+
+Chez Horde, nous auditons systématiquement le LCP de nos clients. Contactez-nous pour identifier vos opportunités d'optimisation.

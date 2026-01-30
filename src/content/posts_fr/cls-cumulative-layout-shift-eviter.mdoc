@@ -1,0 +1,156 @@
+---
+title: "CLS (Cumulative Layout Shift) : Pourquoi votre Page Saute et Comment l'Éviter"
+excerpt: >-
+  Rien n'est plus frustrant qu'un bouton qui se déplace au moment du clic. Le
+  CLS mesure cette instabilité visuelle. Voici comment la corriger.
+featuredImage: /images/posts/cls-layout-shift.jpg
+featuredImageAlt: Illustration d'un décalage de mise en page perturbant l'utilisateur
+publishedDate: '2026-01-30'
+author: Horde Agence
+seoDescription: >-
+  Évitez les décalages de mise en page qui frustrent vos utilisateurs. Guide CLS
+  complet avec solutions pratiques. Agence web UX Bruxelles.
+seoRobots: 'index, follow'
+---
+
+## Le problème des pages instables
+
+Vous avez certainement vécu cette expérience : vous êtes sur le point de cliquer sur un bouton, et soudain la page se décale. Vous cliquez sur le mauvais élément, parfois une publicité ou un lien non désiré.
+
+C'est exactement ce que mesure le **CLS (Cumulative Layout Shift)** : l'instabilité visuelle cumulée de votre page.
+
+## Comment le CLS est calculé
+
+Le CLS additionne tous les décalages de layout inattendus qui se produisent pendant la durée de vie de la page.
+
+Chaque décalage est calculé ainsi :
+**Score de décalage = Fraction d'impact × Fraction de distance**
+
+- **Fraction d'impact** : pourcentage du viewport affecté
+- **Fraction de distance** : distance du décalage en proportion du viewport
+
+## Les seuils Google
+
+- **Bon** : moins de 0,1
+- **À améliorer** : entre 0,1 et 0,25
+- **Mauvais** : plus de 0,25
+
+Un CLS de 0,1 signifie qu'environ 10% de votre écran a bougé de manière inattendue.
+
+## Les causes principales du CLS
+
+### 1. Images sans dimensions
+
+C'est la cause numéro un. Sans `width` et `height`, le navigateur ne peut pas réserver l'espace avant le chargement de l'image.
+
+**Mauvais :**
+```html
+<img src="photo.jpg" alt="Photo">
+```
+
+**Correct :**
+```html
+<img src="photo.jpg" alt="Photo" width="800" height="600">
+```
+
+Avec CSS moderne, vous pouvez ensuite utiliser `width: 100%; height: auto;` pour le responsive sans perdre le ratio.
+
+### 2. Publicités et embeds sans espace réservé
+
+Les iframes publicitaires, les embeds YouTube, les widgets sociaux... tous peuvent injecter du contenu de taille inconnue.
+
+**Solution :** Réservez l'espace avec un conteneur aux dimensions fixes ou un aspect-ratio :
+
+```css
+.ad-container {
+  aspect-ratio: 16/9;
+  background: #f0f0f0;
+}
+```
+
+### 3. Web fonts causant du FOIT/FOUT
+
+Le Flash of Invisible Text (FOIT) ou Flash of Unstyled Text (FOUT) peut décaler le contenu quand la police personnalisée se charge.
+
+**Solution :**
+```css
+@font-face {
+  font-family: 'MaPolice';
+  src: url('police.woff2') format('woff2');
+  font-display: swap;
+  /* Fallback avec metrics similaires */
+  size-adjust: 105%;
+  ascent-override: 90%;
+  descent-override: 20%;
+}
+```
+
+### 4. Contenu injecté dynamiquement
+
+Bandeaux cookies, notifications, barres promotionnelles... tout contenu inséré au-dessus de ce que l'utilisateur regarde cause du CLS.
+
+**Solutions :**
+- Insérer en bas de page plutôt qu'en haut
+- Réserver l'espace avant l'injection
+- Utiliser des overlays qui ne décalent pas le contenu
+
+### 5. Animations mal optimisées
+
+Les animations qui modifient `width`, `height`, `top`, `left` ou `margin` causent du layout shift.
+
+**Préférez les propriétés optimisées :**
+- `transform: translate()` au lieu de `top/left`
+- `transform: scale()` au lieu de `width/height`
+- `opacity` pour les apparitions/disparitions
+
+## Décalages acceptés vs inattendus
+
+Google ne pénalise pas tous les décalages. Sont exclus :
+- Les décalages dans les 500ms suivant une interaction utilisateur
+- Les animations CSS/Web Animation API
+
+Cela signifie qu'un accordéon qui s'ouvre au clic ne compte pas comme CLS (si le décalage se produit rapidement après le clic).
+
+## Outils de diagnostic
+
+### Chrome DevTools
+
+1. Ouvrez DevTools (F12)
+2. Allez dans "Performance"
+3. Cochez "Screenshots" et "Web Vitals"
+4. Enregistrez un chargement
+5. Cherchez les barres rouges "Layout Shift"
+
+### Layout Shift Debugger
+
+L'extension "Web Vitals" de Chrome met en surbrillance les éléments qui causent du CLS.
+
+### PageSpeed Insights
+
+Montre les éléments spécifiques causant du CLS avec des recommandations ciblées.
+
+## Checklist anti-CLS
+
+- [ ] Toutes les images ont `width` et `height`
+- [ ] Toutes les vidéos/iframes ont des dimensions
+- [ ] Les espaces publicitaires sont réservés
+- [ ] Les web fonts utilisent `font-display: swap`
+- [ ] Aucun contenu n'est injecté au-dessus du fold
+- [ ] Les animations utilisent `transform` et `opacity`
+- [ ] Les lazy-loaded elements ont un placeholder dimensionné
+
+## Impact business
+
+Un mauvais CLS n'affecte pas que le SEO. Il détériore directement l'expérience utilisateur :
+- Clics accidentels sur les mauvais éléments
+- Perte de place dans un formulaire
+- Frustration et perception négative de qualité
+- Abandon de page
+
+## Conclusion
+
+Le CLS est souvent le Core Web Vital le plus simple à corriger. La plupart des problèmes se résolvent en ajoutant des dimensions explicites aux médias et en réservant l'espace pour le contenu dynamique.
+
+C'est aussi celui qui a l'impact UX le plus immédiat. Un site stable inspire confiance.
+
+Chez Horde, nous identifions chaque source de CLS sur vos pages et proposons des corrections ciblées. Contactez-nous pour un audit gratuit de la stabilité de votre site.

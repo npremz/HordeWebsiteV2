@@ -1,0 +1,165 @@
+---
+title: "INP (Interaction to Next Paint) : La Nouvelle Métrique qui Change Tout"
+excerpt: >-
+  L'INP a remplacé le FID en 2024 et mesure la réactivité réelle de votre site.
+  Comprenez cette métrique cruciale et apprenez à l'optimiser efficacement.
+featuredImage: /images/posts/inp-metric-guide.jpg
+featuredImageAlt: Schéma illustrant le calcul de l'Interaction to Next Paint
+publishedDate: '2026-01-30'
+author: Horde Agence
+seoDescription: >-
+  Guide complet INP 2026 : comprendre et optimiser l'Interaction to Next Paint.
+  Solutions concrètes par une agence web spécialisée performance à Bruxelles.
+seoRobots: 'index, follow'
+---
+
+## Pourquoi l'INP a remplacé le FID
+
+En mars 2024, Google a officiellement remplacé le FID (First Input Delay) par l'INP (Interaction to Next Paint) dans les Core Web Vitals.
+
+La raison ? Le FID ne mesurait que la **première** interaction. Un site pouvait avoir un excellent FID mais être complètement laggy ensuite. L'INP corrige ce biais en mesurant **toutes** les interactions durant la session.
+
+L'INP est significativement plus strict que le FID. De nombreux sites qui passaient facilement le FID échouent sur l'INP.
+
+## Comment fonctionne l'INP
+
+L'INP mesure le temps entre une interaction utilisateur (clic, tap, appui touche) et le moment où le navigateur affiche la mise à jour visuelle correspondante.
+
+Concrètement, l'INP observe toutes vos interactions et retient la plus lente (avec quelques ajustements statistiques pour les pages avec beaucoup d'interactions).
+
+### Les seuils
+
+- **Bon** : moins de 200 millisecondes
+- **À améliorer** : entre 200 et 500 millisecondes
+- **Mauvais** : plus de 500 millisecondes
+
+## L'impact SEO de l'INP
+
+Les données 2026 sont claires : des scores INP supérieurs à 300ms ont causé des **chutes de 31%** du trafic, particulièrement sur mobile.
+
+Sur mobile, où les processeurs sont moins puissants et les connexions moins stables, l'INP devient un facteur différenciant majeur.
+
+## Les causes d'un mauvais INP
+
+### 1. JavaScript lourd sur le thread principal
+
+Le navigateur ne peut faire qu'une chose à la fois sur le thread principal. Si un script JavaScript monopolise ce thread, les interactions sont bloquées.
+
+**Symptôme** : Vous cliquez, rien ne se passe pendant 500ms, puis tout se débloque.
+
+### 2. Hydration massive des frameworks
+
+Les frameworks JavaScript modernes (React, Vue, etc.) "hydratent" le HTML au chargement. Cette phase peut bloquer les interactions.
+
+### 3. Gestionnaires d'événements lents
+
+Un `onClick` qui déclenche des calculs lourds ou des manipulations DOM importantes ralentit la réponse visuelle.
+
+### 4. Layout thrashing
+
+Lire puis écrire dans le DOM de manière répétée force le navigateur à recalculer le layout constamment.
+
+## Techniques d'optimisation
+
+### Fractionner les longues tâches
+
+Une "longue tâche" est tout script dépassant 50ms. Utilisez `requestIdleCallback` ou `scheduler.yield()` pour découper le travail.
+
+```javascript
+// Mauvais : bloque pendant 200ms
+function processData(items) {
+  items.forEach(item => heavyComputation(item));
+}
+
+// Mieux : cède le contrôle régulièrement
+async function processData(items) {
+  for (const item of items) {
+    heavyComputation(item);
+    await scheduler.yield();
+  }
+}
+```
+
+### Différer le JavaScript non essentiel
+
+```html
+<!-- Bloquant -->
+<script src="analytics.js"></script>
+
+<!-- Non bloquant -->
+<script src="analytics.js" defer></script>
+```
+
+### Utiliser les Web Workers
+
+Déplacez les calculs lourds hors du thread principal :
+
+```javascript
+const worker = new Worker('heavy-computation.js');
+worker.postMessage(data);
+worker.onmessage = (e) => updateUI(e.data);
+```
+
+### Optimiser les gestionnaires d'événements
+
+```javascript
+// Mauvais : calcul dans le handler
+button.addEventListener('click', () => {
+  const result = heavyCalculation();
+  updateDOM(result);
+});
+
+// Mieux : feedback immédiat, calcul différé
+button.addEventListener('click', () => {
+  showLoadingState(); // Feedback visuel immédiat
+  requestAnimationFrame(() => {
+    const result = heavyCalculation();
+    updateDOM(result);
+  });
+});
+```
+
+### Islands Architecture (Astro, Fresh)
+
+Plutôt que d'hydrater toute la page, n'hydratez que les composants interactifs. C'est l'approche d'Astro avec ses directives `client:visible` et `client:idle`.
+
+## Mesurer l'INP
+
+### En laboratoire
+- Chrome DevTools > Performance > cochez "Web Vitals"
+- Lighthouse (mais attention, les tests lab simulent mal l'INP)
+
+### En production (données terrain)
+- Google Search Console
+- PageSpeed Insights (données CrUX)
+- Web Vitals JavaScript library
+
+```javascript
+import {onINP} from 'web-vitals';
+
+onINP(({value, attribution}) => {
+  console.log('INP:', value);
+  console.log('Element:', attribution.interactionTarget);
+});
+```
+
+## Le cas des Single Page Applications
+
+Les SPA sont particulièrement vulnérables à l'INP car :
+- Hydration initiale lourde
+- Navigation côté client avec re-renders
+- État global complexe à mettre à jour
+
+**Solutions :**
+- Server-Side Rendering avec hydration partielle
+- Lazy loading des routes
+- Virtualisation des longues listes
+- Memoization agressive
+
+## Conclusion
+
+L'INP est probablement la métrique Core Web Vitals la plus difficile à optimiser, car elle touche à l'architecture même de votre frontend.
+
+Mais c'est aussi celle qui a le plus d'impact sur l'expérience utilisateur perçue. Un site réactif donne une impression de qualité et de professionnalisme.
+
+Chez Horde, nous auditons l'INP de vos pages et identifions les scripts et interactions problématiques. Notre expertise en architecture frontend moderne nous permet de proposer des solutions adaptées à chaque stack technique.

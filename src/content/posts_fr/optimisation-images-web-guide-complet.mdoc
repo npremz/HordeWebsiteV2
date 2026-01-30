@@ -1,0 +1,249 @@
+---
+title: "Optimisation des Images Web : Le Guide Complet pour 2026"
+excerpt: >-
+  Les images représentent souvent 50% du poids d'une page. Voici comment les
+  optimiser pour améliorer drastiquement vos temps de chargement.
+featuredImage: /images/posts/optimisation-images-web.jpg
+featuredImageAlt: Comparaison avant-après d'une image web optimisée
+publishedDate: '2026-01-30'
+author: Horde Agence
+seoDescription: >-
+  Guide complet optimisation images web 2026 : formats, compression, lazy
+  loading, responsive. Conseils agence web performance Bruxelles.
+seoRobots: 'index, follow'
+---
+
+## Le poids des images
+
+Sur la plupart des sites web, les images représentent entre **40% et 70%** du poids total de la page. C'est donc le levier d'optimisation le plus impactant.
+
+Une image hero de 2 Mo là où 150 Ko suffiraient ? C'est 10 secondes de chargement inutile sur une connexion 3G.
+
+## Formats d'images modernes
+
+### WebP : le standard 2026
+
+WebP offre une compression 25-35% supérieure à JPEG pour une qualité équivalente. En 2026, il est supporté par tous les navigateurs modernes.
+
+**Avantages :**
+- Compression lossy et lossless
+- Support de la transparence
+- Animations (remplace les GIFs lourds)
+- Qualité excellente à taille réduite
+
+### AVIF : la nouvelle génération
+
+AVIF pousse encore plus loin avec une compression 50% supérieure à JPEG. Le support navigateur s'est généralisé en 2025-2026.
+
+**Avantages :**
+- Compression exceptionnelle
+- HDR et wide color gamut
+- 10-bit et 12-bit color depth
+
+**Inconvénient :** Encodage plus lent (à faire au build, pas en temps réel)
+
+### Quand utiliser quel format
+
+| Type d'image | Format recommandé |
+|--------------|-------------------|
+| Photos | AVIF > WebP > JPEG |
+| Illustrations simples | SVG > WebP > PNG |
+| Icônes | SVG inline |
+| Transparence | WebP > PNG |
+| Animations | WebP > MP4 > GIF |
+
+## Compression sans perte de qualité
+
+### Qualité vs taille
+
+La plupart des images peuvent être compressées à 70-80% de qualité sans perte visible à l'œil nu.
+
+Exemple concret :
+- JPEG original : 500 Ko
+- JPEG qualité 85% : 150 Ko (imperceptible)
+- WebP qualité 80% : 100 Ko (imperceptible)
+- AVIF qualité 75% : 70 Ko (imperceptible)
+
+### Outils de compression
+
+**En ligne :**
+- Squoosh.app (Google, comparaison visuelle)
+- TinyPNG/TinyJPG (batch processing)
+
+**CLI :**
+- `sharp` (Node.js, très rapide)
+- `imagemin` (écosystème de plugins)
+- `cwebp` / `avifenc` (outils officiels)
+
+**Build tools :**
+- Astro Image (optimisation automatique)
+- Next.js Image (optimisation à la volée)
+- Vite plugins (imagemin, sharp)
+
+## Images responsive
+
+### Le problème
+
+Une image de 2000px affichée dans un conteneur de 400px gaspille 75% de la bande passante.
+
+### La solution : srcset et sizes
+
+```html
+<img
+  src="image-800.webp"
+  srcset="
+    image-400.webp 400w,
+    image-800.webp 800w,
+    image-1200.webp 1200w,
+    image-1600.webp 1600w
+  "
+  sizes="
+    (max-width: 600px) 100vw,
+    (max-width: 1200px) 50vw,
+    800px
+  "
+  alt="Description de l'image"
+  width="1600"
+  height="900"
+>
+```
+
+Le navigateur choisit automatiquement la taille adaptée à l'écran et à la densité de pixels.
+
+### Avec Astro
+
+```astro
+---
+import { Image } from 'astro:assets';
+import monImage from '../assets/mon-image.jpg';
+---
+
+<Image
+  src={monImage}
+  alt="Description"
+  widths={[400, 800, 1200]}
+  sizes="(max-width: 600px) 100vw, 50vw"
+/>
+```
+
+Astro génère automatiquement les différentes tailles et le WebP.
+
+## Lazy loading
+
+### Native browser lazy loading
+
+```html
+<img src="image.webp" alt="Description" loading="lazy">
+```
+
+Simple, efficace, supporté partout en 2026.
+
+### Attention au LCP
+
+**Ne jamais mettre `loading="lazy"` sur l'image LCP** (généralement l'image hero). Cela retarderait son chargement.
+
+```html
+<!-- Image above the fold : eager -->
+<img src="hero.webp" alt="Hero" loading="eager" fetchpriority="high">
+
+<!-- Images below the fold : lazy -->
+<img src="gallery-1.webp" alt="..." loading="lazy">
+```
+
+## Dimensions explicites
+
+### Éviter le CLS
+
+Sans dimensions, le navigateur ne peut pas réserver l'espace :
+
+```html
+<!-- Mauvais : cause du CLS -->
+<img src="photo.webp" alt="Photo">
+
+<!-- Bon : espace réservé -->
+<img src="photo.webp" alt="Photo" width="800" height="600">
+```
+
+### Aspect ratio CSS
+
+Pour les images responsive :
+
+```css
+img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16/9;
+}
+```
+
+## Préchargement des images critiques
+
+L'image LCP doit être préchargée :
+
+```html
+<head>
+  <link
+    rel="preload"
+    as="image"
+    href="/images/hero.webp"
+    fetchpriority="high"
+    type="image/webp"
+  >
+</head>
+```
+
+Pour les images responsive :
+
+```html
+<link
+  rel="preload"
+  as="image"
+  href="/images/hero.webp"
+  imagesrcset="/images/hero-400.webp 400w, /images/hero-800.webp 800w"
+  imagesizes="100vw"
+>
+```
+
+## CDN pour les images
+
+Un CDN image comme Cloudinary, imgix ou Cloudflare Images offre :
+- Transformation à la volée (resize, crop, format)
+- Optimisation automatique
+- Détection du format optimal (Accept header)
+- Cache global
+
+Exemple Cloudflare Images :
+```
+https://imagedelivery.net/{account_hash}/{image_id}/w=800,f=auto
+```
+
+Le `f=auto` sert AVIF ou WebP selon le navigateur.
+
+## Checklist optimisation images
+
+- [ ] Format moderne (WebP ou AVIF)
+- [ ] Compression 70-85% qualité
+- [ ] Dimensions adaptées à l'affichage
+- [ ] srcset pour le responsive
+- [ ] Lazy loading sous le fold
+- [ ] width/height explicites
+- [ ] Preload de l'image LCP
+- [ ] Alt text pour l'accessibilité
+
+## Impact mesurable
+
+Exemple réel d'optimisation :
+
+| Avant | Après |
+|-------|-------|
+| 15 images, 8 Mo total | 15 images, 800 Ko total |
+| LCP : 4.2s | LCP : 1.8s |
+| Score mobile : 45 | Score mobile : 92 |
+
+**Résultat :** +30% de pages vues, +15% de temps sur site, -25% de rebond.
+
+## Conclusion
+
+L'optimisation des images est le quick win le plus accessible. Sans toucher au code, sans changer d'hébergement, vous pouvez diviser le poids de vos pages par 5 ou 10.
+
+Chez Horde, nous auditons et optimisons systématiquement les images de nos clients. Contactez-nous pour un audit gratuit de vos ressources médias.

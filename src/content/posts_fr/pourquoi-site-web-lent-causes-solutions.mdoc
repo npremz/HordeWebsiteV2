@@ -1,0 +1,187 @@
+---
+title: "Pourquoi votre Site Web est Lent : Les 10 Causes les Plus Fréquentes"
+excerpt: >-
+  Votre site rame et vous ne savez pas pourquoi ? Voici les 10 coupables les
+  plus fréquents et comment les identifier sur votre propre site.
+featuredImage: /images/posts/site-web-lent-causes.jpg
+featuredImageAlt: Diagnostic des causes de lenteur d'un site web
+publishedDate: '2026-01-30'
+author: Horde Agence
+seoDescription: >-
+  Découvrez les 10 causes principales d'un site web lent et leurs solutions.
+  Diagnostic expert par une agence web performance à Bruxelles.
+seoRobots: 'index, follow'
+---
+
+## Un site lent coûte cher
+
+Avant de plonger dans les causes, rappelons les enjeux. Un site qui charge en 5 secondes au lieu de 2 :
+- Perd **32% de ses conversions** sur mobile
+- Voit son **taux de rebond augmenter de 90%**
+- Risque de **descendre dans les résultats Google**
+
+Maintenant, identifions les coupables.
+
+## 1. Images non optimisées
+
+**Le problème le plus fréquent.** Une image de 5 Mo là où 200 Ko suffiraient.
+
+**Symptômes :**
+- LCP très élevé
+- Bande passante saturée sur mobile
+- PageSpeed Insights signale "Properly size images"
+
+**Solutions :**
+- Compresser avec des outils comme Squoosh ou ImageOptim
+- Convertir en WebP ou AVIF
+- Utiliser des images responsive avec `srcset`
+- Lazy loading pour les images sous le fold
+
+## 2. Hébergement inadapté
+
+Un serveur mutualisé à 3€/mois partage ses ressources avec des centaines d'autres sites.
+
+**Symptômes :**
+- TTFB (Time to First Byte) supérieur à 600ms
+- Temps de réponse variable selon les heures
+- Erreurs 503 en pic de trafic
+
+**Solutions :**
+- Passer à un hébergement VPS ou dédié
+- Utiliser un CDN (Cloudflare, Fastly)
+- Considérer le JAMstack avec déploiement edge
+
+## 3. Pas de cache navigateur
+
+Sans cache, chaque page rechargée télécharge les mêmes fichiers.
+
+**Symptômes :**
+- Chaque visite est aussi lente que la première
+- PageSpeed signale "Serve static assets with efficient cache policy"
+
+**Solutions :**
+- Configurer les headers `Cache-Control`
+- Définir des durées de cache longues pour les assets statiques
+- Utiliser le versioning des fichiers (`style.v2.css`)
+
+## 4. JavaScript excessif
+
+Des bibliothèques entières chargées pour quelques fonctionnalités.
+
+**Symptômes :**
+- INP élevé (page non réactive)
+- "Reduce unused JavaScript" dans PageSpeed
+- Bundle JavaScript > 300 Ko
+
+**Solutions :**
+- Auditer les dépendances (bundlephobia.com)
+- Tree-shaking et code-splitting
+- Remplacer les librairies lourdes par des alternatives légères
+- Différer les scripts non critiques
+
+## 5. CSS bloquant le rendu
+
+Le navigateur attend le CSS complet avant d'afficher quoi que ce soit.
+
+**Symptômes :**
+- Écran blanc prolongé au chargement
+- "Eliminate render-blocking resources" dans PageSpeed
+
+**Solutions :**
+- Inliner le CSS critique dans le `<head>`
+- Charger le CSS non critique de manière asynchrone
+- Supprimer le CSS inutilisé (PurgeCSS)
+
+## 6. Trop de requêtes HTTP
+
+Chaque fichier externe (image, script, font, API) nécessite une requête.
+
+**Symptômes :**
+- Waterfall très étalé dans DevTools
+- Nombreuses petites ressources
+
+**Solutions :**
+- Combiner les fichiers CSS/JS
+- Utiliser des sprites ou des SVG inline pour les icônes
+- HTTP/2 qui multiplex les requêtes
+- Réduire les dépendances tierces
+
+## 7. Fonts web mal chargées
+
+Des polices de 500 Ko qui bloquent l'affichage du texte.
+
+**Symptômes :**
+- Texte invisible pendant le chargement (FOIT)
+- "Ensure text remains visible during webfont load"
+
+**Solutions :**
+- `font-display: swap` dans @font-face
+- Précharger les fonts critiques
+- Limiter le nombre de variantes (weights, styles)
+- Considérer les system fonts pour le corps de texte
+
+## 8. Base de données non optimisée
+
+Requêtes SQL lentes, pas d'index, données non paginées.
+
+**Symptômes :**
+- TTFB variable selon les pages
+- Pages de listing très lentes
+- Timeout sur les pages de recherche
+
+**Solutions :**
+- Ajouter des index sur les colonnes fréquemment requêtées
+- Paginer les résultats
+- Mettre en cache les requêtes fréquentes
+- Optimiser les requêtes N+1
+
+## 9. Plugins et extensions
+
+WordPress avec 40 plugins, chacun ajoutant ses scripts et styles.
+
+**Symptômes :**
+- Performance dégradée progressivement
+- Conflits entre plugins
+- Admin lent également
+
+**Solutions :**
+- Auditer et supprimer les plugins inutilisés
+- Remplacer plusieurs plugins par un seul équivalent
+- Éviter les page builders lourds pour les pages simples
+- Considérer une solution headless
+
+## 10. Pas de compression
+
+Les fichiers texte (HTML, CSS, JS) envoyés sans compression.
+
+**Symptômes :**
+- "Enable text compression" dans PageSpeed
+- Taille de transfert = taille réelle
+
+**Solutions :**
+- Activer Gzip ou Brotli sur le serveur
+- Vérifier via DevTools (colonne "Size" vs "Content")
+- Brotli offre 15-25% de compression supplémentaire vs Gzip
+
+## Comment diagnostiquer votre site
+
+1. **PageSpeed Insights** : Vue d'ensemble rapide
+2. **Chrome DevTools Network** : Identifier les ressources lourdes
+3. **WebPageTest** : Tests multi-localisations détaillés
+4. **Lighthouse** : Audit complet avec recommandations
+
+## Prioriser les optimisations
+
+Toutes les optimisations n'ont pas le même impact. Notre ordre recommandé :
+
+1. **Quick wins** : Images, compression, cache
+2. **Impact moyen** : JavaScript, CSS critique
+3. **Structurel** : Hébergement, architecture, base de données
+
+## Conclusion
+
+Un site lent est rarement victime d'une seule cause. C'est généralement une accumulation de petits problèmes qui, ensemble, dégradent l'expérience.
+
+L'audit performance permet d'identifier et de prioriser les optimisations. Chez Horde, nous réalisons cet audit gratuitement et sans engagement. Nous analysons votre site, identifions les goulots d'étranglement, et vous fournissons un plan d'action clair.
+
+Contactez-nous pour découvrir ce qui ralentit votre site.

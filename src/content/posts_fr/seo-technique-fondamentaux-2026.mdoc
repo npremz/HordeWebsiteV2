@@ -1,0 +1,288 @@
+---
+title: "SEO Technique : Les Fondamentaux qui Font la Différence en 2026"
+excerpt: >-
+  Le SEO technique est la fondation invisible de votre référencement. Crawl,
+  indexation, vitesse : maîtrisez les bases qui conditionnent votre visibilité.
+featuredImage: /images/posts/seo-technique-2026.jpg
+featuredImageAlt: Schéma illustrant les composantes du SEO technique
+publishedDate: '2026-01-30'
+author: Horde Agence
+seoDescription: >-
+  Maîtrisez le SEO technique en 2026 : crawl, indexation, Core Web Vitals,
+  structured data. Guide complet par une agence web SEO à Bruxelles.
+seoRobots: 'index, follow'
+---
+
+## SEO technique vs SEO contenu
+
+Le SEO contenu concerne ce que vous dites. Le SEO technique concerne comment vous le dites techniquement.
+
+Un contenu exceptionnel sur une base technique défaillante ne sera jamais visible. Inversement, une technique parfaite sans contenu de qualité ne sert à rien.
+
+Les deux sont nécessaires. Mais le technique est souvent négligé.
+
+## 1. Crawl et indexation
+
+### Comment Google découvre vos pages
+
+1. **Crawl** : Googlebot visite vos pages
+2. **Rendu** : Il exécute le JavaScript et "voit" le résultat
+3. **Indexation** : Il ajoute le contenu à son index
+4. **Classement** : Il détermine la position pour chaque requête
+
+Si une étape échoue, la page n'apparaît pas dans les résultats.
+
+### robots.txt
+
+Le fichier `/robots.txt` indique ce que les robots peuvent crawler.
+
+```
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /checkout/
+Sitemap: https://monsite.com/sitemap.xml
+```
+
+**Erreurs fréquentes :**
+- Bloquer les CSS/JS (empêche le rendu)
+- Bloquer des sections importantes par erreur
+- Oublier de mettre à jour après une migration
+
+### Sitemap XML
+
+Le sitemap liste vos URLs importantes :
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://monsite.com/page</loc>
+    <lastmod>2026-01-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+</urlset>
+```
+
+Soumettez-le dans Search Console. Vérifiez régulièrement les erreurs.
+
+### Budget de crawl
+
+Google n'a pas des ressources infinies. Sur les grands sites, il priorise ce qu'il crawle.
+
+**Optimisations :**
+- Supprimer les pages de faible valeur
+- Éviter les paramètres URL inutiles
+- Corriger les redirections en chaîne
+- Améliorer la vitesse (crawl plus rapide)
+
+## 2. Architecture et URLs
+
+### Structure logique
+
+Une bonne architecture :
+```
+/
+├── /produits/
+│   ├── /produits/categorie-a/
+│   │   ├── /produits/categorie-a/produit-1/
+│   └── /produits/categorie-b/
+├── /blog/
+│   ├── /blog/article-1/
+└── /contact/
+```
+
+**Règles :**
+- Profondeur maximale : 3-4 niveaux
+- URLs descriptives et lisibles
+- Structure reflétant la taxonomie du contenu
+
+### URLs SEO-friendly
+
+**Bon :**
+```
+/services/creation-site-web-bruxelles
+```
+
+**Mauvais :**
+```
+/page?id=123&cat=4
+```
+
+### Canonicalization
+
+Évitez le contenu dupliqué avec la balise canonical :
+
+```html
+<link rel="canonical" href="https://monsite.com/page-principale">
+```
+
+Utilisez-la pour :
+- Paramètres de tracking (`?utm_source=...`)
+- Versions HTTP/HTTPS ou www/non-www
+- Pagination
+- Variantes de tri/filtre
+
+## 3. Core Web Vitals et vitesse
+
+En 2026, les Core Web Vitals sont un facteur de classement établi :
+
+- **LCP** < 2,5s : Temps d'affichage du contenu principal
+- **INP** < 200ms : Réactivité aux interactions
+- **CLS** < 0,1 : Stabilité visuelle
+
+Les sites avec de bonnes métriques ont un avantage dans les niches compétitives.
+
+**Impact mesuré :** Les pages avec LCP > 3s ont subi 23% de perte de trafic supplémentaire par rapport aux concurrents plus rapides.
+
+## 4. HTTPS et sécurité
+
+HTTPS est obligatoire depuis des années. En 2026, HTTP pur est synonyme de "site dangereux" pour les navigateurs.
+
+**Vérifications :**
+- [ ] Certificat SSL valide
+- [ ] Toutes les ressources en HTTPS (pas de mixed content)
+- [ ] Redirections HTTP → HTTPS en place
+- [ ] HSTS header configuré
+
+## 5. Mobile-first indexing
+
+Rappel : Google n'utilise que la version mobile de votre site pour l'indexation.
+
+**Vérifications :**
+- [ ] Contenu mobile = contenu desktop
+- [ ] Structured data identique
+- [ ] Liens internes présents sur mobile
+- [ ] Core Web Vitals mobiles optimisés
+
+## 6. Structured data (Schema.org)
+
+Les données structurées aident Google à comprendre votre contenu et peuvent générer des rich snippets.
+
+### Types utiles
+
+```json
+{
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  "name": "Horde Agence",
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Bruxelles",
+    "addressCountry": "BE"
+  },
+  "url": "https://hordeagence.com"
+}
+```
+
+**Types courants :**
+- Organization / LocalBusiness
+- Product (e-commerce)
+- Article / BlogPosting
+- FAQ
+- HowTo
+- Review / AggregateRating
+- BreadcrumbList
+
+### Validation
+
+Utilisez le [Rich Results Test](https://search.google.com/test/rich-results) de Google.
+
+## 7. Liens internes
+
+Le maillage interne distribue l'autorité et guide le crawl.
+
+**Bonnes pratiques :**
+- Lier les pages importantes depuis la navigation
+- Liens contextuels dans le contenu
+- Anchor text descriptif (pas "cliquez ici")
+- Éviter les orphan pages (sans liens entrants)
+
+## 8. Redirections
+
+### Types de redirections
+
+- **301** : Redirection permanente (transfère ~90% du link juice)
+- **302** : Redirection temporaire (ne transfère pas le link juice)
+- **307/308** : Équivalents HTTP de 302/301
+
+### Erreurs fréquentes
+
+- Chaînes de redirections (A → B → C → D)
+- Redirect loops
+- 302 au lieu de 301 pour les migrations permanentes
+- Redirections vers des 404
+
+## 9. Pages d'erreur
+
+### 404 personnalisée
+
+Une 404 utile :
+- Message clair
+- Liens vers les pages principales
+- Barre de recherche
+- Même design que le reste du site
+
+### Soft 404
+
+Pages qui existent mais disent "produit non trouvé" avec un code 200. Google les détecte et les ignore.
+
+**Solution :** Retournez un vrai code 404 ou 410.
+
+## 10. Internationalisation
+
+Pour les sites multilingues :
+
+### hreflang
+
+```html
+<link rel="alternate" hreflang="fr" href="https://monsite.com/fr/" />
+<link rel="alternate" hreflang="en" href="https://monsite.com/en/" />
+<link rel="alternate" hreflang="x-default" href="https://monsite.com/" />
+```
+
+### Structure d'URL
+
+Options :
+- Sous-répertoires : `/fr/`, `/en/`
+- Sous-domaines : `fr.monsite.com`
+- Domaines séparés : `monsite.fr`, `monsite.com`
+
+Les sous-répertoires sont généralement recommandés pour le SEO.
+
+## Audit SEO technique : checklist
+
+### Crawl et indexation
+- [ ] robots.txt correct
+- [ ] Sitemap XML soumis
+- [ ] Pas de blocages involontaires
+- [ ] Pages importantes indexées
+
+### Architecture
+- [ ] Structure logique et plate
+- [ ] URLs descriptives
+- [ ] Canonicals en place
+- [ ] Pas de contenu dupliqué
+
+### Performance
+- [ ] Core Web Vitals dans le vert
+- [ ] TTFB < 600ms
+- [ ] Mobile performant
+
+### Sécurité
+- [ ] HTTPS partout
+- [ ] Pas de mixed content
+- [ ] Headers de sécurité
+
+### Structured data
+- [ ] Schema.org implémenté
+- [ ] Validé sans erreurs
+
+## Conclusion
+
+Le SEO technique est la fondation. Sans elle, le meilleur contenu reste invisible.
+
+En 2026, avec l'importance accrue des Core Web Vitals et du mobile-first, la technique n'est plus un nice-to-have. C'est un prérequis.
+
+Chez Horde, nous auditons gratuitement le SEO technique de votre site. Contactez-nous pour identifier les blocages qui freinent votre visibilité.

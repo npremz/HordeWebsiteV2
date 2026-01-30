@@ -1,0 +1,225 @@
+---
+title: "CDN et Performance Web : Pourquoi et Comment l'Utiliser en 2026"
+excerpt: >-
+  Un CDN peut diviser vos temps de chargement par 2 ou 3. Découvrez comment
+  cette infrastructure distribuée accélère votre site web.
+featuredImage: /images/posts/cdn-performance.jpg
+featuredImageAlt: Carte mondiale illustrant la distribution d'un CDN
+publishedDate: '2026-01-30'
+author: Horde Agence
+seoDescription: >-
+  Guide CDN 2026 : améliorez drastiquement les performances de votre site web.
+  Comparatif et recommandations par une agence web Bruxelles.
+seoRobots: 'index, follow'
+---
+
+## Qu'est-ce qu'un CDN ?
+
+Un CDN (Content Delivery Network) est un réseau de serveurs distribués géographiquement qui met en cache et sert votre contenu depuis le serveur le plus proche de chaque visiteur.
+
+Sans CDN : un visiteur de Tokyo télécharge vos fichiers depuis un serveur à Paris (13 000 km, ~200ms de latence réseau).
+
+Avec CDN : le même visiteur télécharge depuis Tokyo (quelques km, ~10ms de latence).
+
+## L'impact sur les performances
+
+### TTFB (Time to First Byte)
+
+Le TTFB mesure le temps entre la requête et le premier octet reçu. La latence réseau est incompressible : la lumière dans la fibre ne va pas plus vite.
+
+| Distance | Latence typique |
+|----------|-----------------|
+| Même ville | 10-20ms |
+| Même pays | 30-50ms |
+| Europe → US | 80-120ms |
+| Europe → Asie | 150-250ms |
+
+Un CDN place votre contenu à moins de 50ms de 95% des utilisateurs mondiaux.
+
+### Temps de chargement total
+
+Sur un site avec 50 assets (images, scripts, styles), la réduction de latence se cumule. Passer de 200ms à 20ms par requête peut économiser plusieurs secondes de chargement total.
+
+### Résilience et disponibilité
+
+Un CDN offre :
+- **Redondance** : si un serveur tombe, un autre prend le relais
+- **Protection DDoS** : absorption du trafic malveillant
+- **Scalabilité** : pics de trafic absorbés sans ralentissement
+
+## Types de contenu à mettre sur CDN
+
+### Parfait pour le CDN
+
+- **Images** : statiques, volumineux, parfait pour le cache
+- **CSS/JS** : statiques, versionnés
+- **Fonts** : statiques, souvent volumineuses
+- **Vidéos** : très volumineux, streaming optimisé
+- **HTML statique** : pages générées (SSG)
+
+### Plus complexe
+
+- **Contenu personnalisé** : nécessite edge computing ou pas de cache
+- **Pages dynamiques** : dépend de la stratégie de cache
+- **APIs** : possible avec cache intelligent
+
+## Les principaux CDN en 2026
+
+### Cloudflare
+
+**Leader du marché** avec une offre gratuite très généreuse.
+
+- Points de présence : 300+ villes
+- Offre gratuite : illimitée pour les sites web
+- Features : Workers (edge computing), Images, Stream, WAF
+- Prix pro : à partir de 20$/mois
+
+**Notre recommandation pour la plupart des sites.**
+
+### Fastly
+
+**Premium, très rapide**, utilisé par les géants du web.
+
+- Purge instantanée (150ms global)
+- Edge computing puissant (Compute@Edge)
+- Prix : basé sur la consommation
+- Idéal pour : e-commerce à fort trafic, médias
+
+### AWS CloudFront
+
+**Intégré à l'écosystème AWS.**
+
+- Points de présence : 400+
+- Intégration S3, Lambda@Edge
+- Prix : basé sur la consommation (peut être cher)
+- Idéal pour : stack déjà sur AWS
+
+### Vercel / Netlify CDN
+
+**CDN intégré aux plateformes de déploiement.**
+
+- Optimisé pour les frameworks modernes (Next.js, Astro)
+- Déploiement automatique avec CDN inclus
+- Edge functions intégrées
+- Prix : gratuit pour les projets personnels, forfaits pour le business
+
+## Configuration d'un CDN
+
+### Mise en place basique
+
+1. **DNS** : Pointez votre domaine vers le CDN (généralement un CNAME)
+2. **Origine** : Configurez l'adresse de votre serveur d'origine
+3. **Cache rules** : Définissez ce qui doit être mis en cache et pour combien de temps
+4. **SSL** : Activez HTTPS (souvent automatique)
+
+### Headers de cache essentiels
+
+```
+# Assets statiques (cache longue durée)
+Cache-Control: public, max-age=31536000, immutable
+
+# HTML (revalidation fréquente)
+Cache-Control: public, max-age=3600, stale-while-revalidate=86400
+
+# API dynamique (pas de cache CDN)
+Cache-Control: private, no-store
+```
+
+### Versioning des assets
+
+Pour permettre un cache long (1 an) tout en pouvant mettre à jour :
+
+```html
+<!-- Versioning dans le nom de fichier -->
+<link rel="stylesheet" href="/css/style.a1b2c3d4.css">
+<script src="/js/app.e5f6g7h8.js"></script>
+```
+
+Les build tools (Vite, Webpack) génèrent automatiquement ces hashes.
+
+## Edge Computing : le CDN intelligent
+
+En 2026, les CDN ne sont plus de simples caches. Ils exécutent du code au plus près des utilisateurs.
+
+### Cloudflare Workers
+
+```javascript
+// Personnalisation au edge
+export default {
+  async fetch(request) {
+    const country = request.cf.country;
+
+    // Redirection selon le pays
+    if (country === 'BE') {
+      return fetch('https://origin.com/be/');
+    }
+    return fetch('https://origin.com/int/');
+  }
+};
+```
+
+### Cas d'usage edge
+
+- **A/B testing** : Sans impact sur les performances
+- **Personnalisation géographique** : Contenu, devise, langue
+- **Authentification** : Validation de tokens
+- **Transformations** : Resize d'images, minification
+
+## CDN et SEO
+
+Google mesure la vitesse depuis ses serveurs (souvent aux US). Un CDN améliore donc directement vos métriques SEO :
+
+- **LCP plus rapide** : Images servies depuis des serveurs proches de Googlebot
+- **TTFB réduit** : Meilleure note de temps de réponse serveur
+- **Disponibilité** : Moins de erreurs 5xx = meilleure crawlabilité
+
+## Erreurs courantes
+
+### 1. Cache trop court sur les assets
+
+```
+# Mauvais
+Cache-Control: max-age=3600
+
+# Bon (avec versioning)
+Cache-Control: max-age=31536000, immutable
+```
+
+### 2. Pas de cache du HTML
+
+Le HTML peut aussi être caché (surtout en SSG) :
+
+```
+Cache-Control: public, max-age=3600, stale-while-revalidate=86400
+```
+
+### 3. Oublier les headers CORS
+
+Si vos fonts/images sont sur un CDN différent :
+
+```
+Access-Control-Allow-Origin: *
+```
+
+### 4. Ne pas purger après déploiement
+
+Après un déploiement, purgez le cache CDN pour servir les nouvelles versions immédiatement.
+
+## Checklist CDN
+
+- [ ] CDN activé sur le domaine principal
+- [ ] SSL/HTTPS configuré
+- [ ] Headers Cache-Control optimisés
+- [ ] Assets versionnés pour cache longue durée
+- [ ] Compression Brotli/Gzip active
+- [ ] HTTP/2 ou HTTP/3 activé
+- [ ] Purge automatisée après déploiement
+- [ ] Monitoring des performances edge
+
+## Conclusion
+
+Un CDN n'est plus optionnel en 2026. Même pour un site local à Bruxelles, un CDN comme Cloudflare (gratuit) améliore les performances et la sécurité.
+
+Pour les sites avec audience internationale, c'est indispensable. La différence entre servir depuis un seul serveur et depuis 300 points de présence mondiaux est dramatique.
+
+Chez Horde, nous déployons systématiquement sur CDN avec edge computing. Contactez-nous pour optimiser la distribution de votre site.

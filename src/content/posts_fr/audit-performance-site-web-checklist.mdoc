@@ -1,0 +1,212 @@
+---
+title: "Audit Performance Web : La Checklist Complète pour Analyser votre Site"
+excerpt: >-
+  Comment auditer la performance de votre site web ? Voici notre méthodologie
+  complète avec les outils et métriques à vérifier étape par étape.
+featuredImage: /images/posts/audit-performance-web.jpg
+featuredImageAlt: Checklist d'audit performance avec métriques et outils
+publishedDate: '2026-01-30'
+author: Horde Agence
+seoDescription: >-
+  Checklist complète pour auditer la performance de votre site web. Outils,
+  métriques et méthodologie par une agence web spécialisée à Bruxelles.
+seoRobots: 'index, follow'
+---
+
+## Pourquoi auditer la performance
+
+Un audit performance révèle les problèmes cachés qui plombent votre site. Contrairement à une refonte graphique, les optimisations performance génèrent souvent un ROI immédiat et mesurable.
+
+Avant d'investir dans le design ou le contenu, assurez-vous que la base technique est solide.
+
+## Phase 1 : Collecter les données
+
+### Métriques terrain (Real User Monitoring)
+
+Les données terrain reflètent l'expérience réelle de vos visiteurs.
+
+**Google Search Console :**
+- Rapport Core Web Vitals
+- Historique sur 90 jours
+- Répartition mobile/desktop
+
+**PageSpeed Insights (données CrUX) :**
+- Métriques au 75e percentile
+- Comparaison avec l'origine
+
+**Questions à se poser :**
+- [ ] Vos Core Web Vitals sont-ils tous "bons" ?
+- [ ] Les métriques mobiles sont-elles acceptables ?
+- [ ] Y a-t-il des pages spécifiques problématiques ?
+
+### Métriques laboratoire
+
+Les tests lab permettent le debugging et la reproductibilité.
+
+**Lighthouse :**
+- Score Performance global
+- Détail des métriques (FCP, LCP, TBT, CLS)
+- Recommandations priorisées
+
+**WebPageTest :**
+- Waterfall détaillé
+- Tests multi-localisations
+- Comparaison before/after
+
+**Configuration recommandée :**
+- Throttling : "Mobile" ou "Slow 4G"
+- Device : "Moto G4" ou équivalent milieu de gamme
+- Localisation : Proche de votre audience cible
+
+## Phase 2 : Analyser les ressources
+
+### Audit des images
+
+Les images représentent souvent 50% du poids d'une page.
+
+**Vérifier :**
+- [ ] Format moderne utilisé (WebP, AVIF) ?
+- [ ] Dimensions adaptées au conteneur ?
+- [ ] Compression appliquée ?
+- [ ] Lazy loading sous le fold ?
+- [ ] Attributs width/height présents ?
+
+**Outil :** Tab "Network" de DevTools, filtré sur "Img"
+
+### Audit JavaScript
+
+JavaScript bloquant = interactions bloquées.
+
+**Vérifier :**
+- [ ] Taille totale du bundle
+- [ ] Scripts bloquants dans le `<head>` ?
+- [ ] Code inutilisé (Coverage tool)
+- [ ] Bibliothèques lourdes évitables ?
+
+**Outil :** DevTools > Coverage (Cmd+Shift+P > "Coverage")
+
+### Audit CSS
+
+CSS bloquant = rendu bloqué.
+
+**Vérifier :**
+- [ ] CSS critique inliné ?
+- [ ] CSS inutilisé ?
+- [ ] Animations optimisées (transform, opacity) ?
+
+### Audit des fonts
+
+**Vérifier :**
+- [ ] Nombre de variantes chargées
+- [ ] Format woff2 utilisé ?
+- [ ] font-display: swap ?
+- [ ] Fonts préchargées si critiques ?
+
+## Phase 3 : Analyser l'infrastructure
+
+### Temps de réponse serveur (TTFB)
+
+Un TTFB > 600ms indique un problème serveur.
+
+**Causes possibles :**
+- Hébergement sous-dimensionné
+- Pas de cache serveur
+- Base de données lente
+- Pas de CDN
+
+### CDN et cache
+
+**Vérifier :**
+- [ ] CDN actif pour les assets statiques ?
+- [ ] Headers Cache-Control corrects ?
+- [ ] Compression Brotli/Gzip active ?
+
+**Outil :** DevTools > Network > Response Headers
+
+### Protocoles
+
+**Vérifier :**
+- [ ] HTTPS actif ?
+- [ ] HTTP/2 ou HTTP/3 ?
+- [ ] Redirections minimisées ?
+
+## Phase 4 : Tester le parcours utilisateur
+
+### Pages critiques à auditer
+
+1. **Page d'accueil** : Premier contact, doit être rapide
+2. **Pages de listing** : Souvent les plus lourdes
+3. **Fiches produit/service** : Conversion
+4. **Checkout/formulaires** : Abandon si lent
+5. **Pages de contenu** : SEO et engagement
+
+### Test mobile réel
+
+Ne vous fiez pas uniquement aux émulateurs.
+
+**À tester :**
+- Appareil milieu de gamme (pas le dernier iPhone)
+- Connexion 4G standard
+- Interactions réelles (scrolls, clics, formulaires)
+
+## Phase 5 : Prioriser les actions
+
+### Matrice impact/effort
+
+| Action | Impact | Effort |
+|--------|--------|--------|
+| Optimiser images | Élevé | Faible |
+| Activer compression | Élevé | Faible |
+| Configurer cache | Élevé | Moyen |
+| Inliner CSS critique | Moyen | Moyen |
+| Optimiser JS | Élevé | Élevé |
+| Changer hébergement | Élevé | Élevé |
+
+### Quick wins (moins d'une journée)
+
+1. Compresser les images existantes
+2. Activer la compression serveur
+3. Ajouter width/height aux images
+4. Différer les scripts non critiques
+
+### Optimisations moyennes (quelques jours)
+
+1. Configurer un CDN
+2. Implémenter le lazy loading
+3. Réduire le CSS/JS inutilisé
+4. Optimiser les fonts
+
+### Optimisations structurelles (semaines)
+
+1. Migration vers hébergement performant
+2. Refactoring du code frontend
+3. Static Site Generation
+4. Changement d'architecture
+
+## Outils recommandés
+
+### Gratuits
+- **PageSpeed Insights** : Données terrain + lab
+- **Lighthouse** : Audit complet (intégré à Chrome)
+- **WebPageTest** : Tests avancés
+- **GTmetrix** : Alternative avec historique
+
+### Payants (monitoring continu)
+- **Calibre** : Monitoring Core Web Vitals
+- **SpeedCurve** : Dashboards et alertes
+- **DebugBear** : Focus performance
+
+## Fréquence des audits
+
+- **Hebdomadaire** : Vérification rapide des Core Web Vitals
+- **Mensuelle** : Audit léger des pages principales
+- **Trimestrielle** : Audit complet de tout le site
+- **À chaque release** : Tests de non-régression
+
+## Conclusion
+
+Un audit performance n'est pas un exercice ponctuel. C'est un processus continu d'amélioration. Les sites les plus performants intègrent les tests de performance dans leur cycle de développement.
+
+Chez Horde, nous proposons un audit performance gratuit et sans engagement. Nous analysons votre site avec notre méthodologie éprouvée et vous fournissons un rapport actionnable avec des recommandations priorisées.
+
+Prenez rendez-vous pour découvrir le potentiel d'optimisation de votre site.
