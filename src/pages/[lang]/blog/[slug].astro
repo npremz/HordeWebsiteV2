@@ -107,54 +107,76 @@ const relatedPosts = rawPosts
 function parseMarkdown(content: string): string {
 	if (!content) return '';
 
-	let html = content;
+	// Normaliser les fins de ligne
+	let html = content.replace(/\r\n/g, '\n');
 
-	// Blocs de code avec langage
+	// Blocs de code avec langage (traiter en premier pour protéger le contenu)
 	html = html.replace(/```(\w+)?\n([\s\S]*?)```/g, (_, lang, code) => {
 		const escaped = code.trim()
 			.replace(/&/g, '&amp;')
 			.replace(/</g, '&lt;')
 			.replace(/>/g, '&gt;');
-		return `<div class="pb-10 sm:pb-16 border-b border-lines"><pre class="bg-bg-light p-4 overflow-x-auto text-[1rem]"><code class="language-${lang || 'text'}">${escaped}</code></pre></div>`;
+		return `\n<div class="pb-10 sm:pb-16 border-b border-lines"><pre class="bg-bg-light p-4 overflow-x-auto text-[1rem]"><code class="language-${lang || 'text'}">${escaped}</code></pre></div>\n`;
 	});
 
-	// Code inline
-	html = html.replace(/`([^`]+)`/g, '<code class="px-1.5 py-0.5">$1</code>');
+	// Séparer en blocs par lignes vides
+	const blocks = html.split(/\n\n+/);
 
-	// Titres H2 avec id pour TOC (utilise slugify pour cohérence avec le sommaire)
-	html = html.replace(/^## (.+)$/gm, (_, title) => {
-		const id = slugify(title);
-		return `<h2 class="text-[2rem] leading-tight max-w-[400px] mt-16 sm:mt-32 mb-10 sm:mb-16 scroll-mt-24" id="${id}">${title}</h2>`;
+	const processedBlocks = blocks.map(block => {
+		block = block.trim();
+		if (!block) return '';
+
+		// Déjà du HTML (blocs de code)
+		if (block.startsWith('<div') || block.startsWith('<ul') || block.startsWith('<ol')) {
+			return block;
+		}
+
+		// Titres H2 avec id pour TOC
+		if (block.startsWith('## ')) {
+			const title = block.slice(3);
+			const id = slugify(title);
+			return `<h2 class="text-[2rem] leading-tight max-w-[400px] mt-16 sm:mt-32 mb-10 sm:mb-16 scroll-mt-24" id="${id}">${applyInlineFormatting(title)}</h2>`;
+		}
+
+		// Titres H3
+		if (block.startsWith('### ')) {
+			const title = block.slice(4);
+			return `<h3 class="text-[1.5rem] mt-12 mb-10">${applyInlineFormatting(title)}</h3>`;
+		}
+
+		// Listes à puces (bloc qui commence par - ou *)
+		if (block.match(/^[-*] /m)) {
+			const items = block.split('\n')
+				.filter(line => line.match(/^[-*] /))
+				.map(line => `<li class="ml-4">${applyInlineFormatting(line.slice(2))}</li>`)
+				.join('\n');
+			return `<ul class="list-disc list-outside flex flex-col gap-10 py-10 sm:py-16 border-t border-b border-lines mb-6 pl-4">${items}</ul>`;
+		}
+
+		// Paragraphe normal
+		return `<p class="mb-10 sm:mb-16 leading-relaxed">${applyInlineFormatting(block)}</p>`;
 	});
 
-	// Titres H3
-	html = html.replace(/^### (.+)$/gm, '<h3 class="text-[1.5rem] mt-12 mb-10">$1</h3>');
+	return processedBlocks.filter(b => b).join('\n\n');
+}
 
-	// Listes à puces
-	html = html.replace(/^- (.+)$/gm, '<li class="ml-4">$1</li>');
-	html = html.replace(/(<li.*<\/li>\n?)+/g, (match) => {
-		// Nettoyer les espaces/retours de ligne en fin de match
-		const cleanMatch = match.replace(/\s+$/, '');
-		return `<ul class="list-disc list-outside flex flex-col gap-10  py-10 sm:py-16 border-t border-b border-lines mb-6 pl-4">${cleanMatch}</ul>`;
-	});
+// Appliquer le formatage inline (gras, italique, liens, code)
+function applyInlineFormatting(text: string): string {
+	let result = text;
 
-	// Gras et italique
-	html = html.replace(/\*\*([^*]+)\*\*/g, '<strong class="font-normal">$1</strong>');
-	html = html.replace(/\*([^*]+)\*/g, '<em>$1</em>');
+	// Code inline (avant gras/italique pour éviter les conflits)
+	result = result.replace(/`([^`]+)`/g, '<code class="px-1.5 py-0.5 bg-lines rounded text-[0.875em]">$1</code>');
+
+	// Gras (font-medium au lieu de bold)
+	result = result.replace(/\*\*([^*]+)\*\*/g, '<strong class="font-medium">$1</strong>');
+
+	// Italique
+	result = result.replace(/\*([^*]+)\*/g, '<em>$1</em>');
 
 	// Liens
-	html = html.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" class="underline underline-offset-2 hover:opacity-70 transition-opacity">$1</a>');
+	result = result.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" class="underline! underline-offset-4 hover:opacity-70 transition-opacity">$1</a>');
 
-	// Paragraphes (lignes non vides qui ne sont pas déjà des éléments HTML ou des lignes blanches)
-	html = html.replace(/^(?!<[a-z]|\s*$)(.+)$/gm, '<p class="mb-10 sm:mb-16 leading-relaxed">$1</p>');
-
-	// Nettoyer les <p> vides ou ne contenant que des espaces (partout dans le HTML)
-	html = html.replace(/<p[^>]*>\s*<\/p>/g, '');
-
-	// Nettoyer les sauts de ligne multiples
-	html = html.replace(/\n{3,}/g, '\n\n');
-
-	return html;
+	return result;
 }
 
 // Formater la date

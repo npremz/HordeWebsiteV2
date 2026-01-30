@@ -391,11 +391,25 @@ const blogPostsSchema = {
   }),
   // === CHAMPS PARTAGÉS ===
   featuredImage: fields.image({
-    label: 'Image principale',
-    description: 'Image affichée dans les listes et en haut de l\'article',
+    label: 'Image principale (single)',
+    description: 'Image affichée en haut de l\'article (format paysage recommandé)',
     directory: 'src/assets/images/blog',
     publicPath: '/src/assets/images/blog',
     validation: { isRequired: true },
+  }),
+  thumbnailImage: fields.image({
+    label: 'Image grille (liste)',
+    description: 'Image affichée dans les listes d\'articles (format carré recommandé). Utilise l\'image principale si vide.',
+    directory: 'src/assets/images/blog/thumbnails',
+    publicPath: '/src/assets/images/blog/thumbnails',
+  }),
+  thumbnailImageAlt_fr: fields.text({
+    label: 'Alt image grille (FR)',
+    description: 'Laisser vide pour utiliser l\'alt de l\'image principale',
+  }),
+  thumbnailImageAlt_en: fields.text({
+    label: 'Alt image grille (EN)',
+    description: 'Laisser vide pour utiliser l\'alt de l\'image principale',
   }),
   author: fields.relationship({
     label: 'Auteur',

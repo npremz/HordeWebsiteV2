@@ -9,6 +9,22 @@
 }
 
 @font-face {
+  font-family: 'PP Neue Montreal';
+  src: url('../assets/fonts/PPNeueMontreal-Medium.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'PP Neue Montreal';
+  src: url('../assets/fonts/PPNeueMontreal-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
   font-family: 'PP Neue Machina';
   src: url('../assets/fonts/PPNeueMachina-Light.woff2') format('woff2');
   font-weight: 300;

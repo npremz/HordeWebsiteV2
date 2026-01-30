@@ -1,0 +1,33 @@
+slug: c-est-quoi-un-site-rapide
+title_fr: En 2026, c'est quoi un site (vraiment) rapide?
+title_en: In 2026, What is a (really) fast website
+excerpt_fr: >-
+  53% des utilisateurs abandonnent après 3s d'attente. Un site rapide est notre
+  standard : chargement instantané sur tous appareils. Meilleur SEO, meilleure
+  expérience.
+excerpt_en: >-
+  53% of users leave after 3s. A fast site is our standard: instant loading on
+  all devices. Better SEO, better experience.
+seoDescription_fr: >-
+  Un site rapide booste votre SEO et vos conversions. 53% des visiteurs partent
+  après 3s d'attente. Découvrez comment on livre des sites ultra-performants.
+seoDescription_en: >-
+  A fast website boosts your SEO and conversions. 53% of visitors leave after
+  3s. Discover how we deliver ultra-high-performance websites.
+featuredImageAlt_fr: Horde Agence | Lighthouse de hordeagence.com
+featuredImageAlt_en: Horde Agence | Lighthouse score of hordeagence.com
+featuredImage: /src/assets/images/blog/c-est-quoi-un-site-rapide/featuredImage.jpg
+thumbnailImage: >-
+  /src/assets/images/blog/thumbnails/c-est-quoi-un-site-rapide/thumbnailImage.png
+author: nicolas-premont
+category: performance-web
+tags:
+  - Lighthouse
+  - Mobile
+  - User Experience
+  - Performance
+publishedDate: 2026-01-30
+featured: false
+draft: false
+seoRobots: index, follow
+ogImage: /images/og/c-est-quoi-un-site-rapide/ogImage.jpg

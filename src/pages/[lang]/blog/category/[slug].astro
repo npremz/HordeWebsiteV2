@@ -37,12 +37,17 @@ const posts = rawPosts
 	.sort((a, b) => new Date(b.data.publishedDate).getTime() - new Date(a.data.publishedDate).getTime())
 	.map((post) => {
 		const author = authorsMap.get(post.data.author);
+		// Utiliser thumbnailImage si disponible, sinon featuredImage
+		const gridImage = post.data.thumbnailImage || post.data.featuredImage;
+		const gridImageAlt = post.data.thumbnailImage
+			? (lang === 'fr' ? post.data.thumbnailImageAlt_fr : post.data.thumbnailImageAlt_en) || (lang === 'fr' ? post.data.featuredImageAlt_fr : post.data.featuredImageAlt_en)
+			: (lang === 'fr' ? post.data.featuredImageAlt_fr : post.data.featuredImageAlt_en);
 		return {
 			slug: post.data.slug,
 			title: lang === 'fr' ? post.data.title_fr : post.data.title_en,
 			excerpt: lang === 'fr' ? post.data.excerpt_fr : post.data.excerpt_en,
-			image: post.data.featuredImage,
-			imageAlt: lang === 'fr' ? post.data.featuredImageAlt_fr : post.data.featuredImageAlt_en,
+			image: gridImage,
+			imageAlt: gridImageAlt,
 			publishedDate: post.data.publishedDate,
 			readingTime: post.data.readingTime || 5,
 			authorName: author?.name || 'Horde',

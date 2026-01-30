@@ -88,6 +88,9 @@ const postsCollection = defineCollection({
     featuredImageAlt_en: z.string(),
     // Champs partagés
     featuredImage: image(),
+    thumbnailImage: image().optional(),
+    thumbnailImageAlt_fr: z.string().optional(),
+    thumbnailImageAlt_en: z.string().optional(),
     author: z.string(), // slug de l'auteur (relation)
     category: z.string(), // slug de la catégorie (relation)
     tags: z.array(z.string()).default([]),
