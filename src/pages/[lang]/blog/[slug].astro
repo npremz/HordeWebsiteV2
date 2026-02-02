@@ -270,7 +270,7 @@ const schemaOrg = {
 	<div class="fixed inset-0 bg-bg -z-10" aria-hidden="true"></div>
 	<article id="page-content" class="relative z-10 bg-bg">
 		<!-- Header Article -->
-		<header class="pt-50 sm:pt-78 mb-10 sm:mb-16">
+		<header class="pt-50 sm:pt-78 pb-10 sm:pb-16 border-b border-lines">
 			<!-- Breadcrumbs -->
 			<nav aria-label="Breadcrumb" class="mb-8">
 				<ol class="flex items-center gap-2 section-label flex-wrap">
@@ -304,12 +304,12 @@ const schemaOrg = {
 						<Image
 							src={authorAvatar}
 							alt={authorName}
-							class="h-full aspect-square object-cover"
+							class="h-full w-[72px] sm:w-[100px] aspect-square object-cover"
 							widths={[72, 100]}
 							height={100}
 						/>
 					)}
-					<div>
+					<div class="sm:h-[100px] flex flex-col justify-between">
 						<p class="text-[1.375rem]">{authorName}</p>
 						{authorRole && <p class="section-label max-w-[170px]">{authorRole}</p>}
 					</div>
@@ -334,7 +334,7 @@ const schemaOrg = {
 		</header>
 
 		<!-- Image principale -->
-		<figure class="py-10 sm:py-24 border-t border-b border-lines mb-10 sm:mb-24">
+		<figure class="py-10 sm:py-24 border-b border-lines mb-10 sm:mb-24 max-w-3xl mx-auto">
 			<Image
 				src={post.data.featuredImage}
 				alt={featuredImageAlt}
@@ -354,7 +354,7 @@ const schemaOrg = {
 			<!-- Contenu principal -->
 			<div class="lg:flex-1 max-w-3xl mx-auto">
 				<!-- Extrait / Chapô -->
-				<p class="text-[1.625rem] sm:text-[2rem] md:text-[2.5rem] leading-relaxed pb-10 sm:pb-24 border-b border-lines font-medium">
+				<p class="text-[1.625rem] sm:text-[2rem] md:text-[2.5rem] pb-10 sm:pb-24 border-b border-lines">
 					{excerpt}
 				</p>
 
@@ -396,7 +396,7 @@ const schemaOrg = {
 								{tags.map((tag: string) => (
 									<a
 										href={`/${lang}/blog/tag/${slugify(tag)}`}
-										class="group relative overflow-hidden px-5 py-3 border border-lines text-[0.875rem] font-mono uppercase"
+										class="group relative overflow-hidden py-6 px-5 border border-lines text-[1rem] font-mono uppercase leading-none"
 									>
 										<span class="absolute inset-0 bg-black translate-x-[calc(-100%-1px)] group-hover:translate-x-0 transition-transform duration-400 ease-[cubic-bezier(0.25,0.46,0.45,0.94)]"></span>
 										<span class="relative z-10 transition-colors duration-300 group-hover:text-white">{tag}</span>
@@ -414,7 +414,7 @@ const schemaOrg = {
 								href={`https://twitter.com/intent/tweet?url=${encodeURIComponent(shareUrl)}&text=${encodeURIComponent(title)}`}
 								target="_blank"
 								rel="noopener noreferrer"
-								class="group relative overflow-hidden px-5 py-3 border border-lines font-mono text-[0.875rem] uppercase"
+								class="group relative overflow-hidden py-6 px-5 border border-lines font-mono text-[1rem] uppercase leading-none"
 							>
 								<span class="absolute inset-0 bg-black translate-x-[calc(-100%-1px)] group-hover:translate-x-0 transition-transform duration-400 ease-[cubic-bezier(0.25,0.46,0.45,0.94)]"></span>
 								<span class="relative z-10 transition-colors duration-300 group-hover:text-white">Twitter</span>
@@ -423,14 +423,14 @@ const schemaOrg = {
 								href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(shareUrl)}`}
 								target="_blank"
 								rel="noopener noreferrer"
-								class="group relative overflow-hidden px-5 py-3 border border-lines font-mono text-[0.875rem] uppercase"
+								class="group relative overflow-hidden py-6 px-5 border border-lines font-mono text-[1rem] uppercase leading-none"
 							>
 								<span class="absolute inset-0 bg-black translate-x-[calc(-100%-1px)] group-hover:translate-x-0 transition-transform duration-400 ease-[cubic-bezier(0.25,0.46,0.45,0.94)]"></span>
 								<span class="relative z-10 transition-colors duration-300 group-hover:text-white">LinkedIn</span>
 							</a>
 							<button
 								type="button"
-								class="copy-link group relative overflow-hidden px-5 py-3 border border-lines font-mono text-[0.875rem] uppercase cursor-pointer"
+								class="copy-link group relative overflow-hidden py-6 px-5 border border-lines font-mono text-[1rem] uppercase leading-none cursor-pointer"
 								data-url={shareUrl}
 							>
 								<span class="absolute inset-0 bg-black translate-x-[calc(-100%-1px)] group-hover:translate-x-0 transition-transform duration-400 ease-[cubic-bezier(0.25,0.46,0.45,0.94)]"></span>
