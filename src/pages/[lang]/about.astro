@@ -1,0 +1,215 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Footer from '../../components/Footer.astro';
+import Line from '../../components/ui/Line.astro';
+import Wrapped from '../../components/ui/Wrapped.astro';
+import { Image } from 'astro:assets';
+import { SUPPORTED_LOCALES, type Locale, useTranslations } from '../../i18n';
+import nousImage from '../../assets/images/nous-opti.jpg';
+import keyboard from '../../assets/images/keyboard_a.jpg';
+import nico from '../../assets/images/nico.jpg'
+import alex from '../../assets/images/alex.jpg'
+
+export const prerender = true;
+
+export function getStaticPaths() {
+  return SUPPORTED_LOCALES.map((lang) => ({
+    params: { lang },
+  }));
+}
+
+const { lang } = Astro.params as { lang: Locale };
+const t = useTranslations(lang);
+
+const pageTitle = lang === 'fr' ? 'À propos' : 'About';
+const pageDescription = lang === 'fr'
+  ? 'Découvrez Horde, agence web à Bruxelles. Deux passionnés, un designer et un développeur, qui créent des interfaces ultra-rapides.'
+  : 'Discover Horde, a Brussels web agency. Two passionate experts, a designer and a developer, creating ultra-fast interfaces.';
+
+const workingWithUs = [
+  {
+    quote: "On ne gère pas un dossier. On rejoint votre équipe le temps d'une mission.",
+    text: "Sur WhatsApp, pas de chaînes de mails: vous échangez directement avec nous, en toute simplicité.",
+  },
+  {
+    quote: "On s'occupe de la complexité technique pour que vous restiez concentré sur votre vision.",
+    text: "Pas de devis à rallonge, on vous dit clairement ce qu'on peut faire, comment on le fait, et en combien de temps.",
+  },
+  {
+    quote: "On se pose avec vous, on parle vrai, sans jargon technique inutile.",
+    text: "Pas de surprise: le prix annoncé correspond au prix final payé, en toute transparence, sans coûts supplémentaires.",
+  },
+];
+---
+
+<Layout lang={lang} title={pageTitle} description={pageDescription}>
+	<div class="fixed inset-0 bg-bg sm:bg-transparent -z-10" aria-hidden="true"></div>
+	<article id="page-content" class="relative z-10">
+		<header class="relative h-svh mt-10 flex flex-col items-center justify-center">
+			<span class="sm:hidden absolute h-screen top-0 left-0 w-px bg-lines"></span>
+			<span class="sm:hidden absolute h-screen top-0 right-0 w-px bg-lines"></span>
+			<div class="w-full">
+				<h1
+					class="font-display relative uppercase leading-[0.9] text-4xl sm:text-[3.25rem] md:text-[4.875rem] lg:text-[6.875rem] xl:text-[7.5rem]"
+				>
+					<span class="block mb-2 slg:translate-x-1/8">Deux<br>cerveaux,</span>
+					<svg class="slg:hidden w-1/2 absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-[51%] -z-10" viewBox="0 0 160 327" fill="none" xmlns="http://www.w3.org/2000/svg">
+						<rect x="-0.56875" y="0.56875" width="158.171" height="158.171" rx="79.0853" transform="matrix(-1 -8.74228e-08 -8.74228e-08 1 158.172 167.617)" stroke="#B1B1B1" stroke-width="1.1375"/>
+						<rect x="-0.56875" y="0.56875" width="158.171" height="158.171" rx="79.0853" transform="matrix(-1 -8.74228e-08 -8.74228e-08 1 158.172 6.91394e-06)" stroke="#B1B1B1" stroke-width="1.1375"/>
+						<rect x="158.739" y="250.705" width="158.171" height="165.79" transform="rotate(-180 158.739 250.705)" stroke="#B1B1B1" stroke-width="1.1375"/>
+					</svg>
+					<svg class="hidden slg:block w-3/4 absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-[52%] -z-10" viewBox="0 0 905 441" fill="none" xmlns="http://www.w3.org/2000/svg">
+						<rect x="0.5" y="0.5" width="439.709" height="439.709" rx="219.854" transform="matrix(-4.37114e-08 1 1 4.37114e-08 463.701 2.18557e-08)" stroke="#B1B1B1"/>
+						<rect x="0.5" y="0.5" width="439.709" height="439.709" rx="219.854" transform="matrix(-4.37114e-08 1 1 4.37114e-08 0.000244119 2.18557e-08)" stroke="#B1B1B1"/>
+						<rect x="683.555" y="0.5" width="439.709" height="460.786" transform="rotate(90 683.555 0.5)" stroke="#B1B1B1"/>
+						<rect x="679.454" y="215.328" width="9.26579" height="9.26579" fill="#B1B1B1"/>
+						<rect x="218.481" y="215.328" width="9.26579" height="9.26579" fill="#B1B1B1"/>
+					</svg>
+
+
+					<Line dotClass="z-9999" />
+					<span class="block text-right pt-[5px] md:pt-[13px] slg:-translate-x-1/8">
+						Une<br>vision
+					</span>
+				</h1>
+			</div>
+			<button
+				class="absolute left-1/2 -translate-x-1/2 sm:translate-0 sm:right-0 sm:left-[unset] bottom-10 font-mono uppercase text-sm cursor-pointer scroll-to-btn"
+				><Wrapped class="text-[1rem]">↓</Wrapped></button
+			>
+		</header>
+
+		<!-- Section 1: Intro -->
+		<figure class="md:flex md:gap-16 md:items-center sm:px-5 md:px-8">
+			<Image
+				src={nousImage}
+				alt={lang === 'fr' ? 'Les cofondateurs de Horde' : 'Horde co-founders'}
+				class="w-full md:flex-[3] md:min-w-0 h-auto object-cover"
+				widths={[400, 800, 1200, 1600]}
+				sizes="(min-width: 1024px) 60vw"
+				loading="eager"
+				decoding="async"
+				format="webp"
+				quality={85}
+			/>
+			<Image
+				src={keyboard}
+				alt={lang === 'fr' ? 'Clavier mécanique' : 'Mechanical keyboard'}
+				class="hidden md:block md:flex-[2] md:min-w-0 object-cover"
+				widths={[400, 800, 1200]}
+				sizes="40vw"
+				loading="eager"
+				decoding="async"
+				format="webp"
+				quality={85}
+			/>
+		</figure>
+		<div class="flex sm:px-5 md:px-8 justify-between items-end mt-16 sm:mt-32 md:mt-50">
+			<h2
+				class="methods-title font-display uppercase leading-none text-[2rem] sm:text-[3.25rem]"
+				set:html={t.method.title.replace(/\n/g, "<br>")}
+			/>
+		</div>
+		<section class="mt-10 sm:mt-32 mb-10 slg:flex slg:flex-col">
+			<p class="text-[1.375rem] leading-normal mb-10 sm:mb-16 md:mb-24 sm:px-5 md:px-8 slg:w-1/2">Vous n'avez probablement pas besoin d'un CMS lourd. Ni d'une application web complexe pour presenter votre projet.</p>
+			<p class="text-[1.375rem] leading-normal mb-10 sm:mb-24 md:mb-32 slg:mb-50 sm:px-5 md:px-8 slg:w-1/2 slg:self-end">Ce qu'il vous faut: un site rapide, bien référencé, simple à maintenir, qui n'embarque que ce qui est necessaire pour repondre a votre besoin. C'est exactement ce qu'on construit.</p>
+			<p class="leading-[1.2] px-8 sm:px-5 md:px-8 py-10 sm:py-16 slg:py-50 md:py-32 border-t border-b border-lines text-[1.375rem] sm:text-[2rem] slg:text-[3.25rem] slg:px-32">Notre stack est légère, sécurisée et performante. Cela permet des temps de chargement sous la seconde, un SEO qui performe sans budget pub, et une tranquillité d'esprit côté maintenance.</p>
+		</section>
+ 
+		<!-- Section 2: L'équipe -->
+		<section class="mt-16 sm:mt-32">
+			<div class="w-full sm:px-5 md:px-8 sm:mt-50">
+				<h2
+					class="font-display relative uppercase leading-[0.9] text-4xl sm:text-[3.25rem] md:text-[4.875rem] lg:text-[6.5rem]"
+				>
+					<span class="block mb-2">Notre<br>façon</span>
+					<span class="block text-right pt-[5px] md:pt-[13px]">
+						de bosser<br>avec vous
+					</span>
+				</h2>
+			</div>
+			<ul class="mt-16 sm:mt-50 sm divide-y divide-lines border-t border-b border-lines">
+				{workingWithUs.map((item, i) => (
+					<li class="relative overflow-hidden py-10 sm:py-24 sm:px-5 md:px-8 slg:pt-50 slg:pb-16 slg:flex slg:justify-between slg:items-end">
+						<div>
+							<span class="font-display text-[2.5rem] block mb-4 sm:mb-8">/ {String(i + 1).padStart(3, '0')}</span>
+							<cite class="not-italic font-mono uppercase text-[1rem] leading-tight block mb-10 sm:mb-24 sm:max-w-96 slg:mb-0">"{item.quote}"</cite>
+						</div>
+						<p class="text-[1.375rem] leading-[1.2] sm:text-[2rem] slg:w-1/2">{item.text}</p>
+						<span class="block border border-lines border-t-0 absolute h-full w-full sm:w-[calc(100%-2*1.25rem)] -top-10 rounded-b-full -z-10"></span>
+					</li>
+				))}
+			</ul>
+		</section>
+
+		<!-- Section 3: Valeurs / Approche -->
+		<section class="mt-16 sm:mt-50 slg:relative slg:max-w-[1050px] slg:mx-auto">
+			<div class="w-full sm:px-5 md:px-8">
+				<h2
+					class="font-display relative slg:static uppercase leading-[0.9] text-4xl sm:text-[3.25rem]"
+				>
+					<span class="slg:absolute block mb-2 slg:m-0">Deux<br>cerveaux,</span>
+					<span class="slg:absolute block text-right pt-[5px] md:pt-[13px] slg:p-0 slg:bottom-0 slg:right-0">
+						Une<br>vision
+					</span>
+				</h2>
+			</div>
+			<div class="mt-10 sm:mt-24">
+				<div class="sm:flex sm:flex-col-reverse sm:items-end">
+					<Image
+						src={alex}
+						alt={lang === 'fr' ? 'Nicolas, co-fondateur de Horde' : 'Nicolas, Horde co-founder'}
+						class="w-full sm:w-1/2 p-4 md:p-5 border sm:border-t-0 sm:border-r-0 border-lines aspect-square object-cover md:max-w-[315px]! slg:border-r"
+						widths={[400, 800, 1200]}
+						sizes="100vw"
+						loading="lazy"
+						decoding="async"
+						format="webp"
+						quality={85}
+					/>
+					<div class="px-4 sm:px-10 py-10 border border-t-0 sm:border-0 sm:border-t sm:border-b border-lines md:max-w-[615px] md:border-l slg:border-r">
+						<h3 class="section-label mb-4">Alexandre - Designer</h3>
+						<p class="text-[1.375rem] sm:text-[2rem]">9 ans à transformer des idées floues en interfaces qui convertissent. Obsédé par les détails et allergique au générique.</p>
+					</div>
+				</div>
+				<div class="mt-10 sm:-mt-px">
+					<Image
+						src={nico}
+						alt={lang === 'fr' ? 'Nicolas, co-fondateur de Horde' : 'Nicolas, Horde co-founder'}
+						class="w-full sm:w-1/2 p-4 md:p-5 border sm:border-l-0 sm:border-b-0 border-lines aspect-square object-cover md:max-w-[315px]! slg:border-l"
+						widths={[400, 800, 1200]}
+						sizes="100vw"
+						loading="lazy"
+						decoding="async"
+						format="webp"
+						quality={85}
+					/>
+					<div class="px-4 sm:px-10 py-10 border border-t-0 border-lines sm:border-0 sm:border-t sm:border-b md:max-w-[615px] md:border-r slg:border-l">
+						<h3 class="section-label mb-4">Nicolas - Développeur</h3>
+						<p class="text-[1.375rem] sm:text-[2rem]">9 ans à construire des sites impeccable. La performance, Le SEO et la sécurité: ce n’est pas négociable.</p>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- CTA -->
+		<section class="mt-16 sm:mt-32 mb-16 slg:max-w-[1050px] slg:mx-auto">
+			<a
+				href={`/${lang}/contact`}
+				class="group relative overflow-hidden font-mono text-[1rem] leading-none uppercase py-6 px-5 flex justify-center w-full md:w-fit md:ml-auto border border-lines-dark bg-black text-white transition-colors duration-300 ease-in-out cursor-pointer"
+			>
+				<span
+					class="absolute inset-0 bg-bg-light translate-x-[calc(-100%-1px)] group-hover:translate-x-0 transition-transform duration-400 ease-[cubic-bezier(0.25,0.46,0.45,0.94)]"
+				></span>
+				<span
+					class="relative z-10 text-white group-hover:text-black transition-colors duration-300"
+				>
+					{lang === 'fr' ? 'Travailler avec nous' : 'Work with us'}
+				</span>
+			</a>
+		</section>
+
+	</article>
+
+	<Footer lang={lang} hideOverflow={false} />
+</Layout>

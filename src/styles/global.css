@@ -145,7 +145,7 @@
       opacity: 0;
     }
   }
-
+svh
   @keyframes fade-out {
     to {
       opacity: 0;
@@ -191,6 +191,12 @@ body {
   /* Section headers - monospace uppercase labels */
   .section-label {
     @apply font-mono text-[1rem] uppercase text-black/70;
+  }
+
+  /* Dark variant for dark backgrounds */
+  .bg-black .section-label,
+  [data-theme="dark"] .section-label {
+    @apply text-white/70;
   }
 
   /* Display headings - large decorative titles */

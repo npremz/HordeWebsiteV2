@@ -4,8 +4,8 @@ items:
   - label: Accueil
     url: /fr
     isExternal: false
-  - label: Méthode
-    url: '/fr/#methods-container'
+  - label: À propos
+    url: /fr/about
     isExternal: false
   - label: Services
     url: '/fr/#services-section'
