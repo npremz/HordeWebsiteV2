@@ -44,22 +44,18 @@ const t = useTranslations(lang);
 
 <Layout lang={lang} title={t.contact.title} variant="dark" description={t.contact.description}>
 	<div id="page-content">
-		<div class="mt-40 sm:mt-50 lg:mt-80 xl:mt-96 flex flex-col md:flex-row-reverse md:items-end gap-10 sm:gap-16 lg:gap-32">
-			<div class="md:w-full flex flex-col md:flex-row gap-10 sm:gap-16 md:gap-24 lg:gap-32 xl:gap-40">
-				<div class="flex flex-col gap-4 sm:gap-8 shrink-0">
-					<div class="section-label">{t.contact.knockKnock}</div>
-					<h1 class="leading-tight text-[1.5rem] sm:text-[2rem] lg:text-[2.5rem]" set:html={t.contact.startWhen.replace(/\n/g, '<br>')} />
-				</div>
-				<div class="flex flex-col gap-4 sm:gap-8">
-					<div class="section-label">{t.contact.alternativeContacts}</div>
-					<ul class="flex flex-col gap-2.5 text-[1.25rem] sm:text-[1.5rem]">
-						<li><a href="mailto:hello@hordeagence.com" class="contact-link">hello@hordeagence.com</a></li>
-						<li><a href="https://calendly.com/ni-premont/30min" class="contact-link">{t.contact.bookCall}</a></li>
-					</ul>
-				</div>
+		<div class="mt-40 sm:mt-50 lg:mt-80 xl:mt-96 flex flex-col md:flex-row md:justify-between md:items-start gap-10 sm:gap-16">
+			<div class="flex flex-col gap-4 sm:gap-8 shrink-0">
+				<div class="section-label">{t.contact.knockKnock}</div>
+				<h1 class="font-display uppercase leading-none text-[1.5rem] sm:text-[2rem] md:text-[3.125rem] max-w-[350px] sm:max-w-[485px]">{t.contact.startWhen.replace(/\n/g, ' ')}</h1>
 			</div>
-			<div class="md:w-36 md:shrink-0">
-				<button class="cursor-pointer scroll-to-btn" data-scroll-target="#contact-form" data-scroll-offset="-100"><Wrapped variant='dark' class="font-mono text-bg-light text-[1rem]">↓</Wrapped></button>
+			<div class="flex flex-col gap-4 sm:gap-8 text-right">
+				<div class="section-label">{t.contact.alternativeContacts}</div>
+				<ul class="flex flex-col gap-2.5 text-[1.25rem] sm:text-[1.5rem]">
+					<li><a href="mailto:hello@hordeagence.com" class="contact-link">hello@hordeagence.com</a></li>
+					<li><a href="https://calendly.com/ni-premont/30min" class="contact-link">{t.contact.bookCall}</a></li>
+				</ul>
+				<button class="cursor-pointer scroll-to-btn ml-auto" data-scroll-target="#contact-form" data-scroll-offset="-100"><Wrapped variant='dark' class="font-mono text-bg-light text-[1rem]">↓</Wrapped></button>
 			</div>
 		</div>
 		<hr class="mt-8 sm:mt-16 md:mt-24 border-lines-dark" />

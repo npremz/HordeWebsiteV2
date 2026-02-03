@@ -34,23 +34,76 @@ const workingWithUs = t.aboutPage.workingWithUs;
 			<span class="sm:hidden absolute h-screen top-0 right-0 w-px bg-lines"></span>
 			<div class="w-full">
 				<h1
-					class="font-display relative uppercase leading-[0.9] text-4xl sm:text-[3.25rem] md:text-[4.875rem] lg:text-[6.875rem] xl:text-[7.5rem]"
+					class="font-display relative uppercase leading-[0.9] text-4xl sm:text-[3.25rem] md:text-[4.875rem] lg:text-[6.25rem]"
 				>
-					<span class="block mb-2 slg:translate-x-1/8" set:html={t.aboutPage.heroTitle1.replace(/\n/g, '<br>')} />
-					<svg class="slg:hidden w-1/2 absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-[51%] -z-10" viewBox="0 0 160 327" fill="none" xmlns="http://www.w3.org/2000/svg">
-						<rect x="-0.56875" y="0.56875" width="158.171" height="158.171" rx="79.0853" transform="matrix(-1 -8.74228e-08 -8.74228e-08 1 158.172 167.617)" stroke="#B1B1B1" stroke-width="1.1375"/>
-						<rect x="-0.56875" y="0.56875" width="158.171" height="158.171" rx="79.0853" transform="matrix(-1 -8.74228e-08 -8.74228e-08 1 158.172 6.91394e-06)" stroke="#B1B1B1" stroke-width="1.1375"/>
-						<rect x="158.739" y="250.705" width="158.171" height="165.79" transform="rotate(-180 158.739 250.705)" stroke="#B1B1B1" stroke-width="1.1375"/>
-					</svg>
-					<svg class="hidden slg:block w-3/4 absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-[52%] -z-10" viewBox="0 0 905 441" fill="none" xmlns="http://www.w3.org/2000/svg">
-						<rect x="0.5" y="0.5" width="439.709" height="439.709" rx="219.854" transform="matrix(-4.37114e-08 1 1 4.37114e-08 463.701 2.18557e-08)" stroke="#B1B1B1"/>
-						<rect x="0.5" y="0.5" width="439.709" height="439.709" rx="219.854" transform="matrix(-4.37114e-08 1 1 4.37114e-08 0.000244119 2.18557e-08)" stroke="#B1B1B1"/>
-						<rect x="683.555" y="0.5" width="439.709" height="460.786" transform="rotate(90 683.555 0.5)" stroke="#B1B1B1"/>
-						<rect x="679.454" y="215.328" width="9.26579" height="9.26579" fill="#B1B1B1"/>
-						<rect x="218.481" y="215.328" width="9.26579" height="9.26579" fill="#B1B1B1"/>
+					<span class="block mb-2 slg:translate-x-1/8">Deux<br>cerveaux,</span>
+					<svg
+						class="block lg:hidden -z-10 absolute w-[calc(100%-2*1rem)] -translate-y-[65.1%] center-x"
+						viewBox="0 0 531 1243"
+						fill="none"
+						xmlns="http://www.w3.org/2000/svg"
+					>
+						<rect
+							x="-0.5"
+							y="0.5"
+							width="298.273"
+							height="298.273"
+							rx="149.136"
+							transform="matrix(-1 -8.74228e-08 -8.74228e-08 1 414.272 817.887)"
+							stroke="#B1B1B1"></rect>
+						<rect
+							x="-0.5"
+							y="0.5"
+							width="298.273"
+							height="298.273"
+							rx="149.136"
+							transform="matrix(-1 -8.74228e-08 -8.74228e-08 1 414.272 503)"
+							stroke="#B1B1B1"></rect>
+						<rect
+							x="414.772"
+							y="967.023"
+							width="298.273"
+							height="312.586"
+							transform="rotate(-180 414.772 967.023)"
+							stroke="#B1B1B1"></rect>
+						<path
+							d="M530.5 0.5V977.5C530.5 1123.86 411.855 1242.5 265.5 1242.5C119.145 1242.5 0.5 1123.86 0.5 977.5V0.5H530.5Z"
+							stroke="#B1B1B1"></path>
 					</svg>
 
-
+					<svg
+						class="hidden lg:block -z-10 absolute w-[calc(100%-2*1.5rem)] -translate-y-[54%] center-x"
+						viewBox="0 0 1218 1282"
+						fill="none"
+						xmlns="http://www.w3.org/2000/svg"
+					>
+						<rect
+							x="0.5"
+							y="0.5"
+							width="379.504"
+							height="379.504"
+							rx="189.752"
+							transform="matrix(-4.37114e-08 1 1 4.37114e-08 619.356 498.087)"
+							stroke="#B1B1B1"></rect>
+						<rect
+							x="0.5"
+							y="0.5"
+							width="379.504"
+							height="379.504"
+							rx="189.752"
+							transform="matrix(-4.37114e-08 1 1 4.37114e-08 219 498.087)"
+							stroke="#B1B1B1"></rect>
+						<rect
+							x="809.108"
+							y="498.587"
+							width="379.504"
+							height="397.702"
+							transform="rotate(90 809.108 498.587)"
+							stroke="#B1B1B1"></rect>
+						<path
+							d="M1217.5 0.5V673C1217.5 1009.07 945.065 1281.5 609 1281.5C272.935 1281.5 0.500003 1009.07 0.5 673V0.5H1217.5Z"
+							stroke="#B1B1B1"></path>
+					</svg>
 					<Line dotClass="z-9999" />
 					<span class="block text-right pt-[5px] md:pt-[13px] slg:-translate-x-1/8" set:html={t.aboutPage.heroTitle2.replace(/\n/g, '<br>')} />
 				</h1>

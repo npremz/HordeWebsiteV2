@@ -147,13 +147,13 @@ export default function ContactForm({ translations: t }: ContactFormProps) {
   };
 
   return (
-    <form className="mt-10 sm:mt-16 md:mt-24 lg:mt-30 flex flex-col gap-8" onSubmit={handleSubmit} noValidate>
+    <form className="mt-10 sm:mt-16 md:mt-24 lg:mt-30 flex flex-col gap-10" onSubmit={handleSubmit} noValidate>
       <fieldset className='flex flex-col gap-5 '>
         <div className='relative flex flex-col md:flex-row gap-5 md:gap-16 lg:gap-32 md:items-center w-full'>
           <legend className='section-label block md:w-36 md:shrink-0 relative'>
             {t.needLabel}<span aria-hidden="true">*</span>
           </legend>
-          <div className="w-full flex flex-wrap gap-[1.25rem] lg:gap-[2.5rem] mt-5 border-b pb-5 md:pb-10 border-lines-dark">
+          <div className="w-full flex flex-wrap gap-[1.25rem] lg:gap-[2.5rem] mt-5 pb-5 md:pb-10">
             {besoinOptions.map((option) => (
               <label
                 key={option.value}
@@ -193,9 +193,9 @@ export default function ContactForm({ translations: t }: ContactFormProps) {
             name="objectif"
             rows={1}
             maxLength={MAX_LENGTHS.objectif}
-            className={`py-5 xl:py-8 w-full text-2xl sm:text-[2rem] lg:text-[2.5rem] border-b bg-transparent focus:outline-none focus-visible:outline-none transition-colors resize-none overflow-hidden ${errors.objectif
-              ? 'border-b-err placeholder:text-err'
-              : 'border-lines-dark focus:border-b-lines'
+            className={`py-5 xl:py-8 px-5 md:px-[30px] w-full text-2xl sm:text-[2rem] border bg-transparent focus:outline-none focus-visible:outline-none transition-colors resize-none overflow-hidden ${errors.objectif
+              ? 'border-err placeholder:text-err'
+              : 'border-lines-dark focus:border-lines'
               }`}
             placeholder={t.objectifPlaceholder}
             value={formData.objectif}
@@ -209,7 +209,7 @@ export default function ContactForm({ translations: t }: ContactFormProps) {
             aria-describedby={errors.objectif ? 'objectif-error' : undefined}
           />
           {errors.objectif && (
-            <span id="objectif-error" role="alert" className="section-label text-err block mt-1 absolute right-0 top-6 lg:top-8 xl:top-12 hidden md:block">
+            <span id="objectif-error" role="alert" className="section-label text-err block mt-1 absolute right-[30px] top-6 lg:top-8 xl:top-12 hidden md:block">
               {errors.objectif}
             </span>
           )}
@@ -229,9 +229,9 @@ export default function ContactForm({ translations: t }: ContactFormProps) {
             id="nom"
             name="nom"
             maxLength={MAX_LENGTHS.nom}
-            className={`py-5 xl:py-8 w-full text-2xl sm:text-[2rem] lg:text-[2.5rem] border-b bg-transparent focus:outline-none focus-visible:outline-none transition-colors ${errors.nom
-              ? 'border-b-err placeholder:text-err'
-              : 'border-lines-dark focus:border-b-lines'
+            className={`py-5 xl:py-8 px-5 md:px-[30px] w-full text-2xl sm:text-[2rem] border bg-transparent focus:outline-none focus-visible:outline-none transition-colors ${errors.nom
+              ? 'border-err placeholder:text-err'
+              : 'border-lines-dark focus:border-lines'
               }`}
             placeholder={t.namePlaceholder}
             value={formData.nom}
@@ -241,7 +241,7 @@ export default function ContactForm({ translations: t }: ContactFormProps) {
             aria-describedby={errors.nom ? 'nom-error' : undefined}
           />
           {errors.nom && (
-            <span id="nom-error" role="alert" className="section-label text-err block mt-1 absolute right-0 top-6 lg:top-8 xl:top-12 hidden md:block">
+            <span id="nom-error" role="alert" className="section-label text-err block mt-1 absolute right-[30px] top-6 lg:top-8 xl:top-12 hidden md:block">
               {errors.nom}
             </span>
           )}
@@ -261,9 +261,9 @@ export default function ContactForm({ translations: t }: ContactFormProps) {
             id="email"
             name="email"
             maxLength={MAX_LENGTHS.email}
-            className={`py-5 xl:py-8 w-full text-2xl sm:text-[2rem] lg:text-[2.5rem] border-b bg-transparent focus:outline-none focus-visible:outline-none transition-colors ${errors.email
-              ? 'border-b-err placeholder:text-err'
-              : 'border-lines-dark focus:border-b-lines'
+            className={`py-5 xl:py-8 px-5 md:px-[30px] w-full text-2xl sm:text-[2rem] border bg-transparent focus:outline-none focus-visible:outline-none transition-colors ${errors.email
+              ? 'border-err placeholder:text-err'
+              : 'border-lines-dark focus:border-lines'
               }`}
             placeholder="@"
             value={formData.email}
@@ -273,7 +273,7 @@ export default function ContactForm({ translations: t }: ContactFormProps) {
             aria-describedby={errors.email ? 'email-error' : undefined}
           />
           {errors.email && (
-            <span id="email-error" role="alert" className="section-label text-err block mt-1 absolute right-0 top-6 lg:top-8 xl:top-12 hidden md:block">
+            <span id="email-error" role="alert" className="section-label text-err block mt-1 absolute right-[30px] top-6 lg:top-8 xl:top-12 hidden md:block">
               {errors.email}
             </span>
           )}
@@ -287,7 +287,7 @@ export default function ContactForm({ translations: t }: ContactFormProps) {
           id="societe"
           name="societe"
           maxLength={MAX_LENGTHS.societe}
-          className='py-5 xl:py-8 flex-1 text-2xl sm:text-[2rem] lg:text-[2.5rem] border-lines-dark border-b bg-transparent focus:outline-none focus-visible:outline-none focus:border-b-lines transition-colors'
+          className='py-5 xl:py-8 px-5 md:px-[30px] flex-1 text-2xl sm:text-[2rem] border-lines-dark border bg-transparent focus:outline-none focus-visible:outline-none focus:border-lines transition-colors'
           placeholder={t.companyPlaceholder}
           value={formData.societe}
           onChange={(e) => handleChange('societe', e.target.value)}
