@@ -21,25 +21,9 @@ export function getStaticPaths() {
 const { lang } = Astro.params as { lang: Locale };
 const t = useTranslations(lang);
 
-const pageTitle = lang === 'fr' ? 'À propos' : 'About';
-const pageDescription = lang === 'fr'
-  ? 'Découvrez Horde, agence web à Bruxelles. Deux passionnés, un designer et un développeur, qui créent des interfaces ultra-rapides.'
-  : 'Discover Horde, a Brussels web agency. Two passionate experts, a designer and a developer, creating ultra-fast interfaces.';
-
-const workingWithUs = [
-  {
-    quote: "On ne gère pas un dossier. On rejoint votre équipe le temps d'une mission.",
-    text: "Sur WhatsApp, pas de chaînes de mails: vous échangez directement avec nous, en toute simplicité.",
-  },
-  {
-    quote: "On s'occupe de la complexité technique pour que vous restiez concentré sur votre vision.",
-    text: "Pas de devis à rallonge, on vous dit clairement ce qu'on peut faire, comment on le fait, et en combien de temps.",
-  },
-  {
-    quote: "On se pose avec vous, on parle vrai, sans jargon technique inutile.",
-    text: "Pas de surprise: le prix annoncé correspond au prix final payé, en toute transparence, sans coûts supplémentaires.",
-  },
-];
+const pageTitle = t.aboutPage.title;
+const pageDescription = t.aboutPage.description;
+const workingWithUs = t.aboutPage.workingWithUs;
 ---
 
 <Layout lang={lang} title={pageTitle} description={pageDescription}>
@@ -52,7 +36,7 @@ const workingWithUs = [
 				<h1
 					class="font-display relative uppercase leading-[0.9] text-4xl sm:text-[3.25rem] md:text-[4.875rem] lg:text-[6.875rem] xl:text-[7.5rem]"
 				>
-					<span class="block mb-2 slg:translate-x-1/8">Deux<br>cerveaux,</span>
+					<span class="block mb-2 slg:translate-x-1/8" set:html={t.aboutPage.heroTitle1.replace(/\n/g, '<br>')} />
 					<svg class="slg:hidden w-1/2 absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-[51%] -z-10" viewBox="0 0 160 327" fill="none" xmlns="http://www.w3.org/2000/svg">
 						<rect x="-0.56875" y="0.56875" width="158.171" height="158.171" rx="79.0853" transform="matrix(-1 -8.74228e-08 -8.74228e-08 1 158.172 167.617)" stroke="#B1B1B1" stroke-width="1.1375"/>
 						<rect x="-0.56875" y="0.56875" width="158.171" height="158.171" rx="79.0853" transform="matrix(-1 -8.74228e-08 -8.74228e-08 1 158.172 6.91394e-06)" stroke="#B1B1B1" stroke-width="1.1375"/>
@@ -68,9 +52,7 @@ const workingWithUs = [
 
 
 					<Line dotClass="z-9999" />
-					<span class="block text-right pt-[5px] md:pt-[13px] slg:-translate-x-1/8">
-						Une<br>vision
-					</span>
+					<span class="block text-right pt-[5px] md:pt-[13px] slg:-translate-x-1/8" set:html={t.aboutPage.heroTitle2.replace(/\n/g, '<br>')} />
 				</h1>
 			</div>
 			<button
@@ -83,7 +65,7 @@ const workingWithUs = [
 		<figure class="md:flex md:gap-16 md:items-center sm:px-5 md:px-8">
 			<Image
 				src={nousImage}
-				alt={lang === 'fr' ? 'Les cofondateurs de Horde' : 'Horde co-founders'}
+				alt={t.aboutPage.foundersAlt}
 				class="w-full md:flex-[3] md:min-w-0 h-auto object-cover"
 				widths={[400, 800, 1200, 1600]}
 				sizes="(min-width: 1024px) 60vw"
@@ -94,7 +76,7 @@ const workingWithUs = [
 			/>
 			<Image
 				src={keyboard}
-				alt={lang === 'fr' ? 'Clavier mécanique' : 'Mechanical keyboard'}
+				alt={t.aboutPage.keyboardAlt}
 				class="hidden md:block md:flex-[2] md:min-w-0 object-cover"
 				widths={[400, 800, 1200]}
 				sizes="40vw"
@@ -111,14 +93,14 @@ const workingWithUs = [
 			/>
 		</div>
 		<section class="mt-10 sm:mt-32 mb-10 slg:flex slg:flex-col">
-			<p class="text-[1.375rem] leading-normal mb-10 sm:mb-16 md:mb-24 sm:px-5 md:px-8 slg:w-1/2">On est deux passionnés: un designer, un développeur. 9 ans d’expérience dans le web. Pas de prise de tête, pas de chefs de projet, pas de réunions inutiles. Juste nous deux et votre projet.</p>
-			<p class="text-[1.375rem] leading-normal mb-10 sm:mb-24 md:mb-32 slg:mb-50 sm:px-5 md:px-8 slg:w-1/2 slg:self-end">Vous n'avez probablement pas besoin d'un CMS lourd. Ni d'une usine à gaz avec une vingtaine de plugins. Ce qu'il vous faut: un site rapide, bien référencé, simple à maintenir. C'est exactement ce qu'on construit.</p>
+			<p class="text-[1.375rem] leading-normal mb-10 sm:mb-16 md:mb-24 sm:px-5 md:px-8 slg:w-1/2">{t.aboutPage.introText1}</p>
+			<p class="text-[1.375rem] leading-normal mb-10 sm:mb-24 md:mb-32 slg:mb-50 sm:px-5 md:px-8 slg:w-1/2 slg:self-end">{t.aboutPage.introText2}</p>
 			<div class="relative overflow-hidden px-8 sm:px-5 md:px-8 py-10 sm:py-16 slg:py-50 md:py-32 border-t border-b border-lines slg:px-32">
 				<!-- Cercles décoratifs -->
 				<span class="hidden sm:block absolute left-0 top-1/2 -translate-y-1/2 h-full aspect-square rounded-full border border-lines" aria-hidden="true"></span>
 				<span class="hidden sm:block absolute left-1/2 top-1/2 -translate-y-1/2 -translate-x-1/2 h-full aspect-square rounded-full border border-lines" aria-hidden="true"></span>
 				<span class="hidden sm:block absolute right-0 top-1/2 -translate-y-1/2 h-full aspect-square rounded-full border border-lines" aria-hidden="true"></span>
-				<p class="relative z-10 leading-[1.2] text-[1.375rem] sm:text-[2rem] lg:text-[3.25rem]">Notre stack est légère, sécurisée et performante. Cela permet des temps de chargement sous la seconde, un SEO qui performe sans budget pub, et une tranquillité d'esprit côté maintenance.</p>
+				<p class="relative z-10 leading-[1.2] text-[1.375rem] sm:text-[2rem] lg:text-[3.25rem]">{t.aboutPage.highlightText}</p>
 			</div>
 		</section>
  
@@ -128,10 +110,8 @@ const workingWithUs = [
 				<h2
 					class="font-display relative uppercase leading-[0.9] text-4xl sm:text-[3.25rem] md:text-[4.875rem] lg:text-[6.5rem]"
 				>
-					<span class="block mb-2">Notre<br>façon</span>
-					<span class="block text-right pt-[5px] md:pt-[13px]">
-						de bosser<br>avec vous
-					</span>
+					<span class="block mb-2" set:html={t.aboutPage.workingTitle1.replace(/\n/g, '<br>')} />
+					<span class="block text-right pt-[5px] md:pt-[13px]" set:html={t.aboutPage.workingTitle2.replace(/\n/g, '<br>')} />
 				</h2>
 			</div>
 			<ul class="mt-16 sm:mt-50 sm divide-y divide-lines border-t border-b border-lines">
@@ -154,17 +134,15 @@ const workingWithUs = [
 				<h2
 					class="font-display relative slg:static uppercase leading-[0.9] text-4xl sm:text-[3.25rem]"
 				>
-					<span class="slg:absolute block mb-2 slg:m-0">Deux<br>cerveaux,</span>
-					<span class="slg:absolute block text-right pt-[5px] md:pt-[13px] slg:p-0 slg:bottom-0 slg:right-0">
-						Une<br>vision
-					</span>
+					<span class="slg:absolute block mb-2 slg:m-0" set:html={t.aboutPage.teamTitle1.replace(/\n/g, '<br>')} />
+					<span class="slg:absolute block text-right pt-[5px] md:pt-[13px] slg:p-0 slg:bottom-0 slg:right-0" set:html={t.aboutPage.teamTitle2.replace(/\n/g, '<br>')} />
 				</h2>
 			</div>
 			<div class="mt-10 sm:mt-24">
 				<div class="sm:flex sm:flex-col-reverse sm:items-end">
 					<Image
 						src={alex}
-						alt={lang === 'fr' ? 'Nicolas, co-fondateur de Horde' : 'Nicolas, Horde co-founder'}
+						alt={t.aboutPage.alexAlt}
 						class="w-full sm:w-1/2 p-4 md:p-5 border sm:border-t-0 sm:border-r-0 border-lines aspect-square object-cover md:max-w-[315px]! slg:border-r"
 						widths={[400, 800, 1200]}
 						sizes="100vw"
@@ -174,14 +152,14 @@ const workingWithUs = [
 						quality={85}
 					/>
 					<div class="px-4 sm:px-10 py-10 border border-t-0 sm:border-0 sm:border-t sm:border-b border-lines md:max-w-[615px] md:border-l slg:border-r">
-						<h3 class="section-label mb-4">Alexandre - Designer</h3>
-						<p class="text-[1.375rem] sm:text-[2rem]">9 ans à transformer des idées floues en interfaces qui convertissent. Obsédé par les détails et allergique au générique.</p>
+						<h3 class="section-label mb-4">{t.aboutPage.alexTitle}</h3>
+						<p class="text-[1.375rem] sm:text-[2rem]">{t.aboutPage.alexDescription}</p>
 					</div>
 				</div>
 				<div class="mt-10 sm:-mt-px">
 					<Image
 						src={nico}
-						alt={lang === 'fr' ? 'Nicolas, co-fondateur de Horde' : 'Nicolas, Horde co-founder'}
+						alt={t.aboutPage.nicoAlt}
 						class="w-full sm:w-1/2 p-4 md:p-5 border sm:border-l-0 sm:border-b-0 border-lines aspect-square object-cover md:max-w-[315px]! slg:border-l"
 						widths={[400, 800, 1200]}
 						sizes="100vw"
@@ -191,8 +169,8 @@ const workingWithUs = [
 						quality={85}
 					/>
 					<div class="px-4 sm:px-10 py-10 border border-t-0 border-lines sm:border-0 sm:border-t sm:border-b md:max-w-[615px] md:border-r slg:border-l">
-						<h3 class="section-label mb-4">Nicolas - Développeur</h3>
-						<p class="text-[1.375rem] sm:text-[2rem]">9 ans à construire des sites impeccable. La performance, Le SEO et la sécurité: ce n’est pas négociable.</p>
+						<h3 class="section-label mb-4">{t.aboutPage.nicoTitle}</h3>
+						<p class="text-[1.375rem] sm:text-[2rem]">{t.aboutPage.nicoDescription}</p>
 					</div>
 				</div>
 			</div>
@@ -210,7 +188,7 @@ const workingWithUs = [
 				<span
 					class="relative z-10 text-white group-hover:text-black transition-colors duration-300"
 				>
-					{lang === 'fr' ? 'Travailler avec nous' : 'Work with us'}
+					{t.aboutPage.cta}
 				</span>
 			</a>
 		</section>

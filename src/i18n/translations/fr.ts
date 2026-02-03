@@ -238,6 +238,45 @@ export const fr = {
   a11y: {
     skipToContent: 'Aller au contenu principal',
   },
+
+  // About Page
+  aboutPage: {
+    title: 'À propos',
+    description: 'Découvrez Horde, agence web à Bruxelles. Deux passionnés, un designer et un développeur, qui créent des interfaces ultra-rapides.',
+    heroTitle1: 'Deux\ncerveaux,',
+    heroTitle2: 'Une\nvision',
+    scrollDown: '↓',
+    introText1: "On part d'un constat simple, aujourd'hui beaucoup de sites web sont construits par des équipes marketing qui cherchent à vendre des templates le plus rapidement possible sans se soucier de ce que vous racontez.",
+    introText2: "De plus, vous n'avez probablement pas besoin d'un CMS lourd ni d'une usine à gaz avec une vingtaine de plugins ou encore d'une web app complexe. Ce qu'il vous faut : un site rapide, bien référencé, simple à maintenir. C'est exactement ce qu'on construit.",
+    highlightText: "Nos sites sont pensés pour vous. Ils sont légers, sécurisés et performants. Cela permet des temps de chargement sous la seconde, un SEO qui performe avec moins de budget pub, et une tranquillité d'esprit côté maintenance.",
+    workingTitle1: 'Notre\nfaçon',
+    workingTitle2: 'de bosser\navec vous',
+    workingWithUs: [
+      {
+        quote: "On est deux, ouverts à vos propositions pour que le projet vous ressemble",
+        text: "On est dispo sur WhatsApp, et on vous met à disposition une plateforme pour accéder à tout ce qu'on produit en temps réel",
+      },
+      {
+        quote: "On s'occupe de la complexité technique pour que vous restiez concentré sur votre vision.",
+        text: "On ne vous impose pas un système, on met en place la technologie qui répond le plus à vos besoins d'entreprise pour s'assurer que votre nouveau site soit pratique sur le long terme",
+      },
+      {
+        quote: "On se pose avec vous, on vous accompagne, sans jargon technique inutile.",
+        text: "Pas de surprise : le prix annoncé correspond au prix final payé, en toute transparence, sans coûts supplémentaires. On veut que vous puissiez être autonome après la livraison",
+      },
+    ],
+    teamTitle1: 'Deux\ncerveaux,',
+    teamTitle2: 'Une\nvision',
+    alexTitle: 'Alexandre - Designer',
+    alexDescription: "9 ans à transformer des idées floues en interfaces qui répondent à de vrais besoins. Obsédé par les détails et allergique au générique.",
+    nicoTitle: 'Nicolas - Développeur',
+    nicoDescription: "9 ans à construire des sites impeccables. La performance, le SEO et la sécurité : ce n'est pas négociable.",
+    cta: 'Travailler avec nous',
+    foundersAlt: 'Les cofondateurs de Horde',
+    keyboardAlt: 'Clavier mécanique',
+    alexAlt: 'Alexandre, co-fondateur de Horde',
+    nicoAlt: 'Nicolas, co-fondateur de Horde',
+  },
 } as const;
 
 export type Translations = typeof fr;
