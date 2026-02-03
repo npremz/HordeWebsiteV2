@@ -71,7 +71,7 @@ export const en: Translations = {
       {
         number: '003',
         eyebrow: 'Zero middlemen',
-        title: 'direct<br>collabo-<br>ration',
+        title: 'direct<br>cooperation',
         quote: "We don't manage a file. We join your team for the duration of the mission.",
         description:
           'Forget endless email chains. We work directly via Slack or WhatsApp. You see progress in real-time.',

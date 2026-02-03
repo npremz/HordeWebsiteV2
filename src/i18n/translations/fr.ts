@@ -70,7 +70,7 @@ export const fr = {
       {
         number: '003',
         eyebrow: 'Zéro intermédiaire',
-        title: 'collabo-<br>ration directe',
+        title: 'coopération<br>directe',
         quote: "On ne gère pas un dossier. On rejoint votre équipe le temps d'une mission.",
         description:
           "Oubliez les chaînes de mails infinies. On travaille en direct via Slack ou WhatsApp. Vous voyez l'évolution en temps réel.",
@@ -204,7 +204,7 @@ export const fr = {
     submitting: 'Envoi en cours...',
     successMessage: 'Message envoyé avec succès !',
     errorMessage: 'Une erreur est survenue. Veuillez réessayer.',
-    requiredField: 'Ce champ est obligatoire',
+    requiredField: 'Champ obligatoire',
     invalidEmail: 'Adresse email invalide',
     options: {
       auditPerformance: 'Audit & performance',

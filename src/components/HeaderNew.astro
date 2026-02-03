@@ -147,9 +147,7 @@ const email = "hello@hordeagence.com";
               >
                 <a
                   href={item.url}
-                  class="menu-link nav-scramble inline-block relative text-[2.5rem] leading-none text-black no-underline
-                       after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-current after:scale-x-0 after:origin-left after:transition-transform after:duration-400 after:ease-[cubic-bezier(0.25,0.46,0.45,0.94)]
-                       hover:after:scale-x-100"
+                  class="menu-link nav-scramble inline-block relative text-[2.5rem] leading-none text-black no-underline"
                   target={item.isExternal ? "_blank" : undefined}
                   rel={item.isExternal ? "noopener noreferrer" : undefined}
                   tabindex="-1"
@@ -373,8 +371,8 @@ const email = "hello@hordeagence.com";
           element.textContent = originalText;
         }
 
-        iteration += 1;
-      }, 20);
+        iteration += 0.7;
+      }, 25);
 
       scrambleIntervals.set(element, intervalId);
     }
