@@ -124,8 +124,7 @@ const typewriterWords = t.hero.typewriterWords;
 			<Line dotClass="z-9999" />
 			<span class="block text-right pt-[5px] md:pt-[13px] slg:-translate-x-1/8">
 				{titleLine2}{titleLine2 && <br />}
-				{titleLine3Prefix}<br />
-				<span class="word-rotator">
+				{titleLine3Prefix}{' '}<span class="word-rotator">
 					<span class="word-rotator-inner">
 						{
 							typewriterWords.map((word) => (

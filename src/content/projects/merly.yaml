@@ -3,6 +3,8 @@ shortTitle_fr: Merly
 shortTitle_en: Merly
 fullTitle_fr: Merly - Site vitrine UX par Horde, agence web à Bruxelles
 fullTitle_en: Merly - UX showcase website by Horde, Brussels web agency
+titleDisplay_fr: Merly<br>Web branding
+titleDisplay_en: Merly<br>Web branding
 seoDescription_fr: >-
   Horde, agence web UX à Bruxelles, a créé le site vitrine de Merly. Interface
   élégante et UX optimisée.
@@ -12,14 +14,39 @@ seoDescription_en: >-
 featuredImageAlt_fr: Site web Merly créé par Horde, agence web UX Bruxelles
 featuredImageAlt_en: Merly website created by Horde, Brussels UX web agency
 featuredImage: /src/assets/images/projects/merly/featuredImage.jpg
-gallery: []
+gallery:
+  - layout: full
+    image1: /src/assets/images/projects/gallery/merly/gallery/0/image1.jpg
+  - layout: full
+    image1: /src/assets/images/projects/gallery/merly/gallery/1/image1.jpg
+  - layout: half
+    image1: /src/assets/images/projects/gallery/merly/gallery/2/image1.jpg
+    image2: /src/assets/images/projects/gallery/merly/gallery/2/image2.jpg
+  - layout: full
+    image1: /src/assets/images/projects/gallery/merly/gallery/3/image1.jpg
+  - layout: half
+    image1: /src/assets/images/projects/gallery/merly/gallery/4/image1.jpg
+    image2: /src/assets/images/projects/gallery/merly/gallery/4/image2.jpg
+  - layout: full
+    image1: /src/assets/images/projects/gallery/merly/gallery/5/image1.jpg
+  - layout: half
+    image1: /src/assets/images/projects/gallery/merly/gallery/6/image1.jpg
+    image2: /src/assets/images/projects/gallery/merly/gallery/6/image2.jpg
+  - layout: half
+    image1: /src/assets/images/projects/gallery/merly/gallery/7/image1.jpg
+    image2: /src/assets/images/projects/gallery/merly/gallery/7/image2.jpg
+  - layout: full
+    image1: /src/assets/images/projects/gallery/merly/gallery/8/image1.jpg
+  - layout: full
+    image1: /src/assets/images/projects/gallery/merly/gallery/9/image1.jpg
 projectTypes:
   - Site vitrine
   - UX Design
   - Web Design
   - Bruxelles
 externalUrl: https://merly.hordagency.com
-inProgress: true
+inProgress: false
 publishedDate: 2024-02-01
 order: 2
 seoRobots: index, follow
+ogImage: /images/og/merly/ogImage.jpg
