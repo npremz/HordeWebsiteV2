@@ -67,23 +67,23 @@ const workingWithUs = t.aboutPage.workingWithUs;
 				src={nousImage}
 				alt={t.aboutPage.foundersAlt}
 				class="w-full md:flex-[3] md:min-w-0 h-auto object-cover"
-				widths={[400, 800, 1200, 1600]}
-				sizes="(min-width: 1024px) 60vw"
+				widths={[300, 500, 800, 1200]}
+				sizes="(max-width: 640px) calc(100vw - 2rem), (max-width: 768px) calc(100vw - 2.5rem), (max-width: 1024px) 55vw, 45vw"
 				loading="eager"
 				decoding="async"
 				format="webp"
-				quality={85}
+				quality={80}
 			/>
 			<Image
 				src={keyboard}
 				alt={t.aboutPage.keyboardAlt}
 				class="hidden md:block md:flex-[2] md:min-w-0 object-cover"
-				widths={[400, 800, 1200]}
-				sizes="40vw"
+				widths={[300, 500, 800]}
+				sizes="(max-width: 1024px) 35vw, 30vw"
 				loading="eager"
 				decoding="async"
 				format="webp"
-				quality={85}
+				quality={80}
 			/>
 		</figure>
 		<div class="flex sm:px-5 md:px-8 justify-between items-end mt-16 sm:mt-32 md:mt-50">
