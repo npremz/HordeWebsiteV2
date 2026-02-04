@@ -39,7 +39,7 @@ const posts = rawPosts
       ? (lang === 'fr' ? post.data.thumbnailImageAlt_fr : post.data.thumbnailImageAlt_en) || (lang === 'fr' ? post.data.featuredImageAlt_fr : post.data.featuredImageAlt_en)
       : (lang === 'fr' ? post.data.featuredImageAlt_fr : post.data.featuredImageAlt_en);
     return {
-      slug: post.data.slug,
+      slug: lang === 'fr' ? post.data.slug_fr : post.data.slug,
       title: lang === 'fr' ? post.data.title_fr : post.data.title_en,
       excerpt: lang === 'fr' ? post.data.excerpt_fr : post.data.excerpt_en,
       image: gridImage,

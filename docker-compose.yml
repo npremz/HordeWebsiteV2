@@ -1,10 +1,17 @@
 services:
   hordev2:
-    build: .
+    build:
+      context: .
+      args:
+        - SITE_ENV=${SITE_ENV:-}
     container_name: ${CONTAINER_NAME:-hordenew}
     restart: unless-stopped
     ports:
       - "${PORT:-4328}:${PORT:-4328}"
     environment:
       - PORT=${PORT:-4328}
+      - SITE_ENV=${SITE_ENV:-}
+      - KEYSTATIC_GITHUB_CLIENT_ID=${KEYSTATIC_GITHUB_CLIENT_ID:-}
+      - KEYSTATIC_GITHUB_CLIENT_SECRET=${KEYSTATIC_GITHUB_CLIENT_SECRET:-}
+      - KEYSTATIC_SECRET=${KEYSTATIC_SECRET:-}
       - RESEND_API_KEY=${RESEND_API_KEY}

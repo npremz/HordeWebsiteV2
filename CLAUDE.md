@@ -29,11 +29,17 @@ npm run astro    # Run Astro CLI commands
 ### Integrations & Configuration
 
 **Astro Config (`astro.config.mjs`):**
-- `output: 'static'` - Static site generation
+- `output: 'static'` (staging) ou `'server'` (prod avec Keystatic GitHub)
 - `adapter: node()` - Node adapter for standalone mode
 - `prefetch: true` - Preload links on hover for instant navigation
 - `compressHTML: true` - HTML compression in production
-- `site: 'https://example.com'` - Update with actual production URL
+- `site` - Dynamique selon `SITE_ENV` (hordeagence.com ou waf.hordagency.com)
+
+**IMPORTANT - Astro 5 Output Modes:**
+- `'hybrid'` N'EXISTE PLUS en Astro 5
+- Utiliser `'static'` (tout prérendu) ou `'server'` (SSR)
+- Pour Keystatic GitHub en prod: `output: 'server'` + `export const prerender = true` sur les pages statiques
+- Les routes Keystatic (`/keystatic/*`) ont besoin de SSR pour l'OAuth GitHub
 
 **Integrations:**
 - **@astrojs/react** - React components with Islands architecture

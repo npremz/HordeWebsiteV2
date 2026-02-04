@@ -15,7 +15,7 @@ export async function getStaticPaths() {
 		posts
 			.filter((post) => !post.data.draft)
 			.map((post) => ({
-				params: { lang, slug: post.data.slug },
+				params: { lang, slug: lang === 'fr' ? post.data.slug_fr : post.data.slug },
 				props: { post, lang },
 			}))
 	);
@@ -96,7 +96,7 @@ const relatedPosts = rawPosts
 	.sort((a, b) => new Date(b.data.publishedDate).getTime() - new Date(a.data.publishedDate).getTime())
 	.slice(0, 3)
 	.map((p) => ({
-		slug: p.data.slug,
+		slug: lang === 'fr' ? p.data.slug_fr : p.data.slug,
 		title: lang === 'fr' ? p.data.title_fr : p.data.title_en,
 		image: p.data.featuredImage,
 		imageAlt: lang === 'fr' ? p.data.featuredImageAlt_fr : p.data.featuredImageAlt_en,
@@ -188,10 +188,17 @@ function formatDate(date: Date, locale: string): string {
 	}).format(new Date(date));
 }
 
+// Slug localisé
+const currentSlug = lang === 'fr' ? post.data.slug_fr : post.data.slug;
+const alternateSlug = lang === 'fr' ? post.data.slug : post.data.slug_fr;
+const switchLang = lang === 'fr' ? 'en' : 'fr';
+
 // URL de partage
-const shareUrl = `${Astro.site}${lang}/blog/${post.data.slug}`;
+const shareUrl = `${Astro.site}${lang}/blog/${currentSlug}`;
 const siteUrl = Astro.site?.toString() || 'https://hordeagency.com';
-const articleUrl = `${siteUrl}${lang}/blog/${post.data.slug}`;
+const articleUrl = `${siteUrl}${lang}/blog/${currentSlug}`;
+// URL pour le switch de langue (avec le slug de l'autre langue)
+const alternateUrl = `${siteUrl}${switchLang}/blog/${alternateSlug}`;
 const imageUrl = post.data.featuredImage.src?.startsWith('http')
 	? post.data.featuredImage.src
 	: `${siteUrl}${post.data.featuredImage.src}`;
@@ -263,7 +270,7 @@ const schemaOrg = {
 };
 ---
 
-<Layout lang={lang} title={title} description={seoDescription} ogType="article" publishedTime={publishedDate.toISOString()} modifiedTime={modifiedDate?.toISOString()} author={authorName}>
+<Layout lang={lang} alternateUrl={alternateUrl} title={title} description={seoDescription} ogType="article" publishedTime={publishedDate.toISOString()} modifiedTime={modifiedDate?.toISOString()} author={authorName}>
 	<!-- Schema.org JSON-LD -->
 	<script type="application/ld+json" set:html={JSON.stringify(schemaOrg)} />
 

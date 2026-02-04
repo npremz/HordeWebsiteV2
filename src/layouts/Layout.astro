@@ -14,6 +14,7 @@ import fontBody from '../assets/fonts/PPNeueMontreal-Regular.woff2';
 interface Props {
   // i18n
   lang?: Locale;
+  alternateUrl?: string; // URL de la version dans l'autre langue (pour les slugs différents FR/EN)
 
   // SEO props
   title: string;
@@ -37,6 +38,7 @@ interface Props {
 
 const {
   lang = DEFAULT_LOCALE,
+  alternateUrl,
   title,
   description,
   robots,
@@ -69,6 +71,7 @@ const finalHeaderVariant = headerVariant ?? variant;
 
     <SEO
       lang={lang}
+      alternateUrl={alternateUrl}
       title={title}
       description={description}
       robots={robots}
@@ -88,7 +91,7 @@ const finalHeaderVariant = headerVariant ?? variant;
     <a href="#main-content" class="skip-link">{t.a11y.skipToContent}</a>
 
     <!-- <Header lang={lang} variant={finalHeaderVariant} /> -->
-    <HeaderNew lang={lang} />
+    <HeaderNew lang={lang} alternateUrl={alternateUrl} />
     <Container variant={variant}>
       <main id="main-content">
         <slot />
