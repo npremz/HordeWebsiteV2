@@ -132,6 +132,7 @@ export const en: Translations = {
       "We're two enthusiasts: a designer, a developer. 9 years of web experience. No hassle, no project managers, no useless meetings. Just the two of us and your project.",
     keyboardAlt: 'Horde keyboard',
     foundersAlt: 'Horde Agency co-founders',
+    cta: 'Discover us',
   },
 
   // Project Section

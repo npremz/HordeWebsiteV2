@@ -131,6 +131,7 @@ export const fr = {
       "On est deux passionnés: un designer, un développeur. 9 ans d'expérience dans le web. Pas de prise de tête, pas de chefs de projet, pas de réunions inutiles. Juste nous deux et votre projet.",
     keyboardAlt: 'Clavier de la Horde',
     foundersAlt: 'Les cofondateurs de Horde Agence',
+    cta: 'Nous découvrir',
   },
 
   // Project Section
