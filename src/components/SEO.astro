@@ -4,6 +4,7 @@ import { SUPPORTED_LOCALES, DEFAULT_LOCALE, type Locale, getAlternateUrls } from
 interface Props {
   // i18n
   lang?: Locale;
+  alternateUrl?: string; // URL explicite pour l'autre langue (slugs différents FR/EN)
 
   // Essential meta
   title: string;
@@ -74,7 +75,14 @@ try {
 
 // Get alternate URLs for hreflang
 const siteUrl = Astro.site?.href || 'https://hordeagence.com';
-const alternateUrls = getAlternateUrls(Astro.url.pathname, siteUrl);
+const baseAlternateUrls = getAlternateUrls(Astro.url.pathname, siteUrl);
+
+// Si alternateUrl est fourni, l'utiliser pour l'autre langue
+const alternateUrlProp = Astro.props.alternateUrl;
+const switchLang = lang === 'fr' ? 'en' : 'fr';
+const alternateUrls = alternateUrlProp
+  ? { ...baseAlternateUrls, [switchLang]: alternateUrlProp }
+  : baseAlternateUrls;
 
 const {
   title,

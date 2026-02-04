@@ -12,15 +12,17 @@ import {
 
 interface Props {
   lang?: Locale;
+  alternateUrl?: string; // URL explicite pour l'autre langue (slugs différents FR/EN)
 }
 
-const { lang = DEFAULT_LOCALE } = Astro.props;
+const { lang = DEFAULT_LOCALE, alternateUrl } = Astro.props;
 const t = useTranslations(lang);
 
 // Get current path for language switcher
 const currentPath = getPathWithoutLocale(Astro.url.pathname);
 const switchLang = lang === "fr" ? "en" : "fr";
-const switchUrl = getLocalizedPath(currentPath, switchLang);
+// Utiliser alternateUrl si fourni, sinon calculer automatiquement
+const switchUrl = alternateUrl || getLocalizedPath(currentPath, switchLang);
 
 // Load navigation from localized settings
 const navPath = path.join(
