@@ -1,4 +1,4 @@
-import { useState } from 'preact/hooks';
+import { useState, useRef, useEffect } from 'preact/hooks';
 import type { JSX } from 'preact';
 
 interface FormData {
@@ -55,6 +55,19 @@ export default function ContactForm({ translations: t }: ContactFormProps) {
   const [errors, setErrors] = useState<FormErrors>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
+
+  const resizeTextarea = () => {
+    const textarea = textareaRef.current;
+    if (textarea) {
+      textarea.style.height = 'auto';
+      textarea.style.height = textarea.scrollHeight + 'px';
+    }
+  };
+
+  useEffect(() => {
+    resizeTextarea();
+  }, [formData.objectif]);
 
   const besoinOptions = [
     { value: 'audit-performance', label: t.options.auditPerformance },
@@ -189,6 +202,7 @@ export default function ContactForm({ translations: t }: ContactFormProps) {
         </label>
         <div className="relative flex-1">
           <textarea
+            ref={textareaRef}
             id="objectif"
             name="objectif"
             rows={1}
@@ -199,11 +213,7 @@ export default function ContactForm({ translations: t }: ContactFormProps) {
               }`}
             placeholder={t.objectifPlaceholder}
             value={formData.objectif}
-            onChange={(e) => {
-              handleChange('objectif', e.target.value);
-              e.target.style.height = 'auto';
-              e.target.style.height = e.target.scrollHeight + 'px';
-            }}
+            onInput={(e) => handleChange('objectif', (e.target as HTMLTextAreaElement).value)}
             aria-required="true"
             aria-invalid={!!errors.objectif}
             aria-describedby={errors.objectif ? 'objectif-error' : undefined}
