@@ -11,14 +11,15 @@ import node from '@astrojs/node';
 
 const PORT = parseInt(process.env.PORT || '4328', 10);
 
-// Production = hordeagence.com (mode hybrid pour Keystatic GitHub)
+// Production = hordeagence.com (mode server pour Keystatic GitHub)
 // Staging/Dev = static
 const isProd = process.env.SITE_ENV === 'production';
 
 // https://astro.build/config
 export default defineConfig({
   site: isProd ? 'https://hordeagence.com' : 'https://waf.hordagency.com',
-  output: isProd ? 'hybrid' : 'static',
+  // Astro 5: 'hybrid' n'existe plus. Utiliser 'server' + prerender: true sur les pages statiques
+  output: isProd ? 'server' : 'static',
   adapter: node({ mode: 'standalone' }),
   build: {
     inlineStylesheets: 'always',
