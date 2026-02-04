@@ -344,10 +344,15 @@ const categoriesSchema = {
 const blogPostsSchema = {
   slug: fields.slug({
     name: {
-      label: 'Identifiant (slug)',
-      description: 'Identifiant unique de l\'article (ex: optimiser-core-web-vitals)',
+      label: 'Slug (EN)',
+      description: 'URL slug in English for SEO (e.g. optimize-core-web-vitals)',
       validation: { isRequired: true },
     },
+  }),
+  slug_fr: fields.text({
+    label: 'Slug (FR)',
+    description: 'Slug français pour l\'URL (ex: optimiser-core-web-vitals)',
+    validation: { isRequired: true },
   }),
   // === CHAMPS LOCALISÉS ===
   title_fr: fields.text({
@@ -721,11 +726,11 @@ collections['posts'] = collection({
   schema: blogPostsSchema,
 });
 
-// Configuration storage conditionnelle: GitHub uniquement si KEYSTATIC_GITHUB=true
-const useGitHub = import.meta.env.KEYSTATIC_GITHUB === 'true';
+// Configuration storage conditionnelle: GitHub en prod (SITE_ENV=production), local sinon
+const isProd = import.meta.env.SITE_ENV === 'production';
 
 export default config({
-  storage: useGitHub
+  storage: isProd
     ? {
         kind: 'github',
         repo: 'npremz/HordeWebsiteV2',

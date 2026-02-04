@@ -1,5 +1,8 @@
 FROM node:25-alpine AS builder
 
+ARG SITE_ENV
+ENV SITE_ENV=${SITE_ENV}
+
 WORKDIR /app
 COPY package*.json ./
 RUN npm ci

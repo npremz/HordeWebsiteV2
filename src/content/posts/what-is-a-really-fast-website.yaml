@@ -1,4 +1,5 @@
-slug: c-est-quoi-un-site-rapide
+slug: what-is-a-really-fast-website
+slug_fr: c-est-quoi-un-site-vraiment-rapide
 title_fr: En 2026, c'est quoi un site (vraiment) rapide?
 title_en: In 2026, What is a (really) fast website
 excerpt_fr: >-
@@ -16,9 +17,9 @@ seoDescription_en: >-
   3s. Discover how we deliver ultra-high-performance websites.
 featuredImageAlt_fr: Horde Agence | Lighthouse de hordeagence.com
 featuredImageAlt_en: Horde Agence | Lighthouse score of hordeagence.com
-featuredImage: /src/assets/images/blog/c-est-quoi-un-site-rapide/featuredImage.jpg
+featuredImage: /src/assets/images/blog/what-is-a-really-fast-website/featuredImage.jpg
 thumbnailImage: >-
-  /src/assets/images/blog/thumbnails/c-est-quoi-un-site-rapide/thumbnailImage.png
+  /src/assets/images/blog/thumbnails/what-is-a-really-fast-website/thumbnailImage.png
 author: nicolas-premont
 category: performance-web
 tags:
@@ -30,4 +31,4 @@ publishedDate: 2026-01-30
 featured: false
 draft: false
 seoRobots: index, follow
-ogImage: /images/og/c-est-quoi-un-site-rapide/ogImage.jpg
+ogImage: /images/og/what-is-a-really-fast-website/ogImage.jpg

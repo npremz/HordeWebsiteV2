@@ -77,6 +77,7 @@ const postsCollection = defineCollection({
   loader: glob({ pattern: '**/*.yaml', base: './src/content/posts' }),
   schema: ({ image }) => z.object({
     slug: z.string(),
+    slug_fr: z.string(),
     // Champs localisés
     title_fr: z.string(),
     title_en: z.string(),
