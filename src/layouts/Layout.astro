@@ -148,7 +148,7 @@ const finalHeaderVariant = headerVariant ?? variant;
     top: 0;
   }
 
-  /* Respect reduced motion preference (WCAG 2.1 AA)
+  /* Respect reduced motion preference (WCAG 2.1 AA) */
   @media (prefers-reduced-motion: reduce) {
     *,
     *::before,
@@ -158,7 +158,7 @@ const finalHeaderVariant = headerVariant ?? variant;
       transition-duration: 0.01ms !important;
       scroll-behavior: auto !important;
     }
-  } */
+  }
 
   /* Lenis */
   html.lenis, html.lenis body {
@@ -183,19 +183,18 @@ const finalHeaderVariant = headerVariant ?? variant;
 </style>
 
 <script>
-  // Lenis chargé dynamiquement après première interaction (scroll/touch/wheel)
+  // Lenis désactivé sur mobile pour alléger le chargement
+  const isMobile = window.matchMedia('(max-width: 768px)').matches;
   let lenisLoaded = false;
 
   async function initLenis() {
-    if (lenisLoaded) return;
+    // Ne pas charger Lenis sur mobile
+    if (isMobile || lenisLoaded) return;
     lenisLoaded = true;
 
     const { default: Lenis } = await import('lenis');
-    const isMobile = window.matchMedia('(max-width: 768px)').matches;
 
-    const lenis = new Lenis({
-      touchMultiplier: isMobile ? 3.5 : 1,
-    });
+    const lenis = new Lenis();
 
     (window as any).lenis = lenis;
 
@@ -211,71 +210,89 @@ const finalHeaderVariant = headerVariant ?? variant;
 
     // Cleanup listeners
     window.removeEventListener('wheel', initLenis);
-    window.removeEventListener('touchstart', initLenis);
   }
 
-  // Charger Lenis au premier scroll/touch
-  window.addEventListener('wheel', initLenis, { once: true, passive: true });
-  window.addEventListener('touchstart', initLenis, { once: true, passive: true });
+  // Charger Lenis uniquement sur desktop au premier scroll
+  if (!isMobile) {
+    window.addEventListener('wheel', initLenis, { once: true, passive: true });
 
-  // Ou après idle si pas d'interaction
-  if ('requestIdleCallback' in window) {
-    requestIdleCallback(() => initLenis(), { timeout: 3000 });
+    // Ou après idle si pas d'interaction
+    if ('requestIdleCallback' in window) {
+      requestIdleCallback(() => initLenis(), { timeout: 3000 });
+    }
   }
 </script>
 
 <script>
   // Smooth scroll pour les liens d'ancre
-  function initAnchorScroll() {
-    document.addEventListener('click', (e) => {
-      const link = (e.target as HTMLElement).closest('a[href*="#"]');
-      if (!link) return;
+  function scrollToHash(hashId: string) {
+    const target = document.getElementById(hashId);
+    if (!target) return;
 
-      const href = link.getAttribute('href');
-      if (!href) return;
-
-      const hashIndex = href.indexOf('#');
-      if (hashIndex === -1) return;
-
-      const path = href.substring(0, hashIndex);
-      const hash = href.substring(hashIndex);
-      const currentPath = window.location.pathname;
-
-      // Vérifier si on est sur la bonne page (ou lien relatif)
-      const isCurrentPage = !path || path === currentPath ||
-        (path.endsWith('/') && currentPath === path.slice(0, -1)) ||
-        (currentPath.endsWith('/') && path === currentPath.slice(0, -1));
-
-      if (isCurrentPage && hash) {
-        e.preventDefault();
-        const target = document.querySelector(hash);
-        if (target && (window as any).lenis) {
-          (window as any).lenis.scrollTo(target, { duration: 1.2, offset: -100 });
-        } else if (target) {
-          target.scrollIntoView({ behavior: 'smooth' });
-        }
-        history.pushState(null, '', hash);
-      } else if (path && hash) {
-        // Navigation vers autre page avec ancre - stocker pour après
-        sessionStorage.setItem('scrollToAnchor', hash);
+    // Petit délai pour s'assurer que Lenis est prêt
+    requestAnimationFrame(() => {
+      if ((window as any).lenis) {
+        (window as any).lenis.scrollTo(`#${hashId}`, { duration: 1.2, offset: -100 });
+      } else {
+        target.scrollIntoView({ behavior: 'smooth' });
       }
     });
+  }
 
-    // Scroll vers ancre après navigation
+  // Click handler (ajouté une seule fois)
+  function handleAnchorClick(e: MouseEvent) {
+    const link = (e.target as HTMLElement).closest('a[href*="#"]');
+    if (!link) return;
+
+    const href = link.getAttribute('href');
+    if (!href) return;
+
+    const hashIndex = href.indexOf('#');
+    if (hashIndex === -1) return;
+
+    const path = href.substring(0, hashIndex);
+    const hash = href.substring(hashIndex);
+    const currentPath = window.location.pathname;
+
+    // Vérifier si on est sur la bonne page (ou lien relatif)
+    const isCurrentPage = !path || path === currentPath ||
+      (path.endsWith('/') && currentPath === path.slice(0, -1)) ||
+      (currentPath.endsWith('/') && path === currentPath.slice(0, -1));
+
+    if (isCurrentPage && hash) {
+      e.preventDefault();
+      const hashId = hash.startsWith('#') ? hash.slice(1) : hash;
+      scrollToHash(hashId);
+      history.pushState(null, '', hash);
+    } else if (path && hash) {
+      // Navigation vers autre page avec ancre - stocker pour après
+      sessionStorage.setItem('scrollToAnchor', hash);
+    }
+  }
+
+  // Ajouter le listener une seule fois
+  document.addEventListener('click', handleAnchorClick);
+
+  function handleInitialHash() {
+    // Scroll vers ancre après navigation (depuis autre page)
     const scrollToAnchor = sessionStorage.getItem('scrollToAnchor');
     if (scrollToAnchor) {
       sessionStorage.removeItem('scrollToAnchor');
       setTimeout(() => {
-        const target = document.querySelector(scrollToAnchor);
-        if (target && (window as any).lenis) {
-          (window as any).lenis.scrollTo(target, { duration: 1.2, offset: -100 });
-        } else if (target) {
-          target.scrollIntoView({ behavior: 'smooth' });
-        }
+        const hashId = scrollToAnchor.startsWith('#') ? scrollToAnchor.slice(1) : scrollToAnchor;
+        scrollToHash(hashId);
+      }, 100);
+    }
+
+    // Scroll vers ancre si présente dans l'URL au chargement
+    if (window.location.hash) {
+      setTimeout(() => {
+        const hashId = window.location.hash.slice(1);
+        scrollToHash(hashId);
       }, 100);
     }
   }
 
-  initAnchorScroll();
-  document.addEventListener('astro:after-swap', initAnchorScroll);
+  handleInitialHash();
+  document.addEventListener('astro:after-swap', handleInitialHash);
 </script>

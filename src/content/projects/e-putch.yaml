@@ -1,0 +1,22 @@
+slug: e-putch
+shortTitle_fr: E-Putch
+shortTitle_en: E-Putch
+fullTitle_fr: E-Putch - Application web UX par Horde, agence web à Bruxelles
+fullTitle_en: E-Putch - UX web application by Horde, Brussels web agency
+seoDescription_fr: >-
+  Horde, agence web UX à Bruxelles, développe E-Putch. Application web innovante en cours de réalisation.
+seoDescription_en: >-
+  Horde, UX web agency in Brussels, is developing E-Putch. Innovative web application currently in progress.
+featuredImageAlt_fr: Projet E-Putch par Horde, agence web UX Bruxelles
+featuredImageAlt_en: E-Putch project by Horde, Brussels UX web agency
+featuredImage: ../../assets/images/projects/eputch.jpg
+gallery: []
+projectTypes:
+  - Application web
+  - UX Design
+  - Développement
+  - Bruxelles
+inProgress: true
+publishedDate: 2024-03-01
+order: 3
+seoRobots: noindex, follow

@@ -1,0 +1,252 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Footer from '../../components/Footer.astro';
+import Line from '../../components/ui/Line.astro';
+import Wrapped from '../../components/ui/Wrapped.astro';
+import { Image } from 'astro:assets';
+import { SUPPORTED_LOCALES, type Locale, useTranslations } from '../../i18n';
+import nousImage from '../../assets/images/nous-opti.jpg';
+import keyboard from '../../assets/images/keyboard_a.jpg';
+import nico from '../../assets/images/nico.jpg'
+import alex from '../../assets/images/alex.jpg'
+
+export const prerender = true;
+
+export function getStaticPaths() {
+  return SUPPORTED_LOCALES.map((lang) => ({
+    params: { lang },
+  }));
+}
+
+const { lang } = Astro.params as { lang: Locale };
+const t = useTranslations(lang);
+
+const pageTitle = t.aboutPage.title;
+const pageDescription = t.aboutPage.description;
+const workingWithUs = t.aboutPage.workingWithUs;
+---
+
+<Layout lang={lang} title={pageTitle} description={pageDescription}>
+	<div class="fixed inset-0 bg-bg sm:bg-transparent -z-10" aria-hidden="true"></div>
+	<article id="page-content" class="relative z-10">
+		<header class="relative h-svh mt-10 flex flex-col items-center justify-center">
+			<span class="sm:hidden absolute h-screen top-0 left-0 w-px bg-lines"></span>
+			<span class="sm:hidden absolute h-screen top-0 right-0 w-px bg-lines"></span>
+			<div class="w-full">
+				<h1
+					class="font-display relative uppercase leading-[0.9] text-4xl sm:text-[3.25rem] md:text-[4.875rem] lg:text-[6.25rem]"
+				>
+					<span class="block mb-2 slg:translate-x-1/8">Deux<br>cerveaux,</span>
+					<svg
+						class="block lg:hidden -z-10 absolute w-[calc(100%-2*1rem)] -translate-y-[65.1%] center-x"
+						viewBox="0 0 531 1243"
+						fill="none"
+						xmlns="http://www.w3.org/2000/svg"
+					>
+						<rect
+							x="-0.5"
+							y="0.5"
+							width="298.273"
+							height="298.273"
+							rx="149.136"
+							transform="matrix(-1 -8.74228e-08 -8.74228e-08 1 414.272 817.887)"
+							stroke="#B1B1B1"></rect>
+						<rect
+							x="-0.5"
+							y="0.5"
+							width="298.273"
+							height="298.273"
+							rx="149.136"
+							transform="matrix(-1 -8.74228e-08 -8.74228e-08 1 414.272 503)"
+							stroke="#B1B1B1"></rect>
+						<rect
+							x="414.772"
+							y="967.023"
+							width="298.273"
+							height="312.586"
+							transform="rotate(-180 414.772 967.023)"
+							stroke="#B1B1B1"></rect>
+						<path
+							d="M530.5 0.5V977.5C530.5 1123.86 411.855 1242.5 265.5 1242.5C119.145 1242.5 0.5 1123.86 0.5 977.5V0.5H530.5Z"
+							stroke="#B1B1B1"></path>
+					</svg>
+
+					<svg
+						class="hidden lg:block -z-10 absolute w-[calc(100%-2*1.5rem)] -translate-y-[54%] center-x"
+						viewBox="0 0 1218 1282"
+						fill="none"
+						xmlns="http://www.w3.org/2000/svg"
+					>
+						<rect
+							x="0.5"
+							y="0.5"
+							width="379.504"
+							height="379.504"
+							rx="189.752"
+							transform="matrix(-4.37114e-08 1 1 4.37114e-08 619.356 498.087)"
+							stroke="#B1B1B1"></rect>
+						<rect
+							x="0.5"
+							y="0.5"
+							width="379.504"
+							height="379.504"
+							rx="189.752"
+							transform="matrix(-4.37114e-08 1 1 4.37114e-08 219 498.087)"
+							stroke="#B1B1B1"></rect>
+						<rect
+							x="809.108"
+							y="498.587"
+							width="379.504"
+							height="397.702"
+							transform="rotate(90 809.108 498.587)"
+							stroke="#B1B1B1"></rect>
+						<path
+							d="M1217.5 0.5V673C1217.5 1009.07 945.065 1281.5 609 1281.5C272.935 1281.5 0.500003 1009.07 0.5 673V0.5H1217.5Z"
+							stroke="#B1B1B1"></path>
+					</svg>
+					<Line dotClass="z-9999" />
+					<span class="block text-right pt-[5px] md:pt-[13px] slg:-translate-x-1/8" set:html={t.aboutPage.heroTitle2.replace(/\n/g, '<br>')} />
+				</h1>
+			</div>
+			<button
+				class="absolute left-1/2 -translate-x-1/2 sm:translate-0 sm:right-0 sm:left-[unset] bottom-10 font-mono uppercase text-sm cursor-pointer scroll-to-btn"
+				><Wrapped class="text-[1rem]">↓</Wrapped></button
+			>
+		</header>
+
+		<!-- Section 1: Intro -->
+		<figure class="md:flex md:gap-16 md:items-center sm:px-5 md:px-8">
+			<Image
+				src={nousImage}
+				alt={t.aboutPage.foundersAlt}
+				class="w-full md:flex-[3] md:min-w-0 h-auto object-cover"
+				widths={[300, 500, 800, 1200]}
+				sizes="(max-width: 640px) calc(100vw - 2rem), (max-width: 768px) calc(100vw - 2.5rem), (max-width: 1024px) 55vw, 45vw"
+				loading="eager"
+				decoding="async"
+				format="webp"
+				quality={80}
+			/>
+			<Image
+				src={keyboard}
+				alt={t.aboutPage.keyboardAlt}
+				class="hidden md:block md:flex-[2] md:min-w-0 object-cover"
+				widths={[300, 500, 800]}
+				sizes="(max-width: 1024px) 35vw, 30vw"
+				loading="eager"
+				decoding="async"
+				format="webp"
+				quality={80}
+			/>
+		</figure>
+		<div class="flex sm:px-5 md:px-8 justify-between items-end mt-16 sm:mt-32 md:mt-50">
+			<h2
+				class="methods-title font-display uppercase leading-none text-[2rem] sm:text-[3.25rem]"
+				set:html={t.method.title.replace(/\n/g, "<br>")}
+			/>
+		</div>
+		<section class="mt-10 sm:mt-32 mb-10 slg:flex slg:flex-col">
+			<p class="text-[1.375rem] leading-normal mb-10 sm:mb-16 md:mb-24 sm:px-5 md:px-8 slg:w-1/2">{t.aboutPage.introText1}</p>
+			<p class="text-[1.375rem] leading-normal mb-10 sm:mb-24 md:mb-32 slg:mb-50 sm:px-5 md:px-8 slg:w-1/2 slg:self-end">{t.aboutPage.introText2}</p>
+			<div class="relative overflow-hidden px-8 sm:px-5 md:px-8 py-10 sm:py-16 slg:py-50 md:py-32 border-t border-b border-lines slg:px-32">
+				<!-- Cercles décoratifs -->
+				<span class="hidden sm:block absolute left-0 top-1/2 -translate-y-1/2 h-full aspect-square rounded-full border border-lines" aria-hidden="true"></span>
+				<span class="hidden sm:block absolute left-1/2 top-1/2 -translate-y-1/2 -translate-x-1/2 h-full aspect-square rounded-full border border-lines" aria-hidden="true"></span>
+				<span class="hidden sm:block absolute right-0 top-1/2 -translate-y-1/2 h-full aspect-square rounded-full border border-lines" aria-hidden="true"></span>
+				<p class="relative z-10 leading-[1.2] text-[1.375rem] sm:text-[2rem] lg:text-[3.25rem]">{t.aboutPage.highlightText}</p>
+			</div>
+		</section>
+ 
+		<!-- Section 2: L'équipe -->
+		<section class="mt-16 sm:mt-32">
+			<div class="w-full sm:px-5 md:px-8 sm:mt-50">
+				<h2
+					class="font-display relative uppercase leading-[0.9] text-4xl sm:text-[3.25rem] md:text-[4.875rem] lg:text-[6.5rem]"
+				>
+					<span class="block mb-2" set:html={t.aboutPage.workingTitle1.replace(/\n/g, '<br>')} />
+					<span class="block text-right pt-[5px] md:pt-[13px]" set:html={t.aboutPage.workingTitle2.replace(/\n/g, '<br>')} />
+				</h2>
+			</div>
+			<ul class="mt-16 sm:mt-50 sm divide-y divide-lines border-t border-b border-lines">
+				{workingWithUs.map((item, i) => (
+					<li class="relative overflow-hidden py-10 sm:py-24 sm:px-5 md:px-8 slg:pt-50 slg:pb-16 slg:flex slg:justify-between slg:items-end">
+						<div>
+							<span class="font-display text-[2.5rem] block mb-4 sm:mb-8">/ {String(i + 1).padStart(3, '0')}</span>
+							<cite class="not-italic font-mono uppercase text-[1rem] leading-tight block mb-10 sm:mb-24 sm:max-w-96 slg:mb-0">"{item.quote}"</cite>
+						</div>
+						<p class="text-[1.375rem] leading-[1.2] sm:text-[2rem] slg:w-1/2">{item.text}</p>
+						<span class="block border border-lines border-t-0 absolute h-full slg:h-auto slg:aspect-1/2 w-full sm:w-[calc(100%-2*1.25rem)] -top-10 slg:top-[unset] slg:bottom-10 rounded-b-full -z-10"></span>
+					</li>
+				))}
+			</ul>
+		</section>
+
+		<!-- Section 3: Valeurs / Approche -->
+		<section class="mt-16 sm:mt-50 slg:relative slg:max-w-[1050px] slg:mx-auto">
+			<div class="w-full sm:px-5 md:px-8">
+				<h2
+					class="font-display relative slg:static uppercase leading-[0.9] text-4xl sm:text-[3.25rem]"
+				>
+					<span class="slg:absolute block mb-2 slg:m-0" set:html={t.aboutPage.teamTitle1.replace(/\n/g, '<br>')} />
+					<span class="slg:absolute block text-right pt-[5px] md:pt-[13px] slg:p-0 slg:bottom-0 slg:right-0" set:html={t.aboutPage.teamTitle2.replace(/\n/g, '<br>')} />
+				</h2>
+			</div>
+			<div class="mt-10 sm:mt-24">
+				<div class="sm:flex sm:flex-col-reverse sm:items-end">
+					<Image
+						src={alex}
+						alt={t.aboutPage.alexAlt}
+						class="w-full sm:w-1/2 p-4 md:p-5 border sm:border-t-0 sm:border-r-0 border-lines aspect-square object-cover md:max-w-[315px]! slg:border-r"
+						widths={[400, 800, 1200]}
+						sizes="100vw"
+						loading="lazy"
+						decoding="async"
+						format="webp"
+						quality={85}
+					/>
+					<div class="px-4 sm:px-10 py-10 border border-t-0 sm:border-0 sm:border-t sm:border-b border-lines md:max-w-[615px] md:border-l slg:border-r">
+						<h3 class="section-label mb-4">{t.aboutPage.alexTitle}</h3>
+						<p class="text-[1.375rem] sm:text-[2rem]">{t.aboutPage.alexDescription}</p>
+					</div>
+				</div>
+				<div class="mt-10 sm:-mt-px">
+					<Image
+						src={nico}
+						alt={t.aboutPage.nicoAlt}
+						class="w-full sm:w-1/2 p-4 md:p-5 border sm:border-l-0 sm:border-b-0 border-lines aspect-square object-cover md:max-w-[315px]! slg:border-l"
+						widths={[400, 800, 1200]}
+						sizes="100vw"
+						loading="lazy"
+						decoding="async"
+						format="webp"
+						quality={85}
+					/>
+					<div class="px-4 sm:px-10 py-10 border border-t-0 border-lines sm:border-0 sm:border-t sm:border-b md:max-w-[615px] md:border-r slg:border-l">
+						<h3 class="section-label mb-4">{t.aboutPage.nicoTitle}</h3>
+						<p class="text-[1.375rem] sm:text-[2rem]">{t.aboutPage.nicoDescription}</p>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- CTA -->
+		<section class="mt-16 sm:mt-32 mb-16 slg:max-w-[1050px] slg:mx-auto">
+			<a
+				href={`/${lang}/contact`}
+				class="group relative overflow-hidden font-mono text-[1rem] leading-none uppercase py-6 px-5 flex justify-center w-full md:w-fit md:ml-auto border border-lines-dark bg-black text-white transition-colors duration-300 ease-in-out cursor-pointer"
+			>
+				<span
+					class="absolute inset-0 bg-bg translate-x-[calc(-100%-1px)] group-hover:translate-x-0 transition-transform duration-400 ease-[cubic-bezier(0.25,0.46,0.45,0.94)]"
+				></span>
+				<span
+					class="relative z-10 text-white group-hover:text-black transition-colors duration-300"
+				>
+					{t.aboutPage.cta}
+				</span>
+			</a>
+		</section>
+
+	</article>
+
+	<Footer lang={lang} hideOverflow={false} />
+</Layout>

@@ -4,11 +4,17 @@ items:
   - label: Accueil
     url: /fr
     isExternal: false
-  - label: Méthode
-    url: '/fr/#methods-container'
+  - label: À propos
+    url: /fr/about
     isExternal: false
   - label: Services
     url: '/fr/#services-section'
+    isExternal: false
+  - label: Projets
+    url: /fr/projets
+    isExternal: false
+  - label: Blog
+    url: /fr/blog
     isExternal: false
   - label: Contact
     url: /fr/contact

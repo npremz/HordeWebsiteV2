@@ -263,29 +263,171 @@ const footerSchema = {
   ),
 };
 
-const postsSchema = {
-  title: fields.slug({
+// Schema pour les auteurs du blog
+const authorsSchema = {
+  slug: fields.slug({
     name: {
-      label: 'Titre',
+      label: 'Identifiant (slug)',
+      description: 'Identifiant unique de l\'auteur (ex: nicolas-premont)',
       validation: { isRequired: true },
     },
   }),
-  excerpt: fields.text({
-    label: 'Extrait',
-    description: "Court résumé de l'article affiché dans les listes",
+  name: fields.text({
+    label: 'Nom complet',
+    validation: { isRequired: true },
+  }),
+  role_fr: fields.text({
+    label: 'Rôle (FR)',
+    description: 'Ex: Co-fondateur & Développeur',
+    validation: { isRequired: true },
+  }),
+  role_en: fields.text({
+    label: 'Rôle (EN)',
+    description: 'Ex: Co-founder & Developer',
+    validation: { isRequired: true },
+  }),
+  bio_fr: fields.text({
+    label: 'Bio courte (FR)',
     multiline: true,
-    validation: { isRequired: true, length: { max: 300 } },
+    validation: { length: { max: 300 } },
   }),
+  bio_en: fields.text({
+    label: 'Bio courte (EN)',
+    multiline: true,
+    validation: { length: { max: 300 } },
+  }),
+  avatar: fields.image({
+    label: 'Photo',
+    directory: 'src/assets/images/authors',
+    publicPath: '/src/assets/images/authors',
+    validation: { isRequired: true },
+  }),
+  social: fields.object({
+    twitter: fields.text({ label: 'Twitter/X (username sans @)' }),
+    linkedin: fields.url({ label: 'LinkedIn URL' }),
+    github: fields.text({ label: 'GitHub (username)' }),
+  }),
+};
+
+// Schema pour les catégories du blog
+const categoriesSchema = {
+  slug: fields.slug({
+    name: {
+      label: 'Identifiant (slug)',
+      description: 'Identifiant unique (ex: ux-design)',
+      validation: { isRequired: true },
+    },
+  }),
+  name_fr: fields.text({
+    label: 'Nom (FR)',
+    validation: { isRequired: true },
+  }),
+  name_en: fields.text({
+    label: 'Nom (EN)',
+    validation: { isRequired: true },
+  }),
+  description_fr: fields.text({
+    label: 'Description (FR)',
+    multiline: true,
+  }),
+  description_en: fields.text({
+    label: 'Description (EN)',
+    multiline: true,
+  }),
+  color: fields.text({
+    label: 'Couleur (hex)',
+    description: 'Couleur d\'accent pour la catégorie (ex: #FF5733)',
+  }),
+};
+
+// Schema pour les articles de blog (multilingue)
+const blogPostsSchema = {
+  slug: fields.slug({
+    name: {
+      label: 'Identifiant (slug)',
+      description: 'Identifiant unique de l\'article (ex: optimiser-core-web-vitals)',
+      validation: { isRequired: true },
+    },
+  }),
+  // === CHAMPS LOCALISÉS ===
+  title_fr: fields.text({
+    label: 'Titre (FR)',
+    validation: { isRequired: true },
+  }),
+  title_en: fields.text({
+    label: 'Titre (EN)',
+    validation: { isRequired: true },
+  }),
+  excerpt_fr: fields.text({
+    label: 'Extrait (FR)',
+    description: 'Résumé affiché dans les listes (max 200 caractères)',
+    multiline: true,
+    validation: { isRequired: true, length: { max: 200 } },
+  }),
+  excerpt_en: fields.text({
+    label: 'Extrait (EN)',
+    description: 'Summary shown in lists (max 200 characters)',
+    multiline: true,
+    validation: { isRequired: true, length: { max: 200 } },
+  }),
+  seoDescription_fr: fields.text({
+    label: 'Description SEO (FR)',
+    description: 'Description pour les moteurs de recherche (150-160 caractères)',
+    validation: { isRequired: true, length: { min: 50, max: 160 } },
+    multiline: true,
+  }),
+  seoDescription_en: fields.text({
+    label: 'Description SEO (EN)',
+    validation: { isRequired: true, length: { min: 50, max: 160 } },
+    multiline: true,
+  }),
+  featuredImageAlt_fr: fields.text({
+    label: 'Alt image principale (FR)',
+    validation: { isRequired: true },
+  }),
+  featuredImageAlt_en: fields.text({
+    label: 'Alt image principale (EN)',
+    validation: { isRequired: true },
+  }),
+  // === CHAMPS PARTAGÉS ===
   featuredImage: fields.image({
-    label: 'Image à la une',
-    directory: 'public/images/posts',
-    publicPath: '/images/posts',
+    label: 'Image principale (single)',
+    description: 'Image affichée en haut de l\'article (format paysage recommandé)',
+    directory: 'src/assets/images/blog',
+    publicPath: '/src/assets/images/blog',
     validation: { isRequired: true },
   }),
-  featuredImageAlt: fields.text({
-    label: "Texte alternatif de l'image à la une",
+  thumbnailImage: fields.image({
+    label: 'Image grille (liste)',
+    description: 'Image affichée dans les listes d\'articles (format carré recommandé). Utilise l\'image principale si vide.',
+    directory: 'src/assets/images/blog/thumbnails',
+    publicPath: '/src/assets/images/blog/thumbnails',
+  }),
+  thumbnailImageAlt_fr: fields.text({
+    label: 'Alt image grille (FR)',
+    description: 'Laisser vide pour utiliser l\'alt de l\'image principale',
+  }),
+  thumbnailImageAlt_en: fields.text({
+    label: 'Alt image grille (EN)',
+    description: 'Laisser vide pour utiliser l\'alt de l\'image principale',
+  }),
+  author: fields.relationship({
+    label: 'Auteur',
+    collection: 'authors',
     validation: { isRequired: true },
   }),
+  category: fields.relationship({
+    label: 'Catégorie',
+    collection: 'categories',
+    validation: { isRequired: true },
+  }),
+  tags: fields.array(
+    fields.text({ label: 'Tag', validation: { isRequired: true } }),
+    {
+      label: 'Tags',
+      itemLabel: (props) => props.value || 'Nouveau tag',
+    }
+  ),
   publishedDate: fields.date({
     label: 'Date de publication',
     validation: { isRequired: true },
@@ -294,90 +436,227 @@ const postsSchema = {
     label: 'Date de modification',
     description: 'Dernière modification (optionnel)',
   }),
-  author: fields.text({
-    label: 'Auteur',
-    validation: { isRequired: true },
-  }),
-  ...seoFields,
-  content: fields.markdoc({
-    label: 'Contenu',
-    options: {
-      image: {
-        directory: 'public/images/content',
-        publicPath: '/images/content',
-      },
-    },
-  }),
-};
-
-const pagesSchema = {
-  title: fields.slug({
-    name: {
-      label: 'Titre',
-      validation: { isRequired: true },
-    },
-  }),
-  excerpt: fields.text({
-    label: 'Extrait',
-    description: 'Court résumé de la page',
-    multiline: true,
-    validation: { length: { max: 300 } },
-  }),
-  featuredImage: fields.image({
-    label: 'Image à la une',
-    directory: 'public/images/pages',
-    publicPath: '/images/pages',
-  }),
-  featuredImageAlt: fields.text({
-    label: "Texte alternatif de l'image à la une",
-  }),
-  ogType: fields.select({
-    label: 'Type Open Graph',
-    options: [
-      { label: 'Site web', value: 'website' },
-      { label: 'Article', value: 'article' },
-    ],
-    defaultValue: 'website',
-  }),
-  ...seoFields,
-  content: fields.markdoc({
-    label: 'Contenu',
-    options: {
-      image: {
-        directory: 'public/images/content',
-        publicPath: '/images/content',
-      },
-    },
-  }),
-};
-
-const testimonialsSchema = {
-  author: fields.slug({
-    name: {
-      label: 'Nom',
-      validation: { isRequired: true },
-    },
-  }),
-  role: fields.text({
-    label: 'Rôle / Entreprise',
-  }),
-  avatar: fields.image({
-    label: 'Photo',
-    directory: 'public/images/testimonials',
-    publicPath: '/images/testimonials',
-  }),
-  quote: fields.text({
-    label: 'Témoignage',
-    multiline: true,
-    validation: { isRequired: true },
-  }),
-  rating: fields.integer({
-    label: 'Note (1-5)',
-    validation: { min: 1, max: 5 },
+  readingTime: fields.integer({
+    label: 'Temps de lecture (minutes)',
+    description: 'Estimé automatiquement si vide',
   }),
   featured: fields.checkbox({
-    label: 'Mis en avant',
+    label: 'Article mis en avant',
+    description: 'Afficher cet article en priorité',
     defaultValue: false,
+  }),
+  draft: fields.checkbox({
+    label: 'Brouillon',
+    description: 'Ne pas publier cet article',
+    defaultValue: false,
+  }),
+  seoRobots: fields.select({
+    label: 'Indexation',
+    options: [
+      { label: 'Indexer et suivre les liens', value: 'index, follow' },
+      { label: 'Ne pas indexer, suivre les liens', value: 'noindex, follow' },
+      { label: 'Ne pas indexer, ne pas suivre', value: 'noindex, nofollow' },
+    ],
+    defaultValue: 'index, follow',
+  }),
+  ogImage: fields.image({
+    label: 'Image Open Graph',
+    description: 'Image pour les réseaux sociaux (1200x630px). Utilise l\'image principale si vide.',
+    directory: 'public/images/og',
+    publicPath: '/images/og',
+  }),
+  // === CONTENU ===
+  content_fr: fields.mdx({
+    label: 'Contenu (FR)',
+    description: 'Contenu de l\'article en français',
+    options: {
+      image: {
+        directory: 'src/assets/images/blog/content',
+        publicPath: '/src/assets/images/blog/content',
+      },
+    },
+  }),
+  content_en: fields.mdx({
+    label: 'Contenu (EN)',
+    description: 'Article content in English',
+    options: {
+      image: {
+        directory: 'src/assets/images/blog/content',
+        publicPath: '/src/assets/images/blog/content',
+      },
+    },
+  }),
+};
+
+
+const projectsSchema = {
+  slug: fields.slug({
+    name: {
+      label: 'Identifiant (slug)',
+      description: 'Identifiant unique du projet (ex: cafe-belga)',
+      validation: { isRequired: true },
+    },
+  }),
+  // === CHAMPS LOCALISÉS ===
+  shortTitle_fr: fields.text({
+    label: 'Titre court (FR)',
+    description: 'Titre affiché dans les listes',
+    validation: { isRequired: true },
+  }),
+  shortTitle_en: fields.text({
+    label: 'Titre court (EN)',
+    validation: { isRequired: true },
+  }),
+  fullTitle_fr: fields.text({
+    label: 'Titre complet (FR)',
+    description: 'Titre affiché sur la page du projet',
+    validation: { isRequired: true },
+  }),
+  fullTitle_en: fields.text({
+    label: 'Titre complet (EN)',
+    validation: { isRequired: true },
+  }),
+  titleDisplay_fr: fields.text({
+    label: 'Titre display (FR)',
+    description: 'Titre stylisé avec HTML (ex: Café belga<br>web branding)',
+  }),
+  titleDisplay_en: fields.text({
+    label: 'Titre display (EN)',
+    description: 'Stylized title with HTML (e.g. Café belga<br>web branding)',
+  }),
+  description_fr: fields.mdx({
+    label: 'Description (FR)',
+    description: 'Description détaillée du projet',
+    options: {
+      image: {
+        directory: 'src/assets/images/projects/content',
+        publicPath: '/src/assets/images/projects/content',
+      },
+    },
+  }),
+  description_en: fields.mdx({
+    label: 'Description (EN)',
+    description: 'Detailed project description',
+    options: {
+      image: {
+        directory: 'src/assets/images/projects/content',
+        publicPath: '/src/assets/images/projects/content',
+      },
+    },
+  }),
+  // SEO localisé
+  seoDescription_fr: fields.text({
+    label: 'Description SEO (FR)',
+    description: 'Description pour les moteurs de recherche (150-160 caractères)',
+    validation: { isRequired: true, length: { min: 50, max: 160 } },
+    multiline: true,
+  }),
+  seoDescription_en: fields.text({
+    label: 'Description SEO (EN)',
+    validation: { isRequired: true, length: { min: 50, max: 160 } },
+    multiline: true,
+  }),
+  featuredImageAlt_fr: fields.text({
+    label: "Alt image principale (FR)",
+    validation: { isRequired: true },
+  }),
+  featuredImageAlt_en: fields.text({
+    label: "Alt image principale (EN)",
+    validation: { isRequired: true },
+  }),
+  // === CHAMPS PARTAGÉS ===
+  featuredImage: fields.image({
+    label: 'Image principale',
+    description: 'Image affichée dans les listes et en haut du projet',
+    directory: 'src/assets/images/projects',
+    publicPath: '/src/assets/images/projects',
+    validation: { isRequired: true },
+  }),
+  gallery: fields.array(
+    fields.object({
+      layout: fields.select({
+        label: 'Disposition',
+        options: [
+          { label: '1 image (pleine largeur)', value: 'full' },
+          { label: '2 images (côte à côte)', value: 'half' },
+        ],
+        defaultValue: 'full',
+      }),
+      image1: fields.image({
+        label: 'Image 1',
+        directory: 'src/assets/images/projects/gallery',
+        publicPath: '/src/assets/images/projects/gallery',
+        validation: { isRequired: true },
+      }),
+      alt1_fr: fields.text({
+        label: 'Alt image 1 (FR)',
+        description: 'Laisser vide pour utiliser: "[Nom projet] - Horde, agence web UX Bruxelles"',
+      }),
+      alt1_en: fields.text({
+        label: 'Alt image 1 (EN)',
+        description: 'Laisser vide pour utiliser: "[Project name] - Horde, Brussels UX web agency"',
+      }),
+      image2: fields.image({
+        label: 'Image 2 (si disposition 2 images)',
+        directory: 'src/assets/images/projects/gallery',
+        publicPath: '/src/assets/images/projects/gallery',
+      }),
+      alt2_fr: fields.text({
+        label: 'Alt image 2 (FR)',
+        description: 'Laisser vide pour utiliser le alt par défaut',
+      }),
+      alt2_en: fields.text({
+        label: 'Alt image 2 (EN)',
+        description: 'Laisser vide pour utiliser le alt par défaut',
+      }),
+    }),
+    {
+      label: 'Galerie',
+      itemLabel: (props) => {
+        const layout = props.fields.layout.value === 'full' ? '1 image' : '2 images';
+        return `Rangée - ${layout}`;
+      },
+    }
+  ),
+  projectTypes: fields.array(
+    fields.text({ label: 'Tag', validation: { isRequired: true } }),
+    {
+      label: 'Types de projet',
+      itemLabel: (props) => props.value || 'Nouveau tag',
+    }
+  ),
+  externalUrl: fields.url({
+    label: 'URL du projet',
+    description: 'Lien vers le site en ligne (optionnel)',
+  }),
+  inProgress: fields.checkbox({
+    label: 'En cours de réalisation',
+    description: 'Cocher si le projet n\'est pas encore terminé',
+    defaultValue: false,
+  }),
+  publishedDate: fields.date({
+    label: 'Date de publication',
+    validation: { isRequired: true },
+  }),
+  order: fields.integer({
+    label: 'Ordre d\'affichage',
+    description: 'Les projets sont triés par ordre croissant (1 = premier)',
+    defaultValue: 0,
+  }),
+  seoRobots: fields.select({
+    label: 'Indexation',
+    options: [
+      { label: 'Indexer et suivre les liens', value: 'index, follow' },
+      { label: 'Ne pas indexer, suivre les liens', value: 'noindex, follow' },
+      { label: 'Ne pas indexer, ne pas suivre', value: 'noindex, nofollow' },
+    ],
+    defaultValue: 'index, follow',
+  }),
+  ogImage: fields.image({
+    label: 'Image Open Graph',
+    description: "Image pour les réseaux sociaux (1200x630px)",
+    directory: 'public/images/og',
+    publicPath: '/images/og',
   }),
 };
 
@@ -409,40 +688,51 @@ for (const locale of LOCALES) {
   });
 }
 
-// Build localized collections
+// Collections
 const collections: Record<string, ReturnType<typeof collection>> = {};
 
-for (const locale of LOCALES) {
-  const label = localeLabels[locale];
+// Collection projets (multilingue)
+collections['projects'] = collection({
+  label: 'Projets',
+  slugField: 'slug',
+  path: 'src/content/projects/*',
+  schema: projectsSchema,
+});
 
-  collections[`posts_${locale}`] = collection({
-    label: `Articles (${label})`,
-    slugField: 'title',
-    path: `src/content/posts_${locale}/*`,
-    format: { contentField: 'content' },
-    schema: postsSchema,
-  });
+// Collections blog
+collections['authors'] = collection({
+  label: 'Auteurs',
+  slugField: 'slug',
+  path: 'src/content/authors/*',
+  schema: authorsSchema,
+});
 
-  collections[`pages_${locale}`] = collection({
-    label: `Pages (${label})`,
-    slugField: 'title',
-    path: `src/content/pages_${locale}/*`,
-    format: { contentField: 'content' },
-    schema: pagesSchema,
-  });
+collections['categories'] = collection({
+  label: 'Catégories Blog',
+  slugField: 'slug',
+  path: 'src/content/categories/*',
+  schema: categoriesSchema,
+});
 
-  collections[`testimonials_${locale}`] = collection({
-    label: `Témoignages (${label})`,
-    slugField: 'author',
-    path: `src/content/testimonials_${locale}/*`,
-    schema: testimonialsSchema,
-  });
-}
+collections['posts'] = collection({
+  label: 'Articles Blog',
+  slugField: 'slug',
+  path: 'src/content/posts/*',
+  schema: blogPostsSchema,
+});
+
+// Configuration storage conditionnelle: GitHub uniquement si KEYSTATIC_GITHUB=true
+const useGitHub = import.meta.env.KEYSTATIC_GITHUB === 'true';
 
 export default config({
-  storage: {
-    kind: 'local',
-  },
+  storage: useGitHub
+    ? {
+        kind: 'github',
+        repo: 'npremz/HordeWebsiteV2',
+      }
+    : {
+        kind: 'local',
+      },
   singletons,
   collections,
 });

@@ -1,6 +1,7 @@
 ---
 import Wrapped from "../ui/Wrapped.astro";
 import { DEFAULT_LOCALE, type Locale, useTranslations } from "../../i18n";
+import { getCollection } from "astro:content";
 
 interface Props {
 	lang?: Locale;
@@ -9,43 +10,41 @@ interface Props {
 const { lang = DEFAULT_LOCALE } = Astro.props;
 const t = useTranslations(lang);
 
-const projects = [
-	{
-		name: "Café Belga",
-		href: "https://belga.hordagency.com",
-		image: "/images/projects/belga.jpg",
-		inProgress: false,
-	},
-	{
-		name: "Merly",
-		href: null,
-		image: null,
-		inProgress: true,
-	},
-	{
-		name: "E-Putch",
-		href: null,
-		image: null,
-		inProgress: true,
-	},
-];
+// Récupérer les projets depuis Keystatic (collection unique multilingue)
+const rawProjects = await getCollection('projects');
+
+// Transformer et trier les projets (limité aux 3 premiers pour l'index)
+const projects = rawProjects
+	.sort((a, b) => (a.data.order || 0) - (b.data.order || 0))
+	.slice(0, 3)
+	.map((project) => ({
+		name: lang === 'fr' ? project.data.shortTitle_fr : project.data.shortTitle_en,
+		slug: project.data.slug,
+		image: project.data.featuredImage.src,
+		inProgress: project.data.inProgress,
+	}));
 ---
 
 <div class="flex flex-col">
 	<div
-		class="flex font-display gap-4 leading-none items-end text-[1.625rem] sm:text-[2.5rem] md:text-[3.125rem] lg:text-[4rem] uppercase"
+		class="flex font-display gap-4 leading-none items-end text-[1.625rem] sm:text-[2.5rem] md:text-[3.125rem] uppercase lg:justify-between"
 	>
 		<h2 set:html={t.projects.title.replace(/\n/g, "<br>")} />
-		<span
-			class="block font-mono text-[1rem] uppercase -translate-y-1 md:-translate-y-2"
-			>({String(projects.length).padStart(2, "0")})</span
+		<!-- Bouton desktop (lg+) -->
+		<a
+			href={`/${lang}/projets`}
+			class="hidden lg:flex group relative overflow-hidden font-mono text-[1rem] leading-none uppercase py-6 px-5 justify-center w-fit border border-lines bg-black text-white transition-colors duration-300 ease-in-out cursor-pointer self-end"
 		>
+			<span
+				class="absolute inset-0 bg-bg-light translate-x-[calc(-100%-1px)] group-hover:translate-x-0 transition-transform duration-400 ease-[cubic-bezier(0.25,0.46,0.45,0.94)]"
+			></span>
+			<span
+				class="relative z-10 text-white group-hover:text-black transition-colors duration-300"
+			>
+				{t.projects.otherProjects}
+			</span>
+		</a>
 	</div>
-	<a
-		href={`/${lang}/projects`}
-		class="hidden section-label text-[1rem] leading-none self-end mt-10 sm:mt-0 lg:-mt-[1lh]"
-		><Wrapped>{t.projects.otherProjects} →</Wrapped></a
-	>
 
 	<!-- Image flottante qui suit la souris (desktop only) -->
 	<div
@@ -69,7 +68,7 @@ const projects = [
 		</div>
 	</div>
 
-	<ol class="mt-10 sm:mt-16 text-2xl sm:text-[2rem] lg:text-[2.5rem]">
+	<ol class="mt-10 sm:mt-16 text-2xl sm:text-[2rem]">
 		{
 			projects.map((project, index) => (
 				<li
@@ -77,10 +76,9 @@ const projects = [
 					data-image={project.image || ""}
 					data-in-progress={project.inProgress}
 				>
-					{project.href ? (
+					{!project.inProgress ? (
 						<a
-							href={project.href}
-							target="_blank"
+							href={`/${lang}/projets/${project.slug}`}
 							class:list={[
 								"project-link flex justify-between py-5 xl:py-8 px-8 lg:px-9",
 								index === 0
@@ -113,6 +111,21 @@ const projects = [
 			))
 		}
 	</ol>
+
+	<!-- Bouton mobile (<lg) -->
+	<a
+		href={`/${lang}/projets`}
+		class="lg:hidden group relative overflow-hidden font-mono text-[1rem] leading-none uppercase py-6 px-5 flex justify-center w-full border border-lines bg-black text-white transition-colors duration-300 ease-in-out cursor-pointer mt-10 sm:mt-16"
+	>
+		<span
+			class="absolute inset-0 bg-bg-light translate-x-[calc(-100%-1px)] group-hover:translate-x-0 transition-transform duration-400 ease-[cubic-bezier(0.25,0.46,0.45,0.94)]"
+		></span>
+		<span
+			class="relative z-10 text-white group-hover:text-black transition-colors duration-300"
+		>
+			{t.projects.otherProjects}
+		</span>
+	</a>
 </div>
 
 <style>

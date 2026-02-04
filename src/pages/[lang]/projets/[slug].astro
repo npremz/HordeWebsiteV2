@@ -1,0 +1,195 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import Footer from '../../../components/Footer.astro';
+import Wrapped from '../../../components/ui/Wrapped.astro';
+import { Image } from 'astro:assets';
+import { SUPPORTED_LOCALES, type Locale, useTranslations } from '../../../i18n';
+import { getCollection } from 'astro:content';
+
+export const prerender = true;
+
+export async function getStaticPaths() {
+	const projects = await getCollection('projects');
+
+	return SUPPORTED_LOCALES.flatMap((lang) =>
+		projects
+			.filter((project) => !project.data.inProgress)
+			.map((project) => ({
+				params: { lang, slug: project.data.slug },
+				props: { project, lang },
+			}))
+	);
+}
+
+const { project, lang } = Astro.props as { project: any; lang: Locale };
+const t = useTranslations(lang);
+
+// Champs localisés
+const fullTitle = lang === 'fr' ? project.data.fullTitle_fr : project.data.fullTitle_en;
+const shortTitle = lang === 'fr' ? project.data.shortTitle_fr : project.data.shortTitle_en;
+const titleDisplay = lang === 'fr' ? project.data.titleDisplay_fr : project.data.titleDisplay_en;
+const seoDescription = lang === 'fr' ? project.data.seoDescription_fr : project.data.seoDescription_en;
+
+// Description - lire le contenu brut du fichier MDX
+const allDescriptions = import.meta.glob('../../../content/projects/*/description_*.mdx', { query: '?raw', import: 'default' });
+const descriptionPath = `../../../content/projects/${project.data.slug}/description_${lang}.mdx`;
+let descriptionContent = '';
+if (allDescriptions[descriptionPath]) {
+	descriptionContent = await allDescriptions[descriptionPath]() as string;
+}
+
+// Galerie
+const gallery = project.data.gallery || [];
+
+// Types de projet
+const projectTypes = project.data.projectTypes || [];
+
+// URL externe du projet
+const externalUrl = project.data.externalUrl;
+
+// Autres projets (pour le bouton)
+const allProjects = await getCollection('projects');
+const otherProjects = allProjects
+	.filter((p) => p.data.slug !== project.data.slug && !p.data.inProgress)
+	.sort((a, b) => (a.data.order || 0) - (b.data.order || 0));
+---
+
+<Layout lang={lang} title={fullTitle} description={seoDescription}>
+	<div class="fixed inset-0 bg-bg-light -z-10" aria-hidden="true"></div>
+	<div id="page-content" class="relative z-10">
+		<!-- Titre -->
+		<header class="pt-50 md:pt-78 mb-10">
+			<div class="flex flex-col sm:flex-row sm:justify-between font-display gap-5 leading-none">
+				<h1 class="leading-none text-[2rem] md:text-[2.5rem] lg:text-[3rem] uppercase" set:html={titleDisplay || fullTitle} />
+			</div>
+		</header>
+
+		<div class="lg:flex lg:justify-between lg:mb-22">
+			<!-- Description -->
+			{descriptionContent && (
+				<div>
+					<h2 class="section-label hidden sm:block mb-8">Résumé du projet</h2>
+					<section class="sm:mb-16 md:max-w-[700px] lg:mb-0">
+						{descriptionContent.split(/\n\n+/).filter(Boolean).map((paragraph: string) => (
+							<p class="mb-10" set:html={paragraph.trim()} />
+						))}
+					</section>
+				</div>
+			)}
+
+			<!-- Types de projet -->
+			<div class="lg:flex lg:flex-col lg: justify-between">
+				{projectTypes.length > 0 && (
+					<div class="hidden sm:flex flex-col gap-6 items-end lg:mb-0 lg:gap-8">
+						<h2 class="section-label ">Type de projet</h2>
+						<ul class="flex flex-col text-[1.25rem] leading-none gap-4 text-right">
+							{projectTypes.map((type: string) => (
+								<li>{type}</li>
+							))}
+						</ul>
+					</div>
+				)}
+				<div class="mb-10 sm:mb-32 sm:-mt-[1.414rem] lg:mt-0 lg:mb-10">
+					<Wrapped>
+						{externalUrl && (
+							<a
+								href={externalUrl}
+								target="_blank"
+								rel="noopener noreferrer"
+								class="cursor-pointer uppercase font-mono text-[1rem]"
+							>
+									{lang === 'fr' ? 'Voir le site' : 'View website'} →
+							</a>
+						)}
+					</Wrapped>
+				</div>
+			</div>
+		</div>
+
+		<!-- Galerie -->
+		{gallery.length > 0 && (
+			<section class="grid grid-cols-2 gap-[0.625rem] sm:gap-5 md:gap-6 lg:gap-10 mb-10 sm:mb-16">
+				{gallery.map((row: any, index: number) => {
+					const alt1 = lang === 'fr'
+						? (row.alt1_fr || `${shortTitle} - Horde, agence web UX Bruxelles`)
+						: (row.alt1_en || `${shortTitle} - Horde, Brussels UX web agency`);
+					const alt2 = lang === 'fr'
+						? (row.alt2_fr || `${shortTitle} - Horde, agence web UX Bruxelles`)
+						: (row.alt2_en || `${shortTitle} - Horde, Brussels UX web agency`);
+					const isFirst = index === 0;
+
+					return row.layout === 'full' ? (
+						<Image
+							src={row.image1}
+							alt={alt1}
+							class="col-span-2 w-full h-full object-cover"
+							widths={[250, 500, 800, 1200]}
+							sizes="(max-width: 640px) calc(100vw - 2rem), (max-width: 1024px) calc(100vw - 4rem), calc(100vw - 12rem)"
+							loading={isFirst ? "eager" : "lazy"}
+							fetchpriority={isFirst ? "high" : "auto"}
+							decoding="async"
+							format="webp"
+							quality={80}
+						/>
+					) : (
+						<>
+							<Image
+								src={row.image1}
+								alt={alt1}
+								class="w-full h-full object-cover"
+								widths={[150, 300, 500, 800]}
+								sizes="(max-width: 640px) calc(50vw - 1rem), (max-width: 1024px) calc(50vw - 2rem), calc(50vw - 6rem)"
+								loading={isFirst ? "eager" : "lazy"}
+								fetchpriority={isFirst ? "high" : "auto"}
+								decoding="async"
+								format="webp"
+								quality={80}
+							/>
+							{row.image2 && (
+								<Image
+									src={row.image2}
+									alt={alt2}
+									class="w-full h-full object-cover"
+									widths={[150, 300, 500, 800]}
+									sizes="(max-width: 640px) calc(50vw - 1rem), (max-width: 1024px) calc(50vw - 2rem), calc(50vw - 6rem)"
+									loading={isFirst ? "eager" : "lazy"}
+									fetchpriority={isFirst ? "high" : "auto"}
+									decoding="async"
+									format="webp"
+									quality={80}
+								/>
+							)}
+						</>
+					);
+				})}
+			</section>
+		)}
+
+		<!-- Boutons -->
+		<nav class="mb-10 flex flex-col sm:flex-row gap-4">
+			<a
+				href={`/${lang}/projets`}
+				class="group relative overflow-hidden font-mono text-[1rem] leading-none uppercase py-6 px-5 flex justify-center w-full md:w-fit border border-lines-dark bg-black text-white transition-colors duration-300 ease-in-out cursor-pointer"
+			>
+				<span class="absolute inset-0 bg-bg-light translate-x-[calc(-100%-1px)] group-hover:translate-x-0 transition-transform duration-400 ease-[cubic-bezier(0.25,0.46,0.45,0.94)]"></span>
+				<span class="relative z-10 text-white group-hover:text-black transition-colors duration-300">
+					{lang === 'fr' ? 'Autres projets' : 'Other projects'}
+				</span>
+			</a>
+		</nav>
+
+		<!-- Types de projet -->
+		{projectTypes.length > 0 && (
+			<div class="flex sm:hidden flex-col gap-6 items-end">
+				<h2 class="section-label">Type de projet</h2>
+				<ul class="flex flex-col text-[1.25rem] leading-none gap-4 text-right">
+					{projectTypes.map((type: string) => (
+						<li>{type}</li>
+					))}
+				</ul>
+			</div>
+		)}
+	</div>
+
+	<Footer lang={lang} hideOverflow={false} />
+</Layout>

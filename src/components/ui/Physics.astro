@@ -20,10 +20,7 @@ const {
     dark && "physics-dark",
   ]}
 >
-  <div class:list={["absolute inset-0", hideOverflow && "overflow-hidden"]}>
-    <div id="physics-cta" class="physics-cta uppercase" aria-hidden="true">
-      Assez joué, viens discuter ↓
-    </div>
+  <div class:list={["absolute inset-0", hideOverflow ? "overflow-hidden" : "pointer-events-none z-5"]}>
     <div
       id="logo-letters"
       class="absolute inset-0"
@@ -210,29 +207,6 @@ const {
   .physics-letter.physics-ready {
     opacity: 1;
   }
-
-  .physics-cta {
-    position: absolute;
-    z-index: 100;
-    padding: 1.25rem 1.5rem;
-    background: var(--color-black);
-    color: var(--color-bg-light);
-    font-family: var(--font-mono);
-    font-size: 1rem;
-    text-transform: uppercase;
-    pointer-events: none;
-    opacity: 0;
-    transform: translate(-50%, calc(-50% - 16px)) scale(0.8);
-    transition:
-      opacity 0.3s ease,
-      transform 0.3s ease;
-    white-space: nowrap;
-  }
-
-  .physics-cta.visible {
-    opacity: 1;
-    transform: translate(-50%, calc(-50% - 16px)) scale(1);
-  }
 </style>
 
 <script>
@@ -255,16 +229,6 @@ const {
   let currentEngine: Matter.Engine | null = null;
   let animationFrameId: number | null = null;
 
-  // CTA "Assez joué" - variables globales
-  const PLAY_TIME_THRESHOLD = 10000; // 10 secondes avant d'afficher
-  const CTA_DISPLAY_DURATION = 3300; // 3 secondes d'affichage
-  let playTimer: ReturnType<typeof setTimeout> | null = null;
-  let ctaHideTimer: ReturnType<typeof setTimeout> | null = null;
-  let ctaVisible = false;
-  let ctaShown = false; // Ne montrer qu'une seule fois
-  let mouseX = 0;
-  let mouseY = 0;
-
   function cleanupPhysics() {
     // Arrêter l'animation
     if (animationFrameId) {
@@ -279,80 +243,6 @@ const {
       Engine.clear(currentEngine);
       currentEngine = null;
     }
-
-    // Nettoyer les timers CTA
-    if (playTimer) {
-      clearTimeout(playTimer);
-      playTimer = null;
-    }
-    if (ctaHideTimer) {
-      clearTimeout(ctaHideTimer);
-      ctaHideTimer = null;
-    }
-  }
-
-  // Fonctions CTA "Assez joué"
-  function showCTA() {
-    if (ctaShown) return;
-    const cta = document.getElementById("physics-cta");
-    if (!cta) return;
-
-    ctaShown = true;
-    ctaVisible = true;
-    cta.classList.add("visible");
-    cta.style.left = `${mouseX}px`;
-    cta.style.top = `${mouseY}px`;
-
-    // Auto-hide après 3 secondes
-    ctaHideTimer = setTimeout(() => {
-      hideCTA();
-    }, CTA_DISPLAY_DURATION);
-  }
-
-  function hideCTA() {
-    const cta = document.getElementById("physics-cta");
-    if (!cta) return;
-
-    ctaVisible = false;
-    cta.classList.remove("visible");
-  }
-
-  function updateCTAPosition(e: MouseEvent) {
-    const container = document.getElementById("physics-container");
-    if (!container) return;
-
-    const rect = container.getBoundingClientRect();
-    mouseX = e.clientX - rect.left;
-    mouseY = e.clientY - rect.top;
-
-    if (ctaVisible) {
-      const cta = document.getElementById("physics-cta");
-      if (cta) {
-        cta.style.left = `${mouseX}px`;
-        cta.style.top = `${mouseY}px`;
-      }
-    }
-  }
-
-  function startPlayTimer() {
-    // Ne pas démarrer si déjà montré ou timer déjà en cours
-    if (ctaShown || playTimer) return;
-
-    playTimer = setTimeout(() => {
-      showCTA();
-    }, PLAY_TIME_THRESHOLD);
-  }
-
-  // Setup CTA event listeners
-  function setupCTA() {
-    const cta = document.getElementById("physics-cta");
-    if (!cta || ctaShown) return;
-
-    // Reset l'état
-    ctaVisible = false;
-    hideCTA();
-
-    document.addEventListener("mousemove", updateCTAPosition);
   }
 
   async function initPhysics() {
@@ -375,9 +265,6 @@ const {
 
     // Cleanup avant de réinitialiser
     cleanupPhysics();
-
-    // Setup CTA "Assez joué"
-    setupCTA();
 
     // Reset les classes et cacher les lettres
     letters.forEach((letter) => letter.classList.remove("physics-ready"));
@@ -463,11 +350,16 @@ const {
       let isDragging = false;
 
       const updateMousePosition = (e: MouseEvent) => {
-        if (!isDragging) return;
-        const containerRect = container.getBoundingClientRect();
-        const x = e.clientX - containerRect.left;
-        const y = e.clientY - containerRect.top;
-        Mouse.setPosition(mouse, { x, y });
+        if (!isDragging || !currentEngine || !mouse) return;
+        try {
+          const containerRect = container.getBoundingClientRect();
+          const x = e.clientX - containerRect.left;
+          const y = e.clientY - containerRect.top;
+          mouse.position.x = x;
+          mouse.position.y = y;
+        } catch {
+          // Ignorer si l'objet mouse n'est plus valide
+        }
       };
 
       const onMouseDown = () => {
@@ -476,19 +368,15 @@ const {
         document.body.style.cursor = "grabbing";
       };
 
-      const onMouseUp = (e: MouseEvent) => {
+      const onMouseUp = () => {
         if (!isDragging) return;
         isDragging = false;
         canvas.style.cursor = "grab";
         document.body.style.cursor = "";
-        // Forcer Matter.js à détecter le mouseup en mettant à jour l'état du bouton
-        mouse.button = -1;
-        // Mettre à jour la position finale
-        const containerRect = container.getBoundingClientRect();
-        Mouse.setPosition(mouse, {
-          x: e.clientX - containerRect.left,
-          y: e.clientY - containerRect.top,
-        });
+        // Forcer Matter.js à détecter le mouseup
+        if (mouse) {
+          mouse.button = -1;
+        }
       };
 
       canvas.addEventListener("mousedown", onMouseDown);
@@ -511,9 +399,6 @@ const {
         (event: { body: Matter.Body }) => {
           const body = event.body;
           if (!body) return;
-
-          // Démarrer le timer CTA au premier drag
-          startPlayTimer();
 
           const applyGravityTorque = () => {
             // Arrêter si l'engine a été nettoyé ou si on ne tient plus ce body

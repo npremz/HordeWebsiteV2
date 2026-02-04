@@ -9,6 +9,22 @@
 }
 
 @font-face {
+  font-family: 'PP Neue Montreal';
+  src: url('../assets/fonts/PPNeueMontreal-Medium.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'PP Neue Montreal';
+  src: url('../assets/fonts/PPNeueMontreal-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
   font-family: 'PP Neue Machina';
   src: url('../assets/fonts/PPNeueMachina-Light.woff2') format('woff2');
   font-weight: 300;
@@ -58,6 +74,7 @@
 @theme {
   --breakpoint-sm: 640px;
   --breakpoint-md: 1024px;
+  --breakpoint-slg: 1256px;
   --breakpoint-lg: 1512px;
   --breakpoint-xl: 1920px;
   --breakpoint-2xl: 2560px;
@@ -128,7 +145,7 @@
       opacity: 0;
     }
   }
-
+svh
   @keyframes fade-out {
     to {
       opacity: 0;
@@ -173,7 +190,13 @@ body {
 
   /* Section headers - monospace uppercase labels */
   .section-label {
-    @apply font-mono text-[1rem] uppercase;
+    @apply font-mono text-[1rem] uppercase text-black/70;
+  }
+
+  /* Dark variant for dark backgrounds */
+  .bg-black .section-label,
+  [data-theme="dark"] .section-label {
+    @apply text-white/70;
   }
 
   /* Display headings - large decorative titles */

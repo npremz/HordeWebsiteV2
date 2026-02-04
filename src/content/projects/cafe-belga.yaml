@@ -1,0 +1,46 @@
+slug: cafe-belga
+shortTitle_fr: Café Belga
+shortTitle_en: Café Belga
+fullTitle_fr: Café Belga - Site vitrine UX par Horde, agence web à Bruxelles
+fullTitle_en: Café Belga - UX showcase website by Horde, Brussels web agency
+titleDisplay_fr: Café belga<br>web branding
+titleDisplay_en: Café belga<br>web branding
+seoDescription_fr: >-
+  Horde, agence web UX à Bruxelles, a conçu le site vitrine du Café Belga.
+  Design moderne et performance optimale.
+seoDescription_en: >-
+  Horde, UX web agency in Brussels, designed the Café Belga showcase website.
+  Modern design and optimal performance.
+featuredImageAlt_fr: Site web Café Belga créé par Horde, agence web UX Bruxelles
+featuredImageAlt_en: Café Belga website created by Horde, Brussels UX web agency
+featuredImage: /src/assets/images/projects/cafe-belga/featuredImage.jpg
+gallery:
+  - layout: full
+    image1: /src/assets/images/projects/gallery/cafe-belga/gallery/0/image1.jpg
+  - layout: full
+    image1: /src/assets/images/projects/gallery/cafe-belga/gallery/1/image1.jpg
+  - layout: half
+    image1: /src/assets/images/projects/gallery/cafe-belga/gallery/2/image1.jpg
+    image2: /src/assets/images/projects/gallery/cafe-belga/gallery/2/image2.jpg
+  - layout: full
+    image1: /src/assets/images/projects/gallery/cafe-belga/gallery/3/image1.jpg
+  - layout: half
+    image1: /src/assets/images/projects/gallery/cafe-belga/gallery/4/image1.jpg
+    image2: /src/assets/images/projects/gallery/cafe-belga/gallery/4/image2.jpg
+  - layout: full
+    image1: /src/assets/images/projects/gallery/cafe-belga/gallery/5/image1.jpg
+  - layout: half
+    image1: /src/assets/images/projects/gallery/cafe-belga/gallery/6/image1.jpg
+    image2: /src/assets/images/projects/gallery/cafe-belga/gallery/6/image2.jpg
+  - layout: full
+    image1: /src/assets/images/projects/gallery/cafe-belga/gallery/7/image1.jpg
+projectTypes:
+  - Site vitrine
+  - UX Design
+  - Web Design
+  - Bruxelles
+externalUrl: https://belga.hordagency.com
+inProgress: false
+publishedDate: 2026-01-26
+order: 1
+seoRobots: index, follow

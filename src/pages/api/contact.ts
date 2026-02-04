@@ -1,17 +1,18 @@
 import type { APIRoute } from 'astro';
 import { Resend } from 'resend';
+import { z } from 'zod';
 
 export const prerender = false;
 
 const resend = new Resend(import.meta.env.RESEND_API_KEY);
 
-interface ContactFormData {
-  besoin: string;
-  objectif: string;
-  societe: string;
-  nom: string;
-  email: string;
-}
+const contactSchema = z.object({
+  besoin: z.enum(['audit-performance', 'optimisation-refonte', 'from-scratch-mvp', 'autre']),
+  objectif: z.string().min(1).max(2000),
+  nom: z.string().min(1).max(100),
+  email: z.string().email().max(254),
+  societe: z.string().max(200).optional().default(''),
+});
 
 const besoinLabels: Record<string, string> = {
   'audit-performance': 'Audit & performance',
@@ -22,25 +23,18 @@ const besoinLabels: Record<string, string> = {
 
 export const POST: APIRoute = async ({ request }) => {
   try {
-    const data: ContactFormData = await request.json();
+    const rawData = await request.json();
 
-    const { besoin, objectif, societe, nom, email } = data;
+    const result = contactSchema.safeParse(rawData);
 
-    // Validation
-    if (!besoin || !objectif || !nom || !email) {
+    if (!result.success) {
       return new Response(
-        JSON.stringify({ error: 'Champs requis manquants' }),
+        JSON.stringify({ error: 'Données invalides', details: result.error.flatten() }),
         { status: 400, headers: { 'Content-Type': 'application/json' } }
       );
     }
 
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
-      return new Response(
-        JSON.stringify({ error: 'Email invalide' }),
-        { status: 400, headers: { 'Content-Type': 'application/json' } }
-      );
-    }
+    const { besoin, objectif, societe, nom, email } = result.data;
 
     const besoinLabel = besoinLabels[besoin] || besoin;
 
