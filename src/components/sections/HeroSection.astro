@@ -24,11 +24,11 @@ const typewriterWords = t.hero.typewriterWords;
 
 <section class="relative h-svh -z-9998">
 	<div class="relative top-1/2 -translate-y-1/2 mt-10">
-		<div class="hidden md:flex justify-end mb-6">
+		<div class="hidden md:flex justify-end mb-6 slg:-translate-x-1/8">
 			<div
-				class="flex gap-8 md:gap-16 lg:gap-24 font-mono text-[1rem] uppercase slg:translate-x-[-12.5%]"
+				class="flex gap-8 md:gap-16 lg:gap-24 font-mono text-[1rem] uppercase"
 			>
-				<div class="flex flex-col gap-1 leading-[18px]">
+				<div class="flex flex-col gap-1 leading-[18px] text-right">
 					<span id="hero-time" data-days={JSON.stringify(t.hero.days)}
 						>{t.hero.days[2]} --:--:--</span
 					>
@@ -41,7 +41,7 @@ const typewriterWords = t.hero.typewriterWords;
 						></span
 					>
 				</div>
-				<div class="flex flex-col gap-1 leading-[18px]">
+				<div class="flex flex-col gap-1 leading-[18px] text-right">
 					<span>{t.hero.agency}</span>
 					<span>{t.hero.location}</span>
 				</div>
@@ -139,7 +139,7 @@ const typewriterWords = t.hero.typewriterWords;
 			</span>
 		</h1>
 		<button
-			class="hidden md:block mt-4 sm:mt-8 font-mono uppercase text-sm cursor-pointer scroll-to-btn slg:translate-x-[12.5%]"
+			class="hidden md:block mt-4 sm:mt-8 font-mono uppercase text-sm cursor-pointer scroll-to-btn slg:ml-[12.5%]"
 			data-scroll-target={scrollTarget}
 			><Wrapped class="text-[1rem]">↓</Wrapped></button
 		>
