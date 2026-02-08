@@ -1,3 +1,5 @@
 ---
-export const prerender = false;
+import { DEFAULT_LOCALE } from '../i18n';
+
+return Astro.redirect(`/${DEFAULT_LOCALE}/`, 301);
 ---
