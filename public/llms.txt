@@ -1,6 +1,6 @@
 # Horde Agence
 
-> Horde is a Brussels-based digital agency specializing in UX design and high-performance web development. We design ultra-fast interfaces.
+> Horde is a Brussels-based web agency specializing in UX design and high-performance web development. We design ultra-fast interfaces.
 
 ## About
 
