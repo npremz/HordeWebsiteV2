@@ -116,3 +116,6 @@ The website and services are available in French (default) and English. Primary 
 - Legal notices: https://hordeagence.com/fr/mentions-legales
 - Privacy policy: https://hordeagence.com/fr/confidentialite
 - Cookie policy: https://hordeagence.com/fr/cookies
+
+## More Information
+- [Full Content](/llms-full.txt): Comprehensive version containing all blog posts and project details.
