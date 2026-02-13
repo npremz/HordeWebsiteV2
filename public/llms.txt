@@ -1,10 +1,10 @@
-# Horde Agence
+# Horde — Agence Web Bruxelles
 
-> Horde is a Brussels-based web agency specializing in UX design and high-performance web development. We design ultra-fast interfaces.
+> Horde est une agence web basée à Bruxelles, spécialisée en UX design et développement web haute performance. Nous concevons des interfaces ultra-rapides. (English version below)
 
 ## About
 
-Horde is a two-person agency founded by Nicolas Premont (Developer) and Alexandre (UX Designer), each with 9+ years of experience. Our philosophy: no project managers, no useless meetings — just direct collaboration between senior experts and your project.
+Horde is a two-person web agency based in Brussels, founded by Nicolas Premont (Developer) and Alexandre (UX Designer), each with 9+ years of experience. Our philosophy: no project managers, no useless meetings — just direct collaboration between senior experts and your project.
 
 We operate under Belgian law, based in Brussels. Our approach combines deep UX expertise with technical excellence to deliver websites and applications that are genuinely fast, accessible, and conversion-optimized.
 
