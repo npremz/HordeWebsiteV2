@@ -1,0 +1,164 @@
+# Horde — Agence Web Bruxelles (Full Content)
+
+> Horde est une agence web bruxelloise spécialisée en UX design et développement web haute performance. Nous concevons des interfaces ultra-rapides.
+
+## About
+
+Horde is a leading web agency in Brussels, founded by Nicolas Premont (Developer) and Alexandre (UX Designer), each with 9+ years of experience. Our philosophy: no project managers, no useless meetings — just direct collaboration between senior experts and your project.
+
+We operate under Belgian law, based in Brussels. Our approach combines deep UX expertise with technical excellence to deliver websites and applications that are genuinely fast, accessible, and conversion-optimized.
+
+- Website: https://hordeagence.com
+- Email: hello@hordeagence.com
+- Booking: https://calendly.com/ni-premont/30min
+- LinkedIn: https://linkedin.com/company/horde-agence/
+- Instagram: https://instagram.com/hordeagencebxl/
+- GitHub: https://github.com/npremz
+
+## Full Project Details
+
+### Cafe Belga
+Nous avons travaillé dans un étude de cas qui était de créer un site web du Café Belga. La conception UX/UI a mis l'accent sur la simplicité, la réactivité et la cohérence visuelle.
+
+Construite sur NextJS, la plateforme comprend des fonctionnalités avancées permettant de gérer un système de réservation, les dates des prochains évenements et la carte des différents produits du Café Belga.
+
+- URL: https://belga.hordagency.com
+- Tags: Showcase website, UX/UI, Next.js
+
+### Merly Patrimoine
+Merly Patrimoine est un cabinet de gestion de patrimoine indépendant accompagnant les particuliers et entrepreneurs fortunés dans l'organisation, l'optimisation et la transmission de leur patrimoine. Leur modèle 100% honoraires garantit une totale objectivité dans leurs conseils, sans commission sur les produits financiers.
+
+Nous avons créé une identité graphique et un logo épurés et sophistiqués, reflétant à la fois leur expertise financière et leur approche moderne de la gestion de patrimoine. Au-delà du logo, nous avons conçu un site web complet avec une mise en page élégante et professionnelle, intégrant un simulateur fiscal interactif et des ressources pédagogiques pour accompagner leurs clients dans leurs décisions patrimoniales.
+
+- URL: https://merly.hordagency.com
+- Tags: Showcase website, UX/UI, Visual Identity
+
+## Full Blog Articles
+
+### En 2026, c'est quoi un site (vraiment) rapide?
+
+## C'est quoi un site (vraiment) rapide?
+
+C'est simple, vous pouvez le tester sur ce site: c'est un site qui charge instantanément, qu'on soit sur ordinateur, sur tablette, sur mobile, qu'on soit au bureau ou dans le train avec un faible signal 4G.
+
+**La réalité:** 60% de votre trafic vient du mobile, souvent avec une connexion instable. Un site pensé pour ces conditions, c'est 60% de vos visiteurs qui ne partent pas frustrés.
+
+## Pourquoi c'est important:
+
+**Taux de rebond:** Un site lent, c'est un visiteur qui s'en va aussi rapidement qu'il est arrivé. Les chiffres parlent d'eux-mêmes : **53% des utilisateurs mobiles abandonnent un site qui met plus de 3 secondes à charger** (Google). Chaque seconde compte.
+
+**Expérience utilisateur:** Chaque seconde d'attente dans votre parcours d'achat est une opportunité pour vos visiteurs d'abandonner ou de remettre ça à plus tard, voire souvent jamais. Un délai d'une seconde peut réduire les conversions de 7%, et un site qui charge en 5 secondes voit son taux de rebond augmenter de 90% comparé à un site qui charge en 1 seconde.
+
+Les utilisateurs perçoivent un site lent comme moins fiable, moins professionnel. **47% des consommateurs s'attendent à un chargement en moins de 2 secondes.** Ne pas répondre à cette attente, c'est perdre leur confiance dès les premières secondes.
+
+**Le référencement naturel:** Un site performant, c'est un site qui va très bien répondre aux mécanismes SEO. La vitesse de chargement est un facteur de classement officiel de Google depuis 2010. Les sites dans le top 3 des résultats ont généralement des temps de chargement sous les 2 secondes. Gagnez facilement des places dans les moteurs de recherche.
+
+**Empreinte numérique:** Un site léger et rapide, c'est un site qui tourne même sur les appareils les plus modestes. Un site optimisé peut réduire sa consommation énergétique jusqu'à 70%. À une époque où le prix des composants informatiques explose avec l'IA, nous pensons qu'il est important de repenser l'optimisation.
+
+## Les chiffres parlent d'eux-mêmes:
+
+Amazon a calculé que **chaque 100ms de latence leur coûte 1% de ventes**. Pinterest a augmenté ses conversions de 15% en réduisant le temps d'attente de 40%. Walmart a vu ses conversions augmenter de 2% pour chaque seconde gagnée.
+
+**Pour un e-commerce à 100K€/mois, 1 seconde de gagnée = potentiellement 14K€ de CA annuel en plus.**
+
+### Le résultat?
+
+Donc vous l'aurez compris, un site vraiment rapide, c'est mieux pour tout le monde.
+
+* **Pour vous :** Plus facile à maintenir, meilleur SEO, des utilisateurs qui ne font pas face à un mur technique.
+* **Pour vos utilisateurs :** Une expérience fluide, un téléphone qui ne chauffe pas en 30 secondes de navigation et un message reçu sans frictions.
+* **Pour l'environnement numérique :** Coûts serveur minimes, un site qui fonctionne sur le smartphone de mamie et une maintenance en détente.
+
+## Comment on y arrive?
+
+Code optimisé, images compressées intelligemment, lazy loading, CDN global, cache stratégique. Pas de framework lourd, pas de plugins inutiles. Juste ce qu'il faut, ultra-optimisé.
+
+**Core Web Vitals:** Google mesure la performance avec 3 métriques clés (LCP, FID, CLS). On optimise votre site pour exceller sur ces 3 indicateurs.
+
+## Testez par vous-même
+
+Ouvrez votre site actuel et celui-ci en même temps. La différence est immédiate. Vos visiteurs la ressentent aussi, à chaque visite.
+
+Et ça tombe bien, des sites ultra-rapides, c'est notre standard et c'est ce qu'on livre.
+
+Vous vous demandez comment appliquer ça à votre projet ? On vous montre **→ [réserver un call](https://calendly.com/ni-premont/30min)**
+
+---
+
+### Pourquoi avoir un site web quand les réseaux sociaux marchent déjà ?
+
+## Vos réseaux sociaux tournent. Et alors ?
+
+Vous postez régulièrement. Vos abonnés augmentent. Vous avez même des clients qui vous trouvent via Instagram. Alors pourquoi s'embêter avec un site web ?
+
+Parce que plus vos réseaux fonctionnent, plus vous en dépendez. Et cette dépendance, c'est quelqu'un d'autre qui la contrôle.
+
+## Le vrai problème : la dépendance
+
+Quand vos réseaux sociaux sont votre seul canal, chaque décision de la plateforme vous impacte directement. Changement d'algorithme, nouvelles règles, bug de modération. Vous subissez.
+
+**Ce qui s'est passé récemment :**
+
+* Depuis début 2025, **plus de 10 millions de comptes ont été désactivés par Meta**. Souvent sans explication, souvent par erreur
+* En décembre 2024, Instagram a **supprimé la possibilité de suivre des hashtags**, le dernier mécanisme fiable de découverte organique
+* **65% des créateurs ont perdu en visibilité** après la dernière mise à jour d'Instagram
+* Quand le ban de TikTok s'est profilé aux États-Unis, certaines entreprises ont réalisé que **90 à 98% de leur activité** en dépendait
+
+Funktasy Inc., une entreprise canadienne, a vu son compte Instagram de **98 000 abonnés** suspendu pendant un mois. Sans explication. Ils n'ont récupéré l'accès qu'après qu'un média national a contacté Meta directement.
+
+Ce ne sont pas des cas extrêmes. C'est le fonctionnement normal d'un système où vous n'avez aucun pouvoir de décision.
+
+## Vous ne contrôlez rien
+
+On appelle ça le **digital sharecropping**, le métayage numérique. Vous investissez du temps, de l'énergie et de l'argent pour bâtir une audience... sur le terrain de quelqu'un d'autre.
+
+**Ce que vous ne maîtrisez pas sur les réseaux :**
+
+* **Qui voit votre contenu.** La portée organique sur Facebook est tombée à **5,9%** (certaines études disent 2,6%). Sur Instagram : **4%**, en baisse de 18% sur un an. Sur X : **3%**. Si vous avez 1 000 abonnés, entre 30 et 60 personnes voient réellement vos publications
+* **Comment votre marque est présentée.** Votre contenu s'affiche au milieu de publicités, de concurrents et de distractions. Vous ne contrôlez ni le contexte, ni l'expérience
+* **Vos données.** Les plateformes collectent les données de votre audience. Pas vous. Vous ne savez pas précisément qui sont vos visiteurs, ce qu'ils cherchent, comment ils se comportent
+* **La durée de vie de votre contenu.** Un post social vit quelques heures. Un article de blog a une durée de vie moyenne de **1,95 an**
+
+Les plateformes réduisent volontairement la portée organique pour vous pousser vers la publicité payante. Plus vous dépendez d'elles, plus elles ont de levier sur vous.
+
+## Ce qu'un site web change
+
+Un site web, c'est un espace que vous possédez. Personne ne peut modifier les règles, limiter votre visibilité ou suspendre votre accès.
+
+**Vous reprenez le contrôle sur :**
+
+* **Votre image.** Vous décidez du design, du message, du parcours. Pas de publicités concurrentes, pas de distractions. Juste votre marque, comme vous l'avez pensée
+* **Votre audience.** Via un formulaire de contact ou une newsletter, vous construisez une liste email qui vous appartient. Aucun algorithme entre vous et vos contacts. Au Social Media Marketing World 2025, quand on a demandé aux marketeurs de choisir entre 10 000 abonnés réseaux ou 1 000 abonnés email, **pas un seul n'a choisi les réseaux**
+* **Votre visibilité.** Votre site est trouvable sur Google par des gens qui cherchent activement ce que vous proposez. Vous n'êtes plus soumis à un algorithme qui décide si votre contenu mérite d'être montré
+* **Vos données.** Vous savez qui visite votre site, d'où ils viennent, ce qui les intéresse. Ce sont vos données, pas celles de Meta
+
+C'est aussi un levier pour votre crédibilité. 84% des utilisateurs estiment qu'un business est plus crédible avec un site web dédié. 97% des acheteurs B2B vont vouloir consulter votre site internet avant de prendre contact. Un site web permet de signaler à votre audience que vous êtes une entreprise établie et pas juste un compte sur une plateforme.
+
+## Le bon équilibre : base + relais
+
+Ce n'est pas site web **ou** réseaux sociaux. C'est comprendre le rôle de chacun.
+
+**Votre site web = votre base.** C'est votre territoire. Vous y contrôlez tout : le message, l'expérience, les données, la relation avec vos visiteurs. C'est là que Google vous référence. C'est là que votre contenu travaille pour vous pendant des mois, voire des années.
+
+**Les réseaux sociaux = vos relais.** Ils créent du lien, montrent votre personnalité, amplifient votre message. Mais ils ramènent vers votre base, pas l'inverse.
+
+**La logique :** un abonné sur les réseaux devrait devenir un visiteur de votre site, puis un contact dans votre liste email. Parce que votre site et votre liste email sont les **seuls actifs numériques qui vous appartiennent vraiment**.
+
+## Reprenez le contrôle
+
+Si vos réseaux sociaux sont votre seul canal, vous êtes dépendant d'entreprises qui ne vous doivent rien. Ça fonctionne, jusqu'au jour où ça ne fonctionne plus.
+
+Un site rapide, bien conçu et référencé sur Google, c'est la fondation sur laquelle tout le reste s'appuie. C'est ce qui vous rend indépendant.
+
+Vous voulez reprendre la main sur votre présence en ligne ? On vous montre **→ [réserver un call](https://calendly.com/ni-premont/30min)**
+
+## Footer
+
+Horde Agence - Agence Web UX & Performance à Bruxelles.
+
+- **Contact**: hello@hordeagence.com
+- **Booking**: https://calendly.com/ni-premont/30min
+- **LinkedIn**: https://www.linkedin.com/company/horde-agence/
+- **Instagram**: https://www.instagram.com/hordeagencebxl/
+
+©2026 Horde Agence
