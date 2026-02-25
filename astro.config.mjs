@@ -14,6 +14,26 @@ const PORT = parseInt(process.env.PORT || '4328', 10);
 // Production = hordeagence.com (mode server pour Keystatic GitHub)
 // Staging/Dev = static
 const isProd = process.env.SITE_ENV === 'production';
+const redirectSourcePaths = new Set([
+  '/',
+  '/about',
+  '/blog',
+  '/contact',
+  '/cookies',
+  '/mentions-legales',
+  '/projets',
+]);
+
+function shouldIncludeInSitemap(page) {
+  try {
+    const normalizedPath = new URL(page).pathname.replace(/\/$/, '') || '/';
+    if (redirectSourcePaths.has(normalizedPath)) return false;
+    if (/^\/[a-z]{2}\/404$/.test(normalizedPath)) return false;
+    return true;
+  } catch {
+    return true;
+  }
+}
 
 // https://astro.build/config
 export default defineConfig({
@@ -33,11 +53,17 @@ export default defineConfig({
     preact({ include: ['**/components/**/*.tsx'] }),
     markdoc(),
     keystatic(),
-    sitemap()
+    sitemap({
+      filter: shouldIncludeInSitemap,
+    })
   ],
   prefetch: true,
   compressHTML: true,
   vite: {
     plugins: [tailwindcss()],
+    build: {
+      // Keystatic admin bundle is intentionally large and route-scoped.
+      chunkSizeWarningLimit: 3000,
+    },
   },
 });
