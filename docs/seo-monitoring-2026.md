@@ -87,7 +87,13 @@ zgrep -hE 'GPTBot|OAI-SearchBot|ChatGPT-User|ClaudeBot|anthropic-ai|PerplexityBo
 
 ### Option B - Dokploy container logs (recommended for your setup)
 
-The app now emits bot crawl events in logs with the marker `[bot-crawl]`.
+Enable bot crawl logging first (disabled by default for performance):
+
+```bash
+LOG_BOT_CRAWL=1
+```
+
+The app emits bot crawl events in logs with the marker `[bot-crawl]` only when `LOG_BOT_CRAWL=1`.
 
 Examples:
 
