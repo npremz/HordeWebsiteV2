@@ -194,11 +194,11 @@ const alternateSlug = lang === 'fr' ? post.data.slug : post.data.slug_fr;
 const switchLang = lang === 'fr' ? 'en' : 'fr';
 
 // URL de partage
-const shareUrl = `${Astro.site}${lang}/blog/${currentSlug}`;
-const siteUrl = Astro.site?.toString() || 'https://hordeagency.com';
-const articleUrl = `${siteUrl}${lang}/blog/${currentSlug}`;
+const siteUrl = (Astro.site?.toString() || 'https://hordeagence.com').replace(/\/$/, '');
+const articleUrl = `${siteUrl}/${lang}/blog/${currentSlug}`;
+const shareUrl = articleUrl;
 // URL pour le switch de langue (avec le slug de l'autre langue)
-const alternateUrl = `${siteUrl}${switchLang}/blog/${alternateSlug}`;
+const alternateUrl = `${siteUrl}/${switchLang}/blog/${alternateSlug}`;
 const imageUrl = post.data.featuredImage.src?.startsWith('http')
 	? post.data.featuredImage.src
 	: `${siteUrl}${post.data.featuredImage.src}`;
@@ -228,7 +228,7 @@ const schemaOrg = {
 				"url": siteUrl,
 				"logo": {
 					"@type": "ImageObject",
-					"url": `${siteUrl}images/logo.svg`
+					"url": `${siteUrl}/images/logo.svg`
 				}
 			},
 			"mainEntityOfPage": {
@@ -250,13 +250,13 @@ const schemaOrg = {
 					"@type": "ListItem",
 					"position": 1,
 					"name": lang === 'fr' ? 'Accueil' : 'Home',
-					"item": `${siteUrl}${lang}`
+					"item": `${siteUrl}/${lang}`
 				},
 				{
 					"@type": "ListItem",
 					"position": 2,
 					"name": "Blog",
-					"item": `${siteUrl}${lang}/blog`
+					"item": `${siteUrl}/${lang}/blog`
 				},
 				{
 					"@type": "ListItem",

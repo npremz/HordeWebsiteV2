@@ -9,11 +9,13 @@ export function getStaticPaths() {
   }));
 }
 
+export const prerender = true;
+
 export async function GET(context: APIContext) {
   const lang = context.params.lang as Locale;
   const posts = await getCollection('posts');
 
-  const siteUrl = context.site?.toString() || 'https://hordeagency.com';
+  const siteUrl = (context.site?.toString() || 'https://hordeagence.com').replace(/\/$/, '');
 
   const publishedPosts = posts
     .filter((post) => !post.data.draft)
@@ -29,7 +31,7 @@ export async function GET(context: APIContext) {
       title: lang === 'fr' ? post.data.title_fr : post.data.title_en,
       description: lang === 'fr' ? post.data.excerpt_fr : post.data.excerpt_en,
       pubDate: new Date(post.data.publishedDate),
-      link: `/${lang}/blog/${post.data.slug}/`,
+      link: `/${lang}/blog/${lang === 'fr' ? post.data.slug_fr : post.data.slug}/`,
     })),
     customData: `<language>${lang === 'fr' ? 'fr-FR' : 'en-US'}</language>`,
   });

@@ -6,6 +6,28 @@ export const GET: APIRoute = ({ site }) => {
   const robotsTxt = `User-agent: *
 Allow: /
 
+# AI Search Engine Crawlers
+User-agent: GPTBot
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
 Sitemap: ${sitemapURL}
 `;
 
