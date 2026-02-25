@@ -2,6 +2,7 @@ import { defineMiddleware } from 'astro:middleware';
 import { DEFAULT_LOCALE } from './i18n';
 
 const SHOULD_LOG_BOT_CRAWLS = process.env.LOG_BOT_CRAWL === '1';
+const IS_PROD = process.env.SITE_ENV === 'production';
 
 const TRACKED_BOTS = [
   'OAI-SearchBot',
@@ -24,6 +25,9 @@ export const onRequest = defineMiddleware(({ url, redirect, request, isPrerender
   const shouldTrackBotLogs = SHOULD_LOG_BOT_CRAWLS && !isPrerendered;
 
   if (url.pathname === '/') {
+    // During static prerender (staging), let the page itself handle redirect to avoid Astro's slow default redirect page.
+    if (isPrerendered && !IS_PROD) return next();
+
     if (!shouldTrackBotLogs) return redirect(`/${DEFAULT_LOCALE}/`, 302);
 
     const matchedBot = getMatchedBot(request.headers.get('user-agent') || '');
