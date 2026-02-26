@@ -10,11 +10,11 @@ excerpt_en: >-
   53% of users leave after 3s. A fast site is our standard: instant loading on
   all devices. Better SEO, better experience.
 seoDescription_fr: >-
-  Un site rapide booste votre SEO et vos conversions. 53% des visiteurs partent
-  après 3s d'attente. Découvrez comment on livre des sites ultra-performants.
+  Core Web Vitals, temps de chargement, mobile: découvrez comment rendre un site
+  vraiment rapide en 2026 pour améliorer SEO, UX et conversions.
 seoDescription_en: >-
-  A fast website boosts your SEO and conversions. 53% of visitors leave after
-  3s. Discover how we deliver ultra-high-performance websites.
+  Core Web Vitals, loading speed and mobile UX: learn what makes a truly fast
+  website in 2026 and how it improves SEO and conversions.
 featuredImageAlt_fr: Horde Agence | Lighthouse de hordeagence.com
 featuredImageAlt_en: Horde Agence | Lighthouse score of hordeagence.com
 featuredImage: /src/assets/images/blog/what-is-a-really-fast-website/featuredImage.jpg
@@ -23,10 +23,10 @@ thumbnailImage: >-
 author: nicolas-premont
 category: performance-web
 tags:
-  - Lighthouse
-  - Mobile
-  - User Experience
-  - Performance
+  - Core Web Vitals
+  - Vitesse de chargement
+  - SEO technique
+  - UX mobile
 publishedDate: 2026-01-30
 featured: false
 draft: false
