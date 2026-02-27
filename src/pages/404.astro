@@ -3,6 +3,7 @@
 import Layout from '../layouts/Layout.astro';
 import Footer from '../components/Footer.astro';
 import { DEFAULT_LOCALE, useTranslations } from '../i18n';
+import { formatHeadingHtml } from '../utils/heading-html';
 
 const lang = DEFAULT_LOCALE;
 const t = useTranslations(lang);
@@ -16,13 +17,14 @@ const t = useTranslations(lang);
 >
   <section class="mt-32 min-h-[70vh] flex flex-col justify-center items-center text-center">
     <span class="section-label mb-4">{t.notFound.error}</span>
-    <h1 class="font-display uppercase text-2xl sm:text-8xl lg:text-9xl leading-none mb-8" set:html={t.notFound.heading.replace(/\n/g, '<br>')} />
+    <h1 class="font-display uppercase text-2xl sm:text-8xl lg:text-9xl leading-none mb-8" set:html={formatHeadingHtml(t.notFound.heading)} />
     <p class="text-xl sm:text-2xl max-w-md mb-10">
       {t.notFound.description}
     </p>
     <a
       href={`/${lang}`}
       class="font-mono uppercase text-sm border border-black px-6 py-4 hover:bg-black hover:text-bg-light! transition-colors duration-300"
+      title={t.notFound.backHome}
     >
       {t.notFound.backHome}
     </a>

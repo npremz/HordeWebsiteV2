@@ -2,6 +2,7 @@
 import Line from "../ui/Line.astro";
 import Wrapped from "../ui/Wrapped.astro";
 import { DEFAULT_LOCALE, type Locale, useTranslations } from "../../i18n";
+import { formatHeadingHtml } from "../../utils/heading-html";
 
 interface Props {
 	lang?: Locale;
@@ -52,7 +53,7 @@ const typewriterWords = t.hero.typewriterWords;
 		>
 			<span
 				class="block mb-2 slg:translate-x-1/8"
-				set:html={titleLine1.replace(/\n/g, "<br>")}
+				set:html={formatHeadingHtml(titleLine1)}
 			/>
 			<svg
 				class="block lg:hidden -z-10 absolute w-[calc(100%-2*1rem)] -translate-y-[65.1%] center-x"
@@ -123,8 +124,9 @@ const typewriterWords = t.hero.typewriterWords;
 			</svg>
 			<Line dotClass="z-9999" />
 			<span class="block text-right pt-[5px] md:pt-[13px] slg:-translate-x-1/8">
-				{titleLine2}{titleLine2 && <br />}
-				{titleLine3Prefix}{' '}<br /><span class="word-rotator">
+				{titleLine2}
+				{titleLine2 && <> <br /> </>}
+				{titleLine3Prefix}{' '} <br /> <span class="word-rotator">
 					<span class="word-rotator-inner">
 						{
 							typewriterWords.map((word) => (

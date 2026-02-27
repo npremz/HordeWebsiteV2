@@ -5,6 +5,7 @@ import Wrapped from '../../components/ui/Wrapped.astro';
 import { Image } from 'astro:assets';
 import { SUPPORTED_LOCALES, type Locale, useTranslations } from '../../i18n';
 import { getCollection } from 'astro:content';
+import { formatHeadingHtml } from '../../utils/heading-html';
 
 export const prerender = true;
 
@@ -73,7 +74,7 @@ function formatDate(date: Date, locale: string): string {
 			<!-- Breadcrumbs -->
 			<nav aria-label="Breadcrumb" class="mb-8">
 				<ol class="flex items-center gap-2 section-label flex-wrap">
-					<li><a href={`/${lang}`} class="hover:text-black transition-colors">{lang === 'fr' ? 'Accueil' : 'Home'}</a></li>
+					<li><a href={`/${lang}`} class="hover:text-black transition-colors" title={lang === 'fr' ? 'Accueil' : 'Home'}>{lang === 'fr' ? 'Accueil' : 'Home'}</a></li>
 					<li><span class="mx-1">/</span></li>
 					<li aria-current="page" class="text-black">Blog</li>
 				</ol>
@@ -81,7 +82,7 @@ function formatDate(date: Date, locale: string): string {
 
 			<div class="flex flex-col leading-none">
 				<span class="section-label mb-8">{lang === 'fr' ? 'Un petit café avec la lecture ?' : 'A coffee with your reading?'}</span>
-				<h1 class="leading-none font-display text-[2rem] md:text-[2.5rem] lg:text-[3rem] uppercase" set:html={t.blogPage.heading.replace(/\n/g, '<br>')} />
+				<h1 class="leading-none font-display text-[2rem] md:text-[2.5rem] lg:text-[3rem] uppercase" set:html={formatHeadingHtml(t.blogPage.heading)} />
 			</div>
 		</div>
 
@@ -97,7 +98,7 @@ function formatDate(date: Date, locale: string): string {
 					: Math.floor(index / 3) % 2 === 0 ? "slg:justify-self-end" : "slg:justify-self-start";
 				return (
 				<li class:list={["post-item-grid", sm, slg]} data-image={post.image.src || ""}>
-					<a href={`/${lang}/blog/${post.slug}`}>
+					<a href={`/${lang}/blog/${post.slug}`} title={post.title}>
 						<div class="overflow-hidden mb-8 sm:max-w-70! slg:max-w-80! aspect-square">
 							<Image
 								src={post.image}

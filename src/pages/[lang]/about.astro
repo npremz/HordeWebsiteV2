@@ -5,6 +5,7 @@ import Line from '../../components/ui/Line.astro';
 import Wrapped from '../../components/ui/Wrapped.astro';
 import { Image } from 'astro:assets';
 import { SUPPORTED_LOCALES, type Locale, useTranslations } from '../../i18n';
+import { formatHeadingHtml } from '../../utils/heading-html';
 import nousImage from '../../assets/images/nous-opti.jpg';
 import keyboard from '../../assets/images/keyboard_a.jpg';
 import nico from '../../assets/images/nico.jpg'
@@ -36,7 +37,7 @@ const workingWithUs = t.aboutPage.workingWithUs;
 				<h1
 					class="font-display relative uppercase leading-[0.9] text-4xl sm:text-[3.25rem] md:text-[4.875rem] lg:text-[6.25rem]"
 				>
-					<span class="block mb-2 slg:translate-x-1/8">Deux<br>cerveaux,</span>
+					<span class="block mb-2 slg:translate-x-1/8" set:html={formatHeadingHtml(t.aboutPage.heroTitle1)} />
 					<svg
 						class="block lg:hidden -z-10 absolute w-[calc(100%-2*1rem)] -translate-y-[65.1%] center-x"
 						viewBox="0 0 531 1243"
@@ -105,7 +106,7 @@ const workingWithUs = t.aboutPage.workingWithUs;
 							stroke="#B1B1B1"></path>
 					</svg>
 					<Line dotClass="z-9999" />
-					<span class="block text-right pt-[5px] md:pt-[13px] slg:-translate-x-1/8" set:html={t.aboutPage.heroTitle2.replace(/\n/g, '<br>')} />
+					<span class="block text-right pt-[5px] md:pt-[13px] slg:-translate-x-1/8" set:html={formatHeadingHtml(t.aboutPage.heroTitle2)} />
 				</h1>
 			</div>
 			<button
@@ -142,7 +143,7 @@ const workingWithUs = t.aboutPage.workingWithUs;
 		<div class="flex sm:px-5 md:px-8 justify-between items-end mt-16 sm:mt-32 md:mt-50">
 			<h2
 				class="methods-title font-display uppercase leading-none text-[2rem] sm:text-[3.25rem]"
-				set:html={t.method.title.replace(/\n/g, "<br>")}
+				set:html={formatHeadingHtml(t.method.title)}
 			/>
 		</div>
 		<section class="mt-10 sm:mt-32 mb-10 slg:flex slg:flex-col">
@@ -163,8 +164,8 @@ const workingWithUs = t.aboutPage.workingWithUs;
 				<h2
 					class="font-display relative uppercase leading-[0.9] text-4xl sm:text-[3.25rem] md:text-[4.875rem] lg:text-[6.5rem]"
 				>
-					<span class="block mb-2" set:html={t.aboutPage.workingTitle1.replace(/\n/g, '<br>')} />
-					<span class="block text-right pt-[5px] md:pt-[13px]" set:html={t.aboutPage.workingTitle2.replace(/\n/g, '<br>')} />
+					<span class="block mb-2" set:html={formatHeadingHtml(t.aboutPage.workingTitle1)} />
+					<span class="block text-right pt-[5px] md:pt-[13px]" set:html={formatHeadingHtml(t.aboutPage.workingTitle2)} />
 				</h2>
 			</div>
 			<ul class="mt-16 sm:mt-50 sm divide-y divide-lines border-t border-b border-lines">
@@ -187,8 +188,8 @@ const workingWithUs = t.aboutPage.workingWithUs;
 				<h2
 					class="font-display relative slg:static uppercase leading-[0.9] text-4xl sm:text-[3.25rem]"
 				>
-					<span class="slg:absolute block mb-2 slg:m-0" set:html={t.aboutPage.teamTitle1.replace(/\n/g, '<br>')} />
-					<span class="slg:absolute block text-right pt-[5px] md:pt-[13px] slg:p-0 slg:bottom-0 slg:right-0" set:html={t.aboutPage.teamTitle2.replace(/\n/g, '<br>')} />
+					<span class="slg:absolute block mb-2 slg:m-0" set:html={formatHeadingHtml(t.aboutPage.teamTitle1)} />
+					<span class="slg:absolute block text-right pt-[5px] md:pt-[13px] slg:p-0 slg:bottom-0 slg:right-0" set:html={formatHeadingHtml(t.aboutPage.teamTitle2)} />
 				</h2>
 			</div>
 			<div class="mt-10 sm:mt-24">
@@ -234,6 +235,7 @@ const workingWithUs = t.aboutPage.workingWithUs;
 			<a
 				href={`/${lang}/contact`}
 				class="group relative overflow-hidden font-mono text-[1rem] leading-none uppercase py-6 px-5 flex justify-center w-full md:w-fit md:ml-auto border border-lines-dark bg-black text-white transition-colors duration-300 ease-in-out cursor-pointer"
+				title={t.aboutPage.cta}
 			>
 				<span
 					class="absolute inset-0 bg-bg translate-x-[calc(-100%-1px)] group-hover:translate-x-0 transition-transform duration-400 ease-[cubic-bezier(0.25,0.46,0.45,0.94)]"

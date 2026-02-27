@@ -51,9 +51,9 @@ const t = useTranslations(lang);
         <div class="sticky top-32">
           <p class="section-label mb-8">Navigation</p>
           <ul class="space-y-4 font-mono text-sm uppercase">
-            <li><a href={`/${lang}/mentions-legales`} class="link-hover">{t.legal.mentionsLegales}</a></li>
-            <li><a href={`/${lang}/confidentialite`} class="link-hover">{t.legal.confidentialite}</a></li>
-            <li><a href={`/${lang}/cookies`} class="link-hover">{t.legal.cookies}</a></li>
+            <li><a href={`/${lang}/mentions-legales`} class="link-hover" title={t.legal.mentionsLegales}>{t.legal.mentionsLegales}</a></li>
+            <li><a href={`/${lang}/confidentialite`} class="link-hover" title={t.legal.confidentialite}>{t.legal.confidentialite}</a></li>
+            <li><a href={`/${lang}/cookies`} class="link-hover" title={t.legal.cookies}>{t.legal.cookies}</a></li>
           </ul>
         </div>
       </aside>
@@ -69,6 +69,7 @@ const t = useTranslations(lang);
       <a
         href={`/${lang}`}
         class="section-label link-hover flex items-center gap-2"
+        title={t.legal.backHome}
       >
         <span>←</span> {t.legal.backHome}
       </a>

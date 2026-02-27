@@ -5,6 +5,7 @@ import Wrapped from '../../components/ui/Wrapped.astro';
 import { Image } from 'astro:assets';
 import { SUPPORTED_LOCALES, type Locale, useTranslations } from '../../i18n';
 import { getCollection } from 'astro:content';
+import { formatHeadingHtml } from '../../utils/heading-html';
 
 export const prerender = true;
 
@@ -42,7 +43,7 @@ const projectCount = projects.length;
 	<div id="page-content" class="relative z-10">
 		<div class="pt-80 xl:pt-96">
 			<div class="flex flex-col sm:flex-row sm:justify-between font-display gap-5 leading-none">
-				<h1 class="leading-none text-[2rem] md:text-[2.5rem] lg:text-[3rem] uppercase" set:html={t.projectsPage.heading.replace(/\n/g, '<br>')} />
+				<h1 class="leading-none text-[2rem] md:text-[2.5rem] lg:text-[3rem] uppercase" set:html={formatHeadingHtml(t.projectsPage.heading)} />
 				<span class="hidden sm:block self-stretch w-px bg-lines"></span>
 				<div class="flex flex-col items-end gap-4 sm:gap-0 sm:justify-between">
 					<p>{t.projectsPage.projectCount}</p>
@@ -84,7 +85,7 @@ const projectCount = projects.length;
 				return (
 				<li class:list={["project-item-grid", sm, slg]} data-image={project.image.src || ""} data-in-progress={project.inProgress}>
 					{!project.inProgress ? (
-						<a href={`/${lang}/projets/${project.slug}`}>
+						<a href={`/${lang}/projets/${project.slug}`} title={project.name}>
 							<div class="overflow-hidden mb-8 sm:max-w-70! slg:max-w-80! aspect-square">
 								<Image
 									src={project.image}
@@ -155,6 +156,7 @@ const projectCount = projects.length;
 								"project-link flex justify-between py-5 xl:py-8 px-8 lg:px-9",
 								index === 0 ? "border border-lines" : "border-b border-x border-lines",
 							]}
+							title={project.name}
 						>
 							<p>{project.name}</p>
 							<Wrapped class="text-[1rem] font-mono">→</Wrapped>

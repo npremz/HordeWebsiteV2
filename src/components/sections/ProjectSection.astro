@@ -2,6 +2,7 @@
 import Wrapped from "../ui/Wrapped.astro";
 import { DEFAULT_LOCALE, type Locale, useTranslations } from "../../i18n";
 import { getCollection } from "astro:content";
+import { formatHeadingHtml } from "../../utils/heading-html";
 
 interface Props {
 	lang?: Locale;
@@ -29,10 +30,11 @@ const projects = rawProjects
 	<div
 		class="flex font-display gap-4 leading-none items-end text-[1.625rem] sm:text-[2.5rem] md:text-[3.125rem] uppercase lg:justify-between"
 	>
-		<h2 set:html={t.projects.title.replace(/\n/g, "<br>")} />
+		<h2 set:html={formatHeadingHtml(t.projects.title)} />
 		<!-- Bouton desktop (lg+) -->
 		<a
 			href={`/${lang}/projets`}
+			title={t.projects.otherProjects}
 			class="hidden lg:flex group relative overflow-hidden font-mono text-[1rem] leading-none uppercase py-6 px-5 justify-center w-fit border border-lines bg-black text-white transition-colors duration-300 ease-in-out cursor-pointer self-end"
 		>
 			<span
@@ -76,12 +78,13 @@ const projects = rawProjects
 					data-image={project.image || ""}
 					data-in-progress={project.inProgress}
 				>
-					{!project.inProgress ? (
-						<a
-							href={`/${lang}/projets/${project.slug}`}
-							class:list={[
-								"project-link flex justify-between py-5 xl:py-8 px-8 lg:px-9",
-								index === 0
+						{!project.inProgress ? (
+							<a
+								href={`/${lang}/projets/${project.slug}`}
+								title={project.name}
+								class:list={[
+									"project-link flex justify-between py-5 xl:py-8 px-8 lg:px-9",
+									index === 0
 									? "border border-lines"
 									: "border-b border-x border-lines",
 							]}
@@ -115,6 +118,7 @@ const projects = rawProjects
 	<!-- Bouton mobile (<lg) -->
 	<a
 		href={`/${lang}/projets`}
+		title={t.projects.otherProjects}
 		class="lg:hidden group relative overflow-hidden font-mono text-[1rem] leading-none uppercase py-6 px-5 flex justify-center w-full border border-lines bg-black text-white transition-colors duration-300 ease-in-out cursor-pointer mt-10 sm:mt-16"
 	>
 		<span

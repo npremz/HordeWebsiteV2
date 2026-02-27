@@ -75,9 +75,9 @@ const pageDescription = categoryDescription || `${lang === 'fr' ? 'Articles sur'
 			<!-- Breadcrumbs -->
 			<nav aria-label="Breadcrumb" class="mb-8">
 				<ol class="flex items-center gap-2 section-label flex-wrap">
-					<li><a href={`/${lang}`} class="hover:text-black transition-colors">{lang === 'fr' ? 'Accueil' : 'Home'}</a></li>
+					<li><a href={`/${lang}`} class="hover:text-black transition-colors" title={lang === 'fr' ? 'Accueil' : 'Home'}>{lang === 'fr' ? 'Accueil' : 'Home'}</a></li>
 					<li><span class="mx-1">/</span></li>
-					<li><a href={`/${lang}/blog`} class="hover:text-black transition-colors">Blog</a></li>
+					<li><a href={`/${lang}/blog`} class="hover:text-black transition-colors" title="Blog">Blog</a></li>
 					<li><span class="mx-1">/</span></li>
 					<li aria-current="page" class="text-black truncate max-w-[150px] sm:max-w-none">{categoryName}</li>
 				</ol>
@@ -109,7 +109,7 @@ const pageDescription = categoryDescription || `${lang === 'fr' ? 'Articles sur'
 						: Math.floor(index / 3) % 2 === 0 ? "slg:justify-self-end" : "slg:justify-self-start";
 					return (
 					<li class:list={["post-item-grid", sm, slg]} data-image={post.image.src || ""}>
-						<a href={`/${lang}/blog/${post.slug}`}>
+						<a href={`/${lang}/blog/${post.slug}`} title={post.title}>
 							<div class="overflow-hidden mb-8 sm:max-w-70! slg:max-w-80! aspect-square">
 								<Image
 									src={post.image}
@@ -149,6 +149,7 @@ const pageDescription = categoryDescription || `${lang === 'fr' ? 'Articles sur'
 			<a
 				href={`/${lang}/blog`}
 				class="group relative overflow-hidden font-mono text-[1rem] leading-none uppercase py-6 px-5 flex justify-center w-full md:w-fit border border-lines-dark bg-black text-white transition-colors duration-300 ease-in-out cursor-pointer"
+				title={lang === 'fr' ? 'Tous les articles' : 'All articles'}
 			>
 				<span class="absolute inset-0 bg-bg-light translate-x-[calc(-100%-1px)] group-hover:translate-x-0 transition-transform duration-400 ease-[cubic-bezier(0.25,0.46,0.45,0.94)]"></span>
 				<span class="relative z-10 text-white group-hover:text-black transition-colors duration-300">
