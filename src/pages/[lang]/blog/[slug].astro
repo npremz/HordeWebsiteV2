@@ -174,7 +174,7 @@ function applyInlineFormatting(text: string): string {
 	result = result.replace(/\*([^*]+)\*/g, '<em>$1</em>');
 
 	// Liens
-	result = result.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" class="underline! underline-offset-4 hover:opacity-70 transition-opacity">$1</a>');
+	result = result.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" title="$1" class="underline! underline-offset-4 hover:opacity-70 transition-opacity">$1</a>');
 
 	return result;
 }
@@ -281,11 +281,11 @@ const schemaOrg = {
 			<!-- Breadcrumbs -->
 			<nav aria-label="Breadcrumb" class="mb-8">
 				<ol class="flex items-center gap-2 section-label flex-wrap">
-					<li><a href={`/${lang}`} class="hover:text-black transition-colors">{lang === 'fr' ? 'Accueil' : 'Home'}</a></li>
+					<li><a href={`/${lang}`} class="hover:text-black transition-colors" title={lang === 'fr' ? 'Accueil' : 'Home'}>{lang === 'fr' ? 'Accueil' : 'Home'}</a></li>
 					<li><span class="mx-1">/</span></li>
-					<li class="hidden sm:block"><a href={`/${lang}/blog`} class="hover:text-black transition-colors">Blog</a></li>
+					<li class="hidden sm:block"><a href={`/${lang}/blog`} class="hover:text-black transition-colors" title="Blog">Blog</a></li>
 					<li class="hidden sm:block"><span class="mx-1">/</span></li>
-					<li><a href={`/${lang}/blog/category/${post.data.category}`} class="hover:text-black transition-colors">{categoryName}</a></li>
+					<li><a href={`/${lang}/blog/category/${post.data.category}`} class="hover:text-black transition-colors" title={categoryName}>{categoryName}</a></li>
 					<li><span class="mx-1">/</span></li>
 					<li aria-current="page" class="text-black truncate max-w-[150px] sm:max-w-[250px] md:max-w-[350px]">{title}</li>
 				</ol>
@@ -375,6 +375,7 @@ const schemaOrg = {
 									<a
 										href={`#${heading.id}`}
 										class="flex items-baseline gap-3 hover:text-black/60 transition-colors"
+										title={heading.text}
 									>
 										<span class="section-label">{String(index + 1).padStart(2, '0')}</span>
 										<span>{heading.text}</span>
@@ -404,6 +405,7 @@ const schemaOrg = {
 									<a
 										href={`/${lang}/blog/tag/${slugify(tag)}`}
 										class="group relative overflow-hidden py-6 px-5 border border-lines text-[1rem] font-mono uppercase leading-none"
+										title={tag}
 									>
 										<span class="absolute inset-0 bg-black translate-x-[calc(-100%-1px)] group-hover:translate-x-0 transition-transform duration-400 ease-[cubic-bezier(0.25,0.46,0.45,0.94)]"></span>
 										<span class="relative z-10 transition-colors duration-300 group-hover:text-white">{tag}</span>
@@ -422,6 +424,7 @@ const schemaOrg = {
 								target="_blank"
 								rel="noopener noreferrer"
 								class="group relative overflow-hidden py-6 px-5 border border-lines font-mono text-[1rem] uppercase leading-none"
+								title="Twitter"
 							>
 								<span class="absolute inset-0 bg-black translate-x-[calc(-100%-1px)] group-hover:translate-x-0 transition-transform duration-400 ease-[cubic-bezier(0.25,0.46,0.45,0.94)]"></span>
 								<span class="relative z-10 transition-colors duration-300 group-hover:text-white">Twitter</span>
@@ -431,6 +434,7 @@ const schemaOrg = {
 								target="_blank"
 								rel="noopener noreferrer"
 								class="group relative overflow-hidden py-6 px-5 border border-lines font-mono text-[1rem] uppercase leading-none"
+								title="LinkedIn"
 							>
 								<span class="absolute inset-0 bg-black translate-x-[calc(-100%-1px)] group-hover:translate-x-0 transition-transform duration-400 ease-[cubic-bezier(0.25,0.46,0.45,0.94)]"></span>
 								<span class="relative z-10 transition-colors duration-300 group-hover:text-white">LinkedIn</span>
@@ -472,17 +476,17 @@ const schemaOrg = {
 							{author.social && (
 								<div class="flex gap-4 mt-8">
 									{author.social.twitter && (
-										<a href={`https://twitter.com/${author.social.twitter}`} target="_blank" rel="noopener noreferrer" class="text-black/60 hover:text-black transition-colors">
+										<a href={`https://twitter.com/${author.social.twitter}`} target="_blank" rel="noopener noreferrer" class="text-black/60 hover:text-black transition-colors" title="Twitter">
 											Twitter
 										</a>
 									)}
 									{author.social.linkedin && (
-										<a href={author.social.linkedin} target="_blank" rel="noopener noreferrer" class="text-black/60 hover:text-black transition-colors">
+										<a href={author.social.linkedin} target="_blank" rel="noopener noreferrer" class="text-black/60 hover:text-black transition-colors" title="LinkedIn">
 											LinkedIn
 										</a>
 									)}
 									{author.social.github && (
-										<a href={`https://github.com/${author.social.github}`} target="_blank" rel="noopener noreferrer" class="text-black/60 hover:text-black transition-colors">
+										<a href={`https://github.com/${author.social.github}`} target="_blank" rel="noopener noreferrer" class="text-black/60 hover:text-black transition-colors" title="GitHub">
 											GitHub
 										</a>
 									)}
@@ -513,17 +517,17 @@ const schemaOrg = {
 									{author.social && (
 										<div class="flex lg:flex-col gap-4 mt-8 lg:mt-0 shrink-0">
 											{author.social.twitter && (
-												<a href={`https://twitter.com/${author.social.twitter}`} target="_blank" rel="noopener noreferrer" class="text-black/60 hover:text-black transition-colors">
+												<a href={`https://twitter.com/${author.social.twitter}`} target="_blank" rel="noopener noreferrer" class="text-black/60 hover:text-black transition-colors" title="Twitter">
 													Twitter
 												</a>
 											)}
 											{author.social.linkedin && (
-												<a href={author.social.linkedin} target="_blank" rel="noopener noreferrer" class="text-black/60 hover:text-black transition-colors">
+												<a href={author.social.linkedin} target="_blank" rel="noopener noreferrer" class="text-black/60 hover:text-black transition-colors" title="LinkedIn">
 													LinkedIn
 												</a>
 											)}
 											{author.social.github && (
-												<a href={`https://github.com/${author.social.github}`} target="_blank" rel="noopener noreferrer" class="text-black/60 hover:text-black transition-colors">
+												<a href={`https://github.com/${author.social.github}`} target="_blank" rel="noopener noreferrer" class="text-black/60 hover:text-black transition-colors" title="GitHub">
 													GitHub
 												</a>
 											)}
@@ -543,7 +547,7 @@ const schemaOrg = {
 				<h2 class="font-display text-[1.5rem] md:text-[2rem] uppercase mb-10">{t.blogPage.relatedArticles}</h2>
 				<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
 					{relatedPosts.map((related, index) => (
-						<a href={`/${lang}/blog/${related.slug}`} class="group">
+						<a href={`/${lang}/blog/${related.slug}`} class="group" title={related.title}>
 							<div class="overflow-hidden mb-4 aspect-square">
 								<Image
 									src={related.image}
@@ -570,6 +574,7 @@ const schemaOrg = {
 			<a
 				href={`/${lang}/blog`}
 				class="group relative overflow-hidden font-mono text-[1rem] leading-none uppercase py-6 px-5 flex justify-center w-full md:w-fit border border-lines-dark bg-black text-white transition-colors duration-300 ease-in-out cursor-pointer"
+				title={t.blogPage.allArticles}
 			>
 				<span class="absolute inset-0 bg-bg translate-x-[calc(-100%-1px)] group-hover:translate-x-0 transition-transform duration-400 ease-[cubic-bezier(0.25,0.46,0.45,0.94)]"></span>
 				<span class="relative z-10 text-white group-hover:text-black transition-colors duration-300">

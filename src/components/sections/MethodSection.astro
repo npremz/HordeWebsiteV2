@@ -1,5 +1,6 @@
 ---
 import { DEFAULT_LOCALE, type Locale, useTranslations } from "../../i18n";
+import { formatHeadingHtml } from "../../utils/heading-html";
 
 interface Props {
 	lang?: Locale;
@@ -33,7 +34,7 @@ const methods = t.method.methods;
 	<div class="flex justify-between items-end">
 		<h2
 			class="methods-title font-display uppercase leading-none text-4xl sm:text-[3.25rem] md:text-[4.875rem] lg:text-[6.25rem]"
-			set:html={t.method.title.replace(/\n/g, "<br>")}
+			set:html={formatHeadingHtml(t.method.title)}
 		/>
 		<div
 			class="font-display text-[1.625rem] sm:text-[2.5rem] md:text-[3.125rem]"
@@ -77,7 +78,7 @@ const methods = t.method.methods;
 								</div>
 								<h3
 									class="font-display leading-none text-[1.625rem] sm:text-[2.5rem] md:text-[3.125rem] sm:max-w-[250px] md:max-w-[350px] uppercase"
-									set:html={method.title}
+									set:html={formatHeadingHtml(method.title)}
 								/>
 							</header>
 							<div class="flex flex-col md:w-1/2">
@@ -97,11 +98,12 @@ const methods = t.method.methods;
 			))
 		}
 	</ol>
-	<div class="full-width-bg relative z-[100] -mt-px flex">
-		<a
-			href={`/${lang}/contact`}
-			class="group relative overflow-hidden font-mono text-[1rem] leading-none uppercase py-6 px-5 flex justify-center w-full md:w-fit md:ml-auto border border-lines-dark bg-black text-white transition-colors duration-300 ease-in-out cursor-pointer"
-		>
+		<div class="full-width-bg relative z-[100] -mt-px flex">
+			<a
+				href={`/${lang}/contact`}
+				title={t.method.contact}
+				class="group relative overflow-hidden font-mono text-[1rem] leading-none uppercase py-6 px-5 flex justify-center w-full md:w-fit md:ml-auto border border-lines-dark bg-black text-white transition-colors duration-300 ease-in-out cursor-pointer"
+			>
 			<span
 				class="absolute inset-0 bg-bg-light translate-x-[calc(-100%-1px)] group-hover:translate-x-0 transition-transform duration-400 ease-[cubic-bezier(0.25,0.46,0.45,0.94)]"
 			></span>

@@ -88,7 +88,7 @@ const finalHeaderVariant = headerVariant ?? variant;
     <ClientRouter />
   </head>
   <body class={`${bodyClasses} ${className || ''}`}>
-    <a href="#main-content" class="skip-link">{t.a11y.skipToContent}</a>
+    <a href="#main-content" class="skip-link" title={t.a11y.skipToContent}>{t.a11y.skipToContent}</a>
 
     <!-- <Header lang={lang} variant={finalHeaderVariant} /> -->
     <HeaderNew lang={lang} alternateUrl={alternateUrl} />
