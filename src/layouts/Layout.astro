@@ -86,6 +86,17 @@ const finalHeaderVariant = headerVariant ?? variant;
       siteNameAsPrefix={siteNameAsPrefix}
     />
     <ClientRouter />
+
+    <!-- Plausible Analytics -->
+    <script defer data-domain="hordeagence.com" src="https://stats.hordeagence.com/js/script.js"></script>
+    <script>
+      // Tracker les navigations SPA (Astro view transitions)
+      document.addEventListener('astro:page-load', () => {
+        if (typeof (window as any).plausible === 'function') {
+          (window as any).plausible('pageview');
+        }
+      });
+    </script>
   </head>
   <body class={`${bodyClasses} ${className || ''}`}>
     <a href="#main-content" class="skip-link" title={t.a11y.skipToContent}>{t.a11y.skipToContent}</a>
