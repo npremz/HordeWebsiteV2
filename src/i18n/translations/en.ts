@@ -144,8 +144,8 @@ export const en: Translations = {
 
   // Projects Page
   projectsPage: {
-    title: 'Projects',
-    description: 'Discover our latest work: showcase websites, web applications and e-commerce platforms designed with performance and design in mind.',
+    title: 'Fast website projects in Brussels',
+    description: 'Explore our fast website projects in Brussels: showcase sites, e-commerce and custom high-performance interfaces built to convert.',
     heading: 'Our latest\nprojects',
     projectCount: 'Project count',
     viewGrid: 'Grid',
@@ -154,8 +154,8 @@ export const en: Translations = {
 
   // Blog Page
   blogPage: {
-    title: 'Blog',
-    description: 'Articles and tips on web development, UX design and performance. By Horde, digital agency in Brussels.',
+    title: 'Fast website blog: web performance and UX',
+    description: 'Actionable guides to speed up your website, improve UX, and build reliable web experiences. By Horde, a web agency in Brussels.',
     heading: 'Our latest\narticles',
     articleCount: 'Article count',
     viewGrid: 'Grid',
@@ -184,8 +184,8 @@ export const en: Translations = {
 
   // Contact Page
   contact: {
-    title: 'Contact',
-    description: 'Contact us about your digital project',
+    title: 'Contact a web agency in Brussels',
+    description: 'Let\'s discuss your fast custom website project: free website audit, performance guidance and end-to-end support.',
     knockKnock: 'Knock, knock.',
     startWhen: 'When do we start\nyour new project?',
     alternativeContacts: 'Alternative Contacts',
@@ -243,8 +243,8 @@ export const en: Translations = {
 
   // About Page
   aboutPage: {
-    title: 'About',
-    description: 'Discover Horde, a Brussels web agency. Two passionate experts, a designer and a developer, creating ultra-fast interfaces.',
+    title: 'About Horde, web agency in Brussels',
+    description: 'Meet Horde, a Brussels web agency focused on fast custom websites, clean UX, and reliable delivery.',
     heroTitle1: 'Two\nminds,',
     heroTitle2: 'One\nvision',
     scrollDown: '↓',
