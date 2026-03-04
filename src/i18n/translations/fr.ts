@@ -154,7 +154,7 @@ export const fr = {
   // Blog Page
   blogPage: {
     title: 'Blog site rapide : performance web et UX',
-    description: 'Guides concrets pour accélérer votre site web, améliorer l\'UX et optimiser les performances. Par Horde, agence web à Bruxelles.',
+    description: 'Guides concrets pour accélérer votre site web, améliorer l\'UX et optimiser les performances. Par Horde Agence, agence web à Bruxelles.',
     heading: 'Nos derniers\narticles rien que\npour vous',
     articleCount: 'Nombre articles',
     viewGrid: 'Grille',
@@ -184,7 +184,7 @@ export const fr = {
   // Contact Page
   contact: {
     title: 'Contact agence web à Bruxelles',
-    description: 'Parlons de votre projet de site web rapide sur mesure : audit site web offert et accompagnement de A à Z.',
+    description: 'Parlons de votre projet de site web rapide sur mesure avec Horde Agence à Bruxelles : audit site web offert et accompagnement de A à Z.',
     knockKnock: 'Toc, toc.',
     startWhen: 'On commence quand\nvotre nouveau projet ?',
     alternativeContacts: 'Contacts Alternatifs',
@@ -243,7 +243,7 @@ export const fr = {
   // About Page
   aboutPage: {
     title: 'À propos de Horde, agence web à Bruxelles',
-    description: 'Découvrez Horde à Bruxelles : un designer et un développeur pour créer des sites web sur mesure, rapides et durables.',
+    description: 'Découvrez Horde Agence à Bruxelles : un designer et un développeur pour créer des sites web sur mesure, rapides et durables.',
     heroTitle1: 'Deux\ncerveaux,',
     heroTitle2: 'Une\nvision',
     scrollDown: '↓',

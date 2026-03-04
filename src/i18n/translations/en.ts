@@ -155,7 +155,7 @@ export const en: Translations = {
   // Blog Page
   blogPage: {
     title: 'Fast website blog: web performance and UX',
-    description: 'Actionable guides to speed up your website, improve UX, and build reliable web experiences. By Horde, a web agency in Brussels.',
+    description: 'Actionable guides to speed up your website, improve UX, and build reliable web experiences. By Horde Agence, a web agency in Brussels.',
     heading: 'Our latest\narticles',
     articleCount: 'Article count',
     viewGrid: 'Grid',
@@ -185,7 +185,7 @@ export const en: Translations = {
   // Contact Page
   contact: {
     title: 'Contact a web agency in Brussels',
-    description: 'Let\'s discuss your fast custom website project: free website audit, performance guidance and end-to-end support.',
+    description: 'Let\'s discuss your fast custom website project with Horde Agence in Brussels: free website audit, performance guidance and end-to-end support.',
     knockKnock: 'Knock, knock.',
     startWhen: 'When do we start\nyour new project?',
     alternativeContacts: 'Alternative Contacts',
@@ -244,7 +244,7 @@ export const en: Translations = {
   // About Page
   aboutPage: {
     title: 'About Horde, web agency in Brussels',
-    description: 'Meet Horde, a Brussels web agency focused on fast custom websites, clean UX, and reliable delivery.',
+    description: 'Meet Horde Agence, a Brussels web agency focused on fast custom websites, clean UX, and reliable delivery.',
     heroTitle1: 'Two\nminds,',
     heroTitle2: 'One\nvision',
     scrollDown: '↓',
