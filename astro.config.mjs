@@ -19,6 +19,7 @@ const redirectSourcePaths = new Set([
   '/about',
   '/blog',
   '/contact',
+  '/confidentialite',
   '/cookies',
   '/mentions-legales',
   '/projets',
@@ -29,6 +30,7 @@ function shouldIncludeInSitemap(page) {
     const normalizedPath = new URL(page).pathname.replace(/\/$/, '') || '/';
     if (redirectSourcePaths.has(normalizedPath)) return false;
     if (/^\/[a-z]{2}\/404$/.test(normalizedPath)) return false;
+    if (/^\/(fr|en)\/(cookies|mentions-legales|confidentialite)$/.test(normalizedPath)) return false;
     return true;
   } catch {
     return true;
