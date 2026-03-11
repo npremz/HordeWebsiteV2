@@ -18,7 +18,7 @@ seoInternalLinks:
 h1: Un audit de site web offert
 intro: >-
   On regarde avec vous ce qui freine votre site. Vitesse, SEO technique, UX,
-  conversions. n analyse tous les points qui coincent et on en parle dans un
+  conversions. On analyse tous les points qui coincent et on en parle dans un
   langage que tout le monde comprend.
 problemTitleLeft: Pourquoi votre site sous-performe peut-être sans que vous le sachiez
 problemBlocks:
@@ -26,7 +26,7 @@ problemBlocks:
     body: >-
       La plupart des problèmes techniques sont invisibles à l'œil nu. Un LCP
       trop long, une navigation confuse sur mobile, des balises mal renseignées
-      — aucun de ces éléments n'empêche un site de fonctionner, mais ensemble
+      : aucun de ces éléments n'empêche un site de fonctionner, mais ensemble
       ils coûtent du trafic, des leads et des conversions. Avant de dépenser en
       refonte ou en SEO, il faut savoir ce qui ne va pas.
     items: []
@@ -87,7 +87,7 @@ exclusionsParagraphs:
     Aucune obligation de travailler avec nous après. Ce que vous faites de cet
     échange vous appartient.
 faqTitleLeft: Nos \n réponses
-faqTitleRight: aux question \n fréquentes
+faqTitleRight: aux questions \n fréquentes
 faqItems:
   - question: Qui fait l'audit ?
     answer: >-
@@ -106,7 +106,7 @@ faqItems:
   - question: Et si je veux aller plus loin ?
     answer: >-
       On vous propose une mission d'optimisation ou de refonte selon vos
-      besoins. Mais rien d'automatique — l'audit est sans engagement.
+      besoins. Mais rien d'automatique, l'audit est sans engagement.
 ctaTitleLeft: Demandez votre audit
 ctaParagraphs:
   - >-

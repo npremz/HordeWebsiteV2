@@ -58,7 +58,7 @@ offerItems:
   - title: Design UI
     body: >-
       Maquettes haute fidélité, charte graphique si nécessaire, design system
-      léger pour la cohérence. Validations itératives avec vous — pas de
+      léger pour la cohérence. Validations itératives avec vous, pas de
       surprise en livraison.
   - title: Développement axé performance
     body: >-
@@ -102,7 +102,7 @@ exclusionsParagraphs:
   - >-
     On ne refait pas un site juste pour le refaire. Avant de toucher quoi que ce
     soit, on audite l'existant. On ne livre pas non plus une maquette statique
-    en vous laissant vous débrouiller avec le développement — chez nous, design
+    en vous laissant vous débrouiller avec le développement : chez nous, design
     et développement vont ensemble.
 faqTitleLeft: Réponses \n aux
 faqTitleRight: questions \n fréquentes
@@ -130,7 +130,7 @@ faqItems:
       On peut travailler avec votre rédacteur ou vous recommander quelqu'un. La
       rédaction n'est pas incluse par défaut.
   - question: Je peux voir des exemples de vos refontes ?
-    answer: Oui — lien vers `/fr/projets` avec les cas pertinents mis en avant.
+    answer: Oui, lien vers `/fr/projets` avec les cas pertinents mis en avant.
 ctaTitleLeft: Parlez-nous de votre projet
 ctaParagraphs:
   - >-
@@ -159,7 +159,7 @@ notes:
     Traiter les objections en priorité : coût, durée, impact SEO, gestion du
     contenu après livraison.
   - >-
-    Ne pas promettre de résultats SEO en semaines — c'est le moyen le plus
+    Ne pas promettre de résultats SEO en semaines : c'est le moyen le plus
     rapide de perdre de la crédibilité.
   - >-
     Ton : sérieux, structuré, sans sur-vente. On est une agence qui fait du bon

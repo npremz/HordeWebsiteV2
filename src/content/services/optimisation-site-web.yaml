@@ -7,7 +7,7 @@ seoSecondaryKeywords:
   - performance web seo
   - optimisation lcp inp cls
   - audit performance site web
-seoTitle: Optimisation site web à Bruxelles | Horde
+seoTitle: Optimisation site web à Bruxelles
 seoDescription: >-
   Votre site est lent ou mal classé ? On améliore LCP, INP, CLS et SEO technique
   avec un plan d'action priorisé. Résultats mesurables, sans refonte complète.
@@ -16,7 +16,7 @@ seoInternalLinks:
   - /fr/services/audit-offert
   - /fr/services/refonte-site-web
   - /fr/contact
-h1: 'Optimisation de site web : plus rapide, mieux classé'
+h1: Optimisation de site web
 intro: >-
   Un site qui charge en 4 secondes perd en moyenne 25% de ses visiteurs avant
   même qu'ils voient votre contenu. On améliore les performances techniques sans
@@ -33,9 +33,10 @@ problemBlocks:
   - kind: paragraph
     body: >-
       Si vous vous reconnaissez dans un de ces cas, le problème est probablement
-      technique — et pas dans votre contenu.
+      technique, et pas dans votre contenu.
     items: []
-offerTitleLeft: Les axes d'optimisation
+offerTitleLeft: Les axes \n principaux
+offerTitleRight: pour \n l'optimisation
 offerItems:
   - title: LCP (Largest Contentful Paint)
     body: >-
@@ -59,7 +60,8 @@ offerItems:
     body: >-
       Headers de cache, CDN, compression, HTTP/2. Le backend qui fait la
       différence sur les connexions lentes.
-methodTitleLeft: Comment on travaille
+methodTitleLeft: Comment on \n optimise
+methodTitleRight: votre \n site
 methodSteps:
   - title: Diagnostic initial
     body: >-
@@ -75,7 +77,8 @@ methodSteps:
     body: >-
       Mesures avant/après, suivi Google Search Console sur 30 jours. On livre
       des métriques, pas des promesses.
-deliverablesTitleLeft: Le livrable
+deliverablesTitleLeft: Résumé du \n produit
+deliverablesTitleRight: Apres \n livraison
 deliverables:
   - Rapport de diagnostic avec scores de départ documentés
   - Plan d'action priorisé (quick wins + optimisations structurelles)
@@ -93,12 +96,13 @@ exclusionsParagraphs:
   - >-
     Ce qu'on livre : un site mesurément plus rapide, avec des scores Core Web
     Vitals dans le vert, et une documentation de ce qui a été fait et pourquoi.
-faqTitleLeft: Questions fréquentes
+faqTitleLeft: Nos réponses \n aux
+faqTitleRight: questions \n fréquentes
 faqItems:
   - question: Mon site doit-il être sur une techno particulière ?
     answer: >-
       Non. On optimise WordPress, Webflow, Shopify, Next.js, sites custom.
-      Certaines opérations nécessitent un accès au code — on s'adapte selon les
+      Certaines opérations nécessitent un accès au code. On s'adapte selon les
       contraintes.
   - question: Est-ce qu'il faut refaire le site ?
     answer: >-

@@ -18,11 +18,11 @@ seoInternalLinks:
   - /fr/services/creation-ecommerce
   - /fr/services/creation-mvp-saas
   - /fr/contact
-h1: Création de landing page conçue pour convertir
+h1: Création de landing page
 intro: >-
   Une landing page a un seul objectif : transformer un visiteur en client, en
-  inscription ou en acheteur. Chaque élément — le titre, la hiérarchie visuelle,
-  le CTA, la vitesse — est là pour ça. On crée des pages qui font le job.
+  inscription ou en acheteur. Chaque élément (le titre, la hiérarchie visuelle,
+  le CTA, la vitesse) est là pour ça. On crée des pages qui font le job.
 problemTitleLeft: Pour quoi faire
 problemBlocks:
   - kind: item
@@ -52,7 +52,8 @@ problemBlocks:
       Vous avez déjà une landing page mais vous voulez tester une hypothèse sur
       le message ou le design. On crée une variante et on mesure.
     items: []
-offerTitleLeft: Ce qu'on intègre
+offerTitleLeft: Ce qu'on \n intègre
+offerTitleRight: à votre \n landing page
 offerItems:
   - title: Copywriting orienté conversion
     body: >-
@@ -74,7 +75,8 @@ offerItems:
       Formulaire connecté à votre CRM (HubSpot, Brevo, Mailchimp), pixel Meta,
       Google Tag Manager, events de conversion. On configure le tracking
       correctement dès le départ.
-methodTitleLeft: Comment on travaille
+methodTitleLeft: Notre \n méthode
+methodTitleRight: pour une \n bonne page
 methodSteps:
   - title: Brief
     body: >-
@@ -88,7 +90,8 @@ methodSteps:
     body: La maquette validée, on développe. Performance et mobile au centre.
   - title: Intégrations & mise en ligne
     body: Tracking, CRM, formulaire. On livre sur votre domaine.
-deliverablesTitleLeft: Le livrable
+deliverablesTitleLeft: Résumé du \n produit
+deliverablesTitleRight: Après \n livraison
 deliverables:
   - Page en production sur votre domaine
   - Copywriting structuré et optimisé pour l'objectif
@@ -101,7 +104,7 @@ exclusionsParagraphs:
   - >-
     On ne livre pas un template Unbounce ou Webflow personnalisé en surface. On
     ne promet pas un "taux de conversion de X%". Et on ne fait pas de rush en 3
-    jours qui produit quelque chose de médiocre — on fait du travail sérieux
+    jours qui produit quelque chose de médiocre. On fait du travail sérieux
     dans des délais raisonnables.
 faqTitleLeft: Questions fréquentes
 faqItems:
@@ -117,7 +120,7 @@ faqItems:
       intégrations CRM de l'autre.
   - question: La page sera-t-elle optimisée pour le SEO ?
     answer: >-
-      Pour les pages publicitaires, non nécessairement — ce n'est pas leur rôle.
+      Pour les pages publicitaires, non nécessairement : ce n'est pas leur rôle.
       Pour les pages destinées au trafic organique, oui : balises, structure,
       performance. On cadre ça ensemble selon l'objectif.
   - question: Vous faites aussi l'hébergement ?

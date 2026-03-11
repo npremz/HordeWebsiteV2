@@ -7,7 +7,7 @@ seoSecondaryKeywords:
   - mvp startup belgique
   - créer saas belgique
   - agence développement produit bruxelles
-seoTitle: Développement MVP SaaS à Bruxelles | Horde
+seoTitle: Développement MVP SaaS à Bruxelles
 seoDescription: >-
   Lancez votre MVP SaaS rapidement avec une base technique solide. Cadrage,
   développement et mise en production : on construit ce que vous avez besoin de
@@ -18,7 +18,7 @@ seoInternalLinks:
   - /fr/services/creation-landing-page
   - /fr/projets
   - /fr/contact
-h1: Développement MVP et application web à Bruxelles
+h1: Création MVP et application web à Bruxelles
 intro: >-
   Un MVP, ce n'est pas un produit à moitié fait. C'est le périmètre minimal qui
   vous permet de tester une hypothèse business avec de vrais utilisateurs, sans
@@ -48,7 +48,8 @@ problemBlocks:
       On travaille autrement : on cadre d'abord, on construit ensuite uniquement
       ce qui permet de répondre à la question business centrale.
     items: []
-offerTitleLeft: Ce qu'on couvre
+offerTitleLeft: Ce qu'on \n couvre
+offerTitleRight: avec \n un MVP
 offerItems:
   - title: Cadrage produit
     body: >-
@@ -70,7 +71,8 @@ offerItems:
       Hébergement configuré, monitoring en place, documentation technique. On ne
       disparaît pas après le lancement, on suit les premiers retours et on
       itère.
-methodTitleLeft: Du brief à la mise en production
+methodTitleLeft: Notre \n plan
+methodTitleRight: Pour \n un MVP
 methodSteps:
   - title: Cadrage (1 semaine)
     body: Périmètre MVP défini, hypothèses identifiées, périmètre signé.
@@ -82,7 +84,8 @@ methodSteps:
     body: Hébergement configuré, monitoring, documentation.
   - title: Suivi post-lancement
     body: On suit les premiers retours et on itère avec vous.
-deliverablesTitleLeft: Le livrable
+deliverablesTitleLeft: Résumé du \n produit
+deliverablesTitleRight: Après \n livraison
 deliverables:
   - Application déployée en production
   - Code source sur votre repository, sans dépendances propriétaires
@@ -100,7 +103,8 @@ exclusionsParagraphs:
     On ne s'engage pas non plus sur des fonctionnalités dont on ne comprend pas
     l'utilité. Si on pense qu'une décision de product design est problématique,
     on le dit.
-faqTitleLeft: Questions fréquentes
+faqTitleLeft: Nos réponses \n aux
+faqTitleRight: Questions \n fréquentes
 faqItems:
   - question: Combien coûte un MVP ?
     answer: >-
@@ -116,7 +120,7 @@ faqItems:
   - question: Vous continuez après le MVP ?
     answer: >-
       Selon les résultats, on peut continuer en mode itérations. Ce n'est pas
-      automatique — on réévalue avec vous à chaque étape.
+      automatique. On réévalue avec vous à chaque étape.
   - question: On peut prendre la main sur le code après ?
     answer: >-
       Oui, c'est une condition de base. Code documenté, repository sur votre

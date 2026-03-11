@@ -16,12 +16,12 @@ seoInternalLinks:
   - /fr/services/creation-landing-page
   - /fr/projets
   - /fr/contact
-h1: Création de site e-commerce orienté performance et conversion
+h1: Création de site e-commerce
 intro: >-
   Un e-commerce qui convertit, ce n'est pas qu'une belle boutique. C'est un site
   rapide, des parcours d'achat sans friction, et un référencement qui attire la
-  bonne audience. On conçoit des boutiques qui rendent vos produits accessibles
-  — parce qu'une interface ne devrait pas être un frein à votre business.
+  bonne audience. On conçoit des boutiques qui rendent vos produits accessibles,
+  parce qu'une interface ne devrait pas être un frein à votre business.
 problemTitleLeft: Ce qui sépare un e-commerce qui vend d'un qui ne vend pas
 problemBlocks:
   - kind: paragraph
@@ -38,7 +38,8 @@ problemBlocks:
       aillent jusqu'au bout. Chaque décision va dans ce sens, de la base
       technique jusqu'à la taille des boutons.
     items: []
-offerTitleLeft: Les types de projets qu'on prend en charge
+offerTitleLeft: Nos \n solutions
+offerTitleRight: en \n e-commerce
 offerItems:
   - title: Boutiques Shopify
     body: >-
@@ -55,29 +56,31 @@ offerItems:
       Vous avez une boutique existante qui ne répond plus à vos besoins ? On
       migre vers une nouvelle plateforme sans perdre l'historique de commandes,
       les avis clients, et le référencement acquis.
-methodTitleLeft: Ce qu'on intègre dans chaque projet
+methodTitleLeft: 'Nos \n standards '
+methodTitleRight: pour un \n e-commerce
 methodSteps:
-  - title: '**UX & parcours d''achat**'
+  - title: UX & parcours d'achat
     body: >-
       Fiches produit conçues pour convertir, navigation par facettes, tunnel de
       commande simplifié, gestion des erreurs claire. On cartographie les
       parcours avant de dessiner quoi que ce soit.
-  - title: '**Performance technique**'
+  - title: Performance technique
     body: >-
       Images en WebP/AVIF avec lazy loading, JS minimal, Core Web Vitals dans le
       vert. Un e-commerce lent sur mobile laisse de l'argent sur la table. Pour
       nous, la rapidité est un standard.
-  - title: '**SEO e-commerce**'
+  - title: SEO e-commerce
     body: >-
       Données structurées produits (schema.org), balises canoniques pour les
       variantes, sitemap produit, URLs propres. Les bases qui conditionnent
       votre visibilité sur Google Shopping et la recherche organique.
-  - title: '**Paiement & logistique**'
+  - title: Paiement & logistique
     body: >-
       Intégration Stripe, Mollie, Bancontact, PayPal. Connexion aux
       transporteurs (Bpost, DPD, Sendcloud). On configure ce dont vous avez
       besoin, pas un catalogue de fonctionnalités que vous n'utiliserez jamais.
-deliverablesTitleLeft: Le livrable
+deliverablesTitleLeft: Résumé du \n produit
+deliverablesTitleRight: Après \n livraison
 deliverables:
   - Boutique en production, rapide sur mobile et desktop
   - Core Web Vitals dans le vert
@@ -92,7 +95,8 @@ exclusionsParagraphs:
     quelques apps. On ne met pas non plus en ligne sans avoir testé le tunnel de
     commande sur mobile. Et on ne code pas sans avoir compris votre catalogue,
     vos transporteurs et vos contraintes logistiques.
-faqTitleLeft: Questions fréquentes
+faqTitleLeft: Nos réponses \n aux
+faqTitleRight: Questions \n fréquentes
 faqItems:
   - question: Shopify ou WooCommerce ?
     answer: >-
