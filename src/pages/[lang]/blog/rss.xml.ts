@@ -33,6 +33,6 @@ export async function GET(context: APIContext) {
       pubDate: new Date(post.data.publishedDate),
       link: `/${lang}/blog/${lang === 'fr' ? post.data.slug_fr : post.data.slug}/`,
     })),
-    customData: `<language>${lang === 'fr' ? 'fr-FR' : 'en-US'}</language>`,
+    customData: `<language>${lang === 'fr' ? 'fr-BE' : 'en-US'}</language>`,
   });
 }

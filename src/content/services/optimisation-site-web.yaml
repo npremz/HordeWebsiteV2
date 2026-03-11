@@ -1,0 +1,154 @@
+slug: optimisation-site-web
+seoUrl: /fr/services/optimisation-site-web
+seoPrimaryKeyword: optimisation site web bruxelles
+seoSecondaryKeywords:
+  - améliorer core web vitals
+  - site web lent que faire
+  - performance web seo
+  - optimisation lcp inp cls
+  - audit performance site web
+seoTitle: Optimisation site web à Bruxelles | Horde
+seoDescription: >-
+  Votre site est lent ou mal classé ? On améliore LCP, INP, CLS et SEO technique
+  avec un plan d'action priorisé. Résultats mesurables, sans refonte complète.
+seoRobots: index, follow
+seoInternalLinks:
+  - /fr/services/audit-offert
+  - /fr/services/refonte-site-web
+  - /fr/contact
+h1: 'Optimisation de site web : plus rapide, mieux classé'
+intro: >-
+  Un site qui charge en 4 secondes perd en moyenne 25% de ses visiteurs avant
+  même qu'ils voient votre contenu. On améliore les performances techniques sans
+  repartir de zéro et sans toucher à ce qui fonctionne déjà.
+problemTitleLeft: Votre site souffre peut-être de ça
+problemBlocks:
+  - kind: list
+    items:
+      - Google Search Console affiche des problèmes Core Web Vitals non résolus
+      - PageSpeed Insights sort des scores rouges sur mobile
+      - Votre référencement stagne malgré du contenu régulier
+      - Les pages mettent plus de 3s à s'afficher sur un réseau normal
+      - Le taux de rebond est élevé sans explication claire
+  - kind: paragraph
+    body: >-
+      Si vous vous reconnaissez dans un de ces cas, le problème est probablement
+      technique — et pas dans votre contenu.
+    items: []
+offerTitleLeft: Les axes d'optimisation
+offerItems:
+  - title: LCP (Largest Contentful Paint)
+    body: >-
+      Préchargement des images critiques, optimisation des formats (WebP/AVIF),
+      suppression du render-blocking. On s'attaque à ce qui ralentit l'affichage
+      du contenu principal.
+  - title: INP (Interaction to Next Paint)
+    body: >-
+      Audit du JavaScript exécuté au chargement, réduction des longues tâches,
+      optimisation des event listeners. Ce qui rend un site réactif au clic.
+  - title: CLS (Cumulative Layout Shift)
+    body: >-
+      Dimensions explicites sur les médias, chargement des polices, éléments
+      injectés dynamiquement. On supprime les sauts visuels qui frustrent les
+      utilisateurs.
+  - title: SEO technique
+    body: >-
+      Structure des balises, données structurées, canonicals, hreflang, vitesse
+      de crawl. Les fondations qui conditionnent votre visibilité organique.
+  - title: Infrastructure & cache
+    body: >-
+      Headers de cache, CDN, compression, HTTP/2. Le backend qui fait la
+      différence sur les connexions lentes.
+methodTitleLeft: Comment on travaille
+methodSteps:
+  - title: Diagnostic initial
+    body: >-
+      Mesures Lighthouse, CrUX, WebPageTest sur vos pages clés (pas seulement la
+      home).
+  - title: Plan d'action priorisé
+    body: Quick wins d'abord, optimisations structurelles ensuite.
+  - title: Implémentation
+    body: >-
+      On intervient directement sur le code ou on travaille avec votre équipe
+      technique.
+  - title: Validation
+    body: >-
+      Mesures avant/après, suivi Google Search Console sur 30 jours. On livre
+      des métriques, pas des promesses.
+deliverablesTitleLeft: Le livrable
+deliverables:
+  - Rapport de diagnostic avec scores de départ documentés
+  - Plan d'action priorisé (quick wins + optimisations structurelles)
+  - Implémentation des corrections
+  - Mesures avant/après sur chaque axe traité
+  - Suivi Google Search Console sur 30 jours
+  - Documentation de ce qui a été fait et pourquoi
+exclusionsTitleLeft: Ce qu'on ne fait pas
+exclusionsParagraphs:
+  - >-
+    On n'installe pas un plugin "cache magique" et on appelle ça une
+    optimisation. On ne promet pas +50% de trafic en 3 semaines. On ne vous vend
+    pas un abonnement mensuel pour surveiller des métriques que vous pouvez voir
+    vous-même dans Google Search Console.
+  - >-
+    Ce qu'on livre : un site mesurément plus rapide, avec des scores Core Web
+    Vitals dans le vert, et une documentation de ce qui a été fait et pourquoi.
+faqTitleLeft: Questions fréquentes
+faqItems:
+  - question: Mon site doit-il être sur une techno particulière ?
+    answer: >-
+      Non. On optimise WordPress, Webflow, Shopify, Next.js, sites custom.
+      Certaines opérations nécessitent un accès au code — on s'adapte selon les
+      contraintes.
+  - question: Est-ce qu'il faut refaire le site ?
+    answer: >-
+      Pas nécessairement. Beaucoup de gains de performance sont obtenus sans
+      toucher au design. Si la refonte est la meilleure option, on vous le dira
+      clairement avec une justification chiffrée.
+  - question: Combien de temps ça prend ?
+    answer: >-
+      Les quick wins (images, cache, render-blocking) se règlent en une semaine.
+      Les optimisations plus profondes (refactoring JS, infrastructure) prennent
+      1 à 3 semaines selon la complexité.
+  - question: Quels résultats attendre ?
+    answer: >-
+      Ça dépend de l'état de départ. Sur des sites avec des scores PageSpeed <
+      50, on obtient régulièrement des passages à 80–95. L'impact SEO se voit
+      dans Google Search Console sur 6 à 12 semaines.
+  - question: Combien ça coûte ?
+    answer: >-
+      Ça dépend de la profondeur de l'intervention. On chiffre après le
+      diagnostic initial, qui est gratuit. Pas de devis sans avoir regardé votre
+      site.
+ctaTitleLeft: Commençons par un audit
+ctaParagraphs:
+  - >-
+    Remplissez le formulaire avec vos coordonnées, et un membre de notre équipe
+    vous contactera pour une consultation sans engagement. Ou vous pouvez nous
+    envoyer un e-mail à l'adresse hello@hordeagence.com
+primaryCtaLabel: Demander un audit gratuit
+primaryCtaUrl: /fr/services/audit-offert
+secondaryCtaLabel: Nous contacter
+secondaryCtaUrl: /fr/contact
+recommendedLinks:
+  - anchor: audit gratuit de 48h
+    url: /fr/services/audit-offert
+  - anchor: refonte orientée performance
+    url: /fr/services/refonte-site-web
+  - anchor: nous contacter
+    url: /fr/contact
+notes:
+  - >-
+    Ton : technique mais accessible. Le lecteur cible est un décideur (DG,
+    directeur marketing), pas un développeur.
+  - >-
+    Éviter les formulations génériques : "solution sur mesure", "accompagnement
+    personnalisé", "experts passionnés".
+  - >-
+    L'argument central : l'optimisation sans refonte complète — c'est le point
+    de différenciation par rapport à une agence qui vend systématiquement des
+    refontes.
+  - >-
+    Les chiffres (25% de perte, scores < 50 → 80-95) doivent rester réalistes et
+    vérifiables, pas gonflés.
+order: 4

@@ -85,6 +85,7 @@
   --color-lines: #B1B1B1;
   --color-lines-dark: #4C4B4B;
   --color-err: #FF5858;
+  --color-white: #F4F1F8;
   --spacing-lines: calc(100% + 2 * var(--gutter));
 
   --font-sans: 'PP Neue Montreal', system-ui, sans-serif;
@@ -283,6 +284,16 @@ body {
     content: "";
     @apply absolute top-0 left-1/2 -translate-x-1/2 w-screen h-full -z-1;
     background-color: var(--color-bg-light);
+  }
+
+  .full-width-dark-bg {
+    @apply relative;
+  }
+
+  .full-width-dark-bg::before {
+    content: "";
+    @apply absolute top-0 left-1/2 -translate-x-1/2 w-screen h-full -z-1;
+    background-color: var(--color-black);
   }
 
   /* -----------------------------------------

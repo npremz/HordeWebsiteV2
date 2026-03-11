@@ -1,0 +1,48 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import Footer from '../../../components/Footer.astro';
+import ServiceHero from '../../../components/services/ServiceHero.astro';
+import ServiceOfferSection from '../../../components/services/ServiceOfferSection.astro';
+import ServiceMethodSection from '../../../components/services/ServiceMethodSection.astro';
+import ServiceDeliverablesSection from '../../../components/services/ServiceDeliverablesSection.astro';
+import ServiceExclusionsSection from '../../../components/services/ServiceExclusionsSection.astro';
+import ServiceFaqSection from '../../../components/services/ServiceFaqSection.astro';
+import ServiceCtaSection from '../../../components/services/ServiceCtaSection.astro';
+import { getCollection, type CollectionEntry } from 'astro:content';
+import { type Locale, useTranslations } from '../../../i18n';
+
+export const prerender = true;
+
+type ServiceEntry = CollectionEntry<'services'>;
+
+export async function getStaticPaths() {
+  const services = await getCollection('services');
+
+  return services.map((service) => ({
+    params: { lang: 'fr', slug: service.data.slug },
+    props: { service, lang: 'fr' as Locale },
+  }));
+}
+
+const { service, lang } = Astro.props as { service: ServiceEntry; lang: Locale };
+const t = useTranslations(lang);
+---
+
+<Layout
+  lang={lang}
+  title={service.data.seoTitle}
+  description={service.data.seoDescription}
+  robots={service.data.seoRobots as 'index, follow' | 'noindex, follow' | 'noindex, nofollow'}
+>
+  <article data-service-slug={service.data.slug}>
+    <ServiceHero service={service.data} />
+    <ServiceOfferSection service={service.data} />
+    <ServiceMethodSection service={service.data} />
+    <ServiceDeliverablesSection service={service.data} />
+    <ServiceExclusionsSection service={service.data} />
+    <ServiceFaqSection service={service.data} />
+    <ServiceCtaSection service={service.data} formTranslations={t.form} />
+  </article>
+
+  <Footer lang={lang} hideOverflow={false} />
+</Layout>

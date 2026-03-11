@@ -5,7 +5,7 @@ import '../styles/global.css';
 import Header from '../components/Header.astro';
 import HeaderNew from '../components/HeaderNew.astro';
 import Container from '../components/ui/Container.astro';
-import { DEFAULT_LOCALE, type Locale, useTranslations } from '../i18n';
+import { DEFAULT_LOCALE, HTML_LOCALE_CODES, type Locale, useTranslations } from '../i18n';
 
 // Preload critical fonts
 import fontDisplay from '../assets/fonts/PPNeueMachina-Light.woff2';
@@ -28,6 +28,7 @@ interface Props {
   publishedTime?: string;
   modifiedTime?: string;
   author?: string;
+  authorUrl?: string;
   siteNameAsPrefix?: boolean;
 
   // Layout props
@@ -50,6 +51,7 @@ const {
   publishedTime,
   modifiedTime,
   author,
+  authorUrl,
   siteNameAsPrefix,
   class: className,
   variant = 'light',
@@ -63,7 +65,7 @@ const finalHeaderVariant = headerVariant ?? variant;
 ---
 
 <!doctype html>
-<html lang={lang}>
+<html lang={HTML_LOCALE_CODES[lang]}>
   <head>
     <!-- Preload critical fonts for faster LCP -->
     <link rel="preload" href={fontDisplay} as="font" type="font/woff2" crossorigin />
@@ -83,6 +85,7 @@ const finalHeaderVariant = headerVariant ?? variant;
       publishedTime={publishedTime}
       modifiedTime={modifiedTime}
       author={author}
+      authorUrl={authorUrl}
       siteNameAsPrefix={siteNameAsPrefix}
     />
     <ClientRouter />

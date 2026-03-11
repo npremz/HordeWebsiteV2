@@ -1,0 +1,139 @@
+slug: audit-offert
+seoUrl: /fr/services/audit-offert
+seoPrimaryKeyword: audit site web gratuit bruxelles
+seoSecondaryKeywords:
+  - audit seo gratuit
+  - audit performance site web
+  - analyse site web bruxelles
+  - diagnostic site web
+seoTitle: Audit de site web offert à Bruxelles | Horde
+seoDescription: >-
+  On analyse votre site gratuitement : vitesse, SEO technique, UX et
+  conversions. Résultats concrets sous 48h, sans engagement.
+seoRobots: index, follow
+seoInternalLinks:
+  - /fr/services/optimisation-site-web
+  - /fr/services/refonte-site-web
+  - /fr/contact
+h1: Un audit de site web offert
+intro: >-
+  On regarde avec vous ce qui freine votre site. Vitesse, SEO technique, UX,
+  conversions. n analyse tous les points qui coincent et on en parle dans un
+  langage que tout le monde comprend.
+problemTitleLeft: Pourquoi votre site sous-performe peut-être sans que vous le sachiez
+problemBlocks:
+  - kind: paragraph
+    body: >-
+      La plupart des problèmes techniques sont invisibles à l'œil nu. Un LCP
+      trop long, une navigation confuse sur mobile, des balises mal renseignées
+      — aucun de ces éléments n'empêche un site de fonctionner, mais ensemble
+      ils coûtent du trafic, des leads et des conversions. Avant de dépenser en
+      refonte ou en SEO, il faut savoir ce qui ne va pas.
+    items: []
+offerTitleLeft: Ce qu'on \n audite
+offerTitleRight: sur \n votre site
+offerItems:
+  - title: Performance & Core Web Vitals
+    body: >-
+      LCP, INP, CLS mesurés sur mobile et desktop. On identifie ce qui ralentit
+      le chargement et ce que ça coûte en trafic organique.
+  - title: UX & parcours utilisateur
+    body: >-
+      On repère les points de friction : navigation confuse, CTA introuvables,
+      formulaires trop longs. Ce qui fait partir vos visiteurs avant qu'ils
+      convertissent.
+  - title: UI et image de marque
+    body: >-
+      Est-ce que les visuels de votre site correspondent à votre identité ? On
+      identifie comment on peut mieux raconter votre histoire.
+  - title: SEO technique
+    body: >-
+      Balises, structure des URLs, canonicals, indexation, données structurées.
+      On détecte les erreurs qui bloquent Google sans que vous le sachiez.
+  - title: Accessibilité & compatibilité
+    body: >-
+      Contraste, navigation clavier, responsive. Un site accessible, c'est aussi
+      un signal positif pour les moteurs de recherche.
+methodTitleLeft: Notre \n méthode
+methodTitleRight: pour \n un audit
+methodSteps:
+  - title: Analyse en amont
+    body: >-
+      On effectue une première analyse avant l'échange : outils de mesure, revue
+      manuelle, identification des problèmes prioritaires.
+  - title: Session de 30 min
+    body: >-
+      On passe en revue les résultats ensemble, en visio ou via une vidéo
+      enregistrée selon votre préférence.
+  - title: Plan d'action clair
+    body: >-
+      On ressort avec les 5 à 10 problèmes prioritaires, leur impact estimé, et
+      un ordre d'action (quick wins en premier).
+deliverablesTitleLeft: Ce avec \n quoi
+deliverablesTitleRight: vous \n repartez
+deliverables:
+  - Les 5 à 10 problèmes prioritaires identifiés
+  - L'impact estimé sur le trafic et les conversions
+  - Un ordre d'action clair, quick wins en premier
+  - Une explication sans jargon de chaque point
+  - 'Format : vidéo + session de 30 min si besoin'
+exclusionsTitleLeft: Pourquoi c'est gratuit
+exclusionsParagraphs:
+  - >-
+    Un audit, c'est notre façon de travailler. On ne propose jamais une solution
+    avant de comprendre le problème. Si on peut vous aider, on vous le dira
+    directement. Si ce n'est pas le cas, on vous le dira aussi.
+  - >-
+    Aucune obligation de travailler avec nous après. Ce que vous faites de cet
+    échange vous appartient.
+faqTitleLeft: Nos \n réponses
+faqTitleRight: aux question \n fréquentes
+faqItems:
+  - question: Qui fait l'audit ?
+    answer: >-
+      Nicolas et Alexandre, fondateurs de Horde, avec 9 ans d'expérience sur des
+      projets web pour des PME, startups et marques belges.
+  - question: Mon site est-il adapté ?
+    answer: >-
+      On audite tous les types de sites : vitrines, e-commerce, applications
+      web, landing pages. Technologies acceptées : WordPress, Odoo, Wix,
+      Webflow, Shopify, sites custom.
+  - question: Comment se déroule l'audit ?
+    answer: >-
+      On fixe une date, on réalise une première analyse en amont. Lors de
+      l'échange, on identifie ensemble vos points de blocage et on vous propose
+      des solutions concrètes.
+  - question: Et si je veux aller plus loin ?
+    answer: >-
+      On vous propose une mission d'optimisation ou de refonte selon vos
+      besoins. Mais rien d'automatique — l'audit est sans engagement.
+ctaTitleLeft: Demandez votre audit
+ctaParagraphs:
+  - >-
+    Remplissez le formulaire avec vos coordonnées, et un membre de notre équipe
+    vous contactera pour une consultation sans engagement. Ou vous pouvez nous
+    envoyer un e-mail à l'adresse hello@hordeagence.com
+primaryCtaLabel: Demander mon audit gratuit
+primaryCtaUrl: /fr/contact
+reassurance: On vous répond dans les 24h.
+recommendedLinks:
+  - anchor: optimisation des performances
+    url: /fr/services/optimisation-site-web
+  - anchor: refonte orientée conversion
+    url: /fr/services/refonte-site-web
+  - anchor: nous contacter
+    url: /fr/contact
+notes:
+  - >-
+    Ton : direct, crédible, sans sur-vente. Pas de "offre exceptionnelle" ni de
+    "ne manquez pas".
+  - >-
+    L'audit est positionné comme une démonstration de méthode, pas comme un
+    appât commercial.
+  - >-
+    Insister sur la rapidité (48h) et l'absence d'engagement — les deux
+    objections principales sur ce type d'offre.
+  - >-
+    Éviter les tournures génériques : "nous vous aidons à atteindre vos
+    objectifs", "solution adaptée à vos besoins".
+order: 0

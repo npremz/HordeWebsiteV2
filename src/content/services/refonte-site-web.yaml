@@ -1,0 +1,167 @@
+slug: refonte-site-web
+seoUrl: /fr/services/refonte-site-web
+seoPrimaryKeyword: refonte site web bruxelles
+seoSecondaryKeywords:
+  - refonte ux ui
+  - modernisation site web
+  - améliorer conversion site
+  - refonte site web belgique
+  - prix refonte site web
+seoTitle: Refonte site web à Bruxelles | UX, perf et SEO
+seoDescription: >-
+  On refond votre site sans repartir de zéro : UX/UI, vitesse, SEO technique et
+  architecture claire pour convertir davantage. Devis sous 48h.
+seoRobots: index, follow
+seoInternalLinks:
+  - /fr/services/audit-offert
+  - /fr/services/optimisation-site-web
+  - /fr/projets
+  - /fr/contact
+h1: Refonte de site web orientée UX et conversion
+intro: >-
+  Un site qui date de 5 ans n'est plus adapté aux usages actuels ni aux
+  exigences de Google. On repart de vos objectifs business pour reconstruire
+  quelque chose qui travaille pour vous : plus rapide, plus clair, et qui
+  raconte mieux votre histoire.
+problemTitleLeft: Les signaux qui indiquent qu'il est temps
+problemBlocks:
+  - kind: list
+    items:
+      - Votre site n'est plus représentatif de ce que vous faites
+      - Les visiteurs arrivent mais ne vous contactent pas
+      - Il est lent sur mobile et vous le savez
+      - Votre CMS est ingérable, les mises à jour prennent des heures
+      - >-
+        Vous avez ajouté des pages et des sections sans logique globale depuis
+        des années
+      - >-
+        Votre concurrent a un site meilleur que le vôtre et vous le voyez dans
+        les stats
+  - kind: paragraph
+    body: >-
+      La refonte n'est pas une dépense cosmétique. C'est un investissement sur
+      la capacité de votre site à générer du chiffre.
+    items: []
+offerTitleLeft: Ce qu'on \n refait
+offerTitleRight: et \n comment
+offerItems:
+  - title: Audit de l'existant
+    body: >-
+      On ne repart jamais de zéro sans avoir compris ce qui fonctionne. Ce qui
+      marche reste, ce qui freine disparaît. Pas de page blanche inutile, pas de
+      migration risquée sans plan.
+  - title: Architecture & UX
+    body: >-
+      Arborescence repensée, parcours utilisateurs clés redessinés, hiérarchie
+      du contenu rationalisée. On aligne la structure sur vos objectifs business
+      avant de dessiner quoi que ce soit.
+  - title: Design UI
+    body: >-
+      Maquettes haute fidélité, charte graphique si nécessaire, design system
+      léger pour la cohérence. Validations itératives avec vous — pas de
+      surprise en livraison.
+  - title: Développement axé performance
+    body: >-
+      Intégration avec images optimisées, code propre, Core Web Vitals dans le
+      vert. CMS configurable pour que vous puissiez gérer le contenu vous-même.
+  - title: Migration & lancement
+    body: >-
+      Redirections propres, vérification de l'indexation, monitoring
+      post-launch. On ne coupe pas l'ancien site sans filet. La migration est
+      non destructive.
+methodTitleLeft: Notre \n processus
+methodTitleRight: Pour une \n refonte
+methodSteps:
+  - title: Cadrage
+    body: >-
+      Audit de l'existant, analyse Analytics / Search Console, définition des
+      objectifs et de l'arborescence cible.
+  - title: UX & architecture (1 semaine)
+    body: >-
+      Wireframes basse fidélité, parcours utilisateurs, hiérarchie du contenu
+      validée.
+  - title: Design UI (1 à 2 semaines)
+    body: >-
+      Maquettes haute fidélité, charte graphique si nécessaire, validations
+      itératives.
+  - title: Développement (1 à 3 semaines)
+    body: Intégration performance-first, CMS configuré.
+  - title: Migration & lancement
+    body: Redirections, indexation, monitoring post-launch inclus.
+deliverablesTitleLeft: Résumé du \n produit
+deliverablesTitleRight: Après \n livraison
+deliverables:
+  - Site en production, performant sur mobile et desktop
+  - Score Core Web Vitals vert (LCP < 2.5s, CLS < 0.1, INP < 200ms)
+  - SEO technique propre dès le départ
+  - CMS pris en main lors d'une session de formation si besoin
+  - Documentation des choix techniques et de la structure du contenu
+  - Monitoring 30 jours post-lancement inclus
+exclusionsTitleLeft: Ce qu'on évite
+exclusionsParagraphs:
+  - >-
+    On ne refait pas un site juste pour le refaire. Avant de toucher quoi que ce
+    soit, on audite l'existant. On ne livre pas non plus une maquette statique
+    en vous laissant vous débrouiller avec le développement — chez nous, design
+    et développement vont ensemble.
+faqTitleLeft: Réponses \n aux
+faqTitleRight: questions \n fréquentes
+faqItems:
+  - question: Combien coûte une refonte ?
+    answer: >-
+      Entre 2 000 € et 8 000 € selon la complexité, le nombre de pages et les
+      fonctionnalités. On détaille ça dans notre guide → lien vers article blog
+      "combien coûte une refonte".
+  - question: Mon référencement sera-t-il impacté ?
+    answer: >-
+      Pas si on travaille sérieusement les redirections et la migration SEO. Une
+      refonte bien exécutée améliore le référencement sur 3 à 6 mois.
+  - question: Combien de temps ça prend ?
+    answer: >-
+      De 3 à 6 semaines selon l'étendue du projet. On établit un planning dès le
+      cadrage et on le tient.
+  - question: Je garde mon CMS actuel ?
+    answer: >-
+      Ça dépend. Si votre CMS actuel est une contrainte, on vous propose une
+      alternative. Si c'est un système fiable et que ça vous convient, on peut
+      rester dessus.
+  - question: Vous faites aussi le contenu ?
+    answer: >-
+      On peut travailler avec votre rédacteur ou vous recommander quelqu'un. La
+      rédaction n'est pas incluse par défaut.
+  - question: Je peux voir des exemples de vos refontes ?
+    answer: Oui — lien vers `/fr/projets` avec les cas pertinents mis en avant.
+ctaTitleLeft: Parlez-nous de votre projet
+ctaParagraphs:
+  - >-
+    Remplissez le formulaire avec vos coordonnées, et un membre de notre équipe
+    vous contactera pour une consultation sans engagement. Ou vous pouvez nous
+    envoyer un e-mail à l'adresse hello@hordeagence.com
+primaryCtaLabel: Demander un devis
+primaryCtaUrl: /fr/contact
+secondaryCtaLabel: Voir nos projets
+secondaryCtaUrl: /fr/projets
+reassurance: Réponse sous 48h. Premier échange gratuit, sans engagement.
+recommendedLinks:
+  - anchor: audit gratuit avant refonte
+    url: /fr/services/audit-offert
+  - anchor: optimisation sans refonte complète
+    url: /fr/services/optimisation-site-web
+  - anchor: nos réalisations
+    url: /fr/projets
+  - anchor: nous contacter
+    url: /fr/contact
+notes:
+  - >-
+    Le lecteur a déjà un site mais il ne lui convient plus. Il cherche à
+    comprendre ce que ça implique (coût, délai, risque SEO) avant de décider.
+  - >-
+    Traiter les objections en priorité : coût, durée, impact SEO, gestion du
+    contenu après livraison.
+  - >-
+    Ne pas promettre de résultats SEO en semaines — c'est le moyen le plus
+    rapide de perdre de la crédibilité.
+  - >-
+    Ton : sérieux, structuré, sans sur-vente. On est une agence qui fait du bon
+    travail, pas "la meilleure agence de Bruxelles".
+order: 5

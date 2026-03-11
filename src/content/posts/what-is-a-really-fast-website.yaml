@@ -28,6 +28,16 @@ tags:
   - SEO technique
   - UX mobile
 publishedDate: 2026-01-30
+modifiedDate: 2026-03-09
+readingTime: 3
+keyTakeaways_fr:
+  - Un site vraiment rapide se juge surtout sur mobile, dans des conditions de connexion imparfaites.
+  - La vitesse influence directement le SEO, le taux de rebond et les conversions.
+  - Les Core Web Vitals, les images, le cache et le poids du code sont les leviers techniques prioritaires.
+keyTakeaways_en:
+  - A truly fast website should be evaluated on mobile and under imperfect connection conditions.
+  - Speed directly impacts SEO, bounce rate, and conversions.
+  - Core Web Vitals, images, caching, and code weight are the main technical levers.
 featured: false
 draft: false
 seoRobots: index, follow

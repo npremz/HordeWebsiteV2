@@ -1,0 +1,38 @@
+---
+import ContactForm from "../ui/ContactForm";
+import type { FormTranslations } from "../ui/ContactForm";
+import { formatHeadingHtml } from "../../utils/heading-html";
+import type { ServiceData } from "./types";
+
+interface Props {
+  service: ServiceData;
+  formTranslations: FormTranslations;
+}
+
+const { service, formTranslations } = Astro.props;
+---
+
+<section id="service-cta" class="mt-20 mb-20" data-service-section="cta" aria-labelledby="service-cta-title">
+  <h2 id="service-cta-title" class="text-[2rem] flex pb-10">
+    <span set:html={formatHeadingHtml(service.ctaTitleLeft)} />
+  </h2>
+  <div>
+    {service.ctaParagraphs.map((paragraph) => (
+      <p class="text-[1.25rem]">{paragraph}</p>
+    ))}
+
+    <div id="contact-form" class="mt-25">
+      <ContactForm
+        client:load
+        translations={formTranslations}
+        variant="light"
+        hideNeedField={true}
+        source={{
+          type: 'service-page',
+          pagePath: service.seoUrl,
+          serviceSlug: service.slug,
+        }}
+      />
+    </div>
+  </div>
+</section>

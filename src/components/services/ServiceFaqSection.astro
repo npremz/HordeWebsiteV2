@@ -1,0 +1,114 @@
+---
+import Wrapped from "../ui/Wrapped.astro";
+import ServiceSectionHeading from "./ServiceSectionHeading.astro";
+import type { ServiceData } from "./types";
+
+interface Props {
+  service: ServiceData;
+}
+
+const { service } = Astro.props;
+---
+
+<section id="service-faq" class="mt-20 py-20 full-width-dark-bg text-white" data-service-section="faq" aria-labelledby="service-faq-title">
+  <ServiceSectionHeading
+    id="service-faq-title"
+    left={service.faqTitleLeft}
+    right={service.faqTitleRight}
+    dark={true}
+    class="pb-10"
+  />
+  <div>
+    {service.faqItems.map((item, index) => (
+      <div class="faq-item border-b border-lines-dark last:border-b-0 transition-colors duration-300">
+        <button
+          type="button"
+          class="faq-trigger w-full flex justify-between py-10 text-left cursor-pointer group"
+          aria-expanded="false"
+          aria-controls={`faq-content-${index}`}
+        >
+          <span
+            class="faq-question text-[1.25rem] sm:text-[1.5rem] md:text-[2rem] transition-opacity"
+            data-text={item.question}
+            set:html={item.question}
+          />
+          <Wrapped
+            class="faq-icon h-fit shrink-0 font-mono transition-colors duration-300"
+            aria-hidden="true"
+            variant="dark"
+          >
+            <span class="icon-plus">+</span>
+            <span class="icon-minus hidden">-</span>
+          </Wrapped>
+        </button>
+        <div
+          id={`faq-content-${index}`}
+          class="faq-content grid grid-rows-[0fr] transition-[grid-template-rows] duration-500 ease-out"
+        >
+          <div class="overflow-hidden">
+            <div class="faq-content-inner pb-10 opacity-0 transition-all duration-500 ease-out delay-0">
+              <p class="text-[1.125rem] leading-relaxed max-w-3xl opacity-80">
+                {item.answer}
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    ))}
+  </div>
+</section>
+
+<style>
+  .faq-trigger[aria-expanded="true"] .icon-plus {
+    display: none;
+  }
+
+  .faq-trigger[aria-expanded="true"] .icon-minus {
+    display: inline;
+  }
+
+  .faq-item.is-open .faq-content {
+    grid-template-rows: 1fr;
+  }
+
+  .faq-item.is-open .faq-content-inner {
+    opacity: 1;
+    transition-delay: 150ms;
+  }
+</style>
+
+<script>
+  function initFaqAccordion() {
+    const triggers = document.querySelectorAll(".faq-trigger");
+
+    triggers.forEach((trigger) => {
+      trigger.addEventListener("click", () => {
+        const isExpanded = trigger.getAttribute("aria-expanded") === "true";
+        const faqItem = trigger.closest(".faq-item");
+
+        if (!faqItem) return;
+
+        triggers.forEach((otherTrigger) => {
+          if (otherTrigger !== trigger) {
+            otherTrigger.setAttribute("aria-expanded", "false");
+            const otherItem = otherTrigger.closest(".faq-item");
+            if (otherItem) {
+              otherItem.classList.remove("is-open");
+            }
+          }
+        });
+
+        if (isExpanded) {
+          trigger.setAttribute("aria-expanded", "false");
+          faqItem.classList.remove("is-open");
+        } else {
+          trigger.setAttribute("aria-expanded", "true");
+          faqItem.classList.add("is-open");
+        }
+      });
+    });
+  }
+
+  initFaqAccordion();
+  document.addEventListener("astro:after-swap", initFaqAccordion);
+</script>

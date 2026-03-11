@@ -1,0 +1,157 @@
+slug: creation-ecommerce
+seoUrl: /fr/services/creation-ecommerce
+seoPrimaryKeyword: création site e-commerce bruxelles
+seoSecondaryKeywords:
+  - agence ecommerce belgique
+  - créer boutique en ligne bruxelles
+  - développement shopify bruxelles
+  - site vente en ligne sur mesure
+seoTitle: Création site e-commerce à Bruxelles | Horde
+seoDescription: >-
+  Boutique en ligne rapide, bien référencée et conçue pour convertir. On crée
+  votre e-commerce sur Shopify ou sur mesure, avec UX et performance au centre.
+seoRobots: index, follow
+seoInternalLinks:
+  - /fr/services/audit-offert
+  - /fr/services/creation-landing-page
+  - /fr/projets
+  - /fr/contact
+h1: Création de site e-commerce orienté performance et conversion
+intro: >-
+  Un e-commerce qui convertit, ce n'est pas qu'une belle boutique. C'est un site
+  rapide, des parcours d'achat sans friction, et un référencement qui attire la
+  bonne audience. On conçoit des boutiques qui rendent vos produits accessibles
+  — parce qu'une interface ne devrait pas être un frein à votre business.
+problemTitleLeft: Ce qui sépare un e-commerce qui vend d'un qui ne vend pas
+problemBlocks:
+  - kind: paragraph
+    body: >-
+      La plupart des boutiques en ligne perdent des clients sur des détails qui
+      semblent anodins : un temps de chargement de 2 secondes de trop, un
+      formulaire d'adresse en 12 étapes, des photos qui mettent 4s à s'afficher
+      sur mobile. Ces frictions s'accumulent et se mesurent dans le taux
+      d'abandon de panier.
+    items: []
+  - kind: paragraph
+    body: >-
+      Les e-commerces qu'on construit ont un but en tête : que les utilisateurs
+      aillent jusqu'au bout. Chaque décision va dans ce sens, de la base
+      technique jusqu'à la taille des boutons.
+    items: []
+offerTitleLeft: Les types de projets qu'on prend en charge
+offerItems:
+  - title: Boutiques Shopify
+    body: >-
+      Configuration, thème sur mesure ou personnalisation poussée, apps
+      sélectionnées, checkout optimisé. Shopify est notre recommandation pour la
+      majorité des boutiques. C'est robuste, évolutif, maintenu.
+  - title: E-commerces sur mesure
+    body: >-
+      Pour les besoins spécifiques que Shopify ne couvre pas : catalogue
+      complexe, logique métier particulière, intégration ERP/WMS, modèles B2B.
+      On développe sur des bases solides (Next.js, Astro + headless commerce).
+  - title: Migration e-commerce
+    body: >-
+      Vous avez une boutique existante qui ne répond plus à vos besoins ? On
+      migre vers une nouvelle plateforme sans perdre l'historique de commandes,
+      les avis clients, et le référencement acquis.
+methodTitleLeft: Ce qu'on intègre dans chaque projet
+methodSteps:
+  - title: '**UX & parcours d''achat**'
+    body: >-
+      Fiches produit conçues pour convertir, navigation par facettes, tunnel de
+      commande simplifié, gestion des erreurs claire. On cartographie les
+      parcours avant de dessiner quoi que ce soit.
+  - title: '**Performance technique**'
+    body: >-
+      Images en WebP/AVIF avec lazy loading, JS minimal, Core Web Vitals dans le
+      vert. Un e-commerce lent sur mobile laisse de l'argent sur la table. Pour
+      nous, la rapidité est un standard.
+  - title: '**SEO e-commerce**'
+    body: >-
+      Données structurées produits (schema.org), balises canoniques pour les
+      variantes, sitemap produit, URLs propres. Les bases qui conditionnent
+      votre visibilité sur Google Shopping et la recherche organique.
+  - title: '**Paiement & logistique**'
+    body: >-
+      Intégration Stripe, Mollie, Bancontact, PayPal. Connexion aux
+      transporteurs (Bpost, DPD, Sendcloud). On configure ce dont vous avez
+      besoin, pas un catalogue de fonctionnalités que vous n'utiliserez jamais.
+deliverablesTitleLeft: Le livrable
+deliverables:
+  - Boutique en production, rapide sur mobile et desktop
+  - Core Web Vitals dans le vert
+  - SEO e-commerce technique en place dès le lancement
+  - Formation à la gestion du catalogue et des commandes
+  - Documentation des paramètres et des intégrations
+  - Monitoring 30 jours post-lancement inclus
+exclusionsTitleLeft: Ce qu'on évite
+exclusionsParagraphs:
+  - >-
+    On ne livre pas une installation Shopify par défaut avec un thème gratuit et
+    quelques apps. On ne met pas non plus en ligne sans avoir testé le tunnel de
+    commande sur mobile. Et on ne code pas sans avoir compris votre catalogue,
+    vos transporteurs et vos contraintes logistiques.
+faqTitleLeft: Questions fréquentes
+faqItems:
+  - question: Shopify ou WooCommerce ?
+    answer: >-
+      Pour la grande majorité des projets, Shopify. Plus rapide à lancer, plus
+      stable, moins de maintenance. WooCommerce a du sens si vous êtes déjà sur
+      WordPress et que votre catalogue est limité. On en discute selon votre
+      situation.
+  - question: Combien coûte un e-commerce ?
+    answer: >-
+      Un Shopify sur mesure : entre 5 000 € et 12 000 €. Un e-commerce custom
+      avec logique spécifique : à partir de 15 000 €. Les variables principales
+      : taille du catalogue, intégrations, niveau de personnalisation.
+  - question: Je peux gérer mes produits moi-même après ?
+    answer: >-
+      Oui, c'est une condition non négociable. On forme votre équipe et on
+      documente tout. Vous ne dépendez pas de nous pour ajouter un produit.
+  - question: Vous gérez aussi le SEO après la mise en ligne ?
+    answer: >-
+      On livre un site avec des bases SEO solides. L'accompagnement SEO continu
+      (production de contenu, netlinking) n'est pas notre métier. Mais on peut
+      vous orienter vers des spécialistes.
+  - question: Mon site actuel peut-il être migré ?
+    answer: >-
+      Dans la quasi-totalité des cas, oui. On évalue la migration lors de
+      l'audit initial : données produits, commandes, avis, redirections.
+ctaTitleLeft: Parlez-nous de votre boutique
+ctaParagraphs:
+  - >-
+    Remplissez le formulaire avec vos coordonnées, et un membre de notre équipe
+    vous contactera pour une consultation sans engagement. Ou vous pouvez nous
+    envoyer un e-mail à l'adresse hello@hordeagence.com
+primaryCtaLabel: Discutons de votre projet
+primaryCtaUrl: /fr/contact
+secondaryCtaLabel: Voir nos réalisations
+secondaryCtaUrl: /fr/projets
+reassurance: Premier échange sans engagement. Réponse sous 24h.
+recommendedLinks:
+  - anchor: audit de votre boutique actuelle
+    url: /fr/services/audit-offert
+  - anchor: landing pages produit
+    url: /fr/services/creation-landing-page
+  - anchor: nos réalisations
+    url: /fr/projets
+  - anchor: nous contacter
+    url: /fr/contact
+notes:
+  - >-
+    Le lecteur cible : une PME ou un indépendant qui veut vendre en ligne, ou
+    qui a déjà une boutique qui sous-performe.
+  - >-
+    Éviter de lister trop de technologies — ça intéresse rarement le décideur.
+    L'important : ce que ça change pour son business.
+  - >-
+    Ne pas promettre "le meilleur taux de conversion de votre secteur" — trop
+    vague et invérifiable.
+  - >-
+    Ton : pragmatique, direct. On parle e-commerce comme un artisan parle de son
+    métier, pas comme une brochure Salesforce.
+  - >-
+    Le point de différenciation : performance + UX en amont, pas juste "on
+    installe Shopify".
+order: 1

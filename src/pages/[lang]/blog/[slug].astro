@@ -43,6 +43,7 @@ const authorName = author?.name || 'Horde';
 const authorRole = author ? (lang === 'fr' ? author.role_fr : author.role_en) : '';
 const authorBio = author ? (lang === 'fr' ? author.bio_fr : author.bio_en) : '';
 const authorAvatar = author?.avatar;
+const authorPagePath = author ? `/${lang}/authors/${post.data.author}` : undefined;
 
 // Catégorie
 const category = categoriesMap.get(post.data.category);
@@ -50,6 +51,7 @@ const categoryName = category ? (lang === 'fr' ? category.name_fr : category.nam
 
 // Tags
 const tags = post.data.tags || [];
+const keyTakeaways = lang === 'fr' ? post.data.keyTakeaways_fr || [] : post.data.keyTakeaways_en || [];
 
 // Dates
 const publishedDate = post.data.publishedDate;
@@ -181,7 +183,7 @@ function applyInlineFormatting(text: string): string {
 
 // Formater la date
 function formatDate(date: Date, locale: string): string {
-	return new Intl.DateTimeFormat(locale === 'fr' ? 'fr-FR' : 'en-US', {
+	return new Intl.DateTimeFormat(locale === 'fr' ? 'fr-BE' : 'en-US', {
 		day: 'numeric',
 		month: 'long',
 		year: 'numeric',
@@ -196,7 +198,13 @@ const switchLang = lang === 'fr' ? 'en' : 'fr';
 // URL de partage
 const siteUrl = (Astro.site?.toString() || 'https://hordeagence.com').replace(/\/$/, '');
 const articleUrl = `${siteUrl}/${lang}/blog/${currentSlug}`;
+const authorUrl = authorPagePath ? `${siteUrl}${authorPagePath}` : undefined;
 const shareUrl = articleUrl;
+const authorSameAs = [
+	author?.social?.twitter ? `https://twitter.com/${author.social.twitter}` : null,
+	author?.social?.linkedin || null,
+	author?.social?.github ? `https://github.com/${author.social.github}` : null,
+].filter(Boolean);
 // URL pour le switch de langue (avec le slug de l'autre langue)
 const alternateUrl = `${siteUrl}/${switchLang}/blog/${alternateSlug}`;
 const imageUrl = post.data.featuredImage.src?.startsWith('http')
@@ -220,11 +228,14 @@ const schemaOrg = {
 				"@type": "Person",
 				"name": authorName,
 				"jobTitle": authorRole,
-				...(author?.social?.twitter && { "sameAs": `https://twitter.com/${author.social.twitter}` }),
+				...(authorUrl && { "url": authorUrl }),
+				...(authorAvatar && { "image": `${siteUrl}${authorAvatar.src}` }),
+				...(authorSameAs.length > 0 && { "sameAs": authorSameAs }),
 			},
 			"publisher": {
 				"@type": "Organization",
-				"name": "Horde",
+				"@id": `${siteUrl}#organization`,
+				"name": "Horde Agence",
 				"url": siteUrl,
 				"logo": {
 					"@type": "ImageObject",
@@ -235,14 +246,27 @@ const schemaOrg = {
 				"@type": "WebPage",
 				"@id": articleUrl
 			},
-			"articleSection": categoryName,
-			"keywords": tags.join(", "),
-			"wordCount": articleContent.split(/\s+/).length,
-			"timeRequired": `PT${readingTime}M`,
-			"inLanguage": lang === 'fr' ? 'fr-FR' : 'en-US'
-		},
-		// BreadcrumbList
-		{
+				"articleSection": categoryName,
+				"keywords": tags.join(", "),
+				"wordCount": articleContent.split(/\s+/).length,
+				"timeRequired": `PT${readingTime}M`,
+				"abstract": excerpt,
+				"inLanguage": lang === 'fr' ? 'fr-BE' : 'en-US'
+			},
+			...(keyTakeaways.length > 0
+				? [{
+					"@type": "ItemList",
+					"@id": `${articleUrl}#takeaways`,
+					"name": lang === 'fr' ? 'En bref' : 'Key takeaways',
+					"itemListElement": keyTakeaways.map((item: string, index: number) => ({
+						"@type": "ListItem",
+						"position": index + 1,
+						"name": item,
+					})),
+				}]
+				: []),
+			// BreadcrumbList
+			{
 			"@type": "BreadcrumbList",
 			"@id": `${articleUrl}#breadcrumb`,
 			"itemListElement": [
@@ -270,7 +294,7 @@ const schemaOrg = {
 };
 ---
 
-<Layout lang={lang} alternateUrl={alternateUrl} title={title} description={seoDescription} ogType="article" publishedTime={publishedDate.toISOString()} modifiedTime={modifiedDate?.toISOString()} author={authorName}>
+<Layout lang={lang} alternateUrl={alternateUrl} title={title} description={seoDescription} ogType="article" publishedTime={publishedDate.toISOString()} modifiedTime={modifiedDate?.toISOString()} author={authorName} authorUrl={authorUrl}>
 	<!-- Schema.org JSON-LD -->
 	<script type="application/ld+json" set:html={JSON.stringify(schemaOrg)} />
 
@@ -306,7 +330,7 @@ const schemaOrg = {
 			<!-- Meta: Auteur + Date -->
 			<div class="flex flex-col p-5 sm:p-8 border border-lines sm:flex-row sm:justify-between sm:items-end gap-4 sm:gap-8 mb-10 sm:mb-24">
 				<!-- Auteur -->
-				<div class="flex items-center gap-4">
+				<a href={authorPagePath} class="flex items-center gap-4" title={authorName}>
 					{authorAvatar && (
 						<Image
 							src={authorAvatar}
@@ -320,7 +344,7 @@ const schemaOrg = {
 						<p class="text-[1.375rem]">{authorName}</p>
 						{authorRole && <p class="section-label max-w-[170px]">{authorRole}</p>}
 					</div>
-				</div>
+				</a>
 				<!-- Dates -->
 				<div class="section-label sm:max-w-30">
 					<p>
@@ -364,6 +388,20 @@ const schemaOrg = {
 				<p class="text-[1.625rem] sm:text-[2rem] md:text-[2.5rem] pb-10 sm:pb-24 border-b border-lines">
 					{excerpt}
 				</p>
+
+				{keyTakeaways.length > 0 && (
+					<section class="mt-10 sm:mt-16 pb-10 sm:pb-16 border-b border-lines" aria-label={lang === 'fr' ? 'En bref' : 'Key takeaways'}>
+						<h2 class="section-label mb-6">{lang === 'fr' ? 'En bref' : 'Key takeaways'}</h2>
+						<ul class="flex flex-col gap-4 text-[1.125rem] sm:text-[1.25rem]">
+							{keyTakeaways.map((item: string) => (
+								<li class="flex gap-3 leading-relaxed">
+									<span class="section-label mt-1">/</span>
+									<span>{item}</span>
+								</li>
+							))}
+						</ul>
+					</section>
+				)}
 
 				<!-- Sommaire (rendu côté serveur pour SEO) -->
 				{tableOfContents.length > 0 && (
@@ -467,7 +505,7 @@ const schemaOrg = {
 								/>
 							)}
 							<div class="flex flex-col">
-								<p class="text-[1.375rem]">{authorName}</p>
+								<a href={authorPagePath} class="text-[1.375rem]" title={authorName}>{authorName}</a>
 								{authorRole && <p class="section-label">{authorRole}</p>}
 							</div>
 						</div>
@@ -508,7 +546,7 @@ const schemaOrg = {
 							)}
 							<div class="flex-1">
 								<div class="flex items-baseline gap-4 mb-4">
-									<p class="text-[1.375rem]">{authorName}</p>
+									<a href={authorPagePath} class="text-[1.375rem]" title={authorName}>{authorName}</a>
 									{authorRole && <p class="section-label">{authorRole}</p>}
 								</div>
 								<div class="lg:flex lg:justify-between lg:gap-8">

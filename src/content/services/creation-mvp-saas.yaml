@@ -1,0 +1,176 @@
+slug: creation-mvp-saas
+seoUrl: /fr/services/creation-mvp-saas
+seoPrimaryKeyword: développement mvp saas bruxelles
+seoSecondaryKeywords:
+  - développement application web bruxelles
+  - prototype produit digital
+  - mvp startup belgique
+  - créer saas belgique
+  - agence développement produit bruxelles
+seoTitle: Développement MVP SaaS à Bruxelles | Horde
+seoDescription: >-
+  Lancez votre MVP SaaS rapidement avec une base technique solide. Cadrage,
+  développement et mise en production : on construit ce que vous avez besoin de
+  tester.
+seoRobots: index, follow
+seoInternalLinks:
+  - /fr/services/audit-offert
+  - /fr/services/creation-landing-page
+  - /fr/projets
+  - /fr/contact
+h1: Développement MVP et application web à Bruxelles
+intro: >-
+  Un MVP, ce n'est pas un produit à moitié fait. C'est le périmètre minimal qui
+  vous permet de tester une hypothèse business avec de vrais utilisateurs, sans
+  gaspiller 18 mois de développement. On vous aide à définir ce périmètre, puis
+  on le construit.
+problemTitleLeft: Ce que "minimal" veut dire vraiment
+problemBlocks:
+  - kind: paragraph
+    body: >-
+      "Minimal" ne veut pas dire bâclé. Ça veut dire qu'on ne construit pas les
+      fonctionnalités dont personne n'a encore exprimé le besoin. Les erreurs
+      courantes qu'on voit :
+    items: []
+  - kind: list
+    items:
+      - >-
+        Passer 6 mois à coder un back-office admin avant qu'un seul utilisateur
+        ait testé le produit
+      - >-
+        Construire une architecture "scalable pour 1 million d'utilisateurs" dès
+        le départ
+      - >-
+        Ajouter des fonctionnalités parce que "ça pourrait être utile" sans
+        validation
+  - kind: paragraph
+    body: >-
+      On travaille autrement : on cadre d'abord, on construit ensuite uniquement
+      ce qui permet de répondre à la question business centrale.
+    items: []
+offerTitleLeft: Ce qu'on couvre
+offerItems:
+  - title: Cadrage produit
+    body: >-
+      On décompose votre idée en hypothèses à valider. On définit les parcours
+      utilisateurs critiques, les fonctionnalités du MVP et ce qu'on reporte à
+      plus tard. On sort un périmètre signé avant de coder une ligne.
+  - title: UX & prototypage
+    body: >-
+      Wireframes des écrans clés, flux de navigation, logique des interactions.
+      On valide avec vous (et si possible avec des utilisateurs) avant de passer
+      au développement.
+  - title: Développement
+    body: >-
+      Stack choisie selon les contraintes du projet, pas une stack préférée par
+      défaut. Code propre, tests sur les flux critiques, déploiement continu. On
+      livre en itérations, pas en une seule grande livraison à la fin.
+  - title: Mise en production et suivi
+    body: >-
+      Hébergement configuré, monitoring en place, documentation technique. On ne
+      disparaît pas après le lancement, on suit les premiers retours et on
+      itère.
+methodTitleLeft: Du brief à la mise en production
+methodSteps:
+  - title: Cadrage (1 semaine)
+    body: Périmètre MVP défini, hypothèses identifiées, périmètre signé.
+  - title: UX & prototypage (1 à 3 semaines)
+    body: Wireframes validés, flux clés testés si possible.
+  - title: Développement (2 à 6 semaines)
+    body: Livraisons itératives, accès en continu à un environnement de test.
+  - title: Mise en production
+    body: Hébergement configuré, monitoring, documentation.
+  - title: Suivi post-lancement
+    body: On suit les premiers retours et on itère avec vous.
+deliverablesTitleLeft: Le livrable
+deliverables:
+  - Application déployée en production
+  - Code source sur votre repository, sans dépendances propriétaires
+  - Documentation technique et fonctionnelle
+  - Monitoring configuré (erreurs, uptime)
+  - Formation à la gestion du produit si besoin
+  - Accès à tous les environnements (staging, prod)
+exclusionsTitleLeft: Ce qu'on n'est pas
+exclusionsParagraphs:
+  - >-
+    On n'est pas une usine à code offshore. On ne prend pas en charge 10 projets
+    en parallèle. On travaille avec un nombre limité de clients à la fois, on
+    prend le temps de vraiment comprendre votre projet, on construit ensemble.
+  - >-
+    On ne s'engage pas non plus sur des fonctionnalités dont on ne comprend pas
+    l'utilité. Si on pense qu'une décision de product design est problématique,
+    on le dit.
+faqTitleLeft: Questions fréquentes
+faqItems:
+  - question: Combien coûte un MVP ?
+    answer: >-
+      Entre 5 000 € et 20 000 € selon la complexité. Un MVP B2C avec
+      authentification, CRUD de base et Stripe : plutôt 5–10k. Un SaaS avec
+      logique métier complexe, rôles multiples et intégrations tierces : plus.
+      On chiffre après le cadrage, pas avant.
+  - question: Combien de temps pour avoir quelque chose à tester ?
+    answer: >-
+      Les premiers écrans utilisables : 3 à 5 semaines. Un MVP complet
+      déployable : 6 à 10 semaines. On évite les projets qui s'éternisent et ne
+      testent jamais la réalité du marché.
+  - question: Vous continuez après le MVP ?
+    answer: >-
+      Selon les résultats, on peut continuer en mode itérations. Ce n'est pas
+      automatique — on réévalue avec vous à chaque étape.
+  - question: On peut prendre la main sur le code après ?
+    answer: >-
+      Oui, c'est une condition de base. Code documenté, repository sur votre
+      compte, pas de dépendances propriétaires qui vous enferment. Vous pouvez
+      internaliser le développement à tout moment.
+  - question: Vous aidez aussi à définir le produit ?
+    answer: >-
+      C'est une partie de notre travail, pas un service séparé facturé en plus.
+      On ne commence pas à coder sans avoir compris ce que vous cherchez à
+      valider.
+  - question: Quelles technologies utilisez-vous ?
+    answer: >-
+      On adapte la stack au projet : React / Next.js / Astro en frontend,
+      Node.js + TypeScript en backend, PostgreSQL ou Supabase, Clerk ou Supabase
+      Auth, Stripe pour le paiement, Vercel ou VPS pour l'hébergement.
+ctaTitleLeft: Parlons de votre idée
+ctaParagraphs:
+  - >-
+    Remplissez le formulaire avec vos coordonnées, et un membre de notre équipe
+    vous contactera pour une consultation sans engagement. Ou vous pouvez nous
+    envoyer un e-mail à l'adresse hello@hordeagence.com
+primaryCtaLabel: Discutons de votre projet
+primaryCtaUrl: /fr/contact
+secondaryCtaLabel: Voir nos réalisations
+secondaryCtaUrl: /fr/projets
+reassurance: Premier échange de cadrage gratuit. Réponse sous 24h.
+recommendedLinks:
+  - anchor: landing page pour votre lancement
+    url: /fr/services/creation-landing-page
+  - anchor: audit de votre application existante
+    url: /fr/services/audit-offert
+  - anchor: nos réalisations
+    url: /fr/projets
+  - anchor: nous contacter
+    url: /fr/contact
+notes:
+  - >-
+    Le lecteur cible : un fondateur de startup, un product manager en grande
+    boîte qui veut tester un nouveau produit, un entrepreneur avec une idée SaaS
+    B2B.
+  - >-
+    L'objection principale : "est-ce que vous allez comprendre mon domaine
+    métier ?" → traiter ça avec la section cadrage produit.
+  - >-
+    Ne pas lister trop de technologies — l'essentiel est de montrer qu'on adapte
+    la stack au projet. Garder la liste en FAQ.
+  - >-
+    Différenciateur clé : on n'est pas une agence de sous-traitance. On est un
+    partenaire technique qui pousse en retour sur les décisions produit.
+  - >-
+    Éviter les mots startup-osphere : "pivot", "iterate fast", "ship it", "build
+    in public". Rester concret et professionnel.
+  - >-
+    Le passage sur ce qu'on n'est pas (usine offshore) est important pour
+    qualifier les leads — on cherche des clients qui veulent de la qualité, pas
+    du volume.
+order: 3
