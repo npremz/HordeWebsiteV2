@@ -6,12 +6,19 @@ export const prerender = false;
 
 const resend = new Resend(import.meta.env.RESEND_API_KEY);
 
+const besoinValues = ['audit-performance', 'optimisation-refonte', 'from-scratch-mvp', 'autre'] as const;
+
 const contactSchema = z.object({
-  besoin: z.enum(['audit-performance', 'optimisation-refonte', 'from-scratch-mvp', 'autre']),
+  besoin: z.enum(besoinValues).optional(),
   objectif: z.string().min(1).max(2000),
   nom: z.string().min(1).max(100),
   email: z.string().email().max(254),
   societe: z.string().max(200).optional().default(''),
+  source: z.object({
+    type: z.enum(['contact-page', 'service-page']),
+    pagePath: z.string().max(500).optional(),
+    serviceSlug: z.string().max(200).optional(),
+  }).optional(),
 });
 
 const besoinLabels: Record<string, string> = {
@@ -34,18 +41,26 @@ export const POST: APIRoute = async ({ request }) => {
       );
     }
 
-    const { besoin, objectif, societe, nom, email } = result.data;
+    const { besoin, objectif, societe, nom, email, source } = result.data;
 
-    const besoinLabel = besoinLabels[besoin] || besoin;
+    const besoinLabel = besoin ? besoinLabels[besoin] || besoin : null;
+    const sourceLabel = source?.type === 'service-page'
+      ? `Page service${source.serviceSlug ? ` (${source.serviceSlug})` : ''}`
+      : source?.type === 'contact-page'
+        ? 'Page contact'
+        : 'Formulaire non specifie';
+    const subjectLabel = besoinLabel || sourceLabel;
 
     const { error } = await resend.emails.send({
       from: 'Horde Website <noreply@hordeagence.com>',
       to: ['hello@hordeagence.com'],
       replyTo: email,
-      subject: `Nouveau contact - ${besoinLabel}`,
+      subject: `Nouveau contact - ${subjectLabel}`,
       html: `
         <h2>Nouvelle demande de contact</h2>
-        <p><strong>Besoin :</strong> ${besoinLabel}</p>
+        ${besoinLabel ? `<p><strong>Besoin :</strong> ${besoinLabel}</p>` : ''}
+        <p><strong>Source :</strong> ${sourceLabel}</p>
+        ${source?.pagePath ? `<p><strong>Page :</strong> ${source.pagePath}</p>` : ''}
         <p><strong>Objectif :</strong> ${objectif}</p>
         <p><strong>Nom :</strong> ${nom}</p>
         <p><strong>Email :</strong> ${email}</p>

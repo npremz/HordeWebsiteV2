@@ -1,0 +1,111 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import Footer from '../../../components/Footer.astro';
+import { SUPPORTED_LOCALES, type Locale } from '../../../i18n';
+
+export const prerender = true;
+
+export function getStaticPaths() {
+  return SUPPORTED_LOCALES.map((lang) => ({
+    params: { lang },
+  }));
+}
+
+const { lang } = Astro.params as { lang: Locale };
+
+const pageTitle = lang === 'fr' ? 'Services' : 'Services';
+const pageDescription = lang === 'fr'
+  ? 'Squelette de page service.'
+  : 'Service page skeleton.';
+
+const labels = lang === 'fr'
+  ? {
+      hero: 'Hero',
+      intro: 'Introduction',
+      problem: 'Problème / contexte',
+      offer: "Ce qu'on fait",
+      method: 'Notre méthode',
+      deliverables: 'Ce qu’on livre',
+      exclusions: "Ce qu'on n'est pas",
+      faq: 'FAQ',
+      cta: 'CTA final',
+    }
+  : {
+      hero: 'Hero',
+      intro: 'Introduction',
+      problem: 'Problem / context',
+      offer: 'What we do',
+      method: 'Our method',
+      deliverables: 'What we deliver',
+      exclusions: 'What we are not',
+      faq: 'FAQ',
+      cta: 'Final CTA',
+    };
+---
+
+<Layout lang={lang} title={pageTitle} description={pageDescription}>
+  <div class="fixed inset-0 bg-bg-light -z-10" aria-hidden="true"></div>
+  <div id="page-content" class="relative z-10">
+    <header class="pt-50 md:pt-78 mb-16 md:mb-24">
+      <div class="flex flex-col gap-6 max-w-[900px]">
+        <p class="section-label">{labels.hero}</p>
+        <h1 class="leading-none text-[2rem] md:text-[2.5rem] lg:text-[3rem] uppercase">
+          {pageTitle}
+        </h1>
+        <p class="text-xl md:text-[1.625rem] max-w-[720px] text-black/70">
+          {labels.intro}
+        </p>
+      </div>
+    </header>
+
+    <div class="pb-24 md:pb-32 flex flex-col gap-16 md:gap-24">
+      <section class="grid gap-6 md:grid-cols-12 md:gap-10">
+        <div class="md:col-span-4">
+          <h2 class="text-[1.5rem] md:text-[2rem] leading-tight">{labels.problem}</h2>
+        </div>
+        <div class="md:col-span-8"></div>
+      </section>
+
+      <section class="grid gap-6 md:grid-cols-12 md:gap-10">
+        <div class="md:col-span-4">
+          <h2 class="text-[1.5rem] md:text-[2rem] leading-tight">{labels.offer}</h2>
+        </div>
+        <div class="md:col-span-8"></div>
+      </section>
+
+      <section class="grid gap-6 md:grid-cols-12 md:gap-10">
+        <div class="md:col-span-4">
+          <h2 class="text-[1.5rem] md:text-[2rem] leading-tight">{labels.method}</h2>
+        </div>
+        <div class="md:col-span-8"></div>
+      </section>
+
+      <section class="grid gap-6 md:grid-cols-12 md:gap-10">
+        <div class="md:col-span-4">
+          <h2 class="text-[1.5rem] md:text-[2rem] leading-tight">{labels.deliverables}</h2>
+        </div>
+        <div class="md:col-span-8"></div>
+      </section>
+
+      <section class="grid gap-6 md:grid-cols-12 md:gap-10">
+        <div class="md:col-span-4">
+          <h2 class="text-[1.5rem] md:text-[2rem] leading-tight">{labels.exclusions}</h2>
+        </div>
+        <div class="md:col-span-8"></div>
+      </section>
+
+      <section class="grid gap-6 md:grid-cols-12 md:gap-10">
+        <div class="md:col-span-4">
+          <h2 class="text-[1.5rem] md:text-[2rem] leading-tight">{labels.faq}</h2>
+        </div>
+        <div class="md:col-span-8"></div>
+      </section>
+
+      <section class="border border-lines p-6 md:p-10">
+        <h2 class="text-[1.5rem] md:text-[2rem] leading-tight">{labels.cta}</h2>
+      </section>
+    </div>
+  </div>
+
+  <Footer lang={lang} hideOverflow={false} />
+</Layout>

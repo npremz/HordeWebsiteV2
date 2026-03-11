@@ -57,7 +57,7 @@ const posts = rawPosts
 const articleCount = posts.length;
 
 function formatDate(date: Date, locale: string): string {
-	return new Intl.DateTimeFormat(locale === 'fr' ? 'fr-FR' : 'en-US', {
+	return new Intl.DateTimeFormat(locale === 'fr' ? 'fr-BE' : 'en-US', {
 		day: '2-digit',
 		month: 'short',
 		year: '2-digit',

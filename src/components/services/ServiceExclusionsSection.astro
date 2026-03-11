@@ -1,0 +1,35 @@
+---
+import { formatHeadingHtml } from "../../utils/heading-html";
+import type { ServiceData } from "./types";
+
+interface Props {
+  service: ServiceData;
+}
+
+const { service } = Astro.props;
+---
+
+<section
+  id="service-exclusions"
+  data-service-section="exclusions"
+  aria-labelledby="service-exclusions-title"
+>
+  <div class="p-8 border-lines border">
+    <div class="flex justify-between">
+      <h2 id="service-exclusions-title" class="text-[1.5rem] leading-none underline flex">
+        <span set:html={formatHeadingHtml(service.exclusionsTitleLeft)} />
+      </h2>
+      <svg width="37" height="32" viewBox="0 0 37 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M0 0H6.88854V2.93578H3.28026V29.0642H6.88854V32H0V0Z" fill="#16191B"/>
+        <path d="M16.8706 1.46789H20.1508V8.99082L19.4219 20.9541H17.5995L16.8706 8.99082V1.46789ZM16.7612 24.1835H20.2602V27.7064H16.7612V24.1835Z" fill="#16191B"/>
+        <path d="M37 32H30.1115V29.0642H33.7197V2.93578H30.1115V0H37V32Z" fill="#16191B"/>
+      </svg>
+    </div>
+    <div class="mt-8">
+      {service.exclusionsParagraphs.map((paragraph) => (
+        <p class="text-[1.125rem] indent-32">{paragraph}</p>
+      ))}
+    </div>
+  </div>
+  <p class="mt-8">Encore des zones d’ombres sur les du service? N’hésitez pas à nous contacter par e-mail à l'adresse <a class="block underline!" href="mailto:hello@hordeagence.com">hello@hordeagence.com</a></p>
+</section>

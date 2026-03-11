@@ -1,164 +1,545 @@
-# Horde — Agence Web Bruxelles (Full Content)
+# Horde Agence - Version complete
 
-> Horde est une agence web bruxelloise spécialisée en UX design et développement web haute performance. Nous concevons des interfaces ultra-rapides.
+> Horde Agence est une agence web basee a Bruxelles, specialisee dans la creation de sites web sur mesure, l'UX design et la performance web. Le site public est bilingue francais/anglais, avec le francais comme langue principale.
 
-## About
+## Informations generales
 
-Horde is a leading web agency in Brussels, founded by Nicolas Premont (Developer) and Alexandre (UX Designer), each with 9+ years of experience. Our philosophy: no project managers, no useless meetings — just direct collaboration between senior experts and your project.
-
-We operate under Belgian law, based in Brussels. Our approach combines deep UX expertise with technical excellence to deliver websites and applications that are genuinely fast, accessible, and conversion-optimized.
-
-- Website: https://hordeagence.com
+- Nom: Horde Agence
+- URL principale: https://hordeagence.com
+- Locale principale: fr_BE
+- Langues: francais, anglais
 - Email: hello@hordeagence.com
-- Booking: https://calendly.com/ni-premont/30min
-- LinkedIn: https://linkedin.com/company/horde-agence/
-- Instagram: https://instagram.com/hordeagencebxl/
+- Calendly: https://calendly.com/ni-premont/30min
+- LinkedIn: https://www.linkedin.com/company/horde-agence/
+- Instagram: https://www.instagram.com/hordeagencebxl/
+- Copyright: ©2026 Horde Agence
+
+## Positionnement et promesse
+
+Horde Agence cree des sites web rapides, legers, bien references et simples a maintenir. L'agence se positionne contre les approches standardisees basees sur des templates lourds, des CMS surcharges et des couches de gestion inutiles. Le discours commercial met l'accent sur:
+
+- la performance comme standard, pas comme option
+- un duo senior compose d'un designer et d'un developpeur
+- une communication directe
+- une approche sur mesure, sans outsourcing
+- des decisions guidees par l'UX, la vitesse et l'impact business
+
+## Equipe
+
+### Nicolas Premont
+
+- Role: cofondateur et developpeur
+- Bio courte: developpeur web passionne par la performance et l'experience utilisateur, avec 9 ans d'experience dans la creation d'interfaces ultra-rapides
+- LinkedIn: https://www.linkedin.com/in/nicolas-pr%C3%A9mont-90326b1aa/
 - GitHub: https://github.com/npremz
 
-## Full Project Details
+### Alexandre
+
+- Role: cofondateur et designer UX
+- Bio courte: 9 ans a transformer des idees floues en interfaces qui repondent a de vrais besoins, avec une forte exigence sur les details et l'identite visuelle
+
+## Services
+
+### Audit et performance
+
+Objectif: comprendre avant d'agir.
+
+Prestations:
+
+- audit UX/UI
+- audit SEO technique
+- analyse Core Web Vitals
+- rapport de recommandations
+- diagnostic vitesse et points de friction
+
+Promesse:
+
+Vous voulez optimiser la conversion de votre site ? Horde realise un diagnostic complet pour identifier ce qui freine vos utilisateurs et fournir des actions immediates.
+
+### Optimisation et refonte
+
+Objectif: ameliorer l'existant.
+
+Prestations:
+
+- optimisation des performances
+- refonte UI/UX
+- migration technique
+- responsive et mobile-first
+
+Promesse:
+
+Pas besoin de tout jeter. Horde intervient sur le site existant pour ameliorer les Core Web Vitals, moderniser l'interface et rendre l'experience beaucoup plus rapide sur mobile.
+
+### Creation sur mesure et MVP
+
+Objectif: construire sur des bases solides.
+
+Prestations:
+
+- identite visuelle
+- site vitrine
+- application web
+- MVP et prototypage
+- e-commerce
+
+Promesse:
+
+Pour un lancement de produit, une nouvelle presence de marque ou une plateforme metier, Horde construit une base technique durable et adaptee aux besoins reels du client.
+
+## Methode
+
+### 001 - L'audit offert
+
+Tout commence par un diagnostic des performances SEO, vitesse et UX. Le ton se veut direct, sans jargon inutile, avec des reponses claires et sans engagement.
+
+### 002 - Le moteur Horde
+
+Horde s'appuie sur sa propre architecture technique pour construire des interfaces ultra-rapides. L'idee est de reduire la complexite cachee et de livrer plus vite, sur une base robuste.
+
+### 003 - Cooperation directe
+
+Les echanges se font sans intermediaire, via Slack ou WhatsApp. Le client a une visibilite directe sur l'avancement du projet et traite avec les personnes qui produisent effectivement le travail.
+
+## Pages publiques du site
+
+- Accueil FR: https://hordeagence.com/fr
+- A propos FR: https://hordeagence.com/fr/about
+- Projets FR: https://hordeagence.com/fr/projets
+- Blog FR: https://hordeagence.com/fr/blog
+- Contact FR: https://hordeagence.com/fr/contact
+- Mentions legales FR: https://hordeagence.com/fr/mentions-legales
+- Confidentialite FR: https://hordeagence.com/fr/confidentialite
+- Cookies FR: https://hordeagence.com/fr/cookies
+
+Les equivalents anglais existent sous `/en`, par exemple `https://hordeagence.com/en`, `https://hordeagence.com/en/blog`, etc.
+
+## Contenu institutionnel
+
+### A propos
+
+Le message central de la page A propos est que beaucoup de sites sont construits pour vendre vite des templates, sans se soucier de la singularite du client ni de la performance reelle. Horde defend une autre approche:
+
+- vous n'avez pas forcement besoin d'un CMS lourd
+- vous n'avez pas forcement besoin d'une usine a gaz
+- ce qu'il faut souvent, c'est un site rapide, bien reference et simple a maintenir
+
+Le site affirme aussi que les productions Horde sont:
+
+- legeres
+- securisees
+- performantes
+- pensees pour des temps de chargement sous la seconde
+- utiles pour un SEO plus efficace avec moins de budget publicitaire
+
+### Maniere de travailler
+
+Les messages principaux de la page A propos sur la collaboration:
+
+- Horde est ouvert aux propositions du client pour produire un projet qui lui ressemble
+- les echanges sont fluides via WhatsApp et une plateforme de suivi
+- la complexite technique est prise en charge par l'agence
+- la technologie choisie doit etre maintenable sur le long terme
+- les prix annonces sont les prix finaux, sans surcouts caches
+- l'objectif est aussi de rendre le client autonome apres livraison
+
+### Contact
+
+La page contact pousse vers deux canaux:
+
+- email: hello@hordeagence.com
+- reservation d'appel: https://calendly.com/ni-premont/30min
+
+Le formulaire couvre notamment les besoins suivants:
+
+- audit et performance
+- optimisation et refonte
+- from scratch et MVP
+- autre demande
+
+## Stack technique du site
+
+Dependances principales relevees dans le projet:
+
+- Astro 5
+- React 19
+- Preact
+- Tailwind CSS 4
+- Keystatic
+- Markdoc
+- @astrojs/node
+- @astrojs/rss
+- @astrojs/sitemap
+- Lenis
+- Matter.js
+- Resend
+- Zod
+
+## Projets
 
 ### Cafe Belga
-Nous avons travaillé dans un étude de cas qui était de créer un site web du Café Belga. La conception UX/UI a mis l'accent sur la simplicité, la réactivité et la cohérence visuelle.
 
-Construite sur NextJS, la plateforme comprend des fonctionnalités avancées permettant de gérer un système de réservation, les dates des prochains évenements et la carte des différents produits du Café Belga.
+- Slug: cafe-belga
+- Page projet: https://hordeagence.com/fr/projets/cafe-belga
+- Site public: https://belga.hordagency.com
+- Types: site vitrine, UX design, web design, Bruxelles
+- Date de reference: 2026-01-26
+- Indexation: index, follow
 
-- URL: https://belga.hordagency.com
-- Tags: Showcase website, UX/UI, Next.js
+Description detaillee:
 
-### Merly Patrimoine
-Merly Patrimoine est un cabinet de gestion de patrimoine indépendant accompagnant les particuliers et entrepreneurs fortunés dans l'organisation, l'optimisation et la transmission de leur patrimoine. Leur modèle 100% honoraires garantit une totale objectivité dans leurs conseils, sans commission sur les produits financiers.
+Nous avons travaille dans un etude de cas qui etait de creer un site web du Cafe Belga. La conception UX/UI a mis l'accent sur la simplicite, la reactivite et la coherence visuelle.
 
-Nous avons créé une identité graphique et un logo épurés et sophistiqués, reflétant à la fois leur expertise financière et leur approche moderne de la gestion de patrimoine. Au-delà du logo, nous avons conçu un site web complet avec une mise en page élégante et professionnelle, intégrant un simulateur fiscal interactif et des ressources pédagogiques pour accompagner leurs clients dans leurs décisions patrimoniales.
+Construite sur NextJS, la plateforme comprend des fonctionnalites avancees permettant de gerer un systeme de reservation, les dates des prochains evenements et la carte des differents produits du Cafe Belga.
 
-- URL: https://merly.hordagency.com
-- Tags: Showcase website, UX/UI, Visual Identity
+### Merly
 
-## Full Blog Articles
+- Slug: merly
+- Page projet: https://hordeagence.com/fr/projets/merly
+- Site public: https://merly.hordagency.com
+- Types: site vitrine, UX design, web design, Bruxelles
+- Date de reference: 2024-02-01
+- Indexation: index, follow
 
-### En 2026, c'est quoi un site (vraiment) rapide?
+Description detaillee:
+
+Merly Patrimoine est un cabinet de gestion de patrimoine independant accompagnant les particuliers et entrepreneurs fortunes dans l'organisation, l'optimisation et la transmission de leur patrimoine. Leur modele 100% honoraires garantit une totale objectivite dans leurs conseils, sans commission sur les produits financiers.
+
+Nous avons cree une identite graphique et un logo epures et sophistiques, refletant a la fois leur expertise financiere et leur approche moderne de la gestion de patrimoine. Au-dela du logo, nous avons concu un site web complet avec une mise en page elegante et professionnelle, integrant un simulateur fiscal interactif et des ressources pedagogiques pour accompagner leurs clients dans leurs decisions patrimoniales.
+
+### E-Putch
+
+- Slug: e-putch
+- Statut: en cours
+- Types: application web, UX design, developpement, Bruxelles
+- Date de reference: 2024-03-01
+- Indexation: noindex, follow
+
+Description:
+
+Projet d'application web innovante en cours de realisation. Le projet est liste dans le portfolio mais n'a pas de page detail publique.
+
+## Blog
+
+### Article 1
+
+- Titre: En 2026, c'est quoi un site (vraiment) rapide?
+- Slug FR: c-est-quoi-un-site-vraiment-rapide
+- URL: https://hordeagence.com/fr/blog/c-est-quoi-un-site-vraiment-rapide
+- Date: 2026-01-30
+- Categorie: performance web
+- Tags: Core Web Vitals, vitesse de chargement, SEO technique, UX mobile
+- Extrait: 53% des utilisateurs abandonnent apres 3s d'attente. Un site rapide est notre standard: chargement instantane sur tous appareils. Meilleur SEO, meilleure experience.
+
+Contenu complet:
 
 ## C'est quoi un site (vraiment) rapide?
 
-C'est simple, vous pouvez le tester sur ce site: c'est un site qui charge instantanément, qu'on soit sur ordinateur, sur tablette, sur mobile, qu'on soit au bureau ou dans le train avec un faible signal 4G.
+C'est simple, vous pouvez le tester sur ce site: c'est un site qui charge instantanement, qu'on soit sur ordinateur, sur tablette, sur mobile, qu'on soit au bureau ou dans le train avec un faible signal 4G.
 
-**La réalité:** 60% de votre trafic vient du mobile, souvent avec une connexion instable. Un site pensé pour ces conditions, c'est 60% de vos visiteurs qui ne partent pas frustrés.
+**La realite:** 60% de votre trafic vient du mobile, souvent avec une connexion instable. Un site pense pour ces conditions, c'est 60% de vos visiteurs qui ne partent pas frustres.
 
 ## Pourquoi c'est important:
 
-**Taux de rebond:** Un site lent, c'est un visiteur qui s'en va aussi rapidement qu'il est arrivé. Les chiffres parlent d'eux-mêmes : **53% des utilisateurs mobiles abandonnent un site qui met plus de 3 secondes à charger** (Google). Chaque seconde compte.
+**Taux de rebond:** Un site lent, c'est un visiteur qui s'en va aussi rapidement qu'il est arrive. Les chiffres parlent d'eux-memes : **53% des utilisateurs mobiles abandonnent un site qui met plus de 3 secondes a charger** (Google). Chaque seconde compte.
 
-**Expérience utilisateur:** Chaque seconde d'attente dans votre parcours d'achat est une opportunité pour vos visiteurs d'abandonner ou de remettre ça à plus tard, voire souvent jamais. Un délai d'une seconde peut réduire les conversions de 7%, et un site qui charge en 5 secondes voit son taux de rebond augmenter de 90% comparé à un site qui charge en 1 seconde.
+**Experience utilisateur:** Chaque seconde d'attente dans votre parcours d'achat est une opportunite pour vos visiteurs d'abandonner ou de remettre ca a plus tard, voire souvent jamais. Un delai d'une seconde peut reduire les conversions de 7%, et un site qui charge en 5 secondes voit son taux de rebond augmenter de 90% compare a un site qui charge en 1 seconde.
 
-Les utilisateurs perçoivent un site lent comme moins fiable, moins professionnel. **47% des consommateurs s'attendent à un chargement en moins de 2 secondes.** Ne pas répondre à cette attente, c'est perdre leur confiance dès les premières secondes.
+Les utilisateurs percoivent un site lent comme moins fiable, moins professionnel. **47% des consommateurs s'attendent a un chargement en moins de 2 secondes.** Ne pas repondre a cette attente, c'est perdre leur confiance des les premieres secondes.
 
-**Le référencement naturel:** Un site performant, c'est un site qui va très bien répondre aux mécanismes SEO. La vitesse de chargement est un facteur de classement officiel de Google depuis 2010. Les sites dans le top 3 des résultats ont généralement des temps de chargement sous les 2 secondes. Gagnez facilement des places dans les moteurs de recherche.
+**Le referencement naturel:** Un site performant, c'est un site qui va tres bien repondre aux mecanismes SEO. La vitesse de chargement est un facteur de classement officiel de Google depuis 2010. Les sites dans le top 3 des resultats ont generalement des temps de chargement sous les 2 secondes. Gagnez facilement des places dans les moteurs de recherche.
 
-**Empreinte numérique:** Un site léger et rapide, c'est un site qui tourne même sur les appareils les plus modestes. Un site optimisé peut réduire sa consommation énergétique jusqu'à 70%. À une époque où le prix des composants informatiques explose avec l'IA, nous pensons qu'il est important de repenser l'optimisation.
+**Empreinte numerique:** Un site leger et rapide, c'est un site qui tourne meme sur les appareils les plus modestes. Un site optimise peut reduire sa consommation energetique jusqu'a 70%. A une epoque ou le prix des composants informatiques explose avec l'IA, nous pensons qu'il est important de repenser l'optimisation.
 
-## Les chiffres parlent d'eux-mêmes:
+## Les chiffres parlent d'eux-memes:
 
-Amazon a calculé que **chaque 100ms de latence leur coûte 1% de ventes**. Pinterest a augmenté ses conversions de 15% en réduisant le temps d'attente de 40%. Walmart a vu ses conversions augmenter de 2% pour chaque seconde gagnée.
+Amazon a calcule que **chaque 100ms de latence leur coute 1% de ventes**. Pinterest a augmente ses conversions de 15% en reduisant le temps d'attente de 40%. Walmart a vu ses conversions augmenter de 2% pour chaque seconde gagnee.
 
-**Pour un e-commerce à 100K€/mois, 1 seconde de gagnée = potentiellement 14K€ de CA annuel en plus.**
+**Pour un e-commerce a 100K€/mois, 1 seconde de gagnee = potentiellement 14K€ de CA annuel en plus.**
 
-### Le résultat?
+### Le resultat?
 
 Donc vous l'aurez compris, un site vraiment rapide, c'est mieux pour tout le monde.
 
-* **Pour vous :** Plus facile à maintenir, meilleur SEO, des utilisateurs qui ne font pas face à un mur technique.
-* **Pour vos utilisateurs :** Une expérience fluide, un téléphone qui ne chauffe pas en 30 secondes de navigation et un message reçu sans frictions.
-* **Pour l'environnement numérique :** Coûts serveur minimes, un site qui fonctionne sur le smartphone de mamie et une maintenance en détente.
+- **Pour vous :** Plus facile a maintenir, meilleur SEO, des utilisateurs qui ne font pas face a un mur technique.
+- **Pour vos utilisateurs :** Une experience fluide, un telephone qui ne chauffe pas en 30 secondes de navigation et un message recu sans frictions.
+- **Pour l'environnement numerique :** Couts serveur minimes, un site qui fonctionne sur le smartphone de mamie et une maintenance en detente.
 
 ## Comment on y arrive?
 
-Code optimisé, images compressées intelligemment, lazy loading, CDN global, cache stratégique. Pas de framework lourd, pas de plugins inutiles. Juste ce qu'il faut, ultra-optimisé.
+Code optimise, images compressees intelligemment, lazy loading, CDN global, cache strategique. Pas de framework lourd, pas de plugins inutiles. Juste ce qu'il faut, ultra-optimise.
 
-**Core Web Vitals:** Google mesure la performance avec 3 métriques clés (LCP, FID, CLS). On optimise votre site pour exceller sur ces 3 indicateurs.
+**Core Web Vitals:** Google mesure la performance avec 3 metriques cles (LCP, FID, CLS). On optimise votre site pour exceller sur ces 3 indicateurs.
 
-## Testez par vous-même
+## Testez par vous-meme
 
-Ouvrez votre site actuel et celui-ci en même temps. La différence est immédiate. Vos visiteurs la ressentent aussi, à chaque visite.
+Ouvrez votre site actuel et celui-ci en meme temps. La difference est immediate. Vos visiteurs la ressentent aussi, a chaque visite.
 
-Et ça tombe bien, des sites ultra-rapides, c'est notre standard et c'est ce qu'on livre.
+Et ca tombe bien, des sites ultra-rapides, c'est notre standard et c'est ce qu'on livre.
 
-Vous vous demandez comment appliquer ça à votre projet ? On vous montre **→ [réserver un call](https://calendly.com/ni-premont/30min)**
+Si vous voulez comprendre ce que la lenteur de votre site vous coute concretement, en conversions et en chiffre d'affaires, on a detaille le calcul dans cet article:
 
----
+- https://hordeagence.com/fr/blog/ce-que-votre-site-vous-coute-vraiment
 
-### Pourquoi avoir un site web quand les réseaux sociaux marchent déjà ?
+Vous vous demandez comment appliquer ca a votre projet ?
 
-## Vos réseaux sociaux tournent. Et alors ?
+- https://hordeagence.com/fr/contact
 
-Vous postez régulièrement. Vos abonnés augmentent. Vous avez même des clients qui vous trouvent via Instagram. Alors pourquoi s'embêter avec un site web ?
+### Article 2
 
-Parce que plus vos réseaux fonctionnent, plus vous en dépendez. Et cette dépendance, c'est quelqu'un d'autre qui la contrôle.
+- Titre: Pourquoi avoir un site web quand les reseaux sociaux marchent deja ?
+- Slug FR: pourquoi-avoir-un-site-web-reseaux-sociaux
+- URL: https://hordeagence.com/fr/blog/pourquoi-avoir-un-site-web-reseaux-sociaux
+- Date: 2026-02-11
+- Categorie: strategie
+- Tags: strategie digitale, site web vs reseaux sociaux, acquisition organique, independance numerique
+- Extrait: Vos reseaux sociaux tournent bien. Mais a quel point votre business en depend ? Un site web, c'est reprendre le controle sur votre presence en ligne.
 
-## Le vrai problème : la dépendance
+Contenu complet:
 
-Quand vos réseaux sociaux sont votre seul canal, chaque décision de la plateforme vous impacte directement. Changement d'algorithme, nouvelles règles, bug de modération. Vous subissez.
+## Vos reseaux sociaux tournent. Et alors ?
 
-**Ce qui s'est passé récemment :**
+Vous postez regulierement. Vos abonnes augmentent. Vous avez meme des clients qui vous trouvent via Instagram. Alors pourquoi s'embeter avec un site web ?
 
-* Depuis début 2025, **plus de 10 millions de comptes ont été désactivés par Meta**. Souvent sans explication, souvent par erreur
-* En décembre 2024, Instagram a **supprimé la possibilité de suivre des hashtags**, le dernier mécanisme fiable de découverte organique
-* **65% des créateurs ont perdu en visibilité** après la dernière mise à jour d'Instagram
-* Quand le ban de TikTok s'est profilé aux États-Unis, certaines entreprises ont réalisé que **90 à 98% de leur activité** en dépendait
+Parce que plus vos reseaux fonctionnent, plus vous en dependez. Et cette dependance, c'est quelqu'un d'autre qui la controle.
 
-Funktasy Inc., une entreprise canadienne, a vu son compte Instagram de **98 000 abonnés** suspendu pendant un mois. Sans explication. Ils n'ont récupéré l'accès qu'après qu'un média national a contacté Meta directement.
+## Le vrai probleme : la dependance
 
-Ce ne sont pas des cas extrêmes. C'est le fonctionnement normal d'un système où vous n'avez aucun pouvoir de décision.
+Quand vos reseaux sociaux sont votre seul canal, chaque decision de la plateforme vous impacte directement. Changement d'algorithme, nouvelles regles, bug de moderation. Vous subissez.
 
-## Vous ne contrôlez rien
+**Ce qui s'est passe recemment :**
 
-On appelle ça le **digital sharecropping**, le métayage numérique. Vous investissez du temps, de l'énergie et de l'argent pour bâtir une audience... sur le terrain de quelqu'un d'autre.
+- Depuis debut 2025, **plus de 10 millions de comptes ont ete desactives par Meta**. Souvent sans explication, souvent par erreur
+- En decembre 2024, Instagram a **supprime la possibilite de suivre des hashtags**, le dernier mecanisme fiable de decouverte organique
+- **65% des createurs ont perdu en visibilite** apres la derniere mise a jour d'Instagram
+- Quand le ban de TikTok s'est profile aux Etats-Unis, certaines entreprises ont realise que **90 a 98% de leur activite** en dependait
 
-**Ce que vous ne maîtrisez pas sur les réseaux :**
+Funktasy Inc., une entreprise canadienne, a vu son compte Instagram de **98 000 abonnes** suspendu pendant un mois. Sans explication. Ils n'ont recupere l'acces qu'apres qu'un media national a contacte Meta directement.
 
-* **Qui voit votre contenu.** La portée organique sur Facebook est tombée à **5,9%** (certaines études disent 2,6%). Sur Instagram : **4%**, en baisse de 18% sur un an. Sur X : **3%**. Si vous avez 1 000 abonnés, entre 30 et 60 personnes voient réellement vos publications
-* **Comment votre marque est présentée.** Votre contenu s'affiche au milieu de publicités, de concurrents et de distractions. Vous ne contrôlez ni le contexte, ni l'expérience
-* **Vos données.** Les plateformes collectent les données de votre audience. Pas vous. Vous ne savez pas précisément qui sont vos visiteurs, ce qu'ils cherchent, comment ils se comportent
-* **La durée de vie de votre contenu.** Un post social vit quelques heures. Un article de blog a une durée de vie moyenne de **1,95 an**
+Ce ne sont pas des cas extremes. C'est le fonctionnement normal d'un systeme ou vous n'avez aucun pouvoir de decision.
 
-Les plateformes réduisent volontairement la portée organique pour vous pousser vers la publicité payante. Plus vous dépendez d'elles, plus elles ont de levier sur vous.
+## Vous ne controlez rien
+
+On appelle ca le **digital sharecropping**, le metayage numerique. Vous investissez du temps, de l'energie et de l'argent pour batir une audience... sur le terrain de quelqu'un d'autre.
+
+**Ce que vous ne maitrisez pas sur les reseaux :**
+
+- **Qui voit votre contenu.** La portee organique sur Facebook est tombee a **5,9%** (certaines etudes disent 2,6%). Sur Instagram : **4%**, en baisse de 18% sur un an. Sur X : **3%**. Si vous avez 1 000 abonnes, entre 30 et 60 personnes voient reellement vos publications
+- **Comment votre marque est presentee.** Votre contenu s'affiche au milieu de publicites, de concurrents et de distractions. Vous ne controlez ni le contexte, ni l'experience
+- **Vos donnees.** Les plateformes collectent les donnees de votre audience. Pas vous. Vous ne savez pas precisement qui sont vos visiteurs, ce qu'ils cherchent, comment ils se comportent
+- **La duree de vie de votre contenu.** Un post social vit quelques heures. Un article de blog a une duree de vie moyenne de **1,95 an**
+
+Les plateformes reduisent volontairement la portee organique pour vous pousser vers la publicite payante. Plus vous dependez d'elles, plus elles ont de levier sur vous.
 
 ## Ce qu'un site web change
 
-Un site web, c'est un espace que vous possédez. Personne ne peut modifier les règles, limiter votre visibilité ou suspendre votre accès.
+Un site web, c'est un espace que vous possedez. Personne ne peut modifier les regles, limiter votre visibilite ou suspendre votre acces.
 
-**Vous reprenez le contrôle sur :**
+**Vous reprenez le controle sur :**
 
-* **Votre image.** Vous décidez du design, du message, du parcours. Pas de publicités concurrentes, pas de distractions. Juste votre marque, comme vous l'avez pensée
-* **Votre audience.** Via un formulaire de contact ou une newsletter, vous construisez une liste email qui vous appartient. Aucun algorithme entre vous et vos contacts. Au Social Media Marketing World 2025, quand on a demandé aux marketeurs de choisir entre 10 000 abonnés réseaux ou 1 000 abonnés email, **pas un seul n'a choisi les réseaux**
-* **Votre visibilité.** Votre site est trouvable sur Google par des gens qui cherchent activement ce que vous proposez. Vous n'êtes plus soumis à un algorithme qui décide si votre contenu mérite d'être montré
-* **Vos données.** Vous savez qui visite votre site, d'où ils viennent, ce qui les intéresse. Ce sont vos données, pas celles de Meta
+- **Votre image.** Vous decidez du design, du message, du parcours. Pas de publicites concurrentes, pas de distractions. Juste votre marque, comme vous l'avez pensee
+- **Votre audience.** Via un formulaire de contact ou une newsletter, vous construisez une liste email qui vous appartient. Aucun algorithme entre vous et vos contacts. Au Social Media Marketing World 2025, quand on a demande aux marketeurs de choisir entre 10 000 abonnes reseaux ou 1 000 abonnes email, **pas un seul n'a choisi les reseaux**
+- **Votre visibilite.** Votre site est trouvable sur Google par des gens qui cherchent activement ce que vous proposez. Vous n'etes plus soumis a un algorithme qui decide si votre contenu merite d'etre montre
+- **Vos donnees.** Vous savez qui visite votre site, d'ou ils viennent, ce qui les interesse. Ce sont vos donnees, pas celles de Meta
 
-C'est aussi un levier pour votre crédibilité. 84% des utilisateurs estiment qu'un business est plus crédible avec un site web dédié. 97% des acheteurs B2B vont vouloir consulter votre site internet avant de prendre contact. Un site web permet de signaler à votre audience que vous êtes une entreprise établie et pas juste un compte sur une plateforme.
+C'est aussi un levier pour votre credibilite. 84% des utilisateurs estiment qu'un business est plus credible avec un site web dedie. 97% des acheteurs B2B vont vouloir consulter votre site internet avant de prendre contact. Un site web permet de signaler a votre audience que vous etes une entreprise etablie et pas juste un compte sur une plateforme.
 
-## Le bon équilibre : base + relais
+## Le bon equilibre : base + relais
 
-Ce n'est pas site web **ou** réseaux sociaux. C'est comprendre le rôle de chacun.
+Ce n'est pas site web **ou** reseaux sociaux. C'est comprendre le role de chacun.
 
-**Votre site web = votre base.** C'est votre territoire. Vous y contrôlez tout : le message, l'expérience, les données, la relation avec vos visiteurs. C'est là que Google vous référence. C'est là que votre contenu travaille pour vous pendant des mois, voire des années.
+**Votre site web = votre base.** C'est votre territoire. Vous y controlez tout : le message, l'experience, les donnees, la relation avec vos visiteurs. C'est la que Google vous reference. C'est la que votre contenu travaille pour vous pendant des mois, voire des annees.
 
-**Les réseaux sociaux = vos relais.** Ils créent du lien, montrent votre personnalité, amplifient votre message. Mais ils ramènent vers votre base, pas l'inverse.
+**Les reseaux sociaux = vos relais.** Ils creent du lien, montrent votre personnalite, amplifient votre message. Mais ils ramenent vers votre base, pas l'inverse.
 
-**La logique :** un abonné sur les réseaux devrait devenir un visiteur de votre site, puis un contact dans votre liste email. Parce que votre site et votre liste email sont les **seuls actifs numériques qui vous appartiennent vraiment**.
+**La logique :** un abonne sur les reseaux devrait devenir un visiteur de votre site, puis un contact dans votre liste email. Parce que votre site et votre liste email sont les **seuls actifs numeriques qui vous appartiennent vraiment**.
 
-## Reprenez le contrôle
+## Reprenez le controle
 
-Si vos réseaux sociaux sont votre seul canal, vous êtes dépendant d'entreprises qui ne vous doivent rien. Ça fonctionne, jusqu'au jour où ça ne fonctionne plus.
+Si vos reseaux sociaux sont votre seul canal, vous etes dependant d'entreprises qui ne vous doivent rien. Ca fonctionne, jusqu'au jour ou ca ne fonctionne plus.
 
-Un site rapide, bien conçu et référencé sur Google, c'est la fondation sur laquelle tout le reste s'appuie. C'est ce qui vous rend indépendant.
+Un site rapide, bien concu et reference sur Google, c'est la fondation sur laquelle tout le reste s'appuie. C'est ce qui vous rend independant. Et si vous vous demandez ce qu'un site lent ou mal concu vous coute concretement, la reponse est ici:
 
-Vous voulez reprendre la main sur votre présence en ligne ? On vous montre **→ [réserver un call](https://calendly.com/ni-premont/30min)**
+- https://hordeagence.com/fr/blog/ce-que-votre-site-vous-coute-vraiment
 
-## Footer
+Vous voulez reprendre la main sur votre presence en ligne ?
 
-Horde Agence - Agence Web UX & Performance à Bruxelles.
+- https://hordeagence.com/fr/contact
 
-- **Contact**: hello@hordeagence.com
-- **Booking**: https://calendly.com/ni-premont/30min
-- **LinkedIn**: https://www.linkedin.com/company/horde-agence/
-- **Instagram**: https://www.instagram.com/hordeagencebxl/
+### Article 3
 
-©2026 Horde Agence
+- Titre: Ce que votre site vous coute vraiment (sans que vous le sachiez)
+- Slug FR: ce-que-votre-site-vous-coute-vraiment
+- URL: https://hordeagence.com/fr/blog/ce-que-votre-site-vous-coute-vraiment
+- Date: 2026-02-26
+- Categorie: strategie
+- Tags: cout site web, pertes de conversion, SEO technique, audit performance
+- Extrait: Votre site fonctionne. Mais est-ce qu'il travaille pour vous ? Conversions perdues, SEO qui stagne, credibilite entamee : voici ce qu'un site ordinaire vous coute chaque mois.
+
+Contenu complet:
+
+## Votre site fonctionne. C'est peut-etre le probleme.
+
+Vous avez un site. Il est en ligne, les pages s'affichent, le formulaire de contact marche. Alors vous passez a autre chose.
+
+Sauf qu'un site qui "fonctionne" et un site qui travaille pour vous, c'est rarement la meme chose. Et l'ecart, il se mesure en clients qui ne vous ont jamais appele.
+
+## Le cout n°1 : les visites qui disparaissent
+
+Votre site recoit 300 visiteurs par mois. Combien prennent contact ?
+
+Si votre taux de conversion tourne autour de 2%, c'est 6 contacts. Portez-le a 4% (ce qui est atteignable) et vous doublez votre volume sans toucher a votre budget acquisition.
+
+La plupart des sites perdent des conversions sur des problemes que personne ne signale : une page qui met 4 secondes a charger sur mobile, un formulaire casse sur iOS, un bouton de contact introuvable. Les gens partent, c'est tout.
+
+**Un site lent perd 7% de ses conversions par seconde d'attente supplementaire.** Si votre site genere 50K€/an et charge en 4 secondes au lieu d'une, l'ecart potentiel depasse 10K€. Pas un probleme de trafic. Un probleme de vitesse.
+
+## Le cout n°2 : le SEO qui stagne sans explication
+
+Vous publiez du contenu, vous avez quelques backlinks, votre site est indexe. Vous stagnez quand meme sur des requetes ou vous devriez etre bien place.
+
+Souvent, le probleme vient des Core Web Vitals : les metriques de performance que Google utilise pour classer les sites depuis 2021. Un LCP trop long, un CLS qui fait sauter les elements au chargement, et vous descendez dans les resultats. Pas de penalite visible. Juste une lente erosion, mois apres mois.
+
+**Les sites dans le top 3 des resultats Google chargent presque tous en moins de 2 secondes.** Ce n'est pas une coincidence. On explique exactement ce qui se joue derriere ces chiffres ici:
+
+- https://hordeagence.com/fr/blog/c-est-quoi-un-site-vraiment-rapide
+
+## Le cout n°3 : la credibilite au premier regard
+
+97% des acheteurs B2B consultent le site d'un fournisseur avant de prendre contact. Pour les particuliers, le reflexe est le meme. Votre site, c'est souvent la premiere chose qu'un prospect voit. Avant vous, avant votre equipe, avant meme votre reponse a son message.
+
+Un design date ou un chargement poussif sur mobile envoie un signal fort. Pas forcement juste, mais reel. **84% des consommateurs estiment qu'une entreprise est plus credible avec un site soigne.** L'inverse est aussi vrai. C'est d'ailleurs pour ca que dependre uniquement des reseaux sociaux est risque:
+
+- https://hordeagence.com/fr/blog/pourquoi-avoir-un-site-web-reseaux-sociaux
+
+## Le cout n°4 : la maintenance qui coute plus qu'elle ne devrait
+
+Un site sur un CMS surcharge avec 40 plugins, c'est une mise a jour qui casse le design, un plugin incompatible avec un autre, une intervention dev a 150€/h pour changer un texte.
+
+Le cout n'est pas toujours en euros. C'est aussi le temps que vous passez a gerer des problemes techniques a la place de votre metier. Et la dependance a un prestataire qui est le seul a comprendre votre installation.
+
+## Ce que ca represente concretement
+
+Prenez vos visites mensuelles. Votre valeur client moyenne. Un taux de conversion realiste. Maintenant calculez ce qu'un point de conversion en plus represente sur 12 mois.
+
+Pour la plupart des PME, la reponse rend l'audit difficile a ignorer.
+
+## Ce qu'un audit change
+
+Un audit serieux ne vous dit pas "refaites votre site". Il vous dit precisement ce qui freine vos performances, avec des chiffres, et ce que ca coute de le laisser en l'etat.
+
+Parfois c'est une refonte. Souvent c'est moins que ca.
+
+Vous voulez savoir ce que votre site vous coute vraiment ?
+
+- https://hordeagence.com/fr/contact
+
+### Article 4
+
+- Titre: Combien coute une refonte de site web en 2026
+- Slug FR: combien-coute-refonte-site-web
+- URL: https://hordeagence.com/fr/blog/combien-coute-refonte-site-web
+- Date: 2026-03-03
+- Categorie: strategie
+- Tags: refonte site web, budget web, devis web, prix site web, UX design
+- Extrait: Fourchettes de prix, facteurs de cout et erreurs a eviter pour estimer un budget realiste de refonte web. Sans langue de bois.
+
+Contenu complet:
+
+## La vraie question n'est pas combien ca coute.
+
+C'est combien vous coute le fait de ne pas le faire.
+
+Un site qui perd des contacts, qui charge en 5 secondes sur mobile, qui donne l'impression que l'entreprise n'a pas bouge depuis 2018. Ca a un prix. Il est juste invisible sur votre bilan.
+
+Cela dit, il faut quand meme savoir dans quoi vous mettez les pieds. Voici les fourchettes reelles, les facteurs qui font bouger les chiffres, et les pieges qui font exploser les budgets.
+
+## Les fourchettes de prix en 2026 (marche belge)
+
+Il y a trois categories, et elles ne sont pas interchangeables.
+
+**Template + DIY ou freelance junior : 500EUR a 2 500EUR**
+
+Un site monte sur Wix, Webflow ou WordPress avec un theme achete. Ca tient la route visuellement. Par contre, cote performance, SEO technique et differenciation, vous partez avec les memes fondations que 200 000 autres sites. Et si votre activite evolue, vous vous heurtez tres vite aux limites du template.
+
+**Agence ou freelance experimente : 3 000EUR a 10 000EUR**
+
+C'est la plage dans laquelle un vrai travail de fond est possible. Audit de l'existant, strategie de contenu, design sur mesure, integration soignee, optimisation des performances et du SEO. C'est aussi la que vous trouvez des interlocuteurs qui comprennent vos objectifs business, pas juste votre charte graphique.
+
+C'est le terrain de travail revendique par Horde. Pour parler d'un projet:
+
+- https://hordeagence.com/fr/contact
+
+**Agence specialisee ou projet complexe : 10 000EUR a 30 000EUR+**
+
+Sites e-commerce avec catalogue important, plateformes avec espace client, sites multilingues avec architecture contenu, integrations CRM/ERP. Le budget grimpe quand la complexite technique est reelle, pas juste parce que l'agence a une belle adresse.
+
+## Ce qui fait vraiment varier le prix
+
+Deux projets a 6 000EUR peuvent etre tres differents. Voici ce qui deplace les curseurs.
+
+**Le volume et l'etat du contenu existant**
+
+Reprendre 80 pages de texte mal structure, reformater des images, reecrire les titres pour le SEO : c'est du temps. Beaucoup d'entreprises arrivent avec un site de 60 pages dont 40 sont redondantes. Avant de coder quoi que ce soit, il faut trancher dans le contenu. Plus c'est a faire, plus ca coute.
+
+**La migration SEO**
+
+Si votre site actuel genere du trafic organique, une refonte peut tout effacer en quelques semaines. Redirections 301, mapping des URLs, conservation des balises, traitement des pages qui disparaissent. C'est un travail a part entiere qui ne se negocie pas si vous tenez a vos positions Google.
+
+**Les integrations tierces**
+
+Connexion a un CRM, formulaires avec automatisations, chat en ligne, outil de reservation, paiement en ligne. Chaque integration a son degre de complexite. Certaines se font en 2h. D'autres mobilisent un developpeur pendant 3 jours.
+
+**L'audit UX et la refonte des parcours**
+
+Un beau site qui pousse les visiteurs dans la mauvaise direction, ca existe. Retravailler les parcours utilisateurs, les points de conversion, l'architecture de navigation : c'est souvent la que se joue le ROI de la refonte. Et c'est rarement inclus dans les devis au tarif plancher.
+
+**Le CMS et la maintenabilite**
+
+Ce que vous payez a l'agence n'est pas le seul cout. Un CMS bien choisi, ca vous permet de mettre a jour votre contenu vous-meme, sans appeler un developpeur pour changer un texte. Un mauvais choix technique aujourd'hui peut vous couter 200EUR/h dans deux ans.
+
+## Ce que les devis ne mentionnent pas
+
+Les devis comparent mal parce qu'ils ne couvrent pas les memes choses. Voici ce qui est souvent absent.
+
+**La redaction de contenu.** La plupart des agences livrent le site, pas le texte. Si vous ne produisez pas votre contenu, quelqu'un doit le faire. Comptez entre 80EUR et 200EUR par page redigee et optimisee SEO.
+
+**La mise en ligne et la configuration serveur.** Hebergement, nom de domaine, certificat SSL, configuration DNS. Pas grand chose en cout annuel (100EUR a 500EUR/an selon le contexte), mais c'est rarement integre au devis de refonte.
+
+**La maintenance post-lancement.** Un site, ca se maintient. Mises a jour, sauvegardes, surveillance des performances, petites corrections. Soit vous le faites en interne, soit vous avez un contrat de maintenance. Prevoyez 50EUR a 200EUR/mois selon la complexite.
+
+**Le temps interne.** Vous allez passer du temps sur ce projet. Briefs, validations, fourniture de contenus, tests. Pour une refonte serieuse, comptez facilement 15 a 30 heures cote client. Ce n'est pas un cout a ignorer.
+
+## Les erreurs qui font exploser le budget
+
+On les voit regulierement. Elles ne viennent pas toujours de l'agence.
+
+**Valider le devis sans avoir valide le perimetre.** Vous signez pour "une refonte". L'agence entend "refaire la home et les pages principales". Vous, vous pensiez a "tout le site avec le blog, le catalogue et l'espace client". La divergence, elle se chiffre.
+
+**Changer d'avis a mi-chemin.** Une refonte est un projet. Les modifications en cours de route coutent 3 a 5 fois plus cher que si elles avaient ete prevues au depart. Prenez le temps du brief. C'est lui qui pilote le budget.
+
+**Choisir sur le prix sans regarder le process.** Une agence qui ne fait pas d'audit initial, qui ne vous pose pas de questions sur vos objectifs, qui envoie un devis en 24h sans avoir regarde votre site actuel : c'est un signal. Le devis bon marche peut devenir le projet le plus cher si le travail doit etre refait.
+
+**Ignorer la migration SEO.** Des entreprises ont perdu 40% de leur trafic organique apres une refonte parce que les redirections n'ont pas ete gerees. Recuperer ces positions prend des mois. Parfois plus.
+
+## Comment savoir si le moment est venu
+
+Il n'y a pas de regle des 3 ans. Un site se refait quand c'est justifie commercialement. Voici des signaux concrets:
+
+- taux de rebond mobile superieur a 70%
+- chargement au-dela de 3 secondes sur un reseau standard
+- gene a partager l'URL en prospection
+- CMS qui freine plus qu'il n'aide
+- pages de services invisibles sur les requetes importantes
+
+Un audit permet de distinguer ce qui exige une refonte de ce qui peut etre corrige autrement:
+
+- https://hordeagence.com/fr/contact
+
+Article lie:
+
+- https://hordeagence.com/fr/blog/ce-que-votre-site-vous-coute-vraiment
+
+## Ressource synthese
+
+- Version courte: https://hordeagence.com/llms.txt

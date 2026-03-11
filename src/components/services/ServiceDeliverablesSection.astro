@@ -1,0 +1,32 @@
+---
+import ServiceSectionHeading from "./ServiceSectionHeading.astro";
+import type { ServiceData } from "./types";
+
+interface Props {
+  service: ServiceData;
+}
+
+const { service } = Astro.props;
+---
+
+<section
+  id="service-deliverables"
+  class="mt-20"
+  data-service-section="deliverables"
+  aria-labelledby="service-deliverables-title"
+>
+  <ServiceSectionHeading
+    id="service-deliverables-title"
+    left={service.deliverablesTitleLeft}
+    right={service.deliverablesTitleRight}
+  />
+  <div class="py-16 border-t border-lines">
+    <ul class="space-y-2.5">
+      {service.deliverables.map((item) => (
+        <li class="flex px-4 py-5 items-center bg-white text-center">
+          <span class="text-[1.125rem]">{item}</span>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>

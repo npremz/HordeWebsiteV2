@@ -98,6 +98,8 @@ const postsCollection = defineCollection({
     publishedDate: z.coerce.date(),
     modifiedDate: z.coerce.date().optional(),
     readingTime: z.number().optional(),
+    keyTakeaways_fr: z.array(z.string()).default([]),
+    keyTakeaways_en: z.array(z.string()).default([]),
     featured: z.boolean().default(false),
     draft: z.boolean().default(false),
     seoRobots: z.string().optional(),
@@ -108,9 +110,82 @@ const postsCollection = defineCollection({
   }),
 });
 
+const servicesCollection = defineCollection({
+  loader: glob({ pattern: '**/*.yaml', base: './src/content/services' }),
+  schema: z.object({
+    slug: z.string(),
+    seoUrl: z.string(),
+    seoPrimaryKeyword: z.string(),
+    seoSecondaryKeywords: z.array(z.string()).default([]),
+    seoTitle: z.string(),
+    seoDescription: z.string(),
+    seoRobots: z.string().default('index, follow'),
+    seoInternalLinks: z.array(z.string()).default([]),
+    h1: z.string(),
+    intro: z.string(),
+    problemTitleLeft: z.string(),
+    problemTitleRight: z.string().default(''),
+    problemBlocks: z.array(
+      z.object({
+        kind: z.enum(['paragraph', 'item', 'list']),
+        title: z.string().optional(),
+        body: z.string().optional(),
+        items: z.array(z.string()).default([]),
+      })
+    ).default([]),
+    offerTitleLeft: z.string(),
+    offerTitleRight: z.string().default(''),
+    offerItems: z.array(
+      z.object({
+        title: z.string(),
+        body: z.string(),
+      })
+    ).default([]),
+    methodTitleLeft: z.string(),
+    methodTitleRight: z.string().default(''),
+    methodSteps: z.array(
+      z.object({
+        title: z.string(),
+        body: z.string(),
+      })
+    ).default([]),
+    deliverablesTitleLeft: z.string(),
+    deliverablesTitleRight: z.string().default(''),
+    deliverables: z.array(z.string()).default([]),
+    exclusionsTitleLeft: z.string(),
+    exclusionsTitleRight: z.string().default(''),
+    exclusionsParagraphs: z.array(z.string()).default([]),
+    faqTitleLeft: z.string(),
+    faqTitleRight: z.string().default(''),
+    faqItems: z.array(
+      z.object({
+        question: z.string(),
+        answer: z.string(),
+      })
+    ).default([]),
+    ctaTitleLeft: z.string(),
+    ctaTitleRight: z.string().default(''),
+    ctaParagraphs: z.array(z.string()).default([]),
+    primaryCtaLabel: z.string().optional(),
+    primaryCtaUrl: z.string().optional(),
+    secondaryCtaLabel: z.string().optional(),
+    secondaryCtaUrl: z.string().optional(),
+    reassurance: z.string().optional(),
+    recommendedLinks: z.array(
+      z.object({
+        anchor: z.string(),
+        url: z.string(),
+      })
+    ).default([]),
+    notes: z.array(z.string()).default([]),
+    order: z.number().default(0),
+  }),
+});
+
 export const collections = {
   projects: projectsCollection,
   authors: authorsCollection,
   categories: categoriesCollection,
   posts: postsCollection,
+  services: servicesCollection,
 };

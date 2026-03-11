@@ -1,5 +1,12 @@
 ---
-import { SUPPORTED_LOCALES, DEFAULT_LOCALE, type Locale, getAlternateUrls } from '../i18n';
+import {
+  SUPPORTED_LOCALES,
+  DEFAULT_LOCALE,
+  HREFLANG_LOCALE_CODES,
+  OG_LOCALE_CODES,
+  type Locale,
+  getAlternateUrls,
+} from '../i18n';
 
 interface Props {
   // i18n
@@ -24,6 +31,7 @@ interface Props {
   publishedTime?: string;
   modifiedTime?: string;
   author?: string;
+  authorUrl?: string;
 
   // Override site defaults
   siteName?: string;
@@ -44,12 +52,12 @@ let siteSettings = {
   defaultOgImage: '/images/og/defaultOgImage.jpg',
   defaultOgImageAlt: 'Image par défaut du site',
   twitterSite: '',
-  locale: 'fr_FR',
+  locale: 'fr_BE',
 };
 
 // Get lang from props, default to 'fr'
 const lang = Astro.props.lang || DEFAULT_LOCALE;
-const ogLocale = lang === 'fr' ? 'fr_FR' : 'en_US';
+const ogLocale = OG_LOCALE_CODES[lang];
 
 // Try to load site settings from Keystatic (localized)
 import { createReader } from '@keystatic/core/reader';
@@ -96,6 +104,7 @@ const {
   publishedTime,
   modifiedTime,
   author,
+  authorUrl,
   siteName = siteSettings.siteName,
   twitterSite = siteSettings.twitterSite,
   siteNameAsPrefix = false,
@@ -117,6 +126,16 @@ const ogImageURL = ogImage
   : new URL(siteSettings.defaultOgImage, Astro.site).href;
 
 const resolvedOgImageAlt = ogImageAlt || siteSettings.defaultOgImageAlt;
+const normalizedSiteUrl = siteUrl.replace(/\/$/, '');
+const organizationId = `${normalizedSiteUrl}#organization`;
+const websiteId = `${normalizedSiteUrl}#website`;
+const llmsTxtURL = new URL('/llms.txt', Astro.site).href;
+const llmsFullTxtURL = new URL('/llms-full.txt', Astro.site).href;
+const sameAs = [
+  'https://www.linkedin.com/company/horde-agence/',
+  'https://www.instagram.com/hordeagencebxl/',
+  'https://github.com/npremz',
+];
 ---
 
 <!-- Essential Meta Tags -->
@@ -126,10 +145,13 @@ const resolvedOgImageAlt = ogImageAlt || siteSettings.defaultOgImageAlt;
 <meta name="description" content={description} />
 <meta name="robots" content={robots} />
 <link rel="canonical" href={canonicalURL} />
+{authorUrl && <link rel="author" href={authorUrl} />}
+<link rel="alternate" type="text/plain" title="LLMs.txt" href={llmsTxtURL} />
+<link rel="alternate" type="text/plain" title="LLMs Full" href={llmsFullTxtURL} />
 
 <!-- Hreflang for internationalization -->
 {SUPPORTED_LOCALES.map((locale) => (
-  <link rel="alternate" hreflang={locale} href={alternateUrls[locale]} />
+  <link rel="alternate" hreflang={HREFLANG_LOCALE_CODES[locale]} href={alternateUrls[locale]} />
 ))}
 <link rel="alternate" hreflang="x-default" href={alternateUrls[DEFAULT_LOCALE]} />
 
@@ -144,7 +166,7 @@ const resolvedOgImageAlt = ogImageAlt || siteSettings.defaultOgImageAlt;
 <meta property="og:type" content={ogType} />
 <meta property="og:locale" content={ogLocale} />
 {SUPPORTED_LOCALES.filter(l => l !== lang).map((locale) => (
-  <meta property="og:locale:alternate" content={locale === 'fr' ? 'fr_FR' : 'en_US'} />
+  <meta property="og:locale:alternate" content={OG_LOCALE_CODES[locale]} />
 ))}
 <meta property="og:site_name" content={siteName} />
 
@@ -200,75 +222,111 @@ const resolvedOgImageAlt = ogImageAlt || siteSettings.defaultOgImageAlt;
 <meta name="theme-color" content={THEME_COLOR_LIGHT} media="(prefers-color-scheme: light)" />
 <meta name="theme-color" content={THEME_COLOR_DARK} media="(prefers-color-scheme: dark)" />
 
-<!-- Structured Data - LocalBusiness (SEO Local Bruxelles) -->
+<!-- Structured Data - Organization / ProfessionalService -->
 <script type="application/ld+json" set:html={JSON.stringify({
   "@context": "https://schema.org",
-  "@type": "ProfessionalService",
-  "name": siteName,
-  "alternateName": "Horde Bruxelles",
-  "description": "Horde Agence, agence web à Bruxelles spécialisée en sites web rapides et sur mesure",
-  "url": Astro.site?.href,
-  "logo": new URL("/images/logo.svg", Astro.site).href,
-  "image": new URL(siteSettings.defaultOgImage, Astro.site).href,
-  "address": {
-    "@type": "PostalAddress",
-    "addressLocality": "Bruxelles",
-    "addressRegion": "Bruxelles-Capitale",
-    "addressCountry": "BE"
-  },
-  "geo": {
-    "@type": "GeoCoordinates",
-    "latitude": 50.8503,
-    "longitude": 4.3517
-  },
-  "areaServed": {
-    "@type": "City",
-    "name": "Bruxelles"
-  },
-  "priceRange": "$$",
-  "telephone": "+32",
-  "email": "hello@hordeagence.com",
-  "contactPoint": {
-    "@type": "ContactPoint",
-    "contactType": "customer service",
-    "email": "hello@hordeagence.com",
-    "availableLanguage": ["French", "English"]
-  },
-  "openingHours": "Mo-Fr 09:00-18:00",
-  "sameAs": [
-    "https://www.linkedin.com/company/horde-agency"
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": organizationId,
+      "name": siteName,
+      "alternateName": "Horde Bruxelles",
+      "url": Astro.site?.href,
+      "logo": new URL("/images/logo.svg", Astro.site).href,
+      "image": new URL(siteSettings.defaultOgImage, Astro.site).href,
+      "email": "hello@hordeagence.com",
+      "sameAs": sameAs
+    },
+    {
+      "@type": "ProfessionalService",
+      "@id": `${normalizedSiteUrl}#service`,
+      "name": siteName,
+      "description": "Horde Agence, agence web à Bruxelles spécialisée en sites web rapides et sur mesure",
+      "url": Astro.site?.href,
+      "image": new URL(siteSettings.defaultOgImage, Astro.site).href,
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Bruxelles",
+        "addressRegion": "Bruxelles-Capitale",
+        "addressCountry": "BE"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": 50.8503,
+        "longitude": 4.3517
+      },
+      "areaServed": [
+        {
+          "@type": "City",
+          "name": "Bruxelles"
+        },
+        {
+          "@type": "Country",
+          "name": "Belgique"
+        }
+      ],
+      "priceRange": "$$",
+      "email": "hello@hordeagence.com",
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "contactType": "customer service",
+        "url": `${normalizedSiteUrl}/fr/contact`,
+        "email": "hello@hordeagence.com",
+        "availableLanguage": ["fr-BE", "en-US"]
+      },
+      "sameAs": sameAs,
+      "provider": {
+        "@id": organizationId
+      },
+      "knowsAbout": [
+        "Web Performance",
+        "User Experience",
+        "UX Design",
+        "Web Development",
+        "Core Web Vitals",
+        "SEO",
+        "Interface Design"
+      ],
+      "slogan": "Interfaces ultra-rapides qui convertissent"
+    }
   ],
-  "knowsAbout": [
-    "Web Performance",
-    "User Experience",
-    "UX Design",
-    "Web Development",
-    "Core Web Vitals",
-    "SEO",
-    "Interface Design"
-  ],
-  "slogan": "Interfaces ultra-rapides qui convertissent"
 })} />
 
 <!-- Structured Data - WebSite -->
 <script type="application/ld+json" set:html={JSON.stringify({
   "@context": "https://schema.org",
   "@type": "WebSite",
+  "@id": websiteId,
   "name": siteName,
-  "url": Astro.site?.href
+  "url": Astro.site?.href,
+  "publisher": {
+    "@id": organizationId
+  },
+  "inLanguage": ["fr-BE", "en-US"]
 })} />
 
-<!-- Structured Data - WebPage/Article -->
+<!-- Structured Data - WebPage -->
 <script type="application/ld+json" set:html={JSON.stringify({
   "@context": "https://schema.org",
-  "@type": ogType === "article" ? "Article" : "WebPage",
+  "@type": "WebPage",
   "name": title,
   "description": description,
   "url": canonicalURL,
   "image": ogImageURL,
+  "isPartOf": {
+    "@id": websiteId
+  },
+  "about": {
+    "@id": organizationId
+  },
+  "inLanguage": siteSettings.locale.replace('_', '-'),
   ...(ogType === "article" && publishedTime ? {
     "datePublished": publishedTime,
     "dateModified": modifiedTime || publishedTime,
-    "author": author ? { "@type": "Person", "name": author } : undefined
+    "author": author ? {
+      "@type": "Person",
+      "name": author,
+      ...(authorUrl ? { "url": authorUrl } : {})
+    } : undefined
   } : {})
 })} />

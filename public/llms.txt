@@ -1,121 +1,148 @@
-# Horde — Agence Web Bruxelles
+# Horde Agence
 
-> Horde est une agence web basée à Bruxelles, spécialisée en UX design et développement web haute performance. Nous concevons des interfaces ultra-rapides. (English version below)
+> Horde Agence est une agence web basee a Bruxelles. Nous concevons des sites web sur mesure, rapides, bien references et simples a maintenir.
 
-## About
+## Identite
 
-Horde is a two-person web agency based in Brussels, founded by Nicolas Premont (Developer) and Alexandre (UX Designer), each with 9+ years of experience. Our philosophy: no project managers, no useless meetings — just direct collaboration between senior experts and your project.
-
-We operate under Belgian law, based in Brussels. Our approach combines deep UX expertise with technical excellence to deliver websites and applications that are genuinely fast, accessible, and conversion-optimized.
-
-- Website: https://hordeagence.com
+- Nom: Horde Agence
+- Site: https://hordeagence.com
+- Locale principale: fr_BE
+- Langues du site: francais et anglais
 - Email: hello@hordeagence.com
-- Booking: https://calendly.com/ni-premont/30min
-- LinkedIn: https://linkedin.com/company/horde-agence/
-- Instagram: https://instagram.com/hordeagencebxl/
-- GitHub: https://github.com/npremz
+- Prendre rendez-vous: https://calendly.com/ni-premont/30min
+- LinkedIn: https://www.linkedin.com/company/horde-agence/
+- Instagram: https://www.instagram.com/hordeagencebxl/
 
-## Team
+## Positionnement
 
-### Nicolas Premont — Co-founder & Developer
-9 years of experience building flawless websites. Performance, SEO, and security are non-negotiable. Specialties include Astro, Next.js, React, Node.js, and modern web performance optimization.
+Horde Agence accompagne les entreprises qui veulent un site plus rapide, plus clair et plus utile commercialement. L'agence travaille avec une approche senior-only: pas d'intermediaires, pas de chefs de projet, pas de process lourds. Les missions couvrent l'audit, l'optimisation, la refonte et la creation de sites ou d'applications web.
 
-### Alexandre — Co-founder & UX Designer
-9 years turning vague ideas into interfaces that meet real user needs. Detail-obsessed and allergic to generic design. Focuses on user research, interaction design, and visual identity.
+## Equipe
+
+- Nicolas Premont, cofondateur et developpeur. 9 ans d'experience. Specialites: performance web, SEO technique, architecture front-end et developpement sur mesure.
+- Alexandre, cofondateur et designer UX. 9 ans d'experience. Specialites: recherche utilisateur, interfaces, identite visuelle et parcours de conversion.
 
 ## Services
 
-### Audit & Performance — "Understand before acting"
-Complete diagnostic of your existing digital presence:
-- UX/UI Audit
-- Technical SEO Audit
-- Core Web Vitals Analysis (LCP, FID/INP, CLS)
-- Recommendations Report
-- Loading speed diagnosis and friction point identification
+### Audit et performance
 
-### Optimization & Redesign — "Improve what exists"
-Enhance and modernize your current website or application:
-- Web Performance Optimization
-- UI/UX Redesign
-- Technical Migration
-- Responsive and Mobile-first Development
-- Core Web Vitals Improvement
+- Audit UX/UI
+- Audit SEO technique
+- Analyse Core Web Vitals
+- Rapport de recommandations
+- Diagnostic vitesse et points de friction
 
-### From Scratch & MVP — "Build on solid foundations"
-Build new digital products with solid, long-term architecture:
-- Visual Identity & Branding
-- Showcase Websites (Sites Vitrine)
-- Web Applications
-- MVP and Prototyping
-- E-commerce Platforms
-- Custom Platforms
+### Optimisation et refonte
 
-## Methodology
+- Optimisation des performances
+- Refonte UI/UX
+- Migration technique
+- Responsive et mobile-first
+- Amelioration des Core Web Vitals
 
-### 001 — Free Audit ("Understand before acting")
-We start every engagement with a free diagnostic of your SEO, speed, and UX to identify real blockers. Clear, actionable answers with no strings attached.
+### Creation sur mesure et MVP
 
-### 002 — The Horde Engine ("Performance as standard")
-Our proprietary technical architecture is purpose-built for ultra-fast interfaces. A robust product foundation that enables faster, better delivery on every project.
+- Identite visuelle
+- Site vitrine
+- Application web
+- MVP et prototypage
+- E-commerce
 
-### 003 — Direct Cooperation ("Zero middlemen")
-No endless email chains or unnecessary layers. Direct communication via Slack or WhatsApp. Real-time visibility into project progress at every stage.
+## Methode
 
-## Technology Stack
+1. Audit offert: analyse SEO, vitesse et UX pour identifier les vrais blocages.
+2. Moteur Horde: architecture technique concue pour livrer des interfaces ultra-rapides.
+3. Cooperation directe: echanges en direct via Slack ou WhatsApp, sans intermediaire.
 
-- Astro 5 (static site generation & SSR)
-- React / Preact (interactive components via Islands architecture)
-- Tailwind CSS 4 (utility-first styling)
-- Next.js (for appropriate projects)
-- Node.js
-- Keystatic CMS (file-based content management)
-- Markdoc (rich content with embedded components)
-- Matter.js (physics-based animations)
-- Lenis (smooth scrolling)
-- Vercel (hosting & deployment)
+## Pages publiques principales
 
-## Portfolio
+- Accueil FR: https://hordeagence.com/fr
+- A propos: https://hordeagence.com/fr/about
+- Projets: https://hordeagence.com/fr/projets
+- Blog: https://hordeagence.com/fr/blog
+- Contact: https://hordeagence.com/fr/contact
+- Mentions legales: https://hordeagence.com/fr/mentions-legales
+- Confidentialite: https://hordeagence.com/fr/confidentialite
+- Cookies: https://hordeagence.com/fr/cookies
+
+Les equivalents anglais sont accessibles sous `/en/...`.
+
+## Projets
 
 ### Cafe Belga
-Showcase website for a renowned Brussels establishment. Full UX/UI design and Next.js development including reservation system, events calendar, and menu display.
-- URL: https://belga.hordagency.com
-- Tags: Showcase website, UX/UI, Next.js
 
-### Merly Patrimoine
-Complete branding and website for an independent wealth management firm. Created visual identity, logo, and a comprehensive website featuring an interactive tax simulator.
-- URL: https://merly.hordagency.com
-- Tags: Showcase website, UX/UI, Visual Identity
+- Page projet: https://hordeagence.com/fr/projets/cafe-belga
+- Site: https://belga.hordagency.com
+- Type: site vitrine, UX design, web design
+- Publication: 2026-01-26
+- Resume: etude de cas autour d'un site pour le Cafe Belga, avec travail UX/UI axe sur la simplicite, la reactivite et la coherence visuelle. La plateforme Next.js integre reservation, agenda d'evenements et carte.
+
+### Merly
+
+- Page projet: https://hordeagence.com/fr/projets/merly
+- Site: https://merly.hordagency.com
+- Type: site vitrine, UX design, web design
+- Publication: 2024-02-01
+- Resume: identite visuelle, logo et site pour un cabinet de gestion de patrimoine. Le projet inclut une interface elegante, un simulateur fiscal interactif et des contenus pedagogiques.
 
 ### E-Putch
-Innovative web application currently in development.
 
-## Blog Topics
+- Statut: en cours
+- Type: application web, UX design, developpement
+- Publication de reference: 2024-03-01
+- Visibilite: projet non public en detail (`noindex`)
 
-We publish articles on web strategy, UX design, and web performance, including:
-- Web performance and Core Web Vitals (what makes a website truly fast)
-- Digital independence and owning your online presence vs. platform dependency
-- UX design best practices
-- SEO strategy
+## Blog
 
-## Languages
+### En 2026, c'est quoi un site (vraiment) rapide?
 
-The website and services are available in French (default) and English. Primary locale: fr_FR.
+- URL: https://hordeagence.com/fr/blog/c-est-quoi-un-site-vraiment-rapide
+- Date: 2026-01-30
+- Categorie: performance web
+- Tags: Core Web Vitals, vitesse de chargement, SEO technique, UX mobile
+- Resume: explique ce qu'est un site vraiment rapide en 2026, pourquoi la vitesse agit sur le SEO, l'experience et les conversions, et comment Horde optimise concretement les performances.
 
-## Key Differentiators
+### Pourquoi avoir un site web quand les reseaux sociaux marchent deja ?
 
-1. **Ultra-fast interfaces**: Performance is not an afterthought — it is the foundation of every project.
-2. **Senior-only team**: Every project is handled directly by the two co-founders. No juniors, no outsourcing.
-3. **Free initial audit**: Every engagement starts with a no-obligation diagnostic.
-4. **Direct communication**: Zero middlemen between you and the people building your product.
-5. **Modern tech stack**: Built on cutting-edge, proven technologies (Astro, React, Tailwind CSS).
-6. **Brussels-based**: Local presence with international capability.
+- URL: https://hordeagence.com/fr/blog/pourquoi-avoir-un-site-web-reseaux-sociaux
+- Date: 2026-02-11
+- Categorie: strategie
+- Tags: strategie digitale, site web vs reseaux sociaux, acquisition organique, independance numerique
+- Resume: montre pourquoi une marque ne doit pas dependre uniquement des plateformes sociales, et pourquoi le site web reste la base de la visibilite, de la credibilite et de la relation client.
+
+### Ce que votre site vous coute vraiment (sans que vous le sachiez)
+
+- URL: https://hordeagence.com/fr/blog/ce-que-votre-site-vous-coute-vraiment
+- Date: 2026-02-26
+- Categorie: strategie
+- Tags: cout site web, pertes de conversion, SEO technique, audit performance
+- Resume: detaille les pertes cachees liees a un site lent ou mal pense: conversions, SEO, credibilite et maintenance.
+
+### Combien coute une refonte de site web en 2026
+
+- URL: https://hordeagence.com/fr/blog/combien-coute-refonte-site-web
+- Date: 2026-03-03
+- Categorie: strategie
+- Tags: refonte site web, budget web, devis web, prix site web, UX design
+- Resume: donne des fourchettes de prix realistes, les facteurs qui font varier un budget et les erreurs qui font exploser le cout d'une refonte.
+
+## Stack technique du site
+
+- Astro 5
+- React 19 et Preact
+- Tailwind CSS 4
+- Keystatic CMS
+- Markdoc
+- Node.js
+- Lenis
+- Matter.js
 
 ## Legal
 
-- Jurisdiction: Belgian law, Brussels courts
-- Legal notices: https://hordeagence.com/fr/mentions-legales
-- Privacy policy: https://hordeagence.com/fr/confidentialite
-- Cookie policy: https://hordeagence.com/fr/cookies
+- Droit applicable: droit belge
+- Base juridique: Bruxelles
+- Copyright footer: ©2026 Horde Agence
 
-## More Information
-- [Full Content](/llms-full.txt): Comprehensive version containing all blog posts and project details.
+## Ressource detaillee
+
+- Version complete: https://hordeagence.com/llms-full.txt
