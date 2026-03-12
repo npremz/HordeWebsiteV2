@@ -14,9 +14,9 @@ const { service } = Astro.props;
   data-service-section="exclusions"
   aria-labelledby="service-exclusions-title"
 >
-  <div class="p-8 border-lines border">
+  <div class="p-8 sm:px-16 sm:py-25 border-lines border">
     <div class="flex justify-between">
-      <h2 id="service-exclusions-title" class="text-[1.5rem] leading-none underline flex">
+      <h2 id="service-exclusions-title" class="text-[1.5rem] sm:text-[2rem] leading-none underline flex">
         <span set:html={formatHeadingHtml(service.exclusionsTitleLeft)} />
       </h2>
       <svg width="37" height="32" viewBox="0 0 37 32" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -25,11 +25,11 @@ const { service } = Astro.props;
         <path d="M37 32H30.1115V29.0642H33.7197V2.93578H30.1115V0H37V32Z" fill="#16191B"/>
       </svg>
     </div>
-    <div class="mt-8">
+    <div class="mt-8 sm:mt-16">
       {service.exclusionsParagraphs.map((paragraph) => (
-        <p class="text-[1.125rem] indent-32">{paragraph}</p>
+        <p class="text-[1.125rem] sm:text-[1.5rem] indent-32">{paragraph}</p>
       ))}
     </div>
   </div>
-  <p class="mt-8">Encore des zones d’ombres sur les du service? N’hésitez pas à nous contacter par e-mail à l'adresse <a class="block underline!" href="mailto:hello@hordeagence.com">hello@hordeagence.com</a></p>
+  <p class="mt-8 sm:mt-10">Encore des zones d’ombres sur les du service? N’hésitez pas à nous contacter par e-mail à l'adresse <a class="underline!" href="mailto:hello@hordeagence.com">hello@hordeagence.com</a></p>
 </section>
