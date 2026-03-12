@@ -13,15 +13,15 @@ const { id, left, right, dark = false, class: className = "" } = Astro.props;
 const fillColor = dark ? "white" : "#16191B";
 ---
 
-<h2 id={id} class={`font-display text-[2rem] leading-none uppercase flex pb-8 ${className}`}>
-  <svg class="h-10 pr-4" viewBox="0 0 8 38" fill="none" xmlns="http://www.w3.org/2000/svg">
+<h2 id={id} class={`font-display text-[2rem] sm:text-[3rem] leading-none uppercase flex pb-8 sm:pb-16 ${className}`}>
+  <svg class="h-10 sm:h-15 pr-4 sm:pr-8" viewBox="0 0 8 38" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path d="M5.85475 0H8C4.82682 5.27294 2.4581 11.0252 2.4581 19.0872C2.4581 26.9748 4.82682 32.7271 8 38H5.85475C2.77095 33.5986 0 26.9748 0 19.0872C0 10.9381 2.77095 4.40138 5.85475 0Z" fill={fillColor}/>
   </svg>
   <div class="flex flex-col w-full justify-between items-baseline">
     <span set:html={formatHeadingHtml(left)} />
     <span class="text-right self-end" set:html={formatHeadingHtml(right)} />
   </div>
-  <svg class="h-10 pl-4 self-end" viewBox="0 0 8 38" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <svg class="h-10 sm:h-15 pl-4 sm:pl-8 self-end" viewBox="0 0 8 38" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path d="M2.14525 38L-2.86102e-06 38C3.17318 32.7271 5.5419 26.9748 5.5419 18.9128C5.5419 11.0252 3.17318 5.27294 3.66895e-07 -7.19781e-07L2.14525 -5.26767e-07C5.22905 4.40138 8 11.0252 8 18.9128C8 27.0619 5.22905 33.5986 2.14525 38Z" fill={fillColor}/>
   </svg>
 </h2>
