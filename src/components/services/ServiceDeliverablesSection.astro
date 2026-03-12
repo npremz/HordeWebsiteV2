@@ -20,14 +20,14 @@ const { service } = Astro.props;
     left={service.deliverablesTitleLeft}
     right={service.deliverablesTitleRight}
   />
-  <div class="py-16 border-t border-lines">
+  <div class="pt-16 border-t border-lines">
     <ul class="space-y-2.5">
       {service.deliverables.map((item) => (
         <li class="flex items-center gap-5">
           <svg width="26" height="20" viewBox="0 0 26 20" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M16.5933 20L14.5615 18.1852L21.1462 11.2963H0V8.7037H21.1462L14.5615 1.81482L16.5933 0L26 10L16.5933 20Z" fill="#16191B"/>
           </svg>
-          <span class="block w-full text-[1.125rem] px-4 py-5 sm:py-8 sm:w-fit items-center bg-white text-center sm:text-left">{item}</span>
+          <span class="block w-full text-[1.125rem] md:text-[1.5rem] px-4 py-5 sm:py-8 md:px-6 md:py-12 sm:w-fit items-center bg-white text-center sm:text-left">{item}</span>
         </li>
       ))}
     </ul>

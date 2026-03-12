@@ -19,9 +19,9 @@ const { service } = Astro.props;
     {service.methodSteps.map((step, index) => (
       <article class:list={[
         "flex flex-col",
-        {"mt-50": (index % 2 == 1)}
+        {"sm:mt-50": (index % 2 == 1)}
       ]}>
-        <span class="font-mono text-[1rem] whitespace-nowrap">
+        <span class="font-mono text-[1rem] leading-none whitespace-nowrap">
           / {String(index + 1).padStart(3, "0")}
         </span>
         <div class="w-full mt-4 bg-white p-6">

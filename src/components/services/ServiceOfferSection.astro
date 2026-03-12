@@ -9,13 +9,13 @@ interface Props {
 const { service } = Astro.props;
 ---
 
-<section id="service-offer" class="mt-10 sm:mt-16" data-service-section="offer" aria-labelledby="service-offer-title">
+<section id="service-offer" class="mt-10 sm:mt-16 md:mt-24" data-service-section="offer" aria-labelledby="service-offer-title">
   <ServiceSectionHeading
     id="service-offer-title"
     left={service.offerTitleLeft}
     right={service.offerTitleRight}
   />
-  <div class="py-16 sm:pb-25 border-y border-lines space-y-16">
+  <div class="py-16 sm:pb-25 md:pt-32 md:pb-50 border-y border-lines space-y-16 md:space-y-0 md:grid md:grid-cols-2 md:gap-x-10 md:gap-y-32">
     {service.offerItems.map((item, index) => (
       <article class="flex">
         <div class="w-full">
