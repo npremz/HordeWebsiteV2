@@ -11,7 +11,7 @@ const { service } = Astro.props;
 
 <header
   id="service-hero"
-  class="relative pt-50 sm:pt-62  pb-8 sm:pb-12.5 md:pb-20 bg-black text-white full-width-dark-bg"
+  class="relative pt-50 sm:pt-62 2xl:pt-72 pb-8 sm:pb-12.5 md:pb-20 2xl:pb-25 bg-black text-white full-width-dark-bg"
   data-service-section="hero"
 >
   <div class="relative flex justify-center">
@@ -20,7 +20,7 @@ const { service } = Astro.props;
     </svg>
     <div
       id="service-shape"
-      class="grid h-32 w-32 sm:h-55 sm:w-55 grid-cols-3 grid-rows-3 border-lines-dark border-r border-b"
+      class="grid h-32 w-32 sm:h-55 sm:w-55 2xl:h-76 2xl:w-76 grid-cols-3 grid-rows-3 border-lines-dark border-r border-b"
       style="background-image: linear-gradient(var(--color-lines-dark) 1px, transparent 1px), linear-gradient(90deg, var(--color-lines-dark) 1px, transparent 1px); background-size: calc(100% / 3) calc(100% / 3);"
     >
       {Array.from({ length: 9 }).map(() => (
@@ -31,10 +31,10 @@ const { service } = Astro.props;
       <path d="M2.94972 52L-4.76837e-06 52C4.36313 44.7844 7.62011 36.9128 7.62011 25.8807C7.62011 15.0872 4.36313 7.21559 -2.22387e-07 -4.77635e-06L2.94972 -4.51848e-06C7.18995 6.02293 11 15.0872 11 25.8807C11 37.0321 7.18994 45.9771 2.94972 52Z" fill="white"/>
     </svg>
   </div>
-  <div class="mt-25 sm:mt-50 md:mt-70 lg:mt-10">
+  <div class="mt-25 sm:mt-50 md:mt-70 lg:mt-10 2xl:mt-36">
     <div class="lg:flex lg:justify-between lg:items-end">
       <h1
-        class="font-display text-[2.25rem] sm:text-[4rem] md:text-[5rem] lg:w-1/2 uppercase leading-none"
+        class="font-display text-[2.25rem] sm:text-[4rem] md:text-[5rem] 2xl:text-[6rem] lg:w-1/2 2xl:w-3/5 uppercase leading-none"
         set:html={formatHeadingHtml(service.h1)}
       />
       <div class="lg:max-w-[460px]">
