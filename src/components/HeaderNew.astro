@@ -62,13 +62,13 @@ const email = "hello@hordeagence.com";
 >
   <!-- Header bar -->
   <div
-    class="header-bar max-w-[1350px] mx-auto bg-black border border-lines-dark text-bg-light px-5 py-4 md:px-6 pointer-events-auto"
+    class="header-bar max-w-[1350px] mx-auto bg-white px-5 py-4 md:px-6 pointer-events-auto"
   >
     <div class="flex-between">
       <!-- Logo -->
       <a href={`/${lang}`} class="block" title={logoAlt}>
         <img
-          src="/images/logo_white.svg"
+          src="/images/logo.svg"
           alt={logoAlt}
           class="h-[17px] w-auto sm:h-auto sm:w-18"
           width="112"
@@ -109,22 +109,22 @@ const email = "hello@hordeagence.com";
           class="flex-center gap-4 cursor-pointer"
           aria-expanded="false"
           aria-controls="menu-panel"
-          aria-label={t.nav.openMenu}
+          aria-label={t.nav.openMenu}    
           data-open-label={t.nav.openMenu}
           data-close-label={t.nav.closeMenu}
           data-menu-text={t.nav.menu}
           data-close-text={t.nav.close}
         >
-          <span id="menu-label-new" class="text-[1.375rem]">{t.nav.menu}</span>
+          <span id="menu-label-new" class="text-[1rem] font-mono uppercase">{t.nav.menu}</span>
           <div
-            class="flex flex-col justify-center gap-2 w-[36px] h-4"
+            class="flex flex-col justify-center gap-1.75 w-[36px] h-4"
             aria-hidden="true"
           >
             <span
-              class="burger-line block w-full h-px bg-[#9C9C9C] transition-all duration-300 ease-out origin-center"
+              class="burger-line block w-full h-px bg-[#16191B] transition-all duration-300 ease-out origin-center"
             ></span>
             <span
-              class="burger-line block w-full h-px bg-[#9C9C9C] transition-all duration-300 ease-out origin-center"
+              class="burger-line block w-full h-px bg-[#16191B] transition-all duration-300 ease-out origin-center"
             ></span>
           </div>
         </button>

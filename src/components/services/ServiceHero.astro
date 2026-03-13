@@ -34,13 +34,18 @@ const { service } = Astro.props;
       <path d="M8.05028 0H11C6.63687 7.2156 3.37989 15.0872 3.37989 26.1193C3.37989 36.9128 6.63687 44.7844 11 52H8.05028C3.81006 45.9771 0 36.9128 0 26.1193C0 14.9679 3.81006 6.02294 8.05028 0Z" fill="white"/>
     </svg>
     <div class="relative">
+      <!-- Corner markers centered on each corner of the shape -->
+      <div class="absolute size-[4px] sm:size-[5px] 2xl:size-[7px] bg-white -top-[2px] -left-[2px] sm:-top-[2.5px] sm:-left-[2.5px] 2xl:-top-[3.5px] 2xl:-left-[3.5px]"></div>
+      <div class="absolute size-[4px] sm:size-[5px] 2xl:size-[7px] bg-white -top-[2px] -right-[2px] sm:-top-[2.5px] sm:-right-[2.5px] 2xl:-top-[3.5px] 2xl:-right-[3.5px]"></div>
+      <div class="absolute size-[4px] sm:size-[5px] 2xl:size-[7px] bg-white -bottom-[2px] -left-[2px] sm:-bottom-[2.5px] sm:-left-[2.5px] 2xl:-bottom-[3.5px] 2xl:-left-[3.5px]"></div>
+      <div class="absolute size-[4px] sm:size-[5px] 2xl:size-[7px] bg-white -bottom-[2px] -right-[2px] sm:-bottom-[2.5px] sm:-right-[2.5px] 2xl:-bottom-[3.5px] 2xl:-right-[3.5px]"></div>
       <div
         id="service-shape"
-        class="grid h-32 w-32 sm:h-55 sm:w-55 2xl:h-76 2xl:w-76 grid-cols-3 grid-rows-3 border-lines-dark border-r border-b"
+        class="grid h-32 w-32 sm:h-55 sm:w-55 2xl:h-76 2xl:w-76 grid-cols-3 grid-rows-3 bg-black border-lines-dark border-r border-b"
         style="background-image: linear-gradient(var(--color-lines-dark) 1px, transparent 1px), linear-gradient(90deg, var(--color-lines-dark) 1px, transparent 1px); background-size: calc(100% / 3) calc(100% / 3);"
       >
         {Array.from({ length: 9 }).map(() => (
-          <div class="flex items-center justify-center"><div class="h-full w-full rounded-full bg-white"></div></div>
+          <div class="flex items-center justify-center"><div class="h-full w-full rounded-full bg-white border border-black"></div></div>
         ))}
       </div>
     </div>
