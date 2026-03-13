@@ -58,58 +58,38 @@ const email = "hello@hordeagence.com";
 
 <header
   id="header-new"
-  class="header-new fixed z-9999999 top-0 left-0 right-0 sm:max-w-[85%] sm:mx-auto md:max-w-[1350px] md:mx-auto pt-(--gutter) sm:pt-4 px-(--gutter) lg:px-0 pointer-events-none"
+  class="header-new fixed z-9999999 top-0 left-0 right-0 pointer-events-none"
 >
-  <!-- Header bar -->
-  <div
-    class="header-bar max-w-[1350px] mx-auto bg-white px-5 py-4 md:px-6 pointer-events-auto"
-  >
-    <div class="flex-between">
-      <!-- Logo -->
-      <a href={`/${lang}`} class="block" title={logoAlt}>
-        <img
-          src="/images/logo.svg"
-          alt={logoAlt}
-          class="h-[17px] w-auto sm:h-auto sm:w-18"
-          width="112"
-          height="40"
-          decoding="async"
-          fetchpriority="high"
-        />
-      </a>
 
-      <div class="flex-center gap-16 lg:gap-24">
-        <!-- Start project link (md+) -->
-        <a
-          href={`/${lang}/contact`}
-          id="header-start-project"
-          class="hidden md:flex items-center gap-2.5 text-[1.375rem]"
-          data-text={t.nav.startProject}
-          title={t.nav.startProject}
-        >
-          <svg
-            class="hidden md:block"
-            width="11"
-            height="10"
-            viewBox="0 0 11 10"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M7.38206 10L6.60058 9.24904L9.13314 6.39847L0 6.39847V0H1V5.32567H9.13314L6.60058 2.4751L7.38206 1.72414L11 5.86207L7.38206 10Z"
-              fill="#F4F3F3"></path>
-          </svg>
-          <span class="nav-scramble-header">{t.nav.startProject}</span>
+  <!-- ============================================================ -->
+  <!-- MOBILE header (< 1024px)                                     -->
+  <!-- ============================================================ -->
+  <div class="lg:hidden sm:max-w-[85%] sm:mx-auto pt-(--gutter) sm:pt-4 px-(--gutter)">
+
+    <!-- Header bar -->
+    <div class="header-bar bg-white px-5 py-4 pointer-events-none">
+      <div class="flex-between">
+        <!-- Logo -->
+        <a href={`/${lang}`} class="block pointer-events-auto" title={logoAlt}>
+          <img
+            src="/images/logo.svg"
+            alt={logoAlt}
+            class="h-[17px] w-auto sm:h-auto sm:w-18"
+            width="112"
+            height="40"
+            decoding="async"
+            fetchpriority="high"
+          />
         </a>
 
         <!-- Menu button -->
         <button
           type="button"
           id="menu-toggle-new"
-          class="flex-center gap-4 cursor-pointer"
+          class="flex-center gap-4 cursor-pointer pointer-events-auto"
           aria-expanded="false"
           aria-controls="menu-panel"
-          aria-label={t.nav.openMenu}    
+          aria-label={t.nav.openMenu}
           data-open-label={t.nav.openMenu}
           data-close-label={t.nav.closeMenu}
           data-menu-text={t.nav.menu}
@@ -130,31 +110,156 @@ const email = "hello@hordeagence.com";
         </button>
       </div>
     </div>
-  </div>
 
-  <!-- Menu panel -->
-  <div
-    id="menu-panel"
-    class="menu-panel max-w-[1350px] mx-auto bg-black text-bg-light overflow-hidden border-x border-b border-transparent"
-    aria-hidden="true"
-  >
-    <div class="p-5 md:p-6 sm:flex sm:flex-row-reverse sm:justify-between">
-      <!-- Navigation links -->
-      <nav class="sm:w-1/2">
-        <ul class="flex flex-col gap-6">
-          {
-            items.map((item, index) => (
-              <li
-                class="menu-item opacity-0 transition-all duration-300 ease-out text-right"
-                style={`--item-delay: ${index * 0.05}s`}
+    <!-- Menu panel -->
+    <div
+      id="menu-panel"
+      class="menu-panel bg-black text-bg-light overflow-hidden border-x border-b border-transparent"
+      aria-hidden="true"
+    >
+      <div class="p-5 sm:flex sm:flex-row-reverse sm:justify-between">
+        <!-- Navigation links -->
+        <nav class="sm:w-1/2">
+          <ul class="flex flex-col gap-6">
+            {
+              items.map((item, index) => (
+                <li
+                  class="menu-item opacity-0 transition-all duration-300 ease-out text-right"
+                  style={`--item-delay: ${index * 0.05}s`}
+                >
+                  <a
+                    href={item.url}
+                    class="menu-link nav-scramble inline-block relative text-[2.5rem] leading-none text-black no-underline"
+                    target={item.isExternal ? "_blank" : undefined}
+                    rel={item.isExternal ? "noopener noreferrer" : undefined}
+                    tabindex="-1"
+                    data-text={item.label}
+                    title={item.label}
+                  >
+                    {item.label}
+                  </a>
+                </li>
+              ))
+            }
+          </ul>
+        </nav>
+
+        <!-- Footer info -->
+        <div class="pt-5 mt-5 sm:mt-0 sm:pt-0 border-t border-lines-dark sm:border-0 sm:flex sm:flex-col sm:justify-between">
+          <div class="flex flex-col gap-4 text-right sm:text-left">
+            <!-- Email -->
+            <a
+              href={`mailto:${email}`}
+              class="menu-item opacity-0 flex justify-end sm:justify-start items-center gap-2.5 transition-all duration-300 ease-out leading-none text-[1rem] font-mono uppercase no-underline hover:opacity-70"
+              style="--item-delay: 0.2s"
+              tabindex="-1"
+              title={email}
+            >
+              <svg
+                class="mt-1"
+                width="11"
+                height="10"
+                viewBox="0 0 11 10"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
               >
+                <path
+                  d="M7.38206 10L6.60058 9.24904L9.13314 6.39847L0 6.39847V0H1V5.32567H9.13314L6.60058 2.4751L7.38206 1.72414L11 5.86207L7.38206 10Z"
+                  fill="#F4F3F3"></path>
+              </svg>
+              <span class="nav-scramble" data-text={email}>{email}</span>
+            </a>
+
+            <!-- Language switch -->
+            <a
+              href={switchUrl}
+              class="menu-item opacity-0 flex justify-end sm:justify-start items-center gap-2.5 transition-all duration-300 ease-out leading-none text-[1rem] font-mono uppercase no-underline hover:opacity-70"
+              style="--item-delay: 0.25s"
+              hreflang={switchLang}
+              tabindex="-1"
+              title={t.nav.switchLang}
+            >
+              <svg
+                class="mt-1"
+                width="11"
+                height="10"
+                viewBox="0 0 11 10"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M7.38206 10L6.60058 9.24904L9.13314 6.39847L0 6.39847V0H1V5.32567H9.13314L6.60058 2.4751L7.38206 1.72414L11 5.86207L7.38206 10Z"
+                  fill="#F4F3F3"></path>
+              </svg>
+              <span class="nav-scramble" data-text={t.nav.switchLang}
+                >{t.nav.switchLang}</span
+              >
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <!-- /MOBILE -->
+
+  <!-- ============================================================ -->
+  <!-- DESKTOP header (>= 1024px)                                   -->
+  <!-- ============================================================ -->
+  <div class="hidden lg:grid lg:grid-cols-3 pointer-events-none px-8 py-6">
+
+    <!-- Col 1 — CTA gauche -->
+    <div class="flex h-fit">
+      <a
+        href={`/${lang}/contact`}
+        id="header-start-project"
+        class="flex items-center gap-2.5 text-[1.375rem] pointer-events-auto"
+        data-text={t.nav.startProject}
+        title={t.nav.startProject}
+      >
+        <svg
+          width="11"
+          height="10"
+          viewBox="0 0 11 10"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          aria-hidden="true"
+        >
+          <path
+            d="M7.38206 10L6.60058 9.24904L9.13314 6.39847L0 6.39847V0H1V5.32567H9.13314L6.60058 2.4751L7.38206 1.72414L11 5.86207L7.38206 10Z"
+            fill="#16191B"></path>
+        </svg>
+        <span class="nav-scramble-header">{t.nav.startProject}</span>
+      </a>
+    </div>
+
+    <!-- Col 2 — Logo full centré -->
+    <div class="flex justify-center">
+      <a href={`/${lang}`} title={logoAlt} class="pointer-events-auto">
+        <img
+          src="/images/logo_full.svg"
+          class="py-2.5"
+          alt={logoAlt}
+          width="320"
+          height="15"
+          decoding="async"
+          fetchpriority="high"
+        />
+      </a>
+    </div>
+
+    <!-- Col 3 — Nav verticale droite -->
+    <div class="flex justify-end">
+      <nav aria-label="Navigation principale" class="pointer-events-auto">
+        <ul class="flex flex-col items-end gap-3">
+          {
+            items.map((item) => (
+              <li>
                 <a
                   href={item.url}
-                  class="menu-link nav-scramble inline-block relative text-[2.5rem] leading-none text-black no-underline"
+                  class="text-[1rem] lg:text-[1.375rem] leading-none hover:opacity-60 transition-opacity duration-200"
                   target={item.isExternal ? "_blank" : undefined}
                   rel={item.isExternal ? "noopener noreferrer" : undefined}
-                  tabindex="-1"
-                  data-text={item.label}
                   title={item.label}
                 >
                   {item.label}
@@ -162,88 +267,23 @@ const email = "hello@hordeagence.com";
               </li>
             ))
           }
+          <li>
+            <a
+              href={switchUrl}
+              hreflang={switchLang}
+              title={t.nav.switchLang}
+              class="text-[1rem] font-mono uppercase leading-none hover:opacity-60 transition-opacity duration-200"
+            >
+              {switchLang.toUpperCase()}
+            </a>
+          </li>
         </ul>
       </nav>
-
-      <!-- Footer info -->
-      <div
-        class="pt-5 mt-5 sm:mt-0 sm:pt-0 border-t border-lines-dark sm:border-0 sm:flex sm:flex-col sm:justify-between sm:mt-0"
-      >
-        <a
-          href={`/${lang}/contact`}
-          class="menu-link menu-item opacity-0 hidden sm:flex md:hidden text-[1.375rem] leading-none justify-end sm:justify-start items-center gap-2.5 transition-all duration-300 ease-out"
-          style="--item-delay: 0.15s"
-          tabindex="-1"
-          title={t.nav.startProject}
-        >
-          <svg
-            width="11"
-            height="10"
-            viewBox="0 0 11 10"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M7.38206 10L6.60058 9.24904L9.13314 6.39847L0 6.39847V0H1V5.32567H9.13314L6.60058 2.4751L7.38206 1.72414L11 5.86207L7.38206 10Z"
-              fill="#F4F3F3"></path>
-          </svg>
-          <span class="nav-scramble" data-text={t.nav.startProject}
-            >{t.nav.startProject}</span
-          >
-        </a>
-        <div class="flex flex-col gap-4 text-right sm:text-left">
-          <!-- Email -->
-          <a
-            href={`mailto:${email}`}
-            class="menu-item opacity-0 flex justify-end sm:justify-start items-center gap-2.5 transition-all duration-300 ease-out leading-none text-[1rem] font-mono uppercase no-underline hover:opacity-70"
-            style="--item-delay: 0.2s"
-            tabindex="-1"
-            title={email}
-          >
-            <svg
-              class="mt-1"
-              width="11"
-              height="10"
-              viewBox="0 0 11 10"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M7.38206 10L6.60058 9.24904L9.13314 6.39847L0 6.39847V0H1V5.32567H9.13314L6.60058 2.4751L7.38206 1.72414L11 5.86207L7.38206 10Z"
-                fill="#F4F3F3"></path>
-            </svg>
-            <span class="nav-scramble" data-text={email}>{email}</span>
-          </a>
-
-          <!-- Language switch -->
-          <a
-            href={switchUrl}
-            class="menu-item opacity-0 flex justify-end sm:justify-start items-center gap-2.5 transition-all duration-300 ease-out leading-none text-[1rem] font-mono uppercase no-underline hover:opacity-70"
-            style="--item-delay: 0.25s"
-            hreflang={switchLang}
-            tabindex="-1"
-            title={t.nav.switchLang}
-          >
-            <svg
-              class="mt-1"
-              width="11"
-              height="10"
-              viewBox="0 0 11 10"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M7.38206 10L6.60058 9.24904L9.13314 6.39847L0 6.39847V0H1V5.32567H9.13314L6.60058 2.4751L7.38206 1.72414L11 5.86207L7.38206 10Z"
-                fill="#F4F3F3"></path>
-            </svg>
-            <span class="nav-scramble" data-text={t.nav.switchLang}
-              >{t.nav.switchLang}</span
-            >
-          </a>
-        </div>
-      </div>
     </div>
+
   </div>
+  <!-- /DESKTOP -->
+
 </header>
 
 <style is:global>
