@@ -56,15 +56,102 @@ const { logo, logoAlt = "Logo", items = [], ctaButton } = navigation;
 const email = "hello@hordeagence.com";
 ---
 
+<!-- ============================================================ -->
+<!-- DESKTOP header (>= 1024px) — fixed, remplacé par le relay  -->
+<!-- ============================================================ -->
+<div
+  id="header-desktop"
+  class="header-desktop hidden lg:block fixed top-0 left-0 right-0 z-[9999998] pointer-events-none"
+>
+  <div class="hidden lg:grid lg:grid-cols-3 pointer-events-none px-8 py-6">
+
+    <!-- Col 1 — CTA gauche -->
+    <div class="flex h-fit">
+      <a
+        href={`/${lang}/contact`}
+        id="header-start-project"
+        class="flex items-center gap-2.5 text-[1.375rem] pointer-events-auto"
+        data-text={t.nav.startProject}
+        title={t.nav.startProject}
+      >
+        <svg
+          width="11"
+          height="10"
+          viewBox="0 0 11 10"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          aria-hidden="true"
+        >
+          <path
+            d="M7.38206 10L6.60058 9.24904L9.13314 6.39847L0 6.39847V0H1V5.32567H9.13314L6.60058 2.4751L7.38206 1.72414L11 5.86207L7.38206 10Z"
+            fill="#16191B"></path>
+        </svg>
+        <span class="nav-scramble-header">{t.nav.startProject}</span>
+      </a>
+    </div>
+
+    <!-- Col 2 — Logo full centré -->
+    <div class="flex justify-center">
+      <a href={`/${lang}`} title={logoAlt} class="pointer-events-auto">
+        <img
+          src="/images/logo_full.svg"
+          class="py-2.5"
+          alt={logoAlt}
+          width="320"
+          height="15"
+          decoding="async"
+          fetchpriority="high"
+        />
+      </a>
+    </div>
+
+    <!-- Col 3 — Nav verticale droite -->
+    <div class="flex justify-end">
+      <nav aria-label="Navigation principale" class="pointer-events-auto">
+        <ul class="flex flex-col items-end gap-3">
+          {
+            items.map((item) => (
+              <li>
+                <a
+                  href={item.url}
+                  class="text-[1rem] lg:text-[1.375rem] leading-none hover:opacity-60 transition-opacity duration-200"
+                  target={item.isExternal ? "_blank" : undefined}
+                  rel={item.isExternal ? "noopener noreferrer" : undefined}
+                  title={item.label}
+                >
+                  {item.label}
+                </a>
+              </li>
+            ))
+          }
+          <li>
+            <a
+              href={switchUrl}
+              hreflang={switchLang}
+              title={t.nav.switchLang}
+              class="text-[1rem] font-mono uppercase leading-none hover:opacity-60 transition-opacity duration-200"
+            >
+              {switchLang.toUpperCase()}
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+
+  </div>
+</div>
+<!-- /DESKTOP -->
+
+<!-- ============================================================ -->
+<!-- RELAY header (mobile-style) — toujours fixed sur mobile,   -->
+<!-- slide in sur desktop quand le desktop header disparaît      -->
+<!-- ============================================================ -->
 <header
   id="header-new"
-  class="header-new fixed z-9999999 top-0 left-0 right-0 pointer-events-none"
+  class="header-new fixed z-[9999999] top-0 left-0 right-0 pointer-events-none"
 >
 
-  <!-- ============================================================ -->
-  <!-- MOBILE header (< 1024px)                                     -->
-  <!-- ============================================================ -->
-  <div class="lg:hidden sm:max-w-[85%] sm:mx-auto pt-(--gutter) sm:pt-4 px-(--gutter)">
+  <div class="sm:max-w-[85%] sm:mx-auto pt-(--gutter) sm:pt-4 px-(--gutter)">
 
     <!-- Header bar -->
     <div class="header-bar bg-white px-5 py-4 pointer-events-none">
@@ -201,93 +288,21 @@ const email = "hello@hordeagence.com";
     </div>
 
   </div>
-  <!-- /MOBILE -->
-
-  <!-- ============================================================ -->
-  <!-- DESKTOP header (>= 1024px)                                   -->
-  <!-- ============================================================ -->
-  <div class="hidden lg:grid lg:grid-cols-3 pointer-events-none px-8 py-6">
-
-    <!-- Col 1 — CTA gauche -->
-    <div class="flex h-fit">
-      <a
-        href={`/${lang}/contact`}
-        id="header-start-project"
-        class="flex items-center gap-2.5 text-[1.375rem] pointer-events-auto"
-        data-text={t.nav.startProject}
-        title={t.nav.startProject}
-      >
-        <svg
-          width="11"
-          height="10"
-          viewBox="0 0 11 10"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-          aria-hidden="true"
-        >
-          <path
-            d="M7.38206 10L6.60058 9.24904L9.13314 6.39847L0 6.39847V0H1V5.32567H9.13314L6.60058 2.4751L7.38206 1.72414L11 5.86207L7.38206 10Z"
-            fill="#16191B"></path>
-        </svg>
-        <span class="nav-scramble-header">{t.nav.startProject}</span>
-      </a>
-    </div>
-
-    <!-- Col 2 — Logo full centré -->
-    <div class="flex justify-center">
-      <a href={`/${lang}`} title={logoAlt} class="pointer-events-auto">
-        <img
-          src="/images/logo_full.svg"
-          class="py-2.5"
-          alt={logoAlt}
-          width="320"
-          height="15"
-          decoding="async"
-          fetchpriority="high"
-        />
-      </a>
-    </div>
-
-    <!-- Col 3 — Nav verticale droite -->
-    <div class="flex justify-end">
-      <nav aria-label="Navigation principale" class="pointer-events-auto">
-        <ul class="flex flex-col items-end gap-3">
-          {
-            items.map((item) => (
-              <li>
-                <a
-                  href={item.url}
-                  class="text-[1rem] lg:text-[1.375rem] leading-none hover:opacity-60 transition-opacity duration-200"
-                  target={item.isExternal ? "_blank" : undefined}
-                  rel={item.isExternal ? "noopener noreferrer" : undefined}
-                  title={item.label}
-                >
-                  {item.label}
-                </a>
-              </li>
-            ))
-          }
-          <li>
-            <a
-              href={switchUrl}
-              hreflang={switchLang}
-              title={t.nav.switchLang}
-              class="text-[1rem] font-mono uppercase leading-none hover:opacity-60 transition-opacity duration-200"
-            >
-              {switchLang.toUpperCase()}
-            </a>
-          </li>
-        </ul>
-      </nav>
-    </div>
-
-  </div>
-  <!-- /DESKTOP -->
 
 </header>
 
 <style is:global>
-  /* Header visibility states */
+  /* Desktop header */
+  .header-desktop {
+    transform: translateY(0);
+    transition: transform 0.35s ease-out;
+  }
+
+  .header-desktop.relay-active {
+    transform: translateY(-100%);
+  }
+
+  /* Relay header visibility states */
   .header-new {
     transform: translateY(0);
     transition: transform 0.35s ease-out;
@@ -295,6 +310,13 @@ const email = "hello@hordeagence.com";
 
   .header-new.header-hidden {
     transform: translateY(-100%);
+  }
+
+  /* Sur lg+, le relay est caché par défaut — visible seulement quand relay-active */
+  @media (min-width: 1024px) {
+    .header-new:not(.relay-active) {
+      transform: translateY(-100%);
+    }
   }
 </style>
 
@@ -346,6 +368,7 @@ const email = "hello@hordeagence.com";
 <script>
   function initHeaderNew() {
     const header = document.getElementById("header-new");
+    const headerDesktop = document.getElementById("header-desktop");
     const toggle = document.getElementById("menu-toggle-new");
     const label = document.getElementById("menu-label-new") as HTMLElement;
     const panel = document.getElementById("menu-panel");
@@ -354,6 +377,8 @@ const email = "hello@hordeagence.com";
     let isOpen = false;
     let lastScrollY = 0;
     let ticking = false;
+    let relayActive = false;
+    const RELAY_THRESHOLD = headerDesktop?.offsetHeight ?? 80;
 
     // Text scramble effect
     let scrambleInterval: number | null = null;
@@ -546,18 +571,44 @@ const email = "hello@hordeagence.com";
 
     function updateHeaderVisibility() {
       const currentScrollY = getScrollY();
+      const isDesktop = window.innerWidth >= 1024;
 
       if (isOpen) {
         header?.classList.remove("header-hidden");
+        lastScrollY = currentScrollY;
+        ticking = false;
         return;
       }
 
-      if (currentScrollY < 50) {
-        header?.classList.remove("header-hidden");
-      } else if (currentScrollY > lastScrollY + 5 && currentScrollY > 100) {
-        header?.classList.add("header-hidden");
-      } else if (currentScrollY < lastScrollY - 5) {
-        header?.classList.remove("header-hidden");
+      // Desktop : switch entre header desktop et relay
+      if (isDesktop) {
+        const shouldRelay = currentScrollY > RELAY_THRESHOLD;
+        if (shouldRelay !== relayActive) {
+          relayActive = shouldRelay;
+          if (shouldRelay) {
+            headerDesktop?.classList.add("relay-active");
+            header?.classList.add("relay-active");
+            header?.classList.remove("header-hidden");
+          } else {
+            headerDesktop?.classList.remove("relay-active");
+            header?.classList.remove("relay-active");
+            header?.classList.remove("header-hidden");
+          }
+          lastScrollY = currentScrollY;
+          ticking = false;
+          return;
+        }
+      }
+
+      // Hide/show au scroll (mobile toujours, desktop seulement quand relay actif)
+      if (!isDesktop || relayActive) {
+        if (currentScrollY < 50) {
+          header?.classList.remove("header-hidden");
+        } else if (currentScrollY > lastScrollY + 5 && currentScrollY > 100) {
+          header?.classList.add("header-hidden");
+        } else if (currentScrollY < lastScrollY - 5) {
+          header?.classList.remove("header-hidden");
+        }
       }
 
       lastScrollY = currentScrollY;
@@ -578,6 +629,17 @@ const email = "hello@hordeagence.com";
       window.addEventListener("scroll", onScroll, { passive: true });
     }
 
+    // Reset relay state si on passe en dessous du breakpoint lg
+    function onResize() {
+      if (window.innerWidth < 1024 && relayActive) {
+        relayActive = false;
+        headerDesktop?.classList.remove("relay-active");
+        header?.classList.remove("relay-active");
+        header?.classList.remove("header-hidden");
+      }
+    }
+    window.addEventListener("resize", onResize, { passive: true });
+
     // Cleanup on navigation
     document.addEventListener(
       "astro:before-swap",
@@ -593,6 +655,7 @@ const email = "hello@hordeagence.com";
         } else {
           window.removeEventListener("scroll", onScroll);
         }
+        window.removeEventListener("resize", onResize);
         closeMenu();
       },
       { once: true },
