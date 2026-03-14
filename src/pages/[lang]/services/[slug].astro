@@ -34,7 +34,7 @@ const t = useTranslations(lang);
   description={service.data.seoDescription}
   robots={service.data.seoRobots as 'index, follow' | 'noindex, follow' | 'noindex, nofollow'}
 >
-  <div class="fixed inset-0 bg-bg -z-10" aria-hidden="true"></div>
+  <div class="fixed inset-0 bg-bg-light -z-10" aria-hidden="true"></div>
   <article data-service-slug={service.data.slug}>
     <ServiceHero service={service.data} />
     <ServiceOfferSection service={service.data} />

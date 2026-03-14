@@ -80,7 +80,7 @@
   --breakpoint-2xl: 2560px;
 
   --color-bg: #C5C1CD;
-  --color-bg-light: #F4F3F3;
+  --color-bg-light: #E3DEE3;
   --color-black: #16191B;
   --color-lines: #B1B1B1;
   --color-lines-dark: #4C4B4B;
@@ -91,9 +91,14 @@
   --font-sans: 'PP Neue Montreal', system-ui, sans-serif;
   --font-mono: 'PP Fraktion Mono', monospace;
   --font-display: 'PP Neue Machina', system-ui, sans-serif;
+  --tracking-display: -0.03em;
 }
 
 @layer base {
+  .font-display {
+    letter-spacing: var(--tracking-display);
+  }
+
   html {
     font-family: var(--font-sans);
     font-size: 1rem;
