@@ -278,6 +278,6 @@ export const fr = {
     alexAlt: 'Alexandre, co-fondateur de Horde',
     nicoAlt: 'Nicolas, co-fondateur de Horde',
   },
-} as const;
+};
 
 export type Translations = typeof fr;

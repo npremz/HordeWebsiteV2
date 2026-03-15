@@ -25,6 +25,9 @@ const redirectSourcePaths = new Set([
   '/projets',
 ]);
 
+/**
+ * @param {string} page
+ */
 function shouldIncludeInSitemap(page) {
   try {
     const normalizedPath = new URL(page).pathname.replace(/\/$/, '') || '/';

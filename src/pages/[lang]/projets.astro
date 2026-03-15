@@ -267,31 +267,35 @@ const projectCount = projects.length;
 	function initViewSwitch() {
 		const gridBtn = document.getElementById('view-grid');
 		const listBtn = document.getElementById('view-list');
-		const gridView = document.getElementById('projects-grid');
-		const listView = document.getElementById('projects-list');
+			const gridView = document.getElementById('projects-grid');
+			const listView = document.getElementById('projects-list');
 
-		if (!gridBtn || !listBtn || !gridView || !listView) return;
+			if (!gridBtn || !listBtn || !gridView || !listView) return;
+			const gridBtnEl = gridBtn as HTMLElement;
+			const listBtnEl = listBtn as HTMLElement;
+			const gridViewEl = gridView as HTMLElement;
+			const listViewEl = listView as HTMLElement;
 
-		function showGrid() {
-			gridBtn.classList.add('active');
-			gridBtn.setAttribute('aria-pressed', 'true');
-			listBtn.classList.remove('active');
-			listBtn.setAttribute('aria-pressed', 'false');
-			gridView.classList.remove('hidden');
-			listView.classList.add('hidden');
-		}
+			function showGrid() {
+				gridBtnEl.classList.add('active');
+				gridBtnEl.setAttribute('aria-pressed', 'true');
+				listBtnEl.classList.remove('active');
+				listBtnEl.setAttribute('aria-pressed', 'false');
+				gridViewEl.classList.remove('hidden');
+				listViewEl.classList.add('hidden');
+			}
 
-		function showList() {
-			listBtn.classList.add('active');
-			listBtn.setAttribute('aria-pressed', 'true');
-			gridBtn.classList.remove('active');
-			gridBtn.setAttribute('aria-pressed', 'false');
-			listView.classList.remove('hidden');
-			gridView.classList.add('hidden');
-		}
+			function showList() {
+				listBtnEl.classList.add('active');
+				listBtnEl.setAttribute('aria-pressed', 'true');
+				gridBtnEl.classList.remove('active');
+				gridBtnEl.setAttribute('aria-pressed', 'false');
+				listViewEl.classList.remove('hidden');
+				gridViewEl.classList.add('hidden');
+			}
 
-		gridBtn.addEventListener('click', showGrid);
-		listBtn.addEventListener('click', showList);
+			gridBtnEl.addEventListener('click', showGrid);
+			listBtnEl.addEventListener('click', showList);
 	}
 
 	initViewSwitch();
@@ -306,10 +310,12 @@ const projectCount = projects.length;
 
 		const container = document.getElementById("project-hover-image");
 		const img = document.getElementById("project-hover-img") as HTMLImageElement;
-		const placeholder = document.getElementById("project-hover-placeholder");
-		const projectItems = document.querySelectorAll(".project-item-list");
+			const placeholder = document.getElementById("project-hover-placeholder");
+			const projectItems = document.querySelectorAll(".project-item-list");
 
-		if (!container || !img || !placeholder) return;
+			if (!container || !img || !placeholder) return;
+			const containerEl = container as HTMLElement;
+			const placeholderEl = placeholder as HTMLElement;
 
 		let mouseX = 0;
 		let mouseY = 0;
@@ -351,10 +357,10 @@ const projectCount = projects.length;
 			// Rotation avec inertie
 			currentRotation += (targetRotation - currentRotation) * rotEase;
 
-			container.style.left = `${currentX}px`;
-			container.style.top = `${currentY}px`;
-			container.style.transform = `translate(-50%, -50%) scale(${currentScale}) rotate(${currentRotation}deg)`;
-			container.style.opacity = targetScale === 0 && currentScale < 0.01 ? "0" : "1";
+				containerEl.style.left = `${currentX}px`;
+				containerEl.style.top = `${currentY}px`;
+				containerEl.style.transform = `translate(-50%, -50%) scale(${currentScale}) rotate(${currentRotation}deg)`;
+				containerEl.style.opacity = targetScale === 0 && currentScale < 0.01 ? "0" : "1";
 
 			const isAnimating =
 				Math.abs(currentX - mouseX) > 0.1 ||
@@ -383,13 +389,13 @@ const projectCount = projects.length;
 
 			if (inProgress || !imageSrc) {
 				img.classList.add("hidden");
-				placeholder.classList.remove("hidden");
-			} else {
-				img.src = imageSrc;
-				img.classList.remove("hidden");
-				placeholder.classList.add("hidden");
+					placeholderEl.classList.remove("hidden");
+				} else {
+					img.src = imageSrc;
+					img.classList.remove("hidden");
+					placeholderEl.classList.add("hidden");
+				}
 			}
-		}
 
 		projectItems.forEach((item) => {
 			const element = item as HTMLElement;

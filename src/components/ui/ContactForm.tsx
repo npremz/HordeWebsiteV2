@@ -128,7 +128,7 @@ export default function ContactForm({
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = async (e: JSX.TargetedEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
 
     if (!validateForm()) {
@@ -183,7 +183,7 @@ export default function ContactForm({
   };
 
   return (
-    <form className="mt-10 sm:mt-16 md:mt-24 lg:mt-30 flex flex-col gap-10" onSubmit={handleSubmit} noValidate>
+    <form className="mt-10 sm:mt-16 md:mt-24 lg:mt-30 flex flex-col gap-10" onSubmit={(e) => void handleSubmit(e)} noValidate>
       {!hideNeedField && (
         <fieldset className='flex flex-col gap-5 '>
           <div className='relative flex flex-col md:flex-row gap-5 md:gap-16 lg:gap-32 md:items-center w-full'>

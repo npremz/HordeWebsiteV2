@@ -230,10 +230,12 @@ const methods = t.method.methods;
 			"ontouchstart" in window;
 		if (isMobile) return;
 
-		const container = document.getElementById("methods-hover-svg");
-		const methodsStack = document.querySelector(".methods-stack");
+			const container = document.getElementById("methods-hover-svg");
+			const methodsStack = document.querySelector(".methods-stack");
 
-		if (!container || !methodsStack) return;
+			if (!container || !methodsStack) return;
+			const containerEl = container as HTMLElement;
+			const methodsStackEl = methodsStack as HTMLElement;
 
 		let mouseX = 0;
 		let mouseY = 0;
@@ -271,9 +273,9 @@ const methods = t.method.methods;
 			// Rotation avec inertie
 			currentRotation += (targetRotation - currentRotation) * rotEase;
 
-			container.style.left = `${currentX}px`;
-			container.style.top = `${currentY}px`;
-			container.style.transform = `translate(-50%, -50%) scale(${currentScale}) rotate(${currentRotation}deg)`;
+				containerEl.style.left = `${currentX}px`;
+				containerEl.style.top = `${currentY}px`;
+				containerEl.style.transform = `translate(-50%, -50%) scale(${currentScale}) rotate(${currentRotation}deg)`;
 
 			// Stop animation when scale is nearly 0 and not hovering
 			if (!isHovering && currentScale < 0.01) {
@@ -303,7 +305,7 @@ const methods = t.method.methods;
 
 		// Zone de hover = toute la largeur viewport, hauteur du ol
 		function isInMethodsSection(clientY: number) {
-			const rect = methodsStack.getBoundingClientRect();
+				const rect = methodsStackEl.getBoundingClientRect();
 			// Seulement basé sur Y - toute la largeur du viewport
 			return clientY >= rect.top && clientY <= rect.bottom;
 		}

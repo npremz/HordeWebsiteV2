@@ -279,4 +279,4 @@ export const en: Translations = {
     alexAlt: 'Alexandre, Horde co-founder',
     nicoAlt: 'Nicolas, Horde co-founder',
   },
-} as const;
+};

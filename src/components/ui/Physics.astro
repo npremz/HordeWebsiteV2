@@ -229,7 +229,7 @@ const {
   let currentEngine: Matter.Engine | null = null;
   let animationFrameId: number | null = null;
 
-  function cleanupPhysics() {
+  let cleanupPhysics = () => {
     // Arrêter l'animation
     if (animationFrameId) {
       cancelAnimationFrame(animationFrameId);
@@ -238,12 +238,11 @@ const {
 
     // Nettoyer le moteur Matter.js
     if (currentEngine) {
-      Matter.Events.off(currentEngine);
       Composite.clear(currentEngine.world, false);
       Engine.clear(currentEngine);
       currentEngine = null;
     }
-  }
+  };
 
   async function initPhysics() {
     const container = document.getElementById("physics-container");
@@ -396,7 +395,7 @@ const {
       Matter.Events.on(
         mouseConstraint,
         "startdrag",
-        (event: { body: Matter.Body }) => {
+        (event: any) => {
           const body = event.body;
           if (!body) return;
 

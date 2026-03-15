@@ -929,7 +929,7 @@ for (const locale of LOCALES) {
 }
 
 // Collections
-const collections: Record<string, ReturnType<typeof collection>> = {};
+const collections: Record<string, any> = {};
 
 // Collection projets (multilingue)
 collections['projects'] = collection({
