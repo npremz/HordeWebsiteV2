@@ -105,7 +105,7 @@ const finalHeaderVariant = headerVariant ?? variant;
     <a href="#main-content" class="skip-link" title={t.a11y.skipToContent}>{t.a11y.skipToContent}</a>
 
     <!-- <Header lang={lang} variant={finalHeaderVariant} /> -->
-    <HeaderNew lang={lang} alternateUrl={alternateUrl} />
+    <HeaderNew lang={lang} alternateUrl={alternateUrl} theme={headerVariant} />
     <Container variant={variant}>
       <main id="main-content">
         <slot />

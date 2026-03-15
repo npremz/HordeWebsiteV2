@@ -13,9 +13,13 @@ import {
 interface Props {
   lang?: Locale;
   alternateUrl?: string; // URL explicite pour l'autre langue (slugs différents FR/EN)
+  theme?: 'light' | 'dark';
 }
 
-const { lang = DEFAULT_LOCALE, alternateUrl } = Astro.props;
+const { lang = DEFAULT_LOCALE, alternateUrl, theme } = Astro.props;
+const isDark = theme === 'dark';
+const textColorClass = isDark ? 'text-white' : '';
+const svgFill = isDark ? '#FFFFFF' : '#16191B';
 const t = useTranslations(lang);
 
 // Get current path for language switcher
@@ -206,7 +210,7 @@ const email = "hello@hordeagence.com";
   <!-- ============================================================ -->
   <!-- DESKTOP header (>= 1024px)                                   -->
   <!-- ============================================================ -->
-  <div class="hidden lg:grid lg:grid-cols-3 pointer-events-none px-8 py-6">
+  <div class={`hidden lg:grid lg:grid-cols-3 pointer-events-none px-8 py-6 ${textColorClass}`}>
 
     <!-- Col 1 — CTA gauche -->
     <div class="flex h-fit">
@@ -227,7 +231,7 @@ const email = "hello@hordeagence.com";
         >
           <path
             d="M7.38206 10L6.60058 9.24904L9.13314 6.39847L0 6.39847V0H1V5.32567H9.13314L6.60058 2.4751L7.38206 1.72414L11 5.86207L7.38206 10Z"
-            fill="#16191B"></path>
+            fill={svgFill}></path>
         </svg>
         <span class="nav-scramble-header">{t.nav.startProject}</span>
       </a>
@@ -238,7 +242,7 @@ const email = "hello@hordeagence.com";
       <a href={`/${lang}`} title={logoAlt} class="pointer-events-auto">
         <img
           src="/images/logo_full.svg"
-          class="py-2.5"
+          class={`py-2.5 ${isDark ? 'invert' : ''}`}
           alt={logoAlt}
           width="320"
           height="15"
