@@ -55,10 +55,13 @@ const { service } = Astro.props;
   </div>
   <div class="mt-25 sm:mt-50 md:mt-70 lg:mt-10 2xl:mt-36">
     <div class="lg:flex lg:justify-between lg:items-end">
-      <h1
-        class="font-display text-[2.25rem] sm:text-[4rem] md:text-[5rem] 2xl:text-[6rem] lg:w-1/2 2xl:w-3/5 uppercase leading-none"
-        set:html={formatHeadingHtml(service.h1)}
-      />
+      <div class="flex flex-col gap-[20px] max-w-[700px]">
+        <span class="text-[1.5625rem]">Notre service de</span>
+        <h1
+          class="font-display text-[2.25rem] sm:text-[4rem] md:text-[5rem] 2xl:text-[6rem] uppercase leading-none"
+          set:html={formatHeadingHtml(service.h1)}
+        />
+      </div>
       <div class="lg:max-w-[460px]">
         <p class="mt-4 sm:mt-6 md:mt-8 lg:mt-0 indent-20 text-[1.25rem] md:max-w-[600px]">{service.intro}</p>
         {service.primaryCtaLabel && service.primaryCtaUrl && (

@@ -7,6 +7,8 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
+    "check": "astro check",
+    "typecheck": "astro check",
     "indexnow:posts": "node scripts/indexnow-submit-posts.mjs"
   },
   "dependencies": {
@@ -34,7 +36,9 @@
     "zod": "^3.25.76"
   },
   "devDependencies": {
+    "@astrojs/check": "^0.9.7",
     "@types/js-yaml": "^4.0.9",
-    "@types/matter-js": "^0.20.2"
+    "@types/matter-js": "^0.20.2",
+    "typescript": "^5.9.3"
   }
 }

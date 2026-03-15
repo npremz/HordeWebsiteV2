@@ -7,6 +7,7 @@ import {
   type Locale,
   getAlternateUrls,
 } from '../i18n';
+import { getSiteSettings } from '../lib/site-data';
 
 interface Props {
   // i18n
@@ -45,41 +46,10 @@ interface Props {
 const THEME_COLOR_LIGHT = '#ffffff';
 const THEME_COLOR_DARK = '#1a1a1a';
 
-// Import site settings from Keystatic (will be available after content is created)
-let siteSettings = {
-  siteName: 'Mon Site',
-  defaultDescription: 'Description par défaut du site',
-  defaultOgImage: '/images/og/defaultOgImage.jpg',
-  defaultOgImageAlt: 'Image par défaut du site',
-  twitterSite: '',
-  locale: 'fr_BE',
-};
-
 // Get lang from props, default to 'fr'
 const lang = Astro.props.lang || DEFAULT_LOCALE;
 const ogLocale = OG_LOCALE_CODES[lang];
-
-// Try to load site settings from Keystatic (localized)
-import { createReader } from '@keystatic/core/reader';
-import keystaticConfig from '../../keystatic.config';
-
-try {
-  const reader = createReader(process.cwd(), keystaticConfig);
-  const singletonKey = `siteSettings_${lang}` as keyof typeof reader.singletons;
-  const settings = await reader.singletons[singletonKey]?.read();
-  if (settings) {
-    siteSettings = {
-      siteName: settings.siteName || siteSettings.siteName,
-      defaultDescription: settings.defaultDescription || siteSettings.defaultDescription,
-      defaultOgImage: settings.defaultOgImage || siteSettings.defaultOgImage,
-      defaultOgImageAlt: settings.defaultOgImageAlt || siteSettings.defaultOgImageAlt,
-      twitterSite: settings.twitterSite || siteSettings.twitterSite,
-      locale: settings.locale || siteSettings.locale,
-    };
-  }
-} catch {
-  // Use default settings if Keystatic is not configured yet
-}
+const siteSettings = await getSiteSettings(lang);
 
 // Get alternate URLs for hreflang
 const siteUrl = Astro.site?.href || 'https://hordeagence.com';
