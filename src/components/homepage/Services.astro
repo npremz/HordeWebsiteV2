@@ -1,0 +1,80 @@
+---
+import { getCollection } from 'astro:content';
+import { DEFAULT_LOCALE } from '../../i18n';
+import Wrapped from '../ui/Wrapped.astro';
+import ServiceSectionHeading from '../services/ServiceSectionHeading.astro';
+
+const lang = DEFAULT_LOCALE;
+
+const rawServices = await getCollection('services');
+const services = rawServices
+  .sort((a, b) => (a.data.order || 0) - (b.data.order || 0))
+  .map((s) => ({
+    title: s.data.shortName || s.data.h1,
+    slug: s.data.slug,
+  }));
+---
+
+<section id="services" class="text-white mt-25 pb-25">
+  <ServiceSectionHeading
+    id="service-title"
+    left="Nos \n services"
+    right="de creation \n de site web"
+    dark
+  />
+  <ol class="mt-32">
+    {services.map((service, index) => (
+      <li class="border-b border-lines-dark last:border-b-0">
+        <a
+          href={`/${lang}/services/${service.slug}`}
+          title={service.title}
+          class:list={["service-link flex justify-between items-center pt-8 pb-7 xl:py-8", index % 2 !== 0 && "flex-row-reverse text-right"]}
+        >
+          <span class="max-w-[280px] font-display uppercase leading-none text-[2rem] sm:text-[2.5rem] md:text-[3.125rem]">
+            {service.title}
+          </span>
+          <Wrapped class="shrink-0 text-[1rem] font-mono" variant='dark'>↗</Wrapped>
+        </a>
+      </li>
+    ))}
+  </ol>
+</section>
+
+<style>
+  .service-link {
+    position: relative;
+    isolation: isolate;
+    transition: color 0.3s ease-out;
+  }
+
+  .service-link::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--color-bg-light);
+    z-index: -1;
+    transform: scaleX(0);
+    transform-origin: left center;
+  }
+
+  @media (hover: hover) {
+    .service-link::before {
+      transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    .service-link:hover {
+      color: var(--color-black);
+    }
+
+    .service-link:hover::before {
+      transform: scaleX(1);
+    }
+
+    .service-link:hover :global(.wrapped) {
+      color: var(--color-black) !important;
+    }
+  }
+</style>

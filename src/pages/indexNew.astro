@@ -1,0 +1,24 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Hero from '../components/homepage/Hero.astro';
+import About from '../components/homepage/About.astro';
+import Projects from '../components/homepage/Projects.astro';
+import Demarche from '../components/homepage/Demarche.astro';
+import Services from '../components/homepage/Services.astro';
+import Us from '../components/homepage/Us.astro';
+import BackgroundCanvas from '../components/ui/BackgroundCanvas.astro';
+---
+
+<Layout title="Horde" description="Agence web spécialisée en performance et UX.">
+  <BackgroundCanvas color="rgb(22, 25, 27)" triggerDistance={500} topOffset={800} targetId="demarche" stopTargetId="services" class="z-10" />
+  <Hero />
+  <About />
+  <Projects />
+  <div class="relative z-20">
+    <Demarche />
+  </div>
+  <div class="relative z-20 full-width-dark-bg">
+    <Services />
+  </div>
+  <Us />
+</Layout>

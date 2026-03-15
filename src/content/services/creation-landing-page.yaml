@@ -19,6 +19,7 @@ seoInternalLinks:
   - /fr/services/creation-mvp-saas
   - /fr/contact
 h1: Création de landing page
+shortName: Landing page sur mesure
 intro: >-
   Une landing page a un seul objectif : transformer un visiteur en client, en
   inscription ou en acheteur. Chaque élément (le titre, la hiérarchie visuelle,
@@ -104,8 +105,8 @@ exclusionsParagraphs:
   - >-
     On ne livre pas un template Unbounce ou Webflow personnalisé en surface. On
     ne promet pas un "taux de conversion de X%". Et on ne fait pas de rush en 3
-    jours qui produit quelque chose de médiocre. On fait du travail sérieux
-    dans des délais raisonnables.
+    jours qui produit quelque chose de médiocre. On fait du travail sérieux dans
+    des délais raisonnables.
 faqTitleLeft: Questions fréquentes
 faqItems:
   - question: Vous rédigez le contenu ?

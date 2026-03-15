@@ -717,6 +717,10 @@ const servicesSchema = {
     label: 'H1',
     validation: { isRequired: true },
   }),
+  shortName: fields.text({
+    label: 'Nom court (section homepage)',
+    description: 'Nom affiché dans la liste des services sur la page d\'accueil. Si vide, le H1 est utilisé.',
+  }),
   intro: fields.text({
     label: 'Chapeau',
     validation: { isRequired: true },

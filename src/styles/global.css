@@ -50,7 +50,7 @@
 }
 
 :root {
-  --gutter: 1rem;
+  --gutter: 1.5rem;
 }
 
 @media only screen and (min-width: 640px) {
@@ -82,7 +82,7 @@
   --color-bg: #C5C1CD;
   --color-bg-light: #F4F3F3;
   --color-black: #16191B;
-  --color-lines: #B1B1B1;
+  --color-lines: #9E9AA4;
   --color-lines-dark: #4C4B4B;
   --color-err: #FF5858;
   --color-white: #F4F1F8;
@@ -191,7 +191,7 @@ body {
 
   /* Section headers - monospace uppercase labels */
   .section-label {
-    @apply font-mono text-[1rem] uppercase text-black/70;
+    @apply font-mono text-[1rem] uppercase text-black;
   }
 
   /* Dark variant for dark backgrounds */

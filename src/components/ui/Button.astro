@@ -1,0 +1,47 @@
+---
+interface Props {
+  label: string;
+  href?: string;
+  onclick?: string;
+  variant?: 'dark' | 'light';
+  fullWidth?: boolean;
+  class?: string;
+}
+
+const {
+  label,
+  href,
+  variant = 'dark',
+  fullWidth = false,
+  class: className,
+  ...rest
+} = Astro.props;
+
+const isDark = variant === 'dark';
+
+const base = 'group relative overflow-hidden font-mono text-[1rem] leading-none uppercase py-6 px-5 flex justify-center border transition-colors duration-300 ease-in-out cursor-pointer';
+const width = fullWidth ? 'w-full' : 'w-full md:w-fit';
+const colors = isDark
+  ? 'border-lines-dark bg-black text-white'
+  : 'border-bg-light bg-bg-light text-black';
+const wipe = isDark
+  ? 'absolute inset-0 bg-bg translate-x-[calc(-100%-1px)] group-hover:translate-x-0 transition-transform duration-400 ease-[cubic-bezier(0.25,0.46,0.45,0.94)]'
+  : 'absolute inset-0 bg-black translate-x-[calc(-100%-1px)] group-hover:translate-x-0 transition-transform duration-400 ease-[cubic-bezier(0.25,0.46,0.45,0.94)]';
+const textHover = isDark
+  ? 'relative z-10 text-white group-hover:text-black transition-colors duration-300'
+  : 'relative z-10 text-black group-hover:text-bg-light transition-colors duration-300';
+
+const classes = [base, width, colors, className].filter(Boolean).join(' ');
+---
+
+{href ? (
+  <a href={href} title={label} class={classes} {...rest}>
+    <span class={wipe} aria-hidden="true"></span>
+    <span class={textHover}>{label}</span>
+  </a>
+) : (
+  <button type="button" class={classes} {...rest}>
+    <span class={wipe} aria-hidden="true"></span>
+    <span class={textHover}>{label}</span>
+  </button>
+)}

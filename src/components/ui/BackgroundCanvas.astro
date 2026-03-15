@@ -6,8 +6,10 @@ interface Props {
 	bottomOffset?: number;
 	triggerDistance?: number;
 	triggerDistanceBottom?: number;
+	stopAtMiddle?: boolean;
 	color?: string;
 	parallaxSpeed?: number;
+	class?: string;
 }
 
 const {
@@ -17,8 +19,10 @@ const {
 	bottomOffset = -450,
 	triggerDistance = 500,
 	triggerDistanceBottom = 500,
+	stopAtMiddle = false,
 	color = 'rgb(244, 243, 243)',
-	parallaxSpeed = 0.3
+	parallaxSpeed = 0.3,
+	class: className = '-z-1000',
 } = Astro.props;
 
 const hasOverlay = Astro.slots.has('overlay');
@@ -26,13 +30,14 @@ const hasOverlay = Astro.slots.has('overlay');
 
 <canvas
 	id="bg-canvas"
-	class="fixed top-0 left-0 w-full min-h-lvh pointer-events-none -z-1000"
+	class={`fixed top-0 left-0 w-full min-h-lvh pointer-events-none ${className}`}
 	data-target-id={targetId}
 	data-stop-target-id={stopTargetId}
 	data-top-offset={topOffset}
 	data-bottom-offset={bottomOffset}
 	data-trigger-distance={triggerDistance}
 	data-trigger-distance-bottom={triggerDistanceBottom}
+	data-stop-at-middle={stopAtMiddle ? 'true' : 'false'}
 	data-color={color}
 	data-parallax-speed={parallaxSpeed}
 	aria-hidden="true"
@@ -94,6 +99,8 @@ const hasOverlay = Astro.slots.has('overlay');
     var topOffset = Number(canvas.getAttribute('data-top-offset')) || 500;
     var bottomOffset = Number(canvas.getAttribute('data-bottom-offset')) || -450;
     var triggerDistance = Number(canvas.getAttribute('data-trigger-distance')) || 500;
+    var triggerDistanceBottom = Number(canvas.getAttribute('data-trigger-distance-bottom')) || 500;
+    var stopAtMiddle = canvas.getAttribute('data-stop-at-middle') === 'true';
     var pixelColor = canvas.getAttribute('data-color') || 'rgb(244, 243, 243)';
     var parallaxSpeed = Number(canvas.getAttribute('data-parallax-speed')) || 0.3;
 
@@ -168,7 +175,12 @@ const hasOverlay = Astro.slots.has('overlay');
         if (stopSection) {
           var stopRect = stopSection.getBoundingClientRect();
           var stopPos = stopRect.top + window.scrollY;
-          endZone = stopPos + bottomOffset - viewportHeight;
+          if (stopAtMiddle) {
+            // Reste actif jusqu'à ce que la sortie progressive soit terminée
+            endZone = stopPos - viewportHeight / 2 + triggerDistanceBottom;
+          } else {
+            endZone = stopPos + bottomOffset - viewportHeight;
+          }
         }
       }
 
@@ -193,7 +205,20 @@ const hasOverlay = Astro.slots.has('overlay');
       var adjustedProjectPos = projectPos + topOffset;
       var distanceToProject = adjustedProjectPos - (scrollY + viewportHeight);
       var progressIn = Math.max(0, Math.min(1, 1 - distanceToProject / triggerDistance));
-      var finalProgress = progressIn;
+
+      // Sortie progressive : les pixels disparaissent quand stopTarget atteint le milieu du viewport
+      var progressOut = 1;
+      if (stopAtMiddle && stopTargetId) {
+        var stopSectionExit = document.getElementById(stopTargetId);
+        if (stopSectionExit) {
+          var stopRectExit = stopSectionExit.getBoundingClientRect();
+          var stopPosExit = stopRectExit.top + window.scrollY;
+          var stopMidpoint = stopPosExit - viewportHeight / 2;
+          progressOut = Math.max(0, Math.min(1, (stopMidpoint - scrollY) / triggerDistanceBottom));
+        }
+      }
+
+      var finalProgress = Math.min(progressIn, progressOut);
       var isExitingTop = scrollY + viewportHeight < adjustedProjectPos && progressIn < 1;
 
       updateOverlay(finalProgress, scrollY);

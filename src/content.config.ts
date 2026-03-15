@@ -122,6 +122,7 @@ const servicesCollection = defineCollection({
     seoRobots: z.string().default('index, follow'),
     seoInternalLinks: z.array(z.string()).default([]),
     h1: z.string(),
+    shortName: z.string().optional(),
     intro: z.string(),
     problemTitleLeft: z.string(),
     problemTitleRight: z.string().default(''),

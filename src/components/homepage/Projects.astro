@@ -1,0 +1,29 @@
+---
+import { getCollection } from 'astro:content';
+import { DEFAULT_LOCALE } from '../../i18n';
+
+const lang = DEFAULT_LOCALE;
+
+const rawProjects = await getCollection('projects');
+const projects = rawProjects
+  .sort((a, b) => (a.data.order || 0) - (b.data.order || 0))
+  .slice(0, 3)
+  .map((p) => ({
+    name: lang === 'fr' ? p.data.shortTitle_fr : p.data.shortTitle_en,
+    slug: p.data.slug,
+  }));
+---
+
+<section id="projects" class="mt-25">
+  <h2 class="section-label text-center">sites web realisés ({projects.length.toString().padStart(2, '0')})</h2>
+  <ul class="mt-10 font-display uppercase text-[2.25rem] text-center">
+    {projects.map((project, i) => (
+      <>
+        {i > 0 && <li aria-hidden="true" class="h-px bg-lines"></li>}
+        <li class="py-10">
+          <a href={`/${lang}/projets/${project.slug}`}>{project.name}</a>
+        </li>
+      </>
+    ))}
+  </ul>
+</section>
