@@ -195,9 +195,6 @@ const services = t.services.items;
       const lines = originalHtml.split(/<br\s*\/?>/gi);
       let iteration = 0;
 
-      // Calculer le nombre total de caractères (sans espaces de début/fin par ligne)
-      const totalChars = lines.reduce((sum, line) => sum + line.length, 0);
-
       const intervalId = window.setInterval(() => {
         const scrambledLines = lines.map((line) => {
           const chars = line.split("");

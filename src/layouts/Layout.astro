@@ -89,7 +89,7 @@ const bodyClasses = isDark ? 'bg-black text-bg-light' : 'bg-bg text-black';
     <ClientRouter />
 
     <!-- Plausible Analytics -->
-    <script defer data-domain="hordeagence.com" src="https://stats.hordeagence.com/js/script.js"></script>
+    <script is:inline defer data-domain="hordeagence.com" src="https://stats.hordeagence.com/js/script.js"></script>
     <script>
       // Tracker les navigations SPA (Astro view transitions)
       document.addEventListener('astro:page-load', () => {

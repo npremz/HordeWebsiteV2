@@ -84,7 +84,7 @@ function formatDate(date: Date, locale: string): string {
 ---
 
 <Layout lang={lang} title={title} description={description} canonical={authorUrl}>
-  <script type="application/ld+json" set:html={JSON.stringify(schemaOrg)} />
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(schemaOrg)} />
 
   <div class="fixed inset-0 bg-bg-light -z-10" aria-hidden="true"></div>
   <article id="page-content" class="relative z-10 pt-50 sm:pt-78">

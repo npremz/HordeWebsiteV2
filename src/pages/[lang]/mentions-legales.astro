@@ -1,6 +1,6 @@
 ---
 import LegalLayout from '../../layouts/LegalLayout.astro';
-import { SUPPORTED_LOCALES, type Locale, useTranslations } from '../../i18n';
+import { SUPPORTED_LOCALES, type Locale } from '../../i18n';
 
 export const prerender = true;
 
@@ -11,7 +11,6 @@ export function getStaticPaths() {
 }
 
 const { lang } = Astro.params as { lang: Locale };
-const t = useTranslations(lang);
 ---
 
 <LegalLayout

@@ -1,5 +1,4 @@
 import { useState, useRef, useEffect } from 'preact/hooks';
-import type { JSX } from 'preact';
 
 interface FormData {
   besoin: string;

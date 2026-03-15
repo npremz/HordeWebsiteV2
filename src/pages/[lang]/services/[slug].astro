@@ -8,15 +8,13 @@ import ServiceDeliverablesSection from '../../../components/services/ServiceDeli
 import ServiceExclusionsSection from '../../../components/services/ServiceExclusionsSection.astro';
 import ServiceFaqSection from '../../../components/services/ServiceFaqSection.astro';
 import ServiceCtaSection from '../../../components/services/ServiceCtaSection.astro';
-import { getCollection, type CollectionEntry } from 'astro:content';
 import { type Locale, useTranslations } from '../../../i18n';
+import { type ServiceEntry, getServices } from '../../../lib/content/services';
 
 export const prerender = true;
 
-type ServiceEntry = CollectionEntry<'services'>;
-
 export async function getStaticPaths() {
-  const services = await getCollection('services');
+  const services = await getServices();
 
   return services.map((service) => ({
     params: { lang: 'fr', slug: service.data.slug },

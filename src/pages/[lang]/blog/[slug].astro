@@ -281,7 +281,7 @@ const schemaOrg = {
 
 <Layout lang={lang} alternateUrl={alternateUrl} title={title} description={seoDescription} ogType="article" publishedTime={publishedDate.toISOString()} modifiedTime={modifiedDate?.toISOString()} author={authorName} authorUrl={authorUrl}>
 	<!-- Schema.org JSON-LD -->
-	<script type="application/ld+json" set:html={JSON.stringify(schemaOrg)} />
+	<script is:inline type="application/ld+json" set:html={JSON.stringify(schemaOrg)} />
 
 	<div class="fixed inset-0 bg-bg -z-10" aria-hidden="true"></div>
 	<article id="page-content" class="relative z-10 bg-bg">

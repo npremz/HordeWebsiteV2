@@ -9,7 +9,7 @@ const {
   class: className = "",
   as: Tag = "div",
   variant = "light",
-} = Astro.props;
+} = Astro.props as Props;
 const isDark = variant === "dark";
 const showLines = !isDark;
 ---

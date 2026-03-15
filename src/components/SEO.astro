@@ -193,7 +193,7 @@ const sameAs = [
 <meta name="theme-color" content={THEME_COLOR_DARK} media="(prefers-color-scheme: dark)" />
 
 <!-- Structured Data - Organization / ProfessionalService -->
-<script type="application/ld+json" set:html={JSON.stringify({
+<script is:inline type="application/ld+json" set:html={JSON.stringify({
   "@context": "https://schema.org",
   "@graph": [
     {
@@ -263,7 +263,7 @@ const sameAs = [
 })} />
 
 <!-- Structured Data - WebSite -->
-<script type="application/ld+json" set:html={JSON.stringify({
+<script is:inline type="application/ld+json" set:html={JSON.stringify({
   "@context": "https://schema.org",
   "@type": "WebSite",
   "@id": websiteId,
@@ -276,7 +276,7 @@ const sameAs = [
 })} />
 
 <!-- Structured Data - WebPage -->
-<script type="application/ld+json" set:html={JSON.stringify({
+<script is:inline type="application/ld+json" set:html={JSON.stringify({
   "@context": "https://schema.org",
   "@type": "WebPage",
   "name": title,

@@ -1,18 +1,12 @@
 ---
-import { getCollection } from 'astro:content';
 import { DEFAULT_LOCALE } from '../../i18n';
+import { getServiceSummaries } from '../../lib/content/services';
 import Wrapped from '../ui/Wrapped.astro';
 import ServiceSectionHeading from '../services/ServiceSectionHeading.astro';
 
 const lang = DEFAULT_LOCALE;
 
-const rawServices = await getCollection('services');
-const services = rawServices
-  .sort((a, b) => (a.data.order || 0) - (b.data.order || 0))
-  .map((s) => ({
-    title: s.data.shortName || s.data.h1,
-    slug: s.data.slug,
-  }));
+const services = await getServiceSummaries();
 ---
 
 <section id="services" class="text-white py-25">
