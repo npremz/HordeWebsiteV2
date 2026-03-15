@@ -10,12 +10,14 @@ interface Props {
 	lang?: Locale;
 	variant?: "light" | "dark";
 	hideOverflow?: boolean;
+	innerBg?: boolean;
 }
 
 const {
 	lang = DEFAULT_LOCALE,
 	variant = "light",
 	hideOverflow = true,
+	innerBg = false,
 } = Astro.props;
 const t = useTranslations(lang);
 const isDark = variant === "dark";
@@ -92,12 +94,13 @@ const textColorClass = isDark ? "text-bg-light" : "text-black";
 ---
 
 <footer
-	class:list={["relative pb-16 ", textColorClass]}
+	class:list={["relative", textColorClass]}
 	id="footer-parallax"
 	data-variant={variant}
 >
 	<Physics dark={variant == "dark" && true} hideOverflow={hideOverflow} />
 
+	<div class:list={[innerBg && "footer-inner-bg", "py-10 pb-16 sm:py-16 lg:pt-24"]}>
 	<a
 		href={`/${lang}/contact`}
 		class="footer-logo-wrapper footer-svg-parallax z-9999 block"
@@ -105,7 +108,7 @@ const textColorClass = isDark ? "text-bg-light" : "text-black";
 		title={t.footer.contactAriaLabel}
 	>
 		<svg
-			class="footer-logo relative w-full mt-10 sm:mt-16 lg:mt-24 sm:w-[calc(100vw-4rem)] sm:max-w-none! sm:left-1/2 sm:-translate-x-1/2 md:w-[calc(100vw-8rem)]"
+			class="footer-logo relative w-full sm:w-[calc(100vw-4rem)] sm:max-w-none! sm:left-1/2 sm:-translate-x-1/2 md:w-[calc(100vw-8rem)]"
 			viewBox="0 0 281 43"
 			fill="none"
 			xmlns="http://www.w3.org/2000/svg"
@@ -315,9 +318,24 @@ const textColorClass = isDark ? "text-bg-light" : "text-black";
 			</div>
 		</div>
 	</div>
+	</div>
 </footer>
 
 <style>
+	.footer-inner-bg {
+		position: relative;
+	}
+	.footer-inner-bg::before {
+		content: "";
+		position: absolute;
+		top: 0;
+		bottom: 0;
+		left: -100vw;
+		right: -100vw;
+		z-index: -1;
+		background-color: var(--color-bg);
+	}
+
 	.footer-logo-wrapper {
 		position: relative;
 		cursor: pointer;

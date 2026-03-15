@@ -26,10 +26,11 @@ const {
 } = Astro.props;
 
 const hasOverlay = Astro.slots.has('overlay');
+const instanceId = `bg-canvas-${Math.random().toString(36).slice(2, 10)}`;
 ---
 
 <canvas
-	id="bg-canvas"
+	data-bg-canvas-id={instanceId}
 	class={`fixed top-0 left-0 w-full min-h-lvh pointer-events-none ${className}`}
 	data-target-id={targetId}
 	data-stop-target-id={stopTargetId}
@@ -46,7 +47,8 @@ const hasOverlay = Astro.slots.has('overlay');
 
 {hasOverlay && (
 	<div
-		id="bg-canvas-overlay"
+		data-bg-canvas-id={instanceId}
+		data-bg-canvas-overlay="true"
 		class="fixed inset-0 pointer-events-none z-99999 opacity-0 transition-opacity duration-500 flex items-center justify-center"
 		aria-hidden="true"
 	>
@@ -54,72 +56,99 @@ const hasOverlay = Astro.slots.has('overlay');
 	</div>
 )}
 
-<script is:inline>
-  // État global sur window pour persister entre les navigations
-  if (!window._bgCanvas) {
-    window._bgCanvas = {
-      lenisHandler: null,
-      scrollHandler: null,
-      resizeHandler: null,
-      pixels: [],
-      // Spatial grid: Map<gridKey, true> pour O(1) lookup
-      occupiedGrid: new Map(),
-      isFullyCovered: false,
-      overlayStartScrollY: 0,
-      lastWidth: window.innerWidth,
-      resizeTimeout: undefined,
-      pendingRender: false
-    };
-  }
-
-  function initBackgroundCanvas() {
-    var state = window._bgCanvas;
-
-    // Cleanup previous
-    if (state.lenisHandler && window.lenis) {
-      window.lenis.off('scroll', state.lenisHandler);
-    }
-    if (state.scrollHandler) {
-      window.removeEventListener('scroll', state.scrollHandler);
-    }
-    if (state.resizeHandler) {
-      window.removeEventListener('resize', state.resizeHandler);
-    }
-    clearTimeout(state.resizeTimeout);
-
-    var canvas = document.getElementById('bg-canvas');
+<script is:inline define:vars={{ instanceId }}>
+  (function () {
+    var canvas = document.querySelector('canvas[data-bg-canvas-id="' + instanceId + '"]');
     if (!canvas) return;
 
     var ctx = canvas.getContext('2d');
     if (!ctx) return;
 
-    var overlay = document.getElementById('bg-canvas-overlay');
-    var targetId = canvas.getAttribute('data-target-id') || 'projects';
-    var stopTargetId = canvas.getAttribute('data-stop-target-id') || null;
-    var topOffset = Number(canvas.getAttribute('data-top-offset')) || 500;
-    var bottomOffset = Number(canvas.getAttribute('data-bottom-offset')) || -450;
-    var triggerDistance = Number(canvas.getAttribute('data-trigger-distance')) || 500;
-    var triggerDistanceBottom = Number(canvas.getAttribute('data-trigger-distance-bottom')) || 500;
+    var overlay = document.querySelector('[data-bg-canvas-overlay="true"][data-bg-canvas-id="' + instanceId + '"]');
+    var targetId = canvas.getAttribute('data-target-id') || 'page-content';
+    var stopTargetId = canvas.getAttribute('data-stop-target-id');
     var stopAtMiddle = canvas.getAttribute('data-stop-at-middle') === 'true';
     var pixelColor = canvas.getAttribute('data-color') || 'rgb(244, 243, 243)';
-    var parallaxSpeed = Number(canvas.getAttribute('data-parallax-speed')) || 0.3;
 
-    // Reset state
-    state.pixels = [];
-    state.occupiedGrid.clear();
-    state.lastWidth = window.innerWidth;
-    state.isFullyCovered = false;
-    state.overlayStartScrollY = 0;
-    state.pendingRender = false;
+    function parseNumberAttribute(name, fallback) {
+      var value = canvas.getAttribute(name);
+      if (value === null || value === '') return fallback;
 
-    var pixelSize = Math.floor(window.innerWidth / 8);
+      var parsed = Number(value);
+      return Number.isNaN(parsed) ? fallback : parsed;
+    }
+
+    var topOffset = parseNumberAttribute('data-top-offset', 500);
+    var bottomOffset = parseNumberAttribute('data-bottom-offset', -450);
+    var triggerDistance = parseNumberAttribute('data-trigger-distance', 500);
+    var triggerDistanceBottom = parseNumberAttribute('data-trigger-distance-bottom', 500);
+    var parallaxSpeed = parseNumberAttribute('data-parallax-speed', 0.3);
+
+    var state = {
+      pixels: [],
+      occupiedGrid: new Map(),
+      isFullyCovered: false,
+      overlayStartScrollY: 0,
+      pendingRender: false,
+      viewportWidth: 0,
+      viewportHeight: 0,
+      resizeTimeout: null,
+      checkLenisInterval: null,
+      checkLenisTimeout: null,
+      frameId: null,
+      useLenis: false,
+      destroyed: false
+    };
+
+    var pixelSize = Math.max(1, Math.floor(window.innerWidth / 8));
     var cols = 0;
     var rows = 0;
 
+    function resetOverlay() {
+      if (!overlay) return;
+
+      overlay.style.opacity = '0';
+      overlay.style.transform = 'translateY(0)';
+      state.isFullyCovered = false;
+      state.overlayStartScrollY = 0;
+    }
+
+    function clearPixels() {
+      state.pixels = [];
+      state.occupiedGrid.clear();
+    }
+
+    function clearCanvas() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      clearPixels();
+    }
+
+    function getScrollY() {
+      return window.lenis ? window.lenis.scroll : window.scrollY;
+    }
+
+    function getAbsoluteTop(element) {
+      return element.getBoundingClientRect().top + getScrollY();
+    }
+
+    function getAbsoluteBottom(element) {
+      return element.getBoundingClientRect().bottom + getScrollY();
+    }
+
+    function getTargetSection() {
+      return document.getElementById(targetId);
+    }
+
+    function getStopSection() {
+      return stopTargetId ? document.getElementById(stopTargetId) : null;
+    }
+
     function resizeCanvas() {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-      pixelSize = Math.floor(window.innerWidth / 8);
+      state.viewportWidth = window.innerWidth;
+      state.viewportHeight = window.innerHeight;
+      canvas.width = state.viewportWidth;
+      canvas.height = state.viewportHeight;
+      pixelSize = Math.max(1, Math.floor(state.viewportWidth / 8));
       cols = Math.floor(canvas.width / pixelSize) + 1;
       rows = Math.floor(canvas.height / pixelSize) + 1;
     }
@@ -134,86 +163,63 @@ const hasOverlay = Astro.slots.has('overlay');
         state.overlayStartScrollY = scrollY;
       }
 
-      if (state.isFullyCovered) {
-        overlay.style.opacity = '1';
-        var scrollDelta = scrollY - state.overlayStartScrollY;
-        var parallaxOffset = scrollDelta * parallaxSpeed;
-        overlay.style.transform = 'translateY(' + (-parallaxOffset) + 'px)';
-      } else {
-        overlay.style.opacity = '0';
-        overlay.style.transform = 'translateY(0)';
+      if (!state.isFullyCovered) {
+        resetOverlay();
+        return;
       }
-    }
 
-    function getProjectSectionPosition() {
-      var projectSection = document.getElementById(targetId);
-      if (!projectSection) return null;
-      var rect = projectSection.getBoundingClientRect();
-      return rect.top + window.scrollY;
-    }
-
-    function getScrollY() {
-      return window.lenis ? window.lenis.scroll : window.scrollY;
+      overlay.style.opacity = '1';
+      overlay.style.transform = 'translateY(' + (-(scrollY - state.overlayStartScrollY) * parallaxSpeed) + 'px)';
     }
 
     function isInAnimationZone() {
       var scrollY = getScrollY();
       var viewportHeight = window.innerHeight;
-      var projectPos = getProjectSectionPosition();
-      if (!projectPos) return false;
+      var targetSection = getTargetSection();
+      if (!targetSection) return false;
 
-      var projectSection = document.getElementById(targetId);
-      if (!projectSection) return false;
-
-      var projectRect = projectSection.getBoundingClientRect();
-      var projectEnd = projectRect.bottom + window.scrollY;
+      var projectPos = getAbsoluteTop(targetSection);
+      var projectEnd = getAbsoluteBottom(targetSection);
       var startZone = projectPos + topOffset - triggerDistance;
-
       var endZone = projectEnd + bottomOffset;
+
       if (stopTargetId) {
-        var stopSection = document.getElementById(stopTargetId);
+        var stopSection = getStopSection();
         if (stopSection) {
-          var stopRect = stopSection.getBoundingClientRect();
-          var stopPos = stopRect.top + window.scrollY;
-          if (stopAtMiddle) {
-            // Reste actif jusqu'à ce que la sortie progressive soit terminée
-            endZone = stopPos - viewportHeight / 2 + triggerDistanceBottom;
-          } else {
-            endZone = stopPos + bottomOffset - viewportHeight;
-          }
+          var stopPos = getAbsoluteTop(stopSection);
+          endZone = stopAtMiddle
+            ? stopPos - viewportHeight / 2 + triggerDistanceBottom
+            : stopPos + bottomOffset - viewportHeight;
         }
       }
 
-      return (scrollY + viewportHeight) >= startZone && scrollY <= endZone;
+      return scrollY + viewportHeight >= startZone && scrollY <= endZone;
     }
 
-    // Spatial grid helpers - O(1) lookup au lieu de O(n) avec string keys
     function gridKey(col, row) {
-      return (row << 16) | col; // Combine en un seul nombre
+      return (row << 16) | col;
     }
 
     function updatePixels() {
       var scrollY = getScrollY();
       var viewportHeight = window.innerHeight;
-      var projectPos = getProjectSectionPosition();
-      if (!projectPos) {
-        state.pixels = [];
-        state.occupiedGrid.clear();
+      var targetSection = getTargetSection();
+      if (!targetSection) {
+        clearPixels();
+        resetOverlay();
         return;
       }
 
+      var projectPos = getAbsoluteTop(targetSection);
       var adjustedProjectPos = projectPos + topOffset;
       var distanceToProject = adjustedProjectPos - (scrollY + viewportHeight);
       var progressIn = Math.max(0, Math.min(1, 1 - distanceToProject / triggerDistance));
 
-      // Sortie progressive : les pixels disparaissent quand stopTarget atteint le milieu du viewport
       var progressOut = 1;
       if (stopAtMiddle && stopTargetId) {
-        var stopSectionExit = document.getElementById(stopTargetId);
-        if (stopSectionExit) {
-          var stopRectExit = stopSectionExit.getBoundingClientRect();
-          var stopPosExit = stopRectExit.top + window.scrollY;
-          var stopMidpoint = stopPosExit - viewportHeight / 2;
+        var stopSection = getStopSection();
+        if (stopSection) {
+          var stopMidpoint = getAbsoluteTop(stopSection) - viewportHeight / 2;
           progressOut = Math.max(0, Math.min(1, (stopMidpoint - scrollY) / triggerDistanceBottom));
         }
       }
@@ -224,16 +230,14 @@ const hasOverlay = Astro.slots.has('overlay');
       updateOverlay(finalProgress, scrollY);
 
       if (finalProgress === 0) {
-        state.pixels = [];
-        state.occupiedGrid.clear();
+        clearPixels();
         return;
       }
 
       var maxPixels = cols * rows;
       var targetPixelCount = Math.floor(maxPixels * finalProgress);
-
-      // Construire la liste des positions disponibles avec spatial grid
       var availablePositions = [];
+
       for (var row = 0; row < rows; row++) {
         for (var col = 0; col < cols; col++) {
           var key = gridKey(col, row);
@@ -243,11 +247,8 @@ const hasOverlay = Astro.slots.has('overlay');
         }
       }
 
-      // Tri par Y avec randomisation (Fisher-Yates partiel pour perf)
-      var len = availablePositions.length;
-      if (len > 0) {
-        // Tri simple par Y descendant avec perturbation
-        availablePositions.sort(function(a, b) {
+      if (availablePositions.length > 0) {
+        availablePositions.sort(function (a, b) {
           return (b.y + Math.random() * 200) - (a.y + Math.random() * 200);
         });
       }
@@ -257,22 +258,24 @@ const hasOverlay = Astro.slots.has('overlay');
         var toAdd = Math.min(pixelsToAdd, availablePositions.length);
         for (var i = 0; i < toAdd; i++) {
           var pos = availablePositions[i];
-          var x = pos.col * pixelSize;
-          var y = pos.row * pixelSize;
-          state.pixels.push({ x: x, y: y, col: pos.col, row: pos.row });
+          state.pixels.push({
+            x: pos.col * pixelSize,
+            y: pos.row * pixelSize,
+            col: pos.col,
+            row: pos.row
+          });
           state.occupiedGrid.set(gridKey(pos.col, pos.row), true);
         }
       } else if (pixelsToAdd < 0) {
-        // Trier les pixels existants pour retirer ceux du haut ou du bas
-        state.pixels.sort(function(a, b) {
+        state.pixels.sort(function (a, b) {
           var randomWeight = 200;
           if (isExitingTop) {
             return (-a.y + Math.random() * randomWeight) - (-b.y + Math.random() * randomWeight);
-          } else {
-            return (a.y + Math.random() * randomWeight) - (b.y + Math.random() * randomWeight);
           }
+
+          return (a.y + Math.random() * randomWeight) - (b.y + Math.random() * randomWeight);
         });
-        // Retirer les pixels en trop et mettre à jour la grille
+
         var removed = state.pixels.splice(targetPixelCount);
         for (var j = 0; j < removed.length; j++) {
           state.occupiedGrid.delete(gridKey(removed[j].col, removed[j].row));
@@ -283,82 +286,114 @@ const hasOverlay = Astro.slots.has('overlay');
     function draw() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       ctx.fillStyle = pixelColor;
-      var pixels = state.pixels;
-      for (var i = 0; i < pixels.length; i++) {
-        ctx.fillRect(pixels[i].x, pixels[i].y, pixelSize, pixelSize);
+
+      for (var i = 0; i < state.pixels.length; i++) {
+        var pixel = state.pixels[i];
+        ctx.fillRect(pixel.x, pixel.y, pixelSize, pixelSize);
       }
     }
 
     function render() {
+      if (state.destroyed) return;
+
       if (!isInAnimationZone()) {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        state.pixels = [];
-        state.occupiedGrid.clear();
+        clearCanvas();
+        resetOverlay();
         return;
       }
+
       updatePixels();
       draw();
     }
 
-    // Handler scroll unifié (Lenis ou natif)
     function onScroll() {
-      if (!state.pendingRender) {
-        state.pendingRender = true;
-        requestAnimationFrame(function() {
-          render();
-          state.pendingRender = false;
-        });
+      if (state.pendingRender || state.destroyed) return;
+
+      state.pendingRender = true;
+      state.frameId = requestAnimationFrame(function () {
+        state.pendingRender = false;
+        state.frameId = null;
+        render();
+      });
+    }
+
+    function attachLenis() {
+      if (!window.lenis || state.useLenis || state.destroyed) return;
+
+      state.useLenis = true;
+      window.removeEventListener('scroll', onScroll);
+      window.lenis.on('scroll', onScroll);
+
+      if (state.checkLenisInterval) {
+        clearInterval(state.checkLenisInterval);
+        state.checkLenisInterval = null;
+      }
+      if (state.checkLenisTimeout) {
+        clearTimeout(state.checkLenisTimeout);
+        state.checkLenisTimeout = null;
       }
     }
 
-    // Setup listeners
-    state.resizeHandler = function() {
+    function onResize() {
+      if (state.destroyed) return;
+
       var currentWidth = window.innerWidth;
-      if (currentWidth === state.lastWidth) return;
+      var currentHeight = window.innerHeight;
+      if (currentWidth === state.viewportWidth && currentHeight === state.viewportHeight) return;
 
-      state.lastWidth = currentWidth;
       clearTimeout(state.resizeTimeout);
-
-      state.resizeTimeout = setTimeout(function() {
+      state.resizeTimeout = setTimeout(function () {
         resizeCanvas();
-        state.pixels = [];
-        state.occupiedGrid.clear();
+        clearPixels();
         render();
-      }, 200);
-    };
-
-    state.lenisHandler = onScroll;
-    state.scrollHandler = onScroll;
-
-    window.addEventListener('resize', state.resizeHandler);
-
-    // Utiliser Lenis si disponible, sinon scroll natif
-    if (window.lenis) {
-      window.lenis.on('scroll', state.lenisHandler);
-    } else {
-      window.addEventListener('scroll', state.scrollHandler, { passive: true });
-      // Réessayer d'attacher à Lenis quand il sera prêt
-      var checkLenis = setInterval(function() {
-        if (window.lenis) {
-          window.removeEventListener('scroll', state.scrollHandler);
-          window.lenis.on('scroll', state.lenisHandler);
-          clearInterval(checkLenis);
-        }
-      }, 500);
-      // Arrêter après 5 secondes
-      setTimeout(function() { clearInterval(checkLenis); }, 5000);
+      }, 150);
     }
 
+    function cleanup() {
+      if (state.destroyed) return;
+      state.destroyed = true;
+
+      window.removeEventListener('resize', onResize);
+      window.removeEventListener('scroll', onScroll);
+      document.removeEventListener('astro:before-swap', cleanup);
+
+      if (window.lenis) {
+        window.lenis.off('scroll', onScroll);
+      }
+      if (state.resizeTimeout) {
+        clearTimeout(state.resizeTimeout);
+      }
+      if (state.checkLenisInterval) {
+        clearInterval(state.checkLenisInterval);
+      }
+      if (state.checkLenisTimeout) {
+        clearTimeout(state.checkLenisTimeout);
+      }
+      if (state.frameId !== null) {
+        cancelAnimationFrame(state.frameId);
+      }
+    }
+
+    window.addEventListener('resize', onResize);
+
+    if (window.lenis) {
+      state.useLenis = true;
+      window.lenis.on('scroll', onScroll);
+    } else {
+      window.addEventListener('scroll', onScroll, { passive: true });
+      state.checkLenisInterval = setInterval(attachLenis, 500);
+      state.checkLenisTimeout = setTimeout(function () {
+        if (state.checkLenisInterval) {
+          clearInterval(state.checkLenisInterval);
+          state.checkLenisInterval = null;
+        }
+      }, 5000);
+    }
+
+    document.addEventListener('astro:before-swap', cleanup);
+
     resizeCanvas();
+    resetOverlay();
     render();
-  }
-
-  // Initialiser au chargement et après chaque navigation
-  if (!window._bgCanvasListenerAdded) {
-    window._bgCanvasListenerAdded = true;
-    document.addEventListener('astro:page-load', initBackgroundCanvas);
-  }
-
-  // Toujours initialiser (le script inline s'exécute à chaque page)
-  initBackgroundCanvas();
+  })();
 </script>
