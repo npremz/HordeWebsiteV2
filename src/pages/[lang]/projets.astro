@@ -1,7 +1,7 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import Footer from '../../components/Footer.astro';
-import Wrapped from '../../components/ui/Wrapped.astro';
+import BracketInline from '../../components/ui/decor/BracketInline.astro';
 import { Image } from 'astro:assets';
 import { SUPPORTED_LOCALES, type Locale, useTranslations } from '../../i18n';
 import { getLocalizedProjects } from '../../lib/content/projects';
@@ -144,7 +144,7 @@ const projectCount = projects.length;
 							title={project.shortTitle}
 						>
 							<p>{project.shortTitle}</p>
-							<Wrapped class="text-[1rem] font-mono">→</Wrapped>
+							<BracketInline class="text-[1rem] font-mono">→</BracketInline>
 						</a>
 					) : (
 						<div
@@ -157,7 +157,7 @@ const projectCount = projects.length;
 								{project.shortTitle}{" "}
 								<span class="section-label">{t.projects.inProgress}</span>
 							</p>
-							<Wrapped class="text-[1rem] font-mono">→</Wrapped>
+							<BracketInline class="text-[1rem] font-mono">→</BracketInline>
 						</div>
 					)}
 				</li>

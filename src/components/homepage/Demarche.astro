@@ -1,6 +1,6 @@
 ---
 import ServiceSectionHeading from "../services/ServiceSectionHeading.astro"
-import Button from "../ui/Button.astro";
+import CtaButton from "../ui/actions/CtaButton.astro";
 
 const steps = [
   {
@@ -64,7 +64,7 @@ const [step1, ...remainingSteps] = steps;
         <path d="M40.3977 30.1993L37.364 27.0024L25.8483 37.3628L25.8483 14C25.8483 6.26802 19.5803 -8.6259e-07 11.8483 -5.21966e-07L0 0L1.77429e-07 4.09091L17.5145 4.09091C19.7236 4.09091 21.5145 5.88177 21.5145 8.09091L21.5145 37.3628L9.99882 27.0024L6.96512 30.1993L23.6814 45L40.3977 30.1993Z" fill="#F4F1F8"/>
       </svg>
     </div>
-    <Button href="/fr/contact" label="Lancer un projet" class="mt-8" variant='light'/>
+    <CtaButton href="/fr/contact" label="Lancer un projet" class="mt-8" variant='light'/>
   </div>
 </section>
 

@@ -1,7 +1,7 @@
 ---
 import Layout from '../../layouts/Layout.astro';
-import ContactForm from '../../components/ui/ContactForm';
-import Wrapped from '../../components/ui/Wrapped.astro';
+import ContactForm from '../../components/ui/forms/ContactForm';
+import BracketInline from '../../components/ui/decor/BracketInline.astro';
 import Footer from '../../components/Footer.astro';
 import { SUPPORTED_LOCALES, type Locale, useTranslations } from '../../i18n';
 
@@ -55,7 +55,7 @@ const t = useTranslations(lang);
 					<li><a href="mailto:hello@hordeagence.com" class="contact-link" title="hello@hordeagence.com">hello@hordeagence.com</a></li>
 					<li><a href="https://calendly.com/ni-premont/30min" class="contact-link" title={t.contact.bookCall}>{t.contact.bookCall}</a></li>
 				</ul>
-				<button class="cursor-pointer scroll-to-btn ml-auto" data-scroll-target="#contact-form" data-scroll-offset="-100"><Wrapped variant='dark' class="font-mono text-bg-light text-[1rem]">↓</Wrapped></button>
+				<button class="cursor-pointer scroll-to-btn ml-auto" data-scroll-target="#contact-form" data-scroll-offset="-100"><BracketInline variant='dark' class="font-mono text-bg-light text-[1rem]">↓</BracketInline></button>
 			</div>
 		</div>
 		<hr class="mt-8 sm:mt-16 md:mt-24 border-lines-dark" />

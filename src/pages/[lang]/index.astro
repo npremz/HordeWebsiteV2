@@ -1,6 +1,6 @@
 ---
 import Layout from "../../layouts/Layout.astro";
-import BackgroundCanvas from "../../components/ui/BackgroundCanvas.astro";
+import PixelTransitionCanvas from "../../components/ui/effects/PixelTransitionCanvas.astro";
 import HeroSection from "../../components/sections/HeroSection.astro";
 import MethodSection from "../../components/sections/MethodSection.astro";
 import ProjectSection from "../../components/sections/ProjectSection.astro";
@@ -34,8 +34,8 @@ const description =
   description={description}
   siteNameAsPrefix={true}
 >
-  <BackgroundCanvas triggerDistance={500} topOffset={900} bottomOffset={1400} stopTargetId="method-transition">
-  </BackgroundCanvas>
+  <PixelTransitionCanvas triggerDistance={500} topOffset={900} bottomOffset={1400} stopTargetId="method-transition">
+  </PixelTransitionCanvas>
 
   <HeroSection
     lang={lang}

@@ -1,6 +1,6 @@
 ---
 import { Image } from 'astro:assets';
-import Button from '../ui/Button.astro';
+import CtaButton from '../ui/actions/CtaButton.astro';
 
 import foundersImg from "../../assets/images/nous-opti.jpg";
 import { DEFAULT_LOCALE, type Locale, useTranslations } from "../../i18n";
@@ -18,7 +18,7 @@ const t = useTranslations(lang);
     <h2 class="section-label">une équipe à taille humaine</h2>
     <p class="mt-4 indent-24 text-[1.25rem]">On est une agence de petite taille qui met en avant le côté humain, on prend le temps avec vous de trouver les solutions qui vous conviennent et on vous aide à ce que votre présence numérique soit à la hauteur de vos projets.</p>
     <div class="mt-16 flex justify-end">
-      <Button href="/fr/a-propos" label="Notre culture" variant="light" />
+      <CtaButton href="/fr/a-propos" label="Notre culture" variant="light" />
     </div>
     <figure
 		class="mt-10 sm:mt-32 md:mt-32 lg:mt-48 md:flex md:gap-16 md:items-center"

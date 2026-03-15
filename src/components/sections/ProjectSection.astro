@@ -1,5 +1,5 @@
 ---
-import Wrapped from "../ui/Wrapped.astro";
+import BracketInline from "../ui/decor/BracketInline.astro";
 import { DEFAULT_LOCALE, type Locale, useTranslations } from "../../i18n";
 import { getLocalizedProjects } from "../../lib/content/projects";
 import { formatHeadingHtml } from "../../utils/heading-html";
@@ -78,7 +78,7 @@ const projects = (await getLocalizedProjects(lang)).slice(0, 3);
 							]}
 						>
 							<p>{project.shortTitle}</p>
-							<Wrapped class="text-[1rem] font-mono">→</Wrapped>
+							<BracketInline class="text-[1rem] font-mono">→</BracketInline>
 						</a>
 					) : (
 						<div
@@ -95,7 +95,7 @@ const projects = (await getLocalizedProjects(lang)).slice(0, 3);
 									{t.projects.inProgress}
 								</span>
 							</p>
-							<Wrapped class="text-[1rem] font-mono">→</Wrapped>
+							<BracketInline class="text-[1rem] font-mono">→</BracketInline>
 						</div>
 					)}
 				</li>

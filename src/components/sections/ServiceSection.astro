@@ -1,5 +1,5 @@
 ---
-import Wrapped from "../ui/Wrapped.astro";
+import BracketInline from "../ui/decor/BracketInline.astro";
 import { DEFAULT_LOCALE, type Locale, useTranslations } from "../../i18n";
 import { formatHeadingHtml } from "../../utils/heading-html";
 
@@ -31,13 +31,13 @@ const services = t.services.items;
                 data-text={formatHeadingHtml(service.title)}
                 set:html={formatHeadingHtml(service.title)}
               />
-              <Wrapped
+              <BracketInline
                 class="service-icon h-fit shrink-0 font-mono transition-colors duration-300"
                 aria-hidden="true"
               >
                 <span class="icon-plus">+</span>
                 <span class="icon-minus hidden">-</span>
-              </Wrapped>
+              </BracketInline>
             </button>
             <div
               id={`service-content-${index}`}

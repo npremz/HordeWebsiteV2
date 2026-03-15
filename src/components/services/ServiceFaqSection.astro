@@ -1,5 +1,5 @@
 ---
-import Wrapped from "../ui/Wrapped.astro";
+import BracketInline from "../ui/decor/BracketInline.astro";
 import ServiceSectionHeading from "./ServiceSectionHeading.astro";
 import type { ServiceData } from "./types";
 
@@ -32,14 +32,14 @@ const { service } = Astro.props;
             data-text={item.question}
             set:html={item.question}
           />
-          <Wrapped
+          <BracketInline
             class="faq-icon h-fit shrink-0 font-mono transition-colors duration-300"
             aria-hidden="true"
             variant="dark"
           >
             <span class="icon-plus">+</span>
             <span class="icon-minus hidden">-</span>
-          </Wrapped>
+          </BracketInline>
         </button>
         <div
           id={`faq-content-${index}`}

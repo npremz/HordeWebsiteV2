@@ -1,7 +1,7 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import Footer from '../../components/Footer.astro';
-import Wrapped from '../../components/ui/Wrapped.astro';
+import BracketInline from '../../components/ui/decor/BracketInline.astro';
 import { Image } from 'astro:assets';
 import { SUPPORTED_LOCALES, type Locale, useTranslations } from '../../i18n';
 import { getLocalizedPosts } from '../../lib/content/blog';
@@ -80,7 +80,7 @@ function formatDate(date: Date, locale: string): string {
 							<h2 class="text-[1.25rem] leading-normal mb-4">{post.title}</h2>
 							<div class="section-label flex justify-between">
 								<span>{post.categoryName} - {formatDate(new Date(post.publishedDate), lang)}</span>
-								<Wrapped>→</Wrapped>
+								<BracketInline>→</BracketInline>
 							</div>
 						</div>
 					</a>

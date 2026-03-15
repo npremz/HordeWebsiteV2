@@ -1,7 +1,7 @@
 ---
 import Layout from '../../../../layouts/Layout.astro';
 import Footer from '../../../../components/Footer.astro';
-import Wrapped from '../../../../components/ui/Wrapped.astro';
+import BracketInline from '../../../../components/ui/decor/BracketInline.astro';
 import { Image } from 'astro:assets';
 import { SUPPORTED_LOCALES, type Locale } from '../../../../i18n';
 import { getLocalizedPostsByTag, getPosts, slugifyTag } from '../../../../lib/content/blog';
@@ -102,7 +102,7 @@ const pageDescription = `${lang === 'fr' ? 'Articles tagués' : 'Articles tagged
 								<h2 class="text-[1.25rem] leading-normal mb-4">{post.title}</h2>
 								<div class="section-label flex justify-between">
 									<span>{post.categoryName} - {formatDate(new Date(post.publishedDate), lang)}</span>
-									<Wrapped>→</Wrapped>
+									<BracketInline>→</BracketInline>
 								</div>
 							</div>
 						</a>

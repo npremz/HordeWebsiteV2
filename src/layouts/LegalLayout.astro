@@ -1,7 +1,7 @@
 ---
 import Layout from './Layout.astro';
 import Footer from '../components/Footer.astro';
-import Line from '../components/ui/Line.astro';
+import EndpointDivider from '../components/ui/decor/EndpointDivider.astro';
 import { DEFAULT_LOCALE, type Locale, useTranslations } from '../i18n';
 
 interface Props {
@@ -45,7 +45,7 @@ const t = useTranslations(lang);
       </div>
     </header>
 
-    <Line />
+    <EndpointDivider />
 
     <div class="lg:grid lg:grid-cols-12 gap-16 mt-16 sm:mt-24 mb-32">
       <aside class="hidden lg:block lg:col-span-3">
@@ -64,7 +64,7 @@ const t = useTranslations(lang);
       </article>
     </div>
 
-    <Line />
+    <EndpointDivider />
     
     <div class="mt-16 mb-32">
       <a

@@ -1,7 +1,7 @@
 ---
 import { DEFAULT_LOCALE } from '../../i18n';
 import { getServiceSummaries } from '../../lib/content/services';
-import Wrapped from '../ui/Wrapped.astro';
+import BracketInline from '../ui/decor/BracketInline.astro';
 import ServiceSectionHeading from '../services/ServiceSectionHeading.astro';
 
 const lang = DEFAULT_LOCALE;
@@ -27,7 +27,7 @@ const services = await getServiceSummaries();
           <span class="max-w-[280px] font-display uppercase leading-none text-[2rem] sm:text-[2.5rem] md:text-[3.125rem]">
             {service.title}
           </span>
-          <Wrapped class="shrink-0 text-[1rem] font-mono" variant='dark'>↗</Wrapped>
+          <BracketInline class="shrink-0 text-[1rem] font-mono" variant='dark'>↗</BracketInline>
         </a>
       </li>
     ))}

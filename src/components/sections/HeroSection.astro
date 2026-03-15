@@ -1,6 +1,6 @@
 ---
-import Line from "../ui/Line.astro";
-import Wrapped from "../ui/Wrapped.astro";
+import EndpointDivider from "../ui/decor/EndpointDivider.astro";
+import BracketInline from "../ui/decor/BracketInline.astro";
 import { DEFAULT_LOCALE, type Locale, useTranslations } from "../../i18n";
 import { formatHeadingHtml } from "../../utils/heading-html";
 
@@ -128,7 +128,7 @@ const typewriterWords = t.hero.typewriterWords;
 					d="M1217.5 0.5V673C1217.5 1009.07 945.065 1281.5 609 1281.5C272.935 1281.5 0.500003 1009.07 0.5 673V0.5H1217.5Z"
 					stroke="#B1B1B1"></path>
 			</svg>
-			<Line dotClass="z-9999" />
+			<EndpointDivider dotClass="z-9999" />
 			<span class="block text-right pt-[5px] md:pt-[13px] slg:-translate-x-1/8">
 				{titleLine2}
 				{titleLine2 && <> <br /> </>}
@@ -149,13 +149,13 @@ const typewriterWords = t.hero.typewriterWords;
 		<button
 			class="hidden md:block mt-4 sm:mt-8 font-mono uppercase text-sm cursor-pointer scroll-to-btn slg:translate-x-[12.5%]"
 			data-scroll-target={scrollTarget}
-			><Wrapped class="text-[1rem]">↓</Wrapped></button
+			><BracketInline class="text-[1rem]">↓</BracketInline></button
 		>
 	</div>
 	<button
 		class="md:hidden absolute mt-0 bottom-8 left-1/2 -translate-x-1/2 sm:left-0 sm:translate-0 font-mono uppercase text-sm sm:bottom-24 md:relative md:bottom-0 cursor-pointer scroll-to-btn"
 		data-scroll-target={scrollTarget}
-		><Wrapped class="text-[1rem]">↓</Wrapped></button
+		><BracketInline class="text-[1rem]">↓</BracketInline></button
 	>
 </section>
 

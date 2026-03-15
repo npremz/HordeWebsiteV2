@@ -1,7 +1,7 @@
 ---
 import Layout from '../../../layouts/Layout.astro';
 import Footer from '../../../components/Footer.astro';
-import Wrapped from '../../../components/ui/Wrapped.astro';
+import BracketInline from '../../../components/ui/decor/BracketInline.astro';
 import { Image } from 'astro:assets';
 import { SUPPORTED_LOCALES, type Locale } from '../../../i18n';
 import {
@@ -71,7 +71,7 @@ const { fullTitle, titleDisplay, seoDescription, gallery, projectTypes, external
 					</div>
 				)}
 				<div class="mb-10 sm:mb-32 sm:-mt-[1.414rem] lg:mt-0 lg:mb-10">
-					<Wrapped>
+					<BracketInline>
 						{externalUrl && (
 							<a
 								href={externalUrl}
@@ -83,7 +83,7 @@ const { fullTitle, titleDisplay, seoDescription, gallery, projectTypes, external
 									{lang === 'fr' ? 'Voir le site' : 'View website'} →
 							</a>
 						)}
-					</Wrapped>
+					</BracketInline>
 				</div>
 			</div>
 		</div>

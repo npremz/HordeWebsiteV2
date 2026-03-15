@@ -1,7 +1,7 @@
 ---
 import Layout from '../../../layouts/Layout.astro';
 import Footer from '../../../components/Footer.astro';
-import Wrapped from '../../../components/ui/Wrapped.astro';
+import BracketInline from '../../../components/ui/decor/BracketInline.astro';
 import { Image } from 'astro:assets';
 import { SUPPORTED_LOCALES, type Locale, useTranslations } from '../../../i18n';
 import {
@@ -345,7 +345,7 @@ const schemaOrg = {
 				</div>
 			</div>
 			<div class="flex justify-end">
-				<Wrapped class:list={"font-mono leading-none text-[1rem] align-"}>↓</Wrapped>
+				<BracketInline class:list={"font-mono leading-none text-[1rem] align-"}>↓</BracketInline>
 			</div>
 		</header>
 

@@ -1,8 +1,8 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import Footer from '../../components/Footer.astro';
-import Line from '../../components/ui/Line.astro';
-import Wrapped from '../../components/ui/Wrapped.astro';
+import EndpointDivider from '../../components/ui/decor/EndpointDivider.astro';
+import BracketInline from '../../components/ui/decor/BracketInline.astro';
 import { Image } from 'astro:assets';
 import { SUPPORTED_LOCALES, type Locale, useTranslations } from '../../i18n';
 import { formatHeadingHtml } from '../../utils/heading-html';
@@ -111,13 +111,13 @@ const workingWithUs = t.aboutPage.workingWithUs;
 							d="M1217.5 0.5V673C1217.5 1009.07 945.065 1281.5 609 1281.5C272.935 1281.5 0.500003 1009.07 0.5 673V0.5H1217.5Z"
 							stroke="#B1B1B1"></path>
 					</svg>
-					<Line dotClass="z-9999" />
+					<EndpointDivider dotClass="z-9999" />
 					<span class="block text-right pt-[5px] md:pt-[13px] slg:-translate-x-1/8" set:html={formatHeadingHtml(t.aboutPage.heroTitle2)} />
 				</h1>
 			</div>
 			<button
 				class="absolute left-1/2 -translate-x-1/2 sm:translate-0 sm:right-0 sm:left-[unset] bottom-10 font-mono uppercase text-sm cursor-pointer scroll-to-btn"
-				><Wrapped class="text-[1rem]">↓</Wrapped></button
+				><BracketInline class="text-[1rem]">↓</BracketInline></button
 			>
 		</header>
 

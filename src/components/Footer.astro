@@ -1,5 +1,5 @@
 ---
-import Physics from "./ui/Physics.astro";
+import PhysicsWordmark from "./ui/effects/PhysicsWordmark.astro";
 import { DEFAULT_LOCALE, type Locale, useTranslations } from "../i18n";
 import { getSiteChrome } from "../lib/site-data";
 
@@ -36,7 +36,7 @@ const textColorClass = isDark ? "text-bg-light" : "text-black";
 	id="footer-parallax"
 	data-variant={variant}
 >
-	<Physics dark={variant == "dark" && true} hideOverflow={hideOverflow} />
+	<PhysicsWordmark dark={variant == "dark" && true} hideOverflow={hideOverflow} />
 
 	<div class:list={[innerBg && "footer-inner-bg", "py-10 pb-16 sm:py-16 lg:pt-24"]}>
 	<a
