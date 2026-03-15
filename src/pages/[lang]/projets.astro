@@ -4,7 +4,7 @@ import Footer from '../../components/Footer.astro';
 import Wrapped from '../../components/ui/Wrapped.astro';
 import { Image } from 'astro:assets';
 import { SUPPORTED_LOCALES, type Locale, useTranslations } from '../../i18n';
-import { getCollection } from 'astro:content';
+import { getLocalizedProjects } from '../../lib/content/projects';
 import { formatHeadingHtml } from '../../utils/heading-html';
 
 export const prerender = true;
@@ -18,22 +18,7 @@ export function getStaticPaths() {
 const { lang } = Astro.params as { lang: Locale };
 const t = useTranslations(lang);
 
-// Récupérer les projets depuis Keystatic (collection unique multilingue)
-const rawProjects = await getCollection('projects');
-
-// Transformer et trier les projets avec les champs localisés
-const projects = rawProjects
-  .sort((a, b) => (a.data.order || 0) - (b.data.order || 0))
-  .map((project) => ({
-    slug: project.data.slug,
-    name: lang === 'fr' ? project.data.shortTitle_fr : project.data.shortTitle_en,
-    fullTitle: lang === 'fr' ? project.data.fullTitle_fr : project.data.fullTitle_en,
-    href: project.data.externalUrl || null,
-    image: project.data.featuredImage,
-    imageAlt: lang === 'fr' ? project.data.featuredImageAlt_fr : project.data.featuredImageAlt_en,
-    inProgress: project.data.inProgress,
-    projectTypes: project.data.projectTypes || [],
-  }));
+const projects = await getLocalizedProjects(lang);
 
 const projectCount = projects.length;
 ---
@@ -83,13 +68,13 @@ const projectCount = projects.length;
 					: col === 2 ? "slg:justify-self-end"
 					: Math.floor(index / 3) % 2 === 0 ? "slg:justify-self-end" : "slg:justify-self-start";
 				return (
-				<li class:list={["project-item-grid", sm, slg]} data-image={project.image.src || ""} data-in-progress={project.inProgress}>
+				<li class:list={["project-item-grid", sm, slg]} data-image={project.featuredImage.src || ""} data-in-progress={project.inProgress}>
 					{!project.inProgress ? (
-						<a href={`/${lang}/projets/${project.slug}`} title={project.name}>
+						<a href={`/${lang}/projets/${project.slug}`} title={project.shortTitle}>
 							<div class="overflow-hidden mb-8 sm:max-w-70! slg:max-w-80! aspect-square">
 								<Image
-									src={project.image}
-									alt={project.imageAlt}
+									src={project.featuredImage}
+									alt={project.featuredImageAlt}
 									class="w-full h-full object-cover project-img"
 									widths={[250, 400, 600]}
 									sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
@@ -101,7 +86,7 @@ const projectCount = projects.length;
 								/>
 							</div>
 							<div class="flex gap-2 items-end text-[2rem]">
-								<h2>{project.name}</h2>
+								<h2>{project.shortTitle}</h2>
 							</div>
 						</a>
 					) : (
@@ -110,7 +95,7 @@ const projectCount = projects.length;
 								<span class="section-label">{t.projects.inProgress}</span>
 							</div>
 							<div class="flex gap-2 items-end">
-								<h2 class="text-[2rem]">{project.name}</h2>
+								<h2 class="text-[2rem]">{project.shortTitle}</h2>
 							</div>
 						</div>
 					)}
@@ -146,7 +131,7 @@ const projectCount = projects.length;
 			{projects.map((project, index) => (
 				<li
 					class="project-item-list"
-					data-image={project.image.src || ""}
+					data-image={project.featuredImage.src || ""}
 					data-in-progress={project.inProgress}
 				>
 					{!project.inProgress ? (
@@ -156,9 +141,9 @@ const projectCount = projects.length;
 								"project-link flex justify-between py-5 xl:py-8 px-8 lg:px-9",
 								index === 0 ? "border border-lines" : "border-b border-x border-lines",
 							]}
-							title={project.name}
+							title={project.shortTitle}
 						>
-							<p>{project.name}</p>
+							<p>{project.shortTitle}</p>
 							<Wrapped class="text-[1rem] font-mono">→</Wrapped>
 						</a>
 					) : (
@@ -169,7 +154,7 @@ const projectCount = projects.length;
 							]}
 						>
 							<p>
-								{project.name}{" "}
+								{project.shortTitle}{" "}
 								<span class="section-label">{t.projects.inProgress}</span>
 							</p>
 							<Wrapped class="text-[1rem] font-mono">→</Wrapped>

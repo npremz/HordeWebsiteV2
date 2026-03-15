@@ -3,14 +3,20 @@ import Layout from '../../../layouts/Layout.astro';
 import Footer from '../../../components/Footer.astro';
 import Wrapped from '../../../components/ui/Wrapped.astro';
 import { Image } from 'astro:assets';
-import { SUPPORTED_LOCALES, type Locale, useTranslations } from '../../../i18n';
-import { getCollection } from 'astro:content';
+import { SUPPORTED_LOCALES, type Locale } from '../../../i18n';
+import {
+	type LocalizedProjectGalleryRow,
+	type ProjectEntry,
+	getProjects,
+	getLocalizedProjectDescription,
+	localizeProject,
+} from '../../../lib/content/projects';
 import { formatHeadingHtml } from '../../../utils/heading-html';
 
 export const prerender = true;
 
 export async function getStaticPaths() {
-	const projects = await getCollection('projects');
+	const projects = await getProjects();
 
 	return SUPPORTED_LOCALES.flatMap((lang) =>
 		projects
@@ -22,37 +28,10 @@ export async function getStaticPaths() {
 	);
 }
 
-const { project, lang } = Astro.props as { project: any; lang: Locale };
-const t = useTranslations(lang);
-
-// Champs localisés
-const fullTitle = lang === 'fr' ? project.data.fullTitle_fr : project.data.fullTitle_en;
-const shortTitle = lang === 'fr' ? project.data.shortTitle_fr : project.data.shortTitle_en;
-const titleDisplay = lang === 'fr' ? project.data.titleDisplay_fr : project.data.titleDisplay_en;
-const seoDescription = lang === 'fr' ? project.data.seoDescription_fr : project.data.seoDescription_en;
-
-// Description - lire le contenu brut du fichier MDX
-const allDescriptions = import.meta.glob('../../../content/projects/*/description_*.mdx', { query: '?raw', import: 'default' });
-const descriptionPath = `../../../content/projects/${project.data.slug}/description_${lang}.mdx`;
-let descriptionContent = '';
-if (allDescriptions[descriptionPath]) {
-	descriptionContent = await allDescriptions[descriptionPath]() as string;
-}
-
-// Galerie
-const gallery = project.data.gallery || [];
-
-// Types de projet
-const projectTypes = project.data.projectTypes || [];
-
-// URL externe du projet
-const externalUrl = project.data.externalUrl;
-
-// Autres projets (pour le bouton)
-const allProjects = await getCollection('projects');
-const otherProjects = allProjects
-	.filter((p) => p.data.slug !== project.data.slug && !p.data.inProgress)
-	.sort((a, b) => (a.data.order || 0) - (b.data.order || 0));
+const { project, lang } = Astro.props as { project: ProjectEntry; lang: Locale };
+const localizedProject = localizeProject(project, lang);
+const descriptionContent = await getLocalizedProjectDescription(project.data.slug, lang);
+const { fullTitle, titleDisplay, seoDescription, gallery, projectTypes, externalUrl } = localizedProject;
 ---
 
 <Layout lang={lang} title={fullTitle} description={seoDescription}>
@@ -112,19 +91,13 @@ const otherProjects = allProjects
 		<!-- Galerie -->
 		{gallery.length > 0 && (
 			<section class="grid grid-cols-2 gap-[0.625rem] sm:gap-5 md:gap-6 lg:gap-10 mb-10 sm:mb-16">
-				{gallery.map((row: any, index: number) => {
-					const alt1 = lang === 'fr'
-						? (row.alt1_fr || `${shortTitle} - Horde, agence web UX Bruxelles`)
-						: (row.alt1_en || `${shortTitle} - Horde, Brussels UX web agency`);
-					const alt2 = lang === 'fr'
-						? (row.alt2_fr || `${shortTitle} - Horde, agence web UX Bruxelles`)
-						: (row.alt2_en || `${shortTitle} - Horde, Brussels UX web agency`);
+				{gallery.map((row: LocalizedProjectGalleryRow, index: number) => {
 					const isFirst = index === 0;
 
 					return row.layout === 'full' ? (
 						<Image
 							src={row.image1}
-							alt={alt1}
+							alt={row.alt1}
 							class="col-span-2 w-full h-full object-cover"
 							widths={[250, 500, 800, 1200]}
 							sizes="(max-width: 640px) calc(100vw - 2rem), (max-width: 1024px) calc(100vw - 4rem), calc(100vw - 12rem)"
@@ -136,9 +109,9 @@ const otherProjects = allProjects
 						/>
 					) : (
 						<>
-							<Image
-								src={row.image1}
-								alt={alt1}
+								<Image
+									src={row.image1}
+									alt={row.alt1}
 								class="w-full h-full object-cover"
 								widths={[150, 300, 500, 800]}
 								sizes="(max-width: 640px) calc(50vw - 1rem), (max-width: 1024px) calc(50vw - 2rem), calc(50vw - 6rem)"
@@ -151,7 +124,7 @@ const otherProjects = allProjects
 							{row.image2 && (
 								<Image
 									src={row.image2}
-									alt={alt2}
+									alt={row.alt2 || row.alt1}
 									class="w-full h-full object-cover"
 									widths={[150, 300, 500, 800]}
 									sizes="(max-width: 640px) calc(50vw - 1rem), (max-width: 1024px) calc(50vw - 2rem), calc(50vw - 6rem)"

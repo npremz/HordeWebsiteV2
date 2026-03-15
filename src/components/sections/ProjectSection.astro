@@ -1,7 +1,7 @@
 ---
 import Wrapped from "../ui/Wrapped.astro";
 import { DEFAULT_LOCALE, type Locale, useTranslations } from "../../i18n";
-import { getCollection } from "astro:content";
+import { getLocalizedProjects } from "../../lib/content/projects";
 import { formatHeadingHtml } from "../../utils/heading-html";
 
 interface Props {
@@ -11,19 +11,7 @@ interface Props {
 const { lang = DEFAULT_LOCALE } = Astro.props;
 const t = useTranslations(lang);
 
-// Récupérer les projets depuis Keystatic (collection unique multilingue)
-const rawProjects = await getCollection('projects');
-
-// Transformer et trier les projets (limité aux 3 premiers pour l'index)
-const projects = rawProjects
-	.sort((a, b) => (a.data.order || 0) - (b.data.order || 0))
-	.slice(0, 3)
-	.map((project) => ({
-		name: lang === 'fr' ? project.data.shortTitle_fr : project.data.shortTitle_en,
-		slug: project.data.slug,
-		image: project.data.featuredImage.src,
-		inProgress: project.data.inProgress,
-	}));
+const projects = (await getLocalizedProjects(lang)).slice(0, 3);
 ---
 
 <div class="flex flex-col">
@@ -75,13 +63,13 @@ const projects = rawProjects
 			projects.map((project, index) => (
 				<li
 					class="project-item"
-					data-image={project.image || ""}
+					data-image={project.featuredImage.src || ""}
 					data-in-progress={project.inProgress}
 				>
 						{!project.inProgress ? (
 							<a
 								href={`/${lang}/projets/${project.slug}`}
-								title={project.name}
+								title={project.shortTitle}
 								class:list={[
 									"project-link flex justify-between py-5 xl:py-8 px-8 lg:px-9",
 									index === 0
@@ -89,7 +77,7 @@ const projects = rawProjects
 									: "border-b border-x border-lines",
 							]}
 						>
-							<p>{project.name}</p>
+							<p>{project.shortTitle}</p>
 							<Wrapped class="text-[1rem] font-mono">→</Wrapped>
 						</a>
 					) : (
@@ -102,7 +90,7 @@ const projects = rawProjects
 							]}
 						>
 							<p>
-								{project.name}{" "}
+								{project.shortTitle}{" "}
 								<span class="section-label">
 									{t.projects.inProgress}
 								</span>
