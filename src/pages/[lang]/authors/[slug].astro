@@ -2,13 +2,18 @@
 import Layout from '../../../layouts/Layout.astro';
 import Footer from '../../../components/Footer.astro';
 import { Image } from 'astro:assets';
-import { getCollection } from 'astro:content';
 import { SUPPORTED_LOCALES, type Locale } from '../../../i18n';
+import {
+  type AuthorEntry,
+  getAuthors,
+  getLocalizedAuthorPosts,
+  localizeAuthor,
+} from '../../../lib/content/blog';
 
 export const prerender = true;
 
 export async function getStaticPaths() {
-  const authors = await getCollection('authors');
+  const authors = await getAuthors();
 
   return SUPPORTED_LOCALES.flatMap((lang) =>
     authors.map((author) => ({
@@ -18,24 +23,14 @@ export async function getStaticPaths() {
   );
 }
 
-const { author, lang } = Astro.props as { author: any; lang: Locale };
-
-const name = author.data.name;
-const role = lang === 'fr' ? author.data.role_fr : author.data.role_en;
-const bio = lang === 'fr' ? author.data.bio_fr : author.data.bio_en;
-const avatar = author.data.avatar;
-const social = author.data.social || {};
-
-const allPosts = await getCollection('posts');
-const authoredPosts = allPosts
-  .filter((post) => !post.data.draft && post.data.author === author.data.slug)
-  .sort((a, b) => new Date(b.data.publishedDate).getTime() - new Date(a.data.publishedDate).getTime())
-  .map((post) => ({
-    slug: lang === 'fr' ? post.data.slug_fr : post.data.slug,
-    title: lang === 'fr' ? post.data.title_fr : post.data.title_en,
-    excerpt: lang === 'fr' ? post.data.excerpt_fr : post.data.excerpt_en,
-    publishedDate: post.data.publishedDate,
-  }));
+const { author, lang } = Astro.props as { author: AuthorEntry; lang: Locale };
+const localizedAuthor = localizeAuthor(author, lang);
+const name = localizedAuthor.name;
+const role = localizedAuthor.role;
+const bio = localizedAuthor.bio;
+const avatar = localizedAuthor.avatar;
+const social = localizedAuthor.social;
+const authoredPosts = await getLocalizedAuthorPosts(author.data.slug, lang);
 
 const siteUrl = (Astro.site?.toString() || 'https://hordeagence.com').replace(/\/$/, '');
 const authorUrl = `${siteUrl}/${lang}/authors/${author.data.slug}`;

@@ -3,35 +3,13 @@ import Layout from '../../../../layouts/Layout.astro';
 import Footer from '../../../../components/Footer.astro';
 import Wrapped from '../../../../components/ui/Wrapped.astro';
 import { Image } from 'astro:assets';
-import { SUPPORTED_LOCALES, type Locale, useTranslations } from '../../../../i18n';
-import { getCollection } from 'astro:content';
+import { SUPPORTED_LOCALES, type Locale } from '../../../../i18n';
+import { getLocalizedPostsByTag, getPosts, slugifyTag } from '../../../../lib/content/blog';
 
 export const prerender = true;
 
-// Fonction pour générer un slug à partir d'un tag
-function slugifyTag(tag: string): string {
-	return tag
-		.toLowerCase()
-		.normalize('NFD')
-		.replace(/[\u0300-\u036f]/g, '')
-		.replace(/[^a-z0-9]+/g, '-')
-		.replace(/-+/g, '-')
-		.replace(/(^-|-$)/g, '');
-}
-
 export async function getStaticPaths() {
-	// Fonction locale pour éviter les problèmes de scope
-	function slugify(tag: string): string {
-		return tag
-			.toLowerCase()
-			.normalize('NFD')
-			.replace(/[\u0300-\u036f]/g, '')
-			.replace(/[^a-z0-9]+/g, '-')
-			.replace(/-+/g, '-')
-			.replace(/(^-|-$)/g, '');
-	}
-
-	const posts = await getCollection('posts');
+	const posts = await getPosts();
 
 	// Extraire tous les tags uniques
 	const allTags = new Set<string>();
@@ -43,46 +21,14 @@ export async function getStaticPaths() {
 
 	return SUPPORTED_LOCALES.flatMap((lang) =>
 		Array.from(allTags).map((tag) => ({
-			params: { lang, slug: slugify(tag) },
+			params: { lang, slug: slugifyTag(tag) },
 			props: { tag, lang },
 		}))
 	);
 }
 
 const { tag, lang } = Astro.props as { tag: string; lang: Locale };
-const t = useTranslations(lang);
-
-// Récupérer les articles avec ce tag
-const rawPosts = await getCollection('posts');
-const rawAuthors = await getCollection('authors');
-const rawCategories = await getCollection('categories');
-
-const authorsMap = new Map(rawAuthors.map((a) => [a.data.slug, a.data]));
-const categoriesMap = new Map(rawCategories.map((c) => [c.data.slug, c.data]));
-
-const posts = rawPosts
-	.filter((post) => !post.data.draft && post.data.tags?.includes(tag))
-	.sort((a, b) => new Date(b.data.publishedDate).getTime() - new Date(a.data.publishedDate).getTime())
-	.map((post) => {
-		const author = authorsMap.get(post.data.author);
-		const category = categoriesMap.get(post.data.category);
-		// Utiliser thumbnailImage si disponible, sinon featuredImage
-		const gridImage = post.data.thumbnailImage || post.data.featuredImage;
-		const gridImageAlt = post.data.thumbnailImage
-			? (lang === 'fr' ? post.data.thumbnailImageAlt_fr : post.data.thumbnailImageAlt_en) || (lang === 'fr' ? post.data.featuredImageAlt_fr : post.data.featuredImageAlt_en)
-			: (lang === 'fr' ? post.data.featuredImageAlt_fr : post.data.featuredImageAlt_en);
-		return {
-			slug: lang === 'fr' ? post.data.slug_fr : post.data.slug,
-			title: lang === 'fr' ? post.data.title_fr : post.data.title_en,
-			excerpt: lang === 'fr' ? post.data.excerpt_fr : post.data.excerpt_en,
-			image: gridImage,
-			imageAlt: gridImageAlt,
-			publishedDate: post.data.publishedDate,
-			readingTime: post.data.readingTime || 5,
-			authorName: author?.name || 'Horde',
-			categoryName: category ? (lang === 'fr' ? category.name_fr : category.name_en) : '',
-		};
-	});
+const posts = await getLocalizedPostsByTag(tag, lang);
 
 const articleCount = posts.length;
 
@@ -136,12 +82,12 @@ const pageDescription = `${lang === 'fr' ? 'Articles tagués' : 'Articles tagged
 						: col === 2 ? "slg:justify-self-end"
 						: Math.floor(index / 3) % 2 === 0 ? "slg:justify-self-end" : "slg:justify-self-start";
 					return (
-					<li class:list={["post-item-grid", sm, slg]} data-image={post.image.src || ""}>
+					<li class:list={["post-item-grid", sm, slg]} data-image={post.listingImage.src || ""}>
 						<a href={`/${lang}/blog/${post.slug}`} title={post.title}>
 							<div class="overflow-hidden mb-8 sm:max-w-70! slg:max-w-80! aspect-square">
 								<Image
-									src={post.image}
-									alt={post.imageAlt}
+									src={post.listingImage}
+									alt={post.listingImageAlt}
 									class="w-full h-full object-cover post-img"
 									widths={[250, 400, 600]}
 									sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"

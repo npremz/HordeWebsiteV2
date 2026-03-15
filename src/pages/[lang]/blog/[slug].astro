@@ -4,12 +4,17 @@ import Footer from '../../../components/Footer.astro';
 import Wrapped from '../../../components/ui/Wrapped.astro';
 import { Image } from 'astro:assets';
 import { SUPPORTED_LOCALES, type Locale, useTranslations } from '../../../i18n';
-import { getCollection } from 'astro:content';
+import {
+	type PostEntry,
+	getLocalizedPostContent,
+	getLocalizedPosts,
+	getPosts,
+} from '../../../lib/content/blog';
 
 export const prerender = true;
 
 export async function getStaticPaths() {
-	const posts = await getCollection('posts');
+	const posts = await getPosts();
 
 	return SUPPORTED_LOCALES.flatMap((lang) =>
 		posts
@@ -21,50 +26,32 @@ export async function getStaticPaths() {
 	);
 }
 
-const { post, lang } = Astro.props as { post: any; lang: Locale };
+const { post, lang } = Astro.props as { post: PostEntry; lang: Locale };
 const t = useTranslations(lang);
+const allLocalizedPosts = await getLocalizedPosts(lang);
+const currentPost = allLocalizedPosts.find((entry) => entry.entry.id === post.id);
 
-// Récupérer auteurs et catégories
-const rawAuthors = await getCollection('authors');
-const rawCategories = await getCollection('categories');
-
-const authorsMap = new Map(rawAuthors.map((a) => [a.data.slug, a.data]));
-const categoriesMap = new Map(rawCategories.map((c) => [c.data.slug, c.data]));
-
-// Données localisées
-const title = lang === 'fr' ? post.data.title_fr : post.data.title_en;
-const excerpt = lang === 'fr' ? post.data.excerpt_fr : post.data.excerpt_en;
-const seoDescription = lang === 'fr' ? post.data.seoDescription_fr : post.data.seoDescription_en;
-const featuredImageAlt = lang === 'fr' ? post.data.featuredImageAlt_fr : post.data.featuredImageAlt_en;
-
-// Auteur
-const author = authorsMap.get(post.data.author);
-const authorName = author?.name || 'Horde';
-const authorRole = author ? (lang === 'fr' ? author.role_fr : author.role_en) : '';
-const authorBio = author ? (lang === 'fr' ? author.bio_fr : author.bio_en) : '';
-const authorAvatar = author?.avatar;
-const authorPagePath = author ? `/${lang}/authors/${post.data.author}` : undefined;
-
-// Catégorie
-const category = categoriesMap.get(post.data.category);
-const categoryName = category ? (lang === 'fr' ? category.name_fr : category.name_en) : '';
-
-// Tags
-const tags = post.data.tags || [];
-const keyTakeaways = lang === 'fr' ? post.data.keyTakeaways_fr || [] : post.data.keyTakeaways_en || [];
-
-// Dates
-const publishedDate = post.data.publishedDate;
-const modifiedDate = post.data.modifiedDate;
-const readingTime = post.data.readingTime || 5;
-
-// Contenu - Keystatic stocke le MDX dans des fichiers séparés
-const allContents = import.meta.glob('../../../content/posts/*/content_*.mdx', { query: '?raw', import: 'default' });
-const contentPath = `../../../content/posts/${post.data.slug}/content_${lang}.mdx`;
-let articleContent = '';
-if (allContents[contentPath]) {
-	articleContent = await allContents[contentPath]() as string;
+if (!currentPost) {
+	throw new Error(`Missing localized blog post for ${post.id} (${lang})`);
 }
+
+const title = currentPost.title;
+const excerpt = currentPost.excerpt;
+const seoDescription = currentPost.seoDescription;
+const featuredImageAlt = currentPost.featuredImageAlt;
+const authorName = currentPost.authorName;
+const authorRole = currentPost.authorRole || '';
+const authorBio = currentPost.authorBio || '';
+const authorAvatar = currentPost.authorAvatar;
+const authorSocial = currentPost.authorSocial;
+const authorPagePath = currentPost.authorSlug ? `/${lang}/authors/${currentPost.authorSlug}` : undefined;
+const categoryName = currentPost.categoryName;
+const tags = currentPost.tags;
+const keyTakeaways = currentPost.keyTakeaways;
+const publishedDate = currentPost.publishedDate;
+const modifiedDate = currentPost.modifiedDate;
+const readingTime = currentPost.readingTime;
+const articleContent = await getLocalizedPostContent(post.data.slug, lang);
 
 // Générer un slug à partir d'un texte (gère les accents français)
 function slugify(text: string): string {
@@ -92,17 +79,15 @@ function extractHeadings(content: string): { id: string; text: string }[] {
 const tableOfContents = extractHeadings(articleContent);
 
 // Articles connexes (même catégorie, excluant l'article actuel)
-const rawPosts = await getCollection('posts');
-const relatedPosts = rawPosts
-	.filter((p) => !p.data.draft && p.data.slug !== post.data.slug && p.data.category === post.data.category)
-	.sort((a, b) => new Date(b.data.publishedDate).getTime() - new Date(a.data.publishedDate).getTime())
+const relatedPosts = allLocalizedPosts
+	.filter((entry) => entry.entry.data.slug !== post.data.slug && entry.categorySlug === currentPost.categorySlug)
 	.slice(0, 3)
-	.map((p) => ({
-		slug: lang === 'fr' ? p.data.slug_fr : p.data.slug,
-		title: lang === 'fr' ? p.data.title_fr : p.data.title_en,
-		image: p.data.featuredImage,
-		imageAlt: lang === 'fr' ? p.data.featuredImageAlt_fr : p.data.featuredImageAlt_en,
-		readingTime: p.data.readingTime || 5,
+	.map((entry) => ({
+		slug: entry.slug,
+		title: entry.title,
+		image: entry.featuredImage,
+		imageAlt: entry.featuredImageAlt,
+		readingTime: entry.readingTime,
 	}));
 
 // Parser le markdown simplifié
@@ -191,8 +176,8 @@ function formatDate(date: Date, locale: string): string {
 }
 
 // Slug localisé
-const currentSlug = lang === 'fr' ? post.data.slug_fr : post.data.slug;
-const alternateSlug = lang === 'fr' ? post.data.slug : post.data.slug_fr;
+const currentSlug = currentPost.slug;
+const alternateSlug = currentPost.alternateSlug;
 const switchLang = lang === 'fr' ? 'en' : 'fr';
 
 // URL de partage
@@ -201,15 +186,15 @@ const articleUrl = `${siteUrl}/${lang}/blog/${currentSlug}`;
 const authorUrl = authorPagePath ? `${siteUrl}${authorPagePath}` : undefined;
 const shareUrl = articleUrl;
 const authorSameAs = [
-	author?.social?.twitter ? `https://twitter.com/${author.social.twitter}` : null,
-	author?.social?.linkedin || null,
-	author?.social?.github ? `https://github.com/${author.social.github}` : null,
+	authorSocial?.twitter ? `https://twitter.com/${authorSocial.twitter}` : null,
+	authorSocial?.linkedin || null,
+	authorSocial?.github ? `https://github.com/${authorSocial.github}` : null,
 ].filter(Boolean);
 // URL pour le switch de langue (avec le slug de l'autre langue)
 const alternateUrl = `${siteUrl}/${switchLang}/blog/${alternateSlug}`;
-const imageUrl = post.data.featuredImage.src?.startsWith('http')
-	? post.data.featuredImage.src
-	: `${siteUrl}${post.data.featuredImage.src}`;
+const imageUrl = currentPost.featuredImage.src?.startsWith('http')
+	? currentPost.featuredImage.src
+	: `${siteUrl}${currentPost.featuredImage.src}`;
 
 // Schema.org JSON-LD
 const schemaOrg = {
@@ -309,7 +294,7 @@ const schemaOrg = {
 					<li><span class="mx-1">/</span></li>
 					<li class="hidden sm:block"><a href={`/${lang}/blog`} class="hover:text-black transition-colors" title="Blog">Blog</a></li>
 					<li class="hidden sm:block"><span class="mx-1">/</span></li>
-					<li><a href={`/${lang}/blog/category/${post.data.category}`} class="hover:text-black transition-colors" title={categoryName}>{categoryName}</a></li>
+					<li><a href={`/${lang}/blog/category/${currentPost.categorySlug}`} class="hover:text-black transition-colors" title={categoryName}>{categoryName}</a></li>
 					<li><span class="mx-1">/</span></li>
 					<li aria-current="page" class="text-black truncate max-w-[150px] sm:max-w-[250px] md:max-w-[350px]">{title}</li>
 				</ol>
@@ -367,7 +352,7 @@ const schemaOrg = {
 		<!-- Image principale -->
 		<figure class="py-10 sm:py-24 border-b border-lines mb-10 sm:mb-24 max-w-3xl mx-auto">
 			<Image
-				src={post.data.featuredImage}
+				src={currentPost.featuredImage}
 				alt={featuredImageAlt}
 				class="w-full h-auto object-cover"
 				widths={[400, 800, 1200, 1600]}
@@ -490,7 +475,7 @@ const schemaOrg = {
 				</div>
 
 				<!-- Bio Auteur -->
-				{author && (
+				{(authorBio || authorAvatar || authorSocial || authorPagePath) && (
 					<h2 class="section-label mb-8">{t.blogPage.about}</h2>
 					<div class="mb-16 p-6 md:p-8 border border-lines">
 						{/* Mobile: photo + nom/rôle côte à côte, description en dessous */}
@@ -511,20 +496,20 @@ const schemaOrg = {
 						</div>
 						<div class="md:hidden">
 							{authorBio && <p class="leading-relaxed">{authorBio}</p>}
-							{author.social && (
+							{authorSocial && (
 								<div class="flex gap-4 mt-8">
-									{author.social.twitter && (
-										<a href={`https://twitter.com/${author.social.twitter}`} target="_blank" rel="noopener noreferrer" class="text-black/60 hover:text-black transition-colors" title="Twitter">
+									{authorSocial.twitter && (
+										<a href={`https://twitter.com/${authorSocial.twitter}`} target="_blank" rel="noopener noreferrer" class="text-black/60 hover:text-black transition-colors" title="Twitter">
 											Twitter
 										</a>
 									)}
-									{author.social.linkedin && (
-										<a href={author.social.linkedin} target="_blank" rel="noopener noreferrer" class="text-black/60 hover:text-black transition-colors" title="LinkedIn">
+									{authorSocial.linkedin && (
+										<a href={authorSocial.linkedin} target="_blank" rel="noopener noreferrer" class="text-black/60 hover:text-black transition-colors" title="LinkedIn">
 											LinkedIn
 										</a>
 									)}
-									{author.social.github && (
-										<a href={`https://github.com/${author.social.github}`} target="_blank" rel="noopener noreferrer" class="text-black/60 hover:text-black transition-colors" title="GitHub">
+									{authorSocial.github && (
+										<a href={`https://github.com/${authorSocial.github}`} target="_blank" rel="noopener noreferrer" class="text-black/60 hover:text-black transition-colors" title="GitHub">
 											GitHub
 										</a>
 									)}
@@ -552,20 +537,20 @@ const schemaOrg = {
 								<div class="lg:flex lg:justify-between lg:gap-8">
 									{authorBio && <p class="leading-relaxed lg:max-w-135">{authorBio}</p>}
 									{/* Liens réseaux - en ligne avec bio sur lg+ */}
-									{author.social && (
+									{authorSocial && (
 										<div class="flex lg:flex-col gap-4 mt-8 lg:mt-0 shrink-0">
-											{author.social.twitter && (
-												<a href={`https://twitter.com/${author.social.twitter}`} target="_blank" rel="noopener noreferrer" class="text-black/60 hover:text-black transition-colors" title="Twitter">
+											{authorSocial.twitter && (
+												<a href={`https://twitter.com/${authorSocial.twitter}`} target="_blank" rel="noopener noreferrer" class="text-black/60 hover:text-black transition-colors" title="Twitter">
 													Twitter
 												</a>
 											)}
-											{author.social.linkedin && (
-												<a href={author.social.linkedin} target="_blank" rel="noopener noreferrer" class="text-black/60 hover:text-black transition-colors" title="LinkedIn">
+											{authorSocial.linkedin && (
+												<a href={authorSocial.linkedin} target="_blank" rel="noopener noreferrer" class="text-black/60 hover:text-black transition-colors" title="LinkedIn">
 													LinkedIn
 												</a>
 											)}
-											{author.social.github && (
-												<a href={`https://github.com/${author.social.github}`} target="_blank" rel="noopener noreferrer" class="text-black/60 hover:text-black transition-colors" title="GitHub">
+											{authorSocial.github && (
+												<a href={`https://github.com/${authorSocial.github}`} target="_blank" rel="noopener noreferrer" class="text-black/60 hover:text-black transition-colors" title="GitHub">
 													GitHub
 												</a>
 											)}
@@ -584,7 +569,7 @@ const schemaOrg = {
 			<section class="mt-16 md:mt-24 pt-10 border-t border-lines">
 				<h2 class="font-display text-[1.5rem] md:text-[2rem] uppercase mb-10">{t.blogPage.relatedArticles}</h2>
 				<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-					{relatedPosts.map((related, index) => (
+					{relatedPosts.map((related) => (
 						<a href={`/${lang}/blog/${related.slug}`} class="group" title={related.title}>
 							<div class="overflow-hidden mb-4 aspect-square">
 								<Image
