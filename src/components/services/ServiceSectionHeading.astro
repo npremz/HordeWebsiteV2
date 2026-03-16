@@ -13,7 +13,7 @@ const { id, left, right, dark = false, class: className = "" } = Astro.props;
 const fillColor = dark ? "white" : "#16191B";
 ---
 
-<h2 id={id} class={`font-display text-[2rem] sm:text-[2.75rem] md:text-[4rem] leading-none uppercase flex pb-8 sm:pb-16 md:pb-24 2xl:pb-32 ${className}`}>
+<h2 id={id} class={`font-display text-[2rem] sm:text-[2.75rem] md:text-[4rem] leading-none uppercase flex pb-[120px] ${className}`}>
   <svg class="h-10 sm:h-15 md:h-20 pr-4 sm:pr-8" viewBox="0 0 8 38" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path d="M5.85475 0H8C4.82682 5.27294 2.4581 11.0252 2.4581 19.0872C2.4581 26.9748 4.82682 32.7271 8 38H5.85475C2.77095 33.5986 0 26.9748 0 19.0872C0 10.9381 2.77095 4.40138 5.85475 0Z" fill={fillColor}/>
   </svg>
