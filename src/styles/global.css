@@ -316,7 +316,7 @@ body {
 
   /* Logo sizing (responsive) */
   .logo-size {
-    @apply h-[17px] w-auto sm:h-auto sm:w-20 md:w-28;
+    @apply w-auto sm:h-auto sm:w-20 md:w-28;
   }
 }
 

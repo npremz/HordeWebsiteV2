@@ -7,9 +7,9 @@ const lang = DEFAULT_LOCALE;
 const projects = (await getLocalizedProjects(lang)).slice(0, 3);
 ---
 
-<section id="projects" class="mt-25">
+<section id="projects" class="mt-25 sm:mt-50">
   <h2 class="section-label text-center">sites web realisés ({projects.length.toString().padStart(2, '0')})</h2>
-  <ul class="mt-10 font-display uppercase text-[2.25rem] text-center">
+  <ul class="mt-10 sm:mt-16 font-display uppercase text-[2.25rem] text-center">
     {projects.map((project, i) => (
       <>
         {i > 0 && <li aria-hidden="true" class="h-px bg-lines"></li>}

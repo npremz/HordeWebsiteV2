@@ -36,11 +36,13 @@ const [step1, ...remainingSteps] = steps;
 
   <!-- Step 1 : fond fourni par le canvas uniquement -->
   <ul>
-    <li class="py-16">
+    <li class="py-16 sm:py-32">
       <span class="section-label text-white">/ {step1.number}</span>
-      <h3 class="mt-8 font-display uppercase leading-none text-[2rem]">{step1.title}</h3>
-      <p class="mt-8 section-label text-white">{step1.quote}</p>
-      <p class="mt-16 indent-24 text-[1.5rem]">{step1.description}</p>
+      <div class="sm:flex sm:gap-16">
+        <h3 class="mt-8 font-display uppercase leading-none text-[2rem]">{step1.title}</h3>
+        <p class="mt-8 section-label text-white sm:text-right">{step1.quote}</p>
+      </div>
+      <p class="mt-16 sm:mt-24 indent-24 text-[1.5rem] sm:text-[2rem]">{step1.description}</p>
     </li>
   </ul>
 
@@ -50,16 +52,18 @@ const [step1, ...remainingSteps] = steps;
       {remainingSteps.map((step) => (
         <>
           <li aria-hidden="true" class="h-px bg-lines-dark"></li>
-          <li class="py-16">
+          <li class="py-16 sm:py-32">
             <span class="section-label text-white">/ {step.number}</span>
-            <h3 class="mt-8 font-display uppercase leading-none text-[2rem]">{step.title}</h3>
-            <p class="mt-8 section-label text-white">{step.quote}</p>
-            <p class="mt-16 indent-24 text-[1.5rem]">{step.description}</p>
+            <div class="sm:flex sm:gap-16">
+              <h3 class="mt-8 font-display uppercase leading-none text-[2rem]">{step.title}</h3>
+              <p class="mt-8 section-label text-white sm:text-right">{step.quote}</p>
+            </div>
+            <p class="mt-16 sm:mt-24 indent-24 text-[1.5rem] sm:text-[2rem]">{step.description}</p>
           </li>
         </>
       ))}
     </ul>
-    <div class="flex flex-col">
+    <div class="flex flex-col sm:-mt-12">
       <svg class="self-end" width="41" height="45" viewBox="0 0 41 45" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M40.3977 30.1993L37.364 27.0024L25.8483 37.3628L25.8483 14C25.8483 6.26802 19.5803 -8.6259e-07 11.8483 -5.21966e-07L0 0L1.77429e-07 4.09091L17.5145 4.09091C19.7236 4.09091 21.5145 5.88177 21.5145 8.09091L21.5145 37.3628L9.99882 27.0024L6.96512 30.1993L23.6814 45L40.3977 30.1993Z" fill="#F4F1F8"/>
       </svg>
