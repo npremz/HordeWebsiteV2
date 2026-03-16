@@ -335,7 +335,8 @@ svg polygon {
 /* Service offer grid - 3 columns on desktop */
 @media (min-width: 1024px) {
   .offer-grid {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(3, auto);
+    justify-content: space-between;
   }
 }
 
