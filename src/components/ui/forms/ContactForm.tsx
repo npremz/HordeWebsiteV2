@@ -1,4 +1,10 @@
-import { useState, useRef, useEffect } from 'preact/hooks';
+import {
+  useEffect,
+  useRef,
+  useState,
+  type ChangeEventHandler,
+  type FormEventHandler,
+} from 'react';
 
 interface FormData {
   besoin: string;
@@ -127,7 +133,7 @@ export default function ContactForm({
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = async (e: any) => {
+  const handleSubmit: FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault();
 
     if (!validateForm()) {
@@ -181,6 +187,26 @@ export default function ContactForm({
     }
   };
 
+  const handleNeedChange: ChangeEventHandler<HTMLInputElement> = (e) => {
+    handleChange('besoin', e.target.value);
+  };
+
+  const handleObjectifInput: FormEventHandler<HTMLTextAreaElement> = (e) => {
+    handleChange('objectif', e.currentTarget.value);
+  };
+
+  const handleNameChange: ChangeEventHandler<HTMLInputElement> = (e) => {
+    handleChange('nom', e.target.value);
+  };
+
+  const handleEmailChange: ChangeEventHandler<HTMLInputElement> = (e) => {
+    handleChange('email', e.target.value);
+  };
+
+  const handleCompanyChange: ChangeEventHandler<HTMLInputElement> = (e) => {
+    handleChange('societe', e.target.value);
+  };
+
   return (
     <form className="mt-10 sm:mt-16 md:mt-24 lg:mt-30 flex flex-col gap-10" onSubmit={(e) => void handleSubmit(e)} noValidate>
       {!hideNeedField && (
@@ -205,7 +231,7 @@ export default function ContactForm({
                     name="besoin"
                     value={option.value}
                     checked={formData.besoin === option.value}
-                    onChange={(e) => handleChange('besoin', e.target.value)}
+                    onChange={handleNeedChange}
                     className="sr-only "
                     aria-describedby={errors.besoin ? 'besoin-error' : undefined}
                   />
@@ -237,7 +263,7 @@ export default function ContactForm({
               }`}
             placeholder={t.objectifPlaceholder}
             value={formData.objectif}
-            onInput={(e) => handleChange('objectif', (e.target as HTMLTextAreaElement).value)}
+            onInput={handleObjectifInput}
             aria-required="true"
             aria-invalid={!!errors.objectif}
             aria-describedby={errors.objectif ? 'objectif-error' : undefined}
@@ -269,7 +295,7 @@ export default function ContactForm({
               }`}
             placeholder={t.namePlaceholder}
             value={formData.nom}
-            onChange={(e) => handleChange('nom', e.target.value)}
+            onChange={handleNameChange}
             aria-required="true"
             aria-invalid={!!errors.nom}
             aria-describedby={errors.nom ? 'nom-error' : undefined}
@@ -301,7 +327,7 @@ export default function ContactForm({
               }`}
             placeholder="@"
             value={formData.email}
-            onChange={(e) => handleChange('email', e.target.value)}
+            onChange={handleEmailChange}
             aria-required="true"
             aria-invalid={!!errors.email}
             aria-describedby={errors.email ? 'email-error' : undefined}
@@ -324,7 +350,7 @@ export default function ContactForm({
           className={`py-5 xl:py-8 px-5 md:px-[30px] flex-1 text-2xl sm:text-[2rem] border bg-transparent focus:outline-none focus-visible:outline-none transition-colors ${variant === 'dark' ? 'border-lines-dark focus:border-lines' : 'border-lines focus:border-black'}`}
           placeholder={t.companyPlaceholder}
           value={formData.societe}
-          onChange={(e) => handleChange('societe', e.target.value)}
+          onChange={handleCompanyChange}
         />
       </div>
 
