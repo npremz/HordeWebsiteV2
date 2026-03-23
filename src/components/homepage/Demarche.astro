@@ -26,12 +26,13 @@ const steps = [
 const [step1, ...remainingSteps] = steps;
 ---
 
-<section id="demarche" class="pt-50 text-white">
+<section id="demarche" class="pt-50 sm:pt-100 text-white">
   <ServiceSectionHeading
     id="service-method-title"
     left="Notre \n demarche"
     right="pour un site \n sur mesure"
     dark
+    class="md:pb-18!"
   />
 
   <!-- Step 1 : fond fourni par le canvas uniquement -->
@@ -39,8 +40,8 @@ const [step1, ...remainingSteps] = steps;
     <li class="py-16 sm:py-32">
       <span class="section-label text-white">/ {step1.number}</span>
       <div class="sm:flex sm:gap-16">
-        <h3 class="mt-8 font-display uppercase leading-none text-[2rem]">{step1.title}</h3>
-        <p class="mt-8 section-label text-white sm:text-right">{step1.quote}</p>
+        <h3 class="mt-8 font-display uppercase leading-none text-[2rem] md:text-[2.5rem]">{step1.title}</h3>
+        <p class="mt-8 section-label text-white sm:text-right md:max-w-[260px]">{step1.quote}</p>
       </div>
       <p class="mt-16 sm:mt-24 indent-24 text-[1.5rem] sm:text-[2rem]">{step1.description}</p>
     </li>
@@ -55,8 +56,8 @@ const [step1, ...remainingSteps] = steps;
           <li class="py-16 sm:py-32">
             <span class="section-label text-white">/ {step.number}</span>
             <div class="sm:flex sm:gap-16">
-              <h3 class="mt-8 font-display uppercase leading-none text-[2rem]">{step.title}</h3>
-              <p class="mt-8 section-label text-white sm:text-right">{step.quote}</p>
+              <h3 class="mt-8 font-display uppercase leading-none text-[2rem] md:text-[2.5rem]">{step.title}</h3>
+              <p class="mt-8 section-label text-white sm:text-right md:max-w-[260px]">{step.quote}</p>
             </div>
             <p class="mt-16 sm:mt-24 indent-24 text-[1.5rem] sm:text-[2rem]">{step.description}</p>
           </li>
@@ -68,7 +69,7 @@ const [step1, ...remainingSteps] = steps;
         <path d="M40.3977 30.1993L37.364 27.0024L25.8483 37.3628L25.8483 14C25.8483 6.26802 19.5803 -8.6259e-07 11.8483 -5.21966e-07L0 0L1.77429e-07 4.09091L17.5145 4.09091C19.7236 4.09091 21.5145 5.88177 21.5145 8.09091L21.5145 37.3628L9.99882 27.0024L6.96512 30.1993L23.6814 45L40.3977 30.1993Z" fill="#F4F1F8"/>
       </svg>
     </div>
-    <CtaButton href="/fr/contact" label="Lancer un projet" class="mt-8" variant='light'/>
+    <CtaButton href="/fr/contact" label="Lancer un projet" fullWidth class="mt-8 md:mt-10" variant='light'/>
   </div>
 </section>
 

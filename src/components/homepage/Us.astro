@@ -4,6 +4,7 @@ import CtaButton from '../ui/actions/CtaButton.astro';
 
 import foundersImg from "../../assets/images/nous-opti.jpg";
 import { DEFAULT_LOCALE, type Locale, useTranslations } from "../../i18n";
+import EndpointDivider from '../ui/decor/EndpointDivider.astro';
 
 interface Props {
 	lang?: Locale;
@@ -13,11 +14,11 @@ const { lang = DEFAULT_LOCALE } = Astro.props;
 const t = useTranslations(lang);
 ---
 
-<section id="us" class="pt-25 pb-25 sm:pt-32">
+<section id="us" class="pt-25 pb-25 sm:pt-32 md:py-80 md:mx-5 md:border-x md:border-b md:rounded-b-full md:border-lines">
   <div class="mx-6">
     <h2 class="section-label">une équipe à taille humaine</h2>
     <p class="mt-4 indent-24 text-[1.25rem] sm:text-[2rem]">On est une agence de petite taille qui met en avant le côté humain, on prend le temps avec vous de trouver les solutions qui vous conviennent et on vous aide à ce que votre présence numérique soit à la hauteur de vos projets.</p>
-    <div class="mt-16 flex justify-end">
+    <div class="mt-12 flex">
       <CtaButton href="/fr/a-propos" label="Notre culture" variant="light" />
     </div>
     <figure
@@ -34,3 +35,4 @@ const t = useTranslations(lang);
     </figure>
   </div>
 </section>
+<EndpointDivider class:list={"mt-5"}/>
