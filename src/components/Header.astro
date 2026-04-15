@@ -44,8 +44,8 @@ const secondaryActionClasses = isDark
 ---
 
 <header class:list={['site-header fixed inset-x-0 top-0 z-[9999] pointer-events-none', textClasses]} data-theme={theme}>
-  <div class="px-(--gutter) pt-(--gutter) lg:hidden">
-    <div class="flex items-center justify-between gap-4">
+  <div class="relative z-[3] px-(--gutter) pt-(--gutter) lg:hidden">
+    <div class="relative z-[5] flex items-center justify-between gap-4">
       <a
         href={`/${lang}`}
         class="pointer-events-auto inline-flex items-center"
