@@ -2,7 +2,7 @@
 
 @font-face {
   font-family: 'PP Neue Montreal';
-  src: url('../assets/fonts/PPNeueMontreal-Regular.woff2') format('woff2');
+  src: url('../assets/fonts/PPNeueMontreal-Book.woff2') format('woff2');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -50,7 +50,7 @@
 }
 
 :root {
-  --gutter: 1.5rem;
+  --gutter: 1rem;
 }
 
 @media only screen and (min-width: 640px) {

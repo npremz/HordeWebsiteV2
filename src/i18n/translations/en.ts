@@ -8,7 +8,7 @@ export const en: Translations = {
     close: 'Close',
     openMenu: 'Open menu',
     closeMenu: 'Close menu',
-    switchLang: 'Version Française',
+    switchLang: 'Français',
   },
 
   // Hero Section
