@@ -1,0 +1,290 @@
+---
+import {
+  DEFAULT_LOCALE,
+  type Locale,
+  useTranslations,
+  getLocalizedPath,
+  getPathWithoutLocale,
+} from '../i18n';
+import { getNavigation } from '../lib/site-data';
+
+interface Props {
+  lang?: Locale;
+  alternateUrl?: string;
+  theme?: 'light' | 'dark';
+}
+
+const { lang = DEFAULT_LOCALE, alternateUrl, theme = 'light' } = Astro.props;
+const t = useTranslations(lang);
+
+const currentPath = getPathWithoutLocale(Astro.url.pathname);
+const switchLang = lang === 'fr' ? 'en' : 'fr';
+const switchUrl = alternateUrl || getLocalizedPath(currentPath, switchLang);
+const startProjectUrl = getLocalizedPath('/contact', lang);
+
+const navigation = await getNavigation(lang);
+const {
+  logo = '/images/logo.svg',
+  logoAlt = 'Logo',
+  items = [],
+  ctaButton,
+} = navigation;
+
+const emailUrl = ctaButton?.url || 'mailto:hello@hordeagence.com';
+const emailLabel = ctaButton?.label || 'hello@hordeagence.com';
+---
+
+<header class="site-header" data-theme={theme}>
+  <div class="site-header__mobile lg:hidden">
+    <div class="site-header__mobile-bar">
+      <a href={`/${lang}`} class="site-header__logo-link" title={logoAlt} aria-label={logoAlt}>
+        <img src={logo} alt={logoAlt} class="site-header__logo" width="112" height="40" decoding="async" />
+      </a>
+
+      <button
+        type="button"
+        class="site-header__menu-toggle"
+        data-header-toggle
+        aria-expanded="false"
+        aria-controls="site-header-mobile-panel"
+        aria-label={t.nav.openMenu}
+      >
+        <span class="site-header__menu-toggle-lines" aria-hidden="true">
+          <span class="site-header__menu-toggle-line"></span>
+          <span class="site-header__menu-toggle-line"></span>
+        </span>
+      </button>
+    </div>
+
+    <div
+      id="site-header-mobile-panel"
+      class="site-header__mobile-panel"
+      data-header-panel
+      hidden
+    >
+      <nav class="site-header__mobile-nav" aria-label="Navigation principale">
+        <ul class="site-header__mobile-nav-list">
+          {items.map((item) => (
+            <li class="site-header__mobile-nav-item">
+              <a
+                href={item.url}
+                class="site-header__mobile-nav-link"
+                target={item.isExternal ? '_blank' : undefined}
+                rel={item.isExternal ? 'noopener noreferrer' : undefined}
+              >
+                {item.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+
+      <div class="site-header__mobile-actions">
+        <a href={startProjectUrl} class="site-header__action site-header__action--primary">
+          {t.nav.startProject}
+        </a>
+        <a href={emailUrl} class="site-header__action site-header__action--secondary">
+          {emailLabel}
+        </a>
+        <a href={switchUrl} hreflang={switchLang} class="site-header__action site-header__action--secondary">
+          {t.nav.switchLang}
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="site-header__desktop hidden lg:grid">
+    <div class="site-header__desktop-cta">
+      <a href={startProjectUrl} class="site-header__desktop-start-project">
+        {t.nav.startProject}
+      </a>
+    </div>
+
+    <div class="site-header__desktop-logo">
+      <a href={`/${lang}`} class="site-header__logo-link site-header__logo-link--desktop" title={logoAlt} aria-label={logoAlt}>
+        <img src="/images/logo_full.svg" alt={logoAlt} class="site-header__logo site-header__logo--full" width="320" height="15" decoding="async" />
+      </a>
+    </div>
+
+    <nav class="site-header__desktop-nav" aria-label="Navigation principale">
+      <ul class="site-header__desktop-nav-list">
+        {items.map((item) => (
+          <li class="site-header__desktop-nav-item">
+            <a
+              href={item.url}
+              class="site-header__desktop-nav-link"
+              target={item.isExternal ? '_blank' : undefined}
+              rel={item.isExternal ? 'noopener noreferrer' : undefined}
+            >
+              {item.label}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<style is:global>
+  .site-header {
+    position: fixed;
+    inset: 0 0 auto 0;
+    z-index: 9999;
+    pointer-events: none;
+  }
+
+  .site-header a,
+  .site-header button,
+  .site-header nav,
+  .site-header [data-header-panel] {
+    pointer-events: auto;
+  }
+
+  .site-header__mobile {
+    padding: var(--gutter);
+  }
+
+  .site-header__mobile-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  .site-header__logo-link {
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .site-header__logo {
+    display: block;
+    height: auto;
+    width: auto;
+    max-width: 100%;
+  }
+
+  .site-header__menu-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: inherit;
+    cursor: pointer;
+  }
+
+  .site-header__menu-toggle-lines {
+    display: flex;
+    flex-direction: column;
+    gap: 0.375rem;
+  }
+
+  .site-header__menu-toggle-line {
+    display: block;
+    width: 2rem;
+    height: 1px;
+    background: currentColor;
+  }
+
+  .site-header__mobile-panel {
+    margin-top: 1rem;
+  }
+
+  .site-header__mobile-nav-list,
+  .site-header__desktop-nav-list,
+  .site-header__mobile-actions {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .site-header__mobile-nav-list,
+  .site-header__desktop-nav-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .site-header__mobile-actions {
+    margin-top: 1rem;
+  }
+
+  .site-header__mobile-nav-link,
+  .site-header__desktop-nav-link,
+  .site-header__action,
+  .site-header__desktop-start-project {
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .site-header__desktop {
+    grid-template-columns: 1fr auto 1fr;
+    align-items: start;
+    padding: var(--gutter);
+  }
+
+  .site-header__desktop-cta {
+    justify-self: start;
+  }
+
+  .site-header__desktop-logo {
+    justify-self: center;
+  }
+
+  .site-header__desktop-nav {
+    justify-self: end;
+  }
+
+  .site-header__desktop-nav-list {
+    align-items: flex-end;
+  }
+</style>
+
+<script>
+  function initHeader() {
+    const headers = document.querySelectorAll('.site-header');
+
+    headers.forEach((header) => {
+      const toggle = header.querySelector('[data-header-toggle]');
+      const panel = header.querySelector('[data-header-panel]');
+
+      if (!(toggle instanceof HTMLButtonElement) || !(panel instanceof HTMLElement)) {
+        return;
+      }
+
+      if (toggle.dataset.headerBound === 'true') {
+        return;
+      }
+
+      const closeMenu = () => {
+        toggle.setAttribute('aria-expanded', 'false');
+        panel.hidden = true;
+      };
+
+      const openMenu = () => {
+        toggle.setAttribute('aria-expanded', 'true');
+        panel.hidden = false;
+      };
+
+      toggle.addEventListener('click', () => {
+        const isOpen = toggle.getAttribute('aria-expanded') === 'true';
+        if (isOpen) {
+          closeMenu();
+        } else {
+          openMenu();
+        }
+      });
+
+      panel.querySelectorAll('a').forEach((link) => {
+        link.addEventListener('click', () => {
+          closeMenu();
+        });
+      });
+
+      toggle.dataset.headerBound = 'true';
+    });
+  }
+
+  initHeader();
+  document.addEventListener('astro:after-swap', initHeader);
+</script>
