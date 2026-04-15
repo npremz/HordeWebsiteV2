@@ -67,7 +67,7 @@ const secondaryActionClasses = isDark
 
       <button
         type="button"
-        class="group/menu pointer-events-auto inline-flex h-11 w-11 items-center justify-center rounded-full border border-transparent bg-transparent text-current transition-colors duration-200 hover:border-current/12"
+        class="site-header__menu-toggle pointer-events-auto inline-flex items-center justify-center bg-transparent p-0 text-current"
         data-header-toggle
         data-open-label={t.nav.openMenu}
         data-close-label={t.nav.closeMenu}
@@ -77,8 +77,8 @@ const secondaryActionClasses = isDark
         aria-label={t.nav.openMenu}
       >
         <span class="relative flex h-4 w-8 flex-col justify-center" aria-hidden="true">
-          <span class="site-header__menu-toggle-line absolute left-0 block h-px w-full -translate-y-[0.1875rem] bg-current transition-transform duration-200 ease-out"></span>
-          <span class="site-header__menu-toggle-line absolute left-0 block h-px w-full translate-y-[0.1875rem] bg-current transition-transform duration-200 ease-out"></span>
+          <span class="site-header__menu-toggle-line absolute left-0 block h-px w-full bg-current"></span>
+          <span class="site-header__menu-toggle-line absolute left-0 block h-px w-full bg-current"></span>
         </span>
       </button>
     </div>
@@ -193,6 +193,20 @@ const secondaryActionClasses = isDark
 </header>
 
 <style is:global>
+  .site-header__menu-toggle-line {
+    top: 50%;
+    transform-origin: center;
+    transition: transform 180ms ease-out;
+  }
+
+  .site-header__menu-toggle-line:first-child {
+    transform: translateY(-0.1875rem);
+  }
+
+  .site-header__menu-toggle-line:last-child {
+    transform: translateY(0.1875rem);
+  }
+
   .site-header__menu-toggle[data-menu-open='true'] .site-header__menu-toggle-line:first-child {
     transform: translateY(0);
   }
