@@ -67,15 +67,18 @@ const secondaryActionClasses = isDark
 
       <button
         type="button"
-        class="site-header__menu-toggle pointer-events-auto inline-flex items-center justify-center bg-transparent p-0 text-current"
+        class="site-header__menu-toggle pointer-events-auto cursor-pointer inline-flex gap-2.5 text-[1.125rem] items-center justify-center bg-transparent p-0 text-current"
         data-header-toggle
         data-open-label={t.nav.openMenu}
         data-close-label={t.nav.closeMenu}
+        data-menu-text={t.nav.menu}
+        data-close-text={t.nav.close}
         data-menu-open="false"
         aria-expanded="false"
         aria-controls="site-header-mobile-panel"
         aria-label={t.nav.openMenu}
       >
+        <span data-header-toggle-label>{t.nav.menu}</span>
         <span class="relative flex h-4 w-8 flex-col justify-center" aria-hidden="true">
           <span class="site-header__menu-toggle-line absolute left-0 block h-px w-full bg-current"></span>
           <span class="site-header__menu-toggle-line absolute left-0 block h-px w-full bg-current"></span>
@@ -223,8 +226,13 @@ const secondaryActionClasses = isDark
     headers.forEach((header) => {
       const toggle = header.querySelector('[data-header-toggle]');
       const panel = header.querySelector('[data-header-panel]');
+      const label = header.querySelector('[data-header-toggle-label]');
 
-      if (!(toggle instanceof HTMLButtonElement) || !(panel instanceof HTMLElement)) {
+      if (
+        !(toggle instanceof HTMLButtonElement) ||
+        !(panel instanceof HTMLElement) ||
+        !(label instanceof HTMLElement)
+      ) {
         return;
       }
 
@@ -236,6 +244,7 @@ const secondaryActionClasses = isDark
         toggle.dataset.menuOpen = 'false';
         toggle.setAttribute('aria-expanded', 'false');
         toggle.setAttribute('aria-label', toggle.dataset.openLabel || 'Open menu');
+        label.textContent = toggle.dataset.menuText || 'Menu';
         panel.hidden = true;
       };
 
@@ -243,6 +252,7 @@ const secondaryActionClasses = isDark
         toggle.dataset.menuOpen = 'true';
         toggle.setAttribute('aria-expanded', 'true');
         toggle.setAttribute('aria-label', toggle.dataset.closeLabel || 'Close menu');
+        label.textContent = toggle.dataset.closeText || 'Close';
         panel.hidden = false;
       };
 
@@ -261,6 +271,7 @@ const secondaryActionClasses = isDark
         });
       });
 
+      closeMenu();
       toggle.dataset.headerBound = 'true';
     });
   }
