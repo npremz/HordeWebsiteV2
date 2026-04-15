@@ -35,9 +35,6 @@ const emailUrl = ctaButton?.url || 'mailto:hello@hordeagence.com';
 const emailLabel = ctaButton?.label || 'hello@hordeagence.com';
 const textClasses = isDark ? 'text-bg-light' : 'text-black';
 const logoClasses = isDark ? 'invert' : '';
-const mobilePanelClasses = isDark
-  ? 'border-white/10 bg-black/88 text-bg-light shadow-[0_18px_60px_rgba(0,0,0,0.35)]'
-  : 'border-black/10 bg-bg-light/92 text-black shadow-[0_18px_60px_rgba(22,25,27,0.14)]';
 const desktopLinkClasses = isDark
   ? 'text-bg-light/85 hover:text-bg-light'
   : 'text-black/70 hover:text-black';
@@ -89,8 +86,7 @@ const secondaryActionClasses = isDark
     <div
       id="site-header-mobile-panel"
       class:list={[
-        'pointer-events-auto mt-4 overflow-hidden rounded-[1.75rem] border p-5 backdrop-blur-xl sm:p-6',
-        mobilePanelClasses,
+        'site-header__mobile-panel pointer-events-auto relative z-[2] mt-4 overflow-hidden border border-black/15 bg-white p-5 text-black sm:p-6',
       ]}
       data-header-panel
       hidden
@@ -101,7 +97,7 @@ const secondaryActionClasses = isDark
             <li>
               <a
                 href={item.url}
-                class="inline-flex min-h-11 w-full items-center rounded-2xl border border-transparent px-4 py-3 text-[1.125rem] leading-none tracking-[-0.02em] transition-colors duration-200 hover:border-current/10 hover:bg-black/4 sm:text-[1.25rem]"
+                class="inline-flex min-h-11 w-full items-center border border-transparent px-4 py-3 text-[1.125rem] leading-none tracking-[-0.02em] transition-colors duration-200 hover:border-current/10 hover:bg-black/4 sm:text-[1.25rem]"
                 target={item.isExternal ? '_blank' : undefined}
                 rel={item.isExternal ? 'noopener noreferrer' : undefined}
               >
@@ -115,14 +111,14 @@ const secondaryActionClasses = isDark
       <div class="mt-5 flex flex-col gap-2 border-t border-current/10 pt-5">
         <a
           href={startProjectUrl}
-          class="inline-flex min-h-11 items-center justify-center rounded-full bg-black px-5 py-3 text-center text-[0.95rem] font-medium leading-none text-bg-light transition-opacity duration-200 hover:opacity-90"
+          class="inline-flex min-h-11 items-center justify-center border border-black bg-black px-5 py-3 text-center text-[0.95rem] font-medium leading-none text-bg-light transition-opacity duration-200 hover:opacity-90"
         >
           {t.nav.startProject}
         </a>
         <a
           href={emailUrl}
           class:list={[
-            'inline-flex min-h-11 items-center justify-center rounded-full border px-5 py-3 text-center text-[0.95rem] leading-none transition-colors duration-200',
+            'inline-flex min-h-11 items-center justify-center border px-5 py-3 text-center text-[0.95rem] leading-none transition-colors duration-200',
             secondaryActionClasses,
           ]}
         >
@@ -132,7 +128,7 @@ const secondaryActionClasses = isDark
           href={switchUrl}
           hreflang={switchLang}
           class:list={[
-            'inline-flex min-h-11 items-center justify-center rounded-full border px-5 py-3 text-center text-[0.95rem] leading-none transition-colors duration-200',
+            'inline-flex min-h-11 items-center justify-center border px-5 py-3 text-center text-[0.95rem] leading-none transition-colors duration-200',
             secondaryActionClasses,
           ]}
         >
@@ -140,6 +136,8 @@ const secondaryActionClasses = isDark
         </a>
       </div>
     </div>
+
+    <div class="site-header__mobile-reveal" data-header-reveal aria-hidden="true" hidden></div>
   </div>
 
   <div class="hidden grid-cols-[1fr_auto_1fr] items-start px-(--gutter) pt-(--gutter) lg:grid">
@@ -196,6 +194,33 @@ const secondaryActionClasses = isDark
 </header>
 
 <style is:global>
+  .site-header__mobile-reveal {
+    position: fixed;
+    inset-inline: 0;
+    top: 0;
+    height: 100vh;
+    background: #fff;
+    transform: translateY(-100%);
+    transition: transform 360ms cubic-bezier(0.2, 0.8, 0.2, 1);
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  .site-header__mobile-reveal.is-open {
+    transform: translateY(0);
+  }
+
+  .site-header__mobile-panel {
+    opacity: 0;
+    transform: translateY(-14px);
+    transition: opacity 220ms ease, transform 280ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+
+  .site-header__mobile-panel.is-open {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
   .site-header__menu-toggle-line {
     top: 50%;
     transform-origin: center;
@@ -203,11 +228,11 @@ const secondaryActionClasses = isDark
   }
 
   .site-header__menu-toggle-line:first-child {
-    transform: translateY(-0.1875rem);
+    transform: translateY(-0.2375rem);
   }
 
   .site-header__menu-toggle-line:last-child {
-    transform: translateY(0.1875rem);
+    transform: translateY(0.2375rem);
   }
 
   .site-header__menu-toggle[data-menu-open='true'] .site-header__menu-toggle-line:first-child {
@@ -226,11 +251,13 @@ const secondaryActionClasses = isDark
     headers.forEach((header) => {
       const toggle = header.querySelector('[data-header-toggle]');
       const panel = header.querySelector('[data-header-panel]');
+      const reveal = header.querySelector('[data-header-reveal]');
       const label = header.querySelector('[data-header-toggle-label]');
 
       if (
         !(toggle instanceof HTMLButtonElement) ||
         !(panel instanceof HTMLElement) ||
+        !(reveal instanceof HTMLElement) ||
         !(label instanceof HTMLElement)
       ) {
         return;
@@ -240,12 +267,29 @@ const secondaryActionClasses = isDark
         return;
       }
 
-      const closeMenu = () => {
+      let closeTimeout: number | undefined;
+
+      const closeMenu = (immediate = false) => {
         toggle.dataset.menuOpen = 'false';
         toggle.setAttribute('aria-expanded', 'false');
         toggle.setAttribute('aria-label', toggle.dataset.openLabel || 'Open menu');
         label.textContent = toggle.dataset.menuText || 'Menu';
-        panel.hidden = true;
+        panel.classList.remove('is-open');
+        reveal.classList.remove('is-open');
+        window.clearTimeout(closeTimeout);
+
+        if (immediate) {
+          panel.hidden = true;
+          reveal.hidden = true;
+          return;
+        }
+
+        closeTimeout = window.setTimeout(() => {
+          if (toggle.getAttribute('aria-expanded') === 'false') {
+            panel.hidden = true;
+            reveal.hidden = true;
+          }
+        }, 360);
       };
 
       const openMenu = () => {
@@ -253,7 +297,14 @@ const secondaryActionClasses = isDark
         toggle.setAttribute('aria-expanded', 'true');
         toggle.setAttribute('aria-label', toggle.dataset.closeLabel || 'Close menu');
         label.textContent = toggle.dataset.closeText || 'Close';
+        window.clearTimeout(closeTimeout);
         panel.hidden = false;
+        reveal.hidden = false;
+
+        requestAnimationFrame(() => {
+          panel.classList.add('is-open');
+          reveal.classList.add('is-open');
+        });
       };
 
       toggle.addEventListener('click', () => {
@@ -271,7 +322,7 @@ const secondaryActionClasses = isDark
         });
       });
 
-      closeMenu();
+      closeMenu(true);
       toggle.dataset.headerBound = 'true';
     });
   }
