@@ -83,10 +83,12 @@ const secondaryActionClasses = isDark
       </button>
     </div>
 
+    <div class="relative z-[5] mt-3 h-px w-[calc(100vw-(var(--gutter)*2))] bg-lines"></div>
+
     <div
       id="site-header-mobile-panel"
       class:list={[
-        'site-header__mobile-panel pointer-events-auto fixed inset-0 z-[2] flex min-h-[100dvh] flex-col px-(--gutter) pt-[calc(var(--gutter)+3.5rem)] pb-(--gutter) text-black',
+        'site-header__mobile-panel pointer-events-auto fixed inset-0 z-[2] flex min-h-[100dvh] flex-col mx-(--gutter) pt-[calc(var(--gutter)+3rem)] pb-(--gutter) text-black border-t border-lines',
       ]}
       data-header-panel
       hidden
