@@ -38,6 +38,7 @@ const logoClasses = isDark ? 'invert' : '';
 const desktopLinkClasses = isDark
   ? 'text-bg-light/85 hover:text-bg-light'
   : 'text-black/70 hover:text-black';
+
 ---
 
 <header class:list={['site-header fixed md:absolute inset-x-0 top-0 z-[9999] pointer-events-none', textClasses]} data-theme={theme}>
@@ -53,9 +54,9 @@ const desktopLinkClasses = isDark
           <img
             src={logo}
             alt={logoAlt}
-            class:list={['site-header__mobile-logo block h-auto w-auto max-w-full', logoClasses]}
+            class:list={['site-header__mobile-logo block h-[13px] w-auto max-w-full', logoClasses]}
             width="112"
-            height="40"
+            height="13"
             decoding="async"
           />
         </a>
@@ -119,13 +120,13 @@ const desktopLinkClasses = isDark
         <div class="flex flex-col items-start">
           <a
             href={startProjectUrl}
-            class="site-header__mobile-footer-link site-header__mobile-footer-link--arrow inline-flex min-h-11 items-center text-[1.125rem] leading-none transition-opacity duration-200 hover:opacity-90"
+            class="site-header__mobile-footer-link site-header__mobile-footer-link--arrow inline-flex min-h-11 items-center text-[18px] leading-none transition-opacity duration-200 hover:opacity-90"
           >
             {t.nav.startProject}
           </a>
           <a
             href={emailUrl}
-            class="site-header__mobile-footer-link site-header__mobile-footer-link--arrow inline-flex min-h-11 items-center text-[1.125rem] leading-none transition-opacity duration-200 hover:opacity-90"
+            class="site-header__mobile-footer-link site-header__mobile-footer-link--arrow inline-flex min-h-11 items-center text-[18px] leading-none transition-opacity duration-200 hover:opacity-90"
           >
             {emailLabel}
           </a>
@@ -133,7 +134,7 @@ const desktopLinkClasses = isDark
         <a
           href={switchUrl}
           hreflang={switchLang}
-          class="site-header__mobile-footer-link inline-flex min-h-11 items-center text-[1.125rem] leading-none transition-opacity duration-200 hover:opacity-90"
+          class="site-header__mobile-footer-link inline-flex min-h-11 items-center text-[18px] leading-none transition-opacity duration-200 hover:opacity-90"
         >
           {t.nav.switchLang}
         </a>
@@ -144,137 +145,52 @@ const desktopLinkClasses = isDark
   </div>
 
   <div class="hidden md:block">
-    <div class="absolute inset-x-0 top-0 z-[4] pointer-events-none" data-desktop-static>
-      <div class="grid grid-cols-[1fr_auto_1fr] items-start px-8 pt-6">
-        <div class="justify-self-start">
-          <a
-            href={startProjectUrl}
-            class="site-header__mobile-footer-link site-header__mobile-footer-link--arrow pointer-events-auto inline-flex items-center text-[1.125rem] leading-none transition-opacity duration-200 hover:opacity-90"
-          >
-            {t.nav.startProject}
-          </a>
-        </div>
-
-        <div class="justify-self-center">
-          <a
-            href={`/${lang}`}
-            class="pointer-events-auto inline-flex items-center mt-1"
-            title={logoAlt}
-            aria-label={logoAlt}
-          >
+    <div class="site-header__desktop-fixed fixed inset-x-0 top-0 z-[6]" data-desktop-fixed>
+      <div data-desktop-row>
+        <div class="flex items-center justify-between px-8 py-5">
+          <a href={`/${lang}`} class="inline-flex items-center" title={logoAlt} aria-label={logoAlt}>
             <img
               src="/images/logo_full.svg"
               alt={logoAlt}
-              class:list={['block h-auto w-auto max-w-full', logoClasses]}
+              class="block h-[13px] w-auto max-w-full"
               width="320"
-              height="15"
+              height="13"
               decoding="async"
             />
           </a>
-        </div>
 
-        <div class="pointer-events-auto justify-self-end flex flex-col items-end gap-4">
-          <nav aria-label="Navigation principale">
-            <ul class="m-0 flex list-none flex-col items-end gap-2 p-0">
-              {items.map((item) => (
-                <li>
-                  <a
-                    href={item.url}
-                    class:list={[
-                      'inline-flex items-center rounded-full py-1 text-right text-[1.125rem] leading-none tracking-[-0.02em] transition-colors duration-200',
-                      desktopLinkClasses,
-                    ]}
-                    target={item.isExternal ? '_blank' : undefined}
-                    rel={item.isExternal ? 'noopener noreferrer' : undefined}
-                  >
-                    {item.label}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </nav>
-          <a
-            href={switchUrl}
-            hreflang={switchLang}
-            class="site-header__mobile-footer-link site-header__mobile-footer-link--arrow inline-flex items-center text-[1.125rem] leading-none transition-opacity duration-200 hover:opacity-70"
+          <button
+            type="button"
+            class="site-header__desktop-toggle inline-flex cursor-pointer gap-2.5 items-center justify-center bg-transparent p-0 text-black text-[18px] leading-none"
+            data-desktop-toggle
+            data-menu-open="false"
+            aria-expanded="false"
+            aria-controls="site-header-desktop-curtain"
+            aria-label={t.nav.openMenu}
           >
-            {t.nav.switchLang}
-          </a>
-        </div>
-      </div>
-    </div>
-
-    <div class="site-header__desktop-fixed fixed inset-x-0 top-0 z-[6]" data-desktop-fixed>
-      <div class="bg-white text-black" data-desktop-row>
-        <div class="grid grid-cols-[1fr_auto_1fr] items-center px-8 py-5">
-          <div class="justify-self-start">
-            <a
-              href={startProjectUrl}
-              class="site-header__mobile-footer-link site-header__mobile-footer-link--arrow inline-flex items-center text-[1.125rem] leading-none transition-opacity duration-200 hover:opacity-90"
-            >
-              {t.nav.startProject}
-            </a>
-          </div>
-
-          <div class="justify-self-center">
-            <a href={`/${lang}`} class="inline-flex items-center mt-1" title={logoAlt} aria-label={logoAlt}>
-              <img
-                src="/images/logo_full.svg"
-                alt={logoAlt}
-                class="block h-auto w-auto max-w-full"
-                width="320"
-                height="15"
-                decoding="async"
-              />
-            </a>
-          </div>
-
-          <div class="justify-self-end">
-            <button
-              type="button"
-              class="site-header__desktop-toggle inline-flex cursor-pointer items-center justify-center bg-transparent p-0 text-black"
-              data-desktop-toggle
-              data-menu-open="false"
-              aria-expanded="false"
-              aria-controls="site-header-desktop-curtain"
-              aria-label={t.nav.openMenu}
-            >
-              <span class="relative flex h-4 w-8 flex-col justify-center" aria-hidden="true">
-                <span class="site-header__desktop-toggle-line absolute left-0 block h-px w-full bg-current"></span>
-                <span class="site-header__desktop-toggle-line absolute left-0 block h-px w-full bg-current"></span>
-              </span>
-            </button>
-          </div>
+            <span data-desktop-toggle-label>{t.nav.menu}</span>
+            <span class="relative flex h-4 w-8 flex-col justify-center" aria-hidden="true">
+              <span class="site-header__desktop-toggle-line absolute left-0 block h-px w-full bg-current"></span>
+              <span class="site-header__desktop-toggle-line absolute left-0 block h-px w-full bg-current"></span>
+            </span>
+          </button>
         </div>
       </div>
 
       <div
         id="site-header-desktop-curtain"
-        class="site-header__desktop-curtain border-b border-black/15 bg-white text-black"
+        class="site-header__desktop-curtain bg-[#FFFFFF] text-black"
         data-desktop-curtain
         hidden
       >
-        <div class="flex h-full items-center justify-between px-8">
-          <div class="flex items-center gap-8 text-[1.125rem] leading-none">
-            <a href={emailUrl} class="inline-flex items-center transition-opacity duration-200 hover:opacity-70">
-              {emailLabel}
-            </a>
-            <a
-              href={switchUrl}
-              hreflang={switchLang}
-              class="inline-flex items-center transition-opacity duration-200 hover:opacity-70"
-            >
-              {t.nav.switchLang}
-            </a>
-          </div>
-
+        <div class="flex flex-col px-6 py-5 gap-[20px]">
           <nav aria-label="Navigation desktop curtain">
-            <ul class="m-0 flex list-none items-center gap-8 p-0">
+            <ul class="m-0 flex list-none items-center justify-between gap-1 p-0 text-[18px] leading-none -mx-1">
               {items.map((item) => (
                 <li>
                   <a
                     href={item.url}
-                    class="inline-flex items-center text-[1.125rem] leading-none transition-opacity duration-200 hover:opacity-70"
+                    class="nav-link-hover relative inline-flex items-center whitespace-nowrap px-1 py-1"
                     target={item.isExternal ? '_blank' : undefined}
                     rel={item.isExternal ? 'noopener noreferrer' : undefined}
                   >
@@ -284,6 +200,30 @@ const desktopLinkClasses = isDark
               ))}
             </ul>
           </nav>
+
+          <div class="h-px w-full bg-black"></div>
+
+          <div class="flex flex-col items-end gap-[20px] text-[18px] leading-none">
+            <a
+              href={switchUrl}
+              hreflang={switchLang}
+              class="nav-link-hover site-header__mobile-footer-link site-header__mobile-footer-link--arrow relative inline-flex items-center pr-2 py-1"
+            >
+              {t.nav.switchLang}
+            </a>
+            <a
+              href={startProjectUrl}
+              class="nav-link-hover site-header__mobile-footer-link site-header__mobile-footer-link--arrow relative inline-flex items-center pr-2 py-1"
+            >
+              {t.nav.startProject}
+            </a>
+            <a
+              href={emailUrl}
+              class="nav-link-hover site-header__mobile-footer-link site-header__mobile-footer-link--arrow relative inline-flex items-center pr-2 py-1"
+            >
+              {emailLabel}
+            </a>
+          </div>
         </div>
       </div>
     </div>
@@ -292,24 +232,6 @@ const desktopLinkClasses = isDark
 
 <style is:global>
   .site-header__desktop-fixed {
-    opacity: 0;
-    transform: translateY(-10px);
-    transition: opacity 220ms ease, transform 220ms ease;
-    pointer-events: none;
-  }
-
-  .site-header__desktop-fixed.is-visible {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  .site-header__desktop-fixed [data-desktop-row],
-  .site-header__desktop-fixed [data-desktop-curtain] {
-    pointer-events: none;
-  }
-
-  .site-header__desktop-fixed.is-visible [data-desktop-row],
-  .site-header__desktop-fixed.is-visible [data-desktop-curtain] {
     pointer-events: auto;
   }
 
@@ -336,21 +258,14 @@ const desktopLinkClasses = isDark
   }
 
   .site-header__desktop-curtain {
-    position: relative;
-    height: var(--desktop-header-height, 86px);
+    position: absolute;
+    right: 2rem;
+    top: var(--desktop-header-height, 86px);
+    width: 511px;
+    max-width: calc(100vw - 4rem);
     opacity: 0;
     transform: translateY(-8px);
     transition: opacity 220ms ease, transform 220ms ease;
-  }
-
-  .site-header__desktop-curtain::before {
-    content: "";
-    position: absolute;
-    left: 2rem;
-    right: 2rem;
-    top: 0;
-    height: 1px;
-    background: #000;
   }
 
   .site-header__desktop-curtain.is-open {
@@ -460,6 +375,31 @@ const desktopLinkClasses = isDark
   .site-header__mobile-footer-link--arrow:hover::before {
     transform: translateY(-52%) translateX(2px);
   }
+
+  .nav-link-hover {
+    isolation: isolate;
+    transition: color 0.3s ease-out;
+  }
+
+  .nav-link-hover::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-color: #000;
+    z-index: -1;
+    transform: scaleY(0);
+    transform-origin: top center;
+    transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  @media (hover: hover) {
+    .nav-link-hover:hover {
+      color: #fff;
+    }
+    .nav-link-hover:hover::after {
+      transform: scaleY(1);
+    }
+  }
 </style>
 
 <script>
@@ -473,7 +413,6 @@ const desktopLinkClasses = isDark
       const label = header.querySelector('[data-header-toggle-label]');
       const divider = header.querySelector('[data-header-divider]');
       const mobileFixed = header.querySelector('[data-mobile-fixed]');
-      const desktopStatic = header.querySelector('[data-desktop-static]');
       const desktopFixed = header.querySelector('[data-desktop-fixed]');
       const desktopRow = header.querySelector('[data-desktop-row]');
       const desktopToggle = header.querySelector('[data-desktop-toggle]');
@@ -619,7 +558,6 @@ const desktopLinkClasses = isDark
       toggle.dataset.headerBound = 'true';
 
       if (
-        desktopStatic instanceof HTMLElement &&
         desktopFixed instanceof HTMLElement &&
         desktopRow instanceof HTMLElement &&
         desktopToggle instanceof HTMLButtonElement &&
@@ -632,24 +570,17 @@ const desktopLinkClasses = isDark
         }
 
         let desktopCloseTimeout: number | undefined;
-        let desktopCanDisplay = false;
-        let isDesktopHiddenByScroll = false;
-        let lastScrollY = window.scrollY;
-        const SCROLL_DELTA_THRESHOLD = 8;
-        const SCROLL_HIDE_OFFSET = 120;
 
-        const applyDesktopVisibility = () => {
-          const shouldShowFixed = desktopCanDisplay && !isDesktopHiddenByScroll;
-          desktopFixed.classList.toggle('is-visible', shouldShowFixed);
-
-          if (!shouldShowFixed) {
-            closeDesktopMenu(true);
-          }
+        const setToggleState = (open: boolean) => {
+          const text = open ? (desktopToggle.dataset.closeText || 'Fermer') : (desktopToggle.dataset.menuText || 'Menu');
+          desktopToggle.dataset.menuOpen = open ? 'true' : 'false';
+          desktopToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+          const fixedLabel = header.querySelector('[data-desktop-toggle-label]');
+          if (fixedLabel) fixedLabel.textContent = text;
         };
 
         const closeDesktopMenu = (immediate = false) => {
-          desktopToggle.dataset.menuOpen = 'false';
-          desktopToggle.setAttribute('aria-expanded', 'false');
+          setToggleState(false);
           desktopCurtain.classList.remove('is-open');
           window.clearTimeout(desktopCloseTimeout);
 
@@ -666,8 +597,7 @@ const desktopLinkClasses = isDark
         };
 
         const openDesktopMenu = () => {
-          desktopToggle.dataset.menuOpen = 'true';
-          desktopToggle.setAttribute('aria-expanded', 'true');
+          setToggleState(true);
           window.clearTimeout(desktopCloseTimeout);
           desktopCurtain.hidden = false;
 
@@ -692,46 +622,6 @@ const desktopLinkClasses = isDark
         });
 
         closeDesktopMenu(true);
-        applyDesktopVisibility();
-
-        const handleScroll = () => {
-          if (!desktopCanDisplay) return;
-
-          const currentScrollY = window.scrollY;
-          const delta = currentScrollY - lastScrollY;
-
-          if (Math.abs(delta) < SCROLL_DELTA_THRESHOLD) return;
-
-          if (delta > 0 && currentScrollY > SCROLL_HIDE_OFFSET) {
-            isDesktopHiddenByScroll = true;
-          } else if (delta < 0) {
-            isDesktopHiddenByScroll = false;
-          }
-
-          lastScrollY = currentScrollY;
-          applyDesktopVisibility();
-        };
-
-        if ('IntersectionObserver' in window) {
-          const observer = new IntersectionObserver(
-            (entries) => {
-              const entry = entries[0];
-              desktopCanDisplay = !entry.isIntersecting;
-              if (!desktopCanDisplay) {
-                isDesktopHiddenByScroll = false;
-              }
-              applyDesktopVisibility();
-            },
-            { threshold: 0 }
-          );
-
-          observer.observe(desktopStatic);
-        } else {
-          desktopCanDisplay = true;
-          applyDesktopVisibility();
-        }
-
-        window.addEventListener('scroll', handleScroll, { passive: true });
 
         desktopFixed.dataset.desktopBound = 'true';
       }
