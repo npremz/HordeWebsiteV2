@@ -2,7 +2,7 @@
 
 @font-face {
   font-family: 'PP Neue Montreal';
-  src: url('../assets/fonts/PPNeueMontreal-Regular.woff2') format('woff2');
+  src: url('../assets/fonts/PPNeueMontreal-Book.woff2') format('woff2');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -50,7 +50,7 @@
 }
 
 :root {
-  --gutter: 1.5rem;
+  --gutter: 1rem;
 }
 
 @media only screen and (min-width: 640px) {
@@ -330,4 +330,23 @@ svg polygon {
 
 .font-neuebit {
   font-family: 'PP Neue Bit', system-ui, sans-serif;
+}
+
+/* Service offer grid - 3 columns on desktop */
+@media (min-width: 1024px) {
+  .offer-grid {
+    grid-template-columns: repeat(3, auto);
+    justify-content: space-between;
+  }
+}
+
+/* Contact form responsive overrides (TSX not scanned by Tailwind 4) */
+@media (min-width: 1024px) {
+  .form-input-py {
+    padding-top: 30px !important;
+    padding-bottom: 30px !important;
+  }
+  .form-gap {
+    gap: 60px !important;
+  }
 }

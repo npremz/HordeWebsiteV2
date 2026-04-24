@@ -15,18 +15,14 @@ const { service } = Astro.props;
     left={service.offerTitleLeft}
     right={service.offerTitleRight}
   />
-  <div class="py-16 sm:pb-25 md:pt-32 lg:pt-24 2xl:pt-32 md:pb-50 border-y border-lines space-y-16 md:space-y-0 md:grid md:grid-cols-2 md:gap-x-10 lg:gap-x-25 md:gap-y-32">
+  <div class="offer-grid sm:pb-25 md:pb-50 space-y-16 md:space-y-0 md:grid md:gap-x-10 md:gap-y-32">
     {service.offerItems.map((item, index) => (
-      <article class="flex">
-        <div class="w-full">
-          <div class="flex justify-between items-end">
-            <h3 class="text-[1.5rem] leading-none">{item.title}</h3>
-            <span class="font-mono text-[1rem] whitespace-nowrap">
-              / {String(index + 1).padStart(3, "0")}
-            </span>
-          </div>
-          <p class="mt-8">{item.body}</p>
-        </div>
+      <article>
+        <span class="font-mono text-[1rem] block">
+          / {String(index + 1).padStart(3, "0")}
+        </span>
+        <h3 class="text-[1.5rem] leading-none mt-4">{item.title}</h3>
+        <p class="mt-8 text-[1.125rem] max-w-[365px]">{item.body}</p>
       </article>
     ))}
   </div>

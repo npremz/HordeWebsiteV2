@@ -99,13 +99,25 @@ const email = "hello@hordeagence.com";
               </li>
             ))
           }
-          <li>
+          <li class="pt-[30px]">
             <a
               href={switchUrl}
               hreflang={switchLang}
               title={t.nav.switchLang}
-              class="text-[1rem] font-mono uppercase leading-none hover:opacity-60 transition-opacity duration-200"
+              class="flex items-center gap-2.5 text-[1rem] font-mono uppercase leading-none hover:opacity-60 transition-opacity duration-200"
             >
+              <svg
+                width="11"
+                height="10"
+                viewBox="0 0 11 10"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true"
+              >
+                <path
+                  d="M7.38206 10L6.60058 9.24904L9.13314 6.39847L0 6.39847V0H1V5.32567H9.13314L6.60058 2.4751L7.38206 1.72414L11 5.86207L7.38206 10Z"
+                  fill={svgFill}></path>
+              </svg>
               {switchLang.toUpperCase()}
             </a>
           </li>

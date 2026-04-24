@@ -1,4 +1,10 @@
-import { useState, useRef, useEffect } from 'preact/hooks';
+import {
+  useEffect,
+  useRef,
+  useState,
+  type ChangeEventHandler,
+  type FormEventHandler,
+} from 'react';
 
 interface FormData {
   besoin: string;
@@ -127,7 +133,7 @@ export default function ContactForm({
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = async (e: any) => {
+  const handleSubmit: FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault();
 
     if (!validateForm()) {
@@ -181,12 +187,32 @@ export default function ContactForm({
     }
   };
 
+  const handleNeedChange: ChangeEventHandler<HTMLInputElement> = (e) => {
+    handleChange('besoin', e.target.value);
+  };
+
+  const handleObjectifInput: FormEventHandler<HTMLTextAreaElement> = (e) => {
+    handleChange('objectif', e.currentTarget.value);
+  };
+
+  const handleNameChange: ChangeEventHandler<HTMLInputElement> = (e) => {
+    handleChange('nom', e.target.value);
+  };
+
+  const handleEmailChange: ChangeEventHandler<HTMLInputElement> = (e) => {
+    handleChange('email', e.target.value);
+  };
+
+  const handleCompanyChange: ChangeEventHandler<HTMLInputElement> = (e) => {
+    handleChange('societe', e.target.value);
+  };
+
   return (
-    <form className="mt-10 sm:mt-16 md:mt-24 lg:mt-30 flex flex-col gap-10" onSubmit={(e) => void handleSubmit(e)} noValidate>
+    <form className="mt-10 sm:mt-16 md:mt-24 lg:mt-30 flex flex-col gap-10 form-gap" onSubmit={(e) => void handleSubmit(e)} noValidate>
       {!hideNeedField && (
         <fieldset className='flex flex-col gap-5 '>
           <div className='relative flex flex-col md:flex-row gap-5 md:gap-16 lg:gap-32 md:items-center w-full'>
-            <legend className='section-label block md:w-36 md:shrink-0 relative'>
+            <legend className='text-[1.125rem] block md:w-36 md:shrink-0 relative'>
               {t.needLabel}<span aria-hidden="true">*</span>
             </legend>
             <div className="w-full flex flex-wrap gap-[1.25rem] lg:gap-[2.5rem] mt-5 pb-5 md:pb-10">
@@ -205,7 +231,7 @@ export default function ContactForm({
                     name="besoin"
                     value={option.value}
                     checked={formData.besoin === option.value}
-                    onChange={(e) => handleChange('besoin', e.target.value)}
+                    onChange={handleNeedChange}
                     className="sr-only "
                     aria-describedby={errors.besoin ? 'besoin-error' : undefined}
                   />
@@ -218,7 +244,7 @@ export default function ContactForm({
       )}
 
       <div className='flex flex-col md:flex-row md:items-center md:gap-16 lg:gap-32 gap-2.5 sm:gap-5 '>
-        <label htmlFor="objectif" className='section-label block md:w-36 md:shrink-0 relative'>
+        <label htmlFor="objectif" className='text-[1.125rem] block md:w-36 md:shrink-0 relative'>
           {t.objectifLabel}<span aria-hidden="true">*</span>
           {errors.objectif && (
             <span id="objectif-error" role="alert" className="md:hidden text-err absolute right-0 top-0">{errors.objectif}</span>
@@ -231,13 +257,13 @@ export default function ContactForm({
             name="objectif"
             rows={1}
             maxLength={MAX_LENGTHS.objectif}
-            className={`py-5 xl:py-8 px-5 md:px-[30px] w-full text-2xl sm:text-[2rem] border bg-transparent focus:outline-none focus-visible:outline-none transition-colors resize-none overflow-hidden ${errors.objectif
+            className={`py-5 form-input-py px-5 md:px-[30px] w-full text-2xl sm:text-[2rem] border bg-transparent focus:outline-none focus-visible:outline-none transition-colors resize-none overflow-hidden ${errors.objectif
               ? 'border-err placeholder:text-err'
               : variant === 'dark' ? 'border-lines-dark focus:border-lines' : 'border-lines focus:border-black'
               }`}
             placeholder={t.objectifPlaceholder}
             value={formData.objectif}
-            onInput={(e) => handleChange('objectif', (e.target as HTMLTextAreaElement).value)}
+            onInput={handleObjectifInput}
             aria-required="true"
             aria-invalid={!!errors.objectif}
             aria-describedby={errors.objectif ? 'objectif-error' : undefined}
@@ -251,7 +277,7 @@ export default function ContactForm({
       </div>
 
       <div className='flex flex-col md:flex-row md:items-center md:gap-16 lg:gap-32 gap-2.5 sm:gap-5 '>
-        <label htmlFor="nom" className='section-label block md:w-36 md:shrink-0 relative'>
+        <label htmlFor="nom" className='text-[1.125rem] block md:w-36 md:shrink-0 relative'>
           {t.nameLabel}<span aria-hidden="true">*</span>
           {errors.nom && (
             <span className="md:hidden text-err absolute right-0 top-0">{errors.nom}</span>
@@ -263,13 +289,13 @@ export default function ContactForm({
             id="nom"
             name="nom"
             maxLength={MAX_LENGTHS.nom}
-            className={`py-5 xl:py-8 px-5 md:px-[30px] w-full text-2xl sm:text-[2rem] border bg-transparent focus:outline-none focus-visible:outline-none transition-colors ${errors.nom
+            className={`py-5 form-input-py px-5 md:px-[30px] w-full text-2xl sm:text-[2rem] border bg-transparent focus:outline-none focus-visible:outline-none transition-colors ${errors.nom
               ? 'border-err placeholder:text-err'
               : variant === 'dark' ? 'border-lines-dark focus:border-lines' : 'border-lines focus:border-black'
               }`}
             placeholder={t.namePlaceholder}
             value={formData.nom}
-            onChange={(e) => handleChange('nom', e.target.value)}
+            onChange={handleNameChange}
             aria-required="true"
             aria-invalid={!!errors.nom}
             aria-describedby={errors.nom ? 'nom-error' : undefined}
@@ -283,7 +309,7 @@ export default function ContactForm({
       </div>
 
       <div className='flex flex-col md:flex-row md:items-center md:gap-16 lg:gap-32 gap-2.5 sm:gap-5 '>
-        <label htmlFor="email" className='section-label block md:w-36 md:shrink-0 relative'>
+        <label htmlFor="email" className='text-[1.125rem] block md:w-36 md:shrink-0 relative'>
           {t.emailLabel}<span aria-hidden="true">*</span>
           {errors.email && (
             <span className="md:hidden text-err absolute right-0 top-0">{errors.email}</span>
@@ -295,13 +321,13 @@ export default function ContactForm({
             id="email"
             name="email"
             maxLength={MAX_LENGTHS.email}
-            className={`py-5 xl:py-8 px-5 md:px-[30px] w-full text-2xl sm:text-[2rem] border bg-transparent focus:outline-none focus-visible:outline-none transition-colors ${errors.email
+            className={`py-5 form-input-py px-5 md:px-[30px] w-full text-2xl sm:text-[2rem] border bg-transparent focus:outline-none focus-visible:outline-none transition-colors ${errors.email
               ? 'border-err placeholder:text-err'
               : variant === 'dark' ? 'border-lines-dark focus:border-lines' : 'border-lines focus:border-black'
               }`}
             placeholder="@"
             value={formData.email}
-            onChange={(e) => handleChange('email', e.target.value)}
+            onChange={handleEmailChange}
             aria-required="true"
             aria-invalid={!!errors.email}
             aria-describedby={errors.email ? 'email-error' : undefined}
@@ -315,16 +341,16 @@ export default function ContactForm({
       </div>
 
       <div className='flex flex-col md:flex-row md:items-center md:gap-16 lg:gap-32 gap-2.5 sm:gap-5 '>
-        <label htmlFor="societe" className='section-label block md:w-36 md:shrink-0'>{t.companyLabel}</label>
+        <label htmlFor="societe" className='text-[1.125rem] block md:w-36 md:shrink-0'>{t.companyLabel}</label>
         <input
           type="text"
           id="societe"
           name="societe"
           maxLength={MAX_LENGTHS.societe}
-          className={`py-5 xl:py-8 px-5 md:px-[30px] flex-1 text-2xl sm:text-[2rem] border bg-transparent focus:outline-none focus-visible:outline-none transition-colors ${variant === 'dark' ? 'border-lines-dark focus:border-lines' : 'border-lines focus:border-black'}`}
+          className={`py-5 form-input-py px-5 md:px-[30px] flex-1 text-2xl sm:text-[2rem] border bg-transparent focus:outline-none focus-visible:outline-none transition-colors ${variant === 'dark' ? 'border-lines-dark focus:border-lines' : 'border-lines focus:border-black'}`}
           placeholder={t.companyPlaceholder}
           value={formData.societe}
-          onChange={(e) => handleChange('societe', e.target.value)}
+          onChange={handleCompanyChange}
         />
       </div>
 

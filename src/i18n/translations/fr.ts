@@ -6,7 +6,7 @@ export const fr = {
     close: 'Close',
     openMenu: 'Ouvrir le menu',
     closeMenu: 'Fermer le menu',
-    switchLang: 'English version',
+    switchLang: 'English',
   },
 
   // Hero Section

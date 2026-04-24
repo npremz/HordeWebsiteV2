@@ -2,13 +2,13 @@
 import { ClientRouter } from 'astro:transitions';
 import SEO from '../components/SEO.astro';
 import '../styles/global.css';
-import HeaderNew from '../components/HeaderNew.astro';
+import Header from '../components/Header.astro';
 import Container from '../components/ui/layout/Container.astro';
 import { DEFAULT_LOCALE, HTML_LOCALE_CODES, type Locale, useTranslations } from '../i18n';
 
 // Preload critical fonts
 import fontDisplay from '../assets/fonts/PPNeueMachina-Light.woff2';
-import fontBody from '../assets/fonts/PPNeueMontreal-Regular.woff2';
+import fontBody from '../assets/fonts/PPNeueMontreal-Book.woff2';
 
 interface Props {
   // i18n
@@ -102,8 +102,7 @@ const bodyClasses = isDark ? 'bg-black text-bg-light' : 'bg-bg text-black';
   <body class={`${bodyClasses} ${className || ''}`}>
     <a href="#main-content" class="skip-link" title={t.a11y.skipToContent}>{t.a11y.skipToContent}</a>
 
-    <!-- <Header lang={lang} variant={finalHeaderVariant} /> -->
-    <HeaderNew lang={lang} alternateUrl={alternateUrl} theme={headerVariant} />
+    <Header lang={lang} alternateUrl={alternateUrl} theme={headerVariant} />
     <Container variant={variant}>
       <main id="main-content">
         <slot />
