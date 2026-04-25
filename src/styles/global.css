@@ -196,7 +196,7 @@ body {
 
   /* Section headers - monospace uppercase labels */
   .section-label {
-    @apply font-mono text-[1rem] uppercase text-black;
+    @apply font-mono text-[0.875rem] uppercase text-black;
   }
 
   /* Dark variant for dark backgrounds */
@@ -299,6 +299,16 @@ body {
     content: "";
     @apply absolute top-0 left-1/2 -translate-x-1/2 w-screen h-full -z-1;
     background-color: var(--color-black);
+  }
+
+  .full-width-white-bg {
+    @apply relative;
+  }
+
+  .full-width-white-bg::before {
+    content: "";
+    @apply absolute top-0 left-1/2 -translate-x-1/2 w-screen h-full -z-1;
+    background-color: var(--color-bg-light);
   }
 
   /* -----------------------------------------

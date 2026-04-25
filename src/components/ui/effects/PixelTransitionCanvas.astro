@@ -7,6 +7,7 @@ interface Props {
 	triggerDistance?: number;
 	triggerDistanceBottom?: number;
 	stopAtMiddle?: boolean;
+	stopWhenTargetCoversViewport?: boolean;
 	color?: string;
 	parallaxSpeed?: number;
 	class?: string;
@@ -20,6 +21,7 @@ const {
 	triggerDistance = 500,
 	triggerDistanceBottom = 500,
 	stopAtMiddle = false,
+	stopWhenTargetCoversViewport = false,
 	color = 'rgb(244, 243, 243)',
 	parallaxSpeed = 0.3,
 	class: className = '-z-1000',
@@ -39,6 +41,7 @@ const instanceId = `bg-canvas-${Math.random().toString(36).slice(2, 10)}`;
 	data-trigger-distance={triggerDistance}
 	data-trigger-distance-bottom={triggerDistanceBottom}
 	data-stop-at-middle={stopAtMiddle ? 'true' : 'false'}
+	data-stop-when-target-covers-viewport={stopWhenTargetCoversViewport ? 'true' : 'false'}
 	data-color={color}
 	data-parallax-speed={parallaxSpeed}
 	aria-hidden="true"
@@ -68,6 +71,7 @@ const instanceId = `bg-canvas-${Math.random().toString(36).slice(2, 10)}`;
     var targetId = canvas.getAttribute('data-target-id') || 'page-content';
     var stopTargetId = canvas.getAttribute('data-stop-target-id');
     var stopAtMiddle = canvas.getAttribute('data-stop-at-middle') === 'true';
+    var stopWhenTargetCoversViewport = canvas.getAttribute('data-stop-when-target-covers-viewport') === 'true';
     var pixelColor = canvas.getAttribute('data-color') || 'rgb(244, 243, 243)';
 
     function parseNumberAttribute(name, fallback) {
@@ -143,6 +147,12 @@ const instanceId = `bg-canvas-${Math.random().toString(36).slice(2, 10)}`;
       return stopTargetId ? document.getElementById(stopTargetId) : null;
     }
 
+    function stopSectionHasReachedViewportTop(section) {
+      var rect = section.getBoundingClientRect();
+
+      return rect.top <= 1;
+    }
+
     function resizeCanvas() {
       state.viewportWidth = window.innerWidth;
       state.viewportHeight = window.innerHeight;
@@ -186,10 +196,18 @@ const instanceId = `bg-canvas-${Math.random().toString(36).slice(2, 10)}`;
       if (stopTargetId) {
         var stopSection = getStopSection();
         if (stopSection) {
-          var stopPos = getAbsoluteTop(stopSection);
-          endZone = stopAtMiddle
-            ? stopPos - viewportHeight / 2 + triggerDistanceBottom
-            : stopPos + bottomOffset - viewportHeight;
+          if (stopWhenTargetCoversViewport) {
+            if (stopSectionHasReachedViewportTop(stopSection)) {
+              return false;
+            }
+
+            endZone = getAbsoluteBottom(stopSection);
+          } else {
+            var stopPos = getAbsoluteTop(stopSection);
+            endZone = stopAtMiddle
+              ? stopPos - viewportHeight / 2 + triggerDistanceBottom
+              : stopPos + bottomOffset - viewportHeight;
+          }
         }
       }
 

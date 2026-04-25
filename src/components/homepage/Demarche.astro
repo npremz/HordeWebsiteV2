@@ -1,91 +1,65 @@
 ---
-import ServiceSectionHeading from "../services/ServiceSectionHeading.astro"
 import CtaButton from "../ui/actions/CtaButton.astro";
 
 const steps = [
   {
-    number: '001',
+    number: '1',
     title: 'Audit de votre site actuel (offert)',
     quote: '"On se pose avec vous, avec un langage que tout le monde comprends."',
     description: 'Tout commence par un diagnostic. On analyse vos performances (SEO, vitesse, UX) pour identifier vos réels blocages. Vous repartez avec des réponses claires, sans engagement.',
   },
   {
-    number: '002',
+    number: '2',
     title: 'On crée votre solution sur mesure',
     quote: '"Notre but est de creer un site qui repond a vos probleme business."',
     description: 'On choisi la technologie qui vous convient et on met tout en place pour que votre site ne soit pas un poid de plus a gerer dans votre activite mais bien un levier',
   },
   {
-    number: '003',
+    number: '3',
     title: 'on vous rend autonome',
     quote: '"Pas de relation de dependance, vous avez les cles du projet."',
     description: 'On prend un soin particulier a fournir des solutions qui permetterons a vous et votre equipe d\'avoir une main totale sur le livrable: Modifications, ajouts et migrations sont pensees pour le long terme.',
   },
 ];
 
-const [step1, ...remainingSteps] = steps;
 ---
 
-<section id="demarche" class="pt-50 sm:pt-100 text-white">
-  <ServiceSectionHeading
-    id="service-method-title"
-    left="Notre \n demarche"
-    right="pour un site \n sur mesure"
-    dark
-    class="md:pb-18!"
-  />
-
-  <!-- Step 1 : fond fourni par le canvas uniquement -->
-  <ul>
-    <li class="py-16 sm:py-32">
-      <span class="section-label text-white">/ {step1.number}</span>
-      <div class="sm:flex sm:gap-16">
-        <h3 class="mt-8 font-display uppercase leading-none text-[2rem] md:text-[2.5rem]">{step1.title}</h3>
-        <p class="mt-8 section-label text-white sm:text-right md:max-w-[260px]">{step1.quote}</p>
-      </div>
-      <p class="mt-16 sm:mt-24 indent-24 text-[1.5rem] sm:text-[2rem]">{step1.description}</p>
-    </li>
-  </ul>
-
-  <!-- Steps 2 & 3 + CTA : fond CSS dark bg en relais du canvas -->
-  <div class="demarche-dark-relay">
-    <ul>
-      {remainingSteps.map((step) => (
-        <>
-          <li aria-hidden="true" class="h-px bg-lines-dark"></li>
-          <li class="py-16 sm:py-32">
-            <span class="section-label text-white">/ {step.number}</span>
-            <div class="sm:flex sm:gap-16">
-              <h3 class="mt-8 font-display uppercase leading-none text-[2rem] md:text-[2.5rem]">{step.title}</h3>
-              <p class="mt-8 section-label text-white sm:text-right md:max-w-[260px]">{step.quote}</p>
-            </div>
-            <p class="mt-16 sm:mt-24 indent-24 text-[1.5rem] sm:text-[2rem]">{step.description}</p>
-          </li>
-        </>
-      ))}
-    </ul>
-    <div class="flex flex-col sm:-mt-12">
-      <svg class="self-end" width="41" height="45" viewBox="0 0 41 45" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M40.3977 30.1993L37.364 27.0024L25.8483 37.3628L25.8483 14C25.8483 6.26802 19.5803 -8.6259e-07 11.8483 -5.21966e-07L0 0L1.77429e-07 4.09091L17.5145 4.09091C19.7236 4.09091 21.5145 5.88177 21.5145 8.09091L21.5145 37.3628L9.99882 27.0024L6.96512 30.1993L23.6814 45L40.3977 30.1993Z" fill="#F4F1F8"/>
-      </svg>
-    </div>
-    <CtaButton href="/fr/contact" label="Lancer un projet" fullWidth class="mt-8 md:mt-10" variant='light'/>
+<section id="demarche" class="pt-16 sm:pt-100 text-black">
+  <div class="relative px-5 flex flex-col">
+    <svg class="absolute top-0 left-0 h-8 " viewBox="0 0 6 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4.39106 0H6C3.62011 4.16285 1.84358 8.70413 1.84358 15.0688C1.84358 21.2959 3.62011 25.8372 6 30H4.39106C2.07821 26.5252 0 21.2959 0 15.0688C0 8.63532 2.07821 3.47477 4.39106 0Z" fill="#16191B"/>
+    </svg>
+    <h2>Notre démarche pour la création d’un site web sur mesure</h2>
+    <svg class="h-5 self-end translate-x-5 mt-4" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect width="7" height="20" transform="matrix(0.707107 0.707107 0.707107 -0.707107 0 14.1426)" fill="#16191B"/>
+    </svg>
+    <p class="mt-4 section-label">
+      <span class="block">Ce a quoi vous pouvez<br/> vous attendre</span>
+      <span class="block text-right">en travaillant<br/> avec nous</span>
+    </p>
+    <svg class="absolute bottom-0 right-0 h-8 " viewBox="0 0 7 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M1.67598 30L0 30C2.47905 25.8372 4.32961 21.2959 4.32961 14.9312C4.32961 8.70413 2.47905 4.16284 2.84579e-06 -5.03556e-07L1.67598 -3.68524e-07C4.0852 3.47477 6.25 8.70413 6.25 14.9312C6.25 21.3647 4.0852 26.5252 1.67598 30Z" fill="#16191B"/>
+    </svg>
   </div>
-</section>
 
-<style>
-  .demarche-dark-relay {
-    position: relative;
-    isolation: isolate;
-  }
-  .demarche-dark-relay::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    bottom: -1px;
-    left: -100vw;
-    right: -100vw;
-    z-index: -1;
-    background-color: var(--color-black);
-  }
-</style>
+  <ul>
+    {steps.map((step, index) => (
+      <>
+        {index > 0 && <li aria-hidden="true" class="h-px bg-lines-dark"></li>}
+        <li class="py-16 sm:py-32">
+          <div class="flex gap-7">
+            <span class="text-[1.5rem]">{step.number}/</span>
+            <h3 class="text-[1.5rem]">{step.title}</h3>
+          </div>
+          <p class="mt-10 text-[1.25rem]">{step.description}</p>
+        </li>
+      </>
+    ))}
+  </ul>
+  <div class="flex flex-col sm:-mt-12">
+    <svg class="self-end" width="41" height="45" viewBox="0 0 41 45" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M40.3977 30.1993L37.364 27.0024L25.8483 37.3628L25.8483 14C25.8483 6.26802 19.5803 -8.6259e-07 11.8483 -5.21966e-07L0 0L1.77429e-07 4.09091L17.5145 4.09091C19.7236 4.09091 21.5145 5.88177 21.5145 8.09091L21.5145 37.3628L9.99882 27.0024L6.96512 30.1993L23.6814 45L40.3977 30.1993Z" fill="#16191B"/>
+    </svg>
+  </div>
+  <CtaButton href="/fr/contact" label="Lancer un projet" fullWidth class="mt-8 md:mt-10" variant="dark" />
+</section>
