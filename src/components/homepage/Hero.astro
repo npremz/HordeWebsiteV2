@@ -2,11 +2,11 @@
 import HeroWeather from "./HeroWeather.astro";
 ---
 
-<section id="hero" class="pt-62 pb-68 sm:mx-5 sm:border-x sm:border-lines">
-    <div class="relative px-6 max-w-[388px] md:max-w-[500px] mx-auto flex flex-col justify-center items-center">
+<section id="hero" class="pt-62 pb-68 sm:pt-76 sm:pb-20 sm:mx-5 sm:border-x sm:border-lines">
+    <div class="relative max-w-[388px] sm:max-w-[420px] aspect-square mx-auto flex flex-col justify-center items-center">
       <div class="relative @container w-full">
         <span class="absolute -translate-y-1/2 -z-10 w-full aspect-square rounded-full border border-lines"></span>
-        <div class="relative p-4 w-full h-85 border border-lines flex flex-col justify-between">
+        <div class="relative p-4 w-full h-85 sm:h-105 border border-lines flex flex-col justify-between">
           <span class="block mt-2 font-display uppercase text-[2rem] sm:text-[2.5rem] md:text-[3rem] leading-none">Nous <br>Concevons</span>
           <h1 class="text-[0.875rem] leading-tight uppercase font-mono text-right absolute bottom-1/2 right-4 mb-2">Agence de site web <br/>basée à bruxelles</h1>
           <HeroWeather class="absolute top-1/2 left-4 mt-2" />
@@ -14,5 +14,10 @@ import HeroWeather from "./HeroWeather.astro";
         </div>
         <span class="absolute -translate-y-1/2 -z-10 w-full aspect-square rounded-full border border-lines"></span>
       </div>
+    </div>
+    <div class="hidden sm:flex justify-center sm:justify-end sm:mt-52.5 sm:-translate-y-full">
+      <svg width="31" height="35" viewBox="0 0 31 35" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M0 23.4884L2.32797 21.0018L11.1648 29.06V10.8621C11.1648 4.8631 15.8784 -2.62223e-07 21.6931 0L31 4.19712e-07L31 3.18182L16.83 3.18182C15.5379 3.18182 14.4904 4.26251 14.4904 5.59561L14.4904 29.06L23.3272 21.0018L25.6552 23.4884L12.8276 35L0 23.4884Z" fill="#16191B"/>
+      </svg>
     </div>
 </section>

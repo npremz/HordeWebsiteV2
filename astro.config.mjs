@@ -64,6 +64,14 @@ export default defineConfig({
   compressHTML: true,
   vite: {
     plugins: [tailwindcss()],
+    server: {
+      strictPort: true,
+      hmr: {
+        protocol: 'ws',
+        host: 'localhost',
+        clientPort: PORT,
+      },
+    },
     build: {
       // Keystatic admin bundle is intentionally large and route-scoped.
       chunkSizeWarningLimit: 3000,

@@ -1,6 +1,4 @@
 ---
-import CtaButton from "../ui/actions/CtaButton.astro";
-
 const steps = [
   {
     number: '1',
@@ -16,7 +14,7 @@ const steps = [
   },
   {
     number: '3',
-    title: 'on vous rend autonome',
+    title: 'On vous rend autonome',
     quote: '"Pas de relation de dependance, vous avez les cles du projet."',
     description: 'On prend un soin particulier a fournir des solutions qui permetterons a vous et votre equipe d\'avoir une main totale sur le livrable: Modifications, ajouts et migrations sont pensees pour le long terme.',
   },
@@ -24,7 +22,7 @@ const steps = [
 
 ---
 
-<section id="demarche" class="pt-16 sm:pt-100 text-black">
+<section id="demarche" class="pt-16 pb-16 sm:pt-100 sm:pb-32 text-black">
   <div class="relative px-5 flex flex-col">
     <svg class="absolute top-0 left-0 h-8 " viewBox="0 0 6 30" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path d="M4.39106 0H6C3.62011 4.16285 1.84358 8.70413 1.84358 15.0688C1.84358 21.2959 3.62011 25.8372 6 30H4.39106C2.07821 26.5252 0 21.2959 0 15.0688C0 8.63532 2.07821 3.47477 4.39106 0Z" fill="#16191B"/>
@@ -43,23 +41,14 @@ const steps = [
   </div>
 
   <ul>
-    {steps.map((step, index) => (
-      <>
-        {index > 0 && <li aria-hidden="true" class="h-px bg-lines-dark"></li>}
-        <li class="py-16 sm:py-32">
-          <div class="flex gap-7">
-            <span class="text-[1.5rem]">{step.number}/</span>
-            <h3 class="text-[1.5rem]">{step.title}</h3>
-          </div>
-          <p class="mt-10 text-[1.25rem]">{step.description}</p>
-        </li>
-      </>
+    {steps.map((step) => (
+      <li class="py-16 sm:py-32 border-b border-lines-dark">
+        <div class="flex gap-7">
+          <span class="text-[1.5rem]">{step.number}/</span>
+          <h3 class="text-[1.5rem]">{step.title}</h3>
+        </div>
+        <p class="mt-10 text-[1.25rem]">{step.description}</p>
+      </li>
     ))}
   </ul>
-  <div class="flex flex-col sm:-mt-12">
-    <svg class="self-end" width="41" height="45" viewBox="0 0 41 45" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M40.3977 30.1993L37.364 27.0024L25.8483 37.3628L25.8483 14C25.8483 6.26802 19.5803 -8.6259e-07 11.8483 -5.21966e-07L0 0L1.77429e-07 4.09091L17.5145 4.09091C19.7236 4.09091 21.5145 5.88177 21.5145 8.09091L21.5145 37.3628L9.99882 27.0024L6.96512 30.1993L23.6814 45L40.3977 30.1993Z" fill="#16191B"/>
-    </svg>
-  </div>
-  <CtaButton href="/fr/contact" label="Lancer un projet" fullWidth class="mt-8 md:mt-10" variant="dark" />
 </section>
