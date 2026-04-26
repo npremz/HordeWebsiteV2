@@ -134,6 +134,68 @@ export const fr = {
     cta: 'Nous découvrir',
   },
 
+  // New Homepage
+  homepage: {
+    hero: {
+      topLine1: 'Nous',
+      topLine2: 'Concevons',
+      agencyLine1: 'Agence de site web',
+      agencyLine2: 'basée à Bruxelles',
+      bottomLine1: 'Des sites web',
+      bottomLine2: 'Optimisés',
+    },
+    about: {
+      titleLine1: "Qu'est-ce que",
+      titleLine2: 'la Horde ?',
+      description:
+        'Horde est une agence web bruxelloise qui conçoit des sites web ultra-rapides et qui transforme vos visiteurs en client. ↓ Audit offert, refonte ou création from scratch → on livre des sites légers, bien référencés et pensés pour durer.',
+      cta: 'Prendre contact',
+    },
+    projects: {
+      countLabel: 'Sites web réalisés',
+    },
+    services: {
+      title: 'Nos services de création de site web',
+    },
+    demarche: {
+      title: 'Notre démarche pour la création d’un site web sur mesure',
+      expectationLine1: 'Ce a quoi vous pouvez',
+      expectationLine2: 'vous attendre',
+      expectationLine3: 'en travaillant',
+      expectationLine4: 'avec nous',
+      steps: [
+        {
+          number: '1',
+          title: 'Audit de votre site actuel (offert)',
+          quote: '"On se pose avec vous, avec un langage que tout le monde comprends."',
+          description:
+            'Tout commence par un diagnostic. On analyse vos performances (SEO, vitesse, UX) pour identifier vos réels blocages. Vous repartez avec des réponses claires, sans engagement.',
+        },
+        {
+          number: '2',
+          title: 'On crée votre solution sur mesure',
+          quote: '"Notre but est de creer un site qui repond a vos probleme business."',
+          description:
+            'On choisi la technologie qui vous convient et on met tout en place pour que votre site ne soit pas un poid de plus a gerer dans votre activite mais bien un levier',
+        },
+        {
+          number: '3',
+          title: 'On vous rend autonome',
+          quote: '"Pas de relation de dependance, vous avez les cles du projet."',
+          description:
+            "On prend un soin particulier a fournir des solutions qui permetterons a vous et votre equipe d'avoir une main totale sur le livrable: Modifications, ajouts et migrations sont pensees pour le long terme.",
+        },
+      ],
+    },
+    us: {
+      titleLine1: 'une équipe à taille',
+      titleLine2: 'humaine',
+      description:
+        'On est une agence de petite taille qui met en avant le côté humain, on prend le temps avec vous de trouver les solutions qui vous conviennent et on vous aide à ce que votre présence numérique soit à la hauteur de vos projets.',
+      cta: 'Notre culture',
+    },
+  },
+
   // Project Section
   projects: {
     title: 'Projets\nselectionnés',

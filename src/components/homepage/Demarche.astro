@@ -1,25 +1,13 @@
 ---
-const steps = [
-  {
-    number: '1',
-    title: 'Audit de votre site actuel (offert)',
-    quote: '"On se pose avec vous, avec un langage que tout le monde comprends."',
-    description: 'Tout commence par un diagnostic. On analyse vos performances (SEO, vitesse, UX) pour identifier vos réels blocages. Vous repartez avec des réponses claires, sans engagement.',
-  },
-  {
-    number: '2',
-    title: 'On crée votre solution sur mesure',
-    quote: '"Notre but est de creer un site qui repond a vos probleme business."',
-    description: 'On choisi la technologie qui vous convient et on met tout en place pour que votre site ne soit pas un poid de plus a gerer dans votre activite mais bien un levier',
-  },
-  {
-    number: '3',
-    title: 'On vous rend autonome',
-    quote: '"Pas de relation de dependance, vous avez les cles du projet."',
-    description: 'On prend un soin particulier a fournir des solutions qui permetterons a vous et votre equipe d\'avoir une main totale sur le livrable: Modifications, ajouts et migrations sont pensees pour le long terme.',
-  },
-];
+import { DEFAULT_LOCALE, type Locale, useTranslations } from "../../i18n";
 
+interface Props {
+  lang?: Locale;
+}
+
+const { lang = DEFAULT_LOCALE } = Astro.props;
+const t = useTranslations(lang);
+const steps = t.homepage.demarche.steps;
 ---
 
 <section id="demarche" class="py-16 sm:py-24 sm:pb-32 md:pb-50 text-black">
@@ -27,13 +15,13 @@ const steps = [
     <svg class="absolute top-0 top-2 left-0 h-8 " viewBox="0 0 6 30" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path d="M4.39106 0H6C3.62011 4.16285 1.84358 8.70413 1.84358 15.0688C1.84358 21.2959 3.62011 25.8372 6 30H4.39106C2.07821 26.5252 0 21.2959 0 15.0688C0 8.63532 2.07821 3.47477 4.39106 0Z" fill="#16191B"/>
     </svg>
-    <h2 class="text-[1.5rem] sm:text-[2rem] md:text-[2.5rem] leading-[1.2] sm:pr-8 lg:p-0 lg:max-w-1/2">Notre démarche pour la création d’un site web sur mesure</h2>
+    <h2 class="text-[1.5rem] sm:text-[2rem] md:text-[2.5rem] leading-[1.2] sm:pr-8 lg:p-0 lg:max-w-1/2">{t.homepage.demarche.title}</h2>
     <svg class="h-5 self-end translate-x-5 mt-4 sm:absolute sm:translate-0 sm:right-0" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
       <rect width="7" height="20" transform="matrix(0.707107 0.707107 0.707107 -0.707107 0 14.1426)" fill="#16191B"/>
     </svg>
     <p class="mt-4 sm:mt-10 md:mt-16 section-label lg:max-w-1/2 lg:self-end lg:w-full">
-      <span class="block -translate-x-8 lg:translate-0 lg:pl-16">Ce a quoi vous pouvez<br/> vous attendre</span>
-      <span class="block text-right">en travaillant<br/> avec nous</span>
+      <span class="block -translate-x-8 lg:translate-0 lg:pl-16">{t.homepage.demarche.expectationLine1}<br/> {t.homepage.demarche.expectationLine2}</span>
+      <span class="block text-right">{t.homepage.demarche.expectationLine3}<br/> {t.homepage.demarche.expectationLine4}</span>
     </p>
     <svg class="absolute bottom-0 right-0 h-8 " viewBox="0 0 7 30" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path d="M1.67598 30L0 30C2.47905 25.8372 4.32961 21.2959 4.32961 14.9312C4.32961 8.70413 2.47905 4.16284 2.84579e-06 -5.03556e-07L1.67598 -3.68524e-07C4.0852 3.47477 6.25 8.70413 6.25 14.9312C6.25 21.3647 4.0852 26.5252 1.67598 30Z" fill="#16191B"/>

@@ -135,6 +135,68 @@ export const en: Translations = {
     cta: 'Discover us',
   },
 
+  // New Homepage
+  homepage: {
+    hero: {
+      topLine1: 'We',
+      topLine2: 'Design',
+      agencyLine1: 'Web agency',
+      agencyLine2: 'based in Brussels',
+      bottomLine1: 'Optimized',
+      bottomLine2: 'websites',
+    },
+    about: {
+      titleLine1: 'What is',
+      titleLine2: 'Horde?',
+      description:
+        'Horde is a Brussels web agency that designs ultra-fast websites and turns visitors into clients. ↓ Free audit, redesign, or from-scratch creation → we deliver lightweight, well-referenced websites built to last.',
+      cta: 'Get in touch',
+    },
+    projects: {
+      countLabel: 'Websites delivered',
+    },
+    services: {
+      title: 'Our website creation services',
+    },
+    demarche: {
+      title: 'Our approach to creating a custom website',
+      expectationLine1: 'What you can',
+      expectationLine2: 'expect',
+      expectationLine3: 'when working',
+      expectationLine4: 'with us',
+      steps: [
+        {
+          number: '1',
+          title: 'Audit of your current website (free)',
+          quote: '"We sit down with you, using language everyone understands."',
+          description:
+            'Everything starts with a diagnosis. We analyze your performance (SEO, speed, UX) to identify the real blockers. You leave with clear answers, no strings attached.',
+        },
+        {
+          number: '2',
+          title: 'We create your custom solution',
+          quote: '"Our goal is to create a website that answers your business problems."',
+          description:
+            'We choose the technology that fits you and set everything up so your website is not another burden to manage, but a real lever for your business.',
+        },
+        {
+          number: '3',
+          title: 'We make you autonomous',
+          quote: '"No dependency relationship: you keep the keys to the project."',
+          description:
+            'We take special care to deliver solutions that give you and your team full control over the final product: edits, additions, and migrations are designed for the long term.',
+        },
+      ],
+    },
+    us: {
+      titleLine1: 'a small',
+      titleLine2: 'human team',
+      description:
+        'We are a small agency that puts the human side first. We take the time to find the right solutions with you and help make your digital presence match the ambition of your projects.',
+      cta: 'Our culture',
+    },
+  },
+
   // Project Section
   projects: {
     title: 'Selected\nprojects',

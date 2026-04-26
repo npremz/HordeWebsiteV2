@@ -16,11 +16,11 @@ const t = useTranslations(lang);
 ---
 
 <section id="us" class="py-16 sm:pt-32 md:pt-24 md:mx-5 md:border-x md:border-b md:rounded-b-full md:border-lines">
-  <div class="px-5">
-    <h2 class="section-label">une équipe à taille<br/> humaine</h2>
-    <p class="indent-24 sm:indent-45 text-[1.5rem] sm:text-[2rem]">On est une agence de petite taille qui met en avant le côté humain, on prend le temps avec vous de trouver les solutions qui vous conviennent et on vous aide à ce que votre présence numérique soit à la hauteur de vos projets.</p>
+  <div class="px-5 sm:px-12 lg:px-24">
+    <h2 class="section-label">{t.homepage.us.titleLine1}<br/> {t.homepage.us.titleLine2}</h2>
+    <p class="indent-24 sm:indent-45 text-[1.5rem] sm:text-[2rem]">{t.homepage.us.description}</p>
     <div class="mt-10 md:mt-16 flex">
-      <CtaButton href="/fr/a-propos" label="Notre culture" variant="light" />
+      <CtaButton href={`/${lang}/about`} label={t.homepage.us.cta} variant="light" />
     </div>
     <figure
       class="mt-16 sm:mt-24 md:mt-32 md:flex md:gap-16 md:items-center"

@@ -1,16 +1,19 @@
 ---
-import { DEFAULT_LOCALE } from '../../i18n';
+import { DEFAULT_LOCALE, type Locale, useTranslations } from '../../i18n';
 import { getServiceSummaries } from '../../lib/content/services';
-import BracketInline from '../ui/decor/BracketInline.astro';
 
-const lang = DEFAULT_LOCALE;
+interface Props {
+  lang?: Locale;
+}
 
+const { lang = DEFAULT_LOCALE } = Astro.props;
+const t = useTranslations(lang);
 const services = await getServiceSummaries();
 ---
 
 <section id="services" class="text-white py-25 sm:py-50">
   <div class="flex justify-between gap-4">
-    <h2 class="text-[1.5rem] sm:text-[2rem] md:text-[2.5rem] lg:text-[3rem]">Nos services de création de site web</h2>
+    <h2 class="text-[1.5rem] sm:text-[2rem] md:text-[2.5rem] lg:text-[3rem]">{t.homepage.services.title}</h2>
     <svg class="hidden sm:block mt-2 md:mt-4" width="47" height="20" viewBox="0 0 47 20" fill="none" xmlns="http://www.w3.org/2000/svg">
       <rect width="7" height="20" transform="matrix(1 4.37114e-08 8.74228e-08 -1 0 20)" fill="#F4F1F8"/>
       <rect width="7" height="20" transform="matrix(1 4.37114e-08 8.74228e-08 -1 14 20)" fill="#F4F1F8"/>
@@ -18,10 +21,10 @@ const services = await getServiceSummaries();
     </svg>
   </div>
   <ol class="mt-8 sm:mt-12 md:mt-20">
-    {services.map((service, index) => (
+    {services.map((service) => (
       <li class="border-b border-lines-dark last:border-b-0">
         <a
-          href={`/${lang}/services/${service.slug}`}
+          href={lang === 'fr' ? `/${lang}/services/${service.slug}` : `/${lang}/services`}
           title={service.title}
           class:list={["service-link flex justify-between items-center pt-8 pb-7 sm:pt-10 sm:pb-9"]}
         >

@@ -1,14 +1,18 @@
 ---
-import { DEFAULT_LOCALE } from '../../i18n';
+import { DEFAULT_LOCALE, type Locale, useTranslations } from '../../i18n';
 import { getLocalizedProjects } from '../../lib/content/projects';
 
-const lang = DEFAULT_LOCALE;
+interface Props {
+  lang?: Locale;
+}
 
+const { lang = DEFAULT_LOCALE } = Astro.props;
+const t = useTranslations(lang);
 const projects = (await getLocalizedProjects(lang)).slice(0, 3);
 ---
 
 <section id="projects" class="pt-25 sm:py-50 md:pb-80 lg:pb-120 sm:mx-5 sm:border-x sm:overflow-hidden sm:border-b sm:rounded-b-full sm:border-lines">
-  <h2 class="text-[1.125rem] text-center">Sites web realisés ({projects.length.toString().padStart(2, '0')})</h2>
+  <h2 class="text-[1.125rem] text-center">{t.homepage.projects.countLabel} ({projects.length.toString().padStart(2, '0')})</h2>
   <ul class="mt-6 font-display uppercase text-[2.25rem] sm:text-[4rem] md:text-[5rem] text-center">
     {projects.map((project, i) => (
       <>

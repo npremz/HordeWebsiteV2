@@ -1,6 +1,13 @@
 ---
-import EndpointDivider from "../ui/decor/EndpointDivider.astro";
+import { DEFAULT_LOCALE, type Locale, useTranslations } from "../../i18n";
 import HeroWeather from "./HeroWeather.astro";
+
+interface Props {
+  lang?: Locale;
+}
+
+const { lang = DEFAULT_LOCALE } = Astro.props;
+const t = useTranslations(lang);
 ---
 
 <section id="hero" class="pt-62 pb-68 sm:pt-76 sm:pb-20 md:pt-50 md:pb-40 lg:pt-55 lg:pb-30 2xl:pt-85 2xl:pb-60 sm:mx-5 sm:border-x sm:border-lines">
@@ -8,8 +15,8 @@ import HeroWeather from "./HeroWeather.astro";
       <div class="relative @container w-full">
         <span class="absolute -translate-y-1/2 md:-translate-y-0 md:-translate-x-1/2 -z-10 w-full aspect-square rounded-full border border-lines"></span>
         <div class="relative p-4 w-full h-85 sm:h-105 lg:h-122.5 2xl:h-145 border border-lines flex flex-col justify-between">
-          <span class="block mt-2 font-display uppercase text-[2rem] sm:text-[2.5rem] lg:text-[3rem] 2xl:text-[3.75rem] leading-none">Nous <br>Concevons</span>
-          <h1 class="text-[0.875rem] leading-tight uppercase font-mono text-right absolute bottom-1/2 right-4 mb-2 sm:mb-4 lg:mb-3">Agence de site web <br/>basée à bruxelles</h1>
+          <span class="block mt-2 font-display uppercase text-[2rem] sm:text-[2.5rem] lg:text-[3rem] 2xl:text-[3.75rem] leading-none">{t.homepage.hero.topLine1} <br>{t.homepage.hero.topLine2}</span>
+          <h1 class="text-[0.875rem] leading-tight uppercase font-mono text-right absolute bottom-1/2 right-4 mb-2 sm:mb-4 lg:mb-3">{t.homepage.hero.agencyLine1} <br/>{t.homepage.hero.agencyLine2}</h1>
           <div class:list={['absolute top-1/2 -mt-px w-screen center-x']}>
             <div class:list={['h-px w-full bg-lines']}></div>
             <div class="absolute w-full lg:max-w-[1320px] center-x">
@@ -17,8 +24,8 @@ import HeroWeather from "./HeroWeather.astro";
               <span class="h-2 w-2 bg-lines-dark block absolute right-(--gutter) lg:right-0 -mr-0.75 -mt-1"></span>
             </div>
           </div>
-          <HeroWeather class="absolute top-1/2 left-4 mt-2 sm:mt-4 lg:mt-3" />
-          <span class="block self-end text-right font-display uppercase text-[2rem] sm:text-[2.5rem] lg:text-[3rem] 2xl:text-[3.75rem] leading-none">Des sites web <br>Optimises</span>
+          <HeroWeather lang={lang} class="absolute top-1/2 left-4 mt-2 sm:mt-4 lg:mt-3" />
+          <span class="block self-end text-right font-display uppercase text-[2rem] sm:text-[2.5rem] lg:text-[3rem] 2xl:text-[3.75rem] leading-none">{t.homepage.hero.bottomLine1} <br>{t.homepage.hero.bottomLine2}</span>
         </div>
         <span class="absolute -translate-y-1/2 md:-translate-y-full md:translate-x-1/2 -z-10 w-full aspect-square rounded-full border border-lines"></span>
       </div>
