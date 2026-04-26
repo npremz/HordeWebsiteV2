@@ -25,7 +25,7 @@ intro: >-
   vous permet de tester une hypothèse business avec de vrais utilisateurs, sans
   gaspiller 18 mois de développement. On vous aide à définir ce périmètre, puis
   on le construit.
-problemTitleLeft: Ce que "minimal" veut dire vraiment
+problemTitle: Ce que "minimal" veut dire vraiment
 problemBlocks:
   - kind: paragraph
     body: >-
@@ -49,8 +49,7 @@ problemBlocks:
       On travaille autrement : on cadre d'abord, on construit ensuite uniquement
       ce qui permet de répondre à la question business centrale.
     items: []
-offerTitleLeft: Ce qu'on \n couvre
-offerTitleRight: avec \n un MVP
+offerTitle: Ce qu'on \n couvre avec \n un MVP
 offerItems:
   - title: Cadrage produit
     body: >-
@@ -72,8 +71,7 @@ offerItems:
       Hébergement configuré, monitoring en place, documentation technique. On ne
       disparaît pas après le lancement, on suit les premiers retours et on
       itère.
-methodTitleLeft: Notre \n plan
-methodTitleRight: Pour \n un MVP
+methodTitle: Notre \n plan Pour \n un MVP
 methodSteps:
   - title: Cadrage (1 semaine)
     body: Périmètre MVP défini, hypothèses identifiées, périmètre signé.
@@ -85,8 +83,7 @@ methodSteps:
     body: Hébergement configuré, monitoring, documentation.
   - title: Suivi post-lancement
     body: On suit les premiers retours et on itère avec vous.
-deliverablesTitleLeft: Résumé du \n produit
-deliverablesTitleRight: Après \n livraison
+deliverablesTitle: Résumé du \n produit Après \n livraison
 deliverables:
   - Application déployée en production
   - Code source sur votre repository, sans dépendances propriétaires
@@ -94,7 +91,7 @@ deliverables:
   - Monitoring configuré (erreurs, uptime)
   - Formation à la gestion du produit si besoin
   - Accès à tous les environnements (staging, prod)
-exclusionsTitleLeft: Ce qu'on n'est pas
+exclusionsTitle: Ce qu'on n'est pas
 exclusionsParagraphs:
   - >-
     On n'est pas une usine à code offshore. On ne prend pas en charge 10 projets
@@ -104,8 +101,7 @@ exclusionsParagraphs:
     On ne s'engage pas non plus sur des fonctionnalités dont on ne comprend pas
     l'utilité. Si on pense qu'une décision de product design est problématique,
     on le dit.
-faqTitleLeft: Nos réponses \n aux
-faqTitleRight: Questions \n fréquentes
+faqTitle: Nos réponses \n aux Questions \n fréquentes
 faqItems:
   - question: Combien coûte un MVP ?
     answer: >-
@@ -137,7 +133,7 @@ faqItems:
       On adapte la stack au projet : React / Next.js / Astro en frontend,
       Node.js + TypeScript en backend, PostgreSQL ou Supabase, Clerk ou Supabase
       Auth, Stripe pour le paiement, Vercel ou VPS pour l'hébergement.
-ctaTitleLeft: Parlons de votre idée
+ctaTitle: Parlons de votre idée
 ctaParagraphs:
   - >-
     Remplissez le formulaire avec vos coordonnées, et un membre de notre équipe

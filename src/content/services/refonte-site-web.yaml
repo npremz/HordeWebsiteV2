@@ -23,7 +23,7 @@ intro: >-
   exigences de Google. On repart de vos objectifs business pour reconstruire
   quelque chose qui travaille pour vous : plus rapide, plus clair, et qui
   raconte mieux votre histoire.
-problemTitleLeft: Les signaux qui indiquent qu'il est temps
+problemTitle: Les signaux qui indiquent qu'il est temps
 problemBlocks:
   - kind: list
     items:
@@ -42,8 +42,7 @@ problemBlocks:
       La refonte n'est pas une dépense cosmétique. C'est un investissement sur
       la capacité de votre site à générer du chiffre.
     items: []
-offerTitleLeft: Ce qu'on \n refait
-offerTitleRight: et \n comment
+offerTitle: Ce qu'on \n refait et \n comment
 offerItems:
   - title: Audit de l'existant
     body: >-
@@ -69,8 +68,7 @@ offerItems:
       Redirections propres, vérification de l'indexation, monitoring
       post-launch. On ne coupe pas l'ancien site sans filet. La migration est
       non destructive.
-methodTitleLeft: Notre \n processus
-methodTitleRight: Pour une \n refonte
+methodTitle: Notre \n processus Pour une \n refonte
 methodSteps:
   - title: Cadrage
     body: >-
@@ -88,8 +86,7 @@ methodSteps:
     body: Intégration performance-first, CMS configuré.
   - title: Migration & lancement
     body: Redirections, indexation, monitoring post-launch inclus.
-deliverablesTitleLeft: Résumé du \n produit
-deliverablesTitleRight: Après \n livraison
+deliverablesTitle: Résumé du \n produit Après \n livraison
 deliverables:
   - Site en production, performant sur mobile et desktop
   - Score Core Web Vitals vert (LCP < 2.5s, CLS < 0.1, INP < 200ms)
@@ -97,15 +94,14 @@ deliverables:
   - CMS pris en main lors d'une session de formation si besoin
   - Documentation des choix techniques et de la structure du contenu
   - Monitoring 30 jours post-lancement inclus
-exclusionsTitleLeft: Ce qu'on évite
+exclusionsTitle: Ce qu'on évite
 exclusionsParagraphs:
   - >-
     On ne refait pas un site juste pour le refaire. Avant de toucher quoi que ce
     soit, on audite l'existant. On ne livre pas non plus une maquette statique
     en vous laissant vous débrouiller avec le développement : chez nous, design
     et développement vont ensemble.
-faqTitleLeft: Réponses \n aux
-faqTitleRight: questions \n fréquentes
+faqTitle: Réponses \n aux questions \n fréquentes
 faqItems:
   - question: Combien coûte une refonte ?
     answer: >-
@@ -131,7 +127,7 @@ faqItems:
       rédaction n'est pas incluse par défaut.
   - question: Je peux voir des exemples de vos refontes ?
     answer: Oui, lien vers `/fr/projets` avec les cas pertinents mis en avant.
-ctaTitleLeft: Parlez-nous de votre projet
+ctaTitle: Parlez-nous de votre projet
 ctaParagraphs:
   - >-
     Remplissez le formulaire avec vos coordonnées, et un membre de notre équipe

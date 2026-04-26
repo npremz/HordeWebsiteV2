@@ -726,12 +726,9 @@ const servicesSchema = {
     validation: { isRequired: true },
     multiline: true,
   }),
-  problemTitleLeft: fields.text({
-    label: 'Titre section problème gauche',
+  problemTitle: fields.text({
+    label: 'Titre section problème',
     validation: { isRequired: true },
-  }),
-  problemTitleRight: fields.text({
-    label: 'Titre section problème droite',
   }),
   problemBlocks: fields.array(
     fields.object({
@@ -768,12 +765,9 @@ const servicesSchema = {
       },
     }
   ),
-  offerTitleLeft: fields.text({
-    label: "Titre section offre gauche",
+  offerTitle: fields.text({
+    label: "Titre section offre",
     validation: { isRequired: true },
-  }),
-  offerTitleRight: fields.text({
-    label: "Titre section offre droite",
   }),
   offerItems: fields.array(
     fields.object({
@@ -785,12 +779,9 @@ const servicesSchema = {
       itemLabel: (props) => props.fields.title.value || 'Bloc',
     }
   ),
-  methodTitleLeft: fields.text({
-    label: 'Titre section méthode gauche',
+  methodTitle: fields.text({
+    label: 'Titre section méthode',
     validation: { isRequired: true },
-  }),
-  methodTitleRight: fields.text({
-    label: 'Titre section méthode droite',
   }),
   methodSteps: fields.array(
     fields.object({
@@ -802,12 +793,9 @@ const servicesSchema = {
       itemLabel: (props) => props.fields.title.value || 'Étape',
     }
   ),
-  deliverablesTitleLeft: fields.text({
-    label: 'Titre section livrables gauche',
+  deliverablesTitle: fields.text({
+    label: 'Titre section livrables',
     validation: { isRequired: true },
-  }),
-  deliverablesTitleRight: fields.text({
-    label: 'Titre section livrables droite',
   }),
   deliverables: fields.array(
     fields.text({ label: 'Livrable', validation: { isRequired: true } }),
@@ -816,12 +804,9 @@ const servicesSchema = {
       itemLabel: (props) => props.value || 'Livrable',
     }
   ),
-  exclusionsTitleLeft: fields.text({
-    label: 'Titre section exclusions gauche',
+  exclusionsTitle: fields.text({
+    label: 'Titre section exclusions',
     validation: { isRequired: true },
-  }),
-  exclusionsTitleRight: fields.text({
-    label: 'Titre section exclusions droite',
   }),
   exclusionsParagraphs: fields.array(
     fields.text({ label: 'Paragraphe', validation: { isRequired: true } }),
@@ -830,12 +815,9 @@ const servicesSchema = {
       itemLabel: (props) => props.value || 'Paragraphe',
     }
   ),
-  faqTitleLeft: fields.text({
-    label: 'Titre section FAQ gauche',
+  faqTitle: fields.text({
+    label: 'Titre section FAQ',
     validation: { isRequired: true },
-  }),
-  faqTitleRight: fields.text({
-    label: "Titre section FAQ droite",
   }),
   faqItems: fields.array(
     fields.object({
@@ -847,12 +829,9 @@ const servicesSchema = {
       itemLabel: (props) => props.fields.question.value || 'FAQ',
     }
   ),
-  ctaTitleLeft: fields.text({
-    label: 'Titre CTA gauche',
+  ctaTitle: fields.text({
+    label: 'Titre CTA',
     validation: { isRequired: true },
-  }),
-  ctaTitleRight: fields.text({
-    label: 'Titre CTA droite',
   }),
   ctaParagraphs: fields.array(
     fields.text({ label: 'Paragraphe', validation: { isRequired: true } }),

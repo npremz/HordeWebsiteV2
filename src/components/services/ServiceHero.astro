@@ -1,4 +1,5 @@
 ---
+import CtaButton from "../ui/actions/CtaButton.astro";
 import { formatHeadingHtml } from "../../utils/heading-html";
 import type { ServiceData } from "./types";
 
@@ -7,11 +8,13 @@ interface Props {
 }
 
 const { service } = Astro.props;
+
+const backgroundCircleOffsets = [-250, -200, -150, -100, -50, 0, 50, 100, 150, 200, 250];
 ---
 
 <header
   id="service-hero"
-  class="relative pt-50 sm:pt-62 2xl:pt-72 pb-8 sm:pb-12.5 md:pb-20 2xl:pb-25 bg-black text-white full-width-dark-bg"
+  class="relative pt-52 sm:pt-62 2xl:pt-72 pb-16 sm:pb-12.5 md:pb-20 2xl:pb-25 bg-black text-white full-width-dark-bg"
   data-service-section="hero"
 >
   <!-- Crossing lines: 100vw wide, clipped to hero height via overflow-hidden on this wrapper -->
@@ -20,14 +23,32 @@ const { service } = Astro.props;
     style="left: 50%; width: 100vw; transform: translateX(-50%);"
     aria-hidden="true"
   >
+    <div class="w-full px-(--gutter) sm:w-[unset] sm:px-0 sm:h-[393px] 2xl:h-[580px] absolute center-x -translate-y-1/2" style="top: var(--shape-center-y, 50%);">
+      <svg
+        class="h-full aspect-square overflow-visible"
+        viewBox="0 0 100 100"
+        fill="none"
+        aria-hidden="true"
+      >
+        <rect x="0.5" y="0.5" width="99" height="99" stroke="var(--color-lines-dark)" />
+        {backgroundCircleOffsets.map((offset) => (
+          <circle
+            cx={50 + offset}
+            cy="50"
+            r="49.5"
+            stroke="var(--color-lines-dark)"
+          />
+        ))}
+      </svg>
+    </div>
     <!-- Vertical line -->
     <div class="absolute top-0 bottom-0 w-px bg-lines-dark" style="left: 50%; transform: translateX(-50%);"></div>
     <!-- Horizontal line -->
     <div class="absolute h-px w-full bg-lines-dark" style="top: var(--shape-center-y, 50%);"></div>
     <!-- +30deg diagonal -->
-    <div class="absolute h-px bg-lines-dark" style="width: 120vw; top: var(--shape-center-y, 50%); left: 50%; transform: translateX(-50%) rotate(30deg);"></div>
+    <div class="absolute h-px bg-lines-dark" style="width: 150vw; top: var(--shape-center-y, 50%); left: 50%; transform: translateX(-50%) rotate(45deg);"></div>
     <!-- -30deg diagonal -->
-    <div class="absolute h-px bg-lines-dark" style="width: 120vw; top: var(--shape-center-y, 50%); left: 50%; transform: translateX(-50%) rotate(-30deg);"></div>
+    <div class="absolute h-px bg-lines-dark" style="width: 150vw; top: var(--shape-center-y, 50%); left: 50%; transform: translateX(-50%) rotate(-45deg);"></div>
   </div>
   <div class="relative z-10 flex justify-center">
     <svg class="h-13 sm:h-20 pr-10 sm:pr-12.5" viewBox="0 0 11 52" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -41,7 +62,7 @@ const { service } = Astro.props;
       <div class="absolute size-[4px] sm:size-[5px] 2xl:size-[7px] bg-white -bottom-[2px] -right-[2px] sm:-bottom-[2.5px] sm:-right-[2.5px] 2xl:-bottom-[3.5px] 2xl:-right-[3.5px]"></div>
       <div
         id="service-shape"
-        class="grid h-32 w-32 sm:h-55 sm:w-55 2xl:h-76 2xl:w-76 grid-cols-3 grid-rows-3 bg-black border-lines-dark border-r border-b"
+        class="grid size-45 sm:size-55 2xl:h-76 2xl:w-76 grid-cols-3 grid-rows-3 bg-black border-lines-dark border-r border-b"
         style="background-image: linear-gradient(var(--color-lines-dark) 1px, transparent 1px), linear-gradient(90deg, var(--color-lines-dark) 1px, transparent 1px); background-size: calc(100% / 3) calc(100% / 3);"
       >
         {Array.from({ length: 9 }).map(() => (
@@ -53,9 +74,9 @@ const { service } = Astro.props;
       <path d="M2.94972 52L-4.76837e-06 52C4.36313 44.7844 7.62011 36.9128 7.62011 25.8807C7.62011 15.0872 4.36313 7.21559 -2.22387e-07 -4.77635e-06L2.94972 -4.51848e-06C7.18995 6.02293 11 15.0872 11 25.8807C11 37.0321 7.18994 45.9771 2.94972 52Z" fill="white"/>
     </svg>
   </div>
-  <div class="relative z-10 mt-25 sm:mt-50 md:mt-70 lg:mt-10 2xl:mt-36">
+  <div class="relative z-10 mt-22 sm:mt-50 md:mt-70 lg:mt-10 2xl:mt-36">
     <div class="lg:flex lg:justify-between lg:items-end">
-      <div class="flex flex-col gap-[20px] max-w-[700px]">
+      <div class="flex flex-col gap-5 max-w-[700px]">
         <span class="text-[1.5625rem]">Notre service de</span>
         <h1
           class="font-display text-[2.25rem] sm:text-[4rem] md:text-[5rem] 2xl:text-[6rem] uppercase leading-none max-w-[600px]"
@@ -63,19 +84,14 @@ const { service } = Astro.props;
         />
       </div>
       <div class="lg:max-w-[460px]">
-        <p class="mt-4 sm:mt-6 md:mt-8 lg:mt-0 indent-20 text-[1.125rem] md:max-w-[600px]">{service.intro}</p>
+        <p class="mt-4 sm:mt-6 md:mt-8 lg:mt-0 text-[1.125rem] md:max-w-[600px]">{service.intro}</p>
         {service.primaryCtaLabel && service.primaryCtaUrl && (
           <div class="mt-8 sm:mt-10 lg:mt-16 flex">
-            <a
+            <CtaButton
               href={service.primaryCtaUrl}
-              title={service.primaryCtaLabel}
-              class="group relative overflow-hidden font-mono text-[1rem] leading-[0.6] uppercase py-6 px-5 flex justify-center w-full md:w-fit border border-bg-light bg-bg-light text-black transition-colors duration-300 ease-in-out cursor-pointer"
-            >
-              <span class="absolute inset-0 bg-black transform -translate-x-full group-hover:translate-x-0 transition-transform duration-400 ease-[cubic-bezier(0.25,0.46,0.45,0.94)]" />
-              <span class="relative z-10 text-black group-hover:text-bg-light transition-colors duration-300">
-                {service.primaryCtaLabel}
-              </span>
-            </a>
+              label={service.primaryCtaLabel}
+              variant="light"
+            />
           </div>
         )}
       </div>

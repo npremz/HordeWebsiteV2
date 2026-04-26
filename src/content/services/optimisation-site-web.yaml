@@ -22,7 +22,7 @@ intro: >-
   Un site qui charge en 4 secondes perd en moyenne 25% de ses visiteurs avant
   même qu'ils voient votre contenu. On améliore les performances techniques sans
   repartir de zéro et sans toucher à ce qui fonctionne déjà.
-problemTitleLeft: Votre site souffre peut-être de ça
+problemTitle: Votre site souffre peut-être de ça
 problemBlocks:
   - kind: list
     items:
@@ -36,8 +36,7 @@ problemBlocks:
       Si vous vous reconnaissez dans un de ces cas, le problème est probablement
       technique, et pas dans votre contenu.
     items: []
-offerTitleLeft: Les axes \n principaux
-offerTitleRight: pour \n l'optimisation
+offerTitle: Les axes \n principaux pour \n l'optimisation
 offerItems:
   - title: LCP (Largest Contentful Paint)
     body: >-
@@ -61,8 +60,7 @@ offerItems:
     body: >-
       Headers de cache, CDN, compression, HTTP/2. Le backend qui fait la
       différence sur les connexions lentes.
-methodTitleLeft: Comment on \n optimise
-methodTitleRight: votre \n site
+methodTitle: Comment on \n optimise votre \n site
 methodSteps:
   - title: Diagnostic initial
     body: >-
@@ -78,8 +76,7 @@ methodSteps:
     body: >-
       Mesures avant/après, suivi Google Search Console sur 30 jours. On livre
       des métriques, pas des promesses.
-deliverablesTitleLeft: Résumé du \n produit
-deliverablesTitleRight: Apres \n livraison
+deliverablesTitle: Résumé du \n produit Apres \n livraison
 deliverables:
   - Rapport de diagnostic avec scores de départ documentés
   - Plan d'action priorisé (quick wins + optimisations structurelles)
@@ -87,7 +84,7 @@ deliverables:
   - Mesures avant/après sur chaque axe traité
   - Suivi Google Search Console sur 30 jours
   - Documentation de ce qui a été fait et pourquoi
-exclusionsTitleLeft: Ce qu'on ne fait pas
+exclusionsTitle: Ce qu'on ne fait pas
 exclusionsParagraphs:
   - >-
     On n'installe pas un plugin "cache magique" et on appelle ça une
@@ -97,8 +94,7 @@ exclusionsParagraphs:
   - >-
     Ce qu'on livre : un site mesurément plus rapide, avec des scores Core Web
     Vitals dans le vert, et une documentation de ce qui a été fait et pourquoi.
-faqTitleLeft: Nos réponses \n aux
-faqTitleRight: questions \n fréquentes
+faqTitle: Nos réponses \n aux questions \n fréquentes
 faqItems:
   - question: Mon site doit-il être sur une techno particulière ?
     answer: >-
@@ -125,7 +121,7 @@ faqItems:
       Ça dépend de la profondeur de l'intervention. On chiffre après le
       diagnostic initial, qui est gratuit. Pas de devis sans avoir regardé votre
       site.
-ctaTitleLeft: Commençons par un audit
+ctaTitle: Commençons par un audit
 ctaParagraphs:
   - >-
     Remplissez le formulaire avec vos coordonnées, et un membre de notre équipe

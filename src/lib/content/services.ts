@@ -5,6 +5,7 @@ export type ServiceEntry = CollectionEntry<'services'>;
 export interface ServiceSummary {
   entry: ServiceEntry;
   slug: string;
+  url: string;
   title: string;
   shortName?: string;
   seoTitle: string;
@@ -27,6 +28,7 @@ export async function getServiceSummaries(): Promise<ServiceSummary[]> {
   return services.map((service) => ({
     entry: service,
     slug: service.data.slug,
+    url: service.data.seoUrl || `/fr/services/${service.data.slug}`,
     title: service.data.shortName || service.data.h1,
     shortName: service.data.shortName,
     seoTitle: service.data.seoTitle,

@@ -1,5 +1,5 @@
 ---
-import ServiceSectionHeading from "./ServiceSectionHeading.astro";
+import { formatHeadingHtml } from "../../utils/heading-html";
 import type { ServiceData } from "./types";
 
 interface Props {
@@ -10,10 +10,10 @@ const { service } = Astro.props;
 ---
 
 <section id="service-method" class="mt-16 lg:mt-24" data-service-section="method" aria-labelledby="service-method-title">
-  <ServiceSectionHeading
+  <h2
     id="service-method-title"
-    left={service.methodTitleLeft}
-    right={service.methodTitleRight}
+    class="text-[1.5rem] sm:text-[2rem] md:text-[2.5rem] leading-none uppercase pb-16 md:pb-24"
+    set:html={formatHeadingHtml(service.methodTitle)}
   />
   <div class="pb-16 lg:pb-32 space-y-16 sm:space-y-0 sm:grid sm:grid-cols-2 lg:grid-cols-4 sm:gap-x-5 lg:gap-y-16 ">
     {service.methodSteps.map((step, index) => (

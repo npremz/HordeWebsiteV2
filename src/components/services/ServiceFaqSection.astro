@@ -1,6 +1,6 @@
 ---
 import BracketInline from "../ui/decor/BracketInline.astro";
-import ServiceSectionHeading from "./ServiceSectionHeading.astro";
+import { formatHeadingHtml } from "../../utils/heading-html";
 import type { ServiceData } from "./types";
 
 interface Props {
@@ -11,12 +11,10 @@ const { service } = Astro.props;
 ---
 
 <section id="service-faq" class="mt-20 sm:mt-25 md:mt-50 py-12 lg:pb-50 md:py-32 full-width-dark-bg text-white" data-service-section="faq" aria-labelledby="service-faq-title">
-  <ServiceSectionHeading
+  <h2
     id="service-faq-title"
-    left={service.faqTitleLeft}
-    right={service.faqTitleRight}
-    dark={true}
-    class="pb-10 lg:pb-40"
+    class="text-[1.5rem] sm:text-[2rem] md:text-[2.5rem] leading-none uppercase pb-10 lg:pb-40"
+    set:html={formatHeadingHtml(service.faqTitle)}
   />
   <div>
     {service.faqItems.map((item, index) => (

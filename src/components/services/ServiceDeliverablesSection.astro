@@ -1,5 +1,5 @@
 ---
-import ServiceSectionHeading from "./ServiceSectionHeading.astro";
+import { formatHeadingHtml } from "../../utils/heading-html";
 import type { ServiceData } from "./types";
 
 interface Props {
@@ -15,10 +15,10 @@ const { service } = Astro.props;
   data-service-section="deliverables"
   aria-labelledby="service-deliverables-title"
 >
-  <ServiceSectionHeading
+  <h2
     id="service-deliverables-title"
-    left={service.deliverablesTitleLeft}
-    right={service.deliverablesTitleRight}
+    class="text-[1.5rem] sm:text-[2rem] md:text-[2.5rem] leading-none uppercase pb-16 md:pb-24"
+    set:html={formatHeadingHtml(service.deliverablesTitle)}
   />
   <div class="">
     <ul class="space-y-2.5">

@@ -21,7 +21,7 @@ intro: >-
   On regarde avec vous ce qui freine votre site. Vitesse, SEO technique, UX,
   conversions. On analyse tous les points qui coincent et on en parle dans un
   langage que tout le monde comprend.
-problemTitleLeft: Pourquoi votre site sous-performe peut-être sans que vous le sachiez
+problemTitle: Pourquoi votre site sous-performe peut-être sans que vous le sachiez
 problemBlocks:
   - kind: paragraph
     body: >-
@@ -31,8 +31,7 @@ problemBlocks:
       ils coûtent du trafic, des leads et des conversions. Avant de dépenser en
       refonte ou en SEO, il faut savoir ce qui ne va pas.
     items: []
-offerTitleLeft: Ce qu'on \n audite
-offerTitleRight: sur \n votre site
+offerTitle: Ce qu'on \n audite sur \n votre site
 offerItems:
   - title: Performance & Core Web Vitals
     body: >-
@@ -55,8 +54,7 @@ offerItems:
     body: >-
       Contraste, navigation clavier, responsive. Un site accessible, c'est aussi
       un signal positif pour les moteurs de recherche.
-methodTitleLeft: Notre \n méthode
-methodTitleRight: pour \n un audit
+methodTitle: Notre \n méthode pour \n un audit
 methodSteps:
   - title: Analyse en amont
     body: >-
@@ -70,15 +68,14 @@ methodSteps:
     body: >-
       On ressort avec les 5 à 10 problèmes prioritaires, leur impact estimé, et
       un ordre d'action (quick wins en premier).
-deliverablesTitleLeft: Ce avec \n quoi
-deliverablesTitleRight: vous \n repartez
+deliverablesTitle: Ce avec \n quoi vous \n repartez
 deliverables:
   - Les 5 à 10 problèmes prioritaires identifiés
   - L'impact estimé sur le trafic et les conversions
   - Un ordre d'action clair, quick wins en premier
   - Une explication sans jargon de chaque point
   - 'Format : vidéo + session de 30 min si besoin'
-exclusionsTitleLeft: Pourquoi c'est gratuit
+exclusionsTitle: Pourquoi c'est gratuit
 exclusionsParagraphs:
   - >-
     Un audit, c'est notre façon de travailler. On ne propose jamais une solution
@@ -87,8 +84,7 @@ exclusionsParagraphs:
   - >-
     Aucune obligation de travailler avec nous après. Ce que vous faites de cet
     échange vous appartient.
-faqTitleLeft: Nos \n réponses
-faqTitleRight: aux questions \n fréquentes
+faqTitle: Nos \n réponses aux questions \n fréquentes
 faqItems:
   - question: Qui fait l'audit ?
     answer: >-
@@ -108,7 +104,7 @@ faqItems:
     answer: >-
       On vous propose une mission d'optimisation ou de refonte selon vos
       besoins. Mais rien d'automatique, l'audit est sans engagement.
-ctaTitleLeft: Demandez votre audit
+ctaTitle: Demandez votre audit
 ctaParagraphs:
   - >-
     Remplissez le formulaire avec vos coordonnées, et un membre de notre équipe

@@ -124,8 +124,9 @@ const servicesCollection = defineCollection({
     h1: z.string(),
     shortName: z.string().optional(),
     intro: z.string(),
-    problemTitleLeft: z.string(),
-    problemTitleRight: z.string().default(''),
+    problemTitle: z.string(),
+    problemTitleLeft: z.string().optional(),
+    problemTitleRight: z.string().optional(),
     problemBlocks: z.array(
       z.object({
         kind: z.enum(['paragraph', 'item', 'list']),
@@ -134,38 +135,44 @@ const servicesCollection = defineCollection({
         items: z.array(z.string()).default([]),
       })
     ).default([]),
-    offerTitleLeft: z.string(),
-    offerTitleRight: z.string().default(''),
+    offerTitle: z.string(),
+    offerTitleLeft: z.string().optional(),
+    offerTitleRight: z.string().optional(),
     offerItems: z.array(
       z.object({
         title: z.string(),
         body: z.string(),
       })
     ).default([]),
-    methodTitleLeft: z.string(),
-    methodTitleRight: z.string().default(''),
+    methodTitle: z.string(),
+    methodTitleLeft: z.string().optional(),
+    methodTitleRight: z.string().optional(),
     methodSteps: z.array(
       z.object({
         title: z.string(),
         body: z.string(),
       })
     ).default([]),
-    deliverablesTitleLeft: z.string(),
-    deliverablesTitleRight: z.string().default(''),
+    deliverablesTitle: z.string(),
+    deliverablesTitleLeft: z.string().optional(),
+    deliverablesTitleRight: z.string().optional(),
     deliverables: z.array(z.string()).default([]),
-    exclusionsTitleLeft: z.string(),
-    exclusionsTitleRight: z.string().default(''),
+    exclusionsTitle: z.string(),
+    exclusionsTitleLeft: z.string().optional(),
+    exclusionsTitleRight: z.string().optional(),
     exclusionsParagraphs: z.array(z.string()).default([]),
-    faqTitleLeft: z.string(),
-    faqTitleRight: z.string().default(''),
+    faqTitle: z.string(),
+    faqTitleLeft: z.string().optional(),
+    faqTitleRight: z.string().optional(),
     faqItems: z.array(
       z.object({
         question: z.string(),
         answer: z.string(),
       })
     ).default([]),
-    ctaTitleLeft: z.string(),
-    ctaTitleRight: z.string().default(''),
+    ctaTitle: z.string(),
+    ctaTitleLeft: z.string().optional(),
+    ctaTitleRight: z.string().optional(),
     ctaParagraphs: z.array(z.string()).default([]),
     primaryCtaLabel: z.string().optional(),
     primaryCtaUrl: z.string().optional(),
