@@ -9,19 +9,26 @@ const services = await getServiceSummaries();
 ---
 
 <section id="services" class="text-white py-25 sm:py-50">
-  <h2 class="text-[1.5rem]">Nos services de création de site web</h2>
-  <ol class="mt-8 sm:mt-8">
+  <div class="flex justify-between gap-4">
+    <h2 class="text-[1.5rem] sm:text-[2rem] md:text-[2.5rem] lg:text-[3rem]">Nos services de création de site web</h2>
+    <svg class="hidden sm:block mt-2 md:mt-4" width="47" height="20" viewBox="0 0 47 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect width="7" height="20" transform="matrix(1 4.37114e-08 8.74228e-08 -1 0 20)" fill="#F4F1F8"/>
+      <rect width="7" height="20" transform="matrix(1 4.37114e-08 8.74228e-08 -1 14 20)" fill="#F4F1F8"/>
+      <rect width="7" height="20" transform="matrix(0.707107 0.707107 0.707107 -0.707107 27.4531 14.5938)" fill="#F4F1F8"/>
+    </svg>
+  </div>
+  <ol class="mt-8 sm:mt-12 md:mt-20">
     {services.map((service, index) => (
       <li class="border-b border-lines-dark last:border-b-0">
         <a
           href={`/${lang}/services/${service.slug}`}
           title={service.title}
-          class:list={["service-link flex justify-between items-center pt-8 pb-7 sm:pt-16 sm:pb-15 xl:py-8"]}
+          class:list={["service-link flex justify-between items-center pt-8 pb-7 sm:pt-10 sm:pb-9"]}
         >
-          <span class="max-w-[280px] sm:max-w-[unset] leading-none text-[1.25rem] sm:text-[2rem] md:text-[2.5rem] ">
+          <span class="max-w-[280px] sm:max-w-[unset] leading-none text-[1.25rem] sm:text-[1.5rem] md:text-[2rem] ">
             {service.title}
           </span>
-          <span class="shrink-0 text-[1.375rem]" variant='dark'>(→)</span>
+          <span class="shrink-0 text-[1.375rem]">(→)</span>
         </a>
       </li>
     ))}

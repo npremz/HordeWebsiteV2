@@ -22,17 +22,17 @@ const steps = [
 
 ---
 
-<section id="demarche" class="pt-16 pb-16 sm:pt-100 sm:pb-32 text-black">
-  <div class="relative px-5 flex flex-col">
-    <svg class="absolute top-0 left-0 h-8 " viewBox="0 0 6 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+<section id="demarche" class="py-16 sm:py-24 sm:pb-32 md:pb-50 text-black">
+  <div class="relative px-5 sm:px-8 flex flex-col">
+    <svg class="absolute top-0 top-2 left-0 h-8 " viewBox="0 0 6 30" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path d="M4.39106 0H6C3.62011 4.16285 1.84358 8.70413 1.84358 15.0688C1.84358 21.2959 3.62011 25.8372 6 30H4.39106C2.07821 26.5252 0 21.2959 0 15.0688C0 8.63532 2.07821 3.47477 4.39106 0Z" fill="#16191B"/>
     </svg>
-    <h2>Notre démarche pour la création d’un site web sur mesure</h2>
-    <svg class="h-5 self-end translate-x-5 mt-4" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <h2 class="text-[1.5rem] sm:text-[2rem] md:text-[2.5rem] leading-[1.2] sm:pr-8 lg:p-0 lg:max-w-1/2">Notre démarche pour la création d’un site web sur mesure</h2>
+    <svg class="h-5 self-end translate-x-5 mt-4 sm:absolute sm:translate-0 sm:right-0" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
       <rect width="7" height="20" transform="matrix(0.707107 0.707107 0.707107 -0.707107 0 14.1426)" fill="#16191B"/>
     </svg>
-    <p class="mt-4 section-label">
-      <span class="block">Ce a quoi vous pouvez<br/> vous attendre</span>
+    <p class="mt-4 sm:mt-10 md:mt-16 section-label lg:max-w-1/2 lg:self-end lg:w-full">
+      <span class="block -translate-x-8 lg:translate-0 lg:pl-16">Ce a quoi vous pouvez<br/> vous attendre</span>
       <span class="block text-right">en travaillant<br/> avec nous</span>
     </p>
     <svg class="absolute bottom-0 right-0 h-8 " viewBox="0 0 7 30" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -40,14 +40,14 @@ const steps = [
     </svg>
   </div>
 
-  <ul>
+  <ul class="mt-5 sm:mt-20 sm:mt-16">
     {steps.map((step) => (
-      <li class="py-16 sm:py-32 border-b border-lines-dark">
+      <li class="py-10 md:py-16 border-b border-lines">
         <div class="flex gap-7">
-          <span class="text-[1.5rem]">{step.number}/</span>
-          <h3 class="text-[1.5rem]">{step.title}</h3>
+          <span class="text-[1.5rem] md:text-[2rem]">{step.number}/</span>
+          <h3 class="text-[1.5rem] md:text-[2rem]">{step.title}</h3>
         </div>
-        <p class="mt-10 text-[1.25rem]">{step.description}</p>
+        <p class="mt-10 md:mt-16 text-[1.25rem] md:text-[1.5rem]">{step.description}</p>
       </li>
     ))}
   </ul>

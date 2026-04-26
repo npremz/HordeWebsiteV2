@@ -16,21 +16,10 @@ const showLines = !isDark;
 
 <Tag
   class:list={[
-    "container -mt-10 mx-auto px-(--gutter) max-w-[1320px] md:max-w-[1320px] lg:px-0",
+    "-mt-10 mx-auto px-(--gutter) lg:max-w-[1320px] lg:px-0",
     className,
   ]}
 >
-  {
-    showLines && (
-      <span class="hidden lg:block fixed h-full w-px bg-lines left-6 top-0 -z-9999" />
-    )
-  }
-  {
-    showLines && (
-      <span class="hidden lg:block fixed h-full w-px bg-lines left-12 top-0 -z-9999" />
-    )
-  }
-
   <div
     class:list={[
       "w-full relative z-9998",
@@ -39,15 +28,4 @@ const showLines = !isDark;
   >
     <slot />
   </div>
-
-  {
-    showLines && (
-      <span class="hidden lg:block fixed h-full w-px bg-lines right-12 top-0 -z-9999" />
-    )
-  }
-  {
-    showLines && (
-      <span class="hidden lg:block fixed h-full w-px bg-lines right-6 top-0 -z-9999" />
-    )
-  }
 </Tag>

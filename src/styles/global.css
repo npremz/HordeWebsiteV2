@@ -55,19 +55,19 @@
 
 @media only screen and (min-width: 640px) {
   :root {
-    --gutter: 4rem
+    --gutter: 3rem
   }
 }
 
 @media only screen and (min-width: 1024px) {
   :root {
-    --gutter: 6rem
+    --gutter: 4rem
   }
 }
 
 @media only screen and (min-width: 1512px) {
   :root {
-    --gutter: 8rem
+    --gutter: 6rem
   }
 }
 

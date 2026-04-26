@@ -1,21 +1,29 @@
 ---
+import EndpointDivider from "../ui/decor/EndpointDivider.astro";
 import HeroWeather from "./HeroWeather.astro";
 ---
 
-<section id="hero" class="pt-62 pb-68 sm:pt-76 sm:pb-20 sm:mx-5 sm:border-x sm:border-lines">
-    <div class="relative max-w-[388px] sm:max-w-[420px] aspect-square mx-auto flex flex-col justify-center items-center">
+<section id="hero" class="pt-62 pb-68 sm:pt-76 sm:pb-20 md:pt-50 md:pb-40 lg:pt-55 lg:pb-30 2xl:pt-85 2xl:pb-60 sm:mx-5 sm:border-x sm:border-lines">
+    <div class="relative max-w-[388px] sm:max-w-[420px] lg:max-w-[490px] 2xl:max-w-[580px] aspect-square mx-auto flex flex-col justify-center items-center">
       <div class="relative @container w-full">
-        <span class="absolute -translate-y-1/2 -z-10 w-full aspect-square rounded-full border border-lines"></span>
-        <div class="relative p-4 w-full h-85 sm:h-105 border border-lines flex flex-col justify-between">
-          <span class="block mt-2 font-display uppercase text-[2rem] sm:text-[2.5rem] md:text-[3rem] leading-none">Nous <br>Concevons</span>
-          <h1 class="text-[0.875rem] leading-tight uppercase font-mono text-right absolute bottom-1/2 right-4 mb-2">Agence de site web <br/>basée à bruxelles</h1>
-          <HeroWeather class="absolute top-1/2 left-4 mt-2" />
-          <span class="block self-end text-right font-display uppercase text-[2rem] sm:text-[2.5rem] md:text-[3rem] leading-none">Des sites web <br>Optimises</span>
+        <span class="absolute -translate-y-1/2 md:-translate-y-0 md:-translate-x-1/2 -z-10 w-full aspect-square rounded-full border border-lines"></span>
+        <div class="relative p-4 w-full h-85 sm:h-105 lg:h-122.5 2xl:h-145 border border-lines flex flex-col justify-between">
+          <span class="block mt-2 font-display uppercase text-[2rem] sm:text-[2.5rem] lg:text-[3rem] 2xl:text-[3.75rem] leading-none">Nous <br>Concevons</span>
+          <h1 class="text-[0.875rem] leading-tight uppercase font-mono text-right absolute bottom-1/2 right-4 mb-2 sm:mb-4 lg:mb-3">Agence de site web <br/>basée à bruxelles</h1>
+          <div class:list={['absolute top-1/2 -mt-px w-screen center-x']}>
+            <div class:list={['h-px w-full bg-lines']}></div>
+            <div class="absolute w-full lg:max-w-[1320px] center-x">
+              <span class="h-2 w-2 bg-lines-dark block absolute left-(--gutter) lg:left-0 -ml-1 -mt-1"></span>
+              <span class="h-2 w-2 bg-lines-dark block absolute right-(--gutter) lg:right-0 -mr-0.75 -mt-1"></span>
+            </div>
+          </div>
+          <HeroWeather class="absolute top-1/2 left-4 mt-2 sm:mt-4 lg:mt-3" />
+          <span class="block self-end text-right font-display uppercase text-[2rem] sm:text-[2.5rem] lg:text-[3rem] 2xl:text-[3.75rem] leading-none">Des sites web <br>Optimises</span>
         </div>
-        <span class="absolute -translate-y-1/2 -z-10 w-full aspect-square rounded-full border border-lines"></span>
+        <span class="absolute -translate-y-1/2 md:-translate-y-full md:translate-x-1/2 -z-10 w-full aspect-square rounded-full border border-lines"></span>
       </div>
     </div>
-    <div class="hidden sm:flex justify-center sm:justify-end sm:mt-52.5 sm:-translate-y-full">
+    <div class="hidden sm:flex justify-center sm:justify-end sm:mt-52.5 md:mt-0 sm:-translate-y-full">
       <svg width="31" height="35" viewBox="0 0 31 35" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M0 23.4884L2.32797 21.0018L11.1648 29.06V10.8621C11.1648 4.8631 15.8784 -2.62223e-07 21.6931 0L31 4.19712e-07L31 3.18182L16.83 3.18182C15.5379 3.18182 14.4904 4.26251 14.4904 5.59561L14.4904 29.06L23.3272 21.0018L25.6552 23.4884L12.8276 35L0 23.4884Z" fill="#16191B"/>
       </svg>

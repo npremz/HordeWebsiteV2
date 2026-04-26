@@ -7,13 +7,13 @@ const lang = DEFAULT_LOCALE;
 const projects = (await getLocalizedProjects(lang)).slice(0, 3);
 ---
 
-<section id="projects" class="pt-25 sm:py-50 md:pb-60 sm:mx-5 sm:border-x sm:overflow-hidden sm:border-b sm:rounded-b-full sm:border-lines">
+<section id="projects" class="pt-25 sm:py-50 md:pb-80 lg:pb-120 sm:mx-5 sm:border-x sm:overflow-hidden sm:border-b sm:rounded-b-full sm:border-lines">
   <h2 class="text-[1.125rem] text-center">Sites web realisés ({projects.length.toString().padStart(2, '0')})</h2>
-  <ul class="mt-6 sm:mt-16 font-display uppercase text-[2.25rem] sm:text-[4rem] md:text-[5rem] text-center">
+  <ul class="mt-6 font-display uppercase text-[2.25rem] sm:text-[4rem] md:text-[5rem] text-center">
     {projects.map((project, i) => (
       <>
         {i > 0 && <li aria-hidden="true" class="h-px bg-lines"></li>}
-        <li class="py-4">
+        <li class="py-4 sm:py-5 lg:py-6">
           <a href={`/${lang}/projets/${project.slug}`}>{project.shortTitle}</a>
         </li>
       </>
