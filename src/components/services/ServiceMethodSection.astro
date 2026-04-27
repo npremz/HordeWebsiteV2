@@ -9,27 +9,30 @@ interface Props {
 const { service } = Astro.props;
 ---
 
-<section id="service-method" class="full-width-white-bg py-8 mt-16 lg:mt-24" data-service-section="method" aria-labelledby="service-method-title">
+<section id="service-method" class="full-width-white-bg py-8 sm:py-16 md:py-24 md:pb-32 mt-16 sm:mt-24 md:mt-32" data-service-section="method" aria-labelledby="service-method-title">
   <h2
     id="service-method-title"
     class="text-[1.5rem] sm:text-[2rem] md:text-[2.5rem] leading-none pb-16 md:pb-24"
     set:html={formatHeadingHtml(service.methodTitle)}
   />
-  <div class="pb-16 lg:pb-32 space-y-16 sm:space-y-0 sm:grid sm:grid-cols-2 lg:grid-cols-4 sm:gap-x-5 lg:gap-y-16 ">
+  <div class=" space-y-16 sm:space-y-0 sm:grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 sm:gap-x-32 md:gap-x-16 lg:gap-y-16 ">
     {service.methodSteps.map((step, index) => (
       <article class:list={[
         "flex flex-col",
-        {"sm:mt-50": (index % 2 == 1)}
+        {"sm:mt-25 md:mt-32": (index % 2 == 1)}
       ]}>
         <span class="font-mono text-[1rem] leading-none whitespace-nowrap">
           {String(index + 1).padStart(2, "0")}
         </span>
         <div class="flex flex-col w-full mt-5 sm:justify-between">
           <div class="flex justify-between items-end">
-            <h3 class="text-[1.5rem] sm:text-[2rem] leading-[1.2]">{step.title}</h3>
+            <h3 class="text-[1.5rem] leading-[1.2]">{step.title}</h3>
           </div>
-          <p class="mt-5 text-[1.125rem]">{step.body}</p>
-          {index < service.methodSteps.length - 1 && <hr class="mt-16 border-lines" />}
+          <hr class:list={[
+            "border-lines",
+            index < service.methodSteps.length - 1 ? "mt-16 sm:mt-10" : "hidden sm:block sm:mt-10"
+          ]} />
+          <p class="mt-5 sm:mt-10 text-[1.125rem]">{step.body}</p>
         </div>
       </article>
     ))}

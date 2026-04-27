@@ -158,32 +158,33 @@ export const fr = {
       title: 'Nos services de création de site web',
     },
     demarche: {
-      title: 'Notre démarche pour la création d’un site web sur mesure',
-      expectationLine1: 'Ce a quoi vous pouvez',
+      title: 'Une méthode claire pour créer un site web rapide et utile',
+      expectationLine1: 'Ce à quoi vous pouvez',
       expectationLine2: 'vous attendre',
       expectationLine3: 'en travaillant',
       expectationLine4: 'avec nous',
+      cta: 'Demander un audit offert',
       steps: [
         {
           number: '1',
-          title: 'Audit de votre site actuel (offert)',
-          quote: '"On se pose avec vous, avec un langage que tout le monde comprends."',
+          title: 'Audit SEO, UX et performance offert',
+          quote: 'On identifie ce qui bloque avant de proposer quoi que ce soit.',
           description:
-            'Tout commence par un diagnostic. On analyse vos performances (SEO, vitesse, UX) pour identifier vos réels blocages. Vous repartez avec des réponses claires, sans engagement.',
+            'On analyse votre site actuel ou votre projet : vitesse, structure SEO, expérience mobile, parcours utilisateur et points de conversion. Vous repartez avec les priorités claires, sans jargon et sans engagement.',
         },
         {
           number: '2',
-          title: 'On crée votre solution sur mesure',
-          quote: '"Notre but est de creer un site qui repond a vos probleme business."',
+          title: 'Plan d’action et création sur mesure',
+          quote: 'Le site doit répondre à un objectif business, pas seulement être joli.',
           description:
-            'On choisi la technologie qui vous convient et on met tout en place pour que votre site ne soit pas un poid de plus a gerer dans votre activite mais bien un levier',
+            'On choisit la bonne approche pour votre contexte : refonte, optimisation, landing page, site vitrine, e-commerce ou MVP. Design, contenu, technique et CMS sont pensés ensemble pour créer un site rapide, clair et durable.',
         },
         {
           number: '3',
-          title: 'On vous rend autonome',
-          quote: '"Pas de relation de dependance, vous avez les cles du projet."',
+          title: 'Mise en ligne et autonomie',
+          quote: 'Pas de dépendance inutile : vous gardez les clés du projet.',
           description:
-            "On prend un soin particulier a fournir des solutions qui permetterons a vous et votre equipe d'avoir une main totale sur le livrable: Modifications, ajouts et migrations sont pensees pour le long terme.",
+            "On livre un site prêt à évoluer : performant, bien structuré, documenté et simple à gérer. Votre équipe peut modifier les contenus, ajouter des pages et faire vivre le site sans dépendre de nous pour chaque changement.",
         },
       ],
     },

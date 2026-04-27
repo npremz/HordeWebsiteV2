@@ -13,7 +13,7 @@ const { service } = Astro.props;
   id="service-exclusions"
   data-service-section="exclusions"
   aria-labelledby="service-exclusions-title"
-  class="full-width-white-bg py-12 mt-16 sm:mt-25 md:mt-50"
+  class="full-width-white-bg py-12 sm:py-16 sm:pb-24 md:pt-24 md:pb-32 mt-16 sm:mt-25 md:mt-32"
 >
   <h2 id="service-exclusions-title" class="text-[1.5rem] sm:text-[2rem] md:text-[2.5rem] leading-none flex justify-between">
     <span set:html={formatHeadingHtml(service.exclusionsTitle)} />
@@ -21,7 +21,7 @@ const { service } = Astro.props;
   </h2>
   <div class="mt-10 sm:mt-16">
     {service.exclusionsParagraphs.map((paragraph) => (
-      <p class="text-[1.375rem] sm:text-[1.5rem] md:text-[2rem]">{paragraph}</p>
+      <p class="text-[1.375rem] sm:text-[1.5rem]">{paragraph}</p>
     ))}
   </div>
   <p class="mt-8 sm:mt-10 md:mt-16 md:max-w-[630px] text-[1.125rem] leading-normal">Encore des zones d’ombres sur les du service? N’hésitez pas à nous contacter par e-mail à l’adresse <a class="exclusion-email-link" href="mailto:hello@hordeagence.com">hello@hordeagence.com</a></p>

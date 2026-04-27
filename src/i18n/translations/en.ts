@@ -159,32 +159,33 @@ export const en: Translations = {
       title: 'Our website creation services',
     },
     demarche: {
-      title: 'Our approach to creating a custom website',
+      title: 'A clear method to build a fast, useful website',
       expectationLine1: 'What you can',
       expectationLine2: 'expect',
       expectationLine3: 'when working',
       expectationLine4: 'with us',
+      cta: 'Request a free audit',
       steps: [
         {
           number: '1',
-          title: 'Audit of your current website (free)',
-          quote: '"We sit down with you, using language everyone understands."',
+          title: 'Free SEO, UX and performance audit',
+          quote: 'We identify what blocks results before suggesting anything.',
           description:
-            'Everything starts with a diagnosis. We analyze your performance (SEO, speed, UX) to identify the real blockers. You leave with clear answers, no strings attached.',
+            'We review your current website or project: speed, SEO structure, mobile experience, user journey and conversion points. You leave with clear priorities, plain language and no commitment.',
         },
         {
           number: '2',
-          title: 'We create your custom solution',
-          quote: '"Our goal is to create a website that answers your business problems."',
+          title: 'Action plan and custom creation',
+          quote: 'A website should serve a business goal, not just look good.',
           description:
-            'We choose the technology that fits you and set everything up so your website is not another burden to manage, but a real lever for your business.',
+            'We choose the right approach for your context: redesign, optimization, landing page, showcase website, e-commerce or MVP. Design, content, tech and CMS are planned together to create a fast, clear and durable website.',
         },
         {
           number: '3',
-          title: 'We make you autonomous',
-          quote: '"No dependency relationship: you keep the keys to the project."',
+          title: 'Launch and autonomy',
+          quote: 'No unnecessary dependency: you keep the keys to the project.',
           description:
-            'We take special care to deliver solutions that give you and your team full control over the final product: edits, additions, and migrations are designed for the long term.',
+            'We deliver a website ready to evolve: performant, well structured, documented and easy to manage. Your team can edit content, add pages and keep the site alive without depending on us for every change.',
         },
       ],
     },
