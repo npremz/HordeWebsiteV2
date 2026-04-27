@@ -13,26 +13,18 @@ const { service } = Astro.props;
   id="service-exclusions"
   data-service-section="exclusions"
   aria-labelledby="service-exclusions-title"
-  class="mt-16 sm:mt-25 md:mt-50"
+  class="full-width-white-bg py-12 mt-16 sm:mt-25 md:mt-50"
 >
-  <div class="p-8 sm:px-16 sm:py-25 lg:px-32 border-lines border">
-    <div class="flex justify-between">
-      <h2 id="service-exclusions-title" class="text-[1.5rem] sm:text-[2rem] md:text-[2.5rem] leading-none underline flex">
-        <span set:html={formatHeadingHtml(service.exclusionsTitle)} />
-      </h2>
-      <svg width="37" height="32" viewBox="0 0 37 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M0 0H6.88854V2.93578H3.28026V29.0642H6.88854V32H0V0Z" fill="#16191B"/>
-        <path d="M16.8706 1.46789H20.1508V8.99082L19.4219 20.9541H17.5995L16.8706 8.99082V1.46789ZM16.7612 24.1835H20.2602V27.7064H16.7612V24.1835Z" fill="#16191B"/>
-        <path d="M37 32H30.1115V29.0642H33.7197V2.93578H30.1115V0H37V32Z" fill="#16191B"/>
-      </svg>
-    </div>
-    <div class="mt-8 sm:mt-16">
-      {service.exclusionsParagraphs.map((paragraph) => (
-        <p class="text-[1.125rem] sm:text-[1.5rem] md:text-[2rem] indent-32">{paragraph}</p>
-      ))}
-    </div>
+  <h2 id="service-exclusions-title" class="text-[1.5rem] sm:text-[2rem] md:text-[2.5rem] leading-none flex justify-between">
+    <span set:html={formatHeadingHtml(service.exclusionsTitle)} />
+    <span class="block">[ ! ]</span>
+  </h2>
+  <div class="mt-10 sm:mt-16">
+    {service.exclusionsParagraphs.map((paragraph) => (
+      <p class="text-[1.375rem] sm:text-[1.5rem] md:text-[2rem]">{paragraph}</p>
+    ))}
   </div>
-  <p class="mt-8 sm:mt-10 md:mt-16 md:max-w-[630px] text-[1.125rem]">Encore des zones d’ombres sur les du service? N’hésitez pas à nous contacter par e-mail à l’adresse <a class="exclusion-email-link" href="mailto:hello@hordeagence.com">hello@hordeagence.com</a></p>
+  <p class="mt-8 sm:mt-10 md:mt-16 md:max-w-[630px] text-[1.125rem] leading-normal">Encore des zones d’ombres sur les du service? N’hésitez pas à nous contacter par e-mail à l’adresse <a class="exclusion-email-link" href="mailto:hello@hordeagence.com">hello@hordeagence.com</a></p>
 </section>
 
 <style>

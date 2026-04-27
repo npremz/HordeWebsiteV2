@@ -12,16 +12,16 @@ const { service } = Astro.props;
 <section id="service-offer" class="mt-10 sm:mt-16 md:mt-24" data-service-section="offer" aria-labelledby="service-offer-title">
   <h2
     id="service-offer-title"
-    class="text-[1.5rem] sm:text-[2rem] md:text-[2.5rem] leading-none uppercase pb-16 md:pb-24"
+    class="text-[1.5rem] sm:text-[2rem] md:text-[2.5rem] leading-none pb-16 md:pb-24"
     set:html={formatHeadingHtml(service.offerTitle)}
   />
   <div class="offer-grid sm:pb-25 md:pb-50 space-y-16 md:space-y-0 md:grid md:gap-x-10 md:gap-y-32">
     {service.offerItems.map((item, index) => (
       <article>
         <span class="font-mono text-[1rem] block">
-          / {String(index + 1).padStart(3, "0")}
+          {String(index + 1).padStart(2, "0")}
         </span>
-        <h3 class="text-[1.5rem] leading-none mt-4">{item.title}</h3>
+        <h3 class="text-[1.375rem] leading-none mt-4">{item.title}</h3>
         <p class="mt-8 text-[1.125rem] max-w-[365px]">{item.body}</p>
       </article>
     ))}

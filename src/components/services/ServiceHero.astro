@@ -14,7 +14,7 @@ const backgroundCircleOffsets = [-250, -200, -150, -100, -50, 0, 50, 100, 150, 2
 
 <header
   id="service-hero"
-  class="relative pt-52 sm:pt-62 2xl:pt-72 pb-16 sm:pb-12.5 md:pb-20 2xl:pb-25 bg-black text-white full-width-dark-bg"
+  class="relative pt-52 sm:pt-62 2xl:pt-72 pb-16 sm:pb-12.5 md:pb-16 2xl:pb-25 bg-black text-white full-width-dark-bg"
   data-service-section="hero"
 >
   <!-- Crossing lines: 100vw wide, clipped to hero height via overflow-hidden on this wrapper -->
@@ -74,17 +74,17 @@ const backgroundCircleOffsets = [-250, -200, -150, -100, -50, 0, 50, 100, 150, 2
       <path d="M2.94972 52L-4.76837e-06 52C4.36313 44.7844 7.62011 36.9128 7.62011 25.8807C7.62011 15.0872 4.36313 7.21559 -2.22387e-07 -4.77635e-06L2.94972 -4.51848e-06C7.18995 6.02293 11 15.0872 11 25.8807C11 37.0321 7.18994 45.9771 2.94972 52Z" fill="white"/>
     </svg>
   </div>
-  <div class="relative z-10 mt-22 sm:mt-50 md:mt-70 lg:mt-10 2xl:mt-36">
+  <div class="relative z-10 mt-22 sm:mt-32 md:mt-62.5 lg:mt-20 2xl:mt-36">
     <div class="lg:flex lg:justify-between lg:items-end">
-      <div class="flex flex-col gap-5 max-w-[700px]">
+      <div class="flex flex-col gap-5">
         <span class="text-[1.5625rem]">Notre service de</span>
         <h1
-          class="font-display text-[2.25rem] sm:text-[4rem] md:text-[5rem] 2xl:text-[6rem] uppercase leading-none max-w-[600px]"
+          class="font-display text-[2.25rem] sm:text-[4rem] uppercase leading-none max-w-[600px]"
           set:html={formatHeadingHtml(service.h1)}
         />
+        <p class="lg:mt-0 text-[1.25rem] md:max-w-[830px] lg:max-w-[630px]">{service.intro}</p>
       </div>
       <div class="lg:max-w-[460px]">
-        <p class="mt-4 sm:mt-6 md:mt-8 lg:mt-0 text-[1.125rem] md:max-w-[600px]">{service.intro}</p>
         {service.primaryCtaLabel && service.primaryCtaUrl && (
           <div class="mt-8 sm:mt-10 lg:mt-16 flex">
             <CtaButton

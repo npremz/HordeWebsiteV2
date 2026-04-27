@@ -308,7 +308,7 @@ body {
   .full-width-white-bg::before {
     content: "";
     @apply absolute top-0 left-1/2 -translate-x-1/2 w-screen h-full -z-1;
-    background-color: var(--color-bg-light);
+    background-color: var(--color-white);
   }
 
   /* -----------------------------------------

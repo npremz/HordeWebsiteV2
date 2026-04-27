@@ -39,7 +39,7 @@ problemBlocks:
       aillent jusqu'au bout. Chaque décision va dans ce sens, de la base
       technique jusqu'à la taille des boutons.
     items: []
-offerTitle: Nos \n solutions en \n e-commerce
+offerTitle: Nos solutions en e-commerce
 offerItems:
   - title: Boutiques Shopify
     body: >-
@@ -56,7 +56,7 @@ offerItems:
       Vous avez une boutique existante qui ne répond plus à vos besoins ? On
       migre vers une nouvelle plateforme sans perdre l'historique de commandes,
       les avis clients, et le référencement acquis.
-methodTitle: Nos \n standards pour un \n e-commerce
+methodTitle: Nos standards pour un e-commerce
 methodSteps:
   - title: UX & parcours d'achat
     body: >-
@@ -78,7 +78,7 @@ methodSteps:
       Intégration Stripe, Mollie, Bancontact, PayPal. Connexion aux
       transporteurs (Bpost, DPD, Sendcloud). On configure ce dont vous avez
       besoin, pas un catalogue de fonctionnalités que vous n'utiliserez jamais.
-deliverablesTitle: Résumé du \n produit Après \n livraison
+deliverablesTitle: Résumé du produit Après livraison
 deliverables:
   - Boutique en production, rapide sur mobile et desktop
   - Core Web Vitals dans le vert
@@ -93,7 +93,7 @@ exclusionsParagraphs:
     quelques apps. On ne met pas non plus en ligne sans avoir testé le tunnel de
     commande sur mobile. Et on ne code pas sans avoir compris votre catalogue,
     vos transporteurs et vos contraintes logistiques.
-faqTitle: Nos réponses \n aux Questions \n fréquentes
+faqTitle: Nos réponses aux questions fréquentes
 faqItems:
   - question: Shopify ou WooCommerce ?
     answer: >-
@@ -123,8 +123,9 @@ ctaTitle: Parlez-nous de votre boutique
 ctaParagraphs:
   - >-
     Remplissez le formulaire avec vos coordonnées, et un membre de notre équipe
-    vous contactera pour une consultation sans engagement. Ou vous pouvez nous
-    envoyer un e-mail à l'adresse hello@hordeagence.com
+    vous contactera pour une consultation sans engagement.
+  - >-
+    Ou vous pouvez nous envoyer un e-mail à l'adresse hello@hordeagence.com
 primaryCtaLabel: Discutons de votre projet
 primaryCtaUrl: /fr/contact
 secondaryCtaLabel: Voir nos réalisations

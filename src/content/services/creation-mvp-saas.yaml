@@ -49,7 +49,7 @@ problemBlocks:
       On travaille autrement : on cadre d'abord, on construit ensuite uniquement
       ce qui permet de répondre à la question business centrale.
     items: []
-offerTitle: Ce qu'on \n couvre avec \n un MVP
+offerTitle: Ce qu'on couvre avec un MVP
 offerItems:
   - title: Cadrage produit
     body: >-
@@ -71,7 +71,7 @@ offerItems:
       Hébergement configuré, monitoring en place, documentation technique. On ne
       disparaît pas après le lancement, on suit les premiers retours et on
       itère.
-methodTitle: Notre \n plan Pour \n un MVP
+methodTitle: Notre plan Pour un MVP
 methodSteps:
   - title: Cadrage (1 semaine)
     body: Périmètre MVP défini, hypothèses identifiées, périmètre signé.
@@ -83,7 +83,7 @@ methodSteps:
     body: Hébergement configuré, monitoring, documentation.
   - title: Suivi post-lancement
     body: On suit les premiers retours et on itère avec vous.
-deliverablesTitle: Résumé du \n produit Après \n livraison
+deliverablesTitle: Résumé du produit Après livraison
 deliverables:
   - Application déployée en production
   - Code source sur votre repository, sans dépendances propriétaires
@@ -101,7 +101,7 @@ exclusionsParagraphs:
     On ne s'engage pas non plus sur des fonctionnalités dont on ne comprend pas
     l'utilité. Si on pense qu'une décision de product design est problématique,
     on le dit.
-faqTitle: Nos réponses \n aux Questions \n fréquentes
+faqTitle: Nos réponses aux questions fréquentes
 faqItems:
   - question: Combien coûte un MVP ?
     answer: >-
@@ -137,8 +137,9 @@ ctaTitle: Parlons de votre idée
 ctaParagraphs:
   - >-
     Remplissez le formulaire avec vos coordonnées, et un membre de notre équipe
-    vous contactera pour une consultation sans engagement. Ou vous pouvez nous
-    envoyer un e-mail à l'adresse hello@hordeagence.com
+    vous contactera pour une consultation sans engagement.
+  - >-
+    Ou vous pouvez nous envoyer un e-mail à l'adresse hello@hordeagence.com
 primaryCtaLabel: Discutons de votre projet
 primaryCtaUrl: /fr/contact
 secondaryCtaLabel: Voir nos réalisations

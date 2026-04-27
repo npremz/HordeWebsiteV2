@@ -42,7 +42,7 @@ problemBlocks:
       La refonte n'est pas une dépense cosmétique. C'est un investissement sur
       la capacité de votre site à générer du chiffre.
     items: []
-offerTitle: Ce qu'on \n refait et \n comment
+offerTitle: Ce qu'on refait et comment
 offerItems:
   - title: Audit de l'existant
     body: >-
@@ -68,7 +68,7 @@ offerItems:
       Redirections propres, vérification de l'indexation, monitoring
       post-launch. On ne coupe pas l'ancien site sans filet. La migration est
       non destructive.
-methodTitle: Notre \n processus Pour une \n refonte
+methodTitle: Notre processus Pour une refonte
 methodSteps:
   - title: Cadrage
     body: >-
@@ -86,7 +86,7 @@ methodSteps:
     body: Intégration performance-first, CMS configuré.
   - title: Migration & lancement
     body: Redirections, indexation, monitoring post-launch inclus.
-deliverablesTitle: Résumé du \n produit Après \n livraison
+deliverablesTitle: Résumé du produit Après livraison
 deliverables:
   - Site en production, performant sur mobile et desktop
   - Score Core Web Vitals vert (LCP < 2.5s, CLS < 0.1, INP < 200ms)
@@ -101,7 +101,7 @@ exclusionsParagraphs:
     soit, on audite l'existant. On ne livre pas non plus une maquette statique
     en vous laissant vous débrouiller avec le développement : chez nous, design
     et développement vont ensemble.
-faqTitle: Réponses \n aux questions \n fréquentes
+faqTitle: Nos réponses aux questions fréquentes
 faqItems:
   - question: Combien coûte une refonte ?
     answer: >-
@@ -131,8 +131,9 @@ ctaTitle: Parlez-nous de votre projet
 ctaParagraphs:
   - >-
     Remplissez le formulaire avec vos coordonnées, et un membre de notre équipe
-    vous contactera pour une consultation sans engagement. Ou vous pouvez nous
-    envoyer un e-mail à l'adresse hello@hordeagence.com
+    vous contactera pour une consultation sans engagement.
+  - >-
+    Ou vous pouvez nous envoyer un e-mail à l'adresse hello@hordeagence.com
 primaryCtaLabel: Demander un devis
 primaryCtaUrl: /fr/contact
 secondaryCtaLabel: Voir nos projets

@@ -53,7 +53,7 @@ problemBlocks:
       Vous avez déjà une landing page mais vous voulez tester une hypothèse sur
       le message ou le design. On crée une variante et on mesure.
     items: []
-offerTitle: Ce qu'on \n intègre à votre \n landing page
+offerTitle: Ce qu'on intègre à votre landing page
 offerItems:
   - title: Copywriting orienté conversion
     body: >-
@@ -75,7 +75,7 @@ offerItems:
       Formulaire connecté à votre CRM (HubSpot, Brevo, Mailchimp), pixel Meta,
       Google Tag Manager, events de conversion. On configure le tracking
       correctement dès le départ.
-methodTitle: Notre \n méthode pour une \n bonne page
+methodTitle: Notre méthode pour une bonne page
 methodSteps:
   - title: Brief
     body: >-
@@ -89,7 +89,7 @@ methodSteps:
     body: La maquette validée, on développe. Performance et mobile au centre.
   - title: Intégrations & mise en ligne
     body: Tracking, CRM, formulaire. On livre sur votre domaine.
-deliverablesTitle: Résumé du \n produit Après \n livraison
+deliverablesTitle: Résumé du produit Après livraison
 deliverables:
   - Page en production sur votre domaine
   - Copywriting structuré et optimisé pour l'objectif
@@ -104,7 +104,7 @@ exclusionsParagraphs:
     ne promet pas un "taux de conversion de X%". Et on ne fait pas de rush en 3
     jours qui produit quelque chose de médiocre. On fait du travail sérieux dans
     des délais raisonnables.
-faqTitle: Questions fréquentes
+faqTitle: Nos réponses aux questions fréquentes
 faqItems:
   - question: Vous rédigez le contenu ?
     answer: >-
@@ -137,8 +137,9 @@ ctaTitle: Lancez votre prochaine campagne avec une page qui convertit
 ctaParagraphs:
   - >-
     Remplissez le formulaire avec vos coordonnées, et un membre de notre équipe
-    vous contactera pour une consultation sans engagement. Ou vous pouvez nous
-    envoyer un e-mail à l'adresse hello@hordeagence.com
+    vous contactera pour une consultation sans engagement.
+  - >-
+    Ou vous pouvez nous envoyer un e-mail à l'adresse hello@hordeagence.com
 primaryCtaLabel: Demander un devis rapide
 primaryCtaUrl: /fr/contact
 secondaryCtaLabel: Voir nos réalisations

@@ -13,25 +13,30 @@ const { service, formTranslations } = Astro.props;
 ---
 
 <section id="service-cta" class="mt-20 sm:mt-25 md:mt-50" data-service-section="cta" aria-labelledby="service-cta-title">
-  <h2 id="service-cta-title" class="text-[1.5rem] sm:text-[2rem] md:text-[2.5rem] leading-none flex pb-10">
+  <h2 id="service-cta-title" class="flex flex-col gap-5 text-[1.5rem] sm:text-[2rem] md:text-[2.5rem] leading-tight flex">
     <span set:html={formatHeadingHtml(service.ctaTitle)} />
+    <svg class="self-end" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+     <rect width="7" height="20" transform="matrix(0.707107 0.707107 0.707107 -0.707107 0 14.1406)" fill="#16191B"/>
+    </svg>
   </h2>
-  <div>
-    {service.ctaParagraphs.map((paragraph) => {
-      const emailRegex = /(hello@hordeagence\.com)/;
-      const parts = paragraph.split(emailRegex);
-      return (
-        <p class="text-[1.125rem] max-w-[900px]">
-          {parts.map((part) =>
-            part === 'hello@hordeagence.com'
-              ? <a class="cta-email-link" href="mailto:hello@hordeagence.com">{part}</a>
-              : part
-          )}
-        </p>
-      );
-    })}
+  <div class="mt-5">
+    <div class="space-y-8">
+      {service.ctaParagraphs.map((paragraph) => {
+        const emailRegex = /(hello@hordeagence\.com)/;
+        const parts = paragraph.split(emailRegex);
+        return (
+          <p class="text-[1.125rem] max-w-[900px]">
+            {parts.map((part) =>
+              part === 'hello@hordeagence.com'
+                ? <a class="cta-email-link" href="mailto:hello@hordeagence.com">{part}</a>
+                : part
+            )}
+          </p>
+        );
+      })}
+    </div>
 
-    <div id="contact-form" class="mt-25">
+    <div id="contact-form" class="mt-16">
       <ContactForm
         client:load
         translations={formTranslations}

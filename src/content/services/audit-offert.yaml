@@ -31,7 +31,7 @@ problemBlocks:
       ils coûtent du trafic, des leads et des conversions. Avant de dépenser en
       refonte ou en SEO, il faut savoir ce qui ne va pas.
     items: []
-offerTitle: Ce qu'on \n audite sur \n votre site
+offerTitle: Ce qu'on audite sur votre site
 offerItems:
   - title: Performance & Core Web Vitals
     body: >-
@@ -54,7 +54,7 @@ offerItems:
     body: >-
       Contraste, navigation clavier, responsive. Un site accessible, c'est aussi
       un signal positif pour les moteurs de recherche.
-methodTitle: Notre \n méthode pour \n un audit
+methodTitle: Notre méthode pour un audit
 methodSteps:
   - title: Analyse en amont
     body: >-
@@ -68,7 +68,7 @@ methodSteps:
     body: >-
       On ressort avec les 5 à 10 problèmes prioritaires, leur impact estimé, et
       un ordre d'action (quick wins en premier).
-deliverablesTitle: Ce avec \n quoi vous \n repartez
+deliverablesTitle: Ce avec quoi vous repartez
 deliverables:
   - Les 5 à 10 problèmes prioritaires identifiés
   - L'impact estimé sur le trafic et les conversions
@@ -84,7 +84,7 @@ exclusionsParagraphs:
   - >-
     Aucune obligation de travailler avec nous après. Ce que vous faites de cet
     échange vous appartient.
-faqTitle: Nos \n réponses aux questions \n fréquentes
+faqTitle: Nos réponses aux questions fréquentes
 faqItems:
   - question: Qui fait l'audit ?
     answer: >-
@@ -108,8 +108,9 @@ ctaTitle: Demandez votre audit
 ctaParagraphs:
   - >-
     Remplissez le formulaire avec vos coordonnées, et un membre de notre équipe
-    vous contactera pour une consultation sans engagement. Ou vous pouvez nous
-    envoyer un e-mail à l'adresse hello@hordeagence.com
+    vous contactera pour une consultation sans engagement.
+  - >-
+    Ou vous pouvez nous envoyer un e-mail à l'adresse hello@hordeagence.com
 primaryCtaLabel: Demander mon audit gratuit
 primaryCtaUrl: /fr/contact
 reassurance: On vous répond dans les 24h.

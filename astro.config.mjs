@@ -64,6 +64,20 @@ export default defineConfig({
   compressHTML: true,
   vite: {
     plugins: [tailwindcss()],
+    optimizeDeps: {
+      include: [
+        'matter-js',
+        'react',
+        'react-dom',
+        'react/jsx-runtime',
+        'react/jsx-dev-runtime',
+      ],
+      esbuildOptions: {
+        define: {
+          'process.env.NODE_ENV': '"development"',
+        },
+      },
+    },
     server: {
       strictPort: true,
       hmr: {
