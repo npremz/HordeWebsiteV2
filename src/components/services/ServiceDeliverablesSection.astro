@@ -18,28 +18,34 @@ const t = useTranslations(lang);
   data-service-section="deliverables"
   aria-labelledby="service-deliverables-title"
 >
-  <div class="relative sm:px-8">
+  <div class="relative px-5 sm:px-8">
     <svg class="h-9 absolute top-0 left-0" viewBox="0 0 7 35" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path d="M5.12291 0H7C4.22346 4.85665 2.15084 10.1548 2.15084 17.5803C2.15084 24.8452 4.22346 30.1433 7 35H5.12291C2.42458 30.9461 0 24.8452 0 17.5803C0 10.0745 2.42458 4.0539 5.12291 0Z" fill="#16191B"/>
     </svg>
-    <h2
-      id="service-deliverables-title"
-      class="text-[1.5rem] sm:text-[2rem] md:text-[2.5rem] leading-none"
-      set:html={formatHeadingHtml(service.deliverablesTitle)}
-    />
-    <p class="mt-16 section-label lg:max-w-1/2 lg:self-end lg:w-full">
-      <span class="block sm:-translate-x-8 lg:translate-0 lg:pl-16">{t.homepage.demarche.expectationLine1}<br/> {t.homepage.demarche.expectationLine2}</span>
-      <span class="block text-right">{t.homepage.demarche.expectationLine3}<br/> {t.homepage.demarche.expectationLine4}</span>
-    </p>
+    <div class="flex flex-col">
+      <h2
+        id="service-deliverables-title"
+        class="text-[1.5rem] pr-4 sm:text-[2rem] md:text-[2.5rem] lg:w-1/2 leading-none"
+        set:html={formatHeadingHtml(service.deliverablesTitle)}
+      />
+      <p class="mt-16 section-label lg:max-w-1/2 lg:self-end lg:w-full">
+        <span class="block sm:-translate-x-8 lg:translate-0 lg:pl-16 lg:translate-0">{t.homepage.demarche.expectationLine1}<br/> {t.homepage.demarche.expectationLine2}</span>
+        <span class="block text-right">{t.homepage.demarche.expectationLine3}<br/> {t.homepage.demarche.expectationLine4}</span>
+      </p>
+    </div>
     <svg class="h-9 absolute bottom-0 right-0" viewBox="0 0 8 35" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path d="M1.95533 35L2.00272e-05 35C2.89225 30.1433 5.05123 24.8452 5.05123 17.4197C5.05123 10.1548 2.89225 4.85665 2.32144e-05 -6.1196e-07L1.95533 -4.47859e-07C4.76608 4.0539 7.29169 10.1548 7.29169 17.4197C7.29169 24.9255 4.76608 30.9461 1.95533 35Z" fill="#16191B"/>
     </svg>
+    <svg class="absolute top-2 right-0" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect width="7" height="20" transform="matrix(0.707107 0.707107 0.707107 -0.707107 0 14.1406)" fill="#16191B"/>
+    </svg>
+
   </div>
-  <div class="mt-16 sm:mt-24 md:mt-32">
+  <div class="mt-16 sm:mt-24 md:mt-32 lg:mt-16">
     <ul class="space-y-2.5">
       {service.deliverables.map((item, index) => (
         <li class="flex items-center gap-5">
-          <span class="flex w-full leading-normal text-[1.125rem] sm:text-[1.375rem] md:text-[2rem] p-2.5 sm:p-5 md:py-6 lg:py-[38px] lg:px-9 sm:w-fit items-center bg-white sm:text-left">
+          <span class="flex w-full leading-normal text-[1.125rem] sm:text-[1.375rem] md:text-[2rem] p-2.5 sm:p-5 md:py-6 sm:w-fit items-center bg-white sm:text-left">
             <span class="pr-4 block">{String(index + 1).padStart(1, "0")}/</span> {item}
           </span>
         </li>

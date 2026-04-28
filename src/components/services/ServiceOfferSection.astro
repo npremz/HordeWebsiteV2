@@ -15,7 +15,7 @@ const { service } = Astro.props;
     class="text-[1.5rem] sm:text-[2rem] md:text-[2.5rem] leading-none pb-16 sm:pb-24 lg:pb-32"
     set:html={formatHeadingHtml(service.offerTitle)}
   />
-  <div class="space-y-16 md:space-y-0 md:grid md:grid-cols-2 lg:grid-cols-3 md:gap-20 lg:gap-x-32">
+  <div class="space-y-16 md:space-y-0 md:grid md:grid-cols-2 lg:grid-cols-3 md:gap-20 lg:gap-32">
     {service.offerItems.map((item, index) => (
       <article>
         <span class="font-mono text-[1rem] block">
