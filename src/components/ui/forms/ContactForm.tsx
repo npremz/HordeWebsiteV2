@@ -43,9 +43,12 @@ export interface FormTranslations {
   requiredField: string;
   invalidEmail: string;
   options: {
-    auditPerformance: string;
-    optimisationRefonte: string;
-    fromScratchMvp: string;
+    auditOffert: string;
+    creationEcommerce: string;
+    creationLandingPage: string;
+    creationMvpSaas: string;
+    optimisationSiteWeb: string;
+    refonteSiteWeb: string;
     autre: string;
   };
 }
@@ -63,8 +66,10 @@ export default function ContactForm({
   hideNeedField = false,
   source,
 }: ContactFormProps) {
+  const defaultBesoin = hideNeedField ? '' : 'audit-offert';
+
   const [formData, setFormData] = useState<FormData>({
-    besoin: '',
+    besoin: defaultBesoin,
     objectif: '',
     societe: '',
     nom: '',
@@ -89,9 +94,12 @@ export default function ContactForm({
   }, [formData.objectif]);
 
   const besoinOptions = [
-    { value: 'audit-performance', label: t.options.auditPerformance },
-    { value: 'optimisation-refonte', label: t.options.optimisationRefonte },
-    { value: 'from-scratch-mvp', label: t.options.fromScratchMvp },
+    { value: 'audit-offert', label: t.options.auditOffert },
+    { value: 'creation-ecommerce', label: t.options.creationEcommerce },
+    { value: 'creation-landing-page', label: t.options.creationLandingPage },
+    { value: 'creation-mvp-saas', label: t.options.creationMvpSaas },
+    { value: 'optimisation-site-web', label: t.options.optimisationSiteWeb },
+    { value: 'refonte-site-web', label: t.options.refonteSiteWeb },
     { value: 'autre', label: t.options.autre },
   ];
 
@@ -164,7 +172,7 @@ export default function ContactForm({
       if (response.ok) {
         setSubmitStatus('success');
         setFormData({
-          besoin: '',
+          besoin: defaultBesoin,
           objectif: '',
           societe: '',
           nom: '',
@@ -208,22 +216,25 @@ export default function ContactForm({
   };
 
   return (
-    <form className="mt-10 sm:mt-16 md:mt-24 lg:mt-30 flex flex-col gap-10 form-gap" onSubmit={(e) => void handleSubmit(e)} noValidate>
+    <form className="flex flex-col gap-10 form-gap" onSubmit={(e) => void handleSubmit(e)} noValidate>
       {!hideNeedField && (
         <fieldset className='flex flex-col gap-5 '>
-          <div className='relative flex flex-col md:flex-row gap-5 md:gap-16 lg:gap-32 md:items-center w-full'>
+          <div className={`relative flex flex-col md:flex-row md:gap-16 lg:gap-32 md:items-center w-full border-b transition-colors ${errors.besoin
+            ? 'border-err'
+            : variant === 'dark' ? 'border-[#A29FA9]' : 'border-lines'
+            }`}>
             <legend className='text-[1.125rem] block md:w-36 md:shrink-0 relative'>
               {t.needLabel}<span aria-hidden="true">*</span>
             </legend>
-            <div className="w-full flex flex-wrap gap-[1.25rem] lg:gap-[2.5rem] mt-5 pb-5 md:pb-10">
+            <div className="w-full flex flex-wrap gap-5 lg:gap-[2.5rem] mt-5 pb-5 md:pb-10">
               {besoinOptions.map((option) => (
                 <label
                   key={option.value}
-                    className={`uppercase font-mono text-[1rem] leading-[0.6] py-6 px-5 border transition-all duration-300 ease-in-out cursor-pointer ${formData.besoin === option.value
-                    ? (variant === 'dark' ? 'bg-bg-light text-black border-bg-light' : 'bg-black text-white border-black')
+                    className={`text-[1.375rem] border-b transition-all duration-300 ease-in-out cursor-pointer ${formData.besoin === option.value
+                    ? (variant === 'dark' ? 'text-white border-white' : 'text-black border-black')
                     : errors.besoin
                       ? 'border-err text-err'
-                      : (variant === 'dark' ? 'border-lines-dark hover:border-bg-light' : 'border-lines hover:border-black')
+                      : (variant === 'dark' ? 'text-[#A29FA9] border-transparent hover:text-white hover:border-white' : 'text-[#A29FA9] border-transparent hover:text-black hover:border-black')
                     }`}
                 >
                   <input
@@ -243,8 +254,11 @@ export default function ContactForm({
         </fieldset>
       )}
 
-      <div className='flex flex-col md:flex-row md:items-center md:gap-16 lg:gap-32 gap-2.5 sm:gap-5 '>
-        <label htmlFor="objectif" className='text-[1.125rem] block md:w-36 md:shrink-0 relative'>
+      <div className={`flex flex-col md:flex-row md:items-center md:gap-16 lg:gap-32 sm:gap-5 border-b transition-colors ${errors.objectif
+        ? 'border-err'
+        : variant === 'dark' ? 'border-[#A29FA9] focus-within:border-lines' : 'border-lines focus-within:border-black'
+        }`}>
+        <label htmlFor="objectif" className='text-[1.25rem] block md:w-36 md:shrink-0 relative'>
           {t.objectifLabel}<span aria-hidden="true">*</span>
           {errors.objectif && (
             <span id="objectif-error" role="alert" className="md:hidden text-err absolute right-0 top-0">{errors.objectif}</span>
@@ -257,10 +271,7 @@ export default function ContactForm({
             name="objectif"
             rows={1}
             maxLength={MAX_LENGTHS.objectif}
-            className={`py-5 form-input-py px-5 md:px-[30px] w-full text-2xl sm:text-[2rem] border bg-transparent focus:outline-none focus-visible:outline-none transition-colors resize-none overflow-hidden ${errors.objectif
-              ? 'border-err placeholder:text-err'
-              : variant === 'dark' ? 'border-lines-dark focus:border-lines' : 'border-lines focus:border-black'
-              }`}
+            className={`form-control py-5 form-input-py w-full text-2xl sm:text-[2rem] bg-transparent focus:outline-none focus-visible:outline-none transition-colors resize-none overflow-hidden ${errors.objectif ? 'placeholder:text-err' : ''}`}
             placeholder={t.objectifPlaceholder}
             value={formData.objectif}
             onInput={handleObjectifInput}
@@ -276,8 +287,11 @@ export default function ContactForm({
         </div>
       </div>
 
-      <div className='flex flex-col md:flex-row md:items-center md:gap-16 lg:gap-32 gap-2.5 sm:gap-5 '>
-        <label htmlFor="nom" className='text-[1.125rem] block md:w-36 md:shrink-0 relative'>
+      <div className={`flex flex-col md:flex-row md:items-center md:gap-16 lg:gap-32 sm:gap-5 border-b transition-colors ${errors.nom
+        ? 'border-err'
+        : variant === 'dark' ? 'border-[#A29FA9] focus-within:border-lines' : 'border-lines focus-within:border-black'
+        }`}>
+        <label htmlFor="nom" className='text-[1.25rem] block md:w-36 md:shrink-0 relative'>
           {t.nameLabel}<span aria-hidden="true">*</span>
           {errors.nom && (
             <span className="md:hidden text-err absolute right-0 top-0">{errors.nom}</span>
@@ -289,10 +303,7 @@ export default function ContactForm({
             id="nom"
             name="nom"
             maxLength={MAX_LENGTHS.nom}
-            className={`py-5 form-input-py px-5 md:px-[30px] w-full text-2xl sm:text-[2rem] border bg-transparent focus:outline-none focus-visible:outline-none transition-colors ${errors.nom
-              ? 'border-err placeholder:text-err'
-              : variant === 'dark' ? 'border-lines-dark focus:border-lines' : 'border-lines focus:border-black'
-              }`}
+            className={`form-control py-5 form-input-py w-full text-2xl sm:text-[2rem] bg-transparent focus:outline-none focus-visible:outline-none transition-colors ${errors.nom ? 'placeholder:text-err' : ''}`}
             placeholder={t.namePlaceholder}
             value={formData.nom}
             onChange={handleNameChange}
@@ -308,8 +319,11 @@ export default function ContactForm({
         </div>
       </div>
 
-      <div className='flex flex-col md:flex-row md:items-center md:gap-16 lg:gap-32 gap-2.5 sm:gap-5 '>
-        <label htmlFor="email" className='text-[1.125rem] block md:w-36 md:shrink-0 relative'>
+      <div className={`flex flex-col md:flex-row md:items-center md:gap-16 lg:gap-32 sm:gap-5 border-b transition-colors ${errors.email
+        ? 'border-err'
+        : variant === 'dark' ? 'border-[#A29FA9] focus-within:border-lines' : 'border-lines focus-within:border-black'
+        }`}>
+        <label htmlFor="email" className='text-[1.25rem] block md:w-36 md:shrink-0 relative'>
           {t.emailLabel}<span aria-hidden="true">*</span>
           {errors.email && (
             <span className="md:hidden text-err absolute right-0 top-0">{errors.email}</span>
@@ -321,10 +335,7 @@ export default function ContactForm({
             id="email"
             name="email"
             maxLength={MAX_LENGTHS.email}
-            className={`py-5 form-input-py px-5 md:px-[30px] w-full text-2xl sm:text-[2rem] border bg-transparent focus:outline-none focus-visible:outline-none transition-colors ${errors.email
-              ? 'border-err placeholder:text-err'
-              : variant === 'dark' ? 'border-lines-dark focus:border-lines' : 'border-lines focus:border-black'
-              }`}
+            className={`form-control py-5 form-input-py w-full text-2xl sm:text-[2rem] bg-transparent focus:outline-none focus-visible:outline-none transition-colors ${errors.email ? 'placeholder:text-err' : ''}`}
             placeholder="@"
             value={formData.email}
             onChange={handleEmailChange}
@@ -340,14 +351,14 @@ export default function ContactForm({
         </div>
       </div>
 
-      <div className='flex flex-col md:flex-row md:items-center md:gap-16 lg:gap-32 gap-2.5 sm:gap-5 '>
-        <label htmlFor="societe" className='text-[1.125rem] block md:w-36 md:shrink-0'>{t.companyLabel}</label>
+      <div className={`flex flex-col md:flex-row md:items-center md:gap-16 lg:gap-32 sm:gap-5 border-b transition-colors ${variant === 'dark' ? 'border-[#A29FA9] focus-within:border-lines' : 'border-lines focus-within:border-black'}`}>
+        <label htmlFor="societe" className='text-[1.25rem] block md:w-36 md:shrink-0'>{t.companyLabel}</label>
         <input
           type="text"
           id="societe"
           name="societe"
           maxLength={MAX_LENGTHS.societe}
-          className={`py-5 form-input-py px-5 md:px-[30px] flex-1 text-2xl sm:text-[2rem] border bg-transparent focus:outline-none focus-visible:outline-none transition-colors ${variant === 'dark' ? 'border-lines-dark focus:border-lines' : 'border-lines focus:border-black'}`}
+          className="form-control py-5 form-input-py flex-1 text-2xl sm:text-[2rem] bg-transparent focus:outline-none focus-visible:outline-none transition-colors"
           placeholder={t.companyPlaceholder}
           value={formData.societe}
           onChange={handleCompanyChange}

@@ -44,23 +44,41 @@ const t = useTranslations(lang);
 
 <Layout lang={lang} title={t.contact.title} variant="dark" description={t.contact.description}>
 	<div id="page-content">
-		<div class="mt-40 sm:mt-50 lg:mt-80 xl:mt-96 flex flex-col md:flex-row md:justify-between md:items-start gap-10 sm:gap-16">
-			<div class="flex flex-col gap-4 sm:gap-8 shrink-0">
-				<div class="section-label">{t.contact.knockKnock}</div>
-				<h1 class="font-display uppercase leading-none text-[1.5rem] sm:text-[2rem] md:text-[3.125rem] max-w-[350px] sm:max-w-[485px]">{t.contact.startWhen.replace(/\n/g, ' ')}</h1>
+		<div class="relative z-0 px-5 sm:px-8 lg:px-10 mt-48 sm:mt-72 md:mt-80 lg:mt-100 2xl:mt-84 flex flex-col md:justify-between md:items-start">
+			<div class="pointer-events-none absolute left-1/2 top-1/2 z-0 w-full -translate-x-1/2 -translate-y-1/2" aria-hidden="true">
+				<div class="relative max-w-[388px] sm:max-w-[420px] lg:max-w-[460px] 2xl:max-w-[580px] aspect-square mx-auto flex flex-col justify-center items-center">
+					<div class="relative @container w-full">
+						<span class="absolute -translate-y-0 -translate-x-1/2 -z-10 w-full aspect-square rounded-full border border-lines-dark"></span>
+						<div class="relative p-4 w-full h-97 sm:h-105 lg:h-115 2xl:h-145 border border-lines-dark flex flex-col justify-between"></div>
+						<span class="absolute -translate-y-full translate-x-1/2 -z-10 w-full aspect-square rounded-full border border-lines-dark"></span>
+					</div>
+				</div>
 			</div>
-			<div class="flex flex-col gap-4 sm:gap-8 text-right">
-				<div class="section-label">{t.contact.alternativeContacts}</div>
-				<ul class="flex flex-col gap-2.5 text-[1.125rem] sm:text-[1.5rem]">
-					<li><a href="mailto:hello@hordeagence.com" class="contact-link" title="hello@hordeagence.com">hello@hordeagence.com</a></li>
-					<li><a href="https://calendly.com/ni-premont/30min" class="contact-link" title={t.contact.bookCall}>{t.contact.bookCall}</a></li>
-				</ul>
-				<button class="cursor-pointer scroll-to-btn ml-auto" data-scroll-target="#contact-form" data-scroll-offset="-100"><BracketInline variant='dark' class="font-mono text-bg-light text-[1rem]">↓</BracketInline></button>
-			</div>
-		</div>
-		<hr class="mt-8 sm:mt-16 md:mt-24 border-lines-dark" />
 
-		<div id="contact-form">
+			<svg class="absolute left-0 top-2 z-10" width="8" height="35" viewBox="0 0 8 35" fill="none" xmlns="http://www.w3.org/2000/svg">
+				<path d="M5.21592 0H7.1271C4.30015 4.74704 2.18989 9.92563 2.18989 17.1835C2.18989 24.2845 4.30015 29.463 7.1271 34.2101H5.21592C2.46861 30.2477 0 24.2845 0 17.1835C0 9.84717 2.46861 3.96241 5.21592 0Z" fill="white"/>
+			</svg>
+			<div class="flex flex-col sm:flex-row sm:justify-between">
+				<div class="relative lg:w-1/2 sm:pr-4 md:pr-16 z-10 flex flex-col gap-4 sm:gap-8">
+					<h1 class="text-[1.5rem] sm:text-[2rem] md:text-[2.5rem]">Toc-toc, dites-nous bonjour ! Hâte d’entendre vos idées pour votre projet.</h1>
+				</div>
+				<svg class="relative mt-2 z-10 self-end sm:self-start -mr-5 sm:-mr-8" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+					<rect width="7" height="20" transform="matrix(0.707107 0.707107 0.707107 -0.707107 0 14.1406)" fill="white"/>
+				</svg>
+			</div>
+			<div class="relative z-10 mt-4 sm:mt-16 flex flex-col sm:flex-row sm:justify-between sm:w-full lg:w-1/2 lg:mt-0 lg:self-end lg:justify-around lg:gap-20">
+				<div class="text-[1.375rem] sm:text-[1.5rem] -translate-x-5 sm:-translate-x-8 lg:translate-0">{t.contact.alternativeContacts}:</div>
+				<ul class="list-[square] mt-8 sm:mt-0 pl-5 flex flex-col gap-2.5 text-[1.25rem]">
+					<li><a href="mailto:hello@hordeagence.com" class="" title="hello@hordeagence.com">hello@hordeagence.com</a></li>
+					<li><a href="https://calendly.com/ni-premont/30min" class="" title={t.contact.bookCall}>{t.contact.bookCall}</a></li>
+				</ul>
+			</div>
+			<svg class="absolute bottom-0 right-0 z-10" width="8" height="35" viewBox="0 0 8 35" fill="none" xmlns="http://www.w3.org/2000/svg">
+				<path d="M1.95527 35L-4.1008e-05 35C2.89218 30.1433 5.05117 24.8452 5.05117 17.4197C5.05117 10.1548 2.89219 4.85665 -3.78207e-05 -6.1196e-07L1.95527 -4.47859e-07C4.76602 4.0539 7.29163 10.1548 7.29163 17.4197C7.29163 24.9255 4.76602 30.9461 1.95527 35Z" fill="white"/>
+			</svg>
+		</div>
+
+		<div id="contact-form" class="mt-40 sm:mt-48 md:mt-32 lg:mt-44 2xl:mt-56">
 			<ContactForm client:load translations={t.form} />
 		</div>
 	</div>

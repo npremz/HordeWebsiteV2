@@ -351,10 +351,19 @@ svg polygon {
 }
 
 /* Contact form responsive overrides (TSX not scanned by Tailwind 4) */
+.form-control {
+  display: block;
+  line-height: 1;
+  min-height: calc(1em + 2.5rem);
+}
+
 @media (min-width: 1024px) {
   .form-input-py {
     padding-top: 30px !important;
     padding-bottom: 30px !important;
+  }
+  .form-control {
+    min-height: calc(1em + 60px);
   }
   .form-gap {
     gap: 60px !important;

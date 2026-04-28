@@ -271,10 +271,13 @@ export const fr = {
     requiredField: 'Champ obligatoire',
     invalidEmail: 'Adresse email invalide',
     options: {
-      auditPerformance: 'Audit & performance',
-      optimisationRefonte: 'Optimisation & refonte',
-      fromScratchMvp: 'From scratch & MVP',
-      autre: 'Autre',
+      auditOffert: 'Audit (offert)',
+      creationEcommerce: 'E-Commerce',
+      creationLandingPage: 'Landing Page',
+      creationMvpSaas: 'Saas Mvp',
+      optimisationSiteWeb: 'Optimisation',
+      refonteSiteWeb: 'Refonte',
+      autre: 'Autres',
     },
   },
 

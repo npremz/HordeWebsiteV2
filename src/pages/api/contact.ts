@@ -6,7 +6,15 @@ export const prerender = false;
 
 const resend = new Resend(import.meta.env.RESEND_API_KEY);
 
-const besoinValues = ['audit-performance', 'optimisation-refonte', 'from-scratch-mvp', 'autre'] as const;
+const besoinValues = [
+  'audit-offert',
+  'creation-ecommerce',
+  'creation-landing-page',
+  'creation-mvp-saas',
+  'optimisation-site-web',
+  'refonte-site-web',
+  'autre',
+] as const;
 
 const contactSchema = z.object({
   besoin: z.enum(besoinValues).optional(),
@@ -22,10 +30,13 @@ const contactSchema = z.object({
 });
 
 const besoinLabels: Record<string, string> = {
-  'audit-performance': 'Audit & performance',
-  'optimisation-refonte': 'Optimisation & refonte',
-  'from-scratch-mvp': 'From scratch & MVP',
-  'autre': 'Autre',
+  'audit-offert': 'Audit site web (offert)',
+  'creation-ecommerce': 'Création site e-commerce',
+  'creation-landing-page': 'Landing page sur mesure',
+  'creation-mvp-saas': 'Creation Sass MVP',
+  'optimisation-site-web': 'Optimisation site web',
+  'refonte-site-web': 'Refonte de site web',
+  'autre': 'Autres',
 };
 
 export const POST: APIRoute = async ({ request }) => {
