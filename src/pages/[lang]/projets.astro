@@ -1,10 +1,14 @@
 ---
 import Layout from "../../layouts/Layout.astro";
 import Footer from "../../components/Footer.astro";
-import ProjectIndexList from "../../components/projects/ProjectIndexList.astro";
-import ProjectsShapeBand from "../../components/projects/ProjectsShapeBand.astro";
+import ProjectsListingPage from "../../components/projects/ProjectsListingPage.astro";
 import { SUPPORTED_LOCALES, type Locale, useTranslations } from "../../i18n";
 import { getLocalizedProjects } from "../../lib/content/projects";
+import {
+  getProjectServiceEntries,
+  getProjectServiceHref,
+  getProjectServiceLabel,
+} from "../../lib/projectServices";
 
 export const prerender = true;
 
@@ -18,7 +22,6 @@ const { lang } = Astro.params as { lang: Locale };
 const t = useTranslations(lang);
 
 const projects = await getLocalizedProjects(lang);
-const projectCount = String(projects.length).padStart(2, "0");
 
 const projectOrder: Record<string, number> = {
   "cafe-belga": 1,
@@ -35,83 +38,31 @@ const pageCopy = {
     intro:
       "Des idées transformées en expériences. Des marques qui parlent, des audiences qui écoutent. Nous construisons les ponts entre les deux. Pas de bullshits, pas de templates, juste une obsession qui est de faire en sorte que chaque détail ait un sens",
     all: "Tous",
-    filters: ["Refonte Web", "Optimisation", "E-commerce", "Saas Mvp", "Landing page"],
   },
   en: {
     intro:
       "Ideas turned into experiences. Brands that speak, audiences that listen. We build the bridge between both. No bullshit, no templates, just one obsession: making every detail mean something.",
     all: "All",
-    filters: ["Web redesign", "Optimization", "E-commerce", "Saas Mvp", "Landing page"],
   },
-} satisfies Record<Locale, { intro: string; all: string; filters: string[] }>;
+} satisfies Record<Locale, { intro: string; all: string }>;
+
+const projectServices = await getProjectServiceEntries();
+const serviceFilters = projectServices.map((service) => ({
+  label: getProjectServiceLabel(service),
+  href: getProjectServiceHref(service.data.slug, lang),
+}));
 ---
 
-<Layout lang={lang} title={t.projectsPage.title} description={t.projectsPage.description}>
+<Layout lang={lang} title={t.projectsPage.title} description={t.projectsPage.description} showContainerLines={false}>
   <div class="fixed inset-0 -z-10 bg-bg" aria-hidden="true"></div>
 
-  <div id="page-content" class="relative z-10">
-    <section class="relative pt-16 sm:pt-36" aria-labelledby="projects-intro">
-      <div id="projects-shape-stage" class="relative mt-8 aspect-square w-full sm:h-[385px] sm:aspect-auto">
-        <ProjectsShapeBand class="top-0 h-full" />
-
-        <div class="relative z-10 flex h-full items-center justify-center">
-          <div class="relative w-full max-w-[1300px] px-8 md:px-18 lg:px-40">
-            <svg class="absolute top-2 left-0" width="7" height="35" viewBox="0 0 7 35" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M5.12291 0H7C4.22346 4.85665 2.15084 10.1548 2.15084 17.5803C2.15084 24.8452 4.22346 30.1433 7 35H5.12291C2.42458 30.9461 0 24.8452 0 17.5803C0 10.0745 2.42458 4.0539 5.12291 0Z" fill="#16191B"/>
-            </svg>
-            <svg class="absolute bottom-0 right-0" width="8" height="35" viewBox="0 0 8 35" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M1.95514 35L-0.000163078 35C2.89206 30.1433 5.05105 24.8452 5.05105 17.4197C5.05105 10.1548 2.89206 4.85665 -0.000159891 -6.1196e-07L1.95515 -4.47859e-07C4.7659 4.0539 7.29151 10.1548 7.29151 17.4197C7.2915 24.9255 4.7659 30.9461 1.95514 35Z" fill="#16191B"/>
-            </svg>
-
-            <svg class="mx-auto md:absolute md:right-0 md:top-2" width="35" height="21" viewBox="0 0 35 21" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-              <rect x="28" width="7" height="21" fill="black"/>
-              <rect x="21" y="14" width="7" height="7" fill="black"/>
-              <rect x="21" width="7" height="7" fill="black"/>
-              <rect x="7" y="7" width="7" height="7" fill="black"/>
-              <rect width="7" height="21" fill="black"/>
-            </svg>
-            <div id="projects-copy-lockup" class="relative">
-              <h1 id="projects-intro" class="indent-24 mt-6 md:mt-0 text-[1.25rem] sm:indent-32 sm:text-[1.5rem] md:text-[2rem]">
-                {pageCopy[lang].intro}
-              </h1>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <ProjectIndexList
-        projects={orderedProjects}
-        lang={lang}
-        allLabel={pageCopy[lang].all}
-        filters={pageCopy[lang].filters}
-        countLabel={`(${projectCount})`}
-      />
-    </section>
-  </div>
+  <ProjectsListingPage
+    projects={orderedProjects}
+    lang={lang}
+    intro={pageCopy[lang].intro}
+    allLabel={pageCopy[lang].all}
+    filters={serviceFilters}
+  />
 
   <Footer lang={lang} hideOverflow={false} />
 </Layout>
-
-<script>
-  function updateProjectsShapeCenterY() {
-    const stage = document.getElementById("projects-shape-stage");
-    const copy = document.getElementById("projects-copy-lockup");
-    const shape = stage?.querySelector("[data-projects-shape-square]");
-    if (!stage || !copy || !shape) return;
-
-    const stageRect = stage.getBoundingClientRect();
-    const copyRect = copy.getBoundingClientRect();
-    const centerY = copyRect.top - stageRect.top + copyRect.height / 2;
-    stage.style.setProperty("--shape-center-y", `${centerY}px`);
-  }
-
-  updateProjectsShapeCenterY();
-
-  let projectsShapeResizeTimer: ReturnType<typeof setTimeout>;
-  window.addEventListener("resize", () => {
-    clearTimeout(projectsShapeResizeTimer);
-    projectsShapeResizeTimer = setTimeout(updateProjectsShapeCenterY, 100);
-  });
-
-  document.addEventListener("astro:after-swap", updateProjectsShapeCenterY);
-</script>

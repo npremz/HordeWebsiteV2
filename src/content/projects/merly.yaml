@@ -44,6 +44,8 @@ projectTypes:
   - UX Design
   - Web Design
   - Bruxelles
+services:
+  - creation-landing-page
 externalUrl: https://merly.hordagency.com
 inProgress: false
 publishedDate: 2024-02-01

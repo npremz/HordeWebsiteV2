@@ -1,6 +1,7 @@
 import { getCollection, type CollectionEntry } from 'astro:content';
 import type { Locale } from '../../i18n';
 import { getProjectImageAlt } from '../../utils/project-helpers';
+import { getProjectServices, type ProjectServiceSlug } from '../projectServices';
 
 export type ProjectEntry = CollectionEntry<'projects'>;
 
@@ -22,6 +23,7 @@ export interface LocalizedProject {
   featuredImage: ProjectEntry['data']['featuredImage'];
   featuredImageAlt: string;
   gallery: LocalizedProjectGalleryRow[];
+  services: ProjectServiceSlug[];
   projectTypes: string[];
   externalUrl?: string;
   inProgress: boolean;
@@ -62,6 +64,7 @@ export function localizeProject(project: ProjectEntry, lang: Locale): LocalizedP
         ? getProjectImageAlt(lang === 'fr' ? row.alt2_fr : row.alt2_en, shortTitle, lang)
         : undefined,
     })),
+    services: getProjectServices(project),
     projectTypes: project.data.projectTypes || [],
     externalUrl: project.data.externalUrl,
     inProgress: project.data.inProgress,

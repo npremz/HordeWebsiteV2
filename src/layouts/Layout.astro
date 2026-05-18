@@ -34,6 +34,7 @@ interface Props {
   class?: string;
   variant?: 'light' | 'dark';
   headerVariant?: 'light' | 'dark';
+  showContainerLines?: boolean;
 }
 
 const {
@@ -55,6 +56,7 @@ const {
   class: className,
   variant = 'light',
   headerVariant,
+  showContainerLines = true,
 } = Astro.props;
 
 const t = useTranslations(lang);
@@ -103,7 +105,7 @@ const bodyClasses = isDark ? 'bg-black text-bg-light' : 'bg-bg text-black';
     <a href="#main-content" class="skip-link" title={t.a11y.skipToContent}>{t.a11y.skipToContent}</a>
 
     <Header lang={lang} alternateUrl={alternateUrl} theme={headerVariant} />
-    <Container variant={variant}>
+    <Container variant={variant} showLines={showContainerLines}>
       <main id="main-content">
         <slot />
       </main>

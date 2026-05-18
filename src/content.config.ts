@@ -30,6 +30,7 @@ const projectsCollection = defineCollection({
       alt2_fr: z.string().optional(),
       alt2_en: z.string().optional(),
     })).default([]),
+    services: z.array(z.string()).default([]),
     projectTypes: z.array(z.string()).default([]),
     externalUrl: z.string().url().optional(),
     inProgress: z.boolean().default(false),

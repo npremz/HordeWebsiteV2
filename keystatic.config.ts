@@ -623,6 +623,17 @@ const projectsSchema = {
       },
     }
   ),
+  services: fields.array(
+    fields.relationship({
+      label: 'Service',
+      collection: 'services',
+    }),
+    {
+      label: 'Services filtrables',
+      description: 'Services utilisés pour les pages SEO /projets/[service].',
+      itemLabel: (props) => props.value || 'Service',
+    }
+  ),
   projectTypes: fields.array(
     fields.text({ label: 'Tag', validation: { isRequired: true } }),
     {

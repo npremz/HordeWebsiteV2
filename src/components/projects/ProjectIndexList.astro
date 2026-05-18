@@ -6,7 +6,7 @@ interface Props {
   projects: LocalizedProject[];
   lang: Locale;
   allLabel: string;
-  filters: string[];
+  filters: { label: string; href: string }[];
   countLabel: string;
 }
 
@@ -45,9 +45,9 @@ function getDisplayYear(project: LocalizedProject): string {
       >
         {
           filters.map((filter) => (
-            <button type="button" class="whitespace-nowrap leading-none transition-opacity duration-200 hover:opacity-65">
-              {filter}
-            </button>
+            <a href={filter.href} class="whitespace-nowrap leading-none transition-opacity duration-200 hover:opacity-65">
+              {filter.label}
+            </a>
           ))
         }
       </div>

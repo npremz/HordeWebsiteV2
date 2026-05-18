@@ -1,0 +1,81 @@
+---
+import type { Locale } from '../../i18n';
+import type { LocalizedProject } from '../../lib/content/projects';
+import ProjectIndexList from './ProjectIndexList.astro';
+import ProjectsShapeBand from './ProjectsShapeBand.astro';
+
+interface Props {
+  projects: LocalizedProject[];
+  lang: Locale;
+  intro: string;
+  allLabel: string;
+  filters: { label: string; href: string }[];
+}
+
+const { projects, lang, intro, allLabel, filters } = Astro.props;
+const projectCount = String(projects.length).padStart(2, '0');
+---
+
+<div id="page-content" class="relative z-10">
+  <section class="relative pt-16 sm:pt-36" aria-labelledby="projects-intro">
+    <div id="projects-shape-stage" class="relative mt-8 aspect-square w-full sm:h-[385px] sm:aspect-auto">
+      <ProjectsShapeBand class="top-0 h-full" />
+
+      <div class="relative z-10 flex h-full items-center justify-center">
+        <div class="relative w-full max-w-[1300px] px-8 md:px-18 lg:px-40">
+          <svg class="absolute top-2 left-0" width="7" height="35" viewBox="0 0 7 35" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M5.12291 0H7C4.22346 4.85665 2.15084 10.1548 2.15084 17.5803C2.15084 24.8452 4.22346 30.1433 7 35H5.12291C2.42458 30.9461 0 24.8452 0 17.5803C0 10.0745 2.42458 4.0539 5.12291 0Z" fill="#16191B"/>
+          </svg>
+          <svg class="absolute bottom-0 right-0" width="8" height="35" viewBox="0 0 8 35" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M1.95514 35L-0.000163078 35C2.89206 30.1433 5.05105 24.8452 5.05105 17.4197C5.05105 10.1548 2.89206 4.85665 -0.000159891 -6.1196e-07L1.95515 -4.47859e-07C4.7659 4.0539 7.29151 10.1548 7.29151 17.4197C7.2915 24.9255 4.7659 30.9461 1.95514 35Z" fill="#16191B"/>
+          </svg>
+
+          <svg class="mx-auto md:absolute md:right-0 md:top-2" width="35" height="21" viewBox="0 0 35 21" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <rect x="28" width="7" height="21" fill="black"/>
+            <rect x="21" y="14" width="7" height="7" fill="black"/>
+            <rect x="21" width="7" height="7" fill="black"/>
+            <rect x="7" y="7" width="7" height="7" fill="black"/>
+            <rect width="7" height="21" fill="black"/>
+          </svg>
+          <div id="projects-copy-lockup" class="relative">
+            <h1 id="projects-intro" class="indent-24 mt-6 md:mt-0 text-[1.25rem] sm:indent-32 sm:text-[1.5rem] md:text-[2rem]">
+              {intro}
+            </h1>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <ProjectIndexList
+      projects={projects}
+      lang={lang}
+      allLabel={allLabel}
+      filters={filters}
+      countLabel={`(${projectCount})`}
+    />
+  </section>
+</div>
+
+<script>
+  function updateProjectsShapeCenterY() {
+    const stage = document.getElementById("projects-shape-stage");
+    const copy = document.getElementById("projects-copy-lockup");
+    const shape = stage?.querySelector("[data-projects-shape-square]");
+    if (!stage || !copy || !shape) return;
+
+    const stageRect = stage.getBoundingClientRect();
+    const copyRect = copy.getBoundingClientRect();
+    const centerY = copyRect.top - stageRect.top + copyRect.height / 2;
+    stage.style.setProperty("--shape-center-y", `${centerY}px`);
+  }
+
+  updateProjectsShapeCenterY();
+
+  let projectsShapeResizeTimer: ReturnType<typeof setTimeout>;
+  window.addEventListener("resize", () => {
+    clearTimeout(projectsShapeResizeTimer);
+    projectsShapeResizeTimer = setTimeout(updateProjectsShapeCenterY, 100);
+  });
+
+  document.addEventListener("astro:after-swap", updateProjectsShapeCenterY);
+</script>
