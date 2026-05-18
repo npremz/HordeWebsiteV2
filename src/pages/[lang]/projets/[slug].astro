@@ -79,6 +79,7 @@ const copy = {
     externalUrl: 'Voir le site',
     gallery: 'Galerie',
     allProjects: 'Tous',
+    allWork: 'All work',
   },
   en: {
     breadcrumbHome: 'Home',
@@ -88,15 +89,25 @@ const copy = {
     externalUrl: 'View website',
     gallery: 'Gallery',
     allProjects: 'All',
+    allWork: 'All work',
   },
 } satisfies Record<Locale, Record<string, string>>;
 
 const allLocalizedProjects = await getLocalizedProjects(lang);
+const singleWorkProjectSlugs = ['e-putch', 'merly'];
+const singleWorkProjects = singleWorkProjectSlugs
+  .map((slug) => allLocalizedProjects.find((project) => project.slug === slug))
+  .filter((project): project is (typeof allLocalizedProjects)[number] => Boolean(project));
+const singleWorkCount = `(${String(singleWorkProjects.length).padStart(2, '0')})`;
 const projectServices = await getProjectServiceEntries();
 const serviceFilters = projectServices.map((service) => ({
   label: getProjectServiceLabel(service),
   href: getProjectServiceHref(service.data.slug, lang),
 }));
+
+function getDisplayTitle(project: (typeof allLocalizedProjects)[number]): string {
+  return project.shortTitle.replace(/-/g, '').toUpperCase();
+}
 
 let pageTitle = '';
 let pageDescription = '';
@@ -112,7 +123,7 @@ let pageContent:
       services: ProjectServiceSlug[];
       projectTypes: string[];
       externalUrl?: string;
-      descriptionContent: string;
+      descriptionParagraphs: string[];
       breadcrumbItems: { label: string; href?: string }[];
     }
   | {
@@ -126,6 +137,11 @@ let pageContent:
 if (props.kind === 'project') {
   const localizedProject = localizeProject(props.project, lang);
   const descriptionContent = await getLocalizedProjectDescription(props.project.data.slug, lang);
+  const descriptionParagraphs = descriptionContent
+    .replace(/&#x20;/g, ' ')
+    .split(/\n{2,}/)
+    .map((paragraph) => paragraph.trim())
+    .filter(Boolean);
 
   pageTitle = localizedProject.fullTitle;
   pageDescription = localizedProject.seoDescription;
@@ -140,7 +156,7 @@ if (props.kind === 'project') {
     services: getProjectServices(props.project),
     projectTypes: localizedProject.projectTypes,
     externalUrl: localizedProject.externalUrl,
-    descriptionContent,
+    descriptionParagraphs,
     breadcrumbItems: [
       { label: copy[lang].breadcrumbHome, href: `/${lang}` },
       { label: copy[lang].breadcrumbProjects, href: `/${lang}/projets` },
@@ -178,10 +194,13 @@ if (props.kind === 'project') {
   showContainerLines={pageContent.kind !== 'service'}
 >
   {pageContent.kind === 'project' ? (
-    <article id="page-content" class="project-page">
+    <article id="page-content" class="project-page relative">
+      <div class="project-hero-line project-hero-line--vertical" aria-hidden="true"></div>
       <header class="project-hero">
-        <div class="relative isolate h-[310px] mt-24 flex flex-col items-center justify-center">
-          <ProjectsShapeBand class="project-shape top-0 h-full text-lines-dark" />
+        <div class="relative isolate h-[310px] mt-32 sm:mt-48 lg:mt-60 2xl:mt-80 flex flex-col items-center justify-center">
+          <ProjectsShapeBand class="project-shape top-0 h-full text-lines-dark" squareClass="sm:h-[310px]! md:h-[310px]! lg:h-[393px]! 2xl:h-[580px]!" />
+          <div class="project-hero-line project-hero-line--diagonal project-hero-line--diagonal-a" aria-hidden="true"></div>
+          <div class="project-hero-line project-hero-line--diagonal project-hero-line--diagonal-b" aria-hidden="true"></div>
           <Breadcrumbs
             items={pageContent.breadcrumbItems}
             class="absolute top-0 mt-16"
@@ -189,61 +208,195 @@ if (props.kind === 'project') {
             ariaLabel={lang === 'fr' ? 'Fil d’Ariane' : 'Breadcrumb'}
           />
           <div class="relative z-10 flex items-center justify-center gap-8">
-            <svg width="6" height="30" viewBox="0 0 6 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <svg class="h-8 sm:h-10" viewBox="0 0 6 30" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M4.39106 0H6C3.62011 4.16285 1.84358 8.70413 1.84358 15.0688C1.84358 21.2959 3.62011 25.8372 6 30H4.39106C2.07821 26.5252 0 21.2959 0 15.0688C0 8.63532 2.07821 3.47477 4.39106 0Z" fill="white"/>
             </svg>
-            <h1 class="font-display text-[2rem] uppercase mt-1">{pageContent.shortTitle}</h1>
-            <svg width="6" height="29" viewBox="0 0 6 29" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <h1 class="font-display text-[2rem] sm:text-[2.5rem] 2xl:text-[3.75rem] uppercase mt-1">{pageContent.shortTitle}</h1>
+            <svg class="h-8 sm:h-10" viewBox="0 0 6 29" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M1.60894 28.7998L-2.86102e-06 28.7998C2.37989 24.8035 4.15642 20.4438 4.15643 14.3337C4.15643 8.35576 2.37989 3.99612 -2.38339e-07 -0.000210312L1.60894 -0.000210177C3.92179 3.33557 6 8.35576 6 14.3337C6 20.5099 3.92179 25.464 1.60894 28.7998Z" fill="white"/>
             </svg>
           </div>
+          {pageContent.externalUrl && (
+            <div class="absolute w-full flex text-[1.125rem] lg:text-[1.375rem] justify-between bottom-0 sm:bottom-16 md:bottom-1/2 md:translate-y-1/2">
+              <span>2025©</span>
+              <a href={pageContent.externalUrl} target="_blank" rel="noopener noreferrer" class="underline!">
+                {copy[lang].externalUrl} (↗)
+              </a>
+            </div>
+          )}
         </div>
 
-        {pageContent.services.length > 0 && (
-          <nav aria-label={copy[lang].projectServices}>
-            <ul>
-              {pageContent.services.map((serviceSlug) => (
-                <li>
-                  <a href={getProjectServiceHref(serviceSlug, lang)}>
-                    {getProjectServiceLabel(projectServices.find((service) => service.data.slug === serviceSlug)!)}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </nav>
-        )}
 
-        {pageContent.projectTypes.length > 0 && (
-          <ul aria-label={copy[lang].projectTypes}>
-            {pageContent.projectTypes.map((type: string) => <li>{type}</li>)}
-          </ul>
-        )}
+        <div class="md:flex md:gap-10 md:mt-10 lg:mt-20 2xl:mt-4 ">
+          {pageContent.services.length > 0 && (
+            <nav aria-label={copy[lang].projectServices} class="mt-10 sm:mt-16 md:mt-0 text-[1.25rem] md:flex md:flex-col md:justify-between md:w-1/2">
+              <div class="sm:flex sm:gap-8">
+                <p >Filtre par services :</p>
+                <ul class="mt-5 sm:mt-0 sm:flex sm:gap-4">
+                  {pageContent.services.map((serviceSlug) => (
+                    <li>
+                      <a href={getProjectServiceHref(serviceSlug, lang)} class="underline! underline-offset-2">
+                        {getProjectServiceLabel(projectServices.find((service) => service.data.slug === serviceSlug)!)}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <span class="hidden md:block mt-10 sm:mt-16 text-[1.125rem]">(↓)</span>
+            </nav>
+          )}
 
-        {pageContent.externalUrl && (
-          <a href={pageContent.externalUrl} target="_blank" rel="noopener noreferrer">
-            {copy[lang].externalUrl}
-          </a>
-        )}
+          <div class="hidden md:flex md:w-1/2 justify-end">
+            {pageContent.descriptionParagraphs.length > 0 && (
+              <section class="project-description flex flex-col gap-10 sm:gap-16 md:gap-8 text-[1.125rem] sm:max-w-[500px]">
+                {pageContent.descriptionParagraphs.map((paragraph) => (
+                  <p>{paragraph}</p>
+                ))}
+              </section>
+            )}
+          </div>
+        </div>
       </header>
 
-      <main class="project-content">
-        <Image src={pageContent.featuredImage} alt={pageContent.featuredImageAlt} />
+      <main class="project-content mt-10 sm:mt-16 md:mt-50 lg:max-w-[1000px] lg:mx-auto">
 
-        {pageContent.descriptionContent && (
-          <section class="project-description">{pageContent.descriptionContent}</section>
-        )}
+        <div class="md:hidden">
+          {pageContent.descriptionParagraphs.length > 0 && (
+            <section class="project-description flex flex-col gap-10 sm:gap-16 text-[1.125rem] sm:max-w-[500px]">
+              {pageContent.descriptionParagraphs.map((paragraph) => (
+                <p>{paragraph}</p>
+              ))}
+            </section>
+          )}
+        </div>
+
+        <span class="block md:hidden mt-10 sm:mt-16 text-[1.125rem]">(↓)</span>
 
         {pageContent.gallery.length > 0 && (
-          <section class="project-gallery" aria-label={copy[lang].gallery}>
+          <section class="project-gallery bg-black mt-16 sm:mt-32 flex flex-col gap-2.5 sm:gap-5" aria-label={copy[lang].gallery}>
             {pageContent.gallery.map((row: LocalizedProjectGalleryRow) => (
-              <div class:list={['project-gallery-row', `project-gallery-row--${row.layout}`]}>
-                <Image src={row.image1} alt={row.alt1} />
-                {row.image2 && <Image src={row.image2} alt={row.alt2 || row.alt1} />}
+              <div
+                class:list={[
+                  'project-gallery-row gap-2.5 sm:gap-5',
+                  row.layout === 'half' && row.image2 ? 'grid grid-cols-2' : 'grid grid-cols-1',
+                  `project-gallery-row--${row.layout}`,
+                ]}
+              >
+                <Image src={row.image1} alt={row.alt1} class="w-full" />
+                {row.image2 && <Image src={row.image2} alt={row.alt2 || row.alt1} class="w-full" />}
               </div>
             ))}
           </section>
         )}
+
+        {singleWorkProjects.length > 0 && (
+          <nav class="project-work-nav mt-16 sm:mt-24 text-bg-light" aria-label={copy[lang].allWork}>
+            <a
+              href={`/${lang}/projets`}
+              class="project-work-row grid min-h-[78px] place-items-center border-b border-lines-dark py-6 sm:py-10 lg:py-12 text-center font-display text-[2.25rem] sm:text-[3rem] uppercase leading-none tracking-normal sm:min-h-[108px] md:min-h-[120px] lg:text-[5rem]"
+            >
+              <span>
+                {copy[lang].allWork}
+                <span class="ml-1 text-[1.125rem] font-sans leading-none">
+                  {singleWorkCount}
+                </span>
+              </span>
+            </a>
+
+            <ol>
+              {singleWorkProjects.map((project) => {
+                const href = project.inProgress ? undefined : `/${lang}/projets/${project.slug}`;
+                const RowTag = project.inProgress ? 'div' : 'a';
+
+                return (
+                  <li>
+                    <RowTag
+                      href={href}
+                      class:list={[
+                        'project-work-row grid min-h-[78px] place-items-center py-6 text-center sm:min-h-[108px] md:min-h-[120px] sm:py-10 lg:py-12',
+                        project === singleWorkProjects.at(-1) ? '' : 'border-b border-lines-dark',
+                      ]}
+                      title={project.shortTitle}
+                    >
+                      <span class="font-display text-[2.25rem] uppercase leading-none tracking-normal sm:text-center sm:text-[3rem] lg:text-[5rem]">
+                        {getDisplayTitle(project)}
+                      </span>
+                    </RowTag>
+                  </li>
+                );
+              })}
+            </ol>
+          </nav>
+        )}
       </main>
+
+      <style>
+        .project-hero-line {
+          pointer-events: none;
+          position: absolute;
+          z-index: 0;
+          background: var(--color-lines-dark);
+        }
+
+        .project-hero,
+        .project-content {
+          position: relative;
+          z-index: 1;
+        }
+
+        .project-hero-line--vertical {
+          top: -30rem;
+          left: 50%;
+          width: 1px;
+          height: calc(100% - 2.5rem);
+          transform: translateX(-50%);
+        }
+
+        .project-hero-line--diagonal {
+          left: 50%;
+          top: 50%;
+          width: 150vw;
+          height: 1px;
+          transform-origin: center;
+        }
+
+        .project-hero-line--diagonal-a {
+          transform: translate(-50%, -50%) rotate(45deg);
+        }
+
+        .project-hero-line--diagonal-b {
+          transform: translate(-50%, -50%) rotate(-45deg);
+        }
+
+        .project-work-row {
+          position: relative;
+          isolation: isolate;
+          left: 50%;
+          width: min(1300px, 100vw);
+          transform: translateX(-50%);
+        }
+
+        .project-work-row::before {
+          content: "";
+          position: absolute;
+          inset: 0;
+          z-index: -1;
+          background: var(--color-bg-light);
+          transform: scaleY(0);
+          transform-origin: bottom center;
+          transition: transform 0.28s ease-out;
+        }
+
+        @media (hover: hover) {
+          a.project-work-row:hover {
+            color: var(--color-black);
+          }
+
+          a.project-work-row:hover::before {
+            transform: scaleY(1);
+          }
+        }
+      </style>
     </article>
   ) : (
     <ProjectsListingPage

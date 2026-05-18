@@ -1,9 +1,10 @@
 ---
 interface Props {
   class?: string;
+  squareClass?: string;
 }
 
-const { class: className = "" } = Astro.props;
+const { class: className = "", squareClass = "" } = Astro.props;
 
 const backgroundCircleOffsets = [-250, -200, -150, -100, -50, 50, 100, 150, 200, 250];
 ---
@@ -16,7 +17,10 @@ const backgroundCircleOffsets = [-250, -200, -150, -100, -50, 50, 100, 150, 200,
   aria-hidden="true"
 >
   <div
-    class="absolute center-x flex h-full w-full -translate-y-1/2 justify-center sm:h-[393px] sm:w-[unset] 2xl:h-[580px]"
+    class:list={[
+      "absolute center-x flex h-full w-full -translate-y-1/2 justify-center sm:h-[393px] sm:w-[unset] 2xl:h-[580px]",
+      squareClass,
+    ]}
     style="top: var(--shape-center-y, 50%);"
     data-projects-shape-square
   >
