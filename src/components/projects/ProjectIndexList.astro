@@ -1,0 +1,123 @@
+---
+import type { Locale } from "../../i18n";
+import type { LocalizedProject } from "../../lib/content/projects";
+
+interface Props {
+  projects: LocalizedProject[];
+  lang: Locale;
+  allLabel: string;
+  filters: string[];
+  countLabel: string;
+}
+
+const { projects, lang, allLabel, filters, countLabel } = Astro.props;
+
+const displayMetaBySlug: Record<string, { type: string }> = {
+  "cafe-belga": { type: "Landing page" },
+  "e-putch": { type: "Landing page" },
+  merly: { type: "Case study" },
+};
+
+function getDisplayTitle(project: LocalizedProject): string {
+  return project.shortTitle.replace(/-/g, "").toUpperCase();
+}
+
+function getDisplayType(project: LocalizedProject): string {
+  return displayMetaBySlug[project.slug]?.type || project.projectTypes[0] || "";
+}
+
+function getDisplayYear(project: LocalizedProject): string {
+  const year = new Date(project.entry.data.publishedDate).getFullYear();
+  return Number.isFinite(year) ? String(year) : "";
+}
+---
+
+<div class="mx-auto mt-14 w-full max-w-[1300px] sm:mt-12 lg:mt-14">
+  <div class="flex items-start justify-between text-[1.125rem] leading-none sm:text-[1.25rem]">
+    <details class="projects-filter relative w-fit">
+      <summary
+        class="cursor-pointer list-none underline decoration-[1px] underline-offset-2 transition-opacity duration-200 hover:opacity-65"
+      >
+        {allLabel} (↓)
+      </summary>
+      <div
+        class="filter-panel absolute left-0 top-full z-20 mt-5 hidden w-max max-w-[calc(100vw-2rem)] flex-wrap gap-5 bg-white px-6 py-4 text-[1rem] shadow-none sm:max-w-none"
+      >
+        {
+          filters.map((filter) => (
+            <button type="button" class="whitespace-nowrap leading-none transition-opacity duration-200 hover:opacity-65">
+              {filter}
+            </button>
+          ))
+        }
+      </div>
+    </details>
+
+    <p>{countLabel}</p>
+  </div>
+
+  <ol class="mt-14 sm:mt-16 lg:mt-20">
+    {
+      projects.map((project) => {
+        const href = project.inProgress ? undefined : `/${lang}/projets/${project.slug}`;
+        const RowTag = project.inProgress ? "div" : "a";
+
+        return (
+          <li class="border-b border-lines last:border-b-0">
+            <RowTag
+              href={href}
+              class="project-row grid min-h-[78px] grid-cols-1 items-center gap-4 py-6 text-center sm:min-h-[108px] sm:grid-cols-[minmax(110px,1fr)_minmax(0,2.5fr)_minmax(70px,1fr)] sm:text-left md:min-h-[120px] md:py-7"
+              title={project.shortTitle}
+            >
+              <span class="hidden font-mono text-[0.7rem] uppercase leading-none tracking-[0.08em] sm:block">
+                {getDisplayType(project)}
+              </span>
+              <span class="font-sans text-[2rem] uppercase leading-none tracking-normal sm:text-center sm:text-[3rem] lg:text-[5rem]">
+                {getDisplayTitle(project)}
+              </span>
+              <span class="hidden justify-self-end font-mono text-[0.7rem] leading-none tracking-[0.08em] sm:block">
+                {getDisplayYear(project)}
+              </span>
+            </RowTag>
+          </li>
+        );
+      })
+    }
+  </ol>
+</div>
+
+<style>
+  .projects-filter summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .projects-filter[open] .filter-panel {
+    display: flex;
+  }
+
+  .project-row {
+    position: relative;
+    isolation: isolate;
+  }
+
+  .project-row::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: var(--color-black);
+    transform: scaleY(0);
+    transform-origin: bottom center;
+    transition: transform 0.28s ease-out;
+  }
+
+  @media (hover: hover) {
+    a.project-row:hover {
+      color: var(--color-bg);
+    }
+
+    a.project-row:hover::before {
+      transform: scaleY(1);
+    }
+  }
+</style>

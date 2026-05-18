@@ -5,6 +5,7 @@ import {
   type ChangeEventHandler,
   type FormEventHandler,
 } from 'react';
+import { getCtaButtonClasses, type CtaButtonVariant } from '../actions/cta-button-classes';
 
 interface FormData {
   besoin: string;
@@ -215,6 +216,13 @@ export default function ContactForm({
     handleChange('societe', e.target.value);
   };
 
+  const ctaVariant: CtaButtonVariant = variant === 'dark' ? 'light' : 'dark';
+  const submitCta = getCtaButtonClasses(
+    ctaVariant,
+    false,
+    'mt-5 sm:mt-10 xl:mt-16 disabled:opacity-50 disabled:cursor-not-allowed self-center md:self-end',
+  );
+
   return (
     <form className="flex flex-col gap-10 form-gap" onSubmit={(e) => void handleSubmit(e)} noValidate>
       {!hideNeedField && (
@@ -223,7 +231,7 @@ export default function ContactForm({
             ? 'border-err'
             : variant === 'dark' ? 'border-[#A29FA9]' : 'border-lines'
             }`}>
-            <legend className='text-[1.125rem] block md:w-36 md:shrink-0 relative'>
+            <legend className='text-[1.125rem] block md:w-36 md:pb-4 md:shrink-0 relative'>
               {t.needLabel}<span aria-hidden="true">*</span>
             </legend>
             <div className="w-full flex flex-wrap gap-5 lg:gap-[2.5rem] mt-5 pb-5 md:pb-10">
@@ -366,14 +374,14 @@ export default function ContactForm({
       </div>
 
       <div className='flex flex-col md:flex-row md:gap-16 lg:gap-32 md:justify-end'>
-        <button type="submit" disabled={isSubmitting} className={`group relative overflow-hidden mt-5 sm:mt-10 xl:mt-16 uppercase font-mono text-[1rem] leading-[0.6] py-6 px-5 flex justify-center w-full md:w-fit border transition-colors duration-300 ease-in-out cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed self-center md:self-end ${variant === 'dark' ? 'border-bg-light bg-bg-light text-black' : 'border-black bg-black text-white'}`}>
-          <span className={`absolute inset-0 transform -translate-x-full group-hover:translate-x-0 transition-transform duration-400 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] ${variant === 'dark' ? 'bg-black' : 'bg-bg-light'}`}></span>
-          <span className={`relative z-10 transition-colors duration-300 ${variant === 'dark' ? 'text-black group-hover:text-bg-light' : 'text-white group-hover:text-black'}`}>{isSubmitting ? t.submitting : t.submit}</span>
+        <button type="submit" disabled={isSubmitting} className={submitCta.classes}>
+          <span className={submitCta.wipe} aria-hidden="true"></span>
+          <span className={submitCta.textHover}>{isSubmitting ? t.submitting : t.submit}</span>
         </button>
       </div>
 
       {submitStatus === 'success' && (
-        <p role="status">{t.successMessage}</p>
+        <p role="status">{t.successMessage}</p> 
       )}
 
       {submitStatus === 'error' && (

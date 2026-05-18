@@ -1,17 +1,26 @@
 ---
 import type { ServiceData } from "./types";
+import ServiceSection from "./ServiceSection.astro";
 
 interface Props {
   service: ServiceData;
 }
 
 const { service } = Astro.props;
+
+const sectionClass = "full-width-dark-bg py-8 text-white sm:py-16 md:py-24 md:pb-32";
+const titleClass = "text-[1.5rem] leading-[1.2] sm:text-[2rem] md:text-[2.5rem]";
 ---
 
-<section id="service-faq" class="py-8 sm:py-16 md:py-24 md:pb-32 full-width-dark-bg text-white" data-service-section="faq" aria-labelledby="service-faq-title">
+<ServiceSection
+  id="service-faq"
+  sectionKey="faq"
+  titleId="service-faq-title"
+  class={sectionClass}
+>
   <h2
     id="service-faq-title"
-    class="text-[1.5rem] sm:text-[2rem] md:text-[2.5rem] leading-[1.2]"
+    class={titleClass}
   >
     {service.faqTitle}
   </h2>
@@ -21,7 +30,7 @@ const { service } = Astro.props;
         <div class="faq-panel relative transition-colors duration-300 ease-out">
           <button
             type="button"
-            class="faq-trigger w-full gap-2 flex justify-between py-10 text-left cursor-pointer group"
+            class="faq-trigger w-full gap-2 flex justify-between py-10 text-left items-center cursor-pointer group"
             aria-expanded="false"
             aria-controls={`faq-content-${index}`}
           >
@@ -50,7 +59,7 @@ const { service } = Astro.props;
       </div>
     ))}
   </div>
-</section>
+</ServiceSection>
 
 <style>
   .faq-trigger[aria-expanded="true"] .icon-plus {

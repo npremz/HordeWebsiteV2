@@ -1,0 +1,39 @@
+---
+import CtaButton from "../ui/actions/CtaButton.astro";
+
+interface Props {
+  titleLine1: string;
+  titleLine2: string;
+  description: string;
+  ctaHref: string;
+  ctaLabel: string;
+  containerClass?: string;
+  ctaClass?: string;
+  ctaWrapperClass?: string;
+}
+
+const {
+  titleLine1,
+  titleLine2,
+  description,
+  ctaHref,
+  ctaLabel,
+  containerClass = "",
+  ctaClass = "",
+  ctaWrapperClass = "",
+} = Astro.props as Props;
+---
+
+<div class={containerClass}>
+  <h2 class="section-label">
+    {titleLine1}<br /> {titleLine2}
+  </h2>
+  <p class="indent-24 text-[1.5rem] sm:indent-45 sm:text-[2rem]">{description}</p>
+  {ctaWrapperClass ? (
+    <div class={ctaWrapperClass}>
+      <CtaButton href={ctaHref} label={ctaLabel} class={ctaClass} variant="light" />
+    </div>
+  ) : (
+    <CtaButton href={ctaHref} label={ctaLabel} class={ctaClass} variant="light" />
+  )}
+</div>

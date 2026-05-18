@@ -1,0 +1,35 @@
+---
+interface Props {
+  href: string;
+  label: string;
+  title?: string;
+  class?: string;
+  tone?: "light" | "dark";
+}
+
+const {
+  href,
+  label,
+  title = label,
+  class: className = "",
+  tone = "light",
+} = Astro.props as Props;
+
+const borderClass = tone === "dark" ? "border-lines/50" : "border-black/30";
+---
+
+<a
+  href={href}
+  title={title}
+  class:list={[
+    "relative inline-block border-b",
+    "after:absolute after:bottom-[-1px] after:left-0 after:h-px after:w-full",
+    "after:origin-left after:scale-x-0 after:bg-current",
+    "after:transition-transform after:duration-400 after:ease-[cubic-bezier(0.25,0.46,0.45,0.94)]",
+    "hover:after:scale-x-100",
+    borderClass,
+    className,
+  ]}
+>
+  {label}
+</a>

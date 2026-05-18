@@ -1,6 +1,6 @@
 ---
 import { DEFAULT_LOCALE, type Locale, useTranslations } from "../../i18n";
-import CtaButton from '../ui/actions/CtaButton.astro';
+import HomeIntroBlock from "./HomeIntroBlock.astro";
 
 interface Props {
   lang?: Locale;
@@ -11,9 +11,13 @@ const t = useTranslations(lang);
 ---
 
 <section id="about" class="-mt-16 sm:mx-5 sm:border-x sm:border-lines">
-  <div class="mx-6 sm:px-8 sm:mx-0 md:px-14 lg:px-32">
-    <h2 class="section-label">{t.homepage.about.titleLine1}<br/> {t.homepage.about.titleLine2}</h2>
-    <p class="indent-24 sm:indent-45 text-[1.5rem] sm:text-[2rem]">{t.homepage.about.description}</p>
-    <CtaButton href={`/${lang}/contact`} label={t.homepage.about.cta} class="mt-10 sm:mt-12 md:mt-16" variant='light'/>
-  </div>
+  <HomeIntroBlock
+    titleLine1={t.homepage.about.titleLine1}
+    titleLine2={t.homepage.about.titleLine2}
+    description={t.homepage.about.description}
+    ctaHref={`/${lang}/contact`}
+    ctaLabel={t.homepage.about.cta}
+    containerClass="mx-6 sm:mx-0 sm:px-8 md:px-14 lg:px-32"
+    ctaClass="mt-10 sm:mt-12 md:mt-16"
+  />
 </section>

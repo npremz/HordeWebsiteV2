@@ -2,6 +2,7 @@
 import { formatHeadingHtml } from "../../utils/heading-html";
 import type { ServiceData } from "./types";
 import { DEFAULT_LOCALE, type Locale, useTranslations } from "../../i18n";
+import ServiceSection from "./ServiceSection.astro";
 
 interface Props {
   service: ServiceData;
@@ -10,13 +11,17 @@ interface Props {
 
 const { service, lang = DEFAULT_LOCALE } = Astro.props;
 const t = useTranslations(lang);
+
+const sectionClass = "mt-16 md:mt-24";
+const titleClass = "pr-4 text-[1.5rem] leading-none sm:text-[2rem] md:text-[2.5rem] lg:w-1/2";
+const listOffsetClass = "mt-16 sm:mt-24 md:mt-32 lg:mt-16";
 ---
 
-<section
+<ServiceSection
   id="service-deliverables"
-  class="mt-16 md:mt-24"
-  data-service-section="deliverables"
-  aria-labelledby="service-deliverables-title"
+  sectionKey="deliverables"
+  titleId="service-deliverables-title"
+  class={sectionClass}
 >
   <div class="relative px-5 sm:px-8">
     <svg class="h-9 absolute top-0 left-0" viewBox="0 0 7 35" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -25,7 +30,7 @@ const t = useTranslations(lang);
     <div class="flex flex-col">
       <h2
         id="service-deliverables-title"
-        class="text-[1.5rem] pr-4 sm:text-[2rem] md:text-[2.5rem] lg:w-1/2 leading-none"
+        class={titleClass}
         set:html={formatHeadingHtml(service.deliverablesTitle)}
       />
       <p class="mt-16 section-label lg:max-w-1/2 lg:self-end lg:w-full">
@@ -41,7 +46,7 @@ const t = useTranslations(lang);
     </svg>
 
   </div>
-  <div class="mt-16 sm:mt-24 md:mt-32 lg:mt-16">
+  <div class={listOffsetClass}>
     <ul class="space-y-2.5">
       {service.deliverables.map((item, index) => (
         <li class="flex items-center gap-5">
@@ -52,4 +57,4 @@ const t = useTranslations(lang);
       ))}
     </ul>
   </div>
-</section>
+</ServiceSection>

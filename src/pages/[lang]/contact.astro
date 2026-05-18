@@ -1,7 +1,6 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import ContactForm from '../../components/ui/forms/ContactForm';
-import BracketInline from '../../components/ui/decor/BracketInline.astro';
 import Footer from '../../components/Footer.astro';
 import { SUPPORTED_LOCALES, type Locale, useTranslations } from '../../i18n';
 
@@ -15,36 +14,16 @@ export function getStaticPaths() {
 
 const { lang } = Astro.params as { lang: Locale };
 const t = useTranslations(lang);
+const heroClass = "relative z-0 mt-48 flex flex-col px-5 sm:mt-72 sm:px-8 md:mt-80 md:items-start md:justify-between lg:mt-100 lg:px-10 2xl:mt-84";
+const headingRowClass = "flex w-full flex-col sm:flex-row sm:justify-between";
+const headingTextClass = "relative z-10 flex max-w-[720px] flex-col gap-4 sm:pr-4 sm:gap-8 md:pr-16 lg:w-1/2";
+const alternativesRowClass = "relative z-10 mt-4 flex flex-col sm:mt-16 sm:w-full sm:flex-row sm:justify-between lg:mt-0 lg:w-1/2 lg:self-end lg:justify-around lg:gap-20";
+const formOffsetClass = "mt-40 sm:mt-48 md:mt-32 lg:mt-44 2xl:mt-56";
 ---
-
-<style>
-	.contact-link {
-		position: relative;
-		display: inline-block;
-		border-bottom: 1px solid rgba(177, 177, 177, 0.5);
-	}
-
-	.contact-link::after {
-		content: '';
-		position: absolute;
-		bottom: -1px;
-		left: 0;
-		width: 100%;
-		height: 1px;
-		background-color: currentColor;
-		transform: scaleX(0);
-		transform-origin: left center;
-		transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-	}
-
-	.contact-link:hover::after {
-		transform: scaleX(1);
-	}
-</style>
 
 <Layout lang={lang} title={t.contact.title} variant="dark" description={t.contact.description}>
 	<div id="page-content">
-		<div class="relative z-0 px-5 sm:px-8 lg:px-10 mt-48 sm:mt-72 md:mt-80 lg:mt-100 2xl:mt-84 flex flex-col md:justify-between md:items-start">
+		<div class={heroClass}>
 			<div class="pointer-events-none absolute left-1/2 top-1/2 z-0 w-full -translate-x-1/2 -translate-y-1/2" aria-hidden="true">
 				<div class="relative max-w-[388px] sm:max-w-[420px] lg:max-w-[460px] 2xl:max-w-[580px] aspect-square mx-auto flex flex-col justify-center items-center">
 					<div class="relative @container w-full">
@@ -58,15 +37,15 @@ const t = useTranslations(lang);
 			<svg class="absolute left-0 top-2 z-10" width="8" height="35" viewBox="0 0 8 35" fill="none" xmlns="http://www.w3.org/2000/svg">
 				<path d="M5.21592 0H7.1271C4.30015 4.74704 2.18989 9.92563 2.18989 17.1835C2.18989 24.2845 4.30015 29.463 7.1271 34.2101H5.21592C2.46861 30.2477 0 24.2845 0 17.1835C0 9.84717 2.46861 3.96241 5.21592 0Z" fill="white"/>
 			</svg>
-			<div class="flex flex-col sm:flex-row sm:justify-between">
-				<div class="relative lg:w-1/2 sm:pr-4 md:pr-16 z-10 flex flex-col gap-4 sm:gap-8">
+			<div class={headingRowClass}>
+				<div class={headingTextClass}>
 					<h1 class="text-[1.5rem] sm:text-[2rem] md:text-[2.5rem]">Toc-toc, dites-nous bonjour ! Hâte d’entendre vos idées pour votre projet.</h1>
 				</div>
 				<svg class="relative mt-2 z-10 self-end sm:self-start -mr-5 sm:-mr-8" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
 					<rect width="7" height="20" transform="matrix(0.707107 0.707107 0.707107 -0.707107 0 14.1406)" fill="white"/>
 				</svg>
 			</div>
-			<div class="relative z-10 mt-4 sm:mt-16 flex flex-col sm:flex-row sm:justify-between sm:w-full lg:w-1/2 lg:mt-0 lg:self-end lg:justify-around lg:gap-20">
+			<div class={alternativesRowClass}>
 				<div class="text-[1.375rem] sm:text-[1.5rem] -translate-x-5 sm:-translate-x-8 lg:translate-0">{t.contact.alternativeContacts}:</div>
 				<ul class="list-[square] mt-8 sm:mt-0 pl-5 flex flex-col gap-2.5 text-[1.25rem]">
 					<li><a href="mailto:hello@hordeagence.com" class="" title="hello@hordeagence.com">hello@hordeagence.com</a></li>
@@ -78,29 +57,10 @@ const t = useTranslations(lang);
 			</svg>
 		</div>
 
-		<div id="contact-form" class="mt-40 sm:mt-48 md:mt-32 lg:mt-44 2xl:mt-56">
+		<div id="contact-form" class={formOffsetClass}>
 			<ContactForm client:load translations={t.form} />
 		</div>
 	</div>
 
 	<Footer lang={lang} variant="dark" hideOverflow={false} />
 </Layout>
-
-<script>
-	function initScrollButtons() {
-		const scrollButtons = document.querySelectorAll('.scroll-to-btn');
-
-		scrollButtons.forEach(btn => {
-			btn.addEventListener('click', () => {
-				const target = btn.getAttribute('data-scroll-target');
-				const offset = Number(btn.getAttribute('data-scroll-offset')) || 0;
-				if (target && (window as any).lenis) {
-					(window as any).lenis.scrollTo(target, { duration: 1.2, offset });
-				}
-			});
-		});
-	}
-
-	initScrollButtons();
-	document.addEventListener('astro:after-swap', initScrollButtons);
-</script>

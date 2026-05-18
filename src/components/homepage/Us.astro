@@ -1,6 +1,6 @@
 ---
 import { Image } from 'astro:assets';
-import CtaButton from '../ui/actions/CtaButton.astro';
+import HomeIntroBlock from "./HomeIntroBlock.astro";
 
 import foundersImg from "../../assets/images/nous-opti.jpg";
 import keyboardImg from "../../assets/images/keyboard_a.jpg";
@@ -17,11 +17,14 @@ const t = useTranslations(lang);
 
 <section id="us" class="py-16 sm:pt-32 md:pt-24 md:mx-5 md:border-x md:border-b md:rounded-b-full md:border-lines">
   <div class="px-5 sm:px-12 lg:px-24">
-    <h2 class="section-label">{t.homepage.us.titleLine1}<br/> {t.homepage.us.titleLine2}</h2>
-    <p class="indent-24 sm:indent-45 text-[1.5rem] sm:text-[2rem]">{t.homepage.us.description}</p>
-    <div class="mt-10 md:mt-16 flex">
-      <CtaButton href={`/${lang}/about`} label={t.homepage.us.cta} variant="light" />
-    </div>
+    <HomeIntroBlock
+      titleLine1={t.homepage.us.titleLine1}
+      titleLine2={t.homepage.us.titleLine2}
+      description={t.homepage.us.description}
+      ctaHref={`/${lang}/about`}
+      ctaLabel={t.homepage.us.cta}
+      ctaWrapperClass="mt-10 flex md:mt-16"
+    />
     <figure
       class="mt-16 sm:mt-24 md:mt-32 md:flex md:gap-16 md:items-center"
       data-us-parallax-gallery

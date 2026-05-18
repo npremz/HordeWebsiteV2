@@ -1,0 +1,37 @@
+---
+interface Props {
+  class?: string;
+}
+
+const { class: className = "" } = Astro.props;
+
+const backgroundCircleOffsets = [-250, -200, -150, -100, -50, 50, 100, 150, 200, 250];
+---
+
+<div
+  class:list={[
+    "pointer-events-none absolute inset-x-0 -z-10 w-full text-lines sm:inset-x-1/2 sm:w-screen sm:-translate-x-1/2",
+    className,
+  ]}
+  aria-hidden="true"
+>
+  <div
+    class="absolute center-x flex h-full w-full -translate-y-1/2 justify-center sm:h-[393px] sm:w-[unset] 2xl:h-[580px]"
+    style="top: var(--shape-center-y, 50%);"
+    data-projects-shape-square
+  >
+    <svg
+      class="h-full aspect-square overflow-visible"
+      viewBox="0 0 100 100"
+      fill="none"
+      aria-hidden="true"
+    >
+      <rect x="0.5" y="0.5" width="99" height="99" stroke="currentColor" />
+      {
+        backgroundCircleOffsets.map((offset) => (
+          <circle cx={50 + offset} cy="50" r="49.5" stroke="currentColor" />
+        ))
+      }
+    </svg>
+  </div>
+</div>

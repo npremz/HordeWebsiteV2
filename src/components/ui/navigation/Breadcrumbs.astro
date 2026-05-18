@@ -1,0 +1,119 @@
+---
+export interface BreadcrumbItem {
+  label: string;
+  href?: string;
+}
+
+interface Props {
+  items: BreadcrumbItem[];
+  class?: string;
+  variant?: 'dark' | 'light';
+  ariaLabel?: string;
+}
+
+const {
+  items,
+  class: className = '',
+  variant = 'dark',
+  ariaLabel = 'Breadcrumb',
+} = Astro.props;
+
+const visibleItems = items.filter((item) => item.label);
+const lastIndex = visibleItems.length - 1;
+---
+
+{visibleItems.length > 0 && (
+  <nav
+    class:list={['breadcrumbs', `breadcrumbs--${variant}`, className]}
+    aria-label={ariaLabel}
+  >
+    <ol class="breadcrumbs__list">
+      {visibleItems.map((item, index) => {
+        const isCurrent = index === lastIndex;
+
+        return (
+          <li class="breadcrumbs__item">
+            {isCurrent ? (
+              <span class="breadcrumbs__current" aria-current="page">
+                {item.label}
+              </span>
+            ) : (
+              <>
+                {item.href ? (
+                  <a class="breadcrumbs__link" href={item.href} title={item.label}>
+                    {item.label}
+                  </a>
+                ) : (
+                  <span class="breadcrumbs__link">{item.label}</span>
+                )}
+                <span class="breadcrumbs__separator" aria-hidden="true">/</span>
+              </>
+            )}
+          </li>
+        );
+      })}
+    </ol>
+  </nav>
+)}
+
+<style>
+  .breadcrumbs {
+    --breadcrumbs-muted: rgb(227 222 227 / 0.42);
+    --breadcrumbs-current: var(--color-bg-light);
+    --breadcrumbs-underline: rgb(227 222 227 / 0.72);
+
+    font-size: 1.25rem;
+    line-height: 1;
+  }
+
+  .breadcrumbs--light {
+    --breadcrumbs-muted: rgb(22 25 27 / 0.45);
+    --breadcrumbs-current: var(--color-black);
+    --breadcrumbs-underline: rgb(22 25 27 / 0.68);
+  }
+
+  .breadcrumbs__list {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .breadcrumbs__item {
+    display: inline-flex;
+    align-items: center;
+    min-width: 0;
+  }
+
+  .breadcrumbs__link {
+    color: var(--breadcrumbs-muted);
+    transition: color 180ms ease-out;
+  }
+
+  .breadcrumbs__link:hover {
+    color: var(--breadcrumbs-current);
+  }
+
+  .breadcrumbs__separator {
+    margin-inline: 0.65rem;
+    color: var(--breadcrumbs-muted);
+  }
+
+  .breadcrumbs__current {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    color: var(--breadcrumbs-current);
+    border-bottom: 1px solid var(--breadcrumbs-underline);
+    padding-bottom: 0.12em;
+  }
+
+  .breadcrumbs__current::before {
+    content: "\2192";
+    color: var(--breadcrumbs-current);
+  }
+</style>

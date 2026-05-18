@@ -1,21 +1,26 @@
 ---
 import { formatHeadingHtml } from "../../utils/heading-html";
 import type { ServiceData } from "./types";
+import ServiceSection from "./ServiceSection.astro";
+import AnimatedUnderlineLink from "../ui/links/AnimatedUnderlineLink.astro";
 
 interface Props {
   service: ServiceData;
 }
 
 const { service } = Astro.props;
+
+const sectionClass = "full-width-white-bg mt-16 py-12 sm:mt-25 sm:py-16 sm:pb-24 md:mt-32 md:pt-24 md:pb-32";
+const titleClass = "flex justify-between text-[1.5rem] leading-none sm:text-[2rem] md:text-[2.5rem]";
 ---
 
-<section
+<ServiceSection
   id="service-exclusions"
-  data-service-section="exclusions"
-  aria-labelledby="service-exclusions-title"
-  class="full-width-white-bg py-12 sm:py-16 sm:pb-24 md:pt-24 md:pb-32 mt-16 sm:mt-25 md:mt-32"
+  sectionKey="exclusions"
+  titleId="service-exclusions-title"
+  class={sectionClass}
 >
-  <h2 id="service-exclusions-title" class="text-[1.5rem] sm:text-[2rem] md:text-[2.5rem] leading-none flex justify-between">
+  <h2 id="service-exclusions-title" class={titleClass}>
     <span set:html={formatHeadingHtml(service.exclusionsTitle)} />
     <span class="block">[ ! ]</span>
   </h2>
@@ -24,30 +29,8 @@ const { service } = Astro.props;
       <p class="text-[1.375rem] sm:text-[1.5rem]">{paragraph}</p>
     ))}
   </div>
-  <p class="mt-8 sm:mt-10 md:mt-16 md:max-w-[630px] text-[1.125rem] leading-normal">Encore des zones d’ombres sur les du service? N’hésitez pas à nous contacter par e-mail à l’adresse <a class="exclusion-email-link" href="mailto:hello@hordeagence.com">hello@hordeagence.com</a></p>
-</section>
-
-<style>
-  .exclusion-email-link {
-    position: relative;
-    display: inline-block;
-    border-bottom: 1px solid rgb(0 0 0 / 0.3);
-  }
-
-  .exclusion-email-link::after {
-    content: "";
-    position: absolute;
-    bottom: -1px;
-    left: 0;
-    width: 100%;
-    height: 1px;
-    background-color: currentColor;
-    transform: scaleX(0);
-    transform-origin: left center;
-    transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  }
-
-  .exclusion-email-link:hover::after {
-    transform: scaleX(1);
-  }
-</style>
+  <p class="mt-8 text-[1.125rem] leading-normal sm:mt-10 md:mt-16 md:max-w-[630px]">
+    Encore des zones d’ombres sur les du service? N’hésitez pas à nous contacter par e-mail à l’adresse{" "}
+    <AnimatedUnderlineLink href="mailto:hello@hordeagence.com" label="hello@hordeagence.com" />
+  </p>
+</ServiceSection>

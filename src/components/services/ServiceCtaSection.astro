@@ -3,6 +3,8 @@ import ContactForm from "../ui/forms/ContactForm";
 import type { FormTranslations } from "../ui/forms/ContactForm";
 import { formatHeadingHtml } from "../../utils/heading-html";
 import type { ServiceData } from "./types";
+import ServiceSection from "./ServiceSection.astro";
+import AnimatedUnderlineLink from "../ui/links/AnimatedUnderlineLink.astro";
 
 interface Props {
   service: ServiceData;
@@ -10,25 +12,34 @@ interface Props {
 }
 
 const { service, formTranslations } = Astro.props;
+
+const sectionClass = "mt-16 md:mt-24";
+const titleClass = "flex flex-col gap-5 text-[1.5rem] leading-tight sm:flex-row sm:justify-between sm:text-[2rem] md:text-[2.5rem]";
+const bodyClass = "text-[1.125rem] max-w-[900px]";
 ---
 
-<section id="service-cta" class="mt-16 md:mt-24" data-service-section="cta" aria-labelledby="service-cta-title">
-  <h2 id="service-cta-title" class="flex flex-col sm:flex-row sm:justify-between gap-5 text-[1.5rem] sm:text-[2rem] md:text-[2.5rem] leading-tight flex">
+<ServiceSection
+  id="service-cta"
+  sectionKey="cta"
+  titleId="service-cta-title"
+  class={sectionClass}
+>
+  <h2 id="service-cta-title" class={titleClass}>
     <span set:html={formatHeadingHtml(service.ctaTitle)} class="sm:pr-4" />
     <svg class="self-end sm:self-start mt-2" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
      <rect width="7" height="20" transform="matrix(0.707107 0.707107 0.707107 -0.707107 0 14.1406)" fill="#16191B"/>
     </svg>
   </h2>
   <div class="mt-5 sm:mt-10">
-    <div class="space-y-8 sm:space-y-5 md:max-w-[650px]">
+    <div class="space-y-8 md:max-w-[650px]">
       {service.ctaParagraphs.map((paragraph) => {
         const emailRegex = /(hello@hordeagence\.com)/;
         const parts = paragraph.split(emailRegex);
         return (
-          <p class="text-[1.125rem] max-w-[900px]">
+          <p class={bodyClass}>
             {parts.map((part) =>
               part === 'hello@hordeagence.com'
-                ? <a class="cta-email-link" href="mailto:hello@hordeagence.com">{part}</a>
+                ? <AnimatedUnderlineLink href="mailto:hello@hordeagence.com" label={part} />
                 : part
             )}
           </p>
@@ -50,29 +61,4 @@ const { service, formTranslations } = Astro.props;
       />
     </div>
   </div>
-</section>
-
-<style>
-  .cta-email-link {
-    position: relative;
-    display: inline-block;
-    border-bottom: 1px solid rgb(0 0 0 / 0.3);
-  }
-
-  .cta-email-link::after {
-    content: "";
-    position: absolute;
-    bottom: -1px;
-    left: 0;
-    width: 100%;
-    height: 1px;
-    background-color: currentColor;
-    transform: scaleX(0);
-    transform-origin: left center;
-    transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  }
-
-  .cta-email-link:hover::after {
-    transform: scaleX(1);
-  }
-</style>
+</ServiceSection>
