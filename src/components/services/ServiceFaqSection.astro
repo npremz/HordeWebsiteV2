@@ -34,13 +34,13 @@ const titleClass = "text-[1.5rem] leading-[1.2] sm:text-[2rem] md:text-[2.5rem]"
             aria-expanded="false"
             aria-controls={`faq-content-${index}`}
           >
-            <span
-              class="faq-question text-[1.25rem] sm:text-[1.5rem] md:text-[2rem] transition-opacity"
-              data-text={item.question}
-              set:html={item.question}
-            />
-            <span class="faq-icon h-fit shrink-0 font-mono transition-colors duration-300" aria-hidden="true">
-              (<span class="icon-plus">+</span><span class="icon-minus hidden">-</span>)
+            <span class="faq-question text-[1.25rem] sm:text-[1.5rem] md:text-[2rem]">
+              <span class="faq-question-base" set:html={item.question} />
+              <span class="faq-question-overlay" aria-hidden="true" set:html={item.question} />
+            </span>
+            <span class="faq-icon h-fit shrink-0 font-mono" aria-hidden="true">
+              <span class="faq-icon-base">(<span class="icon-plus">+</span><span class="icon-minus hidden">-</span>)</span>
+              <span class="faq-icon-overlay">(<span class="icon-plus">+</span><span class="icon-minus hidden">-</span>)</span>
             </span>
           </button>
           <div
@@ -74,33 +74,86 @@ const titleClass = "text-[1.5rem] leading-[1.2] sm:text-[2rem] md:text-[2.5rem]"
     grid-template-rows: 1fr;
   }
 
-  .faq-item.is-open .faq-panel {
-    color: var(--color-black);
-  }
-
   .faq-panel::before {
     content: "";
     position: absolute;
-    inset-block: 0.75rem;
-    inset-inline: 0;
+    top: 10px;
+    right: -20px;
+    bottom: 10px;
+    left: -20px;
     z-index: -1;
-    background: transparent;
-    transition: background-color 0.3s ease-out;
+    background: #FFFFFF;
+    transform: scaleY(0);
+    transform-origin: center bottom;
   }
 
   .faq-item.is-open .faq-panel::before {
-    background: var(--color-bg-light);
+    transform: scaleY(1);
   }
 
-  @media (max-width: 639px) {
-    .faq-panel::before {
-      inset-inline: -1rem;
-    }
+  .faq-question,
+  .faq-icon {
+    position: relative;
+    z-index: 1;
+    display: block;
+    overflow: hidden;
+  }
+
+  .faq-icon {
+    display: inline-flex;
+  }
+
+  .faq-question-base,
+  .faq-question-overlay,
+  .faq-icon-base,
+  .faq-icon-overlay {
+    display: block;
+    transition: transform 0.15s ease-out;
+  }
+
+  .faq-question-overlay,
+  .faq-icon-overlay {
+    position: absolute;
+    inset: 0;
+    transform: translateY(100%);
+    color: var(--color-black);
+  }
+
+  .faq-item.is-open .faq-panel {
+    color: var(--color-black);
   }
 
   .faq-item.is-open .faq-content-inner {
     opacity: 1;
     transition-delay: 150ms;
+  }
+
+  .faq-item.is-open .faq-question-base,
+  .faq-trigger:hover .faq-question-base,
+  .faq-item.is-open .faq-icon-base,
+  .faq-trigger:hover .faq-icon-base {
+    transform: translateY(-100%);
+  }
+
+  .faq-item.is-open .faq-question-overlay,
+  .faq-trigger:hover .faq-question-overlay,
+  .faq-item.is-open .faq-icon-overlay,
+  .faq-trigger:hover .faq-icon-overlay {
+    transform: translateY(0);
+  }
+
+  @media (hover: hover) {
+    .faq-panel::before {
+      transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+  }
+
+  .faq-item:hover .faq-panel::before {
+    transform: scaleY(1);
+  }
+
+  .faq-item:hover .faq-trigger {
+    color: var(--color-black);
   }
 </style>
 

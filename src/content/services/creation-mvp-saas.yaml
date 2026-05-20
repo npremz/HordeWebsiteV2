@@ -91,7 +91,7 @@ deliverables:
   - Monitoring configuré (erreurs, uptime)
   - Formation à la gestion du produit si besoin
   - Accès à tous les environnements (staging, prod)
-exclusionsTitle: Ce qu'on n'est pas
+exclusionsTitle: Les choses qu'on évite de faire
 exclusionsParagraphs:
   - >-
     On n'est pas une usine à code offshore. On ne prend pas en charge 10 projets

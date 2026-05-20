@@ -51,7 +51,7 @@ const backgroundCircleOffsets = [-250, -200, -150, -100, -50, 0, 50, 100, 150, 2
     <div class="absolute h-px bg-lines-dark" style="width: 150vw; top: var(--shape-center-y, 50%); left: 50%; transform: translateX(-50%) rotate(-45deg);"></div>
   </div>
   <div class="relative z-10 flex justify-center">
-    <svg class="h-13 sm:h-20 pr-10 sm:pr-12.5" viewBox="0 0 11 52" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg class="h-[30px] pr-4 sm:pr-5" viewBox="0 0 11 52" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path d="M8.05028 0H11C6.63687 7.2156 3.37989 15.0872 3.37989 26.1193C3.37989 36.9128 6.63687 44.7844 11 52H8.05028C3.81006 45.9771 0 36.9128 0 26.1193C0 14.9679 3.81006 6.02294 8.05028 0Z" fill="white"/>
     </svg>
     <div class="relative">
@@ -62,15 +62,15 @@ const backgroundCircleOffsets = [-250, -200, -150, -100, -50, 0, 50, 100, 150, 2
       <div class="absolute size-[4px] sm:size-[5px] 2xl:size-[7px] bg-white -bottom-[2px] -right-[2px] sm:-bottom-[2.5px] sm:-right-[2.5px] 2xl:-bottom-[3.5px] 2xl:-right-[3.5px]"></div>
       <div
         id="service-shape"
-        class="grid size-45 sm:size-55 2xl:h-76 2xl:w-76 grid-cols-3 grid-rows-3 bg-black border-lines-dark border-r border-b"
-        style="background-image: linear-gradient(var(--color-lines-dark) 1px, transparent 1px), linear-gradient(90deg, var(--color-lines-dark) 1px, transparent 1px); background-size: calc(100% / 3) calc(100% / 3);"
+        class="grid size-45 sm:size-55 2xl:h-76 2xl:w-76 grid-cols-3 grid-rows-3 bg-white border-r border-b border-[#BFBFBF]"
+        style="background-image: linear-gradient(#BFBFBF 1px, transparent 1px), linear-gradient(90deg, #BFBFBF 1px, transparent 1px); background-size: calc(100% / 3) calc(100% / 3);"
       >
         {Array.from({ length: 9 }).map(() => (
-          <div class="flex items-center justify-center"><div class="h-full w-full rounded-full bg-white border border-black"></div></div>
+          <div class="flex items-center justify-center"><div class="h-full w-full rounded-full bg-white border border-[#BFBFBF]"></div></div>
         ))}
       </div>
     </div>
-    <svg class="h-13 sm:h-20 pl-10 sm:pl-12.5 self-end" viewBox="0 0 11 52" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg class="h-[30px] pl-4 sm:pl-5 self-end" viewBox="0 0 11 52" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path d="M2.94972 52L-4.76837e-06 52C4.36313 44.7844 7.62011 36.9128 7.62011 25.8807C7.62011 15.0872 4.36313 7.21559 -2.22387e-07 -4.77635e-06L2.94972 -4.51848e-06C7.18995 6.02293 11 15.0872 11 25.8807C11 37.0321 7.18994 45.9771 2.94972 52Z" fill="white"/>
     </svg>
   </div>
@@ -79,10 +79,10 @@ const backgroundCircleOffsets = [-250, -200, -150, -100, -50, 0, 50, 100, 150, 2
       <div class="flex flex-col gap-5">
         <span class="text-[1.5625rem]">Notre service de</span>
         <h1
-          class="font-display text-[2.25rem] sm:text-[4rem] uppercase leading-none max-w-[600px]"
+          class="font-display text-[2.25rem] sm:text-[50px] uppercase leading-none max-w-[600px] lg:max-w-[900px]"
           set:html={formatHeadingHtml(service.h1)}
         />
-        <p class="lg:mt-0 text-[1.25rem] md:max-w-[830px] lg:max-w-[630px]">{service.intro}</p>
+        <p class="lg:mt-0 text-[1.25rem] md:max-w-[830px] lg:max-w-[900px]">{service.intro}</p>
       </div>
       <div class="lg:max-w-[460px]">
         {service.primaryCtaLabel && service.primaryCtaUrl && (

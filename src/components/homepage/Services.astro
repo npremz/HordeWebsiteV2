@@ -13,7 +13,7 @@ const services = await getServiceSummaries();
 const sectionClass = "py-25 text-white sm:py-50";
 const headingClass = "text-[1.5rem] sm:text-[2rem] md:text-[2.5rem] lg:text-[3rem]";
 const listOffsetClass = "mt-8 sm:mt-12 md:mt-20";
-const rowLinkClass = "service-link flex items-center justify-between pt-8 pb-7 sm:pt-10 sm:pb-9";
+const rowLinkClass = "service-link flex items-center justify-between pt-8 pb-7 sm:pt-10 sm:pb-9 lg:pt-10 lg:pb-10";
 const rowTitleClass = "max-w-[280px] text-[1.25rem] leading-none sm:max-w-[unset] sm:text-[1.5rem] md:text-[2rem]";
 ---
 
@@ -34,10 +34,18 @@ const rowTitleClass = "max-w-[280px] text-[1.25rem] leading-none sm:max-w-[unset
           title={service.title}
           class={rowLinkClass}
         >
-          <span class={rowTitleClass}>
-            {service.title}
+          <span class:list={['service-link__label', rowTitleClass]}>
+            <span class="service-link__label-base">
+              {service.title}
+            </span>
+            <span class="service-link__label-overlay" aria-hidden="true">
+              {service.title}
+            </span>
           </span>
-          <span class="shrink-0 text-[1.375rem]">(→)</span>
+          <span class="service-link__icon shrink-0 text-[1.375rem]">
+            <span class="service-link__icon-base">(→)</span>
+            <span class="service-link__icon-overlay" aria-hidden="true">(→)</span>
+          </span>
         </a>
       </li>
     ))}
@@ -48,20 +56,47 @@ const rowTitleClass = "max-w-[280px] text-[1.25rem] leading-none sm:max-w-[unset
   .service-link {
     position: relative;
     isolation: isolate;
-    transition: color 0.3s ease-out;
   }
 
   .service-link::before {
     content: "";
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: var(--color-bg-light);
+    top: 10px;
+    right: -10px;
+    bottom: 10px;
+    left: -10px;
+    background-color: #FFFFFF;
     z-index: -1;
-    transform: scaleX(0);
-    transform-origin: left center;
+    transform: scaleY(0);
+    transform-origin: center bottom;
+  }
+
+  .service-link__label,
+  .service-link__icon {
+    position: relative;
+    z-index: 1;
+    display: block;
+    overflow: hidden;
+  }
+
+  .service-link__icon {
+    display: inline-flex;
+  }
+
+  .service-link__label-base,
+  .service-link__icon-base,
+  .service-link__label-overlay,
+  .service-link__icon-overlay {
+    display: block;
+    transition: transform 0.15s ease-out;
+  }
+
+  .service-link__label-overlay,
+  .service-link__icon-overlay {
+    position: absolute;
+    inset: 0;
+    transform: translateY(100%);
+    color: var(--color-black);
   }
 
   @media (hover: hover) {
@@ -69,16 +104,22 @@ const rowTitleClass = "max-w-[280px] text-[1.25rem] leading-none sm:max-w-[unset
       transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     }
 
-    .service-link:hover {
-      color: var(--color-black);
+    .service-link:hover::before {
+      transform: scaleY(1);
     }
 
-    .service-link:hover::before {
-      transform: scaleX(1);
+    .service-link:hover .service-link__label-base,
+    .service-link:hover .service-link__icon-base {
+      transform: translateY(-100%);
+    }
+
+    .service-link:hover .service-link__label-overlay,
+    .service-link:hover .service-link__icon-overlay {
+      transform: translateY(0);
     }
 
     .service-link:hover :global(.wrapped) {
-      color: var(--color-black) !important;
+      color: inherit !important;
     }
   }
 </style>
