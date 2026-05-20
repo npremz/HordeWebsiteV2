@@ -95,3 +95,16 @@ export async function getLocalizedProjectDescription(
 
   return (await loader()) as string;
 }
+
+export async function getLocalizedProjectDescriptionParagraphs(
+  slug: string,
+  lang: Locale,
+): Promise<string[]> {
+  const description = await getLocalizedProjectDescription(slug, lang);
+
+  return description
+    .replace(/&#x20;/g, ' ')
+    .split(/\n{2,}/)
+    .map((paragraph) => paragraph.trim())
+    .filter(Boolean);
+}

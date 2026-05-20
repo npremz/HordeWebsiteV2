@@ -5,11 +5,11 @@ import Footer from '../../../components/Footer.astro';
 import ProjectsShapeBand from '../../../components/projects/ProjectsShapeBand.astro';
 import ProjectsListingPage from '../../../components/projects/ProjectsListingPage.astro';
 import Breadcrumbs from '../../../components/ui/navigation/Breadcrumbs.astro';
-import { SUPPORTED_LOCALES, type Locale } from '../../../i18n';
+import { SUPPORTED_LOCALES, type Locale, useTranslations } from '../../../i18n';
 import {
   type LocalizedProjectGalleryRow,
   type ProjectEntry,
-  getLocalizedProjectDescription,
+  getLocalizedProjectDescriptionParagraphs,
   getLocalizedProjects,
   getProjects,
   localizeProject,
@@ -24,7 +24,6 @@ import {
   getProjectServiceLabel,
   getProjectServiceTitle,
   getProjectServices,
-  projectHasService,
 } from '../../../lib/projectServices';
 
 export const prerender = true;
@@ -69,29 +68,8 @@ export async function getStaticPaths() {
 
 const props = Astro.props as ProjectPageProps | ServicePageProps;
 const { lang } = props;
-
-const copy = {
-  fr: {
-    breadcrumbHome: 'Accueil',
-    breadcrumbProjects: 'Projets',
-    projectServices: 'Services liés à ce projet',
-    projectTypes: 'Types de projet',
-    externalUrl: 'Voir le site',
-    gallery: 'Galerie',
-    allProjects: 'Tous',
-    allWork: 'All work',
-  },
-  en: {
-    breadcrumbHome: 'Home',
-    breadcrumbProjects: 'Projects',
-    projectServices: 'Services related to this project',
-    projectTypes: 'Project types',
-    externalUrl: 'View website',
-    gallery: 'Gallery',
-    allProjects: 'All',
-    allWork: 'All work',
-  },
-} satisfies Record<Locale, Record<string, string>>;
+const t = useTranslations(lang);
+const projectCopy = t.projectSingle;
 
 const allLocalizedProjects = await getLocalizedProjects(lang);
 const singleWorkProjectSlugs = ['e-putch', 'merly'];
@@ -136,12 +114,7 @@ let pageContent:
 
 if (props.kind === 'project') {
   const localizedProject = localizeProject(props.project, lang);
-  const descriptionContent = await getLocalizedProjectDescription(props.project.data.slug, lang);
-  const descriptionParagraphs = descriptionContent
-    .replace(/&#x20;/g, ' ')
-    .split(/\n{2,}/)
-    .map((paragraph) => paragraph.trim())
-    .filter(Boolean);
+  const descriptionParagraphs = await getLocalizedProjectDescriptionParagraphs(props.project.data.slug, lang);
 
   pageTitle = localizedProject.fullTitle;
   pageDescription = localizedProject.seoDescription;
@@ -158,8 +131,8 @@ if (props.kind === 'project') {
     externalUrl: localizedProject.externalUrl,
     descriptionParagraphs,
     breadcrumbItems: [
-      { label: copy[lang].breadcrumbHome, href: `/${lang}` },
-      { label: copy[lang].breadcrumbProjects, href: `/${lang}/projets` },
+      { label: projectCopy.breadcrumbHome, href: `/${lang}` },
+      { label: projectCopy.breadcrumbProjects, href: `/${lang}/projets` },
       { label: localizedProject.shortTitle },
     ],
   };
@@ -177,8 +150,8 @@ if (props.kind === 'project') {
     service,
     projects,
     breadcrumbItems: [
-      { label: copy[lang].breadcrumbHome, href: `/${lang}` },
-      { label: copy[lang].breadcrumbProjects, href: `/${lang}/projets` },
+      { label: projectCopy.breadcrumbHome, href: `/${lang}` },
+      { label: projectCopy.breadcrumbProjects, href: `/${lang}/projets` },
       { label: getProjectServiceLabel(service) },
     ],
   };
@@ -205,7 +178,7 @@ if (props.kind === 'project') {
             items={pageContent.breadcrumbItems}
             class="absolute top-0 mt-16"
             variant="dark"
-            ariaLabel={lang === 'fr' ? 'Fil d’Ariane' : 'Breadcrumb'}
+            ariaLabel={projectCopy.breadcrumbAriaLabel}
           />
           <div class="relative z-10 flex items-center justify-center gap-8">
             <svg class="h-8 sm:h-10" viewBox="0 0 6 30" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -220,7 +193,7 @@ if (props.kind === 'project') {
             <div class="absolute w-full flex text-[1.125rem] lg:text-[1.375rem] justify-between bottom-0 sm:bottom-16 md:bottom-1/2 md:translate-y-1/2">
               <span>2025©</span>
               <a href={pageContent.externalUrl} target="_blank" rel="noopener noreferrer" class="underline!">
-                {copy[lang].externalUrl} (↗)
+                {projectCopy.externalUrl} (↗)
               </a>
             </div>
           )}
@@ -229,9 +202,9 @@ if (props.kind === 'project') {
 
         <div class="md:flex md:gap-10 md:mt-10 lg:mt-20 2xl:mt-4 ">
           {pageContent.services.length > 0 && (
-            <nav aria-label={copy[lang].projectServices} class="mt-10 sm:mt-16 md:mt-0 text-[1.25rem] md:flex md:flex-col md:justify-between md:w-1/2">
+            <nav aria-label={projectCopy.projectServices} class="mt-10 sm:mt-16 md:mt-0 text-[1.25rem] md:flex md:flex-col md:justify-between md:w-1/2">
               <div class="sm:flex sm:gap-8">
-                <p >Filtre par services :</p>
+                <p>{projectCopy.serviceFilterLabel}</p>
                 <ul class="mt-5 sm:mt-0 sm:flex sm:gap-4">
                   {pageContent.services.map((serviceSlug) => (
                     <li>
@@ -273,7 +246,7 @@ if (props.kind === 'project') {
         <span class="block md:hidden mt-10 sm:mt-16 text-[1.125rem]">(↓)</span>
 
         {pageContent.gallery.length > 0 && (
-          <section class="project-gallery bg-black mt-16 sm:mt-32 flex flex-col gap-2.5 sm:gap-5" aria-label={copy[lang].gallery}>
+          <section class="project-gallery bg-black mt-16 sm:mt-32 flex flex-col gap-2.5 sm:gap-5" aria-label={projectCopy.gallery}>
             {pageContent.gallery.map((row: LocalizedProjectGalleryRow) => (
               <div
                 class:list={[
@@ -290,13 +263,13 @@ if (props.kind === 'project') {
         )}
 
         {singleWorkProjects.length > 0 && (
-          <nav class="project-work-nav mt-16 sm:mt-24 text-bg-light" aria-label={copy[lang].allWork}>
+          <nav class="project-work-nav mt-16 sm:mt-24 text-bg-light" aria-label={projectCopy.allWork}>
             <a
               href={`/${lang}/projets`}
               class="project-work-row grid min-h-[78px] place-items-center border-b border-lines-dark py-6 sm:py-10 lg:py-12 text-center font-display text-[2.25rem] sm:text-[3rem] uppercase leading-none tracking-normal sm:min-h-[108px] md:min-h-[120px] lg:text-[5rem]"
             >
               <span>
-                {copy[lang].allWork}
+                {projectCopy.allWork}
                 <span class="ml-1 text-[1.125rem] font-sans leading-none">
                   {singleWorkCount}
                 </span>
@@ -403,7 +376,7 @@ if (props.kind === 'project') {
       projects={pageContent.projects}
       lang={lang}
       intro={getProjectServiceIntro(pageContent.service)}
-      allLabel={copy[lang].allProjects}
+      allLabel={projectCopy.allProjects}
       filters={serviceFilters}
     />
   )}

@@ -214,11 +214,24 @@ export const fr = {
     viewList: 'Liste',
   },
 
+  // Single Project Page
+  projectSingle: {
+    breadcrumbHome: 'Accueil',
+    breadcrumbProjects: 'Projets',
+    projectServices: 'Services liés à ce projet',
+    serviceFilterLabel: 'Filtrer par services :',
+    externalUrl: 'Voir le site',
+    gallery: 'Galerie',
+    allProjects: 'Tous',
+    allWork: 'Tous les projets',
+    breadcrumbAriaLabel: 'Fil d’Ariane',
+  },
+
   // Blog Page
   blogPage: {
     title: 'Blog site rapide : performance web et UX',
     description: 'Guides concrets pour accélérer votre site web, améliorer l\'UX et optimiser les performances. Par Horde Agence, agence web à Bruxelles.',
-    heading: 'Nos derniers\narticles rien que\npour vous',
+    heading: 'Divers articles sur la technologie, le design et notre expérience',
     articleCount: 'Nombre articles',
     viewGrid: 'Grille',
     viewList: 'Liste',

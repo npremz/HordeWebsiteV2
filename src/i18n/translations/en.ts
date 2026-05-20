@@ -215,6 +215,19 @@ export const en: Translations = {
     viewList: 'List',
   },
 
+  // Single Project Page
+  projectSingle: {
+    breadcrumbHome: 'Home',
+    breadcrumbProjects: 'Projects',
+    projectServices: 'Services related to this project',
+    serviceFilterLabel: 'Filter by services:',
+    externalUrl: 'View website',
+    gallery: 'Gallery',
+    allProjects: 'All',
+    allWork: 'All work',
+    breadcrumbAriaLabel: 'Breadcrumb',
+  },
+
   // Blog Page
   blogPage: {
     title: 'Fast website blog: web performance and UX',
