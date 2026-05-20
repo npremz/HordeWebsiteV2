@@ -220,7 +220,7 @@ export default function ContactForm({
   const submitCta = getCtaButtonClasses(
     ctaVariant,
     false,
-    'mt-5 sm:mt-10 xl:mt-16 disabled:opacity-50 disabled:cursor-not-allowed self-center md:self-end',
+    'disabled:opacity-50 disabled:cursor-not-allowed self-center md:self-end',
   );
 
   return (
@@ -373,7 +373,7 @@ export default function ContactForm({
         />
       </div>
 
-      <div className='flex flex-col md:flex-row md:gap-16 lg:gap-32 md:justify-end'>
+      <div className='mt-5 sm:mt-10 xl:mt-16 flex flex-col md:flex-row md:gap-16 lg:gap-32 md:justify-end'>
         <button type="submit" disabled={isSubmitting} className={submitCta.classes}>
           <span className={submitCta.overlay} aria-hidden="true"></span>
           <span className={submitCta.labelTrack}>

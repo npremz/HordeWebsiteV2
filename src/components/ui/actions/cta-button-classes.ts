@@ -16,7 +16,9 @@ export function getCtaButtonClasses(
     ? 'absolute inset-0 bg-button-white translate-y-full group-hover:translate-y-0 transition-transform duration-200 ease-out'
     : 'absolute inset-0 bg-black translate-y-full group-hover:translate-y-0 transition-transform duration-200 ease-out';
   const labelTrack = 'relative z-10 block overflow-hidden';
-  const labelBase = 'block transition-transform duration-200 ease-out group-hover:-translate-y-full';
+  const labelBase = isDark
+    ? 'block text-white transition-transform duration-200 ease-out group-hover:-translate-y-full'
+    : 'block text-black transition-transform duration-200 ease-out group-hover:-translate-y-full';
   const labelOverlay = isDark
     ? 'absolute inset-0 z-10 flex items-center justify-center overflow-hidden text-black pointer-events-none'
     : 'absolute inset-0 z-10 flex items-center justify-center overflow-hidden text-button-white pointer-events-none';
