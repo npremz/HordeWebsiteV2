@@ -5,12 +5,12 @@ import type { LocalizedProject } from "../../lib/content/projects";
 interface Props {
   projects: LocalizedProject[];
   lang: Locale;
-  allLabel: string;
-  filters: { label: string; href: string }[];
   countLabel: string;
+  variant?: 'light' | 'dark';
 }
 
-const { projects, lang, allLabel, filters, countLabel } = Astro.props;
+const { projects, lang, countLabel, variant = 'light' } = Astro.props;
+const isDark = variant === 'dark';
 
 const displayMetaBySlug: Record<string, { type: string }> = {
   "cafe-belga": { type: "Landing page" },
@@ -32,29 +32,10 @@ function getDisplayYear(project: LocalizedProject): string {
 }
 ---
 
-<div class="mx-auto mt-14 w-full max-w-[1300px] sm:mt-12 lg:mt-14 2xl:mt-32">
-  <div class="flex items-start justify-between text-[1.125rem] leading-none sm:text-[1.25rem] md:max-w-[1000px] md:mx-auto">
-    <details class="projects-filter relative w-fit ">
-      <summary
-        class="cursor-pointer list-none underline decoration-[1px] underline-offset-2 transition-opacity duration-200 hover:opacity-65"
-      >
-        {allLabel} (↓)
-      </summary>
-      <div
-        class="filter-panel absolute left-0 top-full z-20 mt-5 hidden w-max max-w-[calc(100vw-2rem)] flex-wrap gap-5 bg-white px-6 py-4 text-[1rem] shadow-none sm:max-w-none"
-      >
-        {
-          filters.map((filter) => (
-            <a href={filter.href} class="whitespace-nowrap leading-none transition-opacity duration-200 hover:opacity-65">
-              {filter.label}
-            </a>
-          ))
-        }
-      </div>
-    </details>
-
-    <p>{countLabel}</p>
-  </div>
+<div
+  class="projects-index mx-auto mt-40 w-full max-w-[1300px] sm:mt-48 md:mt-32 lg:mt-44 2xl:mt-56"
+  data-variant={variant}
+>
 
   <ol class="mt-14 sm:mt-16 lg:mt-20">
     {
@@ -63,7 +44,7 @@ function getDisplayYear(project: LocalizedProject): string {
         const RowTag = project.inProgress ? "div" : "a";
 
         return (
-          <li class="border-b border-lines last:border-b-0">
+          <li class:list={['border-b last:border-b-0', isDark ? 'border-lines-dark' : 'border-lines']}>
             <RowTag
               href={href}
               class="project-row grid min-h-[78px] grid-cols-1 items-center gap-4 py-6 text-center sm:min-h-[108px] sm:grid-cols-[minmax(110px,1fr)_minmax(0,2.5fr)_minmax(70px,1fr)] sm:text-left md:min-h-[120px] md:py-7"
@@ -87,14 +68,6 @@ function getDisplayYear(project: LocalizedProject): string {
 </div>
 
 <style>
-  .projects-filter summary::-webkit-details-marker {
-    display: none;
-  }
-
-  .projects-filter[open] .filter-panel {
-    display: flex;
-  }
-
   .project-row {
     position: relative;
     isolation: isolate;
@@ -105,15 +78,20 @@ function getDisplayYear(project: LocalizedProject): string {
     position: absolute;
     inset: 0;
     z-index: -1;
-    background: var(--color-black);
+    background: var(--project-row-hover-bg, var(--color-black));
     transform: scaleY(0);
     transform-origin: bottom center;
     transition: transform 0.28s ease-out;
   }
 
+  .projects-index[data-variant="dark"] {
+    --project-row-hover-bg: var(--color-bg-light);
+    --project-row-hover-color: var(--color-black);
+  }
+
   @media (hover: hover) {
     a.project-row:hover {
-      color: var(--color-bg);
+      color: var(--project-row-hover-color, var(--color-bg));
     }
 
     a.project-row:hover::before {

@@ -70,6 +70,13 @@ const props = Astro.props as ProjectPageProps | ServicePageProps;
 const { lang } = props;
 const t = useTranslations(lang);
 const projectCopy = t.projectSingle;
+const projectFilterLabels: Record<string, { fr: string; en: string }> = {
+  'creation-ecommerce': { fr: 'E-commerce', en: 'E-commerce' },
+  'optimisation-site-web': { fr: 'Optimisation', en: 'Optimization' },
+  'creation-landing-page': { fr: 'Landing Page', en: 'Landing Page' },
+  'creation-mvp-saas': { fr: 'Saas Mvp', en: 'Saas Mvp' },
+  'refonte-site-web': { fr: 'Refonte', en: 'Redesign' },
+};
 
 const allLocalizedProjects = await getLocalizedProjects(lang);
 const singleWorkProjectSlugs = ['e-putch', 'merly'];
@@ -78,10 +85,15 @@ const singleWorkProjects = singleWorkProjectSlugs
   .filter((project): project is (typeof allLocalizedProjects)[number] => Boolean(project));
 const singleWorkCount = `(${String(singleWorkProjects.length).padStart(2, '0')})`;
 const projectServices = await getProjectServiceEntries();
-const serviceFilters = projectServices.map((service) => ({
-  label: getProjectServiceLabel(service),
-  href: getProjectServiceHref(service.data.slug, lang),
-}));
+const serviceFilterProjects = allLocalizedProjects.filter((project) => !project.inProgress);
+const serviceFilters = projectServices
+  .filter((service) =>
+    serviceFilterProjects.some((project) => project.services.includes(service.data.slug)),
+  )
+  .map((service) => ({
+    label: projectFilterLabels[service.data.slug]?.[lang] || getProjectServiceLabel(service),
+    href: getProjectServiceHref(service.data.slug, lang),
+  }));
 
 function getDisplayTitle(project: (typeof allLocalizedProjects)[number]): string {
   return project.shortTitle.replace(/-/g, '').toUpperCase();

@@ -20,6 +20,13 @@ export function getStaticPaths() {
 
 const { lang } = Astro.params as { lang: Locale };
 const t = useTranslations(lang);
+const projectFilterLabels: Record<string, { fr: string; en: string }> = {
+  'creation-ecommerce': { fr: 'E-commerce', en: 'E-commerce' },
+  'optimisation-site-web': { fr: 'Optimisation', en: 'Optimization' },
+  'creation-landing-page': { fr: 'Landing Page', en: 'Landing Page' },
+  'creation-mvp-saas': { fr: 'Saas Mvp', en: 'Saas Mvp' },
+  'refonte-site-web': { fr: 'Refonte', en: 'Redesign' },
+};
 
 const projects = await getLocalizedProjects(lang);
 
@@ -35,26 +42,29 @@ const orderedProjects = [...projects].sort(
 
 const pageCopy = {
   fr: {
-    intro:
-      "Des idées transformées en expériences. Des marques qui parlent, des audiences qui écoutent. Nous construisons les ponts entre les deux. Pas de bullshits, pas de templates, juste une obsession qui est de faire en sorte que chaque détail ait un sens",
+    intro: "Divers articles sur la technologie, le design et notre expérience",
     all: "Tous",
   },
   en: {
-    intro:
-      "Ideas turned into experiences. Brands that speak, audiences that listen. We build the bridge between both. No bullshit, no templates, just one obsession: making every detail mean something.",
+    intro: "Various articles about technology, design, and our experience",
     all: "All",
   },
 } satisfies Record<Locale, { intro: string; all: string }>;
 
 const projectServices = await getProjectServiceEntries();
-const serviceFilters = projectServices.map((service) => ({
-  label: getProjectServiceLabel(service),
-  href: getProjectServiceHref(service.data.slug, lang),
-}));
+const listedProjects = orderedProjects.filter((project) => !project.inProgress);
+const serviceFilters = projectServices
+  .filter((service) =>
+    listedProjects.some((project) => project.services.includes(service.data.slug)),
+  )
+  .map((service) => ({
+    label: projectFilterLabels[service.data.slug]?.[lang] || getProjectServiceLabel(service),
+    href: getProjectServiceHref(service.data.slug, lang),
+  }));
 ---
 
-<Layout lang={lang} title={t.projectsPage.title} description={t.projectsPage.description} showContainerLines={false}>
-  <div class="fixed inset-0 -z-10 bg-bg" aria-hidden="true"></div>
+<Layout lang={lang} title={t.projectsPage.title} description={t.projectsPage.description} variant="dark" headerVariant="dark" showContainerLines={false}>
+  <div class="fixed inset-0 -z-10 bg-black" aria-hidden="true"></div>
 
   <ProjectsListingPage
     projects={orderedProjects}
@@ -62,7 +72,8 @@ const serviceFilters = projectServices.map((service) => ({
     intro={pageCopy[lang].intro}
     allLabel={pageCopy[lang].all}
     filters={serviceFilters}
+    variant="dark"
   />
 
-  <Footer lang={lang} hideOverflow={false} />
+  <Footer lang={lang} variant="dark" hideOverflow={false} />
 </Layout>

@@ -10,72 +10,66 @@ interface Props {
   intro: string;
   allLabel: string;
   filters: { label: string; href: string }[];
+  variant?: 'light' | 'dark';
 }
 
-const { projects, lang, intro, allLabel, filters } = Astro.props;
+const { projects, lang, intro, allLabel, filters, variant = 'light' } = Astro.props;
 const projectCount = String(projects.length).padStart(2, '0');
+const isDark = variant === 'dark';
+const filterLinks = [{ label: allLabel, href: `/${lang}/projets` }, ...filters];
+const filterListLabel = lang === 'fr' ? 'Filtres' : 'Filters';
+const heroClass =
+  'relative z-0 mt-48 flex flex-col pr-5 sm:mt-72 sm:pr-8 md:mt-80 md:items-start md:justify-between lg:mt-100 lg:pr-10 2xl:mt-84';
+const headingRowClass = 'flex w-full flex-col sm:flex-row sm:justify-between';
+const headingTextClass = 'relative z-10 flex max-w-[760px] flex-col gap-4 sm:pr-4 sm:gap-8 md:pr-16 lg:w-1/2';
+const quickLinksRowClass =
+  'relative z-10 mt-4 flex flex-col sm:mt-16 sm:w-full sm:flex-row sm:justify-between lg:mt-0 lg:w-1/2 lg:self-end lg:justify-around lg:gap-20';
 ---
 
-<div id="page-content" class="relative z-10">
-  <section class="relative pt-16 sm:pt-36 2xl:mt-36 " aria-labelledby="projects-intro">
-    <div id="projects-shape-stage" class="relative mt-8 aspect-square w-full sm:h-[385px] sm:aspect-auto">
-      <ProjectsShapeBand class="top-0 h-full" />
-
-      <div class="relative z-10 flex h-full items-center justify-center">
-        <div class="relative w-full max-w-[1300px] px-8 md:px-18 lg:px-40">
-          <svg class="absolute top-2 left-0" width="7" height="35" viewBox="0 0 7 35" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M5.12291 0H7C4.22346 4.85665 2.15084 10.1548 2.15084 17.5803C2.15084 24.8452 4.22346 30.1433 7 35H5.12291C2.42458 30.9461 0 24.8452 0 17.5803C0 10.0745 2.42458 4.0539 5.12291 0Z" fill="#16191B"/>
-          </svg>
-          <svg class="absolute bottom-0 right-0" width="8" height="35" viewBox="0 0 8 35" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M1.95514 35L-0.000163078 35C2.89206 30.1433 5.05105 24.8452 5.05105 17.4197C5.05105 10.1548 2.89206 4.85665 -0.000159891 -6.1196e-07L1.95515 -4.47859e-07C4.7659 4.0539 7.29151 10.1548 7.29151 17.4197C7.2915 24.9255 4.7659 30.9461 1.95514 35Z" fill="#16191B"/>
-          </svg>
-
-          <svg class="mx-auto md:absolute md:right-0 md:top-2" width="35" height="21" viewBox="0 0 35 21" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-            <rect x="28" width="7" height="21" fill="black"/>
-            <rect x="21" y="14" width="7" height="7" fill="black"/>
-            <rect x="21" width="7" height="7" fill="black"/>
-            <rect x="7" y="7" width="7" height="7" fill="black"/>
-            <rect width="7" height="21" fill="black"/>
-          </svg>
-          <div id="projects-copy-lockup" class="relative">
-            <h1 id="projects-intro" class="indent-24 mt-6 md:mt-0 text-[1.25rem] sm:indent-32 sm:text-[1.5rem] md:text-[2rem]">
-              {intro}
-            </h1>
-          </div>
-        </div>
-      </div>
+<div id="page-content" class:list={['relative z-10', isDark ? 'text-bg-light' : 'text-black']}>
+  <section class={heroClass} aria-labelledby="projects-intro">
+    <div class="pointer-events-none absolute left-1/2 top-1/2 z-0 aspect-square w-full -translate-x-1/2 -translate-y-1/2 sm:h-[385px] sm:aspect-auto 2xl:h-[580px]" aria-hidden="true">
+      <ProjectsShapeBand
+        class:list={['top-0 h-full', isDark ? 'text-lines-dark' : 'text-lines']}
+        squareClass="sm:h-full! 2xl:h-full!"
+      />
     </div>
 
-    <ProjectIndexList
-      projects={projects}
-      lang={lang}
-      allLabel={allLabel}
-      filters={filters}
-      countLabel={`(${projectCount})`}
-    />
+    <div class={headingRowClass}>
+      <div id="projects-copy-lockup" class={headingTextClass}>
+        <h1 id="projects-intro" class="text-[1.5rem] leading-tight sm:text-[2rem] md:text-[2.5rem]">
+          {intro}
+        </h1>
+      </div>
+      <svg class="relative z-10 mt-2 -mr-5 self-end text-current sm:-mr-8 sm:self-start" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect width="7" height="20" transform="matrix(0.707107 0.707107 0.707107 -0.707107 0 14.1406)" fill="currentColor"/>
+      </svg>
+    </div>
+
+    <div class={quickLinksRowClass}>
+      <div class="text-[1.375rem] sm:text-[1.5rem]">{filterListLabel}:</div>
+      <ul class="mt-8 flex list-[square] flex-col gap-2.5 pl-5 text-[1.25rem] sm:mt-0">
+        {
+          filterLinks.map((filter) => (
+            <li>
+              <a href={filter.href} class="transition-opacity duration-200 hover:opacity-65" title={filter.label}>
+                {filter.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+
+    <svg class="absolute bottom-0 right-0 z-10 text-current" width="8" height="35" viewBox="0 0 8 35" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M1.95527 35L-4.1008e-05 35C2.89218 30.1433 5.05117 24.8452 5.05117 17.4197C5.05117 10.1548 2.89219 4.85665 -3.78207e-05 -6.1196e-07L1.95527 -4.47859e-07C4.76602 4.0539 7.29163 10.1548 7.29163 17.4197C7.29163 24.9255 4.76602 30.9461 1.95527 35Z" fill="currentColor"/>
+    </svg>
   </section>
+
+  <ProjectIndexList
+    projects={projects}
+    lang={lang}
+    countLabel={`(${projectCount})`}
+    variant={variant}
+  />
 </div>
-
-<script>
-  function updateProjectsShapeCenterY() {
-    const stage = document.getElementById("projects-shape-stage");
-    const copy = document.getElementById("projects-copy-lockup");
-    const shape = stage?.querySelector("[data-projects-shape-square]");
-    if (!stage || !copy || !shape) return;
-
-    const stageRect = stage.getBoundingClientRect();
-    const copyRect = copy.getBoundingClientRect();
-    const centerY = copyRect.top - stageRect.top + copyRect.height / 2;
-    stage.style.setProperty("--shape-center-y", `${centerY}px`);
-  }
-
-  updateProjectsShapeCenterY();
-
-  let projectsShapeResizeTimer: ReturnType<typeof setTimeout>;
-  window.addEventListener("resize", () => {
-    clearTimeout(projectsShapeResizeTimer);
-    projectsShapeResizeTimer = setTimeout(updateProjectsShapeCenterY, 100);
-  });
-
-  document.addEventListener("astro:after-swap", updateProjectsShapeCenterY);
-</script>

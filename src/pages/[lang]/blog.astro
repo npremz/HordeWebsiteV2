@@ -18,15 +18,34 @@ export function getStaticPaths() {
 
 const { lang } = Astro.params as { lang: Locale };
 const t = useTranslations(lang);
+
 const [categories, posts] = await Promise.all([
   getLocalizedCategories(lang),
   getLocalizedPosts(lang),
 ]);
-const allLabel = lang === 'fr' ? 'Tous' : 'All';
 
+const allLabel = lang === 'fr' ? 'Tous' : 'All';
+const filterListLabel = lang === 'fr' ? 'Filtres' : 'Filters';
+const categoriesAriaLabel = lang === 'fr' ? 'Catégories principales' : 'Main categories';
+const breadcrumbAriaLabel = lang === 'fr' ? 'Fil d’Ariane' : 'Breadcrumb';
 const breadcrumbItems = [
   { label: lang === 'fr' ? 'Accueil' : 'Home', href: `/${lang}` },
-  { label: 'Blog' },
+  { label: lang === 'fr' ? 'Blog' : 'Blog' },
+];
+const byLabel = lang === 'fr' ? 'Par' : 'By';
+const readingTimeLabel = lang === 'fr' ? 'min de lecture' : 'min read';
+const readArticleLabel = lang === 'fr' ? 'Lire l’article' : 'Read article';
+
+const usedCategorySlugs = new Set(posts.map((post) => post.categorySlug));
+const filterLinks = [
+  { href: `/${lang}/blog`, label: allLabel, current: true },
+  ...categories
+    .filter((category) => usedCategorySlugs.has(category.slug))
+    .map((category) => ({
+      href: `/${lang}/blog/category/${category.slug}`,
+      label: category.name,
+      current: false,
+    })),
 ];
 
 function formatDate(date: Date, locale: Locale): string {
@@ -46,60 +65,98 @@ function formatDate(date: Date, locale: Locale): string {
   headerVariant="dark"
   showContainerLines={false}
 >
-  <article id="page-content" class="blog-listing-page">
-    <header class="blog-hero relative isolate mt-48 flex min-h-[360px] flex-col items-center justify-center py-0 text-bg-light sm:min-h-[640px] sm:py-40">
-      <ProjectsShapeBand class="top-0 h-full text-lines-dark" />
+  <article id="page-content" class="text-black">
+    <header
+      class="relative mt-10 pt-36 sm:pt-62.5 2xl:pt-45 pb-24 2xl:pb-32 left-1/2 w-screen -translate-x-1/2 overflow-hidden bg-black text-bg-light"
+      aria-labelledby="blog-intro"
+    >
+      <div class="mx-auto max-w-[1320px] px-(--gutter) lg:px-0">
+        <div class="relative z-0 min-h-[393px] 2xl:min-h-[580px] flex flex-col justify-center md:items-start">
+          <Breadcrumbs
+            items={breadcrumbItems}
+            class="absolute -top-10 sm:-top-12 2xl:top-6 center-x z-10"
+            variant="dark"
+            ariaLabel={breadcrumbAriaLabel}
+          />
 
-      <Breadcrumbs
-        items={breadcrumbItems}
-        class="absolute -top-10"
-        variant="dark"
-        ariaLabel={lang === 'fr' ? 'Fil d’Ariane' : 'Breadcrumb'}
-      />
+          <div
+            class="pointer-events-none absolute left-1/2 top-1/2 z-0 aspect-square w-full -translate-x-1/2 -translate-y-1/2 sm:h-[393px] 2xl:h-[580px] sm:aspect-auto 2xl:h-[580px]"
+            aria-hidden="true"
+          >
+            <ProjectsShapeBand class="top-0 h-full text-lines-dark" squareClass="sm:h-full! 2xl:h-full!" />
+          </div>
 
-      <div class="relative h-full z-10 flex w-full flex-col text-center px-6">
-        <svg class="h-8 absolute left-0 top-1" viewBox="0 0 6 30" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M4.39106 0H6C3.62011 4.16285 1.84358 8.70413 1.84358 15.0688C1.84358 21.2959 3.62011 25.8372 6 30H4.39106C2.07821 26.5252 0 21.2959 0 15.0688C0 8.63532 2.07821 3.47477 4.39106 0Z" fill="white"/>
-        </svg>
-        <h1 class="font-sans text-[1.5rem] sm:text-[2rem] md:text-[2.5rem] text-left sm:max-w-[500px] md:max-w-[600px]" set:html={formatHeadingHtml(t.blogPage.heading)} />
-        <svg class="h-8 absolute right-0 bottom-1" viewBox="0 0 6 30" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M1.60894 30L-2.86102e-06 30C2.37989 25.8372 4.15642 21.2959 4.15643 14.9312C4.15643 8.70413 2.37989 4.16284 -1.29062e-07 -5.03556e-07L1.60894 -3.68524e-07C3.92179 3.47477 6 8.70413 6 14.9312C6 21.3647 3.92179 26.5252 1.60894 30Z" fill="white"/>
-        </svg>
+          <div class="flex w-full flex-col sm:flex-row sm:justify-between">
+            <div class="relative z-10 flex max-w-[760px] flex-col gap-4 sm:pr-4 sm:gap-8 md:pr-16 lg:w-1/2">
+              <h1
+                id="blog-intro"
+                class="text-[1.5rem] leading-tight sm:text-[2rem] md:text-[2.5rem]"
+                set:html={formatHeadingHtml(t.blogPage.heading)}
+              />
+            </div>
+
+            <svg
+              class="relative z-10 mt-2 self-end text-current sm:self-start"
+              width="20"
+              height="20"
+              viewBox="0 0 20 20"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <rect
+                width="7"
+                height="20"
+                transform="matrix(0.707107 0.707107 0.707107 -0.707107 0 14.1406)"
+                fill="currentColor"
+              />
+            </svg>
+          </div>
+
+          <nav
+            class="relative z-10 mt-4 flex flex-col sm:mt-16 sm:w-full sm:flex-row sm:justify-between lg:mt-0 lg:w-1/2 lg:self-end lg:justify-around lg:gap-20"
+            aria-label={categoriesAriaLabel}
+          >
+            <p class="text-[1.375rem] sm:text-[1.5rem]">{filterListLabel}:</p>
+
+            <ul class="mt-8 flex list-[square] flex-col gap-2.5 pl-5 pr-10 sm:pr-24 text-[1.25rem] sm:mt-0">
+              {
+                filterLinks.map((filter) => (
+                  <li>
+                    <a
+                      href={filter.href}
+                      class="transition-opacity duration-200 hover:opacity-65"
+                      aria-current={filter.current ? 'page' : undefined}
+                    >
+                      {filter.label}
+                    </a>
+                  </li>
+                ))
+              }
+              <svg
+                class="absolute right-0 bottom-0 z-10 text-current"
+                width="8"
+                height="35"
+                viewBox="0 0 8 35"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M1.95527 35L-4.1008e-05 35C2.89218 30.1433 5.05117 24.8452 5.05117 17.4197C5.05117 10.1548 2.89219 4.85665 -3.78207e-05 -6.1196e-07L1.95527 -4.47859e-07C4.76602 4.0539 7.29163 10.1548 7.29163 17.4197C7.29163 24.9255 4.76602 30.9461 1.95527 35Z"
+                  fill="currentColor"
+                />
+              </svg>
+            </ul>
+          </nav>
+        </div>
       </div>
-      
-
     </header>
 
-    <nav class="blog-filter-wrap mt-40 flex items-start justify-between text-[1.125rem] leading-none sm:text-[1.25rem] md:mx-auto md:max-w-[1000px]" aria-label={lang === 'fr' ? 'Catégories principales' : 'Main categories'}>
-      <details class="blog-filter relative w-fit">
-        <summary
-          class="cursor-pointer list-none underline decoration-[1px] underline-offset-2 transition-opacity duration-200 hover:opacity-65"
-        >
-          {allLabel} (↓)
-        </summary>
-        <div
-          class="filter-panel absolute left-0 top-full z-20 mt-5 hidden w-max max-w-[calc(100vw-2rem)] flex-wrap gap-5 bg-bg-light px-6 py-4 text-[1rem] text-black shadow-none sm:max-w-none"
-        >
-          <a href={`/${lang}/blog`} class="whitespace-nowrap leading-none transition-opacity duration-200 hover:opacity-65" aria-current="page">
-            {allLabel}
-          </a>
-          {
-            categories.map((category) => (
-              <a href={`/${lang}/blog/category/${category.slug}`} class="whitespace-nowrap leading-none transition-opacity duration-200 hover:opacity-65">
-                {category.name}
-              </a>
-            ))
-          }
-        </div>
-      </details>
-    </nav>
-
-    <main class="blog-listing-content mx-auto w-full max-w-[1300px] bg-bg py-16 text-black sm:py-24">
-      <ol class="blog-post-list grid gap-12 sm:gap-16 lg:max-w-[1000px] lg:mx-auto">
+    <main class="mx-auto w-full max-w-[1300px] bg-bg py-16 text-black sm:py-24">
+      <ol class="grid gap-12 sm:gap-16 md:mx-auto md:max-w-[1000px]">
         {posts.map((post) => (
-          <li class="blog-post-item border-b border-lines">
-            <article class="blog-post-card grid gap-6 sm:grid-cols-[minmax(180px,200px)_1fr] md:grid-cols-[minmax(180px,276px)_1fr] sm:gap-10 sm:pb-16">
-              <a href={`/${lang}/blog/${post.slug}`} class="blog-post-image-link block" aria-label={post.title}>
+          <li class="border-b border-lines">
+            <article class="grid gap-6 sm:grid-cols-[minmax(180px,200px)_1fr] sm:gap-10 sm:pb-16 md:grid-cols-[minmax(180px,276px)_1fr]">
+              <a href={`/${lang}/blog/${post.slug}`} class="block" aria-label={post.title}>
                 <Image
                   src={post.listingImage}
                   alt={post.listingImageAlt}
@@ -112,31 +169,33 @@ function formatDate(date: Date, locale: Locale): string {
                 />
               </a>
 
-              <div class="blog-post-copy flex flex-col sm:justify-between">
+              <div class="flex flex-col sm:justify-between">
                 <div>
-                  <h2 class="blog-post-title font-sans text-[1.5rem] md:max-w-[500px] leading-tight">
+                  <h2 class="font-sans text-[1.5rem] leading-tight md:max-w-[500px]">
                     <a href={`/${lang}/blog/${post.slug}`}>
                       {post.title}
                     </a>
                   </h2>
-                  <div class="flex items-center gap-2 mt-5">
-                    <p class="blog-post-category text-[1.125rem] leading-none">
-                      {post.categoryName}
-                    </p>
+
+                  <div class="mt-5 flex items-center gap-2">
+                    <p class="text-[1.125rem] leading-none">{post.categoryName}</p>
                     <span>-</span>
-                    <p class="blog-post-reading-time text-[1.125rem] leading-none">
-                      {post.readingTime} {lang === 'fr' ? 'min de lecture' : 'min read'}
+                    <p class="text-[1.125rem] leading-none">
+                      {post.readingTime} {readingTimeLabel}
                     </p>
                   </div>
                 </div>
 
-                <div class="flex flex-col sm:items-center sm:flex-row-reverse sm:justify-between sm:mt-5">
-                  <p class="blog-post-meta text-[1.125rem] leading-none mt-5 sm:mt-0">
-                    {lang === 'fr' ? 'Par' : 'By'} {post.authorName} - {formatDate(new Date(post.publishedDate), lang)}
+                <div class="mt-5 flex flex-col sm:mt-5 sm:flex-row-reverse sm:items-center sm:justify-between">
+                  <p class="mt-5 text-[1.125rem] leading-none sm:mt-0">
+                    {byLabel} {post.authorName} - {formatDate(new Date(post.publishedDate), lang)}
                   </p>
 
-                  <a href={`/${lang}/blog/${post.slug}`} class="blog-post-link w-fit leading-none underline! decoration-[1px] underline-offset-2 mt-5 sm:mt-0">
-                    {lang === 'fr' ? 'Lire l’article' : 'Read article'} →
+                  <a
+                    href={`/${lang}/blog/${post.slug}`}
+                    class="mt-5 w-fit leading-none underline! decoration-[1px] underline-offset-2 sm:mt-0"
+                  >
+                    {readArticleLabel} →
                   </a>
                 </div>
               </div>
@@ -149,25 +208,3 @@ function formatDate(date: Date, locale: Locale): string {
 
   <Footer lang={lang} variant="light" hideOverflow={false} />
 </Layout>
-
-<style>
-  .blog-hero::before {
-    content: "";
-    position: absolute;
-    top: -12rem;
-    bottom: -6rem;
-    left: 50%;
-    z-index: -20;
-    width: 100vw;
-    transform: translateX(-50%);
-    background: var(--color-black);
-  }
-
-  .blog-filter summary::-webkit-details-marker {
-    display: none;
-  }
-
-  .blog-filter[open] .filter-panel {
-    display: flex;
-  }
-</style>
