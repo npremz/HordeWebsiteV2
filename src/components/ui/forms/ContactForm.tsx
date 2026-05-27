@@ -220,7 +220,7 @@ export default function ContactForm({
   const submitCta = getCtaButtonClasses(
     ctaVariant,
     false,
-    'mt-5 sm:mt-10 xl:mt-16 disabled:opacity-50 disabled:cursor-not-allowed self-center md:self-end',
+    'disabled:opacity-50 disabled:cursor-not-allowed self-center md:self-end',
   );
 
   return (
@@ -231,7 +231,7 @@ export default function ContactForm({
             ? 'border-err'
             : variant === 'dark' ? 'border-[#A29FA9]' : 'border-lines'
             }`}>
-            <legend className='text-[1.125rem] block md:w-36 md:pb-4 md:shrink-0 relative'>
+            <legend className='text-[16px] block md:w-36 md:pb-4 md:shrink-0 relative'>
               {t.needLabel}<span aria-hidden="true">*</span>
             </legend>
             <div className="w-full flex flex-wrap gap-5 lg:gap-[2.5rem] mt-5 pb-5 md:pb-10">
@@ -266,7 +266,7 @@ export default function ContactForm({
         ? 'border-err'
         : variant === 'dark' ? 'border-[#A29FA9] focus-within:border-lines' : 'border-lines focus-within:border-black'
         }`}>
-        <label htmlFor="objectif" className='text-[1.25rem] block md:w-36 md:shrink-0 relative'>
+        <label htmlFor="objectif" className='text-[16px] block md:w-36 md:shrink-0 relative'>
           {t.objectifLabel}<span aria-hidden="true">*</span>
           {errors.objectif && (
             <span id="objectif-error" role="alert" className="md:hidden text-err absolute right-0 top-0">{errors.objectif}</span>
@@ -299,7 +299,7 @@ export default function ContactForm({
         ? 'border-err'
         : variant === 'dark' ? 'border-[#A29FA9] focus-within:border-lines' : 'border-lines focus-within:border-black'
         }`}>
-        <label htmlFor="nom" className='text-[1.25rem] block md:w-36 md:shrink-0 relative'>
+        <label htmlFor="nom" className='text-[16px] block md:w-36 md:shrink-0 relative'>
           {t.nameLabel}<span aria-hidden="true">*</span>
           {errors.nom && (
             <span className="md:hidden text-err absolute right-0 top-0">{errors.nom}</span>
@@ -331,7 +331,7 @@ export default function ContactForm({
         ? 'border-err'
         : variant === 'dark' ? 'border-[#A29FA9] focus-within:border-lines' : 'border-lines focus-within:border-black'
         }`}>
-        <label htmlFor="email" className='text-[1.25rem] block md:w-36 md:shrink-0 relative'>
+        <label htmlFor="email" className='text-[16px] block md:w-36 md:shrink-0 relative'>
           {t.emailLabel}<span aria-hidden="true">*</span>
           {errors.email && (
             <span className="md:hidden text-err absolute right-0 top-0">{errors.email}</span>
@@ -360,7 +360,7 @@ export default function ContactForm({
       </div>
 
       <div className={`flex flex-col md:flex-row md:items-center md:gap-16 lg:gap-32 sm:gap-5 border-b transition-colors ${variant === 'dark' ? 'border-[#A29FA9] focus-within:border-lines' : 'border-lines focus-within:border-black'}`}>
-        <label htmlFor="societe" className='text-[1.25rem] block md:w-36 md:shrink-0'>{t.companyLabel}</label>
+        <label htmlFor="societe" className='text-[16px] block md:w-36 md:shrink-0'>{t.companyLabel}</label>
         <input
           type="text"
           id="societe"
@@ -373,10 +373,15 @@ export default function ContactForm({
         />
       </div>
 
-      <div className='flex flex-col md:flex-row md:gap-16 lg:gap-32 md:justify-end'>
+      <div className='mt-5 sm:mt-10 xl:mt-16 flex flex-col md:flex-row md:gap-16 lg:gap-32 md:justify-end'>
         <button type="submit" disabled={isSubmitting} className={submitCta.classes}>
-          <span className={submitCta.wipe} aria-hidden="true"></span>
-          <span className={submitCta.textHover}>{isSubmitting ? t.submitting : t.submit}</span>
+          <span className={submitCta.overlay} aria-hidden="true"></span>
+          <span className={submitCta.labelTrack}>
+            <span className={submitCta.labelBase}>{isSubmitting ? t.submitting : t.submit}</span>
+          </span>
+          <span className={submitCta.labelOverlay} aria-hidden="true">
+            <span className={submitCta.labelOverlayText}>{isSubmitting ? t.submitting : t.submit}</span>
+          </span>
         </button>
       </div>
 

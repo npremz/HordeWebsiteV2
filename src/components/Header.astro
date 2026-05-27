@@ -34,27 +34,26 @@ const {
 const emailUrl = ctaButton?.url || 'mailto:hello@hordeagence.com';
 const emailLabel = ctaButton?.label || 'hello@hordeagence.com';
 const textClasses = isDark ? 'text-bg-light' : 'text-black';
-const logoClasses = isDark ? 'invert' : '';
 const desktopLinkClasses = isDark
   ? 'text-bg-light/85 hover:text-bg-light'
   : 'text-black/70 hover:text-black';
 
 ---
 
-<header class:list={['site-header fixed md:absolute inset-x-0 top-0 z-[9999] pointer-events-none', textClasses]} data-theme={theme}>
+<header class:list={['site-header fixed inset-x-0 top-0 z-[9999] pointer-events-none', textClasses]} data-theme={theme}>
   <div class="relative z-[3] md:hidden">
-    <div class="site-header__mobile-fixed px-(--gutter) sm:px-8 py-(--gutter) sm:py-6" data-mobile-fixed>
-      <div class="relative z-[5] flex items-center justify-between gap-4" data-mobile-row>
+    <div class="site-header__mobile-fixed pl-[15px] pr-[24px]" data-mobile-fixed>
+      <div class="relative z-[5] flex h-full items-center justify-between gap-4" data-mobile-row>
         <a
           href={`/${lang}`}
-          class="pointer-events-auto inline-flex items-center"
+          class="pointer-events-auto inline-flex items-center text-white"
           title={logoAlt}
           aria-label={logoAlt}
         >
           <img
             src={logo}
             alt={logoAlt}
-            class:list={['site-header__mobile-logo block h-[13px] w-auto max-w-full', logoClasses]}
+            class="site-header__mobile-logo block h-[13px] w-auto max-w-full"
             width="112"
             height="13"
             decoding="async"
@@ -63,7 +62,7 @@ const desktopLinkClasses = isDark
 
         <button
           type="button"
-          class="site-header__menu-toggle pointer-events-auto cursor-pointer inline-flex gap-2.5 text-[1.125rem] items-center justify-center bg-transparent p-0 text-current"
+          class="site-header__menu-toggle pointer-events-auto cursor-pointer relative inline-flex gap-2.5 text-[16px] items-center justify-center bg-transparent p-0 text-current"
           data-header-toggle
           data-open-label={t.nav.openMenu}
           data-close-label={t.nav.closeMenu}
@@ -75,36 +74,31 @@ const desktopLinkClasses = isDark
           aria-label={t.nav.openMenu}
         >
           <span data-header-toggle-label>{t.nav.menu}</span>
-          <span class="relative flex h-4 w-8 flex-col justify-center" aria-hidden="true">
+          <span class="relative flex h-4 w-[29px] flex-col justify-center" aria-hidden="true">
             <span class="site-header__menu-toggle-line absolute left-0 block h-px w-full bg-current"></span>
             <span class="site-header__menu-toggle-line absolute left-0 block h-px w-full bg-current"></span>
           </span>
         </button>
       </div>
 
-      <div
-        class="relative z-[5] mt-(--gutter) h-px w-[calc(100vw-(var(--gutter)*2))] bg-lines"
-        data-header-divider
-        hidden
-      ></div>
     </div>
 
     <div
       id="site-header-mobile-panel"
       class:list={[
-        'site-header__mobile-panel pointer-events-auto fixed inset-0 z-[2] flex min-h-[100dvh] flex-col mx-(--gutter) pt-[calc(var(--gutter)+3rem)] pb-(--gutter) text-black',
+        'site-header__mobile-panel pointer-events-auto fixed inset-0 z-[2] flex min-h-[100dvh] flex-col bg-[var(--color-black)] px-[15px] pt-[120px] pb-(--gutter) text-white',
       ]}
       data-header-panel
       hidden
     >
-      <div class="flex flex-1 items-center">
+      <div class="flex flex-1 items-start">
         <nav aria-label="Navigation principale" class="w-full">
-          <ul class="m-0 flex list-none flex-col items-end gap-5 p-0">
+          <ul class="site-header__menu-hover-list m-0 flex list-none flex-col items-end gap-[15px] p-0">
             {items.map((item) => (
               <li>
                 <a
                   href={item.url}
-                  class="inline-flex text-right items-center text-[1.375rem] leading-none tracking-[-0.02em] transition-colors duration-200 hover:border-current/10 hover:bg-black/4 sm:text-[1.9rem]"
+                  class="site-header__menu-hover-item inline-flex text-right items-center text-[18px] leading-none tracking-[-0.02em] transition-opacity duration-200"
                   target={item.isExternal ? '_blank' : undefined}
                   rel={item.isExternal ? 'noopener noreferrer' : undefined}
                 >
@@ -112,44 +106,54 @@ const desktopLinkClasses = isDark
                 </a>
               </li>
             ))}
+            <li class="ml-auto mt-[20px] h-px w-[25px] bg-lines-dark" aria-hidden="true"></li>
+            <li>
+              <a
+                href={switchUrl}
+                hreflang={switchLang}
+                class="site-header__menu-hover-item inline-flex gap-2.5 text-right items-center text-[18px] leading-none tracking-[-0.02em] transition-opacity duration-200"
+              >
+                {t.nav.switchLang}
+                <span aria-hidden="true" class="text-[12px]">( ↗ )</span>
+              </a>
+            </li>
+            <li>
+              <a
+                href={emailUrl}
+                class="site-header__menu-hover-item inline-flex gap-2.5 text-right items-center text-[18px] leading-none tracking-[-0.02em] transition-opacity duration-200"
+              >
+                {emailLabel}
+                <span aria-hidden="true" class="text-[12px]">( ↗ )</span>
+              </a>
+            </li>
+            <li>
+              <a
+                href={startProjectUrl}
+                class="site-header__menu-hover-item inline-flex gap-2.5 text-right items-center text-[18px] leading-none tracking-[-0.02em] transition-opacity duration-200"
+              >
+                {t.nav.startProject}
+                <span aria-hidden="true" class="text-[12px]">( ↗ )</span>
+              </a>
+            </li>
           </ul>
         </nav>
-      </div>
-
-      <div class="flex items-end justify-between">
-        <div class="flex flex-col items-start">
-          <a
-            href={startProjectUrl}
-            class="site-header__mobile-footer-link site-header__mobile-footer-link--arrow inline-flex min-h-11 items-center text-[18px] leading-none transition-opacity duration-200 hover:opacity-90"
-          >
-            {t.nav.startProject}
-          </a>
-          <a
-            href={emailUrl}
-            class="site-header__mobile-footer-link site-header__mobile-footer-link--arrow inline-flex min-h-11 items-center text-[18px] leading-none transition-opacity duration-200 hover:opacity-90"
-          >
-            {emailLabel}
-          </a>
-        </div>
-        <a
-          href={switchUrl}
-          hreflang={switchLang}
-          class="site-header__mobile-footer-link inline-flex min-h-11 items-center text-[18px] leading-none transition-opacity duration-200 hover:opacity-90"
-        >
-          {t.nav.switchLang}
-        </a>
       </div>
     </div>
 
     <div class="site-header__mobile-reveal" data-header-reveal aria-hidden="true" hidden></div>
   </div>
 
-  <div class="hidden md:block">
-    <div class="site-header__desktop-fixed fixed inset-x-0 top-0 z-[6]" data-desktop-fixed>
-      <div data-desktop-row>
-        <div class="flex items-center justify-between px-8 py-5">
-          <a href={`/${lang}`} class="inline-flex items-center" title={logoAlt} aria-label={logoAlt}>
-            <span class="logo-animated" data-logo-animated>
+  <div class="hidden md:block lg:hidden">
+    <div class="site-header__tablet-fixed pl-[15px] pr-[40px]">
+      <div class="relative flex h-full items-center justify-between gap-6">
+        <div class="site-header__desktop-logo-group flex items-center gap-[40px] text-white">
+          <a
+            href={`/${lang}`}
+            class="inline-flex items-center text-white"
+            title={logoAlt}
+            aria-label={logoAlt}
+          >
+            <span class="logo-animated logo-animated--mark-static h-[13px]">
               <svg class="logo-full" width="285" height="13" viewBox="0 0 329 15" preserveAspectRatio="xMinYMin meet" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                 <g class="logo-full__letter" style="--i:0">
                   <path d="M2.91466 14.9988H0V8.99963H2.91466V14.9988Z" fill="currentColor"/>
@@ -221,72 +225,152 @@ const desktopLinkClasses = isDark
               </svg>
             </span>
           </a>
+        </div>
 
-          <button
-            type="button"
-            class="site-header__desktop-toggle inline-flex cursor-pointer gap-2.5 items-center justify-center bg-transparent p-0 text-current text-[18px] leading-none"
-            data-desktop-toggle
-            data-menu-open="false"
-            aria-expanded="false"
-            aria-controls="site-header-desktop-curtain"
-            aria-label={t.nav.openMenu}
+        <nav
+          aria-label="Navigation tablette"
+          class="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
+        >
+          <ul class="site-header__menu-hover-list pointer-events-auto m-0 flex list-none items-center justify-center gap-[40px] p-0 text-[16px] leading-none text-white">
+            {items.map((item) => (
+              <li>
+                <a
+                  href={item.url}
+                  class="site-header__menu-hover-item inline-flex items-center whitespace-nowrap transition-opacity duration-200"
+                  target={item.isExternal ? '_blank' : undefined}
+                  rel={item.isExternal ? 'noopener noreferrer' : undefined}
+                >
+                  {item.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </nav>
+
+        <div class="site-header__menu-hover-list flex items-center gap-[40px] text-white">
+          <span class="h-[25px] w-px bg-lines-dark" aria-hidden="true"></span>
+          <a
+            href={switchUrl}
+            hreflang={switchLang}
+            class="site-header__menu-hover-item inline-flex items-center gap-2 whitespace-nowrap text-[16px] leading-none text-white transition-opacity duration-200"
           >
-            <span data-desktop-toggle-label>{t.nav.menu}</span>
-            <span class="relative flex h-4 w-8 flex-col justify-center" aria-hidden="true">
-              <span class="site-header__desktop-toggle-line absolute left-0 block h-px w-full bg-current"></span>
-              <span class="site-header__desktop-toggle-line absolute left-0 block h-px w-full bg-current"></span>
-            </span>
-          </button>
+            {t.nav.switchLang}
+            <span aria-hidden="true" class="text-[12px]">( ↗ )</span>
+          </a>
         </div>
       </div>
+    </div>
+  </div>
 
-      <div
-        id="site-header-desktop-curtain"
-        class="site-header__desktop-curtain bg-[#FFFFFF] text-black"
-        data-desktop-curtain
-        hidden
-      >
-        <div class="flex flex-col px-6 py-5 gap-[20px]">
-          <nav aria-label="Navigation desktop curtain">
-            <ul class="m-0 flex list-none items-center justify-between gap-1 p-0 text-[18px] leading-none -mx-1">
-              {items.map((item) => (
-                <li>
-                  <a
-                    href={item.url}
-                    class="nav-link-hover relative inline-flex items-center whitespace-nowrap px-1 py-1"
-                    target={item.isExternal ? '_blank' : undefined}
-                    rel={item.isExternal ? 'noopener noreferrer' : undefined}
-                  >
-                    {item.label}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </nav>
+  <div class="hidden lg:block">
+    <div class="site-header__desktop-fixed fixed left-[5px] right-[5px] top-[5px] z-[6]" data-desktop-fixed>
+      <div class="site-header__desktop-bar relative flex h-full items-center justify-between gap-6 pl-[15px] pr-[40px]" data-desktop-row>
+        <div class="site-header__desktop-logo-group flex items-center gap-[40px] text-white">
+          <a href={`/${lang}`} class="inline-flex items-center text-white" title={logoAlt} aria-label={logoAlt}>
+            <span class="logo-animated h-[13px]" data-logo-animated>
+              <svg class="logo-full" width="285" height="13" viewBox="0 0 329 15" preserveAspectRatio="xMinYMin meet" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <g class="logo-full__letter" style="--i:0">
+                  <path d="M2.91466 14.9988H0V8.99963H2.91466V14.9988Z" fill="currentColor"/>
+                  <path d="M26.2299 14.9988H23.3153V8.99963H26.2299V14.9988Z" fill="currentColor"/>
+                  <path d="M23.3153 8.99963H2.91466V6.0004H23.3153V8.99963Z" fill="currentColor"/>
+                  <path d="M2.91466 6.0004H0V0.000537426H2.91466V6.0004Z" fill="currentColor"/>
+                  <path d="M26.2299 5.9997L23.3153 6.0004V0.000537426H26.2299V5.9997Z" fill="currentColor"/>
+                </g>
+                <g class="logo-full__letter" style="--i:1">
+                  <path d="M52.9454 14.9995H32.5448V11.9996H52.9454V14.9995Z" fill="currentColor"/>
+                  <path d="M32.5448 11.9996L29.6302 11.9989V2.99977H32.5448V11.9996Z" fill="currentColor"/>
+                  <path d="M55.8601 11.9989L52.9454 11.9996V2.99977H55.8601V11.9989Z" fill="currentColor"/>
+                  <path d="M52.9454 2.99977H32.5448V0.000537426H52.9454V2.99977Z" fill="currentColor"/>
+                </g>
+                <g class="logo-full__letter" style="--i:2">
+                  <path d="M62.175 6.0004H82.5762V8.99963H85.4902V14.9988H82.5756L82.5762 8.99963H62.175V14.9988H59.2603V2.99977H62.175V6.0004Z" fill="currentColor"/>
+                  <path d="M85.4902 5.9997L82.5762 6.0004L82.5756 3.00047L62.175 2.99977V0.000537426H85.4902V5.9997Z" fill="currentColor"/>
+                </g>
+                <g class="logo-full__letter" style="--i:3">
+                  <path d="M112.206 0.000537426V3.00047H91.8051V11.9996H112.206V3.00047L115.12 2.99977V14.9995H88.8905V0.000537426H112.206Z" fill="currentColor"/>
+                </g>
+                <g class="logo-full__letter" style="--i:4">
+                  <path d="M121.435 6.0004H144.751V8.99963H121.435V11.9996H144.751V14.9995L118.521 14.9988V2.99977H121.435V6.0004Z" fill="currentColor"/>
+                  <path d="M144.751 3.00047L121.435 2.99977V0.000537426H144.751V3.00047Z" fill="currentColor"/>
+                </g>
+                <g class="logo-full__letter" style="--i:5">
+                  <path d="M157.38 14.9986H154.465V9.19893H157.38V14.9986Z" fill="currentColor"/>
+                  <path d="M180.695 14.9986H177.781V9.19893H180.695V14.9986Z" fill="currentColor"/>
+                  <path d="M177.781 9.19893H157.38V6.1997H177.781V9.19893Z" fill="currentColor"/>
+                  <path d="M180.695 6.1997H177.781V3.19977H157.38V6.1997H154.465V0.200534H180.695V6.1997Z" fill="currentColor"/>
+                </g>
+                <g class="logo-full__letter" style="--i:6">
+                  <path d="M187.01 12.0001H207.411V15H184.096V3.20116H187.01V12.0001Z" fill="currentColor"/>
+                  <path d="M210.326 11.9994L207.411 12.0001V9.00014H189.924V6.00091H210.326V11.9994Z" fill="currentColor"/>
+                  <path d="M210.326 3.20046L187.01 3.20116V0.201232H210.326V3.20046Z" fill="currentColor"/>
+                </g>
+                <g class="logo-full__letter" style="--i:7">
+                  <path d="M216.64 5.99986H239.956V8.99909H216.64V11.999H239.956V14.9989L213.726 14.9983V2.99923H216.64V5.99986Z" fill="currentColor"/>
+                  <path d="M239.956 2.99993L216.64 2.99923V0H239.956V2.99993Z" fill="currentColor"/>
+                </g>
+                <g class="logo-full__letter" style="--i:8">
+                  <path d="M266.672 0V2.99993H246.271V14.9989H243.356V0H266.672Z" fill="currentColor"/>
+                  <path d="M269.586 14.9983H266.672V2.99993L269.586 2.99923V14.9983Z" fill="currentColor"/>
+                </g>
+                <g class="logo-full__letter" style="--i:9">
+                  <path d="M275.901 11.999H299.216V14.9989L272.986 14.9983V2.99923H275.901V11.999Z" fill="currentColor"/>
+                  <path d="M299.216 2.99993L275.901 2.99923V0H299.216V2.99993Z" fill="currentColor"/>
+                </g>
+                <g class="logo-full__letter" style="--i:10">
+                  <path d="M305.531 5.99986H328.846V8.99909H305.531V11.999H328.846V14.9989L302.616 14.9983V2.99923H305.531V5.99986Z" fill="currentColor"/>
+                  <path d="M328.846 2.99993L305.531 2.99923V0H328.846V2.99993Z" fill="currentColor"/>
+                </g>
+              </svg>
+              <svg class="logo-mark" width="53" height="13" viewBox="0 0 63 16" preserveAspectRatio="xMinYMin meet" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <g class="logo-mark__part" style="--i:0">
+                  <rect x="0" y="0" width="3.14058" height="6.28149" fill="currentColor"/>
+                  <rect x="0.00976562" y="9.4223" width="3.19997" height="6.17166" fill="currentColor"/>
+                  <rect x="3.1416" y="6.28129" width="21.9841" height="3.14074" fill="currentColor"/>
+                  <rect x="25.1289" y="0" width="3.14058" height="6.28149" fill="currentColor"/>
+                  <rect x="25.1523" y="9.4223" width="3.08568" height="6.17166" fill="currentColor"/>
+                </g>
+                <g class="logo-mark__part" style="--i:1">
+                  <rect x="27.7676" y="0" width="22.9791" height="3.14074" fill="currentColor"/>
+                  <rect x="28.2656" y="6.28129" width="21.9841" height="3.14074" fill="currentColor"/>
+                  <rect x="50.25" y="0" width="3.14058" height="6.28149" fill="currentColor"/>
+                  <rect x="50.2959" y="9.4223" width="3.08568" height="6.17166" fill="currentColor"/>
+                  <path d="M58.2872 14.061V10.5816H59.3254C59.6498 10.5816 59.9093 10.6167 60.104 10.687C60.304 10.7573 60.4473 10.8681 60.5338 11.0195C60.6258 11.1655 60.6717 11.3548 60.6717 11.5873C60.6717 11.7982 60.6122 11.9793 60.4933 12.1307C60.3743 12.2821 60.1959 12.4037 59.958 12.4957L60.9313 14.061H60.2824L59.447 12.6417H58.8468V14.061H58.2872ZM58.8468 12.2118H59.3254C59.5795 12.2118 59.7687 12.1604 59.8931 12.0577C60.0229 11.955 60.0878 11.8036 60.0878 11.6035C60.0878 11.3764 60.0175 11.225 59.8769 11.1493C59.7417 11.0682 59.547 11.0276 59.2929 11.0276H58.8468V12.2118ZM59.3416 15.6831C58.882 15.6831 58.4494 15.5966 58.0439 15.4236C57.6383 15.2506 57.2815 15.0127 56.9733 14.7099C56.6705 14.4017 56.4326 14.0448 56.2595 13.6393C56.0865 13.2337 56 12.8012 56 12.3416C56 11.8766 56.0865 11.444 56.2595 11.0439C56.4326 10.6383 56.6705 10.2842 56.9733 9.98138C57.2815 9.67318 57.6383 9.43257 58.0439 9.25954C58.4494 9.08651 58.882 9 59.3416 9C59.8066 9 60.2392 9.08651 60.6393 9.25954C61.0448 9.43257 61.399 9.67318 61.7018 9.98138C62.01 10.2842 62.2506 10.6383 62.4236 11.0439C62.5966 11.444 62.6832 11.8766 62.6832 12.3416C62.6832 12.8012 62.5966 13.2337 62.4236 13.6393C62.2506 14.0448 62.01 14.4017 61.7018 14.7099C61.399 15.0127 61.0448 15.2506 60.6393 15.4236C60.2392 15.5966 59.8066 15.6831 59.3416 15.6831ZM59.3416 15.2289C59.7417 15.2289 60.1148 15.1559 60.4608 15.0099C60.8123 14.8586 61.1205 14.6504 61.3855 14.3854C61.6504 14.1205 61.8559 13.815 62.0019 13.4689C62.1533 13.1175 62.229 12.7417 62.229 12.3416C62.229 11.9414 62.1533 11.5684 62.0019 11.2223C61.8559 10.8708 61.6504 10.5626 61.3855 10.2977C61.1205 10.0327 60.8123 9.82728 60.4608 9.68129C60.1148 9.52989 59.7417 9.45419 59.3416 9.45419C58.9415 9.45419 58.5657 9.52989 58.2142 9.68129C57.8681 9.82728 57.5626 10.0327 57.2977 10.2977C57.0328 10.5626 56.8246 10.8708 56.6732 11.2223C56.5272 11.5684 56.4542 11.9414 56.4542 12.3416C56.4542 12.7417 56.5272 13.1175 56.6732 13.4689C56.8246 13.815 57.0328 14.1205 57.2977 14.3854C57.5626 14.6504 57.8681 14.8586 58.2142 15.0099C58.5657 15.1559 58.9415 15.2289 59.3416 15.2289Z" fill="currentColor"/>
+                </g>
+              </svg>
+            </span>
+          </a>
+        </div>
 
-          <div class="h-px w-full bg-black"></div>
+        <nav
+          aria-label="Navigation desktop"
+          class="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
+        >
+          <ul class="site-header__menu-hover-list pointer-events-auto m-0 flex list-none items-center justify-center gap-[40px] p-0 text-[16px] leading-none text-white">
+            {items.map((item) => (
+              <li>
+                <a
+                  href={item.url}
+                  class="site-header__menu-hover-item inline-flex items-center whitespace-nowrap transition-opacity duration-200"
+                  target={item.isExternal ? '_blank' : undefined}
+                  rel={item.isExternal ? 'noopener noreferrer' : undefined}
+                >
+                  {item.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </nav>
 
-          <div class="flex flex-col items-end gap-[20px] text-[18px] leading-none">
-            <a
-              href={switchUrl}
-              hreflang={switchLang}
-              class="nav-link-hover site-header__mobile-footer-link site-header__mobile-footer-link--arrow relative inline-flex items-center pr-2 py-1"
-            >
-              {t.nav.switchLang}
-            </a>
-            <a
-              href={startProjectUrl}
-              class="nav-link-hover site-header__mobile-footer-link site-header__mobile-footer-link--arrow relative inline-flex items-center pr-2 py-1"
-            >
-              {t.nav.startProject}
-            </a>
-            <a
-              href={emailUrl}
-              class="nav-link-hover site-header__mobile-footer-link site-header__mobile-footer-link--arrow relative inline-flex items-center pr-2 py-1"
-            >
-              {emailLabel}
-            </a>
-          </div>
+        <div class="site-header__menu-hover-list flex items-center gap-[40px] text-white">
+          <span class="h-[25px] w-px bg-lines-dark" aria-hidden="true"></span>
+          <a
+            href={switchUrl}
+            hreflang={switchLang}
+            class="site-header__menu-hover-item inline-flex items-center gap-2 whitespace-nowrap text-[16px] leading-none text-white transition-opacity duration-200"
+          >
+            {t.nav.switchLang}
+            <span aria-hidden="true" class="text-[12px]">( ↗ )</span>
+          </a>
         </div>
       </div>
     </div>
@@ -295,6 +379,23 @@ const desktopLinkClasses = isDark
 
 <style is:global>
   .site-header__desktop-fixed {
+    pointer-events: auto;
+  }
+
+  .site-header__desktop-bar {
+    height: 42px;
+    width: 100%;
+    background: var(--color-black);
+    color: #fff;
+  }
+
+  .site-header__tablet-fixed {
+    position: relative;
+    z-index: 5;
+    height: 42px;
+    width: 100vw;
+    background: var(--color-black);
+    color: #fff;
     pointer-events: auto;
   }
 
@@ -339,6 +440,10 @@ const desktopLinkClasses = isDark
   .site-header__mobile-fixed {
     position: relative;
     z-index: 5;
+    height: 42px;
+    width: 100vw;
+    background: var(--color-black);
+    color: #fff;
     opacity: 1;
     transform: translateY(0);
     transition: opacity 220ms ease, transform 220ms ease, background-color 220ms ease, color 220ms ease;
@@ -346,8 +451,8 @@ const desktopLinkClasses = isDark
   }
 
   .site-header__mobile-fixed.is-solid {
-    background: #fff;
-    color: #000;
+    background: var(--color-black);
+    color: #fff;
   }
 
   .site-header__mobile-fixed.is-hidden {
@@ -355,18 +460,20 @@ const desktopLinkClasses = isDark
     transform: translateY(calc(-100% - var(--gutter)));
   }
 
-  .site-header__mobile-fixed [data-mobile-row],
-  .site-header__mobile-fixed [data-header-divider] {
+  .site-header__mobile-fixed [data-mobile-row] {
     pointer-events: none;
   }
 
-  .site-header__mobile-fixed:not(.is-hidden) [data-mobile-row],
-  .site-header__mobile-fixed:not(.is-hidden) [data-header-divider] {
+  .site-header__mobile-fixed:not(.is-hidden) [data-mobile-row] {
     pointer-events: auto;
   }
 
+  .site-header__mobile-logo {
+    filter: brightness(0) invert(1);
+  }
+
   .site-header__mobile-fixed.is-solid .site-header__mobile-logo {
-    filter: none;
+    filter: brightness(0) invert(1);
   }
 
   .site-header__mobile-reveal {
@@ -374,7 +481,7 @@ const desktopLinkClasses = isDark
     inset-inline: 0;
     top: 0;
     height: 100vh;
-    background: #fff;
+    background: var(--color-black);
     transform: translateY(-100%);
     transition: transform 360ms cubic-bezier(0.2, 0.8, 0.2, 1);
     z-index: 1;
@@ -400,6 +507,17 @@ const desktopLinkClasses = isDark
     top: 50%;
     transform-origin: center;
     transition: transform 180ms ease-out;
+  }
+
+  .site-header__menu-toggle::before {
+    content: "";
+    position: absolute;
+    left: -20px;
+    top: 50%;
+    width: 1px;
+    height: 25px;
+    background: var(--color-lines-dark);
+    transform: translateY(-50%);
   }
 
   .site-header__menu-toggle-line:first-child {
@@ -441,14 +559,14 @@ const desktopLinkClasses = isDark
 
   .nav-link-hover {
     isolation: isolate;
-    transition: color 0.3s ease-out;
+    transition: color 0.3s ease-out, opacity 0.2s ease-out;
   }
 
   .nav-link-hover::after {
     content: "";
     position: absolute;
     inset: 0;
-    background-color: #000;
+    background-color: var(--color-black);
     z-index: -1;
     transform: scaleY(0);
     transform-origin: top center;
@@ -456,6 +574,19 @@ const desktopLinkClasses = isDark
   }
 
   @media (hover: hover) {
+    .site-header__menu-hover-list:has(.site-header__menu-hover-item:hover) .site-header__menu-hover-item {
+      opacity: 0.5;
+    }
+
+    .site-header__menu-hover-list:has(.site-header__menu-hover-item:hover) .site-header__menu-hover-item:hover {
+      opacity: 1;
+      color: #fff;
+    }
+
+    .site-header__menu-hover-item::after {
+      display: none;
+    }
+
     .nav-link-hover:hover {
       color: #fff;
     }
@@ -465,6 +596,7 @@ const desktopLinkClasses = isDark
   }
 
   .logo-animated {
+    color: #FFFFFF;
     display: inline-block;
     position: relative;
     height: 13px;
@@ -473,15 +605,34 @@ const desktopLinkClasses = isDark
 
   .logo-full {
     display: block;
+    color: #FFFFFF;
     overflow: hidden;
   }
 
   .logo-mark {
     display: block;
+    color: #FFFFFF;
     position: absolute;
     left: 0;
     top: 0;
     overflow: hidden;
+  }
+
+  .logo-animated--mark-static {
+    width: 53px;
+  }
+
+  .logo-animated--mark-static .logo-full {
+    display: none;
+  }
+
+  .logo-animated--mark-static .logo-mark {
+    position: static;
+  }
+
+  .logo-animated--mark-static .logo-mark__part {
+    transform: translateY(0);
+    transition: none;
   }
 
   .logo-full__letter {
@@ -506,6 +657,7 @@ const desktopLinkClasses = isDark
     transition: transform 320ms cubic-bezier(0.4, 0, 0.2, 1);
     transition-delay: calc(var(--i, 0) * 60ms + 220ms);
   }
+
 </style>
 
 <script>
@@ -517,7 +669,6 @@ const desktopLinkClasses = isDark
       const panel = header.querySelector('[data-header-panel]');
       const reveal = header.querySelector('[data-header-reveal]');
       const label = header.querySelector('[data-header-toggle-label]');
-      const divider = header.querySelector('[data-header-divider]');
       const mobileFixed = header.querySelector('[data-mobile-fixed]');
       const desktopFixed = header.querySelector('[data-desktop-fixed]');
       const desktopRow = header.querySelector('[data-desktop-row]');
@@ -529,7 +680,6 @@ const desktopLinkClasses = isDark
         !(panel instanceof HTMLElement) ||
         !(reveal instanceof HTMLElement) ||
         !(label instanceof HTMLElement) ||
-        !(divider instanceof HTMLElement) ||
         !(mobileFixed instanceof HTMLElement)
       ) {
         return;
@@ -546,6 +696,7 @@ const desktopLinkClasses = isDark
       const MOBILE_HIDE_OFFSET = 110;
       const MOBILE_SOLID_OFFSET = 6;
       const MOBILE_BREAKPOINT = 1024;
+      const LOGO_SCROLL_BREAKPOINT = 1512;
 
       const isMobileViewport = () => window.innerWidth < MOBILE_BREAKPOINT;
 
@@ -605,7 +756,6 @@ const desktopLinkClasses = isDark
         label.textContent = toggle.dataset.menuText || 'Menu';
         panel.classList.remove('is-open');
         reveal.classList.remove('is-open');
-        divider.hidden = true;
         window.clearTimeout(closeTimeout);
 
         if (immediate) {
@@ -632,7 +782,6 @@ const desktopLinkClasses = isDark
         window.clearTimeout(closeTimeout);
         panel.hidden = false;
         reveal.hidden = false;
-        divider.hidden = false;
         isMobileHiddenByScroll = false;
         applyMobileHeaderState();
 
@@ -663,13 +812,22 @@ const desktopLinkClasses = isDark
       window.addEventListener('resize', handleMobileResize, { passive: true });
       toggle.dataset.headerBound = 'true';
 
-      const logoAnimated = header.querySelector('[data-logo-animated]');
-      if (logoAnimated instanceof HTMLElement) {
+      const logoAnimatedElements = Array.from(header.querySelectorAll('[data-logo-animated]')).filter(
+        (element): element is HTMLElement => element instanceof HTMLElement,
+      );
+      if (logoAnimatedElements.length > 0) {
         const LOGO_SCROLL_THRESHOLD = 60;
 
         const applyLogoState = () => {
-          if (window.innerWidth < MOBILE_BREAKPOINT) return;
-          logoAnimated.classList.toggle('is-scrolled', window.scrollY > LOGO_SCROLL_THRESHOLD);
+          if (window.innerWidth < LOGO_SCROLL_BREAKPOINT) {
+            logoAnimatedElements.forEach((element) => element.classList.remove('is-scrolled'));
+            return;
+          }
+
+          const isScrolled = window.scrollY > LOGO_SCROLL_THRESHOLD;
+          logoAnimatedElements.forEach((element) => {
+            element.classList.toggle('is-scrolled', isScrolled);
+          });
         };
 
         window.addEventListener('scroll', applyLogoState, { passive: true });

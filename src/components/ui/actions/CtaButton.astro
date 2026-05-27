@@ -19,17 +19,34 @@ const {
   ...rest
 } = Astro.props;
 
-const { classes, wipe, textHover } = getCtaButtonClasses(variant, fullWidth, className);
+const {
+  classes,
+  overlay,
+  labelTrack,
+  labelBase,
+  labelOverlay,
+  labelOverlayText,
+} = getCtaButtonClasses(variant, fullWidth, className);
 ---
 
 {href ? (
   <a href={href} title={label} class={classes} {...rest}>
-    <span class={wipe} aria-hidden="true"></span>
-    <span class={textHover}>{label}</span>
+    <span class={overlay} aria-hidden="true"></span>
+    <span class={labelTrack}>
+      <span class={labelBase}>{label}</span>
+    </span>
+    <span class={labelOverlay} aria-hidden="true">
+      <span class={labelOverlayText}>{label}</span>
+    </span>
   </a>
 ) : (
   <button type="button" class={classes} {...rest}>
-    <span class={wipe} aria-hidden="true"></span>
-    <span class={textHover}>{label}</span>
+    <span class={overlay} aria-hidden="true"></span>
+    <span class={labelTrack}>
+      <span class={labelBase}>{label}</span>
+    </span>
+    <span class={labelOverlay} aria-hidden="true">
+      <span class={labelOverlayText}>{label}</span>
+    </span>
   </button>
 )}

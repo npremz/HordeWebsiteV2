@@ -81,6 +81,7 @@
 
   --color-bg: #C5C1CD;
   --color-bg-light: #E3DEE3;
+  --color-button-white: #FFFFFF;
   --color-black: #16191B;
   --color-lines: #9E9AA4;
   --color-lines-dark: #4C4B4B;
@@ -353,17 +354,17 @@ svg polygon {
 /* Contact form responsive overrides (TSX not scanned by Tailwind 4) */
 .form-control {
   display: block;
-  line-height: 1;
+  line-height: 1.1;
   min-height: calc(1em + 2.5rem);
 }
 
 @media (min-width: 1024px) {
   .form-input-py {
-    padding-top: 30px !important;
-    padding-bottom: 30px !important;
+    padding-top: 20px !important;
+    padding-bottom: 20px !important;
   }
   .form-control {
-    min-height: calc(1em + 60px);
+    min-height: calc(1em + 40px);
   }
   .form-gap {
     gap: 60px !important;
