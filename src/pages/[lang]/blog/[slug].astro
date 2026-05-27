@@ -108,6 +108,7 @@ function parseMarkdown(content: string): string {
 
 	// Séparer en blocs par lignes vides
 	const blocks = html.split(/\n\n+/);
+	let isSourcesSection = false;
 
 	const processedBlocks = blocks.map(block => {
 		block = block.trim();
@@ -122,26 +123,37 @@ function parseMarkdown(content: string): string {
 		if (block.startsWith('## ')) {
 			const title = block.slice(3);
 			const id = slugify(title);
-			return `<h2 class="text-[2rem] leading-tight max-w-[400px] mt-16 sm:mt-32 mb-10 sm:mb-16 scroll-mt-24" id="${id}">${applyInlineFormatting(title)}</h2>`;
+			isSourcesSection = ['sources', 'references'].includes(id);
+			if (isSourcesSection) {
+				return `<h2 class="text-[1.375rem] mt-24 mb-10 scroll-mt-24" id="${id}">${applyInlineFormatting(title)}</h2>`;
+			}
+			return `<h2 class="text-[1.5rem] leading-tight max-w-[400px] mt-24 sm:mt-32 mb-10 sm:mb-16 scroll-mt-24" id="${id}">${applyInlineFormatting(title)}</h2>`;
 		}
 
 		// Titres H3
 		if (block.startsWith('### ')) {
 			const title = block.slice(4);
-			return `<h3 class="text-[1.5rem] mt-12 mb-10">${applyInlineFormatting(title)}</h3>`;
+			isSourcesSection = false;
+			return `<h3 class="text-[1.5rem] mt-16 mb-10">${applyInlineFormatting(title)}</h3>`;
 		}
 
 		// Listes à puces (bloc qui commence par - ou *)
 		if (block.match(/^[-*] /m)) {
 			const items = block.split('\n')
 				.filter(line => line.match(/^[-*] /))
-				.map(line => `<li class="ml-4">${applyInlineFormatting(line.slice(2))}</li>`)
+				.map(line => isSourcesSection
+					? `<li class="flex gap-4 py-6 first:pt-0 last:pb-0 leading-relaxed"><span class="section-label mt-1">/</span><span>${applyInlineFormatting(line.slice(2))}</span></li>`
+					: `<li class="ml-4">${applyInlineFormatting(line.slice(2))}</li>`)
 				.join('\n');
+			if (isSourcesSection) {
+				return `<ul class="flex flex-col divide-y divide-lines text-[1.125rem]">${items}</ul>`;
+			}
 			return `<ul class="list-disc list-outside flex flex-col gap-10 py-10 sm:py-16 border-t border-b border-lines mb-6 pl-4">${items}</ul>`;
 		}
 
 		// Paragraphe normal
-		return `<p class="mb-10 sm:mb-16 leading-relaxed">${applyInlineFormatting(block)}</p>`;
+		isSourcesSection = false;
+		return `<p class="mb-10 sm:mb-16 text-[1.125rem] leading-relaxed">${applyInlineFormatting(block)}</p>`;
 	});
 
 	return processedBlocks.filter(b => b).join('\n\n');
@@ -161,7 +173,7 @@ function applyInlineFormatting(text: string): string {
 	result = result.replace(/\*([^*]+)\*/g, '<em>$1</em>');
 
 	// Liens
-	result = result.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" title="$1" class="underline! underline-offset-4 hover:opacity-70 transition-opacity">$1</a>');
+	result = result.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" title="$1" class="no-underline border-b border-lines hover:border-black/60 hover:opacity-70 transition-colors">$1</a>');
 
 	return result;
 }
@@ -185,6 +197,7 @@ const siteUrl = (Astro.site?.toString() || 'https://hordeagence.com').replace(/\
 const articleUrl = `${siteUrl}/${lang}/blog/${currentSlug}`;
 const authorUrl = authorPagePath ? `${siteUrl}${authorPagePath}` : undefined;
 const shareUrl = articleUrl;
+const tagShareLinkClasses = 'inline-flex text-[1.125rem] leading-[1.375rem] font-[375] underline decoration-lines decoration-1 underline-offset-3 text-black hover:opacity-70 transition-opacity cursor-pointer';
 const authorSameAs = [
 	authorSocial?.twitter ? `https://twitter.com/${authorSocial.twitter}` : null,
 	authorSocial?.linkedin || null,
@@ -285,6 +298,7 @@ const schemaOrg = {
 
 	<div class="fixed inset-0 bg-bg -z-10" aria-hidden="true"></div>
 	<article id="page-content" class="relative z-10 bg-bg">
+		<div class="full-width-white-bg">
 		<!-- Header Article -->
 		<header class="pt-50 sm:pt-78 pb-10 sm:pb-16 border-b border-lines">
 			<!-- Breadcrumbs -->
@@ -369,17 +383,12 @@ const schemaOrg = {
 		<div>
 			<!-- Contenu principal -->
 			<div class="lg:flex-1 max-w-3xl mx-auto">
-				<!-- Extrait / Chapô -->
-				<p class="text-[1.625rem] sm:text-[2rem] md:text-[2.5rem] pb-10 sm:pb-24 border-b border-lines">
-					{excerpt}
-				</p>
-
 				{keyTakeaways.length > 0 && (
-					<section class="mt-10 sm:mt-16 pb-10 sm:pb-16 border-b border-lines" aria-label={lang === 'fr' ? 'En bref' : 'Key takeaways'}>
-						<h2 class="section-label mb-6">{lang === 'fr' ? 'En bref' : 'Key takeaways'}</h2>
-						<ul class="flex flex-col gap-4 text-[1.125rem] sm:text-[1.125rem]">
+					<section class="mt-10 sm:mt-16" aria-label={lang === 'fr' ? 'En bref' : 'Key takeaways'}>
+						<h2 class="text-[1.375rem] mb-10">{lang === 'fr' ? 'En bref' : 'Key takeaways'}</h2>
+						<ul class="flex flex-col divide-y divide-lines text-[1.125rem]">
 							{keyTakeaways.map((item: string) => (
-								<li class="flex gap-3 leading-relaxed">
+								<li class="flex gap-4 py-6 first:pt-0 last:pb-0 leading-relaxed">
 									<span class="section-label mt-1">/</span>
 									<span>{item}</span>
 								</li>
@@ -390,24 +399,40 @@ const schemaOrg = {
 
 				<!-- Sommaire (rendu côté serveur pour SEO) -->
 				{tableOfContents.length > 0 && (
-					<nav class="mt-10 sm:mt-24 pb-10" aria-label={lang === 'fr' ? 'Sommaire' : 'Table of contents'}>
-						<h2 class="section-label mb-8">{lang === 'fr' ? 'Sommaire' : 'Table of contents'}</h2>
-						<ol class="flex flex-col gap-2.5">
+					<nav class="mt-24" aria-label={lang === 'fr' ? 'Sommaire' : 'Table of contents'}>
+						<h2 class="text-[1.375rem] mb-8">{lang === 'fr' ? 'Sommaire' : 'Table of contents'}</h2>
+						<ol class="flex flex-col gap-6">
 							{tableOfContents.map((heading, index) => (
-								<li class="pb-2.5 border-b border-lines">
+								<li class="relative">
 									<a
 										href={`#${heading.id}`}
-										class="flex items-baseline gap-3 hover:text-black/60 transition-colors"
+										class="flex items-center gap-10 pr-24 hover:text-black/60 transition-colors"
 										title={heading.text}
 									>
-										<span class="section-label">{String(index + 1).padStart(2, '0')}</span>
+										<span class="text-[1.125rem]">{String(index + 1)}\</span>
 										<span>{heading.text}</span>
+										<svg width="27" height="20" class="absolute top-1/2 -translate-y-1/2 right-0" viewBox="0 0 27 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+											<path d="M3.01402 -0.000626206H4.31202C2.79402 2.66137 1.60602 5.56537 1.60602 9.63537C1.60602 13.6174 2.79402 16.5214 4.31202 19.1834H3.01402C1.40802 16.9614 1.75834e-05 13.6174 1.75834e-05 9.63537C1.75834e-05 5.52137 1.40802 2.22137 3.01402 -0.000626206ZM15.5676 15.5094L14.5996 14.6294L18.7136 10.2294H5.8656V8.93137H18.7136L14.5996 4.53137L15.5676 3.62937L21.0676 9.56937L15.5676 15.5094ZM23.9383 19.1834H22.6403C24.1583 16.5214 25.3463 13.6174 25.3463 9.54737C25.3463 5.56537 24.1583 2.66137 22.6403 -0.000626206H23.9383C25.5443 2.22137 26.9523 5.56537 26.9523 9.54737C26.9523 13.6614 25.5443 16.9614 23.9383 19.1834Z" fill="#16191B"/>
+										</svg>
 									</a>
 								</li>
 							))}
 						</ol>
 					</nav>
 				)}
+
+				<!-- Extrait / Chapô -->
+				<div class="relative my-24">
+					<svg class="h-8 absolute top-0 left-0" viewBox="0 0 6 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+						<path d="M4.39106 0H6C3.62011 4.16285 1.84358 8.70413 1.84358 15.0688C1.84358 21.2959 3.62011 25.8372 6 30H4.39106C2.07821 26.5252 0 21.2959 0 15.0688C0 8.63532 2.07821 3.47477 4.39106 0Z" fill="#16191B"/>
+					</svg>
+					<p class="text-[1.5rem] leading-[2rem] px-8 indent-16 ">
+						{excerpt}
+					</p>
+					<svg class="h-8 absolute bottom-0 right-0" viewBox="0 0 7 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+						<path d="M1.67598 30L-9.53674e-07 30C2.47905 25.8372 4.32961 21.2959 4.32961 14.9312C4.32961 8.70413 2.47905 4.16284 8.80026e-07 -7.81488e-07L1.67598 -5.71927e-07C4.0852 3.47477 6.25 8.70413 6.25 14.9312C6.25 21.3647 4.0852 26.5252 1.67598 30Z" fill="#16191B"/>
+					</svg>
+				</div>
 
 				<!-- Contenu de l'article -->
 				<div class="prose prose-lg text-[1.375rem] max-w-none mb-16" set:html={parseMarkdown(articleContent)} />
@@ -418,20 +443,19 @@ const schemaOrg = {
 			</div>
 			<div class="max-w-3xl mx-auto lg:max-w-none">
 				<!-- Tags + Partage (2 colonnes sur lg) -->
-				<div class="lg:flex lg:gap-16 pt-10 sm:pt-16 lg:pt-24 sm:mt-24 border-t border-lines mb-10 sm:mb-16 lg:pb-24 lg:mb-0">
+				<div class="flex lg:gap-16 pt-10 sm:pt-16 lg:pt-24 sm:mt-24 pb-24">
 					<!-- Tags -->
 					{tags.length > 0 && (
-						<div class="mb-10 lg:mb-0 lg:flex-1">
-							<h2 class="section-label mb-4">{t.blogPage.tags}</h2>
-							<div class="flex flex-wrap gap-2 md:gap-4">
+						<div class="lg:mb-0 lg:flex-1">
+							<h2 class="section-label mb-10">{t.blogPage.tags}</h2>
+							<div class="flex flex-wrap gap-5">
 								{tags.map((tag: string) => (
 									<a
 										href={`/${lang}/blog/tag/${slugify(tag)}`}
-										class="group relative overflow-hidden py-6 px-5 border border-lines text-[1rem] font-mono uppercase leading-none"
+										class={tagShareLinkClasses}
 										title={tag}
 									>
-										<span class="absolute inset-0 bg-black translate-x-[calc(-100%-1px)] group-hover:translate-x-0 transition-transform duration-400 ease-[cubic-bezier(0.25,0.46,0.45,0.94)]"></span>
-										<span class="relative z-10 transition-colors duration-300 group-hover:text-white">{tag}</span>
+										{tag}
 									</a>
 								))}
 							</div>
@@ -439,65 +463,50 @@ const schemaOrg = {
 					)}
 
 					<!-- Partage -->
-					<div class="lg:flex-1">
-						<h2 class="section-label mb-4">{t.blogPage.shareArticle}</h2>
-						<div class="flex flex-wrap gap-2 md:gap-4">
+					<div class="lg:flex-1 flex flex-col items-end">
+						<h2 class="section-label mb-10">{t.blogPage.shareArticle}</h2>
+						<div class="flex flex-wrap justify-end gap-5 ">
 							<a
 								href={`https://twitter.com/intent/tweet?url=${encodeURIComponent(shareUrl)}&text=${encodeURIComponent(title)}`}
 								target="_blank"
 								rel="noopener noreferrer"
-								class="group relative overflow-hidden py-6 px-5 border border-lines font-mono text-[1rem] uppercase leading-none"
+								class={tagShareLinkClasses}
 								title="Twitter"
 							>
-								<span class="absolute inset-0 bg-black translate-x-[calc(-100%-1px)] group-hover:translate-x-0 transition-transform duration-400 ease-[cubic-bezier(0.25,0.46,0.45,0.94)]"></span>
-								<span class="relative z-10 transition-colors duration-300 group-hover:text-white">Twitter</span>
+								Twitter
 							</a>
 							<a
 								href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(shareUrl)}`}
 								target="_blank"
 								rel="noopener noreferrer"
-								class="group relative overflow-hidden py-6 px-5 border border-lines font-mono text-[1rem] uppercase leading-none"
+								class={tagShareLinkClasses}
 								title="LinkedIn"
 							>
-								<span class="absolute inset-0 bg-black translate-x-[calc(-100%-1px)] group-hover:translate-x-0 transition-transform duration-400 ease-[cubic-bezier(0.25,0.46,0.45,0.94)]"></span>
-								<span class="relative z-10 transition-colors duration-300 group-hover:text-white">LinkedIn</span>
+								LinkedIn
 							</a>
 							<button
 								type="button"
-								class="copy-link group relative overflow-hidden py-6 px-5 border border-lines font-mono text-[1rem] uppercase leading-none cursor-pointer"
+								class={`copy-link bg-transparent p-0 ${tagShareLinkClasses}`}
 								data-url={shareUrl}
 							>
-								<span class="absolute inset-0 bg-black translate-x-[calc(-100%-1px)] group-hover:translate-x-0 transition-transform duration-400 ease-[cubic-bezier(0.25,0.46,0.45,0.94)]"></span>
-								<span class="relative z-10 transition-colors duration-300 group-hover:text-white">{lang === 'fr' ? 'Copier le lien' : 'Copy link'}</span>
+								<span>{lang === 'fr' ? 'Copier le lien' : 'Copy link'}</span>
 							</button>
 						</div>
 					</div>
 				</div>
+			</div>
+		</div>
+		</div>
 
+			<div class="max-w-3xl mt-16 mx-auto lg:max-w-none">
 				<!-- Bio Auteur -->
 				{(authorBio || authorAvatar || authorSocial || authorPagePath) && (
-					<h2 class="section-label mb-8">{t.blogPage.about}</h2>
-					<div class="mb-16 p-6 md:p-8 border border-lines">
-						{/* Mobile: photo + nom/rôle côte à côte, description en dessous */}
-						<div class="flex gap-4 mb-5 md:hidden">
-							{authorAvatar && (
-								<Image
-									src={authorAvatar}
-									alt={authorName}
-									class="w-20 h-20 aspect-square object-cover shrink-0"
-									width={80}
-									height={80}
-								/>
-							)}
-							<div class="flex flex-col">
-								<a href={authorPagePath} class="text-[1.375rem]" title={authorName}>{authorName}</a>
-								{authorRole && <p class="section-label">{authorRole}</p>}
-							</div>
-						</div>
-						<div class="md:hidden">
-							{authorBio && <p class="leading-relaxed">{authorBio}</p>}
+					<div class="flex justify-between">
+						<h2 class="text-[1.25rem] mb-10">{t.blogPage.about}</h2>
+						<div>
+							<p>Nicolas Prémont</p>
 							{authorSocial && (
-								<div class="flex gap-4 mt-8">
+								<div class="flex gap-5">
 									{authorSocial.twitter && (
 										<a href={`https://twitter.com/${authorSocial.twitter}`} target="_blank" rel="noopener noreferrer" class="text-black/60 hover:text-black transition-colors" title="Twitter">
 											Twitter
@@ -515,6 +524,11 @@ const schemaOrg = {
 									)}
 								</div>
 							)}
+						</div>
+					</div>
+					<div class="">
+						<div class="md:hidden">
+							{authorBio && <p class="leading-relaxed">{authorBio}</p>}
 						</div>
 						{/* Desktop (md+): photo à gauche, nom/rôle inline + description à droite */}
 						<div class="hidden md:flex md:gap-8">
@@ -562,11 +576,10 @@ const schemaOrg = {
 					</div>
 				)}
 				</div>
-		</div>
 
 		<!-- Articles connexes -->
 		{relatedPosts.length > 0 && (
-			<section class="mt-16 md:mt-24 pt-10 border-t border-lines">
+			<section class="mt-10 md:mt-24 pt-10 border-t border-lines">
 				<h2 class="font-display text-[1.5rem] md:text-[2rem] uppercase mb-10">{t.blogPage.relatedArticles}</h2>
 				<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
 					{relatedPosts.map((related) => (

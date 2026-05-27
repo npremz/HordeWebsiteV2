@@ -1,0 +1,131 @@
+---
+import ProjectsShapeBand from "../projects/ProjectsShapeBand.astro";
+import Breadcrumbs, { type BreadcrumbItem } from "../ui/navigation/Breadcrumbs.astro";
+
+type BackgroundVariant = "dark" | "light" | "transparent";
+
+interface Props {
+  class?: string;
+  containerClass?: string;
+  contentClass?: string;
+  ariaLabelledby?: string;
+  background?: BackgroundVariant;
+  showHorizontalLine?: boolean;
+  showVerticalLine?: boolean;
+  showObliqueLines?: boolean;
+  showBreadcrumbs?: boolean;
+  breadcrumbItems?: BreadcrumbItem[];
+  breadcrumbAriaLabel?: string;
+  breadcrumbClass?: string;
+}
+
+const {
+  class: className = "",
+  containerClass = "",
+  contentClass = "",
+  ariaLabelledby,
+  background = "dark",
+  showHorizontalLine = false,
+  showVerticalLine = false,
+  showObliqueLines = false,
+  showBreadcrumbs = true,
+  breadcrumbItems = [],
+  breadcrumbAriaLabel = "Breadcrumb",
+  breadcrumbClass = "absolute -top-10 center-x z-10 sm:-top-12 2xl:top-6",
+} = Astro.props as Props;
+
+const backgroundClasses: Record<BackgroundVariant, string> = {
+  dark: "bg-black text-bg-light",
+  light: "bg-bg-light text-black",
+  transparent: "bg-transparent text-black",
+};
+
+const shapeClasses: Record<BackgroundVariant, string> = {
+  dark: "text-lines-dark",
+  light: "text-lines",
+  transparent: "text-lines",
+};
+
+const breadcrumbVariant = background === "dark" ? "dark" : "light";
+const shapeClass = `top-0 h-full ${shapeClasses[background]}`;
+const lineClass = background === "dark" ? "bg-lines-dark" : "bg-lines";
+---
+
+<header
+  class:list={[
+    "relative mt-10 left-1/2 w-screen -translate-x-1/2 overflow-hidden",
+    "pt-36 pb-24 sm:pt-62.5 2xl:pt-45 2xl:pb-32",
+    backgroundClasses[background],
+    className,
+  ]}
+  aria-labelledby={ariaLabelledby}
+>
+  <div
+    class:list={[
+      "mx-auto max-w-[1320px] px-(--gutter) lg:px-0",
+      containerClass,
+    ]}
+  >
+    <div
+      class:list={[
+        "relative z-0 flex min-h-[393px] flex-col justify-center md:items-start 2xl:min-h-[580px]",
+        contentClass,
+      ]}
+    >
+      {showHorizontalLine && (
+        <div
+          class:list={[
+            "pointer-events-none absolute left-1/2 top-1/2 z-0 h-px w-screen -translate-x-1/2",
+            lineClass,
+          ]}
+          aria-hidden="true"
+        />
+      )}
+
+      {showVerticalLine && (
+        <div
+          class:list={[
+            "pointer-events-none absolute left-1/2 top-1/2 z-0 h-screen w-px -translate-x-1/2 -translate-y-1/2",
+            lineClass,
+          ]}
+          aria-hidden="true"
+        />
+      )}
+
+      {showObliqueLines && (
+        <div class="pointer-events-none absolute left-1/2 top-1/2 z-0 h-0 w-screen -translate-x-1/2 -translate-y-1/2" aria-hidden="true">
+          <div
+            class:list={[
+              "absolute left-1/2 top-1/2 h-px w-[150vw] -translate-x-1/2 -translate-y-1/2 rotate-45",
+              lineClass,
+            ]}
+          />
+          <div
+            class:list={[
+              "absolute left-1/2 top-1/2 h-px w-[150vw] -translate-x-1/2 -translate-y-1/2 -rotate-45",
+              lineClass,
+            ]}
+          />
+        </div>
+      )}
+
+      <div
+        class="pointer-events-none absolute left-1/2 top-1/2 z-0 aspect-square w-full -translate-x-1/2 -translate-y-1/2 sm:h-[393px] sm:aspect-auto 2xl:h-[580px]"
+        aria-hidden="true"
+      >
+        <ProjectsShapeBand class={shapeClass} squareClass="sm:h-full! 2xl:h-full!" />
+      </div>
+
+      {showBreadcrumbs && breadcrumbItems.length > 0 && (
+        <Breadcrumbs
+          items={breadcrumbItems}
+          class={breadcrumbClass}
+          variant={breadcrumbVariant}
+          ariaLabel={breadcrumbAriaLabel}
+        />
+      )}
+
+      <slot />
+    </div>
+  </div>
+</header>
