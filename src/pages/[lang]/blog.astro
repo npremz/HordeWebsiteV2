@@ -2,8 +2,7 @@
 import { Image } from 'astro:assets';
 import Layout from '../../layouts/Layout.astro';
 import Footer from '../../components/Footer.astro';
-import ProjectsShapeBand from '../../components/projects/ProjectsShapeBand.astro';
-import Breadcrumbs from '../../components/ui/navigation/Breadcrumbs.astro';
+import HeroStructure from '../../components/blog/HeroStructure.astro';
 import { SUPPORTED_LOCALES, type Locale, useTranslations } from '../../i18n';
 import { getLocalizedCategories, getLocalizedPosts } from '../../lib/content/blog';
 import { formatHeadingHtml } from '../../utils/heading-html';
@@ -66,90 +65,67 @@ function formatDate(date: Date, locale: Locale): string {
   showContainerLines={false}
 >
   <article id="page-content" class="text-black">
-    <header
-      class="relative mt-10 pt-36 sm:pt-62.5 2xl:pt-45 pb-24 2xl:pb-32 left-1/2 w-screen -translate-x-1/2 overflow-hidden bg-black text-bg-light"
-      aria-labelledby="blog-intro"
+    <HeroStructure
+      background="dark"
+      showHorizontalLine={false}
+      showVerticalLine={false}
+      showObliqueLines={false}
+      ariaLabelledby="blog-intro"
+      breadcrumbItems={breadcrumbItems}
+      breadcrumbAriaLabel={breadcrumbAriaLabel}
     >
-      <div class="mx-auto max-w-[1320px] px-(--gutter) lg:px-0">
-        <div class="relative z-0 min-h-[393px] 2xl:min-h-[580px] flex flex-col justify-center md:items-start">
-          <Breadcrumbs
-            items={breadcrumbItems}
-            class="absolute -top-10 sm:-top-12 2xl:top-6 center-x z-10"
-            variant="dark"
-            ariaLabel={breadcrumbAriaLabel}
+      <div class="flex w-full sm:justify-between">
+        <div class="relative z-10 flex max-w-[450px] flex-col gap-4 sm:gap-8 md:pr-16 lg:w-1/2">
+          <h1
+            id="blog-intro"
+            class="text-[1.5rem] leading-tight sm:text-[2rem] md:text-[2.5rem]"
+            set:html={formatHeadingHtml(t.blogPage.heading)}
           />
-
-          <div
-            class="pointer-events-none absolute left-1/2 top-1/2 z-0 aspect-square w-full -translate-x-1/2 -translate-y-1/2 sm:h-[393px] 2xl:h-[580px] sm:aspect-auto 2xl:h-[580px]"
-            aria-hidden="true"
-          >
-            <ProjectsShapeBand class="top-0 h-full text-lines-dark" squareClass="sm:h-full! 2xl:h-full!" />
-          </div>
-
-          <div class="flex w-full flex-col sm:flex-row sm:justify-between">
-            <div class="relative z-10 flex max-w-[760px] flex-col gap-4 sm:pr-4 sm:gap-8 md:pr-16 lg:w-1/2">
-              <h1
-                id="blog-intro"
-                class="text-[1.5rem] leading-tight sm:text-[2rem] md:text-[2.5rem]"
-                set:html={formatHeadingHtml(t.blogPage.heading)}
-              />
-            </div>
-
-            <svg
-              class="relative z-10 mt-2 self-end text-current sm:self-start"
-              width="20"
-              height="20"
-              viewBox="0 0 20 20"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <rect
-                width="7"
-                height="20"
-                transform="matrix(0.707107 0.707107 0.707107 -0.707107 0 14.1406)"
-                fill="currentColor"
-              />
-            </svg>
-          </div>
-
-          <nav
-            class="relative z-10 mt-4 flex flex-col sm:mt-16 sm:w-full sm:flex-row sm:justify-between lg:mt-0 lg:w-1/2 lg:self-end lg:justify-around lg:gap-20"
-            aria-label={categoriesAriaLabel}
-          >
-            <p class="text-[1.375rem] sm:text-[1.5rem]">{filterListLabel}:</p>
-
-            <ul class="mt-8 flex list-[square] flex-col gap-2.5 pl-5 pr-10 sm:pr-24 text-[1.25rem] sm:mt-0">
-              {
-                filterLinks.map((filter) => (
-                  <li>
-                    <a
-                      href={filter.href}
-                      class="transition-opacity duration-200 hover:opacity-65"
-                      aria-current={filter.current ? 'page' : undefined}
-                    >
-                      {filter.label}
-                    </a>
-                  </li>
-                ))
-              }
-              <svg
-                class="absolute right-0 bottom-0 z-10 text-current"
-                width="8"
-                height="35"
-                viewBox="0 0 8 35"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M1.95527 35L-4.1008e-05 35C2.89218 30.1433 5.05117 24.8452 5.05117 17.4197C5.05117 10.1548 2.89219 4.85665 -3.78207e-05 -6.1196e-07L1.95527 -4.47859e-07C4.76602 4.0539 7.29163 10.1548 7.29163 17.4197C7.29163 24.9255 4.76602 30.9461 1.95527 35Z"
-                  fill="currentColor"
-                />
-              </svg>
-            </ul>
-          </nav>
         </div>
+        <svg class="hidden sm:block" width="47" height="20" viewBox="0 0 47 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect width="7" height="20" transform="matrix(1 4.37114e-08 8.74228e-08 -1 0 20)" fill="#F4F1F8"/>
+          <rect width="7" height="20" transform="matrix(1 4.37114e-08 8.74228e-08 -1 14 20)" fill="#F4F1F8"/>
+          <rect width="7" height="20" transform="matrix(0.707107 0.707107 0.707107 -0.707107 27.4531 14.5938)" fill="#F4F1F8"/>
+        </svg>
+
       </div>
-    </header>
+
+      <nav
+        class="relative z-10 mt-8 flex flex-col sm:mt-16 sm:w-full sm:flex-row sm:justify-between lg:mt-0 lg:w-1/2 lg:self-end lg:justify-around lg:gap-20"
+        aria-label={categoriesAriaLabel}
+      >
+
+        <ul class="relative flex list-[square] flex-col sm:flex-row gap-2.5 sm:flex-wrap sm:gap-x-12 sm:max-w-[450px] pl-5 pr-10 text-[1.25rem] sm:mt-0 sm:pr-24">
+          {
+            filterLinks.map((filter) => (
+              <li class="shrink-0">
+                <a
+                  href={filter.href}
+                  class="transition-opacity duration-200 hover:opacity-65"
+                  aria-current={filter.current ? 'page' : undefined}
+                >
+                  {filter.label}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+        <svg
+          class="absolute right-0 bottom-0 z-10 text-current"
+          width="8"
+          height="35"
+          viewBox="0 0 8 35"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          aria-hidden="true"
+        >
+          <path
+            d="M1.95527 35L-4.1008e-05 35C2.89218 30.1433 5.05117 24.8452 5.05117 17.4197C5.05117 10.1548 2.89219 4.85665 -3.78207e-05 -6.1196e-07L1.95527 -4.47859e-07C4.76602 4.0539 7.29163 10.1548 7.29163 17.4197C7.29163 24.9255 4.76602 30.9461 1.95527 35Z"
+            fill="currentColor"
+          />
+        </svg>
+      </nav>
+    </HeroStructure>
 
     <main class="mx-auto w-full max-w-[1300px] bg-bg py-16 text-black sm:py-24">
       <ol class="grid gap-12 sm:gap-16 md:mx-auto md:max-w-[1000px]">

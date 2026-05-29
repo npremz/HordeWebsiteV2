@@ -31,7 +31,6 @@ const {
   showBreadcrumbs = true,
   breadcrumbItems = [],
   breadcrumbAriaLabel = "Breadcrumb",
-  breadcrumbClass = "absolute -top-10 center-x z-10 sm:-top-12 2xl:top-6",
 } = Astro.props as Props;
 
 const backgroundClasses: Record<BackgroundVariant, string> = {
@@ -54,7 +53,7 @@ const lineClass = background === "dark" ? "bg-lines-dark" : "bg-lines";
 <header
   class:list={[
     "relative mt-10 left-1/2 w-screen -translate-x-1/2 overflow-hidden",
-    "pt-36 pb-24 sm:pt-62.5 2xl:pt-45 2xl:pb-32",
+    "pt-16 pb-24 sm:pt-32 2xl:pt-45 2xl:pb-32",
     backgroundClasses[background],
     className,
   ]}
@@ -68,7 +67,7 @@ const lineClass = background === "dark" ? "bg-lines-dark" : "bg-lines";
   >
     <div
       class:list={[
-        "relative z-0 flex min-h-[393px] flex-col justify-center md:items-start 2xl:min-h-[580px]",
+        "relative z-0 flex min-h-[426px] flex-col justify-center md:items-start lg:min-h-[490px]",
         contentClass,
       ]}
     >
@@ -110,7 +109,7 @@ const lineClass = background === "dark" ? "bg-lines-dark" : "bg-lines";
       )}
 
       <div
-        class="pointer-events-none absolute left-1/2 top-1/2 z-0 aspect-square w-full -translate-x-1/2 -translate-y-1/2 sm:h-[393px] sm:aspect-auto 2xl:h-[580px]"
+        class="pointer-events-none absolute left-1/2 top-1/2 z-0 aspect-square w-full -translate-x-1/2 -translate-y-1/2 sm:h-[426px] sm:aspect-auto lg:h-[490px]"
         aria-hidden="true"
       >
         <ProjectsShapeBand class={shapeClass} squareClass="sm:h-full! 2xl:h-full!" />
@@ -119,7 +118,7 @@ const lineClass = background === "dark" ? "bg-lines-dark" : "bg-lines";
       {showBreadcrumbs && breadcrumbItems.length > 0 && (
         <Breadcrumbs
           items={breadcrumbItems}
-          class={breadcrumbClass}
+          class="absolute top-2.5 center-x z-10 sm:-top-12 2xl:top-6"
           variant={breadcrumbVariant}
           ariaLabel={breadcrumbAriaLabel}
         />
