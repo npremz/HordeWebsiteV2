@@ -1,8 +1,8 @@
 ---
 import type { Locale } from '../../i18n';
 import type { LocalizedProject } from '../../lib/content/projects';
+import HeroStructure from '../blog/HeroStructure.astro';
 import ProjectIndexList from './ProjectIndexList.astro';
-import ProjectsShapeBand from './ProjectsShapeBand.astro';
 
 interface Props {
   projects: LocalizedProject[];
@@ -18,53 +18,81 @@ const projectCount = String(projects.length).padStart(2, '0');
 const isDark = variant === 'dark';
 const filterLinks = [{ label: allLabel, href: `/${lang}/projets` }, ...filters];
 const filterListLabel = lang === 'fr' ? 'Filtres' : 'Filters';
-const heroClass =
-  'relative z-0 mt-48 flex flex-col pr-5 sm:mt-72 sm:pr-8 md:mt-80 md:items-start md:justify-between lg:mt-100 lg:pr-10 2xl:mt-84';
-const headingRowClass = 'flex w-full flex-col sm:flex-row sm:justify-between';
-const headingTextClass = 'relative z-10 flex max-w-[760px] flex-col gap-4 sm:pr-4 sm:gap-8 md:pr-16 lg:w-1/2';
-const quickLinksRowClass =
-  'relative z-10 mt-4 flex flex-col sm:mt-16 sm:w-full sm:flex-row sm:justify-between lg:mt-0 lg:w-1/2 lg:self-end lg:justify-around lg:gap-20';
+const breadcrumbAriaLabel = lang === 'fr' ? 'Fil d’Ariane' : 'Breadcrumb';
+const breadcrumbItems = [
+  { label: lang === 'fr' ? 'Accueil' : 'Home', href: `/${lang}` },
+  { label: lang === 'fr' ? 'Projets' : 'Projects' },
+];
 ---
 
 <div id="page-content" class:list={['relative z-10', isDark ? 'text-bg-light' : 'text-black']}>
-  <section class={heroClass} aria-labelledby="projects-intro">
-    <div class="pointer-events-none absolute left-1/2 top-1/2 z-0 aspect-square w-full -translate-x-1/2 -translate-y-1/2 sm:h-[385px] sm:aspect-auto 2xl:h-[580px]" aria-hidden="true">
-      <ProjectsShapeBand
-        class:list={['top-0 h-full', isDark ? 'text-lines-dark' : 'text-lines']}
-        squareClass="sm:h-full! 2xl:h-full!"
-      />
-    </div>
-
-    <div class={headingRowClass}>
-      <div id="projects-copy-lockup" class={headingTextClass}>
-        <h1 id="projects-intro" class="text-[1.5rem] leading-tight sm:text-[2rem] md:text-[2.5rem]">
-          {intro}
-        </h1>
+  <HeroStructure
+    background={isDark ? 'dark' : 'light'}
+    showHorizontalLine={false}
+    showVerticalLine={false}
+    showObliqueLines={false}
+    ariaLabelledby="projects-intro"
+    breadcrumbItems={breadcrumbItems}
+    breadcrumbAriaLabel={breadcrumbAriaLabel}
+    contentClass="sm:h-[426px] lg:h-[490px]"
+  >
+    <div class="w-full sm:flex sm:flex-col sm:gap-8">
+      <div class="flex w-full sm:h-1/2 sm:items-end">
+        <div class="w-full sm:flex sm:justify-between">
+          <div id="projects-copy-lockup" class="relative z-10 flex max-w-[450px] flex-col gap-4 sm:gap-8 lg:w-1/2 lg:max-w-[600px]">
+            <h1 id="projects-intro" class="text-[1.5rem] leading-tight sm:text-[2rem] lg:text-[2.5rem]">
+              {intro}
+            </h1>
+          </div>
+          <svg width="35" height="21" viewBox="0 0 35 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="28" width="7" height="21" fill="white"/>
+            <rect x="21" y="14" width="7" height="7" fill="white"/>
+            <rect x="21" width="7" height="7" fill="white"/>
+            <rect x="7" y="7" width="7" height="7" fill="white"/>
+            <rect width="7" height="21" fill="white"/>
+          </svg>
+        </div>
       </div>
-      <svg class="relative z-10 mt-2 -mr-5 self-end text-current sm:-mr-8 sm:self-start" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <rect width="7" height="20" transform="matrix(0.707107 0.707107 0.707107 -0.707107 0 14.1406)" fill="currentColor"/>
-      </svg>
-    </div>
 
-    <div class={quickLinksRowClass}>
-      <div class="text-[1.375rem] sm:text-[1.5rem]">{filterListLabel}:</div>
-      <ul class="mt-8 flex list-[square] flex-col gap-2.5 pl-5 text-[1.25rem] sm:mt-0">
-        {
-          filterLinks.map((filter) => (
-            <li>
-              <a href={filter.href} class="transition-opacity duration-200 hover:opacity-65" title={filter.label}>
-                {filter.label}
-              </a>
-            </li>
-          ))
-        }
-      </ul>
+      <div class="sm:h-1/2 md:flex md:justify-end">
+        <nav
+          class="relative z-10 mt-8 flex flex-col sm:mt-0 sm:w-full sm:flex-row md:w-1/2 md:self-end lg:mt-0 md:justify-end lg:gap-20"
+          aria-label={filterListLabel}
+        >
+          <ul class="relative flex h-fit list-[square] flex-col gap-1 pl-5 pr-10 text-[1.25rem] sm:mt-0 sm:w-fit sm:flex-row sm:flex-wrap sm:gap-x-12 sm:pr-24 md:pr-0">
+            {
+              filterLinks.map((filter, index) => (
+                <>
+                  <li class="shrink-0">
+                    <a href={filter.href} class="transition-opacity duration-200 hover:opacity-65" title={filter.label}>
+                      {filter.label}
+                    </a>
+                  </li>
+                  {((filterLinks.length === 2 && index === 0) || (filterLinks.length > 2 && index === 1)) && (
+                    <li class="hidden list-none sm:block sm:h-0 sm:basis-full sm:overflow-hidden sm:p-0" aria-hidden="true" />
+                  )}
+                </>
+              ))
+            }
+          </ul>
+          <svg
+            class="absolute bottom-0 right-0 z-10 text-current"
+            width="8"
+            height="35"
+            viewBox="0 0 8 35"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            aria-hidden="true"
+          >
+            <path
+              d="M1.95527 35L-4.1008e-05 35C2.89218 30.1433 5.05117 24.8452 5.05117 17.4197C5.05117 10.1548 2.89219 4.85665 -3.78207e-05 -6.1196e-07L1.95527 -4.47859e-07C4.76602 4.0539 7.29163 10.1548 7.29163 17.4197C7.29163 24.9255 4.76602 30.9461 1.95527 35Z"
+              fill="currentColor"
+            />
+          </svg>
+        </nav>
+      </div>
     </div>
-
-    <svg class="absolute bottom-0 right-0 z-10 text-current" width="8" height="35" viewBox="0 0 8 35" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M1.95527 35L-4.1008e-05 35C2.89218 30.1433 5.05117 24.8452 5.05117 17.4197C5.05117 10.1548 2.89219 4.85665 -3.78207e-05 -6.1196e-07L1.95527 -4.47859e-07C4.76602 4.0539 7.29163 10.1548 7.29163 17.4197C7.29163 24.9255 4.76602 30.9461 1.95527 35Z" fill="currentColor"/>
-    </svg>
-  </section>
+  </HeroStructure>
 
   <ProjectIndexList
     projects={projects}

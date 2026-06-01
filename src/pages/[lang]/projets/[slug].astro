@@ -2,9 +2,8 @@
 import { Image } from 'astro:assets';
 import Layout from '../../../layouts/Layout.astro';
 import Footer from '../../../components/Footer.astro';
-import ProjectsShapeBand from '../../../components/projects/ProjectsShapeBand.astro';
+import HeroStructure from '../../../components/blog/HeroStructure.astro';
 import ProjectsListingPage from '../../../components/projects/ProjectsListingPage.astro';
-import Breadcrumbs from '../../../components/ui/navigation/Breadcrumbs.astro';
 import { SUPPORTED_LOCALES, type Locale, useTranslations } from '../../../i18n';
 import {
   type LocalizedProjectGalleryRow,
@@ -180,41 +179,43 @@ if (props.kind === 'project') {
 >
   {pageContent.kind === 'project' ? (
     <article id="page-content" class="project-page relative">
-      <div class="project-hero-line project-hero-line--vertical" aria-hidden="true"></div>
-      <header class="project-hero">
-        <div class="relative isolate h-[310px] mt-32 sm:mt-48 lg:mt-60 2xl:mt-80 flex flex-col items-center justify-center">
-          <ProjectsShapeBand class="project-shape top-0 h-full text-lines-dark" squareClass="sm:h-[310px]! md:h-[310px]! lg:h-[393px]! 2xl:h-[580px]!" />
-          <div class="project-hero-line project-hero-line--diagonal project-hero-line--diagonal-a" aria-hidden="true"></div>
-          <div class="project-hero-line project-hero-line--diagonal project-hero-line--diagonal-b" aria-hidden="true"></div>
-          <Breadcrumbs
-            items={pageContent.breadcrumbItems}
-            class="absolute top-0 mt-16"
-            variant="dark"
-            ariaLabel={projectCopy.breadcrumbAriaLabel}
-          />
-          <div class="relative z-10 flex items-center justify-center gap-8">
-            <svg class="h-8 sm:h-10" viewBox="0 0 6 30" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M4.39106 0H6C3.62011 4.16285 1.84358 8.70413 1.84358 15.0688C1.84358 21.2959 3.62011 25.8372 6 30H4.39106C2.07821 26.5252 0 21.2959 0 15.0688C0 8.63532 2.07821 3.47477 4.39106 0Z" fill="white"/>
-            </svg>
-            <h1 class="font-display text-[2rem] sm:text-[2.5rem] 2xl:text-[3.75rem] uppercase mt-1">{pageContent.shortTitle}</h1>
-            <svg class="h-8 sm:h-10" viewBox="0 0 6 29" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M1.60894 28.7998L-2.86102e-06 28.7998C2.37989 24.8035 4.15642 20.4438 4.15643 14.3337C4.15643 8.35576 2.37989 3.99612 -2.38339e-07 -0.000210312L1.60894 -0.000210177C3.92179 3.33557 6 8.35576 6 14.3337C6 20.5099 3.92179 25.464 1.60894 28.7998Z" fill="white"/>
-            </svg>
-          </div>
-          {pageContent.externalUrl && (
-            <div class="absolute w-full flex text-[1.125rem] lg:text-[1.375rem] justify-between bottom-0 sm:bottom-16 md:bottom-1/2 md:translate-y-1/2">
-              <span>2025©</span>
-              <a href={pageContent.externalUrl} target="_blank" rel="noopener noreferrer" class="underline!">
-                {projectCopy.externalUrl} (↗)
-              </a>
+      <HeroStructure
+        background="dark"
+        showHorizontalLine={false}
+        showVerticalLine={true}
+        showObliqueLines={true}
+        ariaLabelledby="project-intro"
+        breadcrumbItems={pageContent.breadcrumbItems}
+        breadcrumbAriaLabel={projectCopy.breadcrumbAriaLabel}
+        spacingClass="pt-16 pb-24 sm:pt-32 sm:pb-28 lg:pt-40 lg:pb-32 2xl:pb-40"
+        contentClass="h-[426px] justify-start lg:h-[490px]"
+      >
+        <div class="project-hero w-full h-full flex justify-center items-center">
+          <div class="relative isolate flex flex-col items-center justify-center ">
+            <div class="relative z-10 flex items-center justify-center gap-8">
+              <svg class="h-8 sm:h-10" viewBox="0 0 6 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M4.39106 0H6C3.62011 4.16285 1.84358 8.70413 1.84358 15.0688C1.84358 21.2959 3.62011 25.8372 6 30H4.39106C2.07821 26.5252 0 21.2959 0 15.0688C0 8.63532 2.07821 3.47477 4.39106 0Z" fill="white"/>
+              </svg>
+              <h1 id="project-intro" class="font-display mt-1 text-[2rem] uppercase sm:text-[2.5rem] 2xl:text-[3.75rem]">{pageContent.shortTitle}</h1>
+              <svg class="h-8 sm:h-10" viewBox="0 0 6 29" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M1.60894 28.7998L-2.86102e-06 28.7998C2.37989 24.8035 4.15642 20.4438 4.15643 14.3337C4.15643 8.35576 2.37989 3.99612 -2.38339e-07 -0.000210312L1.60894 -0.000210177C3.92179 3.33557 6 8.35576 6 14.3337C6 20.5099 3.92179 25.464 1.60894 28.7998Z" fill="white"/>
+              </svg>
             </div>
-          )}
+          </div>
         </div>
-
-
-        <div class="md:flex md:gap-10 md:mt-10 lg:mt-20 2xl:mt-4 ">
+      </HeroStructure>
+      <div class="relative z-1 -mt-54 sm:-mt-66 md:-mt-84 lg:-mt-97">
+        {pageContent.externalUrl && (
+          <div class="w-full flex text-[1.125rem] lg:text-[1.375rem] justify-between ">
+            <span>2025©</span>
+            <a href={pageContent.externalUrl} target="_blank" rel="noopener noreferrer" class="underline!">
+              {projectCopy.externalUrl} (↗)
+            </a>
+          </div>
+        )}
+        <div class="md:flex md:gap-10 mt-10 sm:mt-24 md:mt-40 lg:mt-36">
           {pageContent.services.length > 0 && (
-            <nav aria-label={projectCopy.projectServices} class="mt-10 sm:mt-16 md:mt-0 text-[1.25rem] md:flex md:flex-col md:justify-between md:w-1/2">
+            <nav aria-label={projectCopy.projectServices} class="md:mt-0 text-[1.25rem] md:flex md:flex-col md:justify-between md:w-1/2">
               <div class="sm:flex sm:gap-8">
                 <p>{projectCopy.serviceFilterLabel}</p>
                 <ul class="mt-5 sm:mt-0 sm:flex sm:gap-4">
@@ -241,8 +242,7 @@ if (props.kind === 'project') {
             )}
           </div>
         </div>
-      </header>
-
+      </div>
       <main class="project-content mt-10 sm:mt-16 md:mt-50 lg:max-w-[1000px] lg:mx-auto">
 
         <div class="md:hidden">
@@ -316,41 +316,10 @@ if (props.kind === 'project') {
       </main>
 
       <style>
-        .project-hero-line {
-          pointer-events: none;
-          position: absolute;
-          z-index: 0;
-          background: var(--color-lines-dark);
-        }
-
         .project-hero,
         .project-content {
           position: relative;
           z-index: 1;
-        }
-
-        .project-hero-line--vertical {
-          top: -30rem;
-          left: 50%;
-          width: 1px;
-          height: calc(100% - 2.5rem);
-          transform: translateX(-50%);
-        }
-
-        .project-hero-line--diagonal {
-          left: 50%;
-          top: 50%;
-          width: 150vw;
-          height: 1px;
-          transform-origin: center;
-        }
-
-        .project-hero-line--diagonal-a {
-          transform: translate(-50%, -50%) rotate(45deg);
-        }
-
-        .project-hero-line--diagonal-b {
-          transform: translate(-50%, -50%) rotate(-45deg);
         }
 
         .project-work-row {

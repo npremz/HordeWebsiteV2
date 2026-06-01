@@ -2,6 +2,7 @@
 import Layout from '../../layouts/Layout.astro';
 import ContactForm from '../../components/ui/forms/ContactForm';
 import Footer from '../../components/Footer.astro';
+import HeroStructure from '../../components/blog/HeroStructure.astro';
 import { SUPPORTED_LOCALES, type Locale, useTranslations } from '../../i18n';
 
 export const prerender = true;
@@ -14,50 +15,91 @@ export function getStaticPaths() {
 
 const { lang } = Astro.params as { lang: Locale };
 const t = useTranslations(lang);
-const heroClass = "relative z-0 mt-48 flex flex-col px-5 sm:mt-72 sm:px-8 md:mt-80 md:items-start md:justify-between lg:mt-100 lg:px-10 2xl:mt-84";
-const headingRowClass = "flex w-full flex-col sm:flex-row sm:justify-between";
-const headingTextClass = "relative z-10 flex max-w-[720px] flex-col gap-4 sm:pr-4 sm:gap-8 md:pr-16 lg:w-1/2";
-const alternativesRowClass = "relative z-10 mt-4 flex flex-col sm:mt-16 sm:w-full sm:flex-row sm:justify-between lg:mt-0 lg:w-1/2 lg:self-end lg:justify-around lg:gap-20";
-const formOffsetClass = "mt-40 sm:mt-48 md:mt-32 lg:mt-44 2xl:mt-56";
+const breadcrumbAriaLabel = lang === 'fr' ? 'Fil d’Ariane' : 'Breadcrumb';
+const breadcrumbItems = [
+	{ label: lang === 'fr' ? 'Accueil' : 'Home', href: `/${lang}` },
+	{ label: lang === 'fr' ? 'Contact' : 'Contact' },
+];
+const contactLinks = [
+	{ href: 'mailto:hello@hordeagence.com', label: 'hello@hordeagence.com' },
+	{ href: 'https://calendly.com/ni-premont/30min', label: t.contact.bookCall },
+];
 ---
 
 <Layout lang={lang} title={t.contact.title} variant="dark" description={t.contact.description}>
 	<div id="page-content">
-		<div class={heroClass}>
-			<div class="pointer-events-none absolute left-1/2 top-1/2 z-0 w-full -translate-x-1/2 -translate-y-1/2" aria-hidden="true">
-				<div class="relative max-w-[388px] sm:max-w-[420px] lg:max-w-[460px] 2xl:max-w-[580px] aspect-square mx-auto flex flex-col justify-center items-center">
-					<div class="relative @container w-full">
-						<span class="absolute -translate-y-0 -translate-x-1/2 -z-10 w-full aspect-square rounded-full border border-lines-dark"></span>
-						<div class="relative p-4 w-full h-97 sm:h-105 lg:h-115 2xl:h-145 border border-lines-dark flex flex-col justify-between"></div>
-						<span class="absolute -translate-y-full translate-x-1/2 -z-10 w-full aspect-square rounded-full border border-lines-dark"></span>
+			<HeroStructure
+				background="dark"
+				showHorizontalLine={false}
+				showVerticalLine={false}
+				showObliqueLines={false}
+				ariaLabelledby="contact-intro"
+				breadcrumbItems={breadcrumbItems}
+				breadcrumbAriaLabel={breadcrumbAriaLabel}
+				contentClass="sm:h-[426px] lg:h-[490px]"
+			>
+				<div class="w-full sm:flex sm:flex-col sm:gap-8">
+					<div class="flex w-full sm:h-1/2 sm:items-end">
+						<div class="w-full sm:flex sm:justify-between">
+							<div class="relative z-10 flex max-w-[450px] flex-col gap-4 sm:gap-8 lg:w-1/2 lg:max-w-[600px]">
+								<h1 id="contact-intro" class="text-[1.5rem] leading-tight sm:text-[2rem] lg:text-[2.5rem]">
+									<span>{t.contact.knockKnock}</span>{' '}
+									<span class="whitespace-pre-line">{t.contact.startWhen}</span>
+								</h1>
+							</div>
+							<svg class="hidden sm:block" width="47" height="20" viewBox="0 0 47 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+								<rect width="7" height="20" transform="matrix(1 4.37114e-08 8.74228e-08 -1 0 20)" fill="#F4F1F8"/>
+								<rect width="7" height="20" transform="matrix(1 4.37114e-08 8.74228e-08 -1 14 20)" fill="#F4F1F8"/>
+								<rect width="7" height="20" transform="matrix(0.707107 0.707107 0.707107 -0.707107 27.4531 14.5938)" fill="#F4F1F8"/>
+							</svg>
+						</div>
+					</div>
+
+					<div class="sm:h-1/2 md:flex md:justify-end">
+						<nav
+							class="relative z-10 mt-8 flex flex-col sm:mt-0 sm:w-full sm:flex-row md:w-1/2 md:self-end lg:mt-0 md:justify-end lg:gap-20"
+							aria-label={t.contact.alternativeContacts}
+						>
+							<ul class="relative flex h-fit list-[square] flex-col gap-2.5 pl-5 pr-10 text-[1.25rem] sm:mt-0 sm:w-fit sm:gap-x-12 sm:pr-24">
+								{
+									contactLinks.map((contactLink, index) => (
+										<>
+											<li class="shrink-0">
+												<a
+													href={contactLink.href}
+													class="transition-opacity duration-200 hover:opacity-65"
+													title={contactLink.label}
+												>
+													{contactLink.label}
+												</a>
+											</li>
+											{index === 1 && contactLinks.length > 2 && (
+												<li class="hidden list-none sm:block sm:h-0 sm:basis-full sm:overflow-hidden sm:p-0" aria-hidden="true" />
+											)}
+										</>
+									))
+								}
+							</ul>
+							<svg
+								class="absolute bottom-0 right-0 z-10 text-current"
+								width="8"
+								height="35"
+								viewBox="0 0 8 35"
+								fill="none"
+								xmlns="http://www.w3.org/2000/svg"
+								aria-hidden="true"
+							>
+								<path
+									d="M1.95527 35L-4.1008e-05 35C2.89218 30.1433 5.05117 24.8452 5.05117 17.4197C5.05117 10.1548 2.89219 4.85665 -3.78207e-05 -6.1196e-07L1.95527 -4.47859e-07C4.76602 4.0539 7.29163 10.1548 7.29163 17.4197C7.29163 24.9255 4.76602 30.9461 1.95527 35Z"
+									fill="currentColor"
+								/>
+							</svg>
+						</nav>
 					</div>
 				</div>
-			</div>
+			</HeroStructure>
 
-			<svg class="absolute left-0 top-2 z-10" width="8" height="35" viewBox="0 0 8 35" fill="none" xmlns="http://www.w3.org/2000/svg">
-				<path d="M5.21592 0H7.1271C4.30015 4.74704 2.18989 9.92563 2.18989 17.1835C2.18989 24.2845 4.30015 29.463 7.1271 34.2101H5.21592C2.46861 30.2477 0 24.2845 0 17.1835C0 9.84717 2.46861 3.96241 5.21592 0Z" fill="white"/>
-			</svg>
-			<div class={headingRowClass}>
-				<div class={headingTextClass}>
-					<h1 class="w-full max-w-[640px] text-[1.5rem] sm:text-[2rem] md:text-[2.5rem] leading-[1.12]">Toc-toc, dites-nous bonjour ! Hâte d’entendre vos idées pour votre projet.</h1>
-				</div>
-				<svg class="relative mt-2 z-10 self-end sm:self-start -mr-5 sm:-mr-8" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-					<rect width="7" height="20" transform="matrix(0.707107 0.707107 0.707107 -0.707107 0 14.1406)" fill="white"/>
-				</svg>
-			</div>
-			<div class={alternativesRowClass}>
-				<div class="text-[1.375rem] sm:text-[1.5rem] -translate-x-5 sm:-translate-x-8 lg:translate-0">{t.contact.alternativeContacts}:</div>
-				<ul class="list-[square] mt-8 sm:mt-0 pl-5 flex flex-col gap-2.5 text-[1.25rem]">
-					<li><a href="mailto:hello@hordeagence.com" class="" title="hello@hordeagence.com">hello@hordeagence.com</a></li>
-					<li><a href="https://calendly.com/ni-premont/30min" class="" title={t.contact.bookCall}>{t.contact.bookCall}</a></li>
-				</ul>
-			</div>
-			<svg class="absolute bottom-0 right-0 z-10" width="8" height="35" viewBox="0 0 8 35" fill="none" xmlns="http://www.w3.org/2000/svg">
-				<path d="M1.95527 35L-4.1008e-05 35C2.89218 30.1433 5.05117 24.8452 5.05117 17.4197C5.05117 10.1548 2.89219 4.85665 -3.78207e-05 -6.1196e-07L1.95527 -4.47859e-07C4.76602 4.0539 7.29163 10.1548 7.29163 17.4197C7.29163 24.9255 4.76602 30.9461 1.95527 35Z" fill="white"/>
-			</svg>
-		</div>
-
-		<div id="contact-form" class={formOffsetClass}>
+		<div id="contact-form" class="">
 			<ContactForm client:load translations={t.form} />
 		</div>
 	</div>

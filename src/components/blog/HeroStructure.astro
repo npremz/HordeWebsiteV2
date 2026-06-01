@@ -8,6 +8,7 @@ interface Props {
   class?: string;
   containerClass?: string;
   contentClass?: string;
+  spacingClass?: string;
   ariaLabelledby?: string;
   background?: BackgroundVariant;
   showHorizontalLine?: boolean;
@@ -23,6 +24,7 @@ const {
   class: className = "",
   containerClass = "",
   contentClass = "",
+  spacingClass = "pt-16 pb-24 sm:pt-32 lg:pt-40 2xl:pb-32",
   ariaLabelledby,
   background = "dark",
   showHorizontalLine = false,
@@ -52,13 +54,50 @@ const lineClass = background === "dark" ? "bg-lines-dark" : "bg-lines";
 
 <header
   class:list={[
-    "relative mt-10 left-1/2 w-screen -translate-x-1/2 overflow-hidden",
-    "pt-16 pb-24 sm:pt-32 lg:pt-40 2xl:pb-32",
+    "relative mt-10 left-1/2 w-screen -translate-x-1/2 overflow-x-clip overflow-y-visible",
+    spacingClass,
     backgroundClasses[background],
     className,
   ]}
   aria-labelledby={ariaLabelledby}
 >
+  {showHorizontalLine && (
+    <div
+      class:list={[
+        "pointer-events-none absolute left-1/2 top-1/2 z-0 h-px w-screen -translate-x-1/2",
+        lineClass,
+      ]}
+      aria-hidden="true"
+    />
+  )}
+
+  {showVerticalLine && (
+    <div
+      class:list={[
+        "pointer-events-none absolute left-1/2 top-1/2 z-0 h-screen w-px -translate-x-1/2 -translate-y-1/2",
+        lineClass,
+      ]}
+      aria-hidden="true"
+    />
+  )}
+
+  {showObliqueLines && (
+    <div class="pointer-events-none absolute left-1/2 top-1/2 z-0 h-0 w-screen -translate-x-1/2 -translate-y-1/2" aria-hidden="true">
+      <div
+        class:list={[
+          "absolute left-1/2 top-1/2 h-px w-[150vw] -translate-x-1/2 -translate-y-1/2 rotate-45",
+          lineClass,
+        ]}
+      />
+      <div
+        class:list={[
+          "absolute left-1/2 top-1/2 h-px w-[150vw] -translate-x-1/2 -translate-y-1/2 -rotate-45",
+          lineClass,
+        ]}
+      />
+    </div>
+  )}
+
   <div
     class:list={[
       "mx-auto max-w-[1320px] px-(--gutter) lg:px-0",
@@ -71,43 +110,6 @@ const lineClass = background === "dark" ? "bg-lines-dark" : "bg-lines";
         contentClass,
       ]}
     >
-      {showHorizontalLine && (
-        <div
-          class:list={[
-            "pointer-events-none absolute left-1/2 top-1/2 z-0 h-px w-screen -translate-x-1/2",
-            lineClass,
-          ]}
-          aria-hidden="true"
-        />
-      )}
-
-      {showVerticalLine && (
-        <div
-          class:list={[
-            "pointer-events-none absolute left-1/2 top-1/2 z-0 h-screen w-px -translate-x-1/2 -translate-y-1/2",
-            lineClass,
-          ]}
-          aria-hidden="true"
-        />
-      )}
-
-      {showObliqueLines && (
-        <div class="pointer-events-none absolute left-1/2 top-1/2 z-0 h-0 w-screen -translate-x-1/2 -translate-y-1/2" aria-hidden="true">
-          <div
-            class:list={[
-              "absolute left-1/2 top-1/2 h-px w-[150vw] -translate-x-1/2 -translate-y-1/2 rotate-45",
-              lineClass,
-            ]}
-          />
-          <div
-            class:list={[
-              "absolute left-1/2 top-1/2 h-px w-[150vw] -translate-x-1/2 -translate-y-1/2 -rotate-45",
-              lineClass,
-            ]}
-          />
-        </div>
-      )}
-
       <div
         class="pointer-events-none absolute left-1/2 top-1/2 z-0 aspect-square w-full -translate-x-1/2 -translate-y-1/2 sm:h-[426px] sm:aspect-auto lg:h-[490px]"
         aria-hidden="true"
@@ -118,7 +120,7 @@ const lineClass = background === "dark" ? "bg-lines-dark" : "bg-lines";
       {showBreadcrumbs && breadcrumbItems.length > 0 && (
         <Breadcrumbs
           items={breadcrumbItems}
-          class="absolute top-2.5 center-x z-10 sm:-top-12 2xl:top-6"
+          class="absolute top-2.5 center-x z-10 whitespace-nowrap sm:-top-12 2xl:top-6"
           variant={breadcrumbVariant}
           ariaLabel={breadcrumbAriaLabel}
         />

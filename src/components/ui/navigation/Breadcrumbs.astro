@@ -27,7 +27,7 @@ const lastIndex = visibleItems.length - 1;
     class:list={['breadcrumbs', `breadcrumbs--${variant}`, className]}
     aria-label={ariaLabel}
   >
-    <ol class="breadcrumbs__list">
+    <ol class="breadcrumbs__list !flex-nowrap whitespace-nowrap">
       {visibleItems.map((item, index) => {
         const isCurrent = index === lastIndex;
 

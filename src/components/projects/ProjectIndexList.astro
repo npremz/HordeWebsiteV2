@@ -33,11 +33,11 @@ function getDisplayYear(project: LocalizedProject): string {
 ---
 
 <div
-  class="projects-index mx-auto mt-40 w-full max-w-[1300px] sm:mt-48 md:mt-32 lg:mt-44 2xl:mt-56"
+  class="projects-index mx-auto w-full max-w-[1300px]"
   data-variant={variant}
 >
 
-  <ol class="mt-14 sm:mt-16 lg:mt-20">
+  <ol class="">
     {
       projects.map((project) => {
         const href = project.inProgress ? undefined : `/${lang}/projets/${project.slug}`;
