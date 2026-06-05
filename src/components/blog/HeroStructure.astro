@@ -126,7 +126,9 @@ const lineClass = background === "dark" ? "bg-lines-dark" : "bg-lines";
         />
       )}
 
-      <slot />
+      <div class="mx-auto w-full max-w-[426px] px-4 sm:max-w-none sm:px-0">
+        <slot />
+      </div>
     </div>
   </div>
 </header>
