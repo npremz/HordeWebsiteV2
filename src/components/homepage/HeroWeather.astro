@@ -106,7 +106,7 @@ const t = useTranslations(lang);
           : {};
         const weatherLabel = weatherCodes[code] || "--";
 
-        weatherEl.innerHTML = `${temp}° ${weatherLabel} <span class="font-neuebit text-[1.75rem] inline-block leading-[0] relative -top-[-3px]">${weatherIcon}</span>`;
+        weatherEl.innerHTML = `${temp}° <span class="font-neuebit text-[1.75rem] inline-block leading-[0] relative -top-[-3px]">${weatherIcon}</span>`;
       });
     } catch {
       // Keep placeholders on error.

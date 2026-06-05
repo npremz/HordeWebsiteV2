@@ -2,26 +2,34 @@
 interface Props {
   class?: string;
   squareClass?: string;
+  contentClass?: string;
 }
 
-const { class: className = "", squareClass = "" } = Astro.props;
+const { class: className = "", squareClass = "", contentClass = "" } = Astro.props;
 
 const backgroundCircleOffsets = [-250, -200, -150, -100, -50, 50, 100, 150, 200, 250];
+const hasContent = Astro.slots.has("default");
 ---
 
 <div
   class:list={[
-    "pointer-events-none absolute inset-x-0 -z-10 w-full text-lines sm:inset-x-1/2 sm:w-screen sm:-translate-x-1/2",
+    "text-lines",
+    hasContent
+      ? "relative z-0 mx-auto h-[426px] max-w-full aspect-square 2xl:h-[490px]"
+      : "pointer-events-none absolute inset-x-0 -z-10 w-full sm:inset-x-1/2 sm:w-screen sm:-translate-x-1/2",
     className,
   ]}
-  aria-hidden="true"
+  aria-hidden={hasContent ? undefined : "true"}
 >
   <div
     class:list={[
-      "absolute center-x flex -translate-y-1/2 justify-center h-[426px] aspect-square sm:w-[unset] 2xl:h-[490px]",
+      hasContent
+        ? "relative center-x flex h-full aspect-square justify-center"
+        : "absolute center-x flex -translate-y-1/2 justify-center h-[426px] aspect-square sm:w-[unset] 2xl:h-[490px]",
+      "2xl:h-[490px]",
       squareClass,
     ]}
-    style="top: var(--shape-center-y, 50%);"
+    style={hasContent ? undefined : "top: var(--shape-center-y, 50%);"}
     data-projects-shape-square
   >
     <svg
@@ -37,5 +45,10 @@ const backgroundCircleOffsets = [-250, -200, -150, -100, -50, 50, 100, 150, 200,
         ))
       }
     </svg>
+    {hasContent && (
+      <div class:list={["absolute inset-0 z-10", contentClass]}>
+        <slot />
+      </div>
+    )}
   </div>
 </div>
