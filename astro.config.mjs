@@ -13,6 +13,7 @@ const PORT = parseInt(process.env.PORT || '4328', 10);
 // Production = hordeagence.com (mode server pour Keystatic GitHub)
 // Staging/Dev = static
 const isProd = process.env.SITE_ENV === 'production';
+const enableKeystatic = isProd || process.env.ENABLE_KEYSTATIC === '1';
 const redirectSourcePaths = new Set([
   '/',
   '/about',
@@ -55,7 +56,7 @@ export default defineConfig({
   integrations: [
     react({ include: ['**/keystatic/**', '**/components/**/*.tsx'] }),
     markdoc(),
-    keystatic(),
+    ...(enableKeystatic ? [keystatic()] : []),
     sitemap({
       filter: shouldIncludeInSitemap,
     })
