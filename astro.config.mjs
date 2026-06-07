@@ -87,6 +87,7 @@ export default defineConfig({
       },
     },
     build: {
+      reportCompressedSize: false,
       // Keystatic admin bundle is intentionally large and route-scoped.
       chunkSizeWarningLimit: 3000,
     },
