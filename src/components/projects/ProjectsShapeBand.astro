@@ -15,7 +15,7 @@ const hasContent = Astro.slots.has("default");
   class:list={[
     "text-lines",
     hasContent
-      ? "relative z-0 mx-auto h-[426px] max-w-full aspect-square 2xl:h-[490px]"
+      ? "relative z-0 mx-auto h-[426px] max-w-full aspect-square lg:h-[490px]"
       : "pointer-events-none absolute inset-x-0 -z-10 w-full sm:inset-x-1/2 sm:w-screen sm:-translate-x-1/2",
     className,
   ]}
@@ -26,7 +26,7 @@ const hasContent = Astro.slots.has("default");
       hasContent
         ? "relative center-x flex h-full aspect-square justify-center"
         : "absolute center-x flex -translate-y-1/2 justify-center h-[426px] aspect-square sm:w-[unset] 2xl:h-[490px]",
-      "2xl:h-[490px]",
+      "lg:h-[490px]",
       squareClass,
     ]}
     style={hasContent ? undefined : "top: var(--shape-center-y, 50%);"}
