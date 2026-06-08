@@ -2,6 +2,7 @@
 import PhysicsWordmark from "./ui/effects/PhysicsWordmark.astro";
 import { DEFAULT_LOCALE, type Locale, useTranslations } from "../i18n";
 import { getSiteChrome } from "../lib/site-data";
+import { getFooterServiceLinks } from "../lib/content/services";
 
 interface Props {
 	lang?: Locale;
@@ -19,9 +20,15 @@ const {
 const t = useTranslations(lang);
 const isDark = variant === "dark";
 const { footer, navigation } = await getSiteChrome(lang);
+const serviceLinks = await getFooterServiceLinks();
 
 // Extraire les données
-const { description, columns = [], legalLinks = [], copyright } = footer;
+const {
+	description,
+	columns = [],
+	legalLinks = [],
+	copyright,
+} = footer;
 const ctaColumn = columns.find((col) => col.title === "CTAs");
 const { logo, logoAlt = "Logo", items: menuItems = [] } = navigation;
 
@@ -38,7 +45,7 @@ const textColorClass = isDark ? "text-bg-light" : "text-black";
 >
 	<PhysicsWordmark dark={variant == "dark" && true} hideOverflow={hideOverflow} />
 
-	<div class:list={[innerBg && "footer-inner-bg", "py-10 pb-16 sm:py-16 lg:pt-24"]}>
+	<div class:list={[innerBg && "footer-inner-bg", "py-16 lg:pt-24"]}>
 	<a
 		href={`/${lang}/contact`}
 		class="footer-logo-wrapper footer-svg-parallax z-9999 block"
@@ -59,13 +66,13 @@ const textColorClass = isDark ? "text-bg-light" : "text-black";
 	</a>
 
 	<div
-		class="section-spacing sm:mt-16 md:mt-24 2xl:mt-32 flex-col-container  lg:grid lg:grid-cols-12 lg:gap-0 lg:w-full"
+		class="section-spacing mt-16 sm:mt-24 2xl:mt-32 flex-col-container  lg:grid lg:grid-cols-12 lg:gap-0 lg:w-full"
 	>
 		<!-- Description -->
 		{
 			description && (
-				<div class="flex-col-container column-gap lg:col-span-7">
-					<p class="text-2xl leading-tight sm:text-[2rem] sm:max-w-[550px]">
+				<div class="flex-col-container column-gap lg:col-span-5">
+					<p class="text-2xl leading-tight sm:text-[1.5rem] sm:max-w-[380px]">
 						{description}
 					</p>
 				</div>
@@ -73,13 +80,13 @@ const textColorClass = isDark ? "text-bg-light" : "text-black";
 		}
 
 		<div
-			class="flex-col-container mt-10 sm:mt-16 md:mt-24 lg:mt-0 sm:flex-row sm:justify-between lg:col-span-5 lg:grid lg:grid-cols-5 lg:gap-0"
+			class="flex-col-container sm:flex-row sm:justify-between mt-16 sm:mt-24 lg:mt-0 lg:col-span-7 lg:grid lg:grid-cols-7 lg:gap-0"
 		>
 			<!-- CTAs -->
 			{
 				ctaColumn && (
 					<div class="flex-col-container column-gap lg:col-span-3">
-						<ul class="flex flex-wrap gap-[15px] text-[18px] w-[288px]">
+						<ul class="flex flex-wrap max-w-[288px] gap-5 text-[1.125rem] leading-tight">
 							{ctaColumn.links.map((link) => (
 								<li>
 									<a
@@ -111,9 +118,10 @@ const textColorClass = isDark ? "text-bg-light" : "text-black";
 
 			<!-- Menu -->
 			<div
-				class="flex-col-container mt-10 sm:mt-0 column-gap lg:col-span-2 lg:justify-self-end"
+				class="flex-col-container flex-row justify-between mt-16 sm:mt-0 column-gap gap-8 sm:gap-24 lg:col-span-4 lg:justify-self-end"
 			>
-				<ul class="flex-col-container gap-[10px] text-[1.125rem] items-end">
+
+				<ul class="flex-col-container gap-[10px] text-[1.125rem]">
 					{
 						menuItems.map((item) => (
 							<li class="">
@@ -125,11 +133,11 @@ const textColorClass = isDark ? "text-bg-light" : "text-black";
 									}
 									rel={
 										item.isExternal
-											? "noopener noreferrer"
+										? "noopener noreferrer"
 											: undefined
 									}
 									title={item.label}
-								>
+									>
 									<span class="footer-link__text">
 										<span class="footer-link__text-base">{item.label}</span>
 										<span class="footer-link__text-overlay" aria-hidden="true">{item.label}</span>
@@ -139,40 +147,65 @@ const textColorClass = isDark ? "text-bg-light" : "text-black";
 						))
 					}
 				</ul>
+				{
+					serviceLinks.length > 0 && (
+						<ul
+							class="flex-col-container gap-[10px] text-[1.125rem] items-end"
+							aria-label="Services"
+						>
+							{serviceLinks.map((link) => (
+								<li>
+									<a
+										href={link.url}
+										class="footer-link"
+										title={link.label}
+									>
+										<span class="footer-link__text">
+											<span class="footer-link__text-base">{link.label}</span>
+											<span class="footer-link__text-overlay" aria-hidden="true">{link.label}</span>
+										</span>
+									</a>
+								</li>
+							))}
+						</ul>
+					)
+				}
 			</div>
 		</div>
 
 		<!-- Logo -->
 		<div
-			class="flex-col-container sm:flex-row sm:items-end  sm:justify-between mt-10 sm:mt-16 md:mt-24 lg:grid lg:grid-cols-12 lg:items-end lg:gap-0 lg:col-span-12 lg:mt-24 xl:mt-48 2xl:flex 2xl:flex-row 2xl:items-end 2xl:w-[calc(100vw-8rem)] 2xl:relative 2xl:left-1/2 2xl:-translate-x-1/2"
+			class="relative flex-col-container flex-row items-end justify-between mt-16 sm:mt-24 lg:mt-50 lg:col-span-12"
 		>
-			{
-				currentLogo ? (
-					<a href={`/${lang}`} class="lg:col-span-7 lg:self-end 2xl:order-2 2xl:flex-1 2xl:flex 2xl:justify-center 2xl:self-end" title={logoAlt}>
-						<img
-							src={currentLogo}
-							alt={logoAlt}
-							class="logo-size w-30"
-							loading="lazy"
-							decoding="async"
-						/>
-					</a>
-				) : (
-					<a
-						href={`/${lang}`}
-						class="text-xl font-display lg:self-end 2xl:order-2 2xl:flex-1 2xl:flex 2xl:justify-center 2xl:self-end"
-						title={logoAlt}
-					>
-						{logoAlt}
-					</a>
-				)
-			}
+			<div class="sm:absolute sm:left-1/2 sm:-translate-x-1/2">
+				{
+					currentLogo ? (
+						<a href={`/${lang}`} class="" title={logoAlt}>
+							<img
+								src={currentLogo}
+								alt={logoAlt}
+								class="logo-size w-12"
+								loading="lazy"
+								decoding="async"
+							/>
+						</a>
+					) : (
+						<a
+							href={`/${lang}`}
+							class="text-xl font-display"
+							title={logoAlt}
+						>
+							{logoAlt}
+						</a>
+					)
+				}
+			</div>
 			<!-- Copyright et liens légaux -->
 			<div
-				class="flex-col-container gap-2 mt-10 sm:mt-0 section-label sm:justify-between sm:items-end lg:grid lg:grid-cols-5 lg:gap-0 lg:col-span-5 lg:self-end 2xl:contents"
+				class="flex-col-container sm:w-full sm:flex-row gap-2 sm:mt-0 text-[1.125rem] sm:justify-between sm:items-end"
 			>
 				<div
-					class="flex-col-container sm:text-right lg:text-left gap-2 lg:col-span-3 lg:justify-end 2xl:order-1 2xl:flex-1 2xl:self-end 2xl:text-left"
+					class="flex-col-container items-end sm:items-start lg:flex-row lg:gap-5"
 				>
 					{
 						legalLinks.map((link) => (
@@ -187,7 +220,7 @@ const textColorClass = isDark ? "text-bg-light" : "text-black";
 				</div>
 				{
 					copyright && (
-						<span class="md:max-w-[200px] lg:col-span-2 lg:justify-self-end lg:self-end 2xl:order-3 2xl:flex-1 2xl:flex 2xl:justify-end 2xl:self-end 2xl:max-w-none">
+						<span class="md:max-w-[200px]">
 							{copyright}
 						</span>
 					)

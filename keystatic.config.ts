@@ -732,6 +732,14 @@ const servicesSchema = {
     label: 'Nom court (section homepage)',
     description: 'Nom affiché dans la liste des services sur la page d\'accueil. Si vide, le H1 est utilisé.',
   }),
+  footerTitle: fields.text({
+    label: 'Titre footer',
+    description: 'Titre affiché dans la liste des services du footer. Si vide, le nom court puis le H1 sont utilisés.',
+  }),
+  footerOrder: fields.integer({
+    label: "Ordre dans le footer",
+    description: "Tri spécifique au footer. Si vide, l'ordre d'affichage du service est utilisé.",
+  }),
   intro: fields.text({
     label: 'Chapeau',
     validation: { isRequired: true },

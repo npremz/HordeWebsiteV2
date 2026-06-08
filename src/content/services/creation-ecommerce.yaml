@@ -18,6 +18,8 @@ seoInternalLinks:
   - /fr/contact
 h1: Création de site e-commerce
 shortName: Création site e-commerce
+footerTitle: E-Commerce
+footerOrder: 2
 intro: >-
   Un e-commerce qui convertit, ce n'est pas qu'une belle boutique. C'est un site
   rapide, des parcours d'achat sans friction, et un référencement qui attire la

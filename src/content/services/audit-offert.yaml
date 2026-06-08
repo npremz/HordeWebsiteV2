@@ -17,6 +17,8 @@ seoInternalLinks:
   - /fr/contact
 h1: Audit de site web offert
 shortName: Audit site web (offert)
+footerTitle: Audit (Offert)
+footerOrder: 0
 intro: >-
   On regarde avec vous ce qui freine votre site. Vitesse, SEO technique, UX,
   conversions. On analyse tous les points qui coincent et on en parle dans un

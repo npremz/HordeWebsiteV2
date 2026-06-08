@@ -20,6 +20,8 @@ seoInternalLinks:
   - /fr/contact
 h1: Création MVP et application web à Bruxelles
 shortName: Creation Sass MVP
+footerTitle: Saas Mvp
+footerOrder: 4
 intro: >-
   Un MVP, ce n'est pas un produit à moitié fait. C'est le périmètre minimal qui
   vous permet de tester une hypothèse business avec de vrais utilisateurs, sans

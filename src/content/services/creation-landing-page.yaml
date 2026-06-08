@@ -20,6 +20,8 @@ seoInternalLinks:
   - /fr/contact
 h1: Création de landing page
 shortName: Landing page sur mesure
+footerTitle: Landing page
+footerOrder: 3
 intro: >-
   Une landing page a un seul objectif : transformer un visiteur en client, en
   inscription ou en acheteur. Chaque élément (le titre, la hiérarchie visuelle,

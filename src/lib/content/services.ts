@@ -13,6 +13,11 @@ export interface ServiceSummary {
   seoRobots: ServiceEntry['data']['seoRobots'];
 }
 
+export interface FooterServiceLink {
+  label: string;
+  url: string;
+}
+
 let servicesPromise: Promise<ServiceEntry[]> | undefined;
 
 export async function getServices(): Promise<ServiceEntry[]> {
@@ -35,4 +40,19 @@ export async function getServiceSummaries(): Promise<ServiceSummary[]> {
     seoDescription: service.data.seoDescription,
     seoRobots: service.data.seoRobots,
   }));
+}
+
+export async function getFooterServiceLinks(): Promise<FooterServiceLink[]> {
+  const services = await getServices();
+
+  return [...services]
+    .sort((a, b) => {
+      const aOrder = a.data.footerOrder ?? a.data.order ?? 0;
+      const bOrder = b.data.footerOrder ?? b.data.order ?? 0;
+      return aOrder - bOrder;
+    })
+    .map((service) => ({
+      label: service.data.footerTitle || service.data.shortName || service.data.h1,
+      url: service.data.seoUrl || `/fr/services/${service.data.slug}`,
+    }));
 }

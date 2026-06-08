@@ -124,6 +124,8 @@ const servicesCollection = defineCollection({
     seoInternalLinks: z.array(z.string()).default([]),
     h1: z.string(),
     shortName: z.string().optional(),
+    footerTitle: z.string().optional(),
+    footerOrder: z.number().optional(),
     intro: z.string(),
     problemTitle: z.string(),
     problemTitleLeft: z.string().optional(),
