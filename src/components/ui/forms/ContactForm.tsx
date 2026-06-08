@@ -239,10 +239,10 @@ export default function ContactForm({
                 <label
                   key={option.value}
                     className={`text-[1.375rem] border-b transition-all duration-300 ease-in-out cursor-pointer ${formData.besoin === option.value
-                    ? (variant === 'dark' ? 'text-white border-white' : 'text-black border-black')
+                    ? (variant === 'dark' ? 'text-button-white border-white' : 'text-black border-black')
                     : errors.besoin
                       ? 'border-err text-err'
-                      : (variant === 'dark' ? 'text-[#A29FA9] border-transparent hover:text-white hover:border-white' : 'text-[#A29FA9] border-transparent hover:text-black hover:border-black')
+                      : (variant === 'dark' ? 'text-[#A29FA9] border-transparent hover:text-button-white hover:border-white' : 'text-[#A29FA9] border-transparent hover:text-black hover:border-black')
                     }`}
                 >
                   <input

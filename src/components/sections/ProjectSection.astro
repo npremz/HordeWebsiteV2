@@ -23,13 +23,13 @@ const projects = (await getLocalizedProjects(lang)).slice(0, 3);
 		<a
 			href={`/${lang}/projets`}
 			title={t.projects.otherProjects}
-			class="hidden lg:flex group relative overflow-hidden font-mono text-[1rem] leading-none uppercase py-6 px-5 justify-center w-fit border border-lines bg-black text-white transition-colors duration-300 ease-in-out cursor-pointer self-end"
+			class="hidden lg:flex group relative overflow-hidden font-mono text-[1rem] leading-none uppercase py-6 px-5 justify-center w-fit border border-lines bg-black text-button-white transition-colors duration-300 ease-in-out cursor-pointer self-end"
 		>
 			<span
 				class="absolute inset-0 bg-button-white translate-x-[calc(-100%-1px)] group-hover:translate-x-0 transition-transform duration-400 ease-[cubic-bezier(0.25,0.46,0.45,0.94)]"
 			></span>
 			<span
-				class="relative z-10 text-white group-hover:text-black transition-colors duration-300"
+				class="relative z-10 text-button-white group-hover:text-black transition-colors duration-300"
 			>
 				{t.projects.otherProjects}
 			</span>
@@ -107,13 +107,13 @@ const projects = (await getLocalizedProjects(lang)).slice(0, 3);
 	<a
 		href={`/${lang}/projets`}
 		title={t.projects.otherProjects}
-		class="lg:hidden group relative overflow-hidden font-mono text-[1rem] leading-none uppercase py-6 px-5 flex justify-center w-full border border-lines bg-black text-white transition-colors duration-300 ease-in-out cursor-pointer mt-10 sm:mt-16"
+		class="lg:hidden group relative overflow-hidden font-mono text-[1rem] leading-none uppercase py-6 px-5 flex justify-center w-full border border-lines bg-black text-button-white transition-colors duration-300 ease-in-out cursor-pointer mt-10 sm:mt-16"
 	>
 		<span
 			class="absolute inset-0 bg-button-white translate-x-[calc(-100%-1px)] group-hover:translate-x-0 transition-transform duration-400 ease-[cubic-bezier(0.25,0.46,0.45,0.94)]"
 		></span>
 		<span
-			class="relative z-10 text-white group-hover:text-black transition-colors duration-300"
+			class="relative z-10 text-button-white group-hover:text-black transition-colors duration-300"
 		>
 			{t.projects.otherProjects}
 		</span>
@@ -147,7 +147,7 @@ const projects = (await getLocalizedProjects(lang)).slice(0, 3);
 
 	@media (hover: hover) {
 		.project-link:hover {
-			color: var(--color-bg-light);
+			color: var(--color-button-white);
 		}
 
 		.project-link:hover::before {
@@ -159,7 +159,7 @@ const projects = (await getLocalizedProjects(lang)).slice(0, 3);
 		}
 
 		.project-link:hover :global(.wrapped) {
-			color: var(--color-bg-light) !important;
+			color: var(--color-button-white) !important;
 		}
 	}
 </style>

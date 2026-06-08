@@ -33,9 +33,9 @@ const {
 
 const emailUrl = ctaButton?.url || 'mailto:hello@hordeagence.com';
 const emailLabel = ctaButton?.label || 'hello@hordeagence.com';
-const textClasses = isDark ? 'text-bg-light' : 'text-black';
+const textClasses = isDark ? 'text-button-white' : 'text-black';
 const desktopLinkClasses = isDark
-  ? 'text-bg-light/85 hover:text-bg-light'
+  ? 'text-button-white/85 hover:text-button-white'
   : 'text-black/70 hover:text-black';
 
 ---
@@ -46,16 +46,16 @@ const desktopLinkClasses = isDark
       <div class="relative z-[5] flex h-full items-center justify-between gap-4" data-mobile-row>
         <a
           href={`/${lang}`}
-          class="pointer-events-auto inline-flex items-center text-white"
+          class="pointer-events-auto inline-flex items-center text-button-white"
           title={logoAlt}
           aria-label={logoAlt}
         >
           <img
             src={logo}
             alt={logoAlt}
-            class="site-header__mobile-logo block h-[13px] w-auto max-w-full"
+            class="site-header__mobile-logo block h-[12px] w-auto max-w-full"
             width="112"
-            height="13"
+            height="12"
             decoding="async"
           />
         </a>
@@ -86,7 +86,7 @@ const desktopLinkClasses = isDark
     <div
       id="site-header-mobile-panel"
       class:list={[
-        'site-header__mobile-panel pointer-events-auto fixed inset-0 z-[2] flex min-h-[100dvh] flex-col bg-[var(--color-black)] px-[15px] pt-[120px] pb-(--gutter) text-white',
+        'site-header__mobile-panel pointer-events-auto fixed inset-0 z-[2] flex min-h-[100dvh] flex-col bg-[var(--color-black)] px-[15px] pt-[120px] pb-(--gutter) text-button-white',
       ]}
       data-header-panel
       hidden
@@ -146,15 +146,15 @@ const desktopLinkClasses = isDark
   <div class="hidden md:block lg:hidden">
     <div class="site-header__tablet-fixed pl-[15px] pr-[40px]">
       <div class="relative flex h-full items-center justify-between gap-6">
-        <div class="site-header__desktop-logo-group flex items-center gap-[40px] text-white">
+        <div class="site-header__desktop-logo-group flex items-center gap-[40px] text-button-white">
           <a
             href={`/${lang}`}
-            class="inline-flex items-center text-white"
+            class="inline-flex items-center text-button-white"
             title={logoAlt}
             aria-label={logoAlt}
           >
-            <span class="logo-animated logo-animated--mark-static h-[13px]">
-              <svg class="logo-full" width="285" height="13" viewBox="0 0 329 15" preserveAspectRatio="xMinYMin meet" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <span class="logo-animated logo-animated--mark-static h-[12px]">
+              <svg class="logo-full" width="285" height="12" viewBox="0 0 329 15" preserveAspectRatio="xMinYMin meet" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                 <g class="logo-full__letter" style="--i:0">
                   <path d="M2.91466 14.9988H0V8.99963H2.91466V14.9988Z" fill="currentColor"/>
                   <path d="M26.2299 14.9988H23.3153V8.99963H26.2299V14.9988Z" fill="currentColor"/>
@@ -207,7 +207,7 @@ const desktopLinkClasses = isDark
                   <path d="M328.846 2.99993L305.531 2.99923V0H328.846V2.99993Z" fill="currentColor"/>
                 </g>
               </svg>
-              <svg class="logo-mark" width="53" height="13" viewBox="0 0 63 16" preserveAspectRatio="xMinYMin meet" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <svg class="logo-mark" width="53" height="12" viewBox="0 0 63 16" preserveAspectRatio="xMinYMin meet" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                 <g class="logo-mark__part" style="--i:0">
                   <rect x="0" y="0" width="3.14058" height="6.28149" fill="currentColor"/>
                   <rect x="0.00976562" y="9.4223" width="3.19997" height="6.17166" fill="currentColor"/>
@@ -231,7 +231,7 @@ const desktopLinkClasses = isDark
           aria-label="Navigation tablette"
           class="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
         >
-          <ul class="site-header__menu-hover-list pointer-events-auto m-0 flex list-none items-center justify-center gap-[40px] p-0 text-[16px] leading-none text-white">
+          <ul class="site-header__menu-hover-list pointer-events-auto m-0 flex list-none items-center justify-center gap-[40px] p-0 text-[16px] leading-none text-button-white">
             {items.map((item) => (
               <li>
                 <a
@@ -247,12 +247,12 @@ const desktopLinkClasses = isDark
           </ul>
         </nav>
 
-        <div class="site-header__menu-hover-list flex items-center gap-[40px] text-white">
+        <div class="site-header__menu-hover-list flex items-center gap-[40px] text-button-white">
           <span class="h-[25px] w-px bg-lines-dark" aria-hidden="true"></span>
           <a
             href={switchUrl}
             hreflang={switchLang}
-            class="site-header__menu-hover-item inline-flex items-center gap-2 whitespace-nowrap text-[16px] leading-none text-white transition-opacity duration-200"
+            class="site-header__menu-hover-item inline-flex items-center gap-2 whitespace-nowrap text-[16px] leading-none text-button-white transition-opacity duration-200"
           >
             {t.nav.switchLang}
             <span aria-hidden="true" class="text-[12px]">( ↗ )</span>
@@ -264,11 +264,11 @@ const desktopLinkClasses = isDark
 
   <div class="hidden lg:block">
     <div class="site-header__desktop-fixed fixed left-[5px] right-[5px] top-[5px] z-[6]" data-desktop-fixed>
-      <div class="site-header__desktop-bar relative flex h-full items-center justify-between gap-6 pl-[15px] pr-[40px]" data-desktop-row>
-        <div class="site-header__desktop-logo-group flex items-center gap-[40px] text-white">
-          <a href={`/${lang}`} class="inline-flex items-center text-white" title={logoAlt} aria-label={logoAlt}>
-            <span class="logo-animated h-[13px]" data-logo-animated>
-              <svg class="logo-full" width="285" height="13" viewBox="0 0 329 15" preserveAspectRatio="xMinYMin meet" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <div class="site-header__desktop-bar relative flex items-start justify-between" data-desktop-row>
+        <div class="site-header__desktop-logo-group flex h-[42px] items-center bg-button-white px-[15px] text-black">
+          <a href={`/${lang}`} class="inline-flex items-center text-black" title={logoAlt} aria-label={logoAlt}>
+            <span class="logo-animated h-[12px]" data-logo-animated>
+              <svg class="logo-full" width="285" height="12" viewBox="0 0 329 15" preserveAspectRatio="xMinYMin meet" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                 <g class="logo-full__letter" style="--i:0">
                   <path d="M2.91466 14.9988H0V8.99963H2.91466V14.9988Z" fill="currentColor"/>
                   <path d="M26.2299 14.9988H23.3153V8.99963H26.2299V14.9988Z" fill="currentColor"/>
@@ -321,7 +321,7 @@ const desktopLinkClasses = isDark
                   <path d="M328.846 2.99993L305.531 2.99923V0H328.846V2.99993Z" fill="currentColor"/>
                 </g>
               </svg>
-              <svg class="logo-mark" width="53" height="13" viewBox="0 0 63 16" preserveAspectRatio="xMinYMin meet" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <svg class="logo-mark" width="53" height="12" viewBox="0 0 63 16" preserveAspectRatio="xMinYMin meet" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                 <g class="logo-mark__part" style="--i:0">
                   <rect x="0" y="0" width="3.14058" height="6.28149" fill="currentColor"/>
                   <rect x="0.00976562" y="9.4223" width="3.19997" height="6.17166" fill="currentColor"/>
@@ -343,9 +343,9 @@ const desktopLinkClasses = isDark
 
         <nav
           aria-label="Navigation desktop"
-          class="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
+          class="site-header__desktop-menu pointer-events-auto flex h-[42px] items-center bg-black px-[20px]"
         >
-          <ul class="site-header__menu-hover-list pointer-events-auto m-0 flex list-none items-center justify-center gap-[40px] p-0 text-[16px] leading-none text-white">
+          <ul class="site-header__menu-hover-list m-0 flex list-none items-center gap-[30px] p-0 text-[16px] leading-none text-button-white">
             {items.map((item) => (
               <li>
                 <a
@@ -358,20 +358,21 @@ const desktopLinkClasses = isDark
                 </a>
               </li>
             ))}
+            <li class="inline-flex items-center gap-2 whitespace-nowrap normal-case">
+              {lang === 'fr' ? (
+                <span aria-current="page">Fr</span>
+              ) : (
+                <a href={switchUrl} hreflang="fr" class="site-header__language-inactive transition-colors duration-200">Fr</a>
+              )}
+              <span class="text-lines-dark" aria-hidden="true">/</span>
+              {lang === 'en' ? (
+                <span aria-current="page">Eng</span>
+              ) : (
+                <a href={switchUrl} hreflang="en" class="site-header__language-inactive transition-colors duration-200">Eng</a>
+              )}
+            </li>
           </ul>
         </nav>
-
-        <div class="site-header__menu-hover-list flex items-center gap-[40px] text-white">
-          <span class="h-[25px] w-px bg-lines-dark" aria-hidden="true"></span>
-          <a
-            href={switchUrl}
-            hreflang={switchLang}
-            class="site-header__menu-hover-item inline-flex items-center gap-2 whitespace-nowrap text-[16px] leading-none text-white transition-opacity duration-200"
-          >
-            {t.nav.switchLang}
-            <span aria-hidden="true" class="text-[12px]">( ↗ )</span>
-          </a>
-        </div>
       </div>
     </div>
   </div>
@@ -385,8 +386,20 @@ const desktopLinkClasses = isDark
   .site-header__desktop-bar {
     height: 42px;
     width: 100%;
-    background: var(--color-black);
-    color: #fff;
+  }
+
+  .site-header__desktop-logo-group .logo-animated,
+  .site-header__desktop-logo-group .logo-full,
+  .site-header__desktop-logo-group .logo-mark {
+    color: var(--color-black);
+  }
+
+  .site-header__language-inactive {
+    color: var(--color-lines-dark);
+  }
+
+  .site-header__language-inactive:hover {
+    color: var(--color-button-white);
   }
 
   .site-header__tablet-fixed {
@@ -596,22 +609,22 @@ const desktopLinkClasses = isDark
   }
 
   .logo-animated {
-    color: #FFFFFF;
+    color: var(--color-button-white);
     display: inline-block;
     position: relative;
-    height: 13px;
+    height: 12px;
     line-height: 0;
   }
 
   .logo-full {
     display: block;
-    color: #FFFFFF;
+    color: var(--color-button-white);
     overflow: hidden;
   }
 
   .logo-mark {
     display: block;
-    color: #FFFFFF;
+    color: var(--color-button-white);
     position: absolute;
     left: 0;
     top: 0;
