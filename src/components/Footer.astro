@@ -28,7 +28,7 @@ const { logo, logoAlt = "Logo", items: menuItems = [] } = navigation;
 // Dark mode colors
 const currentLogo = isDark ? "/images/logo_white.svg" : logo;
 const strokeColor = isDark ? "#4C4B4B" : "#B1B1B1";
-const textColorClass = isDark ? "text-bg-light" : "text-black";
+const textColorClass = isDark ? "text-button-white" : "text-black";
 ---
 
 <footer
@@ -234,7 +234,7 @@ const textColorClass = isDark ? "text-bg-light" : "text-black";
 	}
 
 	[data-variant="dark"] .footer-logo-wrapper::before {
-		background-color: var(--color-bg-light);
+		background-color: var(--color-button-white);
 	}
 
 	@media (min-width: 640px) {
@@ -254,7 +254,7 @@ const textColorClass = isDark ? "text-bg-light" : "text-black";
 	}
 
 	.footer-logo-wrapper:hover .footer-logo {
-		color: var(--color-bg-light);
+		color: var(--color-button-white);
 	}
 
 	[data-variant="dark"] .footer-logo-wrapper:hover .footer-logo {

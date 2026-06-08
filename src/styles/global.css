@@ -186,6 +186,10 @@ body {
   overflow-x: clip;
 }
 
+body:not(.is-homepage) h1 {
+  letter-spacing: -0.02em;
+}
+
 /* ==========================================
    REUSABLE UTILITY CLASSES
    ========================================== */
@@ -203,7 +207,7 @@ body {
   /* Dark variant for dark backgrounds */
   .bg-black .section-label,
   [data-theme="dark"] .section-label {
-    @apply text-white/70;
+    @apply text-button-white/70;
   }
 
   /* Display headings - large decorative titles */

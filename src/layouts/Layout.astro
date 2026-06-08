@@ -35,6 +35,7 @@ interface Props {
   variant?: 'light' | 'dark';
   headerVariant?: 'light' | 'dark';
   showContainerLines?: boolean;
+  isHomepage?: boolean;
 }
 
 const {
@@ -57,11 +58,12 @@ const {
   variant = 'light',
   headerVariant,
   showContainerLines = true,
+  isHomepage = false,
 } = Astro.props;
 
 const t = useTranslations(lang);
 const isDark = variant === 'dark';
-const bodyClasses = isDark ? 'bg-black text-bg-light' : 'bg-bg text-black';
+const bodyClasses = isDark ? 'bg-black text-button-white' : 'bg-bg text-black';
 ---
 
 <!doctype html>
@@ -101,7 +103,7 @@ const bodyClasses = isDark ? 'bg-black text-bg-light' : 'bg-bg text-black';
       });
     </script>
   </head>
-  <body class={`${bodyClasses} ${className || ''}`}>
+  <body class:list={[bodyClasses, className, { 'is-homepage': isHomepage }]}>
     <a href="#main-content" class="skip-link" title={t.a11y.skipToContent}>{t.a11y.skipToContent}</a>
 
     <Header lang={lang} alternateUrl={alternateUrl} theme={headerVariant} />
