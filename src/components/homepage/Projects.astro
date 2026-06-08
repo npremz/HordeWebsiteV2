@@ -16,13 +16,13 @@ const projects = (await getLocalizedProjects(lang)).slice(0, 3);
   <ul class="mt-6 font-display uppercase text-[2.25rem] sm:text-[4rem] md:text-[5rem] text-center">
     {projects.map((project, i) => (
       <>
-        {i > 0 && <li aria-hidden="true" class="h-px bg-lines"></li>}
-        <li class="py-4 sm:py-5 lg:py-6">
+        {i > 0 && <li aria-hidden="true" class="h-0 border-t border-lines"></li>}
+        <li>
           <a
             href={`/${lang}/projets/${project.slug}`}
-            class="project-home-link relative inline-block overflow-hidden"
+            class="project-home-link relative block overflow-hidden pt-3 lg:pt-6"
           >
-            <span class="project-home-link__text relative z-10 block">{project.shortTitle}</span>
+            <span class="project-home-link__text relative z-10 block px-4">{project.shortTitle}</span>
           </a>
         </li>
       </>
@@ -35,18 +35,18 @@ const projects = (await getLocalizedProjects(lang)).slice(0, 3);
     content: "";
     position: absolute;
     inset: 0;
-    background-color: #FFFFFF;
+    background-color: var(--color-black);
     transform: scaleY(0);
     transform-origin: center bottom;
   }
 
   @media (hover: hover) {
     .project-home-link::before {
-      transition: transform 0.25s ease-out;
+      transition: transform 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     }
 
     .project-home-link__text {
-      transition: color 0.15s ease-out;
+      transition: color 0.15s ease-out 0.1s;
     }
 
     .project-home-link:hover::before {
@@ -54,7 +54,7 @@ const projects = (await getLocalizedProjects(lang)).slice(0, 3);
     }
 
     .project-home-link:hover .project-home-link__text {
-      color: var(--color-black);
+      color: var(--color-button-white);
     }
   }
 </style>

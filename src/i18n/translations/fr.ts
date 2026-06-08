@@ -249,6 +249,19 @@ export const fr = {
     about: 'À propos de l\'auteur',
   },
 
+  // Services Page
+  servicesPage: {
+    title: 'Services',
+    description:
+      'Une approche consultative pour comprendre vos utilisateurs et créer des expériences digitales qui relient durablement votre marque à son audience.',
+    heading: 'La bonne solution pour faire grandir votre business',
+    intro:
+      'Audit, refonte web, e-commerce, landing page, MVP SaaS ou optimisation : on choisit la bonne approche pour créer un site rapide, clair et pensé pour le SEO, l’UX et la conversion.',
+    breadcrumbHome: 'Accueil',
+    breadcrumbServices: 'Services',
+    breadcrumbAriaLabel: 'Fil d’Ariane',
+  },
+
   // Footer
   footer: {
     summary: 'en résumé (on sait jamais)',

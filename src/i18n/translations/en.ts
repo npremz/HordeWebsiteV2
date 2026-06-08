@@ -250,6 +250,19 @@ export const en: Translations = {
     about: 'About the author',
   },
 
+  // Services Page
+  servicesPage: {
+    title: 'Services',
+    description:
+      'We take a consultative approach to create digital experiences that build lasting connections between brands and people.',
+    heading: 'The right solution to make your business grow',
+    intro:
+      'Audit, web redesign, e-commerce, landing page, SaaS MVP or optimization: we choose the right approach to build a fast, clear website designed for SEO, UX and conversion.',
+    breadcrumbHome: 'Home',
+    breadcrumbServices: 'Services',
+    breadcrumbAriaLabel: 'Breadcrumb',
+  },
+
   // Footer
   footer: {
     summary: 'in a nutshell (just in case)',

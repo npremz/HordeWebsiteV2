@@ -4,31 +4,65 @@ import { getServiceSummaries } from '../../lib/content/services';
 
 interface Props {
   lang?: Locale;
+  showHeader?: boolean;
+  spacingClass?: string;
 }
 
-const { lang = DEFAULT_LOCALE } = Astro.props;
+const {
+  lang = DEFAULT_LOCALE,
+  showHeader = true,
+  spacingClass = "py-25 text-button-white sm:py-50",
+} = Astro.props;
 const t = useTranslations(lang);
 const services = await getServiceSummaries();
+const serviceShapeBySlug: Record<string, string> = {
+  'audit-offert': '/images/servicesShapes/audit.svg',
+  'refonte-site-web': '/images/servicesShapes/refonte.svg',
+  'creation-ecommerce': '/images/servicesShapes/ecommerce.svg',
+  'creation-landing-page': '/images/servicesShapes/landing.svg',
+  'creation-mvp-saas': '/images/servicesShapes/sass.svg',
+  'optimisation-site-web': '/images/servicesShapes/opti.svg',
+};
 
-const sectionClass = "py-25 text-button-white sm:py-50";
 const headingClass = "text-[1.5rem] sm:text-[2rem] md:text-[2.5rem] lg:text-[3rem]";
 const listOffsetClass = "mt-8 sm:mt-12 md:mt-20";
 const rowLinkClass = "service-link flex items-center justify-between pt-8 pb-7 sm:pt-10 sm:pb-9 lg:pt-12 lg:pb-12";
 const rowTitleClass = "max-w-[280px] text-[1.25rem] leading-none sm:max-w-[unset] sm:text-[1.5rem] md:text-[2rem]";
 ---
 
-<section id="services" class={sectionClass}>
-  <div class="flex justify-between gap-4">
-    <h2 class={headingClass}>{t.homepage.services.title}</h2>
-    <svg class="hidden sm:block mt-2 md:mt-4" width="47" height="20" viewBox="0 0 47 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <rect width="7" height="20" transform="matrix(1 4.37114e-08 8.74228e-08 -1 0 20)" fill="#F4F1F8"/>
-      <rect width="7" height="20" transform="matrix(1 4.37114e-08 8.74228e-08 -1 14 20)" fill="#F4F1F8"/>
-      <rect width="7" height="20" transform="matrix(0.707107 0.707107 0.707107 -0.707107 27.4531 14.5938)" fill="#F4F1F8"/>
-    </svg>
+<section id="services" class:list={["relative", spacingClass]}>
+  {
+    showHeader && (
+      <div class="flex justify-between gap-4">
+        <h2 class={headingClass}>{t.homepage.services.title}</h2>
+        <svg class="hidden sm:block mt-2 md:mt-4" width="47" height="20" viewBox="0 0 47 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect width="7" height="20" transform="matrix(1 4.37114e-08 8.74228e-08 -1 0 20)" fill="#F4F1F8"/>
+          <rect width="7" height="20" transform="matrix(1 4.37114e-08 8.74228e-08 -1 14 20)" fill="#F4F1F8"/>
+          <rect width="7" height="20" transform="matrix(0.707107 0.707107 0.707107 -0.707107 27.4531 14.5938)" fill="#F4F1F8"/>
+        </svg>
+      </div>
+    )
+  }
+
+  <div
+    id="service-hover-shape"
+    class="hidden md:block pointer-events-none fixed z-[9999] overflow-visible"
+    style="transform: translate(-50%, -50%) scale(0); will-change: transform; opacity: 0;"
+  >
+    <img
+      id="service-hover-shape-img"
+      src=""
+      alt=""
+      class="size-[180px] object-contain"
+    />
   </div>
-  <ol class={listOffsetClass}>
+
+  <ol class:list={[showHeader && listOffsetClass]}>
     {services.map((service) => (
-      <li class="border-b border-lines-dark last:border-b-0">
+      <li
+        class="service-item border-b border-lines-dark last:border-b-0"
+        data-shape={serviceShapeBySlug[service.slug] || ''}
+      >
         <a
           href={service.url}
           title={service.title}
@@ -123,3 +157,116 @@ const rowTitleClass = "max-w-[280px] text-[1.25rem] leading-none sm:max-w-[unset
     }
   }
 </style>
+
+<script>
+  function initServiceHoverShape() {
+    const isMobile =
+      window.matchMedia("(max-width: 768px)").matches ||
+      "ontouchstart" in window;
+    if (isMobile || !window.matchMedia("(hover: hover)").matches) return;
+
+    const container = document.getElementById("service-hover-shape");
+    const img = document.getElementById(
+      "service-hover-shape-img",
+    ) as HTMLImageElement;
+    const serviceItems = document.querySelectorAll(".service-item");
+
+    if (!container || !img || serviceItems.length === 0) return;
+    const containerEl = container as HTMLElement;
+
+    let mouseX = 0;
+    let mouseY = 0;
+    let currentX = 0;
+    let currentY = 0;
+    let currentScale = 0;
+    let targetScale = 0;
+    let animationId: number | null = null;
+    let currentElement: HTMLElement | null = null;
+
+    function animate() {
+      const posEase = 0.1;
+      const scaleEase = 0.08;
+      currentX += (mouseX - currentX) * posEase;
+      currentY += (mouseY - currentY) * posEase;
+      currentScale += (targetScale - currentScale) * scaleEase;
+
+      if (targetScale === 0 && currentScale < 0.01) {
+        currentScale = 0;
+      }
+
+      containerEl.style.left = `${currentX}px`;
+      containerEl.style.top = `${currentY}px`;
+      containerEl.style.transform = `translate(-50%, -50%) scale(${currentScale})`;
+      containerEl.style.opacity =
+        targetScale === 0 && currentScale < 0.01 ? "0" : "1";
+
+      const isAnimating =
+        Math.abs(currentX - mouseX) > 0.1 ||
+        Math.abs(currentY - mouseY) > 0.1 ||
+        Math.abs(currentScale - targetScale) > 0.01;
+
+      if (isAnimating) {
+        animationId = requestAnimationFrame(animate);
+      } else {
+        animationId = null;
+      }
+    }
+
+    function startAnimation() {
+      if (!animationId) {
+        animationId = requestAnimationFrame(animate);
+      }
+    }
+
+    function showShape(element: HTMLElement) {
+      const shapeSrc = element.dataset.shape;
+      if (!shapeSrc) return;
+      img.src = shapeSrc;
+    }
+
+    serviceItems.forEach((item) => {
+      const element = item as HTMLElement;
+
+      element.addEventListener("mouseenter", () => {
+        const shapeSrc = element.dataset.shape;
+        if (!shapeSrc) return;
+
+        if (currentElement !== element) {
+          currentX = mouseX;
+          currentY = mouseY;
+          currentScale = 0;
+        }
+
+        currentElement = element;
+        showShape(element);
+        targetScale = 1;
+        startAnimation();
+      });
+
+      element.addEventListener("mouseleave", () => {
+        currentElement = null;
+        targetScale = 0;
+        startAnimation();
+      });
+
+      element.addEventListener("mousemove", (e) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+        startAnimation();
+      });
+    });
+
+    document.addEventListener(
+      "astro:before-swap",
+      () => {
+        if (animationId) {
+          cancelAnimationFrame(animationId);
+        }
+      },
+      { once: true },
+    );
+  }
+
+  initServiceHoverShape();
+  document.addEventListener("astro:after-swap", initServiceHoverShape);
+</script>
