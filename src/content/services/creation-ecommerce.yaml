@@ -20,6 +20,142 @@ h1: Création de site e-commerce
 shortName: Création site e-commerce
 footerTitle: E-Commerce
 footerOrder: 2
+translations:
+  en:
+    seoUrl: /en/services/creation-ecommerce
+    seoPrimaryKeyword: ecommerce website development brussels
+    seoSecondaryKeywords:
+      - ecommerce agency belgium
+      - online store brussels
+      - shopify development brussels
+      - custom online store
+    seoTitle: E-commerce website development in Brussels | Horde
+    seoDescription: >-
+      A fast online store built for SEO and conversion. We create Shopify or
+      custom e-commerce websites with UX and performance at the core.
+    seoInternalLinks:
+      - /en/services/audit-offert
+      - /en/services/creation-landing-page
+      - /en/projets
+      - /en/contact
+    h1: E-commerce website development
+    shortName: E-commerce website
+    footerTitle: E-Commerce
+    intro: >-
+      An e-commerce website that converts is not just a good-looking store. It
+      is fast, has frictionless purchase journeys and attracts the right
+      audience through search. We build stores that make your products easy to
+      buy.
+    problemTitle: What separates an e-commerce site that sells from one that does not
+    problemBlocks:
+      - kind: paragraph
+        body: >-
+          Most online stores lose customers on details that seem small: two extra
+          seconds of loading time, a 12-step address form or product images that
+          take too long on mobile. These frictions add up and show in cart
+          abandonment.
+        items: []
+      - kind: paragraph
+        body: >-
+          The e-commerce websites we build have one goal: help users complete
+          the purchase. Every decision supports that, from the technical base to
+          the size of the buttons.
+        items: []
+    offerTitle: Our e-commerce solutions
+    offerItems:
+      - title: Shopify stores
+        body: >-
+          Setup, custom theme or advanced customization, selected apps and an
+          optimized checkout. Shopify is our recommendation for most stores: it
+          is robust, scalable and maintained.
+      - title: Custom e-commerce
+        body: >-
+          For needs Shopify does not cover: complex catalogues, specific
+          business logic, ERP/WMS integrations or B2B models. We build on solid
+          foundations with modern headless commerce stacks.
+      - title: E-commerce migration
+        body: >-
+          If your current store no longer fits, we migrate to a better platform
+          without losing order history, customer reviews or existing SEO value.
+    methodTitle: Our e-commerce standards
+    methodSteps:
+      - title: UX & purchase journey
+        body: >-
+          Product pages designed to convert, faceted navigation, simplified
+          checkout and clear error handling. We map the journey before designing.
+      - title: Technical performance
+        body: >-
+          WebP/AVIF images, lazy loading, minimal JavaScript and healthy Core Web
+          Vitals. A slow mobile store leaves money on the table.
+      - title: E-commerce SEO
+        body: >-
+          Product structured data, canonical tags for variants, product sitemap
+          and clean URLs. The foundations for Google Shopping and organic
+          visibility.
+      - title: Payment & logistics
+        body: >-
+          Stripe, Mollie, Bancontact and PayPal integrations. Carrier connections
+          like Bpost, DPD or Sendcloud. We configure what you need, not features
+          you will never use.
+    deliverablesTitle: What is delivered
+    deliverables:
+      - Store live in production, fast on mobile and desktop
+      - Healthy Core Web Vitals
+      - Technical e-commerce SEO in place from launch
+      - Training for catalogue and order management
+      - Documentation for settings and integrations
+      - 30-day post-launch monitoring included
+    exclusionsTitle: What we avoid doing
+    exclusionsParagraphs:
+      - >-
+        We do not deliver a default Shopify install with a free theme and a few
+        apps. We do not launch without testing the mobile checkout. And we do
+        not code before understanding your catalogue, carriers and logistics
+        constraints.
+    faqTitle: Answers to common questions
+    faqItems:
+      - question: Shopify or WooCommerce?
+        answer: >-
+          For most projects, Shopify. It is faster to launch, more stable and
+          requires less maintenance. WooCommerce can make sense if you are
+          already on WordPress with a limited catalogue.
+      - question: How much does an e-commerce website cost?
+        answer: >-
+          A custom Shopify store usually ranges from 5,000 EUR to 12,000 EUR. A
+          custom e-commerce build with specific logic starts around 15,000 EUR.
+      - question: Can I manage products myself afterward?
+        answer: >-
+          Yes. That is non-negotiable. We train your team and document
+          everything so you do not depend on us to add products.
+      - question: Do you handle SEO after launch?
+        answer: >-
+          We deliver a site with solid SEO foundations. Ongoing SEO content and
+          link building are not our core service, but we can refer specialists.
+      - question: Can my current store be migrated?
+        answer: >-
+          In almost every case, yes. We evaluate product data, orders, reviews
+          and redirects during the initial audit.
+    ctaTitle: Tell us about your store
+    ctaParagraphs:
+      - >-
+        Fill in the form with your details and a member of our team will contact
+        you for a no-commitment consultation.
+      - >-
+        You can also email us at hello@hordeagence.com
+    primaryCtaLabel: Let's discuss your project
+    primaryCtaUrl: /en/contact
+    secondaryCtaLabel: View our work
+    secondaryCtaUrl: /en/projets
+    reassurance: First exchange with no commitment. Reply within 24h.
+    recommendedLinks:
+      - anchor: audit your current store
+        url: /en/services/audit-offert
+      - anchor: product landing pages
+        url: /en/services/creation-landing-page
+      - anchor: our work
+        url: /en/projets
+      - anchor: contact us
+        url: /en/contact
 intro: >-
   Un e-commerce qui convertit, ce n'est pas qu'une belle boutique. C'est un site
   rapide, des parcours d'achat sans friction, et un référencement qui attire la

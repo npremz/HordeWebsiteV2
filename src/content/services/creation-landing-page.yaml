@@ -22,6 +22,153 @@ h1: Création de landing page
 shortName: Landing page sur mesure
 footerTitle: Landing page
 footerOrder: 3
+translations:
+  en:
+    seoUrl: /en/services/creation-landing-page
+    seoPrimaryKeyword: landing page development brussels
+    seoSecondaryKeywords:
+      - conversion landing page
+      - custom landing page
+      - google ads landing page
+      - landing page belgium
+      - product page conversion
+    seoTitle: Landing page development in Brussels | Horde
+    seoDescription: >-
+      A landing page that turns clicks into leads or sales. Built for Google
+      Ads, SEO or social campaigns, fast to ship and performance-focused.
+    seoInternalLinks:
+      - /en/services/audit-offert
+      - /en/services/creation-ecommerce
+      - /en/services/creation-mvp-saas
+      - /en/contact
+    h1: Landing page development
+    shortName: Custom landing page
+    footerTitle: Landing page
+    intro: >-
+      A landing page has one goal: turn a visitor into a client, signup or
+      buyer. The headline, visual hierarchy, CTA and speed all serve that goal.
+      We create pages that do the job.
+    problemTitle: What it is for
+    problemBlocks:
+      - kind: item
+        title: Google Ads and Meta Ads campaigns
+        body: >-
+          A dedicated landing page converts better than a generic homepage:
+          tighter message match, focused copy and no leaks to unrelated pages.
+          It can also improve campaign Quality Score.
+        items: []
+      - kind: item
+        title: Product or offer launches
+        body: >-
+          New service, product or seasonal offer. A page built specifically for
+          the launch, with a clear message and a form or direct purchase flow.
+        items: []
+      - kind: item
+        title: B2B lead capture
+        body: >-
+          White paper, webinar, demo or free trial. We build the page around the
+          value you offer, not around generic brand copy.
+        items: []
+      - kind: item
+        title: A/B testing
+        body: >-
+          If you already have a landing page, we can create a variant to test a
+          message or design hypothesis and measure the result.
+        items: []
+    offerTitle: What we include in your landing page
+    offerItems:
+      - title: Conversion-focused copywriting
+        body: >-
+          We write or rework the copy with a clear hierarchy: problem, solution,
+          proof, action. No three-paragraph intro before the point.
+      - title: Distraction-free design
+        body: >-
+          A landing page is not a full website. No menu with eight links, no
+          social-heavy footer. The layout guides the eye to the CTA.
+      - title: Mobile-first performance
+        body: >-
+          Most ad clicks happen on mobile. We build performance-first with
+          optimized images, minimal JavaScript and fast loading.
+      - title: Integrations
+        body: >-
+          CRM-connected forms, Meta pixel, Google Tag Manager and conversion
+          events. Tracking is configured correctly from the start.
+    methodTitle: Our method for a strong page
+    methodSteps:
+      - title: Brief
+        body: >-
+          You describe the offer, audience, tone and traffic source. We ask the
+          missing questions.
+      - title: Structure & copywriting
+        body: >-
+          We propose the page structure, blocks and messages before moving to
+          design.
+      - title: Design & development
+        body: Once the design is approved, we build with performance and mobile at the center.
+      - title: Integrations & launch
+        body: Tracking, CRM and form setup. We publish on your domain.
+    deliverablesTitle: What is delivered
+    deliverables:
+      - Page live on your domain
+      - Structured copy optimized for the objective
+      - PageSpeed score above 90 on mobile
+      - Tracking configured (GTM, conversion events, pixel)
+      - CRM connection if needed
+      - A/B variants available at a reduced rate
+    exclusionsTitle: What we avoid doing
+    exclusionsParagraphs:
+      - >-
+        We do not ship a surface-level Unbounce or Webflow template. We do not
+        promise a fake conversion rate. And we do not rush a weak page in three
+        days. We do serious work in reasonable timelines.
+    faqTitle: Answers to common questions
+    faqItems:
+      - question: Do you write the content?
+        answer: >-
+          Yes, copywriting is included if you want it. You provide the brief and
+          we write, or you provide copy and we structure and optimize it.
+      - question: How much does it cost?
+        answer: >-
+          Usually between 1,200 EUR and 4,000 EUR depending on complexity,
+          sections, video and CRM integrations.
+      - question: Will the page be optimized for SEO?
+        answer: >-
+          For ad pages, not necessarily; that is not always their job. For
+          organic landing pages, yes: tags, structure and performance are
+          planned accordingly.
+      - question: Do you handle hosting?
+        answer: >-
+          We publish on your domain and hosting, or recommend a setup. We do not
+          resell hosting with hidden margin.
+      - question: Can you create variants for testing?
+        answer: >-
+          Yes. We can create 2 to 3 message variants for an A/B test at a lower
+          rate for the same page.
+      - question: What is the timeline?
+        answer: >-
+          A simple landing page takes 1 to 2 weeks. A more complex one with
+          animations, video and multiple integrations takes 2 to 4 weeks.
+    ctaTitle: Launch your next campaign with a page built to convert
+    ctaParagraphs:
+      - >-
+        Fill in the form with your details and a member of our team will contact
+        you for a no-commitment consultation.
+      - >-
+        You can also email us at hello@hordeagence.com
+    primaryCtaLabel: Request a quick quote
+    primaryCtaUrl: /en/contact
+    secondaryCtaLabel: View our work
+    secondaryCtaUrl: /en/projets
+    reassurance: Reply within 24h. Delivery in 1 to 2 weeks.
+    recommendedLinks:
+      - anchor: audit your current page
+        url: /en/services/audit-offert
+      - anchor: complete online store
+        url: /en/services/creation-ecommerce
+      - anchor: SaaS product or app
+        url: /en/services/creation-mvp-saas
+      - anchor: contact us
+        url: /en/contact
 intro: >-
   Une landing page a un seul objectif : transformer un visiteur en client, en
   inscription ou en acheteur. Chaque élément (le titre, la hiérarchie visuelle,

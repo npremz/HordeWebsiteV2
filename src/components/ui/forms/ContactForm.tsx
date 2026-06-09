@@ -43,6 +43,8 @@ export interface FormTranslations {
   errorMessage: string;
   requiredField: string;
   invalidEmail: string;
+  maxLengthPrefix: string;
+  maxLengthSuffix: string;
   options: {
     auditOffert: string;
     creationEcommerce: string;
@@ -113,6 +115,7 @@ export default function ContactForm({
 
   const validateForm = (): boolean => {
     const newErrors: FormErrors = {};
+    const maxLengthMessage = (maxLength: number) => `${t.maxLengthPrefix} ${maxLength} ${t.maxLengthSuffix}`;
 
     if (!hideNeedField && !formData.besoin) {
       newErrors.besoin = t.requiredField;
@@ -121,13 +124,13 @@ export default function ContactForm({
     if (!formData.objectif.trim()) {
       newErrors.objectif = t.requiredField;
     } else if (formData.objectif.length > MAX_LENGTHS.objectif) {
-      newErrors.objectif = `Max ${MAX_LENGTHS.objectif} caractères`;
+      newErrors.objectif = maxLengthMessage(MAX_LENGTHS.objectif);
     }
 
     if (!formData.nom.trim()) {
       newErrors.nom = t.requiredField;
     } else if (formData.nom.length > MAX_LENGTHS.nom) {
-      newErrors.nom = `Max ${MAX_LENGTHS.nom} caractères`;
+      newErrors.nom = maxLengthMessage(MAX_LENGTHS.nom);
     }
 
     if (!formData.email.trim()) {
@@ -135,7 +138,7 @@ export default function ContactForm({
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
       newErrors.email = t.invalidEmail;
     } else if (formData.email.length > MAX_LENGTHS.email) {
-      newErrors.email = `Max ${MAX_LENGTHS.email} caractères`;
+      newErrors.email = maxLengthMessage(MAX_LENGTHS.email);
     }
 
     setErrors(newErrors);

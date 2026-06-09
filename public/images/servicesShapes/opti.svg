@@ -1,21 +1,21 @@
 <svg width="305" height="304" viewBox="0 0 305 304" fill="none" xmlns="http://www.w3.org/2000/svg">
-<rect x="201.5" y="201.5" width="99" height="99" fill="#16191B" stroke="#5C5E5F"/>
+<rect x="201.5" y="201.5" width="99" height="99" fill="white" stroke="#5C5E5F"/>
 <path d="M251 201.5H300.5V300.5H201.5V251C201.5 223.662 223.662 201.5 251 201.5Z" fill="white" stroke="#5C5E5F"/>
-<rect x="102.5" y="201.5" width="99" height="99" fill="#16191B" stroke="#5C5E5F"/>
+<rect x="102.5" y="201.5" width="99" height="99" fill="white" stroke="#5C5E5F"/>
 <path d="M152 201.5C179.338 201.5 201.5 223.662 201.5 251C201.5 278.338 179.338 300.5 152 300.5H102.5V251C102.5 223.662 124.662 201.5 152 201.5Z" fill="white" stroke="#5C5E5F"/>
-<rect x="3.5" y="201.5" width="99" height="99" fill="#16191B" stroke="#5C5E5F"/>
+<rect x="3.5" y="201.5" width="99" height="99" fill="white" stroke="#5C5E5F"/>
 <path d="M53 201.5C80.3381 201.5 102.5 223.662 102.5 251V300.5H3.5V201.5H53Z" fill="white" stroke="#5C5E5F"/>
-<rect x="201.5" y="102.5" width="99" height="99" fill="#16191B" stroke="#5C5E5F"/>
+<rect x="201.5" y="102.5" width="99" height="99" fill="white" stroke="#5C5E5F"/>
 <path d="M251 102.5C278.338 102.5 300.5 124.662 300.5 152V201.5H251C223.662 201.5 201.5 179.338 201.5 152C201.5 124.662 223.662 102.5 251 102.5Z" fill="white" stroke="#5C5E5F"/>
-<rect x="201.5" y="3.5" width="99" height="99" fill="#16191B" stroke="#5C5E5F"/>
+<rect x="201.5" y="3.5" width="99" height="99" fill="white" stroke="#5C5E5F"/>
 <path d="M300.5 3.5V102.5H251C223.662 102.5 201.5 80.3381 201.5 53V3.5H300.5Z" fill="white" stroke="#5C5E5F"/>
-<rect x="102.5" y="102.5" width="99" height="99" fill="#16191B" stroke="#5C5E5F"/>
+<rect x="102.5" y="102.5" width="99" height="99" fill="white" stroke="#5C5E5F"/>
 <rect x="102.5" y="102.5" width="99" height="99" rx="49.5" fill="white" stroke="#5C5E5F"/>
-<rect x="102.5" y="3.5" width="99" height="99" fill="#16191B" stroke="#5C5E5F"/>
+<rect x="102.5" y="3.5" width="99" height="99" fill="white" stroke="#5C5E5F"/>
 <path d="M152 3.5H201.5V53C201.5 80.3381 179.338 102.5 152 102.5C124.662 102.5 102.5 80.3381 102.5 53C102.5 25.6619 124.662 3.5 152 3.5Z" fill="white" stroke="#5C5E5F"/>
-<rect x="3.5" y="102.5" width="99" height="99" fill="#16191B" stroke="#5C5E5F"/>
+<rect x="3.5" y="102.5" width="99" height="99" fill="white" stroke="#5C5E5F"/>
 <path d="M53 102.5C80.3381 102.5 102.5 124.662 102.5 152C102.5 179.338 80.3381 201.5 53 201.5C25.6619 201.5 3.5 179.338 3.5 152V102.5H53Z" fill="white" stroke="#5C5E5F"/>
-<rect x="3.5" y="3.5" width="99" height="99" fill="#16191B" stroke="#5C5E5F"/>
+<rect x="3.5" y="3.5" width="99" height="99" fill="white" stroke="#5C5E5F"/>
 <path d="M102.5 3.5V53C102.5 80.3381 80.3381 102.5 53 102.5H3.5V3.5H102.5Z" fill="white" stroke="#5C5E5F"/>
 <rect width="7" height="7" fill="white"/>
 <rect y="297" width="7" height="7" fill="white"/>

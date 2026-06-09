@@ -6,6 +6,7 @@ import {
   OG_LOCALE_CODES,
   type Locale,
   getAlternateUrls,
+  useTranslations,
 } from '../i18n';
 import { getSiteSettings } from '../lib/site-data';
 
@@ -48,6 +49,7 @@ const THEME_COLOR_DARK = '#1a1a1a';
 
 // Get lang from props, default to 'fr'
 const lang = Astro.props.lang || DEFAULT_LOCALE;
+const t = useTranslations(lang);
 const ogLocale = OG_LOCALE_CODES[lang];
 const siteSettings = await getSiteSettings(lang);
 
@@ -106,6 +108,9 @@ const sameAs = [
   'https://www.instagram.com/hordeagencebxl/',
   'https://github.com/npremz',
 ];
+const structuredServiceDescription = t.seo.serviceDescription;
+const structuredServiceSlogan = t.seo.serviceSlogan;
+const structuredContactUrl = `${normalizedSiteUrl}/${lang}/contact`;
 ---
 
 <!-- Essential Meta Tags -->
@@ -211,7 +216,7 @@ const sameAs = [
       "@type": "ProfessionalService",
       "@id": `${normalizedSiteUrl}#service`,
       "name": siteName,
-      "description": "Horde Agence, agence web à Bruxelles spécialisée en sites web rapides et sur mesure",
+      "description": structuredServiceDescription,
       "url": Astro.site?.href,
       "image": new URL(siteSettings.defaultOgImage, Astro.site).href,
       "address": {
@@ -240,7 +245,7 @@ const sameAs = [
       "contactPoint": {
         "@type": "ContactPoint",
         "contactType": "customer service",
-        "url": `${normalizedSiteUrl}/fr/contact`,
+        "url": structuredContactUrl,
         "email": "hello@hordeagence.com",
         "availableLanguage": ["fr-BE", "en-US"]
       },
@@ -257,7 +262,7 @@ const sameAs = [
         "SEO",
         "Interface Design"
       ],
-      "slogan": "Interfaces ultra-rapides qui convertissent"
+      "slogan": structuredServiceSlogan
     }
   ],
 })} />

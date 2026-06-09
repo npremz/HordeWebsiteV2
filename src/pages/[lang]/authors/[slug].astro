@@ -2,7 +2,7 @@
 import Layout from '../../../layouts/Layout.astro';
 import Footer from '../../../components/Footer.astro';
 import { Image } from 'astro:assets';
-import { SUPPORTED_LOCALES, type Locale } from '../../../i18n';
+import { SUPPORTED_LOCALES, type Locale, useTranslations } from '../../../i18n';
 import {
   type AuthorEntry,
   getAuthors,
@@ -24,6 +24,7 @@ export async function getStaticPaths() {
 }
 
 const { author, lang } = Astro.props as { author: AuthorEntry; lang: Locale };
+const t = useTranslations(lang);
 const localizedAuthor = localizeAuthor(author, lang);
 const name = localizedAuthor.name;
 const role = localizedAuthor.role;
@@ -91,7 +92,7 @@ function formatDate(date: Date, locale: string): string {
     <header class="pb-10 sm:pb-16 border-b border-lines">
       <div class="flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
         <div class="max-w-3xl">
-          <p class="section-label mb-4">{lang === 'fr' ? 'Auteur' : 'Author'}</p>
+          <p class="section-label mb-4">{t.authorsPage.label}</p>
           <h1 class="font-display text-[2rem] md:text-[2.5rem] lg:text-[3rem] leading-[1.1] uppercase">{name}</h1>
           {role && <p class="mt-6 text-[1.375rem]">{role}</p>}
           {bio && <p class="mt-8 text-[1.375rem] leading-relaxed max-w-2xl">{bio}</p>}
@@ -119,7 +120,7 @@ function formatDate(date: Date, locale: string): string {
     </header>
 
     <section class="mt-10 sm:mt-16">
-      <h2 class="section-label mb-8">{lang === 'fr' ? 'Articles signés' : 'Articles by this author'}</h2>
+      <h2 class="section-label mb-8">{t.authorsPage.articlesByAuthor}</h2>
       {authoredPosts.length > 0 ? (
         <div class="border-t border-lines">
           {authoredPosts.map((post) => (
@@ -133,7 +134,7 @@ function formatDate(date: Date, locale: string): string {
           ))}
         </div>
       ) : (
-        <p class="text-black/60">{lang === 'fr' ? 'Aucun article publié pour le moment.' : 'No published articles yet.'}</p>
+        <p class="text-black/60">{t.authorsPage.emptyState}</p>
       )}
     </section>
   </article>

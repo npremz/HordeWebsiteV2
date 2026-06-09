@@ -20,7 +20,7 @@ import {
   getProjectServiceEntries,
   getProjectServiceHref,
   getProjectServiceIntro,
-  getProjectServiceLabel,
+  getLocalizedProjectServiceLabel,
   getProjectServiceTitle,
   getProjectServices,
 } from '../../../lib/projectServices';
@@ -90,7 +90,7 @@ const serviceFilters = projectServices
     serviceFilterProjects.some((project) => project.services.includes(service.data.slug)),
   )
   .map((service) => ({
-    label: projectFilterLabels[service.data.slug]?.[lang] || getProjectServiceLabel(service),
+    label: projectFilterLabels[service.data.slug]?.[lang] || getLocalizedProjectServiceLabel(service, lang),
     href: getProjectServiceHref(service.data.slug, lang),
   }));
 
@@ -154,7 +154,7 @@ if (props.kind === 'project') {
   );
 
   pageTitle = getProjectServiceTitle(service, lang);
-  pageDescription = getProjectServiceDescription(service);
+  pageDescription = getProjectServiceDescription(service, lang);
   pageContent = {
     kind: 'service',
     serviceSlug: service.data.slug,
@@ -163,7 +163,7 @@ if (props.kind === 'project') {
     breadcrumbItems: [
       { label: projectCopy.breadcrumbHome, href: `/${lang}` },
       { label: projectCopy.breadcrumbProjects, href: `/${lang}/projets` },
-      { label: getProjectServiceLabel(service) },
+      { label: getLocalizedProjectServiceLabel(service, lang) },
     ],
   };
 }
@@ -222,7 +222,7 @@ if (props.kind === 'project') {
                   {pageContent.services.map((serviceSlug) => (
                     <li>
                       <a href={getProjectServiceHref(serviceSlug, lang)} class="underline! underline-offset-2">
-                        {getProjectServiceLabel(projectServices.find((service) => service.data.slug === serviceSlug)!)}
+                        {getLocalizedProjectServiceLabel(projectServices.find((service) => service.data.slug === serviceSlug)!, lang)}
                       </a>
                     </li>
                   ))}
@@ -356,7 +356,7 @@ if (props.kind === 'project') {
     <ProjectsListingPage
       projects={pageContent.projects}
       lang={lang}
-      intro={getProjectServiceIntro(pageContent.service)}
+      intro={getProjectServiceIntro(pageContent.service, lang)}
       allLabel={projectCopy.allProjects}
       filters={serviceFilters}
     />

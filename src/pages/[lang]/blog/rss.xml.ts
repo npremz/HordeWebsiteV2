@@ -1,6 +1,6 @@
 import rss from '@astrojs/rss';
 import type { APIContext } from 'astro';
-import { SUPPORTED_LOCALES, type Locale } from '../../../i18n';
+import { SUPPORTED_LOCALES, type Locale, useTranslations } from '../../../i18n';
 import { getLocalizedPosts } from '../../../lib/content/blog';
 
 export function getStaticPaths() {
@@ -13,15 +13,14 @@ export const prerender = true;
 
 export async function GET(context: APIContext) {
   const lang = context.params.lang as Locale;
+  const t = useTranslations(lang);
   const posts = await getLocalizedPosts(lang);
 
   const siteUrl = (context.site?.toString() || 'https://hordeagence.com').replace(/\/$/, '');
 
   return rss({
-    title: lang === 'fr' ? 'Blog Horde - Agence Web UX Bruxelles' : 'Horde Blog - Brussels UX Web Agency',
-    description: lang === 'fr'
-      ? 'Articles et conseils sur le développement web, l\'UX design et les performances par Horde, agence digitale à Bruxelles.'
-      : 'Articles and tips on web development, UX design and performance by Horde, digital agency in Brussels.',
+    title: t.blogPage.rssTitle,
+    description: t.blogPage.rssDescription,
     site: siteUrl,
     items: posts.map((post) => ({
       title: post.title,

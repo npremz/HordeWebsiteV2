@@ -17,6 +17,7 @@ export interface LocalizedAuthor {
 
 export interface LocalizedCategory {
   entry: CategoryEntry;
+  baseSlug: string;
   slug: string;
   name: string;
   description?: string;
@@ -71,6 +72,14 @@ export function slugifyTag(tag: string): string {
     .replace(/(^-|-$)/g, '');
 }
 
+export function getPostTags(post: PostEntry, lang: Locale): string[] {
+  if (lang === 'en') {
+    return post.data.tags_en?.length ? post.data.tags_en : post.data.tags;
+  }
+
+  return post.data.tags;
+}
+
 export async function getPosts(): Promise<PostEntry[]> {
   postsPromise ??= getCollection('posts');
   return postsPromise;
@@ -101,7 +110,8 @@ export function localizeAuthor(author: AuthorEntry, lang: Locale): LocalizedAuth
 export function localizeCategory(category: CategoryEntry, lang: Locale): LocalizedCategory {
   return {
     entry: category,
-    slug: category.data.slug,
+    baseSlug: category.data.slug,
+    slug: lang === 'en' ? category.data.slug_en || category.data.slug : category.data.slug,
     name: lang === 'fr' ? category.data.name_fr : category.data.name_en,
     description: lang === 'fr' ? category.data.description_fr : category.data.description_en,
     color: category.data.color,
@@ -144,7 +154,7 @@ export function localizePost(
     modifiedDate: post.data.modifiedDate,
     readingTime: post.data.readingTime || 5,
     featured: post.data.featured,
-    tags: post.data.tags || [],
+    tags: getPostTags(post, lang),
     keyTakeaways: lang === 'fr' ? post.data.keyTakeaways_fr || [] : post.data.keyTakeaways_en || [],
     authorSlug: post.data.author,
     authorName: author?.name || 'Horde',
@@ -199,6 +209,17 @@ export async function getLocalizedPostsByCategory(
 export async function getLocalizedPostsByTag(tag: string, lang: Locale): Promise<LocalizedPost[]> {
   const posts = await getLocalizedPosts(lang);
   return posts.filter((post) => post.tags.includes(tag));
+}
+
+export async function getLocalizedTags(lang: Locale): Promise<string[]> {
+  const posts = await getPosts();
+  const tags = new Set<string>();
+
+  posts.forEach((post) => {
+    getPostTags(post, lang).forEach((tag) => tags.add(tag));
+  });
+
+  return Array.from(tags);
 }
 
 export async function getLocalizedAuthorPosts(

@@ -14,14 +14,14 @@ const {
   spacingClass = "py-25 text-button-white sm:py-50",
 } = Astro.props;
 const t = useTranslations(lang);
-const services = await getServiceSummaries();
-const serviceShapeBySlug: Record<string, string> = {
-  'audit-offert': '/images/servicesShapes/audit.svg',
-  'refonte-site-web': '/images/servicesShapes/refonte.svg',
-  'creation-ecommerce': '/images/servicesShapes/ecommerce.svg',
-  'creation-landing-page': '/images/servicesShapes/landing.svg',
-  'creation-mvp-saas': '/images/servicesShapes/sass.svg',
-  'optimisation-site-web': '/images/servicesShapes/opti.svg',
+const services = await getServiceSummaries(lang);
+const serviceShapeKeyBySlug: Record<string, string> = {
+  'audit-offert': 'audit',
+  'refonte-site-web': 'refonte',
+  'creation-ecommerce': 'ecommerce',
+  'creation-landing-page': 'landing',
+  'creation-mvp-saas': 'sass',
+  'optimisation-site-web': 'opti',
 };
 
 const headingClass = "text-[1.5rem] sm:text-[2rem] md:text-[2.5rem] lg:text-[3rem]";
@@ -45,23 +45,40 @@ const rowTitleClass = "max-w-[280px] text-[1.25rem] leading-none sm:max-w-[unset
   }
 
   <div
-    id="service-hover-shape"
-    class="hidden md:block pointer-events-none fixed z-[9999] overflow-visible"
-    style="transform: translate(-50%, -50%) scale(0); will-change: transform; opacity: 0;"
+    class="service-shape-preview hidden md:block"
+    aria-hidden="true"
+    data-service-shape-preview
   >
-    <img
-      id="service-hover-shape-img"
-      src=""
-      alt=""
-      class="size-[180px] object-contain"
-    />
+    <svg
+      class="service-shape-preview__svg"
+      width="305"
+      height="304"
+      viewBox="0 0 305 304"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <rect x="3.5" y="3.5" width="297" height="297" fill="white" stroke="#5C5E5F" vector-effect="non-scaling-stroke" />
+      <path d="M102.5 3.5V300.5M201.5 3.5V300.5M3.5 102.5H300.5M3.5 201.5H300.5" stroke="#5C5E5F" vector-effect="non-scaling-stroke" />
+      {Array.from({ length: 9 }).map((_, index) => (
+        <path
+          data-service-shape-cell={index}
+          fill="white"
+          stroke="#5C5E5F"
+          vector-effect="non-scaling-stroke"
+        />
+      ))}
+      <rect width="7" height="7" fill="white" />
+      <rect y="297" width="7" height="7" fill="white" />
+      <rect x="298" width="7" height="7" fill="white" />
+      <rect x="298" y="297" width="7" height="7" fill="white" />
+    </svg>
   </div>
 
-  <ol class:list={[showHeader && listOffsetClass]}>
+  <ol class:list={[showHeader && listOffsetClass]} data-service-shape-list>
     {services.map((service) => (
       <li
         class="service-item border-b border-lines-dark last:border-b-0"
-        data-shape={serviceShapeBySlug[service.slug] || ''}
+        data-service-shape={serviceShapeKeyBySlug[service.slug] || 'neutral'}
       >
         <a
           href={service.url}
@@ -156,117 +173,200 @@ const rowTitleClass = "max-w-[280px] text-[1.25rem] leading-none sm:max-w-[unset
       color: inherit !important;
     }
   }
+
+  #services {
+    --service-shape-x: 62%;
+  }
+
+  .service-shape-preview {
+    --service-shape-size: min(400px, 28vw);
+    --service-shape-y: 0px;
+    pointer-events: none;
+    position: absolute;
+    left: calc(var(--service-shape-x) - (var(--service-shape-size) / 2));
+    top: 0;
+    z-index: 30;
+    width: var(--service-shape-size);
+    aspect-ratio: 305 / 304;
+    opacity: 0;
+    transform: translateY(calc(var(--service-shape-y) - 50%)) scale(0.96);
+    transition:
+      opacity 0.2s ease-out,
+      transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: transform, opacity;
+  }
+
+  .service-shape-preview.is-visible {
+    opacity: 1;
+    transform: translateY(calc(var(--service-shape-y) - 50%)) scale(1);
+  }
+
+  .service-shape-preview__svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
 </style>
 
 <script>
-  function initServiceHoverShape() {
-    const isMobile =
-      window.matchMedia("(max-width: 768px)").matches ||
-      "ontouchstart" in window;
-    if (isMobile || !window.matchMedia("(hover: hover)").matches) return;
+  type CornerRadii = [number, number, number, number];
+  type ShapeRadii = CornerRadii[];
 
-    const container = document.getElementById("service-hover-shape");
-    const img = document.getElementById(
-      "service-hover-shape-img",
-    ) as HTMLImageElement;
-    const serviceItems = document.querySelectorAll(".service-item");
+  const CELL_SIZE = 99;
+  const CORNER_RADIUS = 49.5;
+  const CELL_POSITIONS = [
+    [3.5, 3.5],
+    [102.5, 3.5],
+    [201.5, 3.5],
+    [3.5, 102.5],
+    [102.5, 102.5],
+    [201.5, 102.5],
+    [3.5, 201.5],
+    [102.5, 201.5],
+    [201.5, 201.5],
+  ] as const;
 
-    if (!container || !img || serviceItems.length === 0) return;
-    const containerEl = container as HTMLElement;
+  function radii(code: string): CornerRadii {
+    return [0, 1, 2, 3].map((index) =>
+      code[index] === "1" ? CORNER_RADIUS : 0,
+    ) as CornerRadii;
+  }
 
-    let mouseX = 0;
-    let mouseY = 0;
-    let currentX = 0;
-    let currentY = 0;
-    let currentScale = 0;
-    let targetScale = 0;
-    let animationId: number | null = null;
-    let currentElement: HTMLElement | null = null;
+  function shape(cells: string[]): ShapeRadii {
+    return cells.map(radii);
+  }
 
-    function animate() {
-      const posEase = 0.1;
-      const scaleEase = 0.08;
-      currentX += (mouseX - currentX) * posEase;
-      currentY += (mouseY - currentY) * posEase;
-      currentScale += (targetScale - currentScale) * scaleEase;
+  const SHAPES: Record<string, ShapeRadii> = {
+    neutral: shape(["0000", "0000", "0000", "0000", "0000", "0000", "0000", "0000", "0000"]),
+    audit: shape(["1111", "1100", "1111", "1001", "1111", "0110", "1111", "0011", "1111"]),
+    refonte: shape(["0010", "1111", "0101", "0110", "1111", "1001", "0101", "1111", "1000"]),
+    ecommerce: shape(["1111", "0010", "1110", "0010", "1010", "1000", "1011", "1000", "1111"]),
+    landing: shape(["0101", "1111", "1010", "1001", "1111", "0110", "1010", "0011", "0101"]),
+    sass: shape(["1101", "0011", "1110", "0110", "1111", "1001", "1011", "1100", "0111"]),
+    opti: shape(["0010", "1011", "0001", "0111", "1111", "1101", "0100", "1110", "1000"]),
+  };
 
-      if (targetScale === 0 && currentScale < 0.01) {
-        currentScale = 0;
+  function roundedRectPath(
+    x: number,
+    y: number,
+    width: number,
+    height: number,
+    radii: CornerRadii,
+  ) {
+    const [tl, tr, br, bl] = radii;
+    const right = x + width;
+    const bottom = y + height;
+
+    return [
+      `M${x + tl} ${y}`,
+      `H${right - tr}`,
+      tr ? `A${tr} ${tr} 0 0 1 ${right} ${y + tr}` : `L${right} ${y}`,
+      `V${bottom - br}`,
+      br ? `A${br} ${br} 0 0 1 ${right - br} ${bottom}` : `L${right} ${bottom}`,
+      `H${x + bl}`,
+      bl ? `A${bl} ${bl} 0 0 1 ${x} ${bottom - bl}` : `L${x} ${bottom}`,
+      `V${y + tl}`,
+      tl ? `A${tl} ${tl} 0 0 1 ${x + tl} ${y}` : `L${x} ${y}`,
+      "Z",
+    ].join(" ");
+  }
+
+  function drawShape(cells: NodeListOf<SVGPathElement>, shape: ShapeRadii) {
+    cells.forEach((cell, index) => {
+      const [x, y] = CELL_POSITIONS[index];
+      cell.setAttribute("d", roundedRectPath(x, y, CELL_SIZE, CELL_SIZE, shape[index]));
+    });
+  }
+
+  function cloneShape(shape: ShapeRadii): ShapeRadii {
+    return shape.map((cell) => [...cell] as CornerRadii);
+  }
+
+  function mixShape(from: ShapeRadii, to: ShapeRadii, progress: number): ShapeRadii {
+    return from.map((cell, cellIndex) =>
+      cell.map((value, cornerIndex) => {
+        return value + (to[cellIndex][cornerIndex] - value) * progress;
+      }) as CornerRadii,
+    );
+  }
+
+  function easeOutCubic(value: number) {
+    return 1 - Math.pow(1 - value, 3);
+  }
+
+  function initServiceShapePreview() {
+    const preview = document.querySelector<HTMLElement>("[data-service-shape-preview]");
+    const cells = document.querySelectorAll<SVGPathElement>("[data-service-shape-cell]");
+    const list = document.querySelector<HTMLElement>("[data-service-shape-list]");
+    const serviceItems = document.querySelectorAll<HTMLElement>(".service-item[data-service-shape]");
+
+    if (!preview || !list || cells.length === 0 || serviceItems.length === 0) return;
+    if (preview.dataset.initialized === "true") return;
+    preview.dataset.initialized = "true";
+
+    let currentShape = cloneShape(SHAPES.neutral);
+    let animationFrame: number | null = null;
+
+    drawShape(cells, currentShape);
+
+    function animateTo(shapeName: string) {
+      const targetShape = SHAPES[shapeName] || SHAPES.neutral;
+      const startShape = cloneShape(currentShape);
+      const startTime = performance.now();
+      const duration = 520;
+
+      if (animationFrame) {
+        cancelAnimationFrame(animationFrame);
       }
 
-      containerEl.style.left = `${currentX}px`;
-      containerEl.style.top = `${currentY}px`;
-      containerEl.style.transform = `translate(-50%, -50%) scale(${currentScale})`;
-      containerEl.style.opacity =
-        targetScale === 0 && currentScale < 0.01 ? "0" : "1";
+      function frame(now: number) {
+        const elapsed = now - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        currentShape = mixShape(startShape, targetShape, easeOutCubic(progress));
+        drawShape(cells, currentShape);
 
-      const isAnimating =
-        Math.abs(currentX - mouseX) > 0.1 ||
-        Math.abs(currentY - mouseY) > 0.1 ||
-        Math.abs(currentScale - targetScale) > 0.01;
-
-      if (isAnimating) {
-        animationId = requestAnimationFrame(animate);
-      } else {
-        animationId = null;
+        if (progress < 1) {
+          animationFrame = requestAnimationFrame(frame);
+        } else {
+          currentShape = cloneShape(targetShape);
+          animationFrame = null;
+        }
       }
-    }
 
-    function startAnimation() {
-      if (!animationId) {
-        animationId = requestAnimationFrame(animate);
-      }
-    }
-
-    function showShape(element: HTMLElement) {
-      const shapeSrc = element.dataset.shape;
-      if (!shapeSrc) return;
-      img.src = shapeSrc;
+      animationFrame = requestAnimationFrame(frame);
     }
 
     serviceItems.forEach((item) => {
-      const element = item as HTMLElement;
+      item.addEventListener("mouseenter", () => {
+        const section = preview.closest("#services") as HTMLElement | null;
+        const itemRect = item.getBoundingClientRect();
+        const sectionRect = section?.getBoundingClientRect();
+        const centerY = sectionRect ? itemRect.top - sectionRect.top + itemRect.height / 2 : 0;
+        const shapeName = item.dataset.serviceShape || "neutral";
 
-      element.addEventListener("mouseenter", () => {
-        const shapeSrc = element.dataset.shape;
-        if (!shapeSrc) return;
-
-        if (currentElement !== element) {
-          currentX = mouseX;
-          currentY = mouseY;
-          currentScale = 0;
-        }
-
-        currentElement = element;
-        showShape(element);
-        targetScale = 1;
-        startAnimation();
+        preview.style.setProperty("--service-shape-y", `${centerY}px`);
+        preview.classList.add("is-visible");
+        animateTo(shapeName);
       });
 
-      element.addEventListener("mouseleave", () => {
-        currentElement = null;
-        targetScale = 0;
-        startAnimation();
-      });
+    });
 
-      element.addEventListener("mousemove", (e) => {
-        mouseX = e.clientX;
-        mouseY = e.clientY;
-        startAnimation();
-      });
+    list.addEventListener("mouseleave", () => {
+      preview.classList.remove("is-visible");
+      animateTo("neutral");
     });
 
     document.addEventListener(
       "astro:before-swap",
       () => {
-        if (animationId) {
-          cancelAnimationFrame(animationId);
+        if (animationFrame) {
+          cancelAnimationFrame(animationFrame);
         }
       },
       { once: true },
     );
   }
 
-  initServiceHoverShape();
-  document.addEventListener("astro:after-swap", initServiceHoverShape);
+  initServiceShapePreview();
+  document.addEventListener("astro:after-swap", initServiceShapePreview);
 </script>

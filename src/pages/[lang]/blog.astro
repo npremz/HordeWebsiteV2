@@ -23,23 +23,22 @@ const [categories, posts] = await Promise.all([
   getLocalizedPosts(lang),
 ]);
 
-const allLabel = lang === 'fr' ? 'Tous' : 'All';
-const filterListLabel = lang === 'fr' ? 'Filtres' : 'Filters';
-const categoriesAriaLabel = lang === 'fr' ? 'Catégories principales' : 'Main categories';
-const breadcrumbAriaLabel = lang === 'fr' ? 'Fil d’Ariane' : 'Breadcrumb';
+const allLabel = t.blogPage.allLabel;
+const categoriesAriaLabel = t.blogPage.categoriesAriaLabel;
+const breadcrumbAriaLabel = t.blogPage.breadcrumbAriaLabel;
 const breadcrumbItems = [
-  { label: lang === 'fr' ? 'Accueil' : 'Home', href: `/${lang}` },
-  { label: lang === 'fr' ? 'Blog' : 'Blog' },
+  { label: t.blogPage.breadcrumbHome, href: `/${lang}` },
+  { label: 'Blog' },
 ];
-const byLabel = lang === 'fr' ? 'Par' : 'By';
-const readingTimeLabel = lang === 'fr' ? 'min de lecture' : 'min read';
-const readArticleLabel = lang === 'fr' ? 'Lire l’article' : 'Read article';
+const byLabel = t.blogPage.by;
+const readingTimeLabel = t.blogPage.minRead;
+const readArticleLabel = t.blogPage.readMore;
 
 const usedCategorySlugs = new Set(posts.map((post) => post.categorySlug));
 const filterLinks = [
   { href: `/${lang}/blog`, label: allLabel, current: true },
   ...categories
-    .filter((category) => usedCategorySlugs.has(category.slug))
+    .filter((category) => usedCategorySlugs.has(category.baseSlug))
     .map((category) => ({
       href: `/${lang}/blog/category/${category.slug}`,
       label: category.name,

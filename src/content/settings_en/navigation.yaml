@@ -8,7 +8,7 @@ items:
     url: /en/about
     isExternal: false
   - label: Services
-    url: '/en/#services-section'
+    url: /en/services
     isExternal: false
   - label: Projects
     url: /en/projets

@@ -5,7 +5,7 @@ items:
     url: /fr
     isExternal: false
   - label: Services
-    url: '/fr/#services-section'
+    url: /fr/services
     isExternal: false
   - label: Projets
     url: /fr/projets

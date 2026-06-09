@@ -3,7 +3,7 @@ import Layout from '../../../../layouts/Layout.astro';
 import Footer from '../../../../components/Footer.astro';
 import BracketInline from '../../../../components/ui/decor/BracketInline.astro';
 import { Image } from 'astro:assets';
-import { SUPPORTED_LOCALES, type Locale } from '../../../../i18n';
+import { SUPPORTED_LOCALES, type Locale, useTranslations } from '../../../../i18n';
 import {
   type CategoryEntry,
   getCategories,
@@ -17,14 +17,19 @@ export async function getStaticPaths() {
 	const categories = await getCategories();
 
 	return SUPPORTED_LOCALES.flatMap((lang) =>
-		categories.map((category) => ({
-			params: { lang, slug: category.data.slug },
-			props: { category, lang },
-		}))
+		categories.map((category) => {
+			const localizedCategory = localizeCategory(category, lang);
+
+			return {
+				params: { lang, slug: localizedCategory.slug },
+				props: { category, lang },
+			};
+		})
 	);
 }
 
 const { category, lang } = Astro.props as { category: CategoryEntry; lang: Locale };
+const t = useTranslations(lang);
 const localizedCategory = localizeCategory(category, lang);
 const categoryName = localizedCategory.name;
 const categoryDescription = localizedCategory.description;
@@ -41,7 +46,8 @@ function formatDate(date: Date, locale: string): string {
 }
 
 const pageTitle = `${categoryName} - Blog`;
-const pageDescription = categoryDescription || `${lang === 'fr' ? 'Articles sur' : 'Articles about'} ${categoryName}`;
+const pageDescription = categoryDescription || `${t.blogPage.categoryArticles} ${categoryName}`;
+const articleCountLabel = articleCount > 1 ? t.blogPage.articlePlural : t.blogPage.articleSingular;
 ---
 
 <Layout lang={lang} title={pageTitle} description={pageDescription}>
@@ -49,9 +55,9 @@ const pageDescription = categoryDescription || `${lang === 'fr' ? 'Articles sur'
 	<div id="page-content" class="relative z-10">
 		<div class="pt-52 sm:pt-80 xl:pt-96">
 			<!-- Breadcrumbs -->
-			<nav aria-label="Breadcrumb" class="mb-8">
+			<nav aria-label={t.blogPage.breadcrumbAriaLabel} class="mb-8">
 				<ol class="flex items-center gap-2 section-label flex-wrap">
-					<li><a href={`/${lang}`} class="hover:text-black transition-colors" title={lang === 'fr' ? 'Accueil' : 'Home'}>{lang === 'fr' ? 'Accueil' : 'Home'}</a></li>
+					<li><a href={`/${lang}`} class="hover:text-black transition-colors" title={t.blogPage.breadcrumbHome}>{t.blogPage.breadcrumbHome}</a></li>
 					<li><span class="mx-1">/</span></li>
 					<li><a href={`/${lang}/blog`} class="hover:text-black transition-colors" title="Blog">Blog</a></li>
 					<li><span class="mx-1">/</span></li>
@@ -68,7 +74,7 @@ const pageDescription = categoryDescription || `${lang === 'fr' ? 'Articles sur'
 						<p class="text-lg max-w-2xl text-black/70">{categoryDescription}</p>
 					)}
 					<p class="section-label mt-8">
-						{articleCount} {articleCount > 1 ? (lang === 'fr' ? 'articles' : 'articles') : (lang === 'fr' ? 'article' : 'article')}
+						{articleCount} {articleCountLabel}
 					</p>
 				</div>
 			</div>
@@ -115,7 +121,7 @@ const pageDescription = categoryDescription || `${lang === 'fr' ? 'Articles sur'
 		) : (
 			<div class="mt-16 py-16 text-center">
 				<p class="text-xl text-black/60">
-					{lang === 'fr' ? 'Aucun article dans cette catégorie pour le moment.' : 'No articles in this category yet.'}
+					{t.blogPage.noCategoryArticles}
 				</p>
 			</div>
 		)}
@@ -125,11 +131,11 @@ const pageDescription = categoryDescription || `${lang === 'fr' ? 'Articles sur'
 			<a
 				href={`/${lang}/blog`}
 				class="group relative overflow-hidden font-mono text-[1rem] leading-none uppercase py-6 px-5 flex justify-center w-full md:w-fit border border-lines-dark bg-black text-button-white transition-colors duration-300 ease-in-out cursor-pointer"
-				title={lang === 'fr' ? 'Tous les articles' : 'All articles'}
+				title={t.blogPage.allArticles}
 			>
 				<span class="absolute inset-0 bg-bg-light translate-x-[calc(-100%-1px)] group-hover:translate-x-0 transition-transform duration-400 ease-[cubic-bezier(0.25,0.46,0.45,0.94)]"></span>
 				<span class="relative z-10 text-button-white group-hover:text-black transition-colors duration-300">
-					← {lang === 'fr' ? 'Tous les articles' : 'All articles'}
+					← {t.blogPage.allArticles}
 				</span>
 			</a>
 		</nav>
