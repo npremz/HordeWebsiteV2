@@ -1,5 +1,5 @@
 ---
-import type { Locale } from '../../i18n';
+import { type Locale, useTranslations } from '../../i18n';
 import type { LocalizedProject } from '../../lib/content/projects';
 import HeroStructure from '../blog/HeroStructure.astro';
 import ProjectIndexList from './ProjectIndexList.astro';
@@ -14,14 +14,15 @@ interface Props {
 }
 
 const { projects, lang, intro, allLabel, filters, variant = 'light' } = Astro.props;
+const t = useTranslations(lang);
 const projectCount = String(projects.length).padStart(2, '0');
 const isDark = variant === 'dark';
 const filterLinks = [{ label: allLabel, href: `/${lang}/projets` }, ...filters];
-const filterListLabel = lang === 'fr' ? 'Filtres' : 'Filters';
-const breadcrumbAriaLabel = lang === 'fr' ? 'Fil d’Ariane' : 'Breadcrumb';
+const filterListLabel = t.projectsPage.filtersLabel;
+const breadcrumbAriaLabel = t.projectSingle.breadcrumbAriaLabel;
 const breadcrumbItems = [
-  { label: lang === 'fr' ? 'Accueil' : 'Home', href: `/${lang}` },
-  { label: lang === 'fr' ? 'Projets' : 'Projects' },
+  { label: t.projectSingle.breadcrumbHome, href: `/${lang}` },
+  { label: t.projectSingle.breadcrumbProjects },
 ];
 ---
 

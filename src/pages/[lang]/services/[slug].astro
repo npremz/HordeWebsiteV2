@@ -8,40 +8,43 @@ import ServiceDeliverablesSection from '../../../components/services/ServiceDeli
 import ServiceExclusionsSection from '../../../components/services/ServiceExclusionsSection.astro';
 import ServiceFaqSection from '../../../components/services/ServiceFaqSection.astro';
 import ServiceCtaSection from '../../../components/services/ServiceCtaSection.astro';
-import { type Locale, useTranslations } from '../../../i18n';
-import { type ServiceEntry, getServices } from '../../../lib/content/services';
+import { SUPPORTED_LOCALES, type Locale, useTranslations } from '../../../i18n';
+import { type ServiceEntry, getServices, localizeServiceEntry } from '../../../lib/content/services';
 
 export const prerender = true;
 
 export async function getStaticPaths() {
   const services = await getServices();
 
-  return services.map((service) => ({
-    params: { lang: 'fr', slug: service.data.slug },
-    props: { service, lang: 'fr' as Locale },
-  }));
+  return SUPPORTED_LOCALES.flatMap((lang) =>
+    services.map((service) => ({
+      params: { lang, slug: service.data.slug },
+      props: { service, lang },
+    })),
+  );
 }
 
 const { service, lang } = Astro.props as { service: ServiceEntry; lang: Locale };
 const t = useTranslations(lang);
+const localizedService = localizeServiceEntry(service, lang);
 ---
 
 <Layout
   lang={lang}
-  title={service.data.seoTitle}
-  description={service.data.seoDescription}
-  robots={service.data.seoRobots as 'index, follow' | 'noindex, follow' | 'noindex, nofollow'}
+  title={localizedService.data.seoTitle}
+  description={localizedService.data.seoDescription}
+  robots={localizedService.data.seoRobots as 'index, follow' | 'noindex, follow' | 'noindex, nofollow'}
   headerVariant="dark"
 >
   <div class="fixed inset-0 bg-bg -z-10" aria-hidden="true"></div>
-  <article data-service-slug={service.data.slug}>
-    <ServiceHero service={service.data} />
-    <ServiceOfferSection service={service.data} />
-    <ServiceMethodSection service={service.data} />
-    <ServiceDeliverablesSection service={service.data} lang={lang} />
-    <ServiceExclusionsSection service={service.data} />
-    <ServiceFaqSection service={service.data} />
-    <ServiceCtaSection service={service.data} formTranslations={t.form} />
+  <article data-service-slug={localizedService.data.slug}>
+    <ServiceHero service={localizedService.data} />
+    <ServiceOfferSection service={localizedService.data} />
+    <ServiceMethodSection service={localizedService.data} />
+    <ServiceDeliverablesSection service={localizedService.data} lang={lang} />
+    <ServiceExclusionsSection service={localizedService.data} lang={lang} />
+    <ServiceFaqSection service={localizedService.data} />
+    <ServiceCtaSection service={localizedService.data} formTranslations={t.form} />
   </article>
 
   <Footer lang={lang} hideOverflow={false} />

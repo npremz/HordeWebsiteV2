@@ -196,6 +196,7 @@ export const en: Translations = {
         'We are a small agency that puts the human side first. We take the time to find the right solutions with you and help make your digital presence match the ambition of your projects.',
       cta: 'Our culture',
     },
+    fallbackDescription: 'Web agency specialized in performance and UX.',
   },
 
   // Project Section
@@ -210,9 +211,12 @@ export const en: Translations = {
     title: 'Fast website projects in Brussels',
     description: 'Explore our fast website projects in Brussels: showcase sites, e-commerce and custom high-performance interfaces built to convert.',
     heading: 'Our latest\nprojects',
+    intro: 'Various articles about technology, design, and our experience',
+    all: 'All',
     projectCount: 'Project count',
     viewGrid: 'Grid',
     viewList: 'List',
+    filtersLabel: 'Filters',
   },
 
   // Single Project Page
@@ -248,6 +252,24 @@ export const en: Translations = {
     shareArticle: 'Share',
     tableOfContents: 'Table of contents',
     about: 'About the author',
+    allLabel: 'All',
+    filtersLabel: 'Filters',
+    categoriesAriaLabel: 'Main categories',
+    breadcrumbAriaLabel: 'Breadcrumb',
+    breadcrumbHome: 'Home',
+    authorIntro: 'Written by',
+    keyTakeaways: 'Key takeaways',
+    copyLink: 'Copy link',
+    taggedArticles: 'Articles tagged',
+    categoryArticles: 'Articles about',
+    articleSingular: 'article',
+    articlePlural: 'articles',
+    tagLabel: 'Tag',
+    noTagArticles: 'No articles with this tag yet.',
+    noCategoryArticles: 'No articles in this category yet.',
+    rssTitle: 'Horde Blog - Brussels UX Web Agency',
+    rssDescription: 'Articles about web performance, UX design and fast website development by Horde Agence.',
+    emptyContent: 'Article content coming soon...',
   },
 
   // Services Page
@@ -279,6 +301,15 @@ export const en: Translations = {
     startWhen: 'When do we start\nyour new project?',
     alternativeContacts: 'Alternative Contacts',
     bookCall: 'Book a call',
+    breadcrumbAriaLabel: 'Breadcrumb',
+    breadcrumbHome: 'Home',
+    breadcrumbContact: 'Contact',
+  },
+
+  authorsPage: {
+    label: 'Author',
+    articlesByAuthor: 'Articles by this author',
+    emptyState: 'No published articles yet.',
   },
 
   // Contact Form
@@ -297,6 +328,8 @@ export const en: Translations = {
     errorMessage: 'An error occurred. Please try again.',
     requiredField: 'This field is required',
     invalidEmail: 'Invalid email address',
+    maxLengthPrefix: 'Max',
+    maxLengthSuffix: 'characters',
     options: {
       auditOffert: 'Audit (offert)',
       creationEcommerce: 'E-Commerce',
@@ -306,6 +339,10 @@ export const en: Translations = {
       refonteSiteWeb: 'Refonte',
       autre: 'Other',
     },
+  },
+
+  serviceSingle: {
+    exclusionsContactPrefix: 'Still unclear about this service? Contact us by email at',
   },
 
   // 404 Page
@@ -326,6 +363,95 @@ export const en: Translations = {
     confidentialite: 'Privacy',
     cookies: 'Cookies',
     backHome: 'Back to home',
+  },
+
+  legalPages: {
+    privacy: {
+      title: 'Privacy Policy',
+      description: 'Horde Agency Privacy Policy. Discover how we protect your personal data.',
+      updatedAt: 'January 2025',
+      sections: [
+        {
+          heading: 'Introduction',
+          html: '<p>Horde Agency is committed to protecting the privacy of users of its website. This privacy policy explains how we collect, use and protect your personal information in accordance with the General Data Protection Regulation (GDPR).</p>',
+        },
+        {
+          heading: 'Data Controller',
+          html: '<p>The data controller is:<br><strong>Horde Agency</strong><br>Brussels, Belgium<br>Email: <a href="mailto:hello@hordeagence.com" title="hello@hordeagence.com">hello@hordeagence.com</a></p>',
+        },
+        {
+          heading: 'Data Collected',
+          html: '<p>We collect the following data:</p><ul><li><strong>Contact data</strong>: name, email, company (via the contact form)</li><li><strong>Navigation data</strong>: IP address, browser type, pages visited</li><li><strong>Cookies</strong>: see our <a href="/en/cookies" title="Cookie Policy">cookie policy</a></li></ul>',
+        },
+        {
+          heading: 'Purposes of Processing',
+          html: '<p>Your data is used to:</p><ul><li>Respond to your contact requests</li><li>Improve our website and services</li><li>Analyze site usage via Plausible Analytics (aggregated statistics)</li><li>Comply with our legal obligations</li></ul>',
+        },
+        {
+          heading: 'Your Rights',
+          html: '<p>Under the GDPR, you have the following rights:</p><ul><li><strong>Right of access</strong>: obtain a copy of your data</li><li><strong>Right to rectification</strong>: correct your data</li><li><strong>Right to erasure</strong>: delete your data</li><li><strong>Right to portability</strong>: receive your data in a structured format</li><li><strong>Right to object</strong>: object to processing</li></ul><p>To exercise these rights, contact us at <a href="mailto:hello@hordeagence.com" title="hello@hordeagence.com">hello@hordeagence.com</a>.</p>',
+        },
+      ],
+    },
+    cookies: {
+      title: 'Cookie Policy',
+      description: 'Cookie usage policy on the Horde Agency website.',
+      updatedAt: 'January 2025',
+      sections: [
+        {
+          heading: 'What is a cookie?',
+          html: '<p>A cookie is a small text file stored on your device (computer, tablet, smartphone) when you visit a website. Cookies allow the site to remember your actions and preferences for a given period.</p>',
+        },
+        {
+          heading: 'Cookies we use',
+          html: '<h3>Essential cookies</h3><p>These cookies are necessary for the site to function. They allow you to navigate and use basic features.</p><h3>Analytical cookies</h3><p>We use Plausible Analytics (instance served via <code>stats.hordeagence.com</code>) to understand how visitors interact with our site. Data is used for aggregated traffic statistics.</p>',
+        },
+        {
+          heading: 'Managing cookies',
+          html: '<p>You can control and/or delete cookies as you wish in your browser settings.</p>',
+        },
+        {
+          heading: 'Contact',
+          html: '<p>For any questions, contact us at <a href="mailto:hello@hordeagence.com" title="hello@hordeagence.com">hello@hordeagence.com</a>.</p>',
+        },
+      ],
+    },
+    legalNotices: {
+      title: 'Legal Notices',
+      description: 'Legal notices of Horde Agency. Find the legal information about our company.',
+      updatedAt: 'January 2026',
+      sections: [
+        {
+          heading: 'Site Publisher',
+          html: '<p>This site is published by:<br><strong>Horde Agency</strong><br>Activity carried out under an affiliation with Smart Belgium (SMartCoop).<br>Operating office: Brussels, Belgium<br>Email: <a href="mailto:hello@hordeagence.com" title="hello@hordeagence.com">hello@hordeagence.com</a></p>',
+        },
+        {
+          heading: 'Hosting',
+          html: '<p>The site is hosted by:<br><strong>Hostinger</strong><br>Hostinger International Ltd.<br>https://www.hostinger.com</p>',
+        },
+        {
+          heading: 'Analytics',
+          html: '<p>We use Plausible Analytics to measure website traffic. The instance is served from <code>stats.hordeagence.com</code>. This privacy-focused tool is used for aggregated traffic statistics.</p>',
+        },
+        {
+          heading: 'Intellectual Property',
+          html: '<p>All content on this site is subject to Belgian and international copyright and intellectual property law. All reproduction rights are reserved, including for downloadable documents and iconographic and photographic representations.</p><p>Reproduction of all or part of this site on any medium whatsoever is strictly prohibited without the express authorization of Horde Agency.</p>',
+        },
+        {
+          heading: 'Personal Data',
+          html: '<p>For information regarding the collection and processing of your personal data, please see our <a href="/en/confidentialite" title="Privacy Policy">Privacy Policy</a>.</p>',
+        },
+        {
+          heading: 'Applicable Law',
+          html: '<p>These legal notices are governed by Belgian law. In the event of a dispute, the courts of Brussels shall have sole jurisdiction.</p>',
+        },
+      ],
+    },
+  },
+
+  seo: {
+    serviceDescription: 'Web agency specialized in ultra-fast websites, redesign, e-commerce and SEO optimization in Brussels',
+    serviceSlogan: 'Fast, useful websites built to last',
   },
 
   // Accessibility

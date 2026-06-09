@@ -191,15 +191,15 @@ function formatDate(date: Date, locale: string): string {
 const currentSlug = currentPost.slug;
 const alternateSlug = currentPost.alternateSlug;
 const switchLang = lang === 'fr' ? 'en' : 'fr';
-const breadcrumbAriaLabel = lang === 'fr' ? 'Fil d’Ariane' : 'Breadcrumb';
+const breadcrumbAriaLabel = t.blogPage.breadcrumbAriaLabel;
 const breadcrumbItems = [
-	{ label: lang === 'fr' ? 'Accueil' : 'Home', href: `/${lang}` },
+	{ label: t.blogPage.breadcrumbHome, href: `/${lang}` },
 	{ label: 'Blog', href: `/${lang}/blog` },
 	{ label: `${title.trim().split(/\s+/)[0]}...` },
 ];
-const authorIntroLabel = lang === 'fr' ? 'Écrit par' : 'Written by';
-const heroAuthorLabel = 'Nicolas Prémont - Co-Fondateur & Développeur';
-const readingTimeLabel = lang === 'fr' ? 'min de lecture' : 'min read';
+const authorIntroLabel = t.blogPage.authorIntro;
+const heroAuthorLabel = authorRole ? `${authorName} - ${authorRole}` : authorName;
+const readingTimeLabel = t.blogPage.minRead;
 const updatedDate = modifiedDate || publishedDate;
 
 // URL de partage
@@ -265,7 +265,7 @@ const schemaOrg = {
 				? [{
 					"@type": "ItemList",
 					"@id": `${articleUrl}#takeaways`,
-					"name": lang === 'fr' ? 'En bref' : 'Key takeaways',
+					"name": t.blogPage.keyTakeaways,
 					"itemListElement": keyTakeaways.map((item: string, index: number) => ({
 						"@type": "ListItem",
 						"position": index + 1,
@@ -281,7 +281,7 @@ const schemaOrg = {
 				{
 					"@type": "ListItem",
 					"position": 1,
-					"name": lang === 'fr' ? 'Accueil' : 'Home',
+					"name": t.blogPage.breadcrumbHome,
 					"item": `${siteUrl}/${lang}`
 				},
 				{
@@ -435,8 +435,8 @@ const schemaOrg = {
 			<!-- Contenu principal -->
 			<div class="lg:flex-1 max-w-[1000px] mx-auto">
 				{keyTakeaways.length > 0 && (
-					<section class="mt-10 sm:mt-16" aria-label={lang === 'fr' ? 'En bref' : 'Key takeaways'}>
-						<h2 class="text-[1.375rem] mb-10">{lang === 'fr' ? 'En bref' : 'Key takeaways'}</h2>
+					<section class="mt-10 sm:mt-16" aria-label={t.blogPage.keyTakeaways}>
+						<h2 class="text-[1.375rem] mb-10">{t.blogPage.keyTakeaways}</h2>
 						<ul class="flex flex-col divide-y divide-lines text-[1.125rem]">
 							{keyTakeaways.map((item: string) => (
 								<li class="flex gap-4 py-6 first:pt-0 last:pb-0 leading-relaxed">
@@ -450,8 +450,8 @@ const schemaOrg = {
 
 				<!-- Sommaire (rendu côté serveur pour SEO) -->
 				{tableOfContents.length > 0 && (
-					<nav class="mt-24" aria-label={lang === 'fr' ? 'Sommaire' : 'Table of contents'}>
-						<h2 class="text-[1.375rem] mb-8">{lang === 'fr' ? 'Sommaire' : 'Table of contents'}</h2>
+					<nav class="mt-24" aria-label={t.blogPage.tableOfContents}>
+						<h2 class="text-[1.375rem] mb-8">{t.blogPage.tableOfContents}</h2>
 						<ol class="flex flex-col gap-6">
 							{tableOfContents.map((heading, index) => (
 								<li class="relative">
@@ -488,7 +488,7 @@ const schemaOrg = {
 				<!-- Contenu de l'article -->
 				<div class="prose prose-lg text-[1.375rem] max-w-none mb-16" set:html={parseMarkdown(articleContent)} />
 				{!articleContent && (
-					<p class="text-black/60 italic">Contenu de l'article à venir...</p>
+					<p class="text-black/60 italic">{t.blogPage.emptyContent}</p>
 				)}
 
 			</div>
@@ -540,7 +540,7 @@ const schemaOrg = {
 								class={`copy-link bg-transparent p-0 ${tagShareLinkClasses}`}
 								data-url={shareUrl}
 							>
-								<span>{lang === 'fr' ? 'Copier le lien' : 'Copy link'}</span>
+								<span>{t.blogPage.copyLink}</span>
 							</button>
 						</div>
 					</div>

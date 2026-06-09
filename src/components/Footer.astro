@@ -20,7 +20,7 @@ const {
 const t = useTranslations(lang);
 const isDark = variant === "dark";
 const { footer, navigation } = await getSiteChrome(lang);
-const serviceLinks = await getFooterServiceLinks();
+const serviceLinks = await getFooterServiceLinks(lang);
 
 // Extraire les données
 const {

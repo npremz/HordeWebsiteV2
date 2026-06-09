@@ -65,6 +65,7 @@ const categoriesCollection = defineCollection({
   loader: glob({ pattern: '**/*.yaml', base: './src/content/categories' }),
   schema: z.object({
     slug: z.string(),
+    slug_en: z.string().optional(),
     name_fr: z.string(),
     name_en: z.string(),
     description_fr: z.string().optional(),
@@ -96,6 +97,7 @@ const postsCollection = defineCollection({
     author: z.string(), // slug de l'auteur (relation)
     category: z.string(), // slug de la catégorie (relation)
     tags: z.array(z.string()).default([]),
+    tags_en: z.array(z.string()).optional(),
     publishedDate: z.coerce.date(),
     modifiedDate: z.coerce.date().optional(),
     readingTime: z.number().optional(),
@@ -109,6 +111,66 @@ const postsCollection = defineCollection({
     content_fr: z.string().optional(),
     content_en: z.string().optional(),
   }),
+});
+
+const serviceTranslationSchema = z.object({
+  seoUrl: z.string().optional(),
+  seoPrimaryKeyword: z.string().optional(),
+  seoSecondaryKeywords: z.array(z.string()).optional(),
+  seoTitle: z.string().optional(),
+  seoDescription: z.string().optional(),
+  seoInternalLinks: z.array(z.string()).optional(),
+  h1: z.string().optional(),
+  shortName: z.string().optional(),
+  footerTitle: z.string().optional(),
+  intro: z.string().optional(),
+  problemTitle: z.string().optional(),
+  problemBlocks: z.array(
+    z.object({
+      kind: z.enum(['paragraph', 'item', 'list']),
+      title: z.string().optional(),
+      body: z.string().optional(),
+      items: z.array(z.string()).default([]),
+    })
+  ).optional(),
+  offerTitle: z.string().optional(),
+  offerItems: z.array(
+    z.object({
+      title: z.string(),
+      body: z.string(),
+    })
+  ).optional(),
+  methodTitle: z.string().optional(),
+  methodSteps: z.array(
+    z.object({
+      title: z.string(),
+      body: z.string(),
+    })
+  ).optional(),
+  deliverablesTitle: z.string().optional(),
+  deliverables: z.array(z.string()).optional(),
+  exclusionsTitle: z.string().optional(),
+  exclusionsParagraphs: z.array(z.string()).optional(),
+  faqTitle: z.string().optional(),
+  faqItems: z.array(
+    z.object({
+      question: z.string(),
+      answer: z.string(),
+    })
+  ).optional(),
+  ctaTitle: z.string().optional(),
+  ctaParagraphs: z.array(z.string()).optional(),
+  primaryCtaLabel: z.string().optional(),
+  primaryCtaUrl: z.string().optional(),
+  secondaryCtaLabel: z.string().optional(),
+  secondaryCtaUrl: z.string().optional(),
+  reassurance: z.string().optional(),
+  recommendedLinks: z.array(
+    z.object({
+      anchor: z.string(),
+      url: z.string(),
+    })
+  ).optional(),
 });
 
 const servicesCollection = defineCollection({
@@ -126,6 +188,9 @@ const servicesCollection = defineCollection({
     shortName: z.string().optional(),
     footerTitle: z.string().optional(),
     footerOrder: z.number().optional(),
+    translations: z.object({
+      en: serviceTranslationSchema.optional(),
+    }).optional(),
     intro: z.string(),
     problemTitle: z.string(),
     problemTitleLeft: z.string().optional(),

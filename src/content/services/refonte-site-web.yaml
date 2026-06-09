@@ -20,6 +20,143 @@ seoInternalLinks:
 h1: Refonte de site web
 footerTitle: Refonte Web
 footerOrder: 1
+translations:
+  en:
+    seoUrl: /en/services/refonte-site-web
+    seoPrimaryKeyword: website redesign brussels
+    seoSecondaryKeywords:
+      - ux ui redesign
+      - website modernization
+      - improve website conversion
+      - website redesign belgium
+      - website redesign cost
+    seoTitle: Website redesign in Brussels | UX, performance and SEO
+    seoDescription: >-
+      We redesign your website without starting blindly from zero: UX/UI, speed,
+      technical SEO and clear architecture to convert more visitors.
+    seoInternalLinks:
+      - /en/services/audit-offert
+      - /en/services/optimisation-site-web
+      - /en/projets
+      - /en/contact
+    h1: Website redesign
+    shortName: Website redesign
+    footerTitle: Web Redesign
+    intro: >-
+      A website built five years ago is rarely aligned with today's user habits
+      or Google's expectations. We start from your business goals to rebuild
+      something faster, clearer and better at telling your story.
+    problemTitle: Signals that it is time for a redesign
+    problemBlocks:
+      - kind: list
+        items:
+          - Your website no longer represents what you do
+          - Visitors arrive but do not contact you
+          - It is slow on mobile and you know it
+          - Your CMS is painful to manage and updates take hours
+          - You have added pages and sections for years without a clear structure
+          - A competitor has a better website and the numbers show it
+      - kind: paragraph
+        body: >-
+          A redesign is not cosmetic spending. It is an investment in your
+          website's ability to generate business.
+        items: []
+    offerTitle: What we redesign and how
+    offerItems:
+      - title: Existing-site audit
+        body: >-
+          We never restart from zero without understanding what already works.
+          What performs stays, what blocks progress disappears.
+      - title: Architecture & UX
+        body: >-
+          Reworked sitemap, key user journeys and content hierarchy. We align
+          the structure with business goals before designing.
+      - title: UI design
+        body: >-
+          High-fidelity mockups, visual direction if needed and a lightweight
+          design system for consistency. Iterative validation, no delivery
+          surprise.
+      - title: Performance-first development
+        body: >-
+          Optimized images, clean code, healthy Core Web Vitals and a
+          configurable CMS so you can manage content yourself.
+      - title: Migration & launch
+        body: >-
+          Clean redirects, indexation checks and post-launch monitoring. We do
+          not switch the old site off without a safety plan.
+    methodTitle: Our redesign process
+    methodSteps:
+      - title: Scoping
+        body: >-
+          Existing-site audit, Analytics and Search Console review, objectives
+          and target sitemap definition.
+      - title: UX & architecture (1 week)
+        body: Low-fidelity wireframes, user journeys and validated content hierarchy.
+      - title: UI design (1 to 2 weeks)
+        body: High-fidelity mockups, visual direction if needed and iterative validation.
+      - title: Development (1 to 3 weeks)
+        body: Performance-first integration and CMS setup.
+      - title: Migration & launch
+        body: Redirects, indexation and post-launch monitoring included.
+    deliverablesTitle: What is delivered
+    deliverables:
+      - Website live in production, fast on mobile and desktop
+      - Healthy Core Web Vitals (LCP below 2.5s, CLS below 0.1, INP below 200ms)
+      - Clean technical SEO from launch
+      - CMS training session if needed
+      - Documentation for technical choices and content structure
+      - 30-day post-launch monitoring included
+    exclusionsTitle: What we avoid doing
+    exclusionsParagraphs:
+      - >-
+        We do not redesign a site just for the sake of it. We audit first. We
+        also do not hand over static mockups and leave you alone with
+        development; design and development work together here.
+    faqTitle: Answers to common questions
+    faqItems:
+      - question: How much does a redesign cost?
+        answer: >-
+          Usually between 2,000 EUR and 8,000 EUR depending on complexity, page
+          count and features. We detail the scope after the audit.
+      - question: Will my SEO be impacted?
+        answer: >-
+          Not if redirects and SEO migration are handled seriously. A well-run
+          redesign often improves SEO over 3 to 6 months.
+      - question: How long does it take?
+        answer: >-
+          Usually 3 to 6 weeks depending on project scope. We define and follow
+          the schedule from the scoping phase.
+      - question: Can I keep my current CMS?
+        answer: >-
+          It depends. If your CMS is the constraint, we suggest an alternative.
+          If it is reliable and works for you, we can keep it.
+      - question: Do you also write the content?
+        answer: >-
+          We can work with your copywriter or recommend one. Copywriting is not
+          included by default.
+      - question: Can I see examples of redesigns?
+        answer: Yes, see `/en/projets` for relevant project cases.
+    ctaTitle: Tell us about your project
+    ctaParagraphs:
+      - >-
+        Fill in the form with your details and a member of our team will contact
+        you for a no-commitment consultation.
+      - >-
+        You can also email us at hello@hordeagence.com
+    primaryCtaLabel: Request a quote
+    primaryCtaUrl: /en/contact
+    secondaryCtaLabel: View our projects
+    secondaryCtaUrl: /en/projets
+    reassurance: Reply within 48h. Free first exchange, no commitment.
+    recommendedLinks:
+      - anchor: free audit before redesign
+        url: /en/services/audit-offert
+      - anchor: optimization without a full redesign
+        url: /en/services/optimisation-site-web
+      - anchor: our work
+        url: /en/projets
+      - anchor: contact us
+        url: /en/contact
 intro: >-
   Un site qui date de 5 ans n'est plus adapté aux usages actuels ni aux
   exigences de Google. On repart de vos objectifs business pour reconstruire

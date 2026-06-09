@@ -7,7 +7,7 @@ import { getLocalizedProjects } from "../../lib/content/projects";
 import {
   getProjectServiceEntries,
   getProjectServiceHref,
-  getProjectServiceLabel,
+  getLocalizedProjectServiceLabel,
 } from "../../lib/projectServices";
 
 export const prerender = true;
@@ -40,17 +40,6 @@ const orderedProjects = [...projects].sort(
   (a, b) => (projectOrder[a.slug] || a.order) - (projectOrder[b.slug] || b.order),
 );
 
-const pageCopy = {
-  fr: {
-    intro: "Divers articles sur la technologie, le design et notre expérience",
-    all: "Tous",
-  },
-  en: {
-    intro: "Various articles about technology, design, and our experience",
-    all: "All",
-  },
-} satisfies Record<Locale, { intro: string; all: string }>;
-
 const projectServices = await getProjectServiceEntries();
 const listedProjects = orderedProjects.filter((project) => !project.inProgress);
 const serviceFilters = projectServices
@@ -58,7 +47,7 @@ const serviceFilters = projectServices
     listedProjects.some((project) => project.services.includes(service.data.slug)),
   )
   .map((service) => ({
-    label: projectFilterLabels[service.data.slug]?.[lang] || getProjectServiceLabel(service),
+    label: projectFilterLabels[service.data.slug]?.[lang] || getLocalizedProjectServiceLabel(service, lang),
     href: getProjectServiceHref(service.data.slug, lang),
   }));
 ---
@@ -69,8 +58,8 @@ const serviceFilters = projectServices
   <ProjectsListingPage
     projects={orderedProjects}
     lang={lang}
-    intro={pageCopy[lang].intro}
-    allLabel={pageCopy[lang].all}
+    intro={t.projectsPage.intro}
+    allLabel={t.projectsPage.all}
     filters={serviceFilters}
     variant="dark"
   />

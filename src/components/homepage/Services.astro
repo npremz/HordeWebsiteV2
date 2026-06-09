@@ -14,7 +14,7 @@ const {
   spacingClass = "py-25 text-button-white sm:py-50",
 } = Astro.props;
 const t = useTranslations(lang);
-const services = await getServiceSummaries();
+const services = await getServiceSummaries(lang);
 const serviceShapeBySlug: Record<string, string> = {
   'audit-offert': '/images/servicesShapes/audit.svg',
   'refonte-site-web': '/images/servicesShapes/refonte.svg',

@@ -22,6 +22,10 @@ const currentPath = getPathWithoutLocale(Astro.url.pathname);
 const switchLang = lang === 'fr' ? 'en' : 'fr';
 const switchUrl = alternateUrl || getLocalizedPath(currentPath, switchLang);
 const startProjectUrl = getLocalizedPath('/contact', lang);
+const languageItems = [
+  { locale: 'fr' as const, label: 'Fr', href: switchLang === 'fr' ? switchUrl : getLocalizedPath(currentPath, 'fr') },
+  { locale: 'en' as const, label: 'Eng', href: switchLang === 'en' ? switchUrl : getLocalizedPath(currentPath, 'en') },
+];
 
 const navigation = await getNavigation(lang);
 const {
@@ -359,17 +363,18 @@ const desktopLinkClasses = isDark
               </li>
             ))}
             <li class="inline-flex items-center gap-2 whitespace-nowrap normal-case">
-              {lang === 'fr' ? (
-                <span aria-current="page">Fr</span>
-              ) : (
-                <a href={switchUrl} hreflang="fr" class="site-header__language-inactive transition-colors duration-200">Fr</a>
-              )}
-              <span class="text-lines-dark" aria-hidden="true">/</span>
-              {lang === 'en' ? (
-                <span aria-current="page">Eng</span>
-              ) : (
-                <a href={switchUrl} hreflang="en" class="site-header__language-inactive transition-colors duration-200">Eng</a>
-              )}
+              {languageItems.map((languageItem, index) => (
+                <>
+                  {languageItem.locale === lang ? (
+                    <span aria-current="page">{languageItem.label}</span>
+                  ) : (
+                    <a href={languageItem.href} hreflang={languageItem.locale} class="site-header__language-inactive transition-colors duration-200">
+                      {languageItem.label}
+                    </a>
+                  )}
+                  {index < languageItems.length - 1 && <span class="text-lines-dark" aria-hidden="true">/</span>}
+                </>
+              ))}
             </li>
           </ul>
         </nav>

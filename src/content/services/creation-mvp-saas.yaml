@@ -22,6 +22,145 @@ h1: Création MVP et application web à Bruxelles
 shortName: Creation Sass MVP
 footerTitle: Saas Mvp
 footerOrder: 4
+translations:
+  en:
+    seoUrl: /en/services/creation-mvp-saas
+    seoPrimaryKeyword: saas mvp development brussels
+    seoSecondaryKeywords:
+      - web app development brussels
+      - digital product prototype
+      - startup mvp belgium
+      - build saas belgium
+      - product development agency brussels
+    seoTitle: SaaS MVP development in Brussels
+    seoDescription: >-
+      Launch your SaaS MVP quickly with a solid technical base. Scope, build and
+      production release: we create what you need to test.
+    seoInternalLinks:
+      - /en/services/audit-offert
+      - /en/services/creation-landing-page
+      - /en/projets
+      - /en/contact
+    h1: SaaS MVP and web app development in Brussels
+    shortName: SaaS MVP creation
+    footerTitle: Saas Mvp
+    intro: >-
+      An MVP is not a half-built product. It is the smallest scope that lets you
+      test a business hypothesis with real users without wasting 18 months of
+      development. We help define that scope, then build it.
+    problemTitle: What "minimal" really means
+    problemBlocks:
+      - kind: paragraph
+        body: >-
+          Minimal does not mean sloppy. It means we do not build features nobody
+          has asked for yet. Common mistakes we see include:
+        items: []
+      - kind: list
+        items:
+          - Spending 6 months building an admin back office before one user tests the product
+          - Building an architecture "ready for one million users" from day one
+          - Adding features because they might be useful without validation
+      - kind: paragraph
+        body: >-
+          We work differently: we scope first, then build only what answers the
+          central business question.
+        items: []
+    offerTitle: What we cover with an MVP
+    offerItems:
+      - title: Product scoping
+        body: >-
+          We break your idea into hypotheses to validate. We define critical
+          user journeys, MVP features and what should wait.
+      - title: UX & prototyping
+        body: >-
+          Wireframes for key screens, navigation flows and interaction logic. We
+          validate before development.
+      - title: Development
+        body: >-
+          The stack is chosen for the project constraints, not by habit. Clean
+          code, tests on critical flows and iterative releases.
+      - title: Production and follow-up
+        body: >-
+          Hosting, monitoring and documentation. We stay involved after launch
+          to review early feedback and iterate.
+    methodTitle: Our MVP plan
+    methodSteps:
+      - title: Scoping (1 week)
+        body: MVP scope defined, hypotheses identified and scope approved.
+      - title: UX & prototyping (1 to 3 weeks)
+        body: Wireframes approved, key flows tested where possible.
+      - title: Development (2 to 6 weeks)
+        body: Iterative releases with continuous access to a test environment.
+      - title: Production release
+        body: Hosting configured, monitoring and documentation included.
+      - title: Post-launch follow-up
+        body: We track early feedback and iterate with you.
+    deliverablesTitle: What is delivered
+    deliverables:
+      - Application deployed to production
+      - Source code on your repository, without proprietary lock-in
+      - Technical and functional documentation
+      - Monitoring configured for errors and uptime
+      - Product management training if needed
+      - Access to every environment, staging and production
+    exclusionsTitle: What we avoid doing
+    exclusionsParagraphs:
+      - >-
+        We are not an offshore code factory. We do not handle ten projects in
+        parallel. We work with a limited number of clients, take time to
+        understand the product and build with you.
+      - >-
+        We also do not commit to features whose value we do not understand. If a
+        product decision looks risky, we say it.
+    faqTitle: Answers to common questions
+    faqItems:
+      - question: How much does an MVP cost?
+        answer: >-
+          Usually between 5,000 EUR and 20,000 EUR depending on complexity. A
+          B2C MVP with auth, basic CRUD and Stripe is closer to 5-10k. A SaaS
+          with complex logic, roles and integrations costs more.
+      - question: How long before something can be tested?
+        answer: >-
+          First usable screens: 3 to 5 weeks. A complete deployable MVP: 6 to 10
+          weeks.
+      - question: Can you continue after the MVP?
+        answer: >-
+          Depending on results, yes, we can continue in iterations. It is not
+          automatic; we reassess with you at each step.
+      - question: Can we take over the code afterward?
+        answer: >-
+          Yes. Documented code, repository on your account and no proprietary
+          dependency that locks you in.
+      - question: Do you help define the product?
+        answer: >-
+          Yes. It is part of the work, not a separate upsell. We do not code
+          before understanding what you need to validate.
+      - question: What technologies do you use?
+        answer: >-
+          We adapt the stack: React, Next.js or Astro on the frontend, Node.js
+          and TypeScript on the backend, PostgreSQL or Supabase, Clerk or
+          Supabase Auth, Stripe, Vercel or VPS hosting.
+    ctaTitle: Tell us about your idea
+    ctaParagraphs:
+      - >-
+        Fill in the form with your details and a member of our team will contact
+        you for a no-commitment consultation.
+      - >-
+        You can also email us at hello@hordeagence.com
+    primaryCtaLabel: Let's discuss your project
+    primaryCtaUrl: /en/contact
+    secondaryCtaLabel: View our work
+    secondaryCtaUrl: /en/projets
+    reassurance: Free first scoping exchange. Reply within 24h.
+    recommendedLinks:
+      - anchor: landing page for your launch
+        url: /en/services/creation-landing-page
+      - anchor: audit your existing app
+        url: /en/services/audit-offert
+      - anchor: our work
+        url: /en/projets
+      - anchor: contact us
+        url: /en/contact
 intro: >-
   Un MVP, ce n'est pas un produit à moitié fait. C'est le périmètre minimal qui
   vous permet de tester une hypothèse business avec de vrais utilisateurs, sans

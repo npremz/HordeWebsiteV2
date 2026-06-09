@@ -1,5 +1,6 @@
 import { getCollection, type CollectionEntry } from 'astro:content';
 import type { Locale } from '../i18n';
+import { localizeServiceData } from './content/services';
 
 export type ProjectEntry = CollectionEntry<'projects'>;
 export type ProjectService = CollectionEntry<'services'>;
@@ -36,19 +37,20 @@ export function getProjectServiceLabel(service: ProjectService): string {
 }
 
 export function getProjectServiceTitle(service: ProjectService, lang: Locale): string {
-  if (lang === 'en') {
-    return getProjectServiceLabel(service);
-  }
-
-  return service.data.seoTitle;
+  return localizeServiceData(service.data, lang).seoTitle;
 }
 
-export function getProjectServiceDescription(service: ProjectService): string {
-  return service.data.seoDescription;
+export function getProjectServiceDescription(service: ProjectService, lang: Locale): string {
+  return localizeServiceData(service.data, lang).seoDescription;
 }
 
-export function getProjectServiceIntro(service: ProjectService): string {
-  return service.data.intro;
+export function getProjectServiceIntro(service: ProjectService, lang: Locale): string {
+  return localizeServiceData(service.data, lang).intro;
+}
+
+export function getLocalizedProjectServiceLabel(service: ProjectService, lang: Locale): string {
+  const localizedService = localizeServiceData(service.data, lang);
+  return localizedService.shortName || localizedService.h1;
 }
 
 export function getProjectServiceHref(slug: ProjectServiceSlug, lang: Locale): string {
