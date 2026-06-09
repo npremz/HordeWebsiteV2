@@ -1,5 +1,6 @@
 ---
 import CtaButton from "../ui/actions/CtaButton.astro";
+import HeroStructure from "../blog/HeroStructure.astro";
 import { formatHeadingHtml } from "../../utils/heading-html";
 import type { ServiceData } from "./types";
 
@@ -9,72 +10,55 @@ interface Props {
 
 const { service } = Astro.props;
 
-const backgroundCircleOffsets = [-250, -200, -150, -100, -50, 0, 50, 100, 150, 200, 250];
+const serviceShapeBySlug: Record<string, string> = {
+  'audit-offert': '/images/servicesShapes/audit.svg',
+  'refonte-site-web': '/images/servicesShapes/refonte.svg',
+  'creation-ecommerce': '/images/servicesShapes/ecommerce.svg',
+  'creation-landing-page': '/images/servicesShapes/landing.svg',
+  'creation-mvp-saas': '/images/servicesShapes/sass.svg',
+  'optimisation-site-web': '/images/servicesShapes/opti.svg',
+};
+
+const serviceShapeSrc = serviceShapeBySlug[service.slug] || '/images/servicesShapes/neutral.svg';
 ---
 
-<header
+<section
   id="service-hero"
-  class="relative pt-52 sm:pt-62 2xl:pt-72 pb-16 sm:pb-16 md:pb-16 2xl:pb-25 bg-black text-button-white full-width-dark-bg"
+  class="bg-black text-button-white full-width-dark-bg"
   data-service-section="hero"
 >
-  <!-- Crossing lines: 100vw wide, clipped to hero height via overflow-hidden on this wrapper -->
-  <div
-    class="absolute top-0 bottom-0 z-0 overflow-hidden pointer-events-none"
-    style="left: 50%; width: 100vw; transform: translateX(-50%);"
-    aria-hidden="true"
+  <HeroStructure
+    background="dark"
+    showBreadcrumbs={false}
+    showHorizontalLine={false}
+    showVerticalLine={true}
+    showObliqueLines={true}
+    contentClass="h-[426px] justify-center lg:h-[490px]"
+    class="mt-0!"
   >
-    <div class="w-full px-(--gutter) sm:w-[unset] sm:px-0 sm:h-[393px] 2xl:h-[580px] absolute center-x -translate-y-1/2" style="top: var(--shape-center-y, 50%);">
-      <svg
-        class="h-full aspect-square overflow-visible"
-        viewBox="0 0 100 100"
-        fill="none"
-        aria-hidden="true"
-      >
-        <rect x="0.5" y="0.5" width="99" height="99" stroke="var(--color-lines-dark)" />
-        {backgroundCircleOffsets.map((offset) => (
-          <circle
-            cx={50 + offset}
-            cy="50"
-            r="49.5"
-            stroke="var(--color-lines-dark)"
+    <div class="flex items-center justify-center h-[426px] lg:h-[490px]">
+      <div class="flex">
+        <svg class="h-[30px] pr-4 sm:pr-5" viewBox="0 0 11 52" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M8.05028 0H11C6.63687 7.2156 3.37989 15.0872 3.37989 26.1193C3.37989 36.9128 6.63687 44.7844 11 52H8.05028C3.81006 45.9771 0 36.9128 0 26.1193C0 14.9679 3.81006 6.02294 8.05028 0Z" fill="white"/>
+        </svg>
+        <div class="relative">
+          <img
+            id="service-shape"
+            src={serviceShapeSrc}
+            alt=""
+            class="size-45 sm:size-55 2xl:h-76 2xl:w-76"
+            loading="eager"
+            decoding="async"
           />
-        ))}
-      </svg>
-    </div>
-    <!-- Vertical line -->
-    <div class="absolute top-0 bottom-0 w-px bg-lines-dark" style="left: 50%; transform: translateX(-50%);"></div>
-    <!-- Horizontal line -->
-    <div class="absolute h-px w-full bg-lines-dark" style="top: var(--shape-center-y, 50%);"></div>
-    <!-- +30deg diagonal -->
-    <div class="absolute h-px bg-lines-dark" style="width: 150vw; top: var(--shape-center-y, 50%); left: 50%; transform: translateX(-50%) rotate(45deg);"></div>
-    <!-- -30deg diagonal -->
-    <div class="absolute h-px bg-lines-dark" style="width: 150vw; top: var(--shape-center-y, 50%); left: 50%; transform: translateX(-50%) rotate(-45deg);"></div>
-  </div>
-  <div class="relative z-10 flex justify-center">
-    <svg class="h-[30px] pr-4 sm:pr-5" viewBox="0 0 11 52" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M8.05028 0H11C6.63687 7.2156 3.37989 15.0872 3.37989 26.1193C3.37989 36.9128 6.63687 44.7844 11 52H8.05028C3.81006 45.9771 0 36.9128 0 26.1193C0 14.9679 3.81006 6.02294 8.05028 0Z" fill="white"/>
-    </svg>
-    <div class="relative">
-      <!-- Corner markers centered on each corner of the shape -->
-      <div class="absolute size-[4px] sm:size-[5px] 2xl:size-[7px] bg-white -top-[2px] -left-[2px] sm:-top-[2.5px] sm:-left-[2.5px] 2xl:-top-[3.5px] 2xl:-left-[3.5px]"></div>
-      <div class="absolute size-[4px] sm:size-[5px] 2xl:size-[7px] bg-white -top-[2px] -right-[2px] sm:-top-[2.5px] sm:-right-[2.5px] 2xl:-top-[3.5px] 2xl:-right-[3.5px]"></div>
-      <div class="absolute size-[4px] sm:size-[5px] 2xl:size-[7px] bg-white -bottom-[2px] -left-[2px] sm:-bottom-[2.5px] sm:-left-[2.5px] 2xl:-bottom-[3.5px] 2xl:-left-[3.5px]"></div>
-      <div class="absolute size-[4px] sm:size-[5px] 2xl:size-[7px] bg-white -bottom-[2px] -right-[2px] sm:-bottom-[2.5px] sm:-right-[2.5px] 2xl:-bottom-[3.5px] 2xl:-right-[3.5px]"></div>
-      <div
-        id="service-shape"
-        class="grid size-45 sm:size-55 2xl:h-76 2xl:w-76 grid-cols-3 grid-rows-3 bg-white border-r border-b border-[#BFBFBF]"
-        style="background-image: linear-gradient(#BFBFBF 1px, transparent 1px), linear-gradient(90deg, #BFBFBF 1px, transparent 1px); background-size: calc(100% / 3) calc(100% / 3);"
-      >
-        {Array.from({ length: 9 }).map(() => (
-          <div class="flex items-center justify-center"><div class="h-full w-full rounded-full bg-white border border-[#BFBFBF]"></div></div>
-        ))}
+        </div>
+        <svg class="h-[30px] pl-4 sm:pl-5 self-end" viewBox="0 0 11 52" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M2.94972 52L-4.76837e-06 52C4.36313 44.7844 7.62011 36.9128 7.62011 25.8807C7.62011 15.0872 4.36313 7.21559 -2.22387e-07 -4.77635e-06L2.94972 -4.51848e-06C7.18995 6.02293 11 15.0872 11 25.8807C11 37.0321 7.18994 45.9771 2.94972 52Z" fill="white"/>
+        </svg>
       </div>
     </div>
-    <svg class="h-[30px] pl-4 sm:pl-5 self-end" viewBox="0 0 11 52" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M2.94972 52L-4.76837e-06 52C4.36313 44.7844 7.62011 36.9128 7.62011 25.8807C7.62011 15.0872 4.36313 7.21559 -2.22387e-07 -4.77635e-06L2.94972 -4.51848e-06C7.18995 6.02293 11 15.0872 11 25.8807C11 37.0321 7.18994 45.9771 2.94972 52Z" fill="white"/>
-    </svg>
-  </div>
-  <div class="relative z-10 mt-22 sm:mt-32 md:mt-62.5 lg:mt-20 2xl:mt-36">
+  </HeroStructure>
+
+  <div class="relative z-10 mx-auto max-w-[1320px] px-(--gutter) pb-16 sm:pb-16 md:pb-16 2xl:pb-25 lg:px-0">
     <div class="lg:flex lg:justify-between lg:items-end">
       <div class="flex flex-col gap-5">
         <span class="text-[1.5625rem]">Notre service de</span>
@@ -97,26 +81,4 @@ const backgroundCircleOffsets = [-250, -200, -150, -100, -50, 0, 50, 100, 150, 2
       </div>
     </div>
   </div>
-</header>
-
-<script>
-  function updateShapeCenterY() {
-    const hero = document.getElementById('service-hero');
-    const shape = document.getElementById('service-shape');
-    if (!hero || !shape) return;
-    const heroRect = hero.getBoundingClientRect();
-    const shapeRect = shape.getBoundingClientRect();
-    const centerY = shapeRect.top - heroRect.top + shapeRect.height / 2;
-    hero.style.setProperty('--shape-center-y', centerY + 'px');
-  }
-
-  updateShapeCenterY();
-
-  let resizeTimer: ReturnType<typeof setTimeout>;
-  window.addEventListener('resize', () => {
-    clearTimeout(resizeTimer);
-    resizeTimer = setTimeout(updateShapeCenterY, 100);
-  });
-
-  document.addEventListener('astro:after-swap', updateShapeCenterY);
-</script>
+</section>
