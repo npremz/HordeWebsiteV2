@@ -48,21 +48,24 @@ const desktopLinkClasses = isDark
   <div class="relative z-[3] md:hidden">
     <div class="site-header__mobile-fixed pl-[15px] pr-[24px]" data-mobile-fixed>
       <div class="relative z-[5] flex h-full items-center justify-between gap-4" data-mobile-row>
-        <a
-          href={`/${lang}`}
-          class="pointer-events-auto inline-flex items-center text-button-white"
-          title={logoAlt}
-          aria-label={logoAlt}
-        >
-          <img
-            src={logo}
-            alt={logoAlt}
-            class="site-header__mobile-logo block h-[12px] w-auto max-w-full"
-            width="112"
-            height="12"
-            decoding="async"
-          />
-        </a>
+        <div class="flex items-center">
+          <a
+            href={`/${lang}`}
+            class="pointer-events-auto inline-flex items-center text-button-white"
+            title={logoAlt}
+            aria-label={logoAlt}
+          >
+            <img
+              src={logo}
+              alt={logoAlt}
+              class="site-header__mobile-logo block h-[12px] w-auto max-w-full"
+              width="112"
+              height="12"
+              decoding="async"
+            />
+          </a>
+          <div class="site-header__desktop-breadcrumb site-header__sm-breadcrumb hidden items-center sm:flex md:hidden" data-header-breadcrumb-slot></div>
+        </div>
 
         <button
           type="button"
@@ -147,7 +150,7 @@ const desktopLinkClasses = isDark
     <div class="site-header__mobile-reveal" data-header-reveal aria-hidden="true" hidden></div>
   </div>
 
-  <div class="hidden md:block lg:hidden">
+  <div class="hidden md:block slg:hidden">
     <div class="site-header__tablet-fixed pl-[15px] pr-[40px]">
       <div class="relative flex h-full items-center justify-between gap-6">
         <div class="site-header__desktop-logo-group flex items-center gap-[40px] text-button-white">
@@ -229,6 +232,7 @@ const desktopLinkClasses = isDark
               </svg>
             </span>
           </a>
+          <div class="site-header__desktop-breadcrumb hidden items-center md:flex slg:hidden" data-header-breadcrumb-slot></div>
         </div>
 
         <nav
@@ -266,12 +270,11 @@ const desktopLinkClasses = isDark
     </div>
   </div>
 
-  <div class="hidden lg:block">
+  <div class="hidden slg:block">
     <div class="site-header__desktop-fixed fixed left-[5px] right-[5px] top-[5px] z-[6]" data-desktop-fixed>
-      <div class="site-header__desktop-bar relative flex items-start justify-between" data-desktop-row>
-        <div class="site-header__desktop-logo-group site-header__desktop-logo-box flex h-[42px] w-[279px] items-center bg-button-white px-[15px] text-black">
-          <a href={`/${lang}`} class="inline-flex w-full items-center justify-between text-black" title={logoAlt} aria-label={logoAlt}>
-            <img src="/images/carre9.svg" alt="" class="order-2 block h-[18px] w-[18px]" width="18" height="18" aria-hidden="true" />
+      <div class="site-header__desktop-bar relative flex items-center justify-between bg-black px-[20px]" data-desktop-row>
+        <div class="site-header__desktop-logo-group flex h-[42px] items-center text-button-white">
+          <a href={`/${lang}`} class="inline-flex items-center text-button-white" title={logoAlt} aria-label={logoAlt}>
             <span class="order-1 inline-flex items-center gap-[15px]">
             <span class="logo-animated logo-animated--mark-static h-[13px]">
               <svg class="logo-full" width="285" height="12" viewBox="0 0 329 15" preserveAspectRatio="xMinYMin meet" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -347,11 +350,12 @@ const desktopLinkClasses = isDark
             <span class="font-sans text-[16px] leading-none whitespace-nowrap">Horde Agence</span>
             </span>
           </a>
+          <div class="site-header__desktop-breadcrumb hidden items-center slg:flex" data-header-breadcrumb-slot></div>
         </div>
 
         <nav
           aria-label="Navigation desktop"
-          class="site-header__desktop-menu pointer-events-auto flex h-[42px] items-center bg-black px-[20px]"
+          class="site-header__desktop-menu pointer-events-auto flex h-[42px] items-center"
         >
           <ul class="site-header__menu-hover-list m-0 flex list-none items-center gap-[30px] p-0 text-[16px] leading-none text-button-white">
             {items.map((item) => (
@@ -366,7 +370,7 @@ const desktopLinkClasses = isDark
                 </a>
               </li>
             ))}
-            <li class="inline-flex items-center gap-2 whitespace-nowrap normal-case">
+            <li class="site-header__desktop-language inline-flex items-center gap-2 whitespace-nowrap normal-case">
               {languageItems.map((languageItem, index) => (
                 <>
                   {languageItem.locale === lang ? (
@@ -398,10 +402,10 @@ const desktopLinkClasses = isDark
   }
 
   .site-header__desktop-logo-group {
-    color: var(--color-black);
+    color: var(--color-button-white);
   }
 
-  .site-header__desktop-logo-box .logo-animated--mark-static {
+  .site-header__desktop-logo-group .logo-animated--mark-static {
     width: 44px;
   }
 
@@ -409,6 +413,60 @@ const desktopLinkClasses = isDark
   .site-header__desktop-logo-group .logo-full,
   .site-header__desktop-logo-group .logo-mark {
     color: inherit;
+  }
+
+  .site-header__desktop-breadcrumb:empty {
+    display: none;
+  }
+
+  .site-header__desktop-breadcrumb:not(:empty) {
+    gap: 25px;
+    margin-left: 25px;
+  }
+
+  .site-header__sm-breadcrumb:not(:empty) {
+    margin-left: 25px;
+  }
+
+  .site-header__desktop-breadcrumb:not(:empty)::before,
+  .site-header__desktop-language::before {
+    content: "";
+    width: 1px;
+    height: 20px;
+    flex: 0 0 auto;
+    background: var(--color-lines-dark);
+  }
+
+  .site-header__desktop-language {
+    gap: 8px;
+    margin-left: -5px;
+  }
+
+  .site-header__desktop-language::before {
+    margin-right: 17px;
+  }
+
+  .site-header__desktop-breadcrumb .breadcrumbs,
+  .site-header__desktop-breadcrumb .breadcrumbs__list,
+  .site-header__desktop-breadcrumb .breadcrumbs__item,
+  .site-header__desktop-breadcrumb .breadcrumbs__link,
+  .site-header__desktop-breadcrumb .breadcrumbs__current {
+    font-size: 16px !important;
+    line-height: 1;
+  }
+
+  .site-header__desktop-breadcrumb .breadcrumbs__list {
+    justify-content: flex-start;
+  }
+
+  .site-header__desktop-breadcrumb .breadcrumbs__current {
+    color: var(--color-button-white);
+    border-bottom-color: rgb(255 255 255 / 0.6);
+  }
+
+  .site-header__desktop-breadcrumb .breadcrumbs__link,
+  .site-header__desktop-breadcrumb .breadcrumbs__separator {
+    color: rgb(255 255 255 / 0.45);
   }
 
   .site-header__language-inactive {
@@ -725,7 +783,7 @@ const desktopLinkClasses = isDark
       const MOBILE_SCROLL_DELTA_THRESHOLD = 8;
       const MOBILE_HIDE_OFFSET = 110;
       const MOBILE_SOLID_OFFSET = 6;
-      const MOBILE_BREAKPOINT = 1024;
+      const MOBILE_BREAKPOINT = 1256;
 
       const isMobileViewport = () => window.innerWidth < MOBILE_BREAKPOINT;
 
@@ -840,6 +898,17 @@ const desktopLinkClasses = isDark
       window.addEventListener('scroll', handleMobileScroll, { passive: true });
       window.addEventListener('resize', handleMobileResize, { passive: true });
       toggle.dataset.headerBound = 'true';
+
+      const breadcrumbSlots = header.querySelectorAll('[data-header-breadcrumb-slot]');
+      const breadcrumbSource = document.querySelector('.hero-breadcrumb-source');
+      breadcrumbSlots.forEach((breadcrumbSlot) => {
+        breadcrumbSlot.replaceChildren();
+        if (breadcrumbSource instanceof HTMLElement) {
+          const breadcrumb = breadcrumbSource.cloneNode(true) as HTMLElement;
+          breadcrumb.className = 'breadcrumbs breadcrumbs--dark';
+          breadcrumbSlot.append(breadcrumb);
+        }
+      });
 
       if (
         desktopFixed instanceof HTMLElement &&

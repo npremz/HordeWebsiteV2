@@ -86,7 +86,7 @@ const textColorClass = isDark ? "text-button-white" : "text-black";
 			{
 				ctaColumn && (
 					<div class="flex-col-container column-gap lg:col-span-3">
-						<ul class="flex flex-wrap max-w-[288px] gap-5 text-[1.125rem] leading-tight">
+						<ul class="flex flex-wrap max-w-[288px] gap-[10px] text-[16px] leading-tight">
 							{ctaColumn.links.map((link) => (
 								<li>
 									<a
@@ -121,7 +121,7 @@ const textColorClass = isDark ? "text-button-white" : "text-black";
 				class="flex-col-container flex-row justify-between mt-16 sm:mt-0 column-gap gap-8 sm:gap-24 lg:col-span-4 lg:justify-self-end"
 			>
 
-				<ul class="flex-col-container gap-[10px] text-[1.125rem]">
+				<ul class="flex-col-container gap-[10px] text-[16px]">
 					{
 						menuItems.map((item) => (
 							<li class="">
@@ -150,7 +150,7 @@ const textColorClass = isDark ? "text-button-white" : "text-black";
 				{
 					serviceLinks.length > 0 && (
 						<ul
-							class="flex-col-container gap-[10px] text-[1.125rem] items-end"
+							class="flex-col-container gap-[10px] text-[16px] items-end"
 							aria-label="Services"
 						>
 							{serviceLinks.map((link) => (
@@ -175,7 +175,7 @@ const textColorClass = isDark ? "text-button-white" : "text-black";
 
 		<!-- Logo -->
 		<div
-			class="relative flex-col-container flex-row items-end justify-between mt-16 sm:mt-24 lg:mt-50 lg:col-span-12"
+			class="relative flex-col-container flex-row items-end justify-between mt-[120px] lg:col-span-12"
 		>
 			<div class="sm:absolute sm:left-1/2 sm:-translate-x-1/2">
 				{
@@ -202,10 +202,10 @@ const textColorClass = isDark ? "text-button-white" : "text-black";
 			</div>
 			<!-- Copyright et liens légaux -->
 			<div
-				class="flex-col-container sm:w-full sm:flex-row gap-2 sm:mt-0 text-[1.125rem] sm:justify-between sm:items-end"
+				class="flex-col-container sm:w-full sm:flex-row gap-2 sm:mt-0 text-[16px] sm:justify-between sm:items-end"
 			>
 				<div
-					class="flex-col-container items-end sm:items-start lg:flex-row gap-3 leading-tight"
+					class="flex-col-container items-end sm:items-start gap-3 leading-tight"
 				>
 					{
 						legalLinks.map((link) => (

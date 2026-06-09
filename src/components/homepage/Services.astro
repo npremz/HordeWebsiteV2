@@ -26,7 +26,7 @@ const serviceShapeKeyBySlug: Record<string, string> = {
 
 const headingClass = "text-[1.5rem] sm:text-[2rem] md:text-[2.5rem] lg:text-[3rem]";
 const listOffsetClass = "mt-8 sm:mt-12 md:mt-20";
-const rowLinkClass = "service-link flex items-center justify-between pt-8 pb-7 sm:pt-10 sm:pb-9 lg:pt-12 lg:pb-12";
+const rowLinkClass = "service-link flex items-center justify-between pt-8 pb-7 sm:pt-10 sm:pb-9";
 const rowTitleClass = "max-w-[280px] text-[1.25rem] leading-none sm:max-w-[unset] sm:text-[1.5rem] md:text-[2rem]";
 ---
 
@@ -57,13 +57,13 @@ const rowTitleClass = "max-w-[280px] text-[1.25rem] leading-none sm:max-w-[unset
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
-      <rect x="3.5" y="3.5" width="297" height="297" fill="white" stroke="#5C5E5F" vector-effect="non-scaling-stroke" />
-      <path d="M102.5 3.5V300.5M201.5 3.5V300.5M3.5 102.5H300.5M3.5 201.5H300.5" stroke="#5C5E5F" vector-effect="non-scaling-stroke" />
+      <rect x="3.5" y="3.5" width="297" height="297" fill="white" stroke="#C9C9C9" vector-effect="non-scaling-stroke" />
+      <path d="M102.5 3.5V300.5M201.5 3.5V300.5M3.5 102.5H300.5M3.5 201.5H300.5" stroke="#C9C9C9" vector-effect="non-scaling-stroke" />
       {Array.from({ length: 9 }).map((_, index) => (
         <path
           data-service-shape-cell={index}
           fill="white"
-          stroke="#5C5E5F"
+          stroke="#C9C9C9"
           vector-effect="non-scaling-stroke"
         />
       ))}
@@ -128,6 +128,8 @@ const rowTitleClass = "max-w-[280px] text-[1.25rem] leading-none sm:max-w-[unset
     z-index: 1;
     display: block;
     overflow: hidden;
+    margin-block: -0.05em;
+    padding-block: 0.05em;
   }
 
   .service-link__icon {
@@ -145,8 +147,8 @@ const rowTitleClass = "max-w-[280px] text-[1.25rem] leading-none sm:max-w-[unset
   .service-link__label-overlay,
   .service-link__icon-overlay {
     position: absolute;
-    inset: 0;
-    transform: translateY(100%);
+    inset: 0.05em 0;
+    transform: translateY(110%);
     color: var(--color-black);
   }
 
@@ -161,7 +163,7 @@ const rowTitleClass = "max-w-[280px] text-[1.25rem] leading-none sm:max-w-[unset
 
     .service-link:hover .service-link__label-base,
     .service-link:hover .service-link__icon-base {
-      transform: translateY(-100%);
+      transform: translateY(-110%);
     }
 
     .service-link:hover .service-link__label-overlay,
@@ -179,7 +181,7 @@ const rowTitleClass = "max-w-[280px] text-[1.25rem] leading-none sm:max-w-[unset
   }
 
   .service-shape-preview {
-    --service-shape-size: min(400px, 28vw);
+    --service-shape-size: 250px;
     --service-shape-y: 0px;
     pointer-events: none;
     position: absolute;
