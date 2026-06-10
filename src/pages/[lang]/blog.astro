@@ -3,6 +3,7 @@ import { Image } from 'astro:assets';
 import Layout from '../../layouts/Layout.astro';
 import Footer from '../../components/Footer.astro';
 import HeroStructure from '../../components/blog/HeroStructure.astro';
+import WordsMarquee from '../../components/ui/effects/WordsMarquee.astro';
 import { SUPPORTED_LOCALES, type Locale, useTranslations } from '../../i18n';
 import { getLocalizedCategories, getLocalizedPosts } from '../../lib/content/blog';
 import { formatHeadingHtml } from '../../utils/heading-html';
@@ -63,7 +64,7 @@ function formatDate(date: Date, locale: Locale): string {
   headerVariant="dark"
   showContainerLines={false}
 >
-  <article id="page-content" class="text-black">
+  <article id="page-content" class="bg-button-white text-black">
     <HeroStructure
       background="dark"
       showHorizontalLine={false}
@@ -137,60 +138,66 @@ function formatDate(date: Date, locale: Locale): string {
       </div>
     </HeroStructure>
 
-    <main class="mx-auto w-full max-w-[1300px] bg-bg py-16 text-black sm:py-24">
-      <ol class="grid gap-12 sm:gap-16 md:mx-auto md:max-w-[1000px]">
-        {posts.map((post) => (
-          <li class="border-b border-lines">
-            <article class="grid gap-6 sm:grid-cols-[minmax(180px,200px)_1fr] sm:gap-10 sm:pb-16 md:grid-cols-[minmax(180px,276px)_1fr]">
-              <a href={`/${lang}/blog/${post.slug}`} class="block" aria-label={post.title}>
-                <Image
-                  src={post.listingImage}
-                  alt={post.listingImageAlt}
-                  class="aspect-square w-full object-cover"
-                  widths={[320, 480, 640]}
-                  sizes="(max-width: 640px) 100vw, 320px"
-                  loading="lazy"
-                  decoding="async"
-                  format="webp"
-                />
-              </a>
+    <WordsMarquee />
 
-              <div class="flex flex-col sm:justify-between">
-                <div>
-                  <h2 class="font-sans text-[1.5rem] leading-tight md:max-w-[500px]">
-                    <a href={`/${lang}/blog/${post.slug}`}>
-                      {post.title}
-                    </a>
-                  </h2>
+    <div class="relative z-0 full-width-white-bg">
+      <main class="mx-auto w-full max-w-[1300px] py-16 text-black sm:py-24">
+        <ol class="grid gap-12 sm:gap-16 md:mx-auto md:max-w-[1000px]">
+          {posts.map((post) => (
+            <li class="border-b border-lines">
+              <article class="grid gap-6 sm:grid-cols-[minmax(180px,200px)_1fr] sm:gap-10 sm:pb-16 md:grid-cols-[minmax(180px,276px)_1fr]">
+                <a href={`/${lang}/blog/${post.slug}`} class="block" aria-label={post.title}>
+                  <Image
+                    src={post.listingImage}
+                    alt={post.listingImageAlt}
+                    class="aspect-square w-full object-cover"
+                    widths={[320, 480, 640]}
+                    sizes="(max-width: 640px) 100vw, 320px"
+                    loading="lazy"
+                    decoding="async"
+                    format="webp"
+                  />
+                </a>
 
-                  <div class="mt-5 flex items-center gap-2">
-                    <p class="text-[1.125rem] leading-none">{post.categoryName}</p>
-                    <span>-</span>
-                    <p class="text-[1.125rem] leading-none">
-                      {post.readingTime} {readingTimeLabel}
+                <div class="flex flex-col sm:justify-between">
+                  <div>
+                    <h2 class="font-sans text-[1.5rem] leading-tight md:max-w-[500px]">
+                      <a href={`/${lang}/blog/${post.slug}`}>
+                        {post.title}
+                      </a>
+                    </h2>
+
+                    <div class="mt-5 flex items-center gap-2">
+                      <p class="text-[1.125rem] leading-none">{post.categoryName}</p>
+                      <span>-</span>
+                      <p class="text-[1.125rem] leading-none">
+                        {post.readingTime} {readingTimeLabel}
+                      </p>
+                    </div>
+                  </div>
+
+                  <div class="mt-5 flex flex-col sm:mt-5 sm:flex-row-reverse sm:items-center sm:justify-between">
+                    <p class="mt-5 text-[1.125rem] leading-none sm:mt-0">
+                      {byLabel} {post.authorName} - {formatDate(new Date(post.publishedDate), lang)}
                     </p>
+
+                    <a
+                      href={`/${lang}/blog/${post.slug}`}
+                      class="mt-5 w-fit leading-none underline! decoration-[1px] underline-offset-2 sm:mt-0"
+                    >
+                      {readArticleLabel} →
+                    </a>
                   </div>
                 </div>
-
-                <div class="mt-5 flex flex-col sm:mt-5 sm:flex-row-reverse sm:items-center sm:justify-between">
-                  <p class="mt-5 text-[1.125rem] leading-none sm:mt-0">
-                    {byLabel} {post.authorName} - {formatDate(new Date(post.publishedDate), lang)}
-                  </p>
-
-                  <a
-                    href={`/${lang}/blog/${post.slug}`}
-                    class="mt-5 w-fit leading-none underline! decoration-[1px] underline-offset-2 sm:mt-0"
-                  >
-                    {readArticleLabel} →
-                  </a>
-                </div>
-              </div>
-            </article>
-          </li>
-        ))}
-      </ol>
-    </main>
+              </article>
+            </li>
+          ))}
+        </ol>
+      </main>
+    </div>
   </article>
 
-  <Footer lang={lang} variant="light" hideOverflow={false} />
+  <div class="relative z-0 full-width-white-bg">
+    <Footer lang={lang} variant="light" hideOverflow={false} />
+  </div>
 </Layout>
