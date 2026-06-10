@@ -20,9 +20,12 @@ const projects = (await getLocalizedProjects(lang)).slice(0, 3);
         <li>
           <a
             href={`/${lang}/projets/${project.slug}`}
-            class="project-home-link relative block overflow-hidden pt-3 lg:pt-6"
+            class="project-home-link relative block pt-8 pb-7 sm:pt-10 sm:pb-9"
           >
-            <span class="project-home-link__text relative z-10 block px-4">{project.shortTitle}</span>
+            <span class="project-home-link__text">
+              <span class="project-home-link__text-base">{project.shortTitle}</span>
+              <span class="project-home-link__text-overlay" aria-hidden="true">{project.shortTitle}</span>
+            </span>
           </a>
         </li>
       </>
@@ -34,27 +37,57 @@ const projects = (await getLocalizedProjects(lang)).slice(0, 3);
   .project-home-link::before {
     content: "";
     position: absolute;
-    inset: 0;
-    background-color: var(--color-black);
+    top: 10px;
+    right: -20px;
+    bottom: 10px;
+    left: -20px;
+    z-index: -1;
+    background-color: #FFFFFF;
     transform: scaleY(0);
     transform-origin: center bottom;
   }
 
+  .project-home-link {
+    isolation: isolate;
+  }
+
+  .project-home-link__text {
+    position: relative;
+    z-index: 1;
+    display: block;
+    overflow: hidden;
+    margin-block: -0.05em;
+    padding-block: 0.05em;
+  }
+
+  .project-home-link__text-base,
+  .project-home-link__text-overlay {
+    display: block;
+    transition: transform 0.15s ease-out;
+  }
+
+  .project-home-link__text-overlay {
+    position: absolute;
+    inset: 0.05em 0;
+    color: var(--color-black);
+    transform: translateY(110%);
+  }
+
   @media (hover: hover) {
     .project-home-link::before {
-      transition: transform 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    }
-
-    .project-home-link__text {
-      transition: color 0.15s ease-out 0.1s;
+      transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     }
 
     .project-home-link:hover::before {
       transform: scaleY(1);
     }
 
-    .project-home-link:hover .project-home-link__text {
-      color: var(--color-button-white);
+    .project-home-link:hover .project-home-link__text-base {
+      transform: translateY(-110%);
+    }
+
+    .project-home-link:hover .project-home-link__text-overlay {
+      transform: translateY(0);
     }
   }
 </style>

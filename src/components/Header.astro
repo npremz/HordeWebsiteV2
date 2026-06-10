@@ -151,7 +151,7 @@ const desktopLinkClasses = isDark
   </div>
 
   <div class="hidden md:block slg:hidden">
-    <div class="site-header__tablet-fixed pl-[15px] pr-[40px]">
+    <div class="site-header__tablet-fixed left-[15px] right-[10px] top-[5px] px-[20px]">
       <div class="relative flex h-full items-center justify-between gap-6">
         <div class="site-header__desktop-logo-group flex items-center gap-[40px] text-button-white">
           <a
@@ -237,9 +237,9 @@ const desktopLinkClasses = isDark
 
         <nav
           aria-label="Navigation tablette"
-          class="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
+          class="pointer-events-auto flex h-full items-center"
         >
-          <ul class="site-header__menu-hover-list pointer-events-auto m-0 flex list-none items-center justify-center gap-[40px] p-0 text-[16px] leading-none text-button-white">
+          <ul class="site-header__menu-hover-list m-0 flex list-none items-center justify-end gap-[30px] p-0 text-[16px] leading-none text-button-white">
             {items.map((item) => (
               <li>
                 <a
@@ -252,20 +252,22 @@ const desktopLinkClasses = isDark
                 </a>
               </li>
             ))}
+            <li class="site-header__desktop-language inline-flex items-center gap-2 whitespace-nowrap normal-case">
+              {languageItems.map((languageItem, index) => (
+                <>
+                  {languageItem.locale === lang ? (
+                    <span aria-current="page">{languageItem.label}</span>
+                  ) : (
+                    <a href={languageItem.href} hreflang={languageItem.locale} class="site-header__language-inactive transition-colors duration-200">
+                      {languageItem.label}
+                    </a>
+                  )}
+                  {index < languageItems.length - 1 && <span class="text-lines-dark" aria-hidden="true">/</span>}
+                </>
+              ))}
+            </li>
           </ul>
         </nav>
-
-        <div class="site-header__menu-hover-list flex items-center gap-[40px] text-button-white">
-          <span class="h-[25px] w-px bg-lines-dark" aria-hidden="true"></span>
-          <a
-            href={switchUrl}
-            hreflang={switchLang}
-            class="site-header__menu-hover-item inline-flex items-center gap-2 whitespace-nowrap text-[16px] leading-none text-button-white transition-opacity duration-200"
-          >
-            {t.nav.switchLang}
-            <span aria-hidden="true" class="text-[12px]">( ↗ )</span>
-          </a>
-        </div>
       </div>
     </div>
   </div>
@@ -350,7 +352,7 @@ const desktopLinkClasses = isDark
             <span class="font-sans text-[16px] leading-none whitespace-nowrap">Horde Agence</span>
             </span>
           </a>
-          <div class="site-header__desktop-breadcrumb hidden items-center slg:flex" data-header-breadcrumb-slot></div>
+          <div class="site-header__desktop-breadcrumb site-header__slg-breadcrumb hidden items-center slg:flex" data-header-breadcrumb-slot></div>
         </div>
 
         <nav
@@ -424,6 +426,12 @@ const desktopLinkClasses = isDark
     margin-left: 25px;
   }
 
+  @media (min-width: 1256px) and (max-width: 1511.98px) {
+    .site-header__slg-breadcrumb:not(:empty) {
+      margin-left: 15px;
+    }
+  }
+
   .site-header__sm-breadcrumb:not(:empty) {
     margin-left: 25px;
   }
@@ -478,10 +486,9 @@ const desktopLinkClasses = isDark
   }
 
   .site-header__tablet-fixed {
-    position: relative;
+    position: fixed;
     z-index: 5;
     height: 42px;
-    width: 100vw;
     background: var(--color-black);
     color: #fff;
     pointer-events: auto;
