@@ -3,7 +3,12 @@ import Layout from "../../layouts/Layout.astro";
 import Footer from "../../components/Footer.astro";
 import HeroStructure from "../../components/blog/HeroStructure.astro";
 import { SUPPORTED_LOCALES, type Locale, useTranslations } from "../../i18n";
-import { getLocalizedCategories, getLocalizedPosts } from "../../lib/content/blog";
+import {
+  getBlogCategoryHref,
+  getBlogIndexHref,
+  getLocalizedCategories,
+  getLocalizedPosts,
+} from "../../lib/content/blog";
 import { formatHeadingHtml } from "../../utils/heading-html";
 
 export const prerender = true;
@@ -33,11 +38,11 @@ const breadcrumbItems = [
 
 const usedCategorySlugs = new Set(posts.map((post) => post.categorySlug));
 const filterLinks = [
-  { href: `/${lang}/blog`, label: allLabel, current: true },
+  { href: getBlogIndexHref(lang), label: allLabel, current: true },
   ...categories
-    .filter((category) => usedCategorySlugs.has(category.slug))
+    .filter((category) => usedCategorySlugs.has(category.baseSlug))
     .map((category) => ({
-      href: `/${lang}/blog/category/${category.slug}`,
+      href: getBlogCategoryHref(category.slug, lang),
       label: category.name,
       current: false,
     })),

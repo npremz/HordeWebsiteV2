@@ -1,6 +1,7 @@
 ---
 import { DEFAULT_LOCALE, type Locale, useTranslations } from '../../i18n';
 import { getLocalizedProjects } from '../../lib/content/projects';
+import { getProjectHref } from '../../lib/projectServices';
 
 interface Props {
   lang?: Locale;
@@ -19,7 +20,7 @@ const projects = (await getLocalizedProjects(lang)).slice(0, 3);
         {i > 0 && <li aria-hidden="true" class="h-0 border-t border-lines"></li>}
         <li>
           <a
-            href={`/${lang}/projets/${project.slug}`}
+            href={getProjectHref(project.slug, lang)}
             class="project-home-link relative block overflow-hidden pt-3 lg:pt-6"
           >
             <span class="project-home-link__text relative z-10 block px-4">{project.shortTitle}</span>

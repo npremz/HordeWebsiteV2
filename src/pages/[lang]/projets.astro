@@ -6,6 +6,7 @@ import { SUPPORTED_LOCALES, type Locale, useTranslations } from "../../i18n";
 import { getLocalizedProjects } from "../../lib/content/projects";
 import {
   getProjectServiceEntries,
+  getProjectIndexHref,
   getProjectServiceHref,
   getLocalizedProjectServiceLabel,
 } from "../../lib/projectServices";
@@ -61,6 +62,7 @@ const serviceFilters = projectServices
     intro={t.projectsPage.intro}
     allLabel={t.projectsPage.all}
     filters={serviceFilters}
+    activeHref={getProjectIndexHref(lang)}
     variant="dark"
   />
 
