@@ -125,9 +125,9 @@ function parseMarkdown(content: string): string {
 			const id = slugify(title);
 			isSourcesSection = ['sources', 'references'].includes(id);
 			if (isSourcesSection) {
-				return `<h2 class="text-[1.375rem] mt-24 mb-10 scroll-mt-24" id="${id}">${applyInlineFormatting(title)}</h2>`;
+				return `<h2 class="text-[1.375rem] md:text-[32px] mt-24 mb-10 scroll-mt-24" id="${id}">${applyInlineFormatting(title)}</h2>`;
 			}
-			return `<h2 class="text-[1.5rem] leading-tight max-w-[400px] mt-24 sm:mt-32 mb-10 sm:mb-16 scroll-mt-24" id="${id}">${applyInlineFormatting(title)}</h2>`;
+			return `<h2 class="text-[1.5rem] md:text-[32px] leading-tight mt-24 sm:mt-24 mb-10 sm:mb-10 scroll-mt-24" id="${id}">${applyInlineFormatting(title)}</h2>`;
 		}
 
 		// Titres H3
@@ -148,12 +148,12 @@ function parseMarkdown(content: string): string {
 			if (isSourcesSection) {
 				return `<ul class="flex flex-col divide-y divide-lines text-[1.125rem]">${items}</ul>`;
 			}
-			return `<ul class="list-disc list-outside flex flex-col gap-10 py-10 sm:py-16 border-t border-b border-lines mb-6 pl-4">${items}</ul>`;
+				return `<ul class="list-disc list-outside flex flex-col gap-10 py-10 border-t border-b border-lines mb-6 pl-4">${items}</ul>`;
 		}
 
 		// Paragraphe normal
 		isSourcesSection = false;
-		return `<p class="mb-10 sm:mb-16 text-[1.125rem] leading-relaxed">${applyInlineFormatting(block)}</p>`;
+			return `<p class="mb-10 text-[1.125rem] leading-relaxed">${applyInlineFormatting(block)}</p>`;
 	});
 
 	return processedBlocks.filter(b => b).join('\n\n');
@@ -436,7 +436,7 @@ const schemaOrg = {
 			<div class="lg:flex-1 max-w-[1000px] mx-auto">
 				{keyTakeaways.length > 0 && (
 					<section class="mt-10 sm:mt-16" aria-label={t.blogPage.keyTakeaways}>
-						<h2 class="text-[1.375rem] mb-10">{t.blogPage.keyTakeaways}</h2>
+							<h2 class="text-[1.375rem] md:text-[32px] mb-10">{t.blogPage.keyTakeaways}</h2>
 						<ul class="flex flex-col divide-y divide-lines text-[1.125rem]">
 							{keyTakeaways.map((item: string) => (
 								<li class="flex gap-4 py-6 first:pt-0 last:pb-0 leading-relaxed">
@@ -451,23 +451,27 @@ const schemaOrg = {
 				<!-- Sommaire (rendu côté serveur pour SEO) -->
 				{tableOfContents.length > 0 && (
 					<nav class="mt-24" aria-label={t.blogPage.tableOfContents}>
-						<h2 class="text-[1.375rem] mb-8">{t.blogPage.tableOfContents}</h2>
-						<ol class="flex flex-col gap-6">
-							{tableOfContents.map((heading, index) => (
-								<li class="relative">
-									<a
-										href={`#${heading.id}`}
-										class="flex items-center gap-10 pr-24 hover:text-black/60 transition-colors"
-										title={heading.text}
-									>
-										<span class="text-[1.125rem]">{String(index + 1)}/</span>
-										<span>{heading.text}</span>
-										<svg width="27" height="20" class="absolute top-1/2 -translate-y-1/2 right-0" viewBox="0 0 27 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-											<path d="M3.01402 -0.000626206H4.31202C2.79402 2.66137 1.60602 5.56537 1.60602 9.63537C1.60602 13.6174 2.79402 16.5214 4.31202 19.1834H3.01402C1.40802 16.9614 1.75834e-05 13.6174 1.75834e-05 9.63537C1.75834e-05 5.52137 1.40802 2.22137 3.01402 -0.000626206ZM15.5676 15.5094L14.5996 14.6294L18.7136 10.2294H5.8656V8.93137H18.7136L14.5996 4.53137L15.5676 3.62937L21.0676 9.56937L15.5676 15.5094ZM23.9383 19.1834H22.6403C24.1583 16.5214 25.3463 13.6174 25.3463 9.54737C25.3463 5.56537 24.1583 2.66137 22.6403 -0.000626206H23.9383C25.5443 2.22137 26.9523 5.56537 26.9523 9.54737C26.9523 13.6614 25.5443 16.9614 23.9383 19.1834Z" fill="#16191B"/>
-										</svg>
-									</a>
-								</li>
-							))}
+							<h2 class="text-[1.375rem] md:text-[32px] mb-8">{t.blogPage.tableOfContents}</h2>
+							<ol class="flex flex-col gap-6">
+								{tableOfContents.map((heading, index) => (
+									<li>
+										<a
+											href={`#${heading.id}`}
+											class="toc-service-link flex items-center gap-10"
+											title={heading.text}
+										>
+											<span class="text-[1.125rem]">{String(index + 1)}/</span>
+											<span class="toc-service-link__label flex-1">
+												<span class="toc-service-link__base">{heading.text}</span>
+												<span class="toc-service-link__overlay" aria-hidden="true">{heading.text}</span>
+											</span>
+											<span class="toc-service-link__icon shrink-0">
+												<span class="toc-service-link__base">(→)</span>
+												<span class="toc-service-link__overlay" aria-hidden="true">(→)</span>
+											</span>
+										</a>
+									</li>
+								))}
 						</ol>
 					</nav>
 				)}
@@ -674,9 +678,76 @@ const schemaOrg = {
 	<Footer lang={lang} hideOverflow={false} />
 </Layout>
 
-<style>
-	/* Prose styles */
-	.prose h2 {
+	<style>
+		.toc-service-link {
+			position: relative;
+			isolation: isolate;
+		}
+
+		.toc-service-link::before {
+			content: "";
+			position: absolute;
+			top: -6px;
+			right: -10px;
+			bottom: -6px;
+			left: -10px;
+			z-index: -1;
+			background-color: var(--color-black);
+			transform: scaleY(0);
+			transform-origin: center bottom;
+		}
+
+		.toc-service-link__label,
+		.toc-service-link__icon {
+			position: relative;
+			z-index: 1;
+			display: block;
+			overflow: hidden;
+			margin-block: -0.05em;
+			padding-block: 0.05em;
+		}
+
+		.toc-service-link__icon {
+			display: inline-flex;
+		}
+
+		.toc-service-link__base,
+		.toc-service-link__overlay {
+			display: block;
+			transition: transform 0.15s ease-out;
+		}
+
+		.toc-service-link__overlay {
+			position: absolute;
+			inset: 0.05em 0;
+			color: var(--color-button-white);
+			transform: translateY(110%);
+		}
+
+		@media (hover: hover) {
+			.toc-service-link::before {
+				transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+			}
+
+			.toc-service-link:hover::before {
+				transform: scaleY(1);
+			}
+
+			.toc-service-link:hover {
+				color: var(--color-button-white);
+			}
+
+			.toc-service-link:hover .toc-service-link__base {
+				transform: translateY(-110%);
+			}
+
+			.toc-service-link:hover .toc-service-link__overlay {
+				transform: translateY(0);
+			}
+		}
+
+		/* Prose styles */
+		.prose h2 {
 		scroll-margin-top: 6rem;
 	}
 

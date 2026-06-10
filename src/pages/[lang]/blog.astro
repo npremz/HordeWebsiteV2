@@ -183,9 +183,9 @@ function formatDate(date: Date, locale: Locale): string {
 
                     <a
                       href={`/${lang}/blog/${post.slug}`}
-                      class="mt-5 w-fit leading-none underline! decoration-[1px] underline-offset-2 sm:mt-0"
+                      class="blog-read-link mt-5 w-fit leading-none sm:mt-0 slg:text-[22px]"
                     >
-                      {readArticleLabel} →
+                      {readArticleLabel} (→)
                     </a>
                   </div>
                 </div>
@@ -201,3 +201,50 @@ function formatDate(date: Date, locale: Locale): string {
     <Footer lang={lang} variant="light" hideOverflow={false} />
   </div>
 </Layout>
+
+<style>
+  .blog-read-link {
+    position: relative;
+    padding-bottom: 2px;
+  }
+
+  .blog-read-link::after {
+    content: "";
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    height: 1px;
+    background: currentColor;
+    transform: scaleX(1);
+    transform-origin: right center;
+  }
+
+  @media (hover: hover) {
+    .blog-read-link:hover::after {
+      animation: blog-read-link-underline 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+  }
+
+  @keyframes blog-read-link-underline {
+    0% {
+      transform: scaleX(1);
+      transform-origin: right center;
+    }
+
+    45% {
+      transform: scaleX(0);
+      transform-origin: right center;
+    }
+
+    46% {
+      transform: scaleX(0);
+      transform-origin: left center;
+    }
+
+    100% {
+      transform: scaleX(1);
+      transform-origin: left center;
+    }
+  }
+</style>
