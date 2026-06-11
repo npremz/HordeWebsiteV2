@@ -6,7 +6,7 @@ export function getCtaButtonClasses(
   className?: string,
 ) {
   const isDark = variant === 'dark';
-  const base = 'group relative overflow-hidden text-[1.375rem] leading-none py-3.5 px-5 flex items-center justify-center transition-colors duration-200 ease-out cursor-pointer lg:h-[4.5rem]';
+  const base = 'group relative h-[60px] overflow-hidden text-[20px] leading-none px-5 flex items-center justify-center transition-colors duration-200 ease-out cursor-pointer';
   const width = fullWidth ? 'w-full' : 'w-full md:w-fit';
   const colors = isDark
     ? 'bg-black text-button-white'

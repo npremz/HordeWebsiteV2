@@ -152,7 +152,7 @@ export const fr = {
       cta: 'Prendre contact',
     },
     projects: {
-      countLabel: 'Sites web réalisés',
+      countLabel: 'Nos derniers projets',
     },
     services: {
       title: 'Nos services de création de site web',
@@ -303,8 +303,8 @@ export const fr = {
   contact: {
     title: 'Contact agence web à Bruxelles',
     description: 'Parlons de votre projet de site web rapide sur mesure avec Horde Agence à Bruxelles : audit site web offert et accompagnement de A à Z.',
-    knockKnock: 'Toc, toc.',
-    startWhen: 'On commence quand\nvotre nouveau projet ?',
+    knockKnock: 'Toc-toc, dites-nous bonjour !',
+    startWhen: 'Hâte d’entendre vos idées pour votre projet.',
     alternativeContacts: 'Contacts Alternatifs',
     bookCall: 'Réserver un appel',
     breadcrumbAriaLabel: 'Fil d’Ariane',

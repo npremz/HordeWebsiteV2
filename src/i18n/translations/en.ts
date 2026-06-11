@@ -153,7 +153,7 @@ export const en: Translations = {
       cta: 'Get in touch',
     },
     projects: {
-      countLabel: 'Websites delivered',
+      countLabel: 'Our latest projects',
     },
     services: {
       title: 'Our website creation services',
@@ -304,8 +304,8 @@ export const en: Translations = {
   contact: {
     title: 'Contact a web agency in Brussels',
     description: 'Let\'s discuss your fast custom website project with Horde Agence in Brussels: free website audit, performance guidance and end-to-end support.',
-    knockKnock: 'Knock, knock.',
-    startWhen: 'When do we start\nyour new project?',
+    knockKnock: 'Knock knock, say hello!',
+    startWhen: 'We can’t wait to hear your ideas for your project.',
     alternativeContacts: 'Alternative Contacts',
     bookCall: 'Book a call',
     breadcrumbAriaLabel: 'Breadcrumb',

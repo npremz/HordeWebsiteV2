@@ -389,6 +389,18 @@ svg polygon {
   vector-effect: non-scaling-stroke;
 }
 
+.decorative-diagonal-spin {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: decorative-diagonal-spin 1.6s steps(6, end) infinite;
+}
+
+@keyframes decorative-diagonal-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 .font-neuebit {
   font-family: 'PP Neue Bit', system-ui, sans-serif;
 }
