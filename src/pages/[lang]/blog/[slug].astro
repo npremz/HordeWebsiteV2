@@ -210,7 +210,7 @@ const siteUrl = (Astro.site?.toString() || 'https://hordeagence.com').replace(/\
 const articleUrl = `${siteUrl}/${lang}/blog/${currentSlug}`;
 const authorUrl = authorPagePath ? `${siteUrl}${authorPagePath}` : undefined;
 const shareUrl = articleUrl;
-const tagShareLinkClasses = 'underline-hover inline-flex text-[1.125rem] leading-[1.375rem] font-[375] text-black cursor-pointer';
+const tagShareLinkClasses = 'underline-hover w-fit inline-flex text-[1.125rem] leading-[1.375rem] font-[375] text-black cursor-pointer';
 const authorSameAs = [
 	authorSocial?.twitter ? `https://twitter.com/${authorSocial.twitter}` : null,
 	authorSocial?.linkedin || null,
@@ -503,10 +503,10 @@ const schemaOrg = {
 			</div>
 			<div class="max-w-[1000px] mx-auto lg:max-w-none">
 				<!-- Tags + Partage (2 colonnes sur lg) -->
-				<div class="flex lg:gap-16 pt-10 sm:pt-16 lg:pt-24 sm:mt-24 pb-24">
+				<div class="flex sm:justify-between lg:gap-16 pt-10 sm:pt-16 lg:pt-24 pb-24">
 					<!-- Tags -->
 					{tags.length > 0 && (
-						<div class="lg:mb-0 lg:flex-1">
+						<div class="lg:mb-0 lg:flex-1 sm:max-w-[300px]">
 							<h2 class="section-label mb-10">{t.blogPage.tags}</h2>
 							<div class="flex flex-wrap gap-5">
 								{tags.map((tag: string) => (
@@ -525,7 +525,7 @@ const schemaOrg = {
 					<!-- Partage -->
 					<div class="lg:flex-1 flex flex-col items-end">
 						<h2 class="section-label mb-10">{t.blogPage.shareArticle}</h2>
-						<div class="flex flex-wrap justify-end gap-5 ">
+						<div class="flex flex-wrap sm:flex-col sm:flex-nowrap justify-end sm:items-end gap-5 ">
 							<a
 								href={`https://twitter.com/intent/tweet?url=${encodeURIComponent(shareUrl)}&text=${encodeURIComponent(title)}`}
 								target="_blank"
@@ -558,27 +558,27 @@ const schemaOrg = {
 		</div>
 		</div>
 
-			<div class="max-w-[1000px] mt-16 mx-auto lg:max-w-none">
+			<div class="max-w-[1000px] mt-16 sm:mt-24 mx-auto lg:max-w-none">
 				<!-- Bio Auteur -->
 				{(authorBio || authorAvatar || authorSocial || authorPagePath) && (
 					<div class="flex justify-between">
-						<h2 class="text-[1.25rem] mb-10">{t.blogPage.about}</h2>
-						<div>
-							<p>Nicolas Prémont</p>
+						<h2 class="text-[1.25rem] sm:text-[1.5rem] mb-10">{t.blogPage.authorIntro} :</h2>
+						<div class="flex flex-col items-end sm:items-start gap-6 md:w-1/2 lg:w-[430px]">
+							<p class="sm:text-[1.5rem]">Nicolas Prémont</p>
 							{authorSocial && (
 								<div class="flex gap-5">
 									{authorSocial.twitter && (
-										<a href={`https://twitter.com/${authorSocial.twitter}`} target="_blank" rel="noopener noreferrer" class="text-black/60 hover:text-black transition-colors" title="Twitter">
+										<a href={`https://twitter.com/${authorSocial.twitter}`} target="_blank" rel="noopener noreferrer" class="underline-hover text-black/60 hover:text-black transition-colors" title="Twitter">
 											Twitter
 										</a>
 									)}
 									{authorSocial.linkedin && (
-										<a href={authorSocial.linkedin} target="_blank" rel="noopener noreferrer" class="text-black/60 hover:text-black transition-colors" title="LinkedIn">
+										<a href={authorSocial.linkedin} target="_blank" rel="noopener noreferrer" class="underline-hover text-black/60 hover:text-black transition-colors" title="LinkedIn">
 											LinkedIn
 										</a>
 									)}
 									{authorSocial.github && (
-										<a href={`https://github.com/${authorSocial.github}`} target="_blank" rel="noopener noreferrer" class="text-black/60 hover:text-black transition-colors" title="GitHub">
+										<a href={`https://github.com/${authorSocial.github}`} target="_blank" rel="noopener noreferrer" class="underline-hover text-black/60 hover:text-black transition-colors" title="GitHub">
 											GitHub
 										</a>
 									)}
@@ -586,62 +586,25 @@ const schemaOrg = {
 							)}
 						</div>
 					</div>
-					<div class="">
-						<div class="md:hidden">
-							{authorBio && <p class="leading-relaxed">{authorBio}</p>}
+					<div class="mt-16">
+						<div class="md:flex lg:justify-between">
+							{authorBio && (
+								<p class="md:w-1/2">{t.blogPage.authorBioLabel}: </p>
+								<p class="leading-relaxed mt-10 md:mt-0 md:w-1/2 lg:w-[430px]">
+									{authorBio}
+								</p>
+							)}
 						</div>
 						{/* Desktop (md+): photo à gauche, nom/rôle inline + description à droite */}
-						<div class="hidden md:flex md:gap-8">
-							{authorAvatar && (
-								<div class="shrink-0">
-									<Image
-										src={authorAvatar}
-										alt={authorName}
-										class="w-auto h-full aspect-square object-cover"
-										width={160}
-										height={160}
-									/>
-								</div>
-							)}
-							<div class="flex-1">
-								<div class="flex items-baseline gap-4 mb-4">
-									<a href={authorPagePath} class="text-[1.375rem]" title={authorName}>{authorName}</a>
-									{authorRole && <p class="section-label">{authorRole}</p>}
-								</div>
-								<div class="lg:flex lg:justify-between lg:gap-8">
-									{authorBio && <p class="leading-relaxed lg:max-w-135">{authorBio}</p>}
-									{/* Liens réseaux - en ligne avec bio sur lg+ */}
-									{authorSocial && (
-										<div class="flex lg:flex-col gap-4 mt-8 lg:mt-0 shrink-0">
-											{authorSocial.twitter && (
-												<a href={`https://twitter.com/${authorSocial.twitter}`} target="_blank" rel="noopener noreferrer" class="text-black/60 hover:text-black transition-colors" title="Twitter">
-													Twitter
-												</a>
-											)}
-											{authorSocial.linkedin && (
-												<a href={authorSocial.linkedin} target="_blank" rel="noopener noreferrer" class="text-black/60 hover:text-black transition-colors" title="LinkedIn">
-													LinkedIn
-												</a>
-											)}
-											{authorSocial.github && (
-												<a href={`https://github.com/${authorSocial.github}`} target="_blank" rel="noopener noreferrer" class="text-black/60 hover:text-black transition-colors" title="GitHub">
-													GitHub
-												</a>
-											)}
-										</div>
-									)}
-								</div>
-							</div>
-						</div>
 					</div>
 				)}
 				</div>
 
 		<!-- Articles connexes -->
 		{relatedPosts.length > 0 && (
-			<section class="mt-10 md:mt-24 pt-10 border-t border-lines">
-				<h2 class="font-display text-[1.5rem] md:text-[2rem] uppercase mb-10">{t.blogPage.relatedArticles}</h2>
-				<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+			<section class="mt-10 sm:mt-16 pt-24 border-t border-lines">
+				<h2 class=" text-[1.5rem] md:text-[2rem] mb-10">{t.blogPage.relatedArticles}</h2>
+				<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
 					{relatedPosts.map((related) => (
 						<a href={getBlogPostHref(related.slug, lang)} class="group" title={related.title}>
 							<div class="overflow-hidden mb-4 aspect-square">
@@ -657,8 +620,8 @@ const schemaOrg = {
 									quality={75}
 								/>
 							</div>
-							<p class="text-[0.75rem] font-mono uppercase text-black/60 mb-2">{related.readingTime} {t.blogPage.minRead}</p>
 							<h3 class="text-[1.125rem] leading-tight">{related.title}</h3>
+							<p class="text-[0.875rem] font-mono uppercase text-black/90 mt-5">{related.readingTime} {t.blogPage.minRead}</p>
 						</a>
 					))}
 				</div>

@@ -258,6 +258,7 @@ export const fr = {
     breadcrumbAriaLabel: 'Fil d’Ariane',
     breadcrumbHome: 'Accueil',
     authorIntro: 'Écrit par',
+    authorBioLabel: 'À propos de l’auteur',
     keyTakeaways: 'En bref',
     copyLink: 'Copier le lien',
     taggedArticles: 'Articles tagués',
