@@ -2,6 +2,7 @@
 import BracketInline from "../ui/decor/BracketInline.astro";
 import { DEFAULT_LOCALE, type Locale, useTranslations } from "../../i18n";
 import { getLocalizedProjects } from "../../lib/content/projects";
+import { getProjectHref, getProjectIndexHref } from "../../lib/projectServices";
 import { formatHeadingHtml } from "../../utils/heading-html";
 
 interface Props {
@@ -21,7 +22,7 @@ const projects = (await getLocalizedProjects(lang)).slice(0, 3);
 		<h2 set:html={formatHeadingHtml(t.projects.title)} />
 		<!-- Bouton desktop (lg+) -->
 		<a
-			href={`/${lang}/projets`}
+			href={getProjectIndexHref(lang)}
 			title={t.projects.otherProjects}
 			class="hidden lg:flex group relative overflow-hidden font-mono text-[1rem] leading-none uppercase py-6 px-5 justify-center w-fit border border-lines bg-black text-button-white transition-colors duration-300 ease-in-out cursor-pointer self-end"
 		>
@@ -68,7 +69,7 @@ const projects = (await getLocalizedProjects(lang)).slice(0, 3);
 				>
 						{!project.inProgress ? (
 							<a
-								href={`/${lang}/projets/${project.slug}`}
+								href={getProjectHref(project.slug, lang)}
 								title={project.shortTitle}
 								class:list={[
 									"project-link flex justify-between py-5 xl:py-8 px-8 lg:px-9",
@@ -105,7 +106,7 @@ const projects = (await getLocalizedProjects(lang)).slice(0, 3);
 
 	<!-- Bouton mobile (<lg) -->
 	<a
-		href={`/${lang}/projets`}
+		href={getProjectIndexHref(lang)}
 		title={t.projects.otherProjects}
 		class="lg:hidden group relative overflow-hidden font-mono text-[1rem] leading-none uppercase py-6 px-5 flex justify-center w-full border border-lines bg-black text-button-white transition-colors duration-300 ease-in-out cursor-pointer mt-10 sm:mt-16"
 	>

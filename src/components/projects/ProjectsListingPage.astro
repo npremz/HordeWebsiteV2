@@ -1,6 +1,7 @@
 ---
 import { type Locale, useTranslations } from '../../i18n';
 import type { LocalizedProject } from '../../lib/content/projects';
+import { getProjectIndexHref } from '../../lib/projectServices';
 import HeroStructure from '../blog/HeroStructure.astro';
 import ProjectIndexList from './ProjectIndexList.astro';
 
@@ -10,14 +11,16 @@ interface Props {
   intro: string;
   allLabel: string;
   filters: { label: string; href: string }[];
+  activeHref?: string;
   variant?: 'light' | 'dark';
 }
 
-const { projects, lang, intro, allLabel, filters, variant = 'light' } = Astro.props;
+const { projects, lang, intro, allLabel, filters, activeHref, variant = 'dark' } = Astro.props;
 const t = useTranslations(lang);
 const projectCount = String(projects.length).padStart(2, '0');
 const isDark = variant === 'dark';
-const filterLinks = [{ label: allLabel, href: `/${lang}/projets` }, ...filters];
+const filterLinks = [{ label: allLabel, href: getProjectIndexHref(lang) }, ...filters];
+const currentHref = activeHref || getProjectIndexHref(lang);
 const filterListLabel = t.projectsPage.filtersLabel;
 const breadcrumbAriaLabel = t.projectSingle.breadcrumbAriaLabel;
 const breadcrumbItems = [
@@ -26,7 +29,13 @@ const breadcrumbItems = [
 ];
 ---
 
-<div id="page-content" class:list={['relative z-10', isDark ? 'text-button-white' : 'text-black']}>
+<div
+  id="page-content"
+  class:list={[
+    'relative z-10',
+    isDark ? 'bg-black text-button-white full-width-dark-bg' : 'text-black',
+  ]}
+>
   <HeroStructure
     background={isDark ? 'dark' : 'light'}
     showHorizontalLine={false}
@@ -65,7 +74,15 @@ const breadcrumbItems = [
               filterLinks.map((filter, index) => (
                 <>
                   <li class="shrink-0">
-                    <a href={filter.href} class="transition-opacity duration-200 hover:opacity-65" title={filter.label}>
+                    <a
+                      href={filter.href}
+                      class:list={[
+                        'border-b transition-opacity duration-200 hover:opacity-65',
+                        filter.href === currentHref ? 'border-current' : 'border-transparent',
+                      ]}
+                      title={filter.label}
+                      aria-current={filter.href === currentHref ? 'page' : undefined}
+                    >
                       {filter.label}
                     </a>
                   </li>

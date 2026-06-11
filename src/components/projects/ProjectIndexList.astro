@@ -1,6 +1,7 @@
 ---
 import type { Locale } from "../../i18n";
 import type { LocalizedProject } from "../../lib/content/projects";
+import { getProjectHref } from "../../lib/projectServices";
 
 interface Props {
   projects: LocalizedProject[];
@@ -40,7 +41,7 @@ function getDisplayYear(project: LocalizedProject): string {
   <ol class="">
     {
       projects.map((project) => {
-        const href = project.inProgress ? undefined : `/${lang}/projets/${project.slug}`;
+        const href = project.inProgress ? undefined : getProjectHref(project.slug, lang);
         const RowTag = project.inProgress ? "div" : "a";
 
         return (

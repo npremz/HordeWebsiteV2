@@ -1,151 +1,90 @@
 ---
 import Layout from '../../../../layouts/Layout.astro';
 import Footer from '../../../../components/Footer.astro';
-import BracketInline from '../../../../components/ui/decor/BracketInline.astro';
-import { Image } from 'astro:assets';
+import BlogListingPage from '../../../../components/blog/BlogListingPage.astro';
 import { SUPPORTED_LOCALES, type Locale, useTranslations } from '../../../../i18n';
-import { getLocalizedPostsByTag, getLocalizedTags, slugifyTag } from '../../../../lib/content/blog';
+import {
+  getLocalizedCategories,
+  getLocalizedPosts,
+  getLocalizedPostsByTag,
+  getLocalizedTags,
+  getAlternateTagSlug,
+  getBlogCategoryHref,
+  getBlogIndexHref,
+  getBlogTagHref,
+  slugifyTag,
+} from '../../../../lib/content/blog';
 
 export const prerender = true;
 
 export async function getStaticPaths() {
-	const paths = await Promise.all(
-		SUPPORTED_LOCALES.map(async (lang) => {
-			const tags = await getLocalizedTags(lang);
+  const paths = await Promise.all(
+    SUPPORTED_LOCALES.map(async (lang) => {
+      const tags = await getLocalizedTags(lang);
 
-			return tags.map((tag) => ({
-				params: { lang, slug: slugifyTag(tag) },
-				props: { tag, lang },
-			}));
-		}),
-	);
+      return tags.map((tag) => ({
+        params: { lang, slug: slugifyTag(tag) },
+        props: { tag, lang },
+      }));
+    }),
+  );
 
-	return paths.flat();
+  return paths.flat();
 }
 
 const { tag, lang } = Astro.props as { tag: string; lang: Locale };
 const t = useTranslations(lang);
-const posts = await getLocalizedPostsByTag(tag, lang);
+const switchLang: Locale = lang === 'fr' ? 'en' : 'fr';
+const alternateTagSlug = await getAlternateTagSlug(tag, lang);
+const alternateUrl = alternateTagSlug
+  ? new URL(getBlogTagHref(alternateTagSlug, switchLang), Astro.site).href
+  : undefined;
+const [categories, allPosts, posts] = await Promise.all([
+  getLocalizedCategories(lang),
+  getLocalizedPosts(lang),
+  getLocalizedPostsByTag(tag, lang),
+]);
 
-const articleCount = posts.length;
+const usedCategorySlugs = new Set(allPosts.map((post) => post.categorySlug));
+const filters = [
+  { href: getBlogIndexHref(lang), label: t.blogPage.allLabel, current: false },
+  ...categories
+    .filter((category) => usedCategorySlugs.has(category.baseSlug))
+    .map((category) => ({
+      href: getBlogCategoryHref(category.slug, lang),
+      label: category.name,
+      current: false,
+    })),
+];
 
-function formatDate(date: Date, locale: string): string {
-	return new Intl.DateTimeFormat(locale === 'fr' ? 'fr-BE' : 'en-US', {
-		day: '2-digit',
-		month: 'short',
-		year: '2-digit',
-	}).format(date);
+function withTag(template: string): string {
+  return template.replace('{tag}', tag);
 }
 
-const pageTitle = `${tag} - Blog`;
-const pageDescription = `${t.blogPage.taggedArticles} ${tag}`;
-const articleCountLabel = articleCount > 1 ? t.blogPage.articlePlural : t.blogPage.articleSingular;
+const pageTitle = withTag(t.blogPage.tagPageTitle);
+const pageDescription = withTag(t.blogPage.tagPageDescription);
+const heading = withTag(t.blogPage.tagPageHeading);
+const robots = posts.length > 2 ? 'index, follow' : 'noindex, follow';
 ---
 
-<Layout lang={lang} title={pageTitle} description={pageDescription}>
-	<div class="fixed inset-0 bg-bg-light -z-10" aria-hidden="true"></div>
-	<div id="page-content" class="relative z-10">
-		<div class="pt-52 sm:pt-80 xl:pt-96">
-			<!-- Breadcrumbs -->
-			<nav aria-label={t.blogPage.breadcrumbAriaLabel} class="mb-8">
-				<ol class="flex items-center gap-2 section-label flex-wrap">
-					<li><a href={`/${lang}`} class="hover:text-black transition-colors" title={t.blogPage.breadcrumbHome}>{t.blogPage.breadcrumbHome}</a></li>
-					<li><span class="mx-1">/</span></li>
-					<li><a href={`/${lang}/blog`} class="hover:text-black transition-colors" title="Blog">Blog</a></li>
-					<li><span class="mx-1">/</span></li>
-					<li aria-current="page" class="text-black truncate max-w-[150px] sm:max-w-none">#{tag}</li>
-				</ol>
-			</nav>
+<Layout
+  lang={lang}
+  title={pageTitle}
+  description={pageDescription}
+  alternateUrl={alternateUrl}
+  robots={robots}
+  variant="light"
+  headerVariant="dark"
+  showContainerLines={false}
+>
+  <BlogListingPage
+    lang={lang}
+    posts={posts}
+    heading={heading}
+    filters={filters}
+  />
 
-			<div class="flex flex-col leading-none md:flex-row md:justify-between md:items-end">
-				<div>
-					<span class="section-label block mb-4">{t.blogPage.tagLabel}</span>
-					<h1 class="leading-none font-display text-[2rem] md:text-[2.5rem] lg:text-[3rem] uppercase mb-6 md:mb-0">
-						#{tag}
-					</h1>
-				</div>
-				<p class="section-label mt-4">
-					{articleCount} {articleCountLabel}
-				</p>
-			</div>
-		</div>
-
-		<!-- Grille des articles -->
-		{posts.length > 0 ? (
-			<ol id="posts-grid" class="mt-10 sm:mt-32 grid grid-cols-1 sm:grid-cols-2 slg:grid-cols-[320px_1fr_320px] gap-10 sm:gap-5 md:gap-16 slg:gap-8 sm:gap-y-24 text-2xl sm:text-[2rem] lg:text-[2.5rem]">
-				{posts.map((post, index) => {
-					const sm = index % 2 === 0 ? "sm:justify-self-start" : "sm:justify-self-end";
-					const col = index % 3;
-					const slg = col === 0 ? "slg:justify-self-start"
-						: col === 2 ? "slg:justify-self-end"
-						: Math.floor(index / 3) % 2 === 0 ? "slg:justify-self-end" : "slg:justify-self-start";
-					return (
-					<li class:list={["post-item-grid", sm, slg]} data-image={post.listingImage.src || ""}>
-						<a href={`/${lang}/blog/${post.slug}`} title={post.title}>
-							<div class="overflow-hidden mb-8 sm:max-w-70! slg:max-w-80! aspect-square">
-								<Image
-									src={post.listingImage}
-									alt={post.listingImageAlt}
-									class="w-full h-full object-cover post-img"
-									widths={[250, 400, 600]}
-									sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-									loading={index === 0 ? "eager" : "lazy"}
-									fetchpriority={index === 0 ? "high" : "auto"}
-									decoding="async"
-									format="webp"
-									quality={75}
-								/>
-							</div>
-							<div class="flex flex-col gap-3 sm:max-w-70 slg:max-w-80">
-								<h2 class="text-[1.125rem] leading-normal mb-4">{post.title}</h2>
-								<div class="section-label flex justify-between">
-									<span>{post.categoryName} - {formatDate(new Date(post.publishedDate), lang)}</span>
-									<BracketInline>→</BracketInline>
-								</div>
-							</div>
-						</a>
-					</li>
-				);
-				})}
-			</ol>
-		) : (
-			<div class="mt-16 py-16 text-center">
-				<p class="text-xl text-black/60">
-					{t.blogPage.noTagArticles}
-				</p>
-			</div>
-		)}
-
-		<!-- Bouton retour -->
-		<nav class="mt-16 mb-10 flex justify-start md:justify-end">
-			<a
-				href={`/${lang}/blog`}
-				class="group relative overflow-hidden font-mono text-[1rem] leading-none uppercase py-6 px-5 flex justify-center w-full md:w-fit border border-lines-dark bg-black text-button-white transition-colors duration-300 ease-in-out cursor-pointer"
-				title={t.blogPage.allArticles}
-			>
-				<span class="absolute inset-0 bg-bg-light translate-x-[calc(-100%-1px)] group-hover:translate-x-0 transition-transform duration-400 ease-[cubic-bezier(0.25,0.46,0.45,0.94)]"></span>
-				<span class="relative z-10 text-button-white group-hover:text-black transition-colors duration-300">
-					← {t.blogPage.allArticles}
-				</span>
-			</a>
-		</nav>
-	</div>
-
-	<Footer lang={lang} hideOverflow={false} />
+  <div class="relative z-0 full-width-white-bg">
+    <Footer lang={lang} variant="light" hideOverflow={false} />
+  </div>
 </Layout>
-
-<style>
-	.post-item-grid {
-		position: relative;
-	}
-
-	.post-item-grid .post-img {
-		transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-	}
-
-	@media (hover: hover) {
-		.post-item-grid:hover .post-img {
-			transform: scale(1.05);
-		}
-	}
-</style>

@@ -72,6 +72,22 @@ export function slugifyTag(tag: string): string {
     .replace(/(^-|-$)/g, '');
 }
 
+export function getBlogIndexHref(lang: Locale): string {
+  return `/${lang}/blog`;
+}
+
+export function getBlogPostHref(slug: string, lang: Locale): string {
+  return `/${lang}/blog/${slug}`;
+}
+
+export function getBlogCategoryHref(slug: string, lang: Locale): string {
+  return `/${lang}/blog/category/${slug}`;
+}
+
+export function getBlogTagHref(tag: string, lang: Locale): string {
+  return `/${lang}/blog/tag/${slugifyTag(tag)}`;
+}
+
 export function getPostTags(post: PostEntry, lang: Locale): string[] {
   if (lang === 'en') {
     return post.data.tags_en?.length ? post.data.tags_en : post.data.tags;
@@ -190,7 +206,11 @@ export async function getLocalizedPosts(
     getLocalizedCategories(lang),
   ]);
   const authorMap = new Map(authors.map((author) => [author.slug, author]));
-  const categoryMap = new Map(categories.map((category) => [category.slug, category]));
+  const categoryMap = new Map<string, LocalizedCategory>();
+  categories.forEach((category) => {
+    categoryMap.set(category.slug, category);
+    categoryMap.set(category.baseSlug, category);
+  });
 
   return posts
     .filter((post) => includeDrafts || !post.data.draft)
@@ -220,6 +240,25 @@ export async function getLocalizedTags(lang: Locale): Promise<string[]> {
   });
 
   return Array.from(tags);
+}
+
+export async function getAlternateTagSlug(tag: string, lang: Locale): Promise<string | undefined> {
+  const targetLang: Locale = lang === 'fr' ? 'en' : 'fr';
+  const posts = await getPosts();
+
+  for (const post of posts) {
+    const sourceTags = getPostTags(post, lang);
+    const tagIndex = sourceTags.findIndex((sourceTag) => slugifyTag(sourceTag) === slugifyTag(tag));
+
+    if (tagIndex === -1) {
+      continue;
+    }
+
+    const targetTags = getPostTags(post, targetLang);
+    return slugifyTag(targetTags[tagIndex] || targetTags[0] || tag);
+  }
+
+  return undefined;
 }
 
 export async function getLocalizedAuthorPosts(

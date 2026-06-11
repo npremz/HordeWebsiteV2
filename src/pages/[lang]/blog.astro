@@ -1,12 +1,14 @@
 ---
-import { Image } from 'astro:assets';
 import Layout from '../../layouts/Layout.astro';
 import Footer from '../../components/Footer.astro';
-import HeroStructure from '../../components/blog/HeroStructure.astro';
-import WordsMarquee from '../../components/ui/effects/WordsMarquee.astro';
+import BlogListingPage from '../../components/blog/BlogListingPage.astro';
 import { SUPPORTED_LOCALES, type Locale, useTranslations } from '../../i18n';
-import { getLocalizedCategories, getLocalizedPosts } from '../../lib/content/blog';
-import { formatHeadingHtml } from '../../utils/heading-html';
+import {
+  getBlogCategoryHref,
+  getBlogIndexHref,
+  getLocalizedCategories,
+  getLocalizedPosts,
+} from '../../lib/content/blog';
 
 export const prerender = true;
 
@@ -25,35 +27,17 @@ const [categories, posts] = await Promise.all([
 ]);
 
 const allLabel = t.blogPage.allLabel;
-const categoriesAriaLabel = t.blogPage.categoriesAriaLabel;
-const breadcrumbAriaLabel = t.blogPage.breadcrumbAriaLabel;
-const breadcrumbItems = [
-  { label: t.blogPage.breadcrumbHome, href: `/${lang}` },
-  { label: 'Blog' },
-];
-const byLabel = t.blogPage.by;
-const readingTimeLabel = t.blogPage.minRead;
-const readArticleLabel = t.blogPage.readMore;
-
 const usedCategorySlugs = new Set(posts.map((post) => post.categorySlug));
 const filterLinks = [
-  { href: `/${lang}/blog`, label: allLabel, current: true },
+  { href: getBlogIndexHref(lang), label: allLabel, current: true },
   ...categories
     .filter((category) => usedCategorySlugs.has(category.baseSlug))
     .map((category) => ({
-      href: `/${lang}/blog/category/${category.slug}`,
+      href: getBlogCategoryHref(category.slug, lang),
       label: category.name,
       current: false,
     })),
 ];
-
-function formatDate(date: Date, locale: Locale): string {
-  return new Intl.DateTimeFormat(locale === 'fr' ? 'fr-BE' : 'en-US', {
-    day: '2-digit',
-    month: 'short',
-    year: 'numeric',
-  }).format(date);
-}
 ---
 
 <Layout
@@ -64,138 +48,12 @@ function formatDate(date: Date, locale: Locale): string {
   headerVariant="dark"
   showContainerLines={false}
 >
-  <article id="page-content" class="bg-button-white text-black">
-    <HeroStructure
-      background="dark"
-      showHorizontalLine={false}
-      showVerticalLine={false}
-      showObliqueLines={false}
-      ariaLabelledby="blog-intro"
-      breadcrumbItems={breadcrumbItems}
-      breadcrumbAriaLabel={breadcrumbAriaLabel}
-      contentClass="sm:h-[426px] lg:h-[490px]"
-    >
-      <div class="w-full sm:flex sm:flex-col sm:gap-8">
-        <div class="flex w-full sm:h-1/2 sm:items-end">
-          <div class="w-full sm:flex sm:justify-between">
-            <div class="relative z-10 flex max-w-[450px] lg:max-w-[600px] flex-col gap-4 sm:gap-8 lg:w-1/2">
-              <h1
-                id="blog-intro"
-                class="text-[1.5rem] leading-tight sm:text-[2rem] lg:text-[2.5rem]"
-                set:html={formatHeadingHtml(t.blogPage.heading)}
-              />
-            </div>
-            <svg class="hidden sm:block" width="47" height="20" viewBox="0 0 47 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <rect width="7" height="20" transform="matrix(1 4.37114e-08 8.74228e-08 -1 0 20)" fill="#F4F1F8"/>
-              <rect width="7" height="20" transform="matrix(1 4.37114e-08 8.74228e-08 -1 14 20)" fill="#F4F1F8"/>
-              <rect width="7" height="20" transform="matrix(0.707107 0.707107 0.707107 -0.707107 27.4531 14.5938)" fill="#F4F1F8"/>
-            </svg>
-          </div>
-        </div>
-
-        <div class="sm:h-1/2 md:flex md:justify-end">
-          <nav
-            class="relative z-10 mt-8 flex flex-col sm:mt-0 sm:w-full sm:flex-row lg:mt-0 md:w-1/2 md:self-end md:justify-end lg:gap-20"
-            aria-label={categoriesAriaLabel}
-          >
-
-            <ul class="relative h-fit sm:w-fit flex list-[square] flex-col sm:flex-row gap-1 sm:flex-wrap sm:gap-x-12 pl-5 pr-10 text-[1.25rem] sm:mt-0 sm:pr-24 md:pr-0">
-              {
-                filterLinks.map((filter, index) => (
-                  <>
-                    <li class="shrink-0">
-                    <a
-                      href={filter.href}
-                      class="transition-opacity duration-200 hover:opacity-65"
-                      aria-current={filter.current ? 'page' : undefined}
-                    >
-                      {filter.label}
-                    </a>
-                  </li>
-                    {index === 1 && filterLinks.length > 2 && (
-                      <li class="hidden list-none sm:block sm:h-0 sm:basis-full sm:overflow-hidden sm:p-0" aria-hidden="true" />
-                    )}
-                  </>
-                ))
-              }
-            </ul>
-            <svg
-              class="absolute right-0 bottom-0 z-10 text-current"
-              width="8"
-              height="35"
-              viewBox="0 0 8 35"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-              aria-hidden="true"
-            >
-              <path
-                d="M1.95527 35L-4.1008e-05 35C2.89218 30.1433 5.05117 24.8452 5.05117 17.4197C5.05117 10.1548 2.89219 4.85665 -3.78207e-05 -6.1196e-07L1.95527 -4.47859e-07C4.76602 4.0539 7.29163 10.1548 7.29163 17.4197C7.29163 24.9255 4.76602 30.9461 1.95527 35Z"
-                fill="currentColor"
-              />
-            </svg>
-          </nav>
-        </div>
-      </div>
-    </HeroStructure>
-
-    <WordsMarquee />
-
-    <div class="relative z-0 full-width-white-bg">
-      <main class="mx-auto w-full max-w-[1300px] py-16 text-black sm:py-24">
-        <ol class="grid gap-12 sm:gap-16 md:mx-auto md:max-w-[1000px]">
-          {posts.map((post) => (
-            <li class="border-b border-lines">
-              <article class="grid gap-6 sm:grid-cols-[minmax(180px,200px)_1fr] sm:gap-10 sm:pb-16 md:grid-cols-[minmax(180px,276px)_1fr]">
-                <a href={`/${lang}/blog/${post.slug}`} class="block" aria-label={post.title}>
-                  <Image
-                    src={post.listingImage}
-                    alt={post.listingImageAlt}
-                    class="aspect-square w-full object-cover"
-                    widths={[320, 480, 640]}
-                    sizes="(max-width: 640px) 100vw, 320px"
-                    loading="lazy"
-                    decoding="async"
-                    format="webp"
-                  />
-                </a>
-
-                <div class="flex flex-col sm:justify-between">
-                  <div>
-                    <h2 class="font-sans text-[1.5rem] leading-tight md:max-w-[500px]">
-                      <a href={`/${lang}/blog/${post.slug}`}>
-                        {post.title}
-                      </a>
-                    </h2>
-
-                    <div class="mt-5 flex items-center gap-2">
-                      <p class="text-[1.125rem] leading-none">{post.categoryName}</p>
-                      <span>-</span>
-                      <p class="text-[1.125rem] leading-none">
-                        {post.readingTime} {readingTimeLabel}
-                      </p>
-                    </div>
-                  </div>
-
-                  <div class="mt-5 flex flex-col sm:mt-5 sm:flex-row-reverse sm:items-center sm:justify-between">
-                    <p class="mt-5 text-[1.125rem] leading-none sm:mt-0">
-                      {byLabel} {post.authorName} - {formatDate(new Date(post.publishedDate), lang)}
-                    </p>
-
-                    <a
-                      href={`/${lang}/blog/${post.slug}`}
-                      class="blog-read-link mt-5 w-fit leading-none sm:mt-0 slg:text-[22px]"
-                    >
-                      {readArticleLabel} (→)
-                    </a>
-                  </div>
-                </div>
-              </article>
-            </li>
-          ))}
-        </ol>
-      </main>
-    </div>
-  </article>
+  <BlogListingPage
+    lang={lang}
+    posts={posts}
+    heading={t.blogPage.heading}
+    filters={filterLinks}
+  />
 
   <div class="relative z-0 full-width-white-bg">
     <Footer lang={lang} variant="light" hideOverflow={false} />

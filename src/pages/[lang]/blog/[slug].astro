@@ -5,6 +5,9 @@ import HeroStructure from '../../../components/blog/HeroStructure.astro';
 import { Image } from 'astro:assets';
 import { SUPPORTED_LOCALES, type Locale, useTranslations } from '../../../i18n';
 import {
+	getBlogIndexHref,
+	getBlogPostHref,
+	getBlogTagHref,
 	type PostEntry,
 	getLocalizedPostContent,
 	getLocalizedPosts,
@@ -194,7 +197,7 @@ const switchLang = lang === 'fr' ? 'en' : 'fr';
 const breadcrumbAriaLabel = t.blogPage.breadcrumbAriaLabel;
 const breadcrumbItems = [
 	{ label: t.blogPage.breadcrumbHome, href: `/${lang}` },
-	{ label: 'Blog', href: `/${lang}/blog` },
+	{ label: 'Blog', href: getBlogIndexHref(lang) },
 	{ label: `${title.trim().split(/\s+/)[0]}...` },
 ];
 const authorIntroLabel = t.blogPage.authorIntro;
@@ -506,7 +509,7 @@ const schemaOrg = {
 							<div class="flex flex-wrap gap-5">
 								{tags.map((tag: string) => (
 									<a
-										href={`/${lang}/blog/tag/${slugify(tag)}`}
+										href={getBlogTagHref(tag, lang)}
 										class={tagShareLinkClasses}
 										title={tag}
 									>
@@ -638,7 +641,7 @@ const schemaOrg = {
 				<h2 class="font-display text-[1.5rem] md:text-[2rem] uppercase mb-10">{t.blogPage.relatedArticles}</h2>
 				<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
 					{relatedPosts.map((related) => (
-						<a href={`/${lang}/blog/${related.slug}`} class="group" title={related.title}>
+						<a href={getBlogPostHref(related.slug, lang)} class="group" title={related.title}>
 							<div class="overflow-hidden mb-4 aspect-square">
 								<Image
 									src={related.image}
@@ -663,7 +666,7 @@ const schemaOrg = {
 		<!-- Bouton retour -->
 		<nav class="mt-16 mb-10 flex justify-end max-w-[1000px] mx-auto lg:max-w-none">
 			<a
-				href={`/${lang}/blog`}
+				href={getBlogIndexHref(lang)}
 				class="group relative overflow-hidden font-mono text-[1rem] leading-none uppercase py-6 px-5 flex justify-center w-full md:w-fit border border-lines-dark bg-black text-button-white transition-colors duration-300 ease-in-out cursor-pointer"
 				title={t.blogPage.allArticles}
 			>

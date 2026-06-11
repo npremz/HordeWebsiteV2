@@ -1,7 +1,7 @@
 import rss from '@astrojs/rss';
 import type { APIContext } from 'astro';
 import { SUPPORTED_LOCALES, type Locale, useTranslations } from '../../../i18n';
-import { getLocalizedPosts } from '../../../lib/content/blog';
+import { getBlogPostHref, getLocalizedPosts } from '../../../lib/content/blog';
 
 export function getStaticPaths() {
   return SUPPORTED_LOCALES.map((lang) => ({
@@ -26,7 +26,7 @@ export async function GET(context: APIContext) {
       title: post.title,
       description: post.excerpt,
       pubDate: new Date(post.publishedDate),
-      link: `/${lang}/blog/${post.slug}/`,
+      link: `${getBlogPostHref(post.slug, lang)}/`,
     })),
     customData: `<language>${lang === 'fr' ? 'fr-BE' : 'en-US'}</language>`,
   });
