@@ -176,7 +176,7 @@ function applyInlineFormatting(text: string): string {
 	result = result.replace(/\*([^*]+)\*/g, '<em>$1</em>');
 
 	// Liens
-	result = result.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" title="$1" class="no-underline border-b border-lines hover:border-black/60 hover:opacity-70 transition-colors">$1</a>');
+	result = result.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" title="$1" class="underline-hover">$1</a>');
 
 	return result;
 }
@@ -210,7 +210,7 @@ const siteUrl = (Astro.site?.toString() || 'https://hordeagence.com').replace(/\
 const articleUrl = `${siteUrl}/${lang}/blog/${currentSlug}`;
 const authorUrl = authorPagePath ? `${siteUrl}${authorPagePath}` : undefined;
 const shareUrl = articleUrl;
-const tagShareLinkClasses = 'inline-flex text-[1.125rem] leading-[1.375rem] font-[375] underline decoration-lines decoration-1 underline-offset-3 text-black hover:opacity-70 transition-opacity cursor-pointer';
+const tagShareLinkClasses = 'underline-hover inline-flex text-[1.125rem] leading-[1.375rem] font-[375] text-black cursor-pointer';
 const authorSameAs = [
 	authorSocial?.twitter ? `https://twitter.com/${authorSocial.twitter}` : null,
 	authorSocial?.linkedin || null,
@@ -755,14 +755,7 @@ const schemaOrg = {
 	}
 
 	.prose a {
-		text-decoration: underline;
-		text-underline-offset: 3px;
-		transition: color 0.2s;
-	}
-
-	.prose a:hover {
-		color: var(--color-black);
-		opacity: 0.7;
+		text-decoration: none;
 	}
 
 	.prose blockquote {

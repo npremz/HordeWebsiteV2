@@ -242,6 +242,52 @@ body:not(.is-homepage) h1 {
     @apply hover:opacity-90 transition-opacity duration-300;
   }
 
+  .underline-hover {
+    position: relative;
+    padding-bottom: 2px;
+    text-decoration: none;
+  }
+
+  .underline-hover::after {
+    content: "";
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    height: 1px;
+    background: currentColor;
+    transform: scaleX(1);
+    transform-origin: right center;
+  }
+
+  @media (hover: hover) {
+    .underline-hover:hover::after {
+      animation: underline-hover-line 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+  }
+
+  @keyframes underline-hover-line {
+    0% {
+      transform: scaleX(1);
+      transform-origin: right center;
+    }
+
+    45% {
+      transform: scaleX(0);
+      transform-origin: right center;
+    }
+
+    46% {
+      transform: scaleX(0);
+      transform-origin: left center;
+    }
+
+    100% {
+      transform: scaleX(1);
+      transform-origin: left center;
+    }
+  }
+
   /* -----------------------------------------
      Spacing
      ----------------------------------------- */
