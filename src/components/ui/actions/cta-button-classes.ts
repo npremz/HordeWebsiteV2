@@ -13,8 +13,8 @@ export function getCtaButtonClasses(
     : 'bg-button-white text-black';
   const classes = [base, width, colors, className].filter(Boolean).join(' ');
   const overlay = isDark
-    ? 'absolute inset-0 bg-button-white translate-y-full group-hover:translate-y-0 transition-transform duration-200 ease-out'
-    : 'absolute inset-0 bg-black translate-y-full group-hover:translate-y-0 transition-transform duration-200 ease-out';
+    ? 'absolute -inset-px bg-button-white translate-y-full group-hover:translate-y-0 transition-transform duration-200 ease-out'
+    : 'absolute -inset-px bg-black translate-y-full group-hover:translate-y-0 transition-transform duration-200 ease-out';
   const labelTrack = 'relative z-10 block overflow-hidden';
   const labelBase = isDark
     ? 'block text-button-white transition-transform duration-200 ease-out group-hover:-translate-y-full'

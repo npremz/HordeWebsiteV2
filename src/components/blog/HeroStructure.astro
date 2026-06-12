@@ -18,6 +18,7 @@ interface Props {
   breadcrumbItems?: BreadcrumbItem[];
   breadcrumbAriaLabel?: string;
   breadcrumbClass?: string;
+  clipLines?: boolean;
 }
 
 const {
@@ -33,6 +34,7 @@ const {
   showBreadcrumbs = true,
   breadcrumbItems = [],
   breadcrumbAriaLabel = "Breadcrumb",
+  clipLines = false,
 } = Astro.props as Props;
 
 const backgroundClasses: Record<BackgroundVariant, string> = {
@@ -54,7 +56,8 @@ const lineClass = background === "dark" ? "bg-lines-dark" : "bg-lines";
 
 <header
   class:list={[
-    "relative mt-10 left-1/2 w-screen -translate-x-1/2 overflow-x-clip overflow-y-visible",
+    "relative mt-10 left-1/2 w-screen -translate-x-1/2",
+    clipLines ? "overflow-hidden" : "overflow-x-clip overflow-y-visible",
     spacingClass,
     backgroundClasses[background],
     className,
@@ -64,7 +67,8 @@ const lineClass = background === "dark" ? "bg-lines-dark" : "bg-lines";
   {showVerticalLine && (
     <div
       class:list={[
-        "pointer-events-none absolute left-1/2 top-1/2 z-0 h-screen w-px -translate-x-1/2 -translate-y-1/2",
+        "pointer-events-none absolute left-1/2 top-1/2 z-0 w-px -translate-x-1/2 -translate-y-1/2",
+        clipLines ? "h-full" : "h-screen",
         lineClass,
       ]}
       aria-hidden="true"

@@ -24,7 +24,7 @@ const serviceShapeSrc = serviceShapeBySlug[service.slug] || '/images/servicesSha
 
 <section
   id="service-hero"
-  class="bg-black text-button-white full-width-dark-bg"
+  class="relative left-1/2 w-screen -translate-x-1/2 overflow-hidden bg-black text-button-white"
   data-service-section="hero"
 >
   <HeroStructure
@@ -34,7 +34,7 @@ const serviceShapeSrc = serviceShapeBySlug[service.slug] || '/images/servicesSha
     showVerticalLine={true}
     showObliqueLines={true}
     contentClass="h-[426px] justify-center lg:h-[490px]"
-    class="mt-0!"
+    class="mt-0! bg-transparent!"
   >
     <div class="flex items-center justify-center h-[426px] lg:h-[490px]">
       <div class="flex">
