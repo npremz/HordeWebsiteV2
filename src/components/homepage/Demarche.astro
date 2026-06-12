@@ -13,11 +13,12 @@ const steps = t.homepage.demarche.steps;
 const sectionClass = "py-16 text-black sm:py-24 sm:pb-32 md:pb-50";
 const headingClass = "text-[1.5rem] leading-[1.08] sm:pr-8 sm:text-[2rem] md:text-[2.5rem] lg:max-w-1/2 lg:p-0";
 const expectationClass = "mt-4 section-label sm:mt-10 md:mt-16 lg:w-full lg:max-w-1/2 lg:self-end";
-const stepsOffsetClass = "mt-5 sm:mt-16";
+const gridClass = "space-y-16 sm:grid sm:grid-cols-2 sm:space-y-0 sm:gap-x-24 md:grid-cols-3 md:gap-x-16";
+const stepOffsetClasses = ["", "md:mt-32", "md:mt-64"];
 ---
 
 <section id="demarche" class={sectionClass}>
-  <div class="relative flex flex-col px-5 sm:px-8">
+  <div class="relative flex flex-col px-5 sm:px-8 mb-16 md:mb-24">
     <svg class="absolute top-2 left-0 h-8" viewBox="0 0 6 30" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path d="M4.39106 0H6C3.62011 4.16285 1.84358 8.70413 1.84358 15.0688C1.84358 21.2959 3.62011 25.8372 6 30H4.39106C2.07821 26.5252 0 21.2959 0 15.0688C0 8.63532 2.07821 3.47477 4.39106 0Z" fill="#16191B"/>
     </svg>
@@ -36,20 +37,28 @@ const stepsOffsetClass = "mt-5 sm:mt-16";
     </svg>
   </div>
 
-  <ul class={stepsOffsetClass}>
-    {steps.map((step) => (
-      <li class="py-10 md:py-16 border-b border-lines">
-        <div class="flex gap-7">
-          <span class="text-[1.5rem] md:text-[2rem]">{step.number}/</span>
-          <div>
-            <h3 class="text-[1.5rem] md:text-[2rem]">{step.title}</h3>
-            <p class="mt-3 section-label text-black/60">{step.quote}</p>
+  <div class={gridClass}>
+    {steps.map((step, index) => (
+      <article class:list={[
+        "flex flex-col",
+        stepOffsetClasses[index % 3]
+      ]}>
+        <span class="font-mono text-[1rem] leading-none whitespace-nowrap">
+          {step.number.padStart(2, "0")}
+        </span>
+        <div class="flex flex-col w-full mt-5 sm:justify-between">
+          <div class="flex justify-between items-end">
+            <h3 class="text-[1.5rem] lg:text-[2rem] leading-[1.2]">{step.title}</h3>
           </div>
+          <hr class:list={[
+            "border-lines",
+            "mt-10 md:mt-16"
+          ]} />
+          <p class="mt-10 md:mt-16 text-[1.125rem] indent-24">{step.description}</p>
         </div>
-        <p class="mt-10 md:mt-16 text-[1.25rem] leading-[1.27] md:text-[1.5rem] md:max-w-[900px]">{step.description}</p>
-      </li>
+      </article>
     ))}
-  </ul>
+  </div>
 
   <div class="mt-10 sm:mt-16 md:mt-24 flex">
     <CtaButton href={`/${lang}/contact`} label={t.homepage.demarche.cta} variant="light" />

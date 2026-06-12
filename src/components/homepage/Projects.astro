@@ -12,7 +12,23 @@ const t = useTranslations(lang);
 const projects = (await getLocalizedProjects(lang)).slice(0, 3);
 ---
 
-<section id="projects" class="pt-25 sm:py-50 md:pb-80 lg:pb-120 sm:mx-5 sm:border-x sm:overflow-hidden sm:border-b sm:rounded-b-full sm:border-lines">
+<section id="projects" class="pt-16 sm:py-32 md:pb-80 lg:pb-120 sm:mx-5 sm:overflow-hidden">
+  <div
+    id="project-home-hover-image"
+    class="hidden md:block pointer-events-none fixed z-50 overflow-visible opacity-0"
+    style="transform: translate(-50%, -50%) scale(0); will-change: transform;"
+    aria-hidden="true"
+  >
+    <div class="w-[315px] h-[315px] overflow-hidden">
+      <img
+        id="project-home-hover-img"
+        src=""
+        alt=""
+        class="w-full h-full object-cover"
+      />
+    </div>
+  </div>
+
   <h2 class="font-sans text-[25px] text-center">
     {t.homepage.projects.countLabel}
     <span class="font-mono text-[14px]">({projects.length.toString().padStart(2, '0')})</span>
@@ -24,6 +40,8 @@ const projects = (await getLocalizedProjects(lang)).slice(0, 3);
         <li>
           <a
             href={getProjectHref(project.slug, lang)}
+            data-project-home-item
+            data-image={project.featuredImage.src || ""}
             class="project-home-link relative block pt-8 pb-7 sm:pt-10 sm:pb-9"
           >
             <span class="project-home-link__text">
@@ -46,7 +64,7 @@ const projects = (await getLocalizedProjects(lang)).slice(0, 3);
     bottom: 10px;
     left: -20px;
     z-index: -1;
-    background-color: #FFFFFF;
+    background-color: var(--color-black);
     transform: scaleY(0);
     transform-origin: center bottom;
   }
@@ -73,7 +91,7 @@ const projects = (await getLocalizedProjects(lang)).slice(0, 3);
   .project-home-link__text-overlay {
     position: absolute;
     inset: 0.05em 0;
-    color: var(--color-black);
+    color: var(--color-button-white);
     transform: translateY(110%);
   }
 
@@ -95,3 +113,128 @@ const projects = (await getLocalizedProjects(lang)).slice(0, 3);
     }
   }
 </style>
+
+<script>
+  function initProjectHomeHoverImage() {
+    const isMobile =
+      window.matchMedia("(max-width: 768px)").matches ||
+      "ontouchstart" in window;
+
+    if (isMobile || !window.matchMedia("(hover: hover)").matches) return;
+
+    const container = document.getElementById("project-home-hover-image");
+    const img = document.getElementById("project-home-hover-img") as HTMLImageElement | null;
+    const projectItems = document.querySelectorAll("[data-project-home-item]");
+
+    if (!container || !img || !projectItems.length) return;
+
+    const containerEl = container as HTMLElement;
+    const imageEl = img;
+    let mouseX = 0;
+    let mouseY = 0;
+    let currentX = 0;
+    let currentY = 0;
+    let velocityX = 0;
+    let currentRotation = 0;
+    let targetRotation = 0;
+    let currentScale = 0;
+    let targetScale = 0;
+    let isHovering = false;
+    let animationId: number | null = null;
+
+    function animate() {
+      const posEase = 0.1;
+      const scaleEase = 0.08;
+      const rotEase = 0.06;
+
+      const prevX = currentX;
+      currentX += (mouseX - currentX) * posEase;
+      currentY += (mouseY - currentY) * posEase;
+
+      velocityX = currentX - prevX;
+      targetRotation = isHovering ? Math.max(-12, Math.min(12, velocityX * 2.5)) : 0;
+      currentScale += (targetScale - currentScale) * scaleEase;
+
+      if (targetScale === 0 && currentScale < 0.01) {
+        currentScale = 0;
+      }
+
+      currentRotation += (targetRotation - currentRotation) * rotEase;
+
+      containerEl.style.left = `${currentX}px`;
+      containerEl.style.top = `${currentY}px`;
+      containerEl.style.transform = `translate(-50%, -50%) scale(${currentScale}) rotate(${currentRotation}deg)`;
+      containerEl.style.opacity = targetScale === 0 && currentScale < 0.01 ? "0" : "1";
+
+      const isAnimating =
+        Math.abs(currentX - mouseX) > 0.1 ||
+        Math.abs(currentY - mouseY) > 0.1 ||
+        Math.abs(currentScale - targetScale) > 0.01 ||
+        Math.abs(currentRotation - targetRotation) > 0.1;
+
+      if (isAnimating) {
+        animationId = requestAnimationFrame(animate);
+      } else {
+        animationId = null;
+      }
+    }
+
+    function startAnimation() {
+      if (!animationId) {
+        animationId = requestAnimationFrame(animate);
+      }
+    }
+
+    function showImage(element: HTMLElement) {
+      const imageSrc = element.dataset.image;
+
+      if (!imageSrc) {
+        targetScale = 0;
+        startAnimation();
+        return;
+      }
+
+      imageEl.src = imageSrc;
+      targetScale = 1;
+      startAnimation();
+    }
+
+    projectItems.forEach((item) => {
+      const element = item as HTMLElement;
+
+      element.addEventListener("mouseenter", () => {
+        isHovering = true;
+        currentX = mouseX;
+        currentY = mouseY;
+        currentScale = 0;
+        currentRotation = 0;
+        showImage(element);
+      });
+
+      element.addEventListener("mouseleave", () => {
+        isHovering = false;
+        targetScale = 0;
+        startAnimation();
+      });
+
+      element.addEventListener("mousemove", (event) => {
+        mouseX = event.clientX;
+        mouseY = event.clientY;
+        startAnimation();
+      });
+    });
+
+    document.addEventListener(
+      "astro:before-swap",
+      () => {
+        if (animationId) {
+          cancelAnimationFrame(animationId);
+        }
+      },
+      { once: true },
+    );
+  }
+
+  initProjectHomeHoverImage();
+  document.addEventListener("astro:after-swap", initProjectHomeHoverImage);
+</script>

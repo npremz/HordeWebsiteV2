@@ -34,6 +34,7 @@ const description = siteSettings.defaultDescription || t.homepage.fallbackDescri
   description={description}
   siteNameAsPrefix={true}
   isHomepage
+  showContainerLines={false}
 >
   <PixelTransitionCanvas
     color="rgb(22, 25, 27)"
@@ -46,6 +47,7 @@ const description = siteSettings.defaultDescription || t.homepage.fallbackDescri
   />
   <Hero lang={lang} />
   <About lang={lang} />
+  <div class="border-t border-lines mt-10 sm:mt-16 md:mt-24" aria-hidden="true"></div>
   <Projects lang={lang} />
   <div id="services-section" class="relative pt-25 z-20">
     <Services lang={lang} />

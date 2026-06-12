@@ -11,7 +11,7 @@ const { lang = DEFAULT_LOCALE } = Astro.props;
 const t = useTranslations(lang);
 ---
 
-<section id="hero" class="px-4 pt-62 pb-68 sm:mx-5 sm:border-x sm:border-lines sm:pt-76 sm:pb-20 md:pt-50 md:pb-40 lg:pt-55 lg:pb-30 2xl:pt-85 2xl:pb-60">
+<section id="hero" class="px-4 pt-62 pb-68 sm:mx-5 sm:pt-76 sm:pb-20 md:pt-50 md:pb-40 lg:pt-55 lg:pb-30 2xl:pt-85 2xl:pb-60">
     <div class="relative mx-auto flex flex-col items-center justify-center">
       <div class="relative @container w-full">
         <ProjectsShapeBand contentClass="h-full w-full p-4 flex flex-col justify-between text-black">
@@ -19,19 +19,10 @@ const t = useTranslations(lang);
           <h1 class="text-[0.875rem] leading-tight uppercase font-mono text-right absolute bottom-1/2 right-4 mb-2 sm:mb-4 lg:mb-3">{t.homepage.hero.agencyLine1} <br/>{t.homepage.hero.agencyLine2}</h1>
           <div class="absolute top-1/2 -mt-px w-screen center-x">
             <div class="h-px w-full bg-lines"></div>
-            <div class="hidden sm:block absolute w-full lg:max-w-[1320px] center-x">
-              <span class="h-2 w-2 bg-lines-dark block absolute left-(--gutter) lg:left-0 -ml-1 -mt-1"></span>
-              <span class="h-2 w-2 bg-lines-dark block absolute right-(--gutter) lg:right-0 -mr-0.75 -mt-1"></span>
-            </div>
           </div>
           <HeroWeather lang={lang} class="absolute top-1/2 left-4 mt-2 sm:mt-4 lg:mt-3" />
           <span class="block self-end text-right font-display text-[2rem] uppercase leading-none sm:text-[2.5rem] lg:text-[3rem] 2xl:text-[3.75rem]">{t.homepage.hero.bottomLine1} <br>{t.homepage.hero.bottomLine2}</span>
         </ProjectsShapeBand>
       </div>
-    </div>
-    <div class="hidden sm:flex justify-center sm:justify-end sm:mt-52.5 md:mt-0 sm:-translate-y-full">
-      <svg width="31" height="35" viewBox="0 0 31 35" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M0 23.4884L2.32797 21.0018L11.1648 29.06V10.8621C11.1648 4.8631 15.8784 -2.62223e-07 21.6931 0L31 4.19712e-07L31 3.18182L16.83 3.18182C15.5379 3.18182 14.4904 4.26251 14.4904 5.59561L14.4904 29.06L23.3272 21.0018L25.6552 23.4884L12.8276 35L0 23.4884Z" fill="#16191B"/>
-      </svg>
     </div>
 </section>
