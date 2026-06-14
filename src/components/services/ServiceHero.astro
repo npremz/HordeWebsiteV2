@@ -10,16 +10,8 @@ interface Props {
 
 const { service } = Astro.props;
 
-const serviceShapeBySlug: Record<string, string> = {
-  'audit-offert': '/images/servicesShapes/audit.svg',
-  'refonte-site-web': '/images/servicesShapes/refonte.svg',
-  'creation-ecommerce': '/images/servicesShapes/ecommerce.svg',
-  'creation-landing-page': '/images/servicesShapes/landing.svg',
-  'creation-mvp-saas': '/images/servicesShapes/sass.svg',
-  'optimisation-site-web': '/images/servicesShapes/opti.svg',
-};
-
-const serviceShapeSrc = serviceShapeBySlug[service.slug] || '/images/servicesShapes/neutral.svg';
+const serviceShapeSrc = '/images/servicesShapes/neutral.svg';
+const serviceHeadingLines = service.h1.split(/\r?\n|<br\s*\/?>/i).map((line) => line.trim()).filter(Boolean);
 ---
 
 <section
@@ -60,13 +52,22 @@ const serviceShapeSrc = serviceShapeBySlug[service.slug] || '/images/servicesSha
 
   <div class="relative z-10 mx-auto max-w-[1320px] px-(--gutter) pb-16 sm:pb-16 md:pb-16 2xl:pb-25 lg:px-0">
     <div class="lg:flex lg:justify-between lg:items-end">
-      <div class="flex flex-col gap-5">
-        <span class="text-[1.5625rem]">Notre service de</span>
+      <div class="page-hero-service-copy flex flex-col gap-5">
+        <span class="page-hero-reveal-clip text-[1.5625rem]">
+          <span class="page-hero-reveal-line" style="--hero-reveal-order: 0">Notre service de</span>
+        </span>
         <h1
           class="font-display text-[2.25rem] sm:text-[50px] uppercase leading-none max-w-[600px] lg:max-w-[900px]"
-          set:html={formatHeadingHtml(service.h1)}
-        />
-        <p class="lg:mt-0 text-[18px] text-[#FFFFFF] md:max-w-[830px] lg:max-w-[900px]">{service.intro}</p>
+        >
+          {serviceHeadingLines.map((line, index) => (
+            <span class="page-hero-reveal-clip">
+              <span class="page-hero-reveal-line" style={`--hero-reveal-order: ${index + 1}`} set:html={formatHeadingHtml(line)} />
+            </span>
+          ))}
+        </h1>
+        <p class="page-hero-reveal-clip lg:mt-0 text-[18px] text-[#FFFFFF] md:max-w-[830px] lg:max-w-[900px]">
+          <span class="page-hero-reveal-line" style={`--hero-reveal-order: ${serviceHeadingLines.length + 1}`}>{service.intro}</span>
+        </p>
       </div>
       <div class="lg:max-w-[460px]">
         {service.primaryCtaLabel && service.primaryCtaUrl && (

@@ -50,10 +50,12 @@ const breadcrumbItems = [
                 id="services-intro"
                 class="text-[1.5rem] leading-tight sm:text-[2rem] lg:text-[2.5rem]"
               >
-                {pageCopy.heading}
+                <span class="page-hero-reveal-clip">
+                  <span class="page-hero-reveal-line" style="--hero-reveal-order: 0">{pageCopy.heading}</span>
+                </span>
               </h1>
             </div>
-            <svg class="hidden sm:block" width="47" height="20" viewBox="0 0 47 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <svg class="page-hero-heading-svg hidden sm:block" width="47" height="20" viewBox="0 0 47 20" fill="none" xmlns="http://www.w3.org/2000/svg">
               <rect width="7" height="20" transform="matrix(1 4.37114e-08 8.74228e-08 -1 0 20)" fill="#F4F1F8"/>
               <rect width="7" height="20" transform="matrix(1 4.37114e-08 8.74228e-08 -1 14 20)" fill="#F4F1F8"/>
               <g class="decorative-diagonal-spin">
@@ -65,8 +67,8 @@ const breadcrumbItems = [
 
         <div class="sm:h-1/2 md:flex md:justify-end">
           <div class="relative z-10 mt-8 flex flex-col sm:mt-0 sm:w-full sm:flex-row md:w-1/2 md:self-end md:justify-end lg:gap-20">
-            <p class="relative max-w-[560px] pr-10! text-[1.25rem] leading-[1.27] text-[#FFFFFF] sm:pr-24 md:pr-0">
-              {pageCopy.intro}
+            <p class="page-hero-reveal-clip relative max-w-[560px] pr-10! text-[1.25rem] leading-[1.27] text-[#FFFFFF] sm:pr-24 md:pr-0">
+              <span class="page-hero-reveal-line" style="--hero-reveal-order: 1">{pageCopy.intro}</span>
             </p>
             <svg
               class="absolute right-0 bottom-0 z-10 text-current"

@@ -51,10 +51,12 @@ const breadcrumbItems = [
         <div class="w-full sm:flex sm:justify-between">
           <div id="projects-copy-lockup" class="relative z-10 flex max-w-[450px] flex-col gap-4 sm:gap-8 lg:w-1/2 lg:max-w-[600px]">
             <h1 id="projects-intro" class="text-[1.5rem] leading-tight sm:text-[2rem] lg:text-[2.5rem]">
-              {intro}
+              <span class="page-hero-reveal-clip">
+                <span class="page-hero-reveal-line" style="--hero-reveal-order: 0">{intro}</span>
+              </span>
             </h1>
           </div>
-          <svg class="hidden sm:block" width="35" height="21" viewBox="0 0 35 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <svg class="page-hero-heading-svg hidden sm:block" width="35" height="21" viewBox="0 0 35 21" fill="none" xmlns="http://www.w3.org/2000/svg">
             <rect x="28" width="7" height="21" fill="white"/>
             <rect x="21" y="14" width="7" height="7" fill="white"/>
             <rect x="21" width="7" height="7" fill="white"/>

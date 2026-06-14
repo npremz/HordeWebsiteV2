@@ -54,7 +54,7 @@ const lineClass = background === "dark" ? "bg-lines-dark" : "bg-lines";
 
 <header
   class:list={[
-    "relative mt-10 left-1/2 w-screen -translate-x-1/2 overflow-x-clip overflow-y-visible",
+    "page-hero-structure relative mt-10 left-1/2 w-screen -translate-x-1/2 overflow-x-clip overflow-y-visible",
     spacingClass,
     backgroundClasses[background],
     className,
@@ -126,9 +126,180 @@ const lineClass = background === "dark" ? "bg-lines-dark" : "bg-lines";
         />
       )}
 
-      <div class="relative z-10 mx-auto w-full max-w-[426px] px-4 sm:max-w-none sm:px-0">
+      <div class="page-hero-structure__content relative z-10 mx-auto w-full max-w-[426px] px-4 sm:max-w-none sm:px-0">
         <slot />
       </div>
     </div>
   </div>
 </header>
+
+<style is:global>
+  .page-hero-structure [data-projects-shape-square] > svg rect,
+  .page-hero-structure [data-projects-shape-square] > svg circle,
+  .page-hero-structure__content svg,
+  .page-hero-structure__content img {
+    opacity: 0;
+    transform-box: fill-box;
+    transform-origin: center;
+    transform: scale(0.94);
+  }
+
+  html.is-site-intro-content-revealing .page-hero-structure [data-projects-shape-square] > svg rect,
+  html.is-site-intro-content-revealing .page-hero-structure [data-projects-shape-square] > svg circle,
+  html.is-site-intro-content-revealing .page-hero-structure__content svg,
+  html.is-site-intro-content-revealing .page-hero-structure__content img {
+    animation: page-hero-shape-reveal 520ms cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  }
+
+  html.is-site-intro-content-revealing .page-hero-structure [data-projects-shape-square] > svg rect {
+    animation-delay: 80ms;
+  }
+
+  html.is-site-intro-content-revealing .page-hero-structure [data-projects-shape-square] > svg circle {
+    animation-delay: calc(140ms + var(--shape-index, 0) * 55ms);
+  }
+
+  html.is-site-intro-content-revealing .page-hero-structure__content svg,
+  html.is-site-intro-content-revealing .page-hero-structure__content img {
+    animation-delay: calc(320ms + var(--hero-svg-order, 0) * 90ms);
+  }
+
+  .page-hero-structure__content svg.page-hero-heading-svg {
+    --heading-svg-order: 0;
+    overflow: hidden;
+    opacity: 1;
+    transform: none;
+  }
+
+  .page-hero-structure__content svg.page-hero-heading-svg > :is(rect, path),
+  .page-hero-structure__content svg.page-hero-heading-svg > g > :is(rect, path) {
+    --heading-svg-part-order: 0;
+    opacity: 0;
+    clip-path: inset(0 0 100% 0);
+  }
+
+  .page-hero-structure__content svg.page-hero-heading-svg > :is(rect, path):nth-child(2),
+  .page-hero-structure__content svg.page-hero-heading-svg > g:nth-child(2) > :is(rect, path) { --heading-svg-part-order: 1; }
+
+  .page-hero-structure__content svg.page-hero-heading-svg > :is(rect, path):nth-child(3),
+  .page-hero-structure__content svg.page-hero-heading-svg > g:nth-child(3) > :is(rect, path) { --heading-svg-part-order: 2; }
+
+  .page-hero-structure__content svg.page-hero-heading-svg > :is(rect, path):nth-child(4),
+  .page-hero-structure__content svg.page-hero-heading-svg > g:nth-child(4) > :is(rect, path) { --heading-svg-part-order: 3; }
+
+  .page-hero-structure__content svg.page-hero-heading-svg > :is(rect, path):nth-child(5),
+  .page-hero-structure__content svg.page-hero-heading-svg > g:nth-child(5) > :is(rect, path) { --heading-svg-part-order: 4; }
+
+  html.is-site-intro-content-revealing .page-hero-structure__content svg.page-hero-heading-svg > :is(rect, path),
+  html.is-site-intro-content-revealing .page-hero-structure__content svg.page-hero-heading-svg > g > :is(rect, path) {
+    animation: page-hero-heading-svg-part-reveal 520ms cubic-bezier(0.77, 0, 0.18, 1) forwards;
+    animation-delay: calc(500ms + var(--heading-svg-order) * 180ms + var(--heading-svg-part-order) * 140ms);
+  }
+
+  .page-hero-structure__content svg.page-hero-heading-svg:nth-of-type(2) { --heading-svg-order: 1; }
+  .page-hero-structure__content svg.page-hero-heading-svg:nth-of-type(3) { --heading-svg-order: 2; }
+  .page-hero-structure__content svg.page-hero-heading-svg:nth-of-type(4) { --heading-svg-order: 3; }
+
+  html.is-site-intro-content-revealing .page-hero-structure__content svg.page-hero-heading-svg {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+
+  .page-hero-structure [data-projects-shape-square] > svg circle:nth-of-type(1) { --shape-index: 0; }
+  .page-hero-structure [data-projects-shape-square] > svg circle:nth-of-type(2) { --shape-index: 1; }
+  .page-hero-structure [data-projects-shape-square] > svg circle:nth-of-type(3) { --shape-index: 2; }
+  .page-hero-structure [data-projects-shape-square] > svg circle:nth-of-type(4) { --shape-index: 3; }
+  .page-hero-structure [data-projects-shape-square] > svg circle:nth-of-type(5) { --shape-index: 4; }
+  .page-hero-structure [data-projects-shape-square] > svg circle:nth-of-type(6) { --shape-index: 5; }
+  .page-hero-structure [data-projects-shape-square] > svg circle:nth-of-type(7) { --shape-index: 6; }
+  .page-hero-structure [data-projects-shape-square] > svg circle:nth-of-type(8) { --shape-index: 7; }
+  .page-hero-structure [data-projects-shape-square] > svg circle:nth-of-type(9) { --shape-index: 8; }
+  .page-hero-structure [data-projects-shape-square] > svg circle:nth-of-type(10) { --shape-index: 9; }
+
+  .page-hero-reveal-clip {
+    display: block;
+    overflow: hidden;
+  }
+
+  .page-hero-reveal-line {
+    display: block;
+    transform: translateY(110%);
+  }
+
+  html.is-site-intro-content-revealing .page-hero-reveal-line {
+    animation: page-hero-text-reveal 720ms cubic-bezier(0.77, 0, 0.18, 1) forwards;
+    animation-delay: calc(420ms + var(--hero-reveal-order, 0) * 90ms);
+  }
+
+  .page-hero-structure__content h1:not(:has(.page-hero-reveal-line)),
+  .page-hero-structure__content p:not(:has(.page-hero-reveal-line)),
+  .page-hero-structure__content nav {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+
+  html.is-site-intro-content-revealing .page-hero-structure__content h1:not(:has(.page-hero-reveal-line)),
+  html.is-site-intro-content-revealing .page-hero-structure__content p:not(:has(.page-hero-reveal-line)),
+  html.is-site-intro-content-revealing .page-hero-structure__content nav {
+    animation: page-hero-secondary-reveal 620ms cubic-bezier(0.77, 0, 0.18, 1) 620ms forwards;
+  }
+
+  @keyframes page-hero-shape-reveal {
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  @keyframes page-hero-text-reveal {
+    to {
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes page-hero-heading-svg-part-reveal {
+    to {
+      clip-path: inset(0);
+      opacity: 1;
+    }
+  }
+
+  @keyframes page-hero-secondary-reveal {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .page-hero-structure [data-projects-shape-square] > svg rect,
+    .page-hero-structure [data-projects-shape-square] > svg circle,
+    .page-hero-structure__content svg,
+    .page-hero-structure__content img {
+      opacity: 1;
+      transform: none;
+    }
+
+    .page-hero-structure__content svg.page-hero-heading-svg {
+      transform: none;
+    }
+
+    .page-hero-structure__content svg.page-hero-heading-svg > :is(rect, path),
+    .page-hero-structure__content svg.page-hero-heading-svg > g > :is(rect, path) {
+      opacity: 1;
+      clip-path: none;
+    }
+
+    .page-hero-reveal-line {
+      transform: none;
+    }
+
+    .page-hero-structure__content h1:not(:has(.page-hero-reveal-line)),
+    .page-hero-structure__content p:not(:has(.page-hero-reveal-line)),
+    .page-hero-structure__content nav {
+      opacity: 1;
+      transform: none;
+    }
+  }
+</style>
