@@ -10,7 +10,7 @@ const { lang = DEFAULT_LOCALE } = Astro.props;
 const t = useTranslations(lang);
 ---
 
-<section id="about" class="-mt-16 sm:mx-5">
+<section id="about" class="home-about-intro -mt-16 sm:mx-5">
   <HomeIntroBlock
     titleLine1={t.homepage.about.titleLine1}
     titleLine2={t.homepage.about.titleLine2}
@@ -21,3 +21,28 @@ const t = useTranslations(lang);
     ctaClass="mt-10 sm:mt-12 md:mt-16"
   />
 </section>
+
+<style is:global>
+  .home-about-intro {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+
+  html.is-site-intro-content-revealing .home-about-intro {
+    animation: home-about-intro-reveal 620ms cubic-bezier(0.77, 0, 0.18, 1) 1400ms forwards;
+  }
+
+  @keyframes home-about-intro-reveal {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .home-about-intro {
+      opacity: 1;
+      transform: none;
+    }
+  }
+</style>
