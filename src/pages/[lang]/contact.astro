@@ -42,12 +42,13 @@ const contactLinks = [
 					<div class="flex w-full sm:h-1/2 sm:items-end">
 						<div class="w-full sm:flex sm:justify-between">
 								<div class="relative z-10 flex max-w-[640px] flex-col gap-4 sm:gap-8 lg:w-2/3">
-									<h1 id="contact-intro" class="text-[1.5rem] leading-tight sm:text-[2rem] lg:text-[2.5rem]">
-										<span>{t.contact.knockKnock}</span>{' '}
-										<span class="whitespace-pre-line">{t.contact.startWhen}</span>
-								</h1>
+										<h1 id="contact-intro" class="text-[1.5rem] leading-tight sm:text-[2rem] lg:text-[2.5rem]">
+											<span class="page-hero-reveal-clip">
+												<span class="page-hero-reveal-line" style="--hero-reveal-order: 0">{t.contact.knockKnock} {t.contact.startWhen}</span>
+											</span>
+									</h1>
 							</div>
-							<svg class="hidden sm:block" width="47" height="20" viewBox="0 0 47 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+							<svg class="page-hero-heading-svg hidden sm:block" width="47" height="20" viewBox="0 0 47 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
 								<rect width="7" height="20" transform="matrix(1 4.37114e-08 8.74228e-08 -1 0 20)" fill="#F4F1F8"/>
 								<rect width="7" height="20" transform="matrix(1 4.37114e-08 8.74228e-08 -1 14 20)" fill="#F4F1F8"/>
 								<g class="decorative-diagonal-spin">

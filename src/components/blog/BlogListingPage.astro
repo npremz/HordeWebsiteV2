@@ -35,6 +35,8 @@ function formatDate(date: Date, locale: Locale): string {
     year: 'numeric',
   }).format(date);
 }
+
+const headingLines = heading.split(/\r?\n|<br\s*\/?>/i).map((line) => line.trim()).filter(Boolean);
 ---
 
 <article id="page-content" class="bg-button-white text-black">
@@ -55,15 +57,20 @@ function formatDate(date: Date, locale: Locale): string {
             <h1
               id="blog-intro"
               class="text-[1.5rem] leading-tight sm:text-[2rem] lg:text-[2.5rem]"
-              set:html={formatHeadingHtml(heading)}
-            />
+            >
+              {headingLines.map((line, index) => (
+                <span class="page-hero-reveal-clip">
+                  <span class="page-hero-reveal-line" style={`--hero-reveal-order: ${index}`} set:html={formatHeadingHtml(line)} />
+                </span>
+              ))}
+            </h1>
             {description && (
-              <p class="text-[1.125rem] leading-tight text-button-white/70">
-                {description}
+              <p class="page-hero-reveal-clip text-[1.125rem] leading-tight text-button-white/70">
+                <span class="page-hero-reveal-line" style={`--hero-reveal-order: ${headingLines.length}`}>{description}</span>
               </p>
             )}
           </div>
-          <svg class="hidden sm:block" width="47" height="20" viewBox="0 0 47 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <svg class="page-hero-heading-svg hidden sm:block" width="47" height="20" viewBox="0 0 47 20" fill="none" xmlns="http://www.w3.org/2000/svg">
             <rect width="7" height="20" transform="matrix(1 4.37114e-08 8.74228e-08 -1 0 20)" fill="#F4F1F8"/>
             <rect width="7" height="20" transform="matrix(1 4.37114e-08 8.74228e-08 -1 14 20)" fill="#F4F1F8"/>
             <g class="decorative-diagonal-spin">

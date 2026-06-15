@@ -19,6 +19,7 @@ const t = useTranslations(lang);
 const isDark = theme === 'dark';
 
 const currentPath = getPathWithoutLocale(Astro.url.pathname);
+const showSiteIntro = currentPath === '/';
 const switchLang = lang === 'fr' ? 'en' : 'fr';
 const switchUrl = alternateUrl || getLocalizedPath(currentPath, switchLang);
 const startProjectUrl = getLocalizedPath('/contact', lang);
@@ -43,6 +44,12 @@ const desktopLinkClasses = isDark
   : 'text-black/70 hover:text-black';
 
 ---
+
+{showSiteIntro && (
+  <div class="site-intro" data-site-intro aria-hidden="true">
+    <div class="site-intro__logo-clip" data-site-intro-logo></div>
+  </div>
+)}
 
 <header class:list={['site-header fixed inset-x-0 top-0 z-[9999] pointer-events-none', textClasses]} data-theme={theme}>
   <div class="relative z-[3] md:hidden">
@@ -394,6 +401,125 @@ const desktopLinkClasses = isDark
 </header>
 
 <style is:global>
+  html.is-site-intro-playing,
+  html.is-site-intro-playing body {
+    overflow: hidden;
+  }
+
+  .site-intro {
+    position: fixed;
+    inset: 0;
+    z-index: 10000;
+    display: none;
+    place-items: center;
+    overflow: hidden;
+    background: var(--color-black);
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transition:
+      opacity 720ms cubic-bezier(0.65, 0, 0.35, 1),
+      visibility 0s linear 720ms;
+  }
+
+  .site-intro.is-active {
+    display: grid;
+  }
+
+  .site-intro.is-leaving {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+  }
+
+  .site-intro__logo-clip {
+    display: block;
+    width: clamp(220px, 28vw, 420px);
+    overflow: hidden;
+    color: var(--color-button-white);
+  }
+
+  .site-intro__logo-clip .site-intro__logo {
+    display: block;
+    width: 100%;
+    height: auto;
+    color: currentColor;
+    overflow: visible;
+  }
+
+  .site-intro__logo .logo-full__letter {
+    transform: translateY(-18px);
+    transition: transform 320ms cubic-bezier(0.4, 0, 0.2, 1);
+    transition-delay: calc(var(--i, 0) * 22ms);
+  }
+
+  .site-intro.is-started .site-intro__logo .logo-full__letter {
+    transform: translateY(0);
+  }
+
+  .site-intro.is-logo-leaving .site-intro__logo .logo-full__letter {
+    transform: translateY(18px);
+    transition-duration: 280ms;
+    transition-delay: calc(var(--i, 0) * 22ms);
+  }
+
+  .site-header.is-intro-revealing .site-header__mobile-fixed,
+  .site-header.is-intro-revealing .site-header__tablet-fixed,
+  .site-header.is-intro-revealing .site-header__desktop-bar {
+    overflow: hidden;
+  }
+
+  .site-header.is-intro-revealing .site-header__mobile-fixed [data-mobile-row],
+  .site-header.is-intro-revealing .site-header__tablet-fixed > div,
+  .site-header.is-intro-revealing .site-header__desktop-bar > * {
+    animation: site-header-intro-reveal 720ms cubic-bezier(0.77, 0, 0.18, 1) both;
+  }
+
+  .site-header.is-intro-revealing .site-header__desktop-bar > :last-child {
+    animation-delay: 90ms;
+  }
+
+  .site-header.is-intro-revealing .site-header__menu-hover-list > li,
+  .site-header.is-intro-revealing [data-header-toggle],
+  .site-header.is-intro-revealing .site-header__desktop-logo-group a > span > span:last-child {
+    overflow: hidden;
+  }
+
+  .site-header.is-intro-revealing .site-header__menu-hover-list > li > a,
+  .site-header.is-intro-revealing .site-header__menu-hover-list > li > span,
+  .site-header.is-intro-revealing [data-header-toggle-label],
+  .site-header.is-intro-revealing .site-header__desktop-logo-group a > span > span:last-child {
+    animation: site-header-text-reveal 620ms cubic-bezier(0.77, 0, 0.18, 1) both;
+  }
+
+  .site-header.is-intro-revealing .site-header__menu-hover-list > li:nth-child(2) > :is(a, span) { animation-delay: 45ms; }
+  .site-header.is-intro-revealing .site-header__menu-hover-list > li:nth-child(3) > :is(a, span) { animation-delay: 90ms; }
+  .site-header.is-intro-revealing .site-header__menu-hover-list > li:nth-child(4) > :is(a, span) { animation-delay: 135ms; }
+  .site-header.is-intro-revealing .site-header__menu-hover-list > li:nth-child(5) > :is(a, span) { animation-delay: 180ms; }
+  .site-header.is-intro-revealing .site-header__menu-hover-list > li:nth-child(6) > :is(a, span) { animation-delay: 225ms; }
+
+  @keyframes site-header-intro-reveal {
+    from {
+      opacity: 0;
+      transform: translateY(140%);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes site-header-text-reveal {
+    from {
+      transform: translateY(125%);
+    }
+
+    to {
+      transform: translateY(0);
+    }
+  }
+
   .site-header__desktop-fixed {
     pointer-events: auto;
   }
@@ -756,6 +882,72 @@ const desktopLinkClasses = isDark
 </style>
 
 <script>
+  let siteIntroHasPlayed = false;
+  let siteHeroRevealTimeout: number | undefined;
+
+  function revealSiteIntroContent() {
+    document.documentElement.classList.add('is-site-intro-content-revealing');
+    window.clearTimeout(siteHeroRevealTimeout);
+    siteHeroRevealTimeout = window.setTimeout(() => {
+      document.documentElement.classList.add('is-site-hero-complete');
+    }, 1800);
+  }
+
+  function initSiteIntro() {
+    const intro = document.querySelector('[data-site-intro]');
+    const header = document.querySelector('.site-header');
+    const introLogoSlot = intro?.querySelector('[data-site-intro-logo]');
+    const headerWordmark = header?.querySelector('.logo-full');
+
+    if (!(intro instanceof HTMLElement)) {
+      revealSiteIntroContent();
+      return;
+    }
+
+    if (
+      !(header instanceof HTMLElement) ||
+      !(introLogoSlot instanceof HTMLElement) ||
+      !(headerWordmark instanceof SVGElement)
+    ) {
+      return;
+    }
+
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    if (siteIntroHasPlayed || prefersReducedMotion) {
+      intro.remove();
+      revealSiteIntroContent();
+      return;
+    }
+
+    siteIntroHasPlayed = true;
+    const introLogo = headerWordmark.cloneNode(true) as SVGElement;
+    introLogo.classList.add('site-intro__logo');
+    introLogoSlot.replaceChildren(introLogo);
+    intro.classList.add('is-active');
+    document.documentElement.classList.add('is-site-intro-playing');
+
+    window.setTimeout(() => {
+      intro.classList.add('is-started');
+    }, 40);
+
+    window.setTimeout(() => {
+      intro.classList.add('is-logo-leaving');
+    }, 980);
+
+    window.setTimeout(() => {
+      header.classList.add('is-intro-revealing');
+      revealSiteIntroContent();
+      intro.classList.add('is-leaving');
+    }, 1420);
+
+    window.setTimeout(() => {
+      intro.remove();
+      header.classList.remove('is-intro-revealing');
+      document.documentElement.classList.remove('is-site-intro-playing');
+    }, 2240);
+  }
+
   function initHeader() {
     const headers = document.querySelectorAll('.site-header');
 
@@ -988,6 +1180,14 @@ const desktopLinkClasses = isDark
     });
   }
 
+  initSiteIntro();
   initHeader();
-  document.addEventListener('astro:after-swap', initHeader);
+  document.addEventListener('astro:before-swap', () => {
+    window.clearTimeout(siteHeroRevealTimeout);
+    document.documentElement.classList.remove('is-site-intro-content-revealing', 'is-site-hero-complete');
+  });
+  document.addEventListener('astro:after-swap', () => {
+    initSiteIntro();
+    initHeader();
+  });
 </script>

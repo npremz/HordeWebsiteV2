@@ -4,9 +4,10 @@ import { DEFAULT_LOCALE, type Locale, useTranslations } from "../../i18n";
 interface Props {
   lang?: Locale;
   class?: string;
+  animated?: boolean;
 }
 
-const { lang = DEFAULT_LOCALE, class: className = "" } = Astro.props;
+const { lang = DEFAULT_LOCALE, class: className = "", animated = false } = Astro.props;
 const t = useTranslations(lang);
 ---
 
@@ -16,17 +17,25 @@ const t = useTranslations(lang);
     className,
   ]}
 >
-  <span class="hero-weather-time" data-days={JSON.stringify(t.hero.days)}
-    >--- (--:--:--)</span
-  >
-  <span
-    class="hero-weather-current"
-    data-weather-codes={JSON.stringify(t.hero.weatherCodes)}
-    >BXL --° <span
-      class="font-neuebit text-[1.75rem] inline-block leading-[0] relative -top-[-3px]"
-      >☁</span
-    ></span
-  >
+  <span class:list={[animated && "home-hero__text-clip"]}>
+    <span
+      class:list={["hero-weather-time", animated && "home-hero__text"]}
+      style={animated ? "--intro-order: 2" : undefined}
+      data-days={JSON.stringify(t.hero.days)}
+      >--- (--:--:--)</span
+    >
+  </span>
+  <span class:list={[animated && "home-hero__text-clip"]}>
+    <span
+      class:list={["hero-weather-current", animated && "home-hero__text"]}
+      style={animated ? "--intro-order: 3" : undefined}
+      data-weather-codes={JSON.stringify(t.hero.weatherCodes)}
+      >BXL --° <span
+        class="font-neuebit text-[1.75rem] inline-block leading-[0] relative -top-[-3px]"
+        >☁</span
+      ></span
+    >
+  </span>
 </div>
 
 <script>
