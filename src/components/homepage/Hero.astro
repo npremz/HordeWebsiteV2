@@ -11,10 +11,10 @@ const { lang = DEFAULT_LOCALE } = Astro.props;
 const t = useTranslations(lang);
 ---
 
-<section id="hero" class="home-hero px-4 pt-62 pb-68 sm:mx-5 sm:pt-76 sm:pb-20 md:pt-50 md:pb-40 lg:pt-55 lg:pb-30 2xl:pt-85 2xl:pb-60">
+<section id="hero" class="home-hero px-4 pt-36 pb-32 sm:mx-5 md:pt-50 md:pb-40 lg:pt-55 lg:pb-30 2xl:pt-85 2xl:pb-60">
     <div class="relative mx-auto flex flex-col items-center justify-center">
       <div class="relative @container w-full">
-        <ProjectsShapeBand contentClass="h-full w-full p-4 flex flex-col justify-between text-black">
+        <ProjectsShapeBand contentClass="home-hero__content h-full p-4 flex flex-col justify-between text-black">
           <span class="mt-2 block font-display text-[2rem] uppercase leading-none sm:text-[2.5rem] lg:text-[3rem] 2xl:text-[3.75rem]">
             <span class="home-hero__text-clip"><span class="home-hero__text" style="--intro-order: 0">{t.homepage.hero.topLine1}</span></span>
             <span class="home-hero__text-clip"><span class="home-hero__text" style="--intro-order: 1">{t.homepage.hero.topLine2}</span></span>
@@ -39,6 +39,14 @@ const t = useTranslations(lang);
 </section>
 
 <style is:global>
+  .home-hero__content {
+    left: 50%;
+    right: auto;
+    width: 100vw;
+    max-width: 100%;
+    transform: translateX(-50%);
+  }
+
   .home-hero [data-projects-shape-square] > svg rect,
   .home-hero [data-projects-shape-square] > svg circle {
     opacity: 0;
