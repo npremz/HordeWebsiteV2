@@ -17,7 +17,43 @@ const t = useTranslations(lang);
     description={t.homepage.about.description}
     ctaHref={`/${lang}/contact`}
     ctaLabel={t.homepage.about.cta}
-    containerClass="mx-6 sm:mx-0 sm:px-8 md:px-14 lg:px-32"
+    containerClass="home-about-intro mx-6 sm:mx-0 sm:px-8 md:px-14 lg:px-32"
     ctaClass="mt-10 sm:mt-12 md:mt-16"
   />
 </section>
+
+<style is:global>
+  .home-about-intro .section-label,
+  .home-about-intro > p {
+    opacity: 0;
+    transform: translateY(110%);
+  }
+
+  html.is-site-intro-content-revealing .home-about-intro .section-label,
+  html.is-site-intro-content-revealing .home-about-intro > p {
+    animation: home-about-text-reveal 720ms cubic-bezier(0.77, 0, 0.18, 1) forwards;
+  }
+
+  html.is-site-intro-content-revealing .home-about-intro .section-label {
+    animation-delay: 1140ms;
+  }
+
+  html.is-site-intro-content-revealing .home-about-intro > p {
+    animation-delay: 1640ms;
+  }
+
+  @keyframes home-about-text-reveal {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .home-about-intro .section-label,
+    .home-about-intro > p {
+      opacity: 1;
+      transform: none;
+    }
+  }
+</style>

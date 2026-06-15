@@ -882,8 +882,27 @@ const desktopLinkClasses = isDark
 </style>
 
 <script>
+  const SITE_INTRO_STORAGE_KEY = 'horde-site-intro-played';
   let siteIntroHasPlayed = false;
   let siteHeroRevealTimeout: number | undefined;
+
+  function hasSiteIntroPlayed() {
+    try {
+      return siteIntroHasPlayed || sessionStorage.getItem(SITE_INTRO_STORAGE_KEY) === 'true';
+    } catch {
+      return siteIntroHasPlayed;
+    }
+  }
+
+  function rememberSiteIntroPlayed() {
+    siteIntroHasPlayed = true;
+
+    try {
+      sessionStorage.setItem(SITE_INTRO_STORAGE_KEY, 'true');
+    } catch {
+      // Keep the in-memory fallback when storage is unavailable.
+    }
+  }
 
   function revealSiteIntroContent() {
     document.documentElement.classList.add('is-site-intro-content-revealing');
@@ -914,13 +933,13 @@ const desktopLinkClasses = isDark
 
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-    if (siteIntroHasPlayed || prefersReducedMotion) {
+    if (hasSiteIntroPlayed() || prefersReducedMotion) {
       intro.remove();
       revealSiteIntroContent();
       return;
     }
 
-    siteIntroHasPlayed = true;
+    rememberSiteIntroPlayed();
     const introLogo = headerWordmark.cloneNode(true) as SVGElement;
     introLogo.classList.add('site-intro__logo');
     introLogoSlot.replaceChildren(introLogo);

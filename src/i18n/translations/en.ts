@@ -237,7 +237,7 @@ export const en: Translations = {
   blogPage: {
     title: 'Fast website blog: web performance and UX',
     description: 'Actionable guides to speed up your website, improve UX, and build reliable web experiences. By Horde Agence, a web agency in Brussels.',
-    heading: 'Articles about technology, design, and our experience building for the web',
+    heading: 'Articles about technology, design,\nand our experience building for the web',
     articleCount: 'Article count',
     viewGrid: 'Grid',
     viewList: 'List',
@@ -285,7 +285,7 @@ export const en: Translations = {
     title: 'Services',
     description:
       'We take a consultative approach to create digital experiences that build lasting connections between brands and people.',
-    heading: 'The right solution to make your business grow',
+    heading: 'The right solution to make\nyour business grow',
     intro:
       'Audit, web redesign, e-commerce, landing page, SaaS MVP or optimization: we choose the right approach to build a fast, clear website designed for SEO, UX and conversion.',
     breadcrumbHome: 'Home',

@@ -236,7 +236,7 @@ export const fr = {
   blogPage: {
     title: 'Blog site rapide : performance web et UX',
     description: 'Guides concrets pour accélérer votre site web, améliorer l\'UX et optimiser les performances. Par Horde Agence, agence web à Bruxelles.',
-    heading: 'Divers articles sur la technologie, le design et notre expérience',
+    heading: 'Divers articles sur la technologie,\nle design et notre expérience',
     articleCount: 'Nombre articles',
     viewGrid: 'Grille',
     viewList: 'Liste',
@@ -284,7 +284,7 @@ export const fr = {
     title: 'Services',
     description:
       'Une approche consultative pour comprendre vos utilisateurs et créer des expériences digitales qui relient durablement votre marque à son audience.',
-    heading: 'La bonne solution pour faire grandir votre business',
+    heading: 'La bonne solution pour\nfaire grandir votre business',
     intro:
       'Audit, refonte web, e-commerce, landing page, MVP SaaS ou optimisation : on choisit la bonne approche pour créer un site rapide, clair et pensé pour le SEO, l’UX et la conversion.',
     breadcrumbHome: 'Accueil',

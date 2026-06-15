@@ -2,6 +2,7 @@
 import { type Locale, useTranslations } from '../../i18n';
 import type { LocalizedProject } from '../../lib/content/projects';
 import { getProjectIndexHref } from '../../lib/projectServices';
+import { splitHeadingLines } from '../../utils/split-heading-lines';
 import HeroStructure from '../blog/HeroStructure.astro';
 import ProjectIndexList from './ProjectIndexList.astro';
 
@@ -22,6 +23,7 @@ const isDark = variant === 'dark';
 const filterLinks = [{ label: allLabel, href: getProjectIndexHref(lang) }, ...filters];
 const currentHref = activeHref || getProjectIndexHref(lang);
 const filterListLabel = t.projectsPage.filtersLabel;
+const introLines = splitHeadingLines(intro);
 const breadcrumbAriaLabel = t.projectSingle.breadcrumbAriaLabel;
 const breadcrumbItems = [
   { label: t.projectSingle.breadcrumbHome, href: `/${lang}` },
@@ -51,9 +53,11 @@ const breadcrumbItems = [
         <div class="w-full sm:flex sm:justify-between">
           <div id="projects-copy-lockup" class="relative z-10 flex max-w-[450px] flex-col gap-4 sm:gap-8 lg:w-1/2 lg:max-w-[600px]">
             <h1 id="projects-intro" class="text-[1.5rem] leading-tight sm:text-[2rem] lg:text-[2.5rem]">
-              <span class="page-hero-reveal-clip">
-                <span class="page-hero-reveal-line" style="--hero-reveal-order: 0">{intro}</span>
-              </span>
+              {introLines.map((line, index) => (
+                <span class="page-hero-reveal-clip">
+                  <span class="page-hero-reveal-line" style={`--hero-reveal-order: ${index}`}>{line}</span>
+                </span>
+              ))}
             </h1>
           </div>
           <svg class="page-hero-heading-svg hidden sm:block" width="35" height="21" viewBox="0 0 35 21" fill="none" xmlns="http://www.w3.org/2000/svg">

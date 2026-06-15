@@ -56,6 +56,7 @@ const lineClass = background === "dark" ? "bg-lines-dark" : "bg-lines";
 
 <header
   class:list={[
+    "page-hero-structure",
     "relative mt-10 left-1/2 w-screen -translate-x-1/2",
     clipLines ? "overflow-hidden" : "overflow-x-clip overflow-y-visible",
     spacingClass,
@@ -171,8 +172,8 @@ const lineClass = background === "dark" ? "bg-lines-dark" : "bg-lines";
   .page-hero-structure__content svg.page-hero-heading-svg {
     --heading-svg-order: 0;
     overflow: hidden;
-    opacity: 1;
-    transform: none;
+    opacity: 0;
+    transform: scale(0.92);
   }
 
   .page-hero-structure__content svg.page-hero-heading-svg > :is(rect, path),
@@ -197,7 +198,7 @@ const lineClass = background === "dark" ? "bg-lines-dark" : "bg-lines";
   html.is-site-intro-content-revealing .page-hero-structure__content svg.page-hero-heading-svg > :is(rect, path),
   html.is-site-intro-content-revealing .page-hero-structure__content svg.page-hero-heading-svg > g > :is(rect, path) {
     animation: page-hero-heading-svg-part-reveal 520ms cubic-bezier(0.77, 0, 0.18, 1) forwards;
-    animation-delay: calc(500ms + var(--heading-svg-order) * 180ms + var(--heading-svg-part-order) * 140ms);
+    animation-delay: calc(350ms + var(--heading-svg-order) * 110ms + var(--heading-svg-part-order) * 75ms);
   }
 
   .page-hero-structure__content svg.page-hero-heading-svg:nth-of-type(2) { --heading-svg-order: 1; }
@@ -205,9 +206,8 @@ const lineClass = background === "dark" ? "bg-lines-dark" : "bg-lines";
   .page-hero-structure__content svg.page-hero-heading-svg:nth-of-type(4) { --heading-svg-order: 3; }
 
   html.is-site-intro-content-revealing .page-hero-structure__content svg.page-hero-heading-svg {
-    animation: none;
-    opacity: 1;
-    transform: none;
+    animation: page-hero-shape-reveal 520ms cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    animation-delay: calc(320ms + var(--heading-svg-order, 0) * 90ms);
   }
 
   .page-hero-structure [data-projects-shape-square] > svg circle:nth-of-type(1) { --shape-index: 0; }

@@ -10,6 +10,7 @@ import {
   getLocalizedPosts,
 } from "../../lib/content/blog";
 import { formatHeadingHtml } from "../../utils/heading-html";
+import { splitHeadingLines } from "../../utils/split-heading-lines";
 
 export const prerender = true;
 
@@ -31,6 +32,7 @@ const allLabel = t.blogPage.allLabel;
 const filterListLabel = t.blogPage.filtersLabel;
 const categoriesAriaLabel = t.blogPage.categoriesAriaLabel;
 const breadcrumbAriaLabel = t.blogPage.breadcrumbAriaLabel;
+const headingLines = splitHeadingLines(t.blogPage.heading);
 const breadcrumbItems = [
   { label: t.blogPage.breadcrumbHome, href: `/${lang}` },
   { label: "Blog" },
@@ -72,8 +74,17 @@ const filterLinks = [
           <h1
             id="blog-intro"
             class="text-[1.5rem] leading-tight sm:text-[2rem] md:text-[2.5rem]"
-            set:html={formatHeadingHtml(t.blogPage.heading)}
-          />
+          >
+            {headingLines.map((line, index) => (
+              <span class="page-hero-reveal-clip">
+                <span
+                  class="page-hero-reveal-line"
+                  style={`--hero-reveal-order: ${index}`}
+                  set:html={formatHeadingHtml(line)}
+                />
+              </span>
+            ))}
+          </h1>
         </div>
 
         <svg

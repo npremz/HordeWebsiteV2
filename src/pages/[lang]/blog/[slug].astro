@@ -4,6 +4,7 @@ import Footer from '../../../components/Footer.astro';
 import HeroStructure from '../../../components/blog/HeroStructure.astro';
 import { Image } from 'astro:assets';
 import { SUPPORTED_LOCALES, type Locale, useTranslations } from '../../../i18n';
+import { splitHeadingLines } from '../../../utils/split-heading-lines';
 import {
 	getBlogIndexHref,
 	getBlogPostHref,
@@ -39,6 +40,7 @@ if (!currentPost) {
 }
 
 const title = currentPost.title;
+const titleLines = splitHeadingLines(title);
 const excerpt = currentPost.excerpt;
 const seoDescription = currentPost.seoDescription;
 const featuredImageAlt = currentPost.featuredImageAlt;
@@ -346,9 +348,11 @@ const schemaOrg = {
 									id="blog-post-intro"
 									class="text-[1.5rem] leading-tight sm:text-[2rem] lg:text-[2.5rem]"
 								>
-									<span class="page-hero-reveal-clip">
-										<span class="page-hero-reveal-line" style="--hero-reveal-order: 0">{title}</span>
-									</span>
+									{titleLines.map((line, index) => (
+										<span class="page-hero-reveal-clip">
+											<span class="page-hero-reveal-line" style={`--hero-reveal-order: ${index}`}>{line}</span>
+										</span>
+									))}
 								</h1>
 						</div>
 						<svg class="page-hero-heading-svg hidden sm:block" width="47" height="20" viewBox="0 0 47 20" fill="none" xmlns="http://www.w3.org/2000/svg">
