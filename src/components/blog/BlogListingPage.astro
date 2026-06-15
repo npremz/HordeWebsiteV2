@@ -85,8 +85,8 @@ function formatDate(date: Date, locale: Locale): string {
                   <a
                     href={filter.href}
                     class:list={[
-                      'border-b transition-opacity duration-200 hover:opacity-65',
-                      filter.current ? 'border-current' : 'border-transparent',
+                      'underline-hover',
+                      filter.current && 'text-button-white',
                     ]}
                     aria-current={filter.current ? 'page' : undefined}
                   >

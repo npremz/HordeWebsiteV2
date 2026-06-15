@@ -77,8 +77,8 @@ const breadcrumbItems = [
                     <a
                       href={filter.href}
                       class:list={[
-                        'border-b transition-opacity duration-200 hover:opacity-65',
-                        filter.href === currentHref ? 'border-current' : 'border-transparent',
+                        'underline-hover',
+                        filter.href === currentHref && (isDark ? 'text-button-white' : 'text-black'),
                       ]}
                       title={filter.label}
                       aria-current={filter.href === currentHref ? 'page' : undefined}

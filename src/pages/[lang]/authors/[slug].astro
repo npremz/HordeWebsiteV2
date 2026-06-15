@@ -113,9 +113,9 @@ function formatDate(date: Date, locale: string): string {
 
       {sameAs.length > 0 && (
         <div class="mt-8 flex flex-wrap gap-4 section-label">
-          {social.twitter && <a href={`https://twitter.com/${social.twitter}`} target="_blank" rel="noopener noreferrer" title="Twitter">Twitter</a>}
-          {social.linkedin && <a href={social.linkedin} target="_blank" rel="noopener noreferrer" title="LinkedIn">LinkedIn</a>}
-          {social.github && <a href={`https://github.com/${social.github}`} target="_blank" rel="noopener noreferrer" title="GitHub">GitHub</a>}
+          {social.twitter && <a href={`https://twitter.com/${social.twitter}`} target="_blank" rel="noopener noreferrer" class="underline-hover" title="Twitter">Twitter</a>}
+          {social.linkedin && <a href={social.linkedin} target="_blank" rel="noopener noreferrer" class="underline-hover" title="LinkedIn">LinkedIn</a>}
+          {social.github && <a href={`https://github.com/${social.github}`} target="_blank" rel="noopener noreferrer" class="underline-hover" title="GitHub">GitHub</a>}
         </div>
       )}
     </header>
