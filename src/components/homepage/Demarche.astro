@@ -12,28 +12,17 @@ const steps = t.homepage.demarche.steps;
 
 const sectionClass = "py-16 text-black sm:py-24 sm:pb-32 md:pb-50";
 const headingClass = "text-[1.5rem] leading-[1.08] sm:pr-8 sm:text-[2rem] md:text-[2.5rem] lg:max-w-1/2 lg:p-0";
-const expectationClass = "mt-4 section-label sm:mt-10 md:mt-16 lg:w-full lg:max-w-1/2 lg:self-end";
 const gridClass = "space-y-16 sm:grid sm:grid-cols-2 sm:space-y-0 sm:gap-x-24 md:grid-cols-3 md:gap-x-16";
 const stepOffsetClasses = ["", "md:mt-32", "md:mt-64"];
 ---
 
 <section id="demarche" class={sectionClass}>
-  <div class="relative flex flex-col px-5 sm:px-8 mb-16 md:mb-24">
-    <svg class="absolute top-2 left-0 h-8" viewBox="0 0 6 30" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M4.39106 0H6C3.62011 4.16285 1.84358 8.70413 1.84358 15.0688C1.84358 21.2959 3.62011 25.8372 6 30H4.39106C2.07821 26.5252 0 21.2959 0 15.0688C0 8.63532 2.07821 3.47477 4.39106 0Z" fill="#16191B"/>
-    </svg>
+  <div class="relative mb-16 flex flex-col md:mb-24">
     <h2 class={headingClass}>{t.homepage.demarche.title}</h2>
-    <svg class="h-5 self-end translate-x-5 mt-4 sm:absolute sm:translate-0 sm:right-0" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg class="decorative-diagonal-box mt-4 h-6 self-end translate-x-5 sm:absolute sm:right-0 sm:translate-0" width="24" height="24" viewBox="-2 -2 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
       <g class="decorative-diagonal-spin">
         <rect width="7" height="20" transform="matrix(0.707107 0.707107 0.707107 -0.707107 0 14.1426)" fill="#16191B"/>
       </g>
-    </svg>
-    <p class={expectationClass}>
-      <span class="block -translate-x-5 lg:translate-0 lg:pl-16">{t.homepage.demarche.expectationLine1}<br/> {t.homepage.demarche.expectationLine2}</span>
-      <span class="block text-right">{t.homepage.demarche.expectationLine3}<br/> {t.homepage.demarche.expectationLine4}</span>
-    </p>
-    <svg class="absolute bottom-0 right-0 h-8" viewBox="0 0 7 30" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M1.67598 30L0 30C2.47905 25.8372 4.32961 21.2959 4.32961 14.9312C4.32961 8.70413 2.47905 4.16284 2.84579e-06 -5.03556e-07L1.67598 -3.68524e-07C4.0852 3.47477 6.25 8.70413 6.25 14.9312C6.25 21.3647 4.0852 26.5252 1.67598 30Z" fill="#16191B"/>
     </svg>
   </div>
 

@@ -395,6 +395,10 @@ svg polygon {
   animation: decorative-diagonal-spin 1.6s steps(6, end) infinite;
 }
 
+.decorative-diagonal-box {
+  overflow: visible;
+}
+
 @keyframes decorative-diagonal-spin {
   to {
     transform: rotate(360deg);

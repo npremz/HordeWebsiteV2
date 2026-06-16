@@ -10,7 +10,16 @@ interface Props {
 
 const { service } = Astro.props;
 
-const serviceShapeSrc = '/images/servicesShapes/neutral.svg';
+const serviceShapeSrcBySlug: Record<string, string> = {
+  'audit-offert': '/images/servicesShapes/audit.svg',
+  'refonte-site-web': '/images/servicesShapes/refonte.svg',
+  'creation-ecommerce': '/images/servicesShapes/ecommerce.svg',
+  'creation-landing-page': '/images/servicesShapes/landing.svg',
+  'creation-mvp-saas': '/images/servicesShapes/sass.svg',
+  'optimisation-site-web': '/images/servicesShapes/opti.svg',
+};
+
+const serviceShapeSrc = serviceShapeSrcBySlug[service.slug] ?? '/images/servicesShapes/neutral.svg';
 const serviceHeadingLines = service.h1.split(/\r?\n|<br\s*\/?>/i).map((line) => line.trim()).filter(Boolean);
 ---
 
@@ -19,11 +28,15 @@ const serviceHeadingLines = service.h1.split(/\r?\n|<br\s*\/?>/i).map((line) => 
   class="relative left-1/2 w-screen -translate-x-1/2 overflow-hidden bg-black text-button-white"
   data-service-section="hero"
 >
+  <div
+    class="pointer-events-none absolute left-1/2 top-0 z-0 h-full w-px -translate-x-1/2 bg-lines-dark"
+    aria-hidden="true"
+  />
   <HeroStructure
     background="dark"
     showBreadcrumbs={false}
     showHorizontalLine={false}
-    showVerticalLine={true}
+    showVerticalLine={false}
     showObliqueLines={true}
     contentClass="h-[426px] justify-center lg:h-[490px]"
     class="mt-0! bg-transparent!"
