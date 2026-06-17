@@ -260,6 +260,10 @@ body:not(.is-homepage) h1 {
     transform-origin: right center;
   }
 
+  .hero-filter-list li::marker {
+    font-size: 0.9em;
+  }
+
   @media (hover: hover) {
     .underline-hover:hover::after {
       animation: underline-hover-line 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);

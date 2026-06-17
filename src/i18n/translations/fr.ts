@@ -236,7 +236,7 @@ export const fr = {
   blogPage: {
     title: 'Blog site rapide : performance web et UX',
     description: 'Guides concrets pour accélérer votre site web, améliorer l\'UX et optimiser les performances. Par Horde Agence, agence web à Bruxelles.',
-    heading: 'Divers articles sur la technologie,\nle design et notre expérience',
+    heading: 'Divers articles sur la technologie, le\ndesign et notre expérience',
     articleCount: 'Nombre articles',
     viewGrid: 'Grille',
     viewList: 'Liste',

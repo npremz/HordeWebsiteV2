@@ -61,6 +61,7 @@ interface ContactFormProps {
   variant?: 'light' | 'dark';
   hideNeedField?: boolean;
   source?: FormSource;
+  submitClassName?: string;
 }
 
 export default function ContactForm({
@@ -68,6 +69,7 @@ export default function ContactForm({
   variant = 'dark',
   hideNeedField = false,
   source,
+  submitClassName,
 }: ContactFormProps) {
   const defaultBesoin = hideNeedField ? '' : 'audit-offert';
 
@@ -223,7 +225,10 @@ export default function ContactForm({
   const submitCta = getCtaButtonClasses(
     ctaVariant,
     false,
-    'disabled:opacity-50 disabled:cursor-not-allowed self-center md:self-end',
+    [
+      'disabled:opacity-50 disabled:cursor-not-allowed self-center md:self-end',
+      submitClassName,
+    ].filter(Boolean).join(' '),
   );
 
   return (

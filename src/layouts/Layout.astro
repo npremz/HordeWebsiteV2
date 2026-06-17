@@ -137,20 +137,6 @@ const bodyClasses = isDark ? 'bg-black text-button-white' : 'bg-bg text-black';
     font-family: 'PP Neue Montreal';
   }
 
-  html:not(.is-site-hero-complete) #main-content:has(.home-hero, .page-hero-structure, #service-hero) {
-    visibility: hidden;
-  }
-
-  html:not(.is-site-hero-complete) #main-content :is(.home-hero, .page-hero-structure, #service-hero) {
-    visibility: visible;
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    html:not(.is-site-hero-complete) #main-content:has(.home-hero, .page-hero-structure, #service-hero) {
-      visibility: visible;
-    }
-  }
-
   img,
   picture,
   video,
