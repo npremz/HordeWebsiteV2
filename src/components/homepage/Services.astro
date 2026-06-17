@@ -1,6 +1,7 @@
 ---
 import { DEFAULT_LOCALE, type Locale, useTranslations } from '../../i18n';
 import { getServiceSummaries } from '../../lib/content/services';
+import ServiceShapeMorph from '../services/ServiceShapeMorph.astro';
 
 interface Props {
   lang?: Locale;
@@ -51,29 +52,11 @@ const rowTitleClass = "max-w-[280px] text-[1.25rem] leading-none sm:max-w-[unset
     aria-hidden="true"
     data-service-shape-preview
   >
-    <svg
+    <ServiceShapeMorph
+      shape="neutral"
+      initialShape="neutral"
       class="service-shape-preview__svg"
-      width="305"
-      height="304"
-      viewBox="0 0 305 304"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <rect x="3.5" y="3.5" width="297" height="297" fill="white" stroke="#C9C9C9" vector-effect="non-scaling-stroke" />
-      <path d="M102.5 3.5V300.5M201.5 3.5V300.5M3.5 102.5H300.5M3.5 201.5H300.5" stroke="#C9C9C9" vector-effect="non-scaling-stroke" />
-      {Array.from({ length: 9 }).map((_, index) => (
-        <path
-          data-service-shape-cell={index}
-          fill="white"
-          stroke="#C9C9C9"
-          vector-effect="non-scaling-stroke"
-        />
-      ))}
-      <rect width="7" height="7" fill="white" />
-      <rect y="297" width="7" height="7" fill="white" />
-      <rect x="298" width="7" height="7" fill="white" />
-      <rect x="298" y="297" width="7" height="7" fill="white" />
-    </svg>
+    />
   </div>
 
   <ol class:list={[showHeader && listOffsetClass]} data-service-shape-list>
@@ -213,132 +196,24 @@ const rowTitleClass = "max-w-[280px] text-[1.25rem] leading-none sm:max-w-[unset
 </style>
 
 <script>
-  type CornerRadii = [number, number, number, number];
-  type ShapeRadii = CornerRadii[];
-
-  const CELL_SIZE = 99;
-  const CORNER_RADIUS = 49.5;
-  const CELL_POSITIONS = [
-    [3.5, 3.5],
-    [102.5, 3.5],
-    [201.5, 3.5],
-    [3.5, 102.5],
-    [102.5, 102.5],
-    [201.5, 102.5],
-    [3.5, 201.5],
-    [102.5, 201.5],
-    [201.5, 201.5],
-  ] as const;
-
-  function radii(code: string): CornerRadii {
-    return [0, 1, 2, 3].map((index) =>
-      code[index] === "1" ? CORNER_RADIUS : 0,
-    ) as CornerRadii;
-  }
-
-  function shape(cells: string[]): ShapeRadii {
-    return cells.map(radii);
-  }
-
-  const SHAPES: Record<string, ShapeRadii> = {
-    neutral: shape(["0000", "0000", "0000", "0000", "0000", "0000", "0000", "0000", "0000"]),
-    audit: shape(["1111", "1100", "1111", "1001", "1111", "0110", "1111", "0011", "1111"]),
-    refonte: shape(["0010", "1111", "0101", "0110", "1111", "1001", "0101", "1111", "1000"]),
-    ecommerce: shape(["1111", "0010", "1110", "0010", "1010", "1000", "1011", "1000", "1111"]),
-    landing: shape(["0101", "1111", "1010", "1001", "1111", "0110", "1010", "0011", "0101"]),
-    sass: shape(["1101", "0011", "1110", "0110", "1111", "1001", "1011", "1100", "0111"]),
-    opti: shape(["0010", "1011", "0001", "0111", "1111", "1101", "0100", "1110", "1000"]),
-  };
-
-  function roundedRectPath(
-    x: number,
-    y: number,
-    width: number,
-    height: number,
-    radii: CornerRadii,
-  ) {
-    const [tl, tr, br, bl] = radii;
-    const right = x + width;
-    const bottom = y + height;
-
-    return [
-      `M${x + tl} ${y}`,
-      `H${right - tr}`,
-      tr ? `A${tr} ${tr} 0 0 1 ${right} ${y + tr}` : `L${right} ${y}`,
-      `V${bottom - br}`,
-      br ? `A${br} ${br} 0 0 1 ${right - br} ${bottom}` : `L${right} ${bottom}`,
-      `H${x + bl}`,
-      bl ? `A${bl} ${bl} 0 0 1 ${x} ${bottom - bl}` : `L${x} ${bottom}`,
-      `V${y + tl}`,
-      tl ? `A${tl} ${tl} 0 0 1 ${x + tl} ${y}` : `L${x} ${y}`,
-      "Z",
-    ].join(" ");
-  }
-
-  function drawShape(cells: NodeListOf<SVGPathElement>, shape: ShapeRadii) {
-    cells.forEach((cell, index) => {
-      const [x, y] = CELL_POSITIONS[index];
-      cell.setAttribute("d", roundedRectPath(x, y, CELL_SIZE, CELL_SIZE, shape[index]));
-    });
-  }
-
-  function cloneShape(shape: ShapeRadii): ShapeRadii {
-    return shape.map((cell) => [...cell] as CornerRadii);
-  }
-
-  function mixShape(from: ShapeRadii, to: ShapeRadii, progress: number): ShapeRadii {
-    return from.map((cell, cellIndex) =>
-      cell.map((value, cornerIndex) => {
-        return value + (to[cellIndex][cornerIndex] - value) * progress;
-      }) as CornerRadii,
-    );
-  }
-
-  function easeOutCubic(value: number) {
-    return 1 - Math.pow(1 - value, 3);
-  }
+  import {
+    createServiceShapeAnimator,
+    getServiceShapeName,
+  } from "../../lib/serviceShapeMorph";
 
   function initServiceShapePreview() {
     const preview = document.querySelector<HTMLElement>("[data-service-shape-preview]");
-    const cells = document.querySelectorAll<SVGPathElement>("[data-service-shape-cell]");
     const list = document.querySelector<HTMLElement>("[data-service-shape-list]");
     const serviceItems = document.querySelectorAll<HTMLElement>(".service-item[data-service-shape]");
 
-    if (!preview || !list || cells.length === 0 || serviceItems.length === 0) return;
+    if (!preview || !list || serviceItems.length === 0) return;
     if (preview.dataset.initialized === "true") return;
     preview.dataset.initialized = "true";
 
-    let currentShape = cloneShape(SHAPES.neutral);
-    let animationFrame: number | null = null;
+    const cells = preview.querySelectorAll<SVGPathElement>("[data-service-shape-cell]");
+    if (cells.length === 0) return;
 
-    drawShape(cells, currentShape);
-
-    function animateTo(shapeName: string) {
-      const targetShape = SHAPES[shapeName] || SHAPES.neutral;
-      const startShape = cloneShape(currentShape);
-      const startTime = performance.now();
-      const duration = 520;
-
-      if (animationFrame) {
-        cancelAnimationFrame(animationFrame);
-      }
-
-      function frame(now: number) {
-        const elapsed = now - startTime;
-        const progress = Math.min(elapsed / duration, 1);
-        currentShape = mixShape(startShape, targetShape, easeOutCubic(progress));
-        drawShape(cells, currentShape);
-
-        if (progress < 1) {
-          animationFrame = requestAnimationFrame(frame);
-        } else {
-          currentShape = cloneShape(targetShape);
-          animationFrame = null;
-        }
-      }
-
-      animationFrame = requestAnimationFrame(frame);
-    }
+    const animator = createServiceShapeAnimator(cells, "neutral");
 
     serviceItems.forEach((item) => {
       item.addEventListener("mouseenter", () => {
@@ -346,26 +221,24 @@ const rowTitleClass = "max-w-[280px] text-[1.25rem] leading-none sm:max-w-[unset
         const itemRect = item.getBoundingClientRect();
         const sectionRect = section?.getBoundingClientRect();
         const centerY = sectionRect ? itemRect.top - sectionRect.top + itemRect.height / 2 : 0;
-        const shapeName = item.dataset.serviceShape || "neutral";
+        const shapeName = getServiceShapeName(item.dataset.serviceShape);
 
         preview.style.setProperty("--service-shape-y", `${centerY}px`);
         preview.classList.add("is-visible");
-        animateTo(shapeName);
+        animator.animateTo(shapeName);
       });
 
     });
 
     list.addEventListener("mouseleave", () => {
       preview.classList.remove("is-visible");
-      animateTo("neutral");
+      animator.animateTo("neutral");
     });
 
     document.addEventListener(
       "astro:before-swap",
       () => {
-        if (animationFrame) {
-          cancelAnimationFrame(animationFrame);
-        }
+        animator.cancel();
       },
       { once: true },
     );
