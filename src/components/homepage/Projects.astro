@@ -202,7 +202,9 @@ const projects = (await getLocalizedProjects(lang)).slice(0, 3);
     projectItems.forEach((item) => {
       const element = item as HTMLElement;
 
-      element.addEventListener("mouseenter", () => {
+      element.addEventListener("mouseenter", (event) => {
+        mouseX = event.clientX;
+        mouseY = event.clientY;
         isHovering = true;
         currentX = mouseX;
         currentY = mouseY;
