@@ -26,7 +26,6 @@ const t = useTranslations(lang);
   .home-about-intro .section-label,
   .home-about-intro > p {
     opacity: 0;
-    transform: translateY(110%);
   }
 
   html.is-site-intro-content-revealing .home-about-intro .section-label,
@@ -45,7 +44,6 @@ const t = useTranslations(lang);
   @keyframes home-about-text-reveal {
     to {
       opacity: 1;
-      transform: translateY(0);
     }
   }
 
@@ -53,7 +51,6 @@ const t = useTranslations(lang);
     .home-about-intro .section-label,
     .home-about-intro > p {
       opacity: 1;
-      transform: none;
     }
   }
 </style>

@@ -92,8 +92,8 @@ const listOffsetClass = "mt-16 sm:mt-24 md:mt-32 lg:mt-16";
       const sectionProgress = clamp(raw, 0, 1);
 
       items.forEach((item, index) => {
-        const itemStart = index * 0.16;
-        const itemProgress = clamp((sectionProgress - itemStart) / 0.34, 0, 1);
+        const itemStart = index * 0.12;
+        const itemProgress = clamp((sectionProgress - itemStart) / 0.26, 0, 1);
         const fullText = item.dataset.deliverableText || '';
         const visibleText = item.querySelector('[data-deliverable-visible-text]');
         const visibleChars = Math.round(fullText.length * itemProgress);

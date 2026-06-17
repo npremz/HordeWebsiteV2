@@ -42,11 +42,11 @@ const contactHeadingLines = [t.contact.knockKnock, t.contact.startWhen];
 				<div class="w-full sm:flex sm:flex-col sm:gap-8">
 					<div class="flex w-full sm:h-1/2 sm:items-end">
 						<div class="w-full sm:flex sm:justify-between">
-								<div class="relative z-10 flex max-w-[640px] flex-col gap-4 sm:gap-8 lg:w-2/3">
+								<div class="relative z-10 flex max-w-[640px] flex-col gap-4 sm:gap-8 lg:w-2/3 lg:max-w-none">
 										<h1 id="contact-intro" class="text-[1.5rem] leading-tight sm:text-[2rem] lg:text-[2.5rem]">
 											{contactHeadingLines.map((line, index) => (
 												<span class="page-hero-reveal-clip">
-													<span class="page-hero-reveal-line" style={`--hero-reveal-order: ${index}`}>{line}</span>
+													<span class="page-hero-reveal-line lg:whitespace-nowrap" style={`--hero-reveal-order: ${index}`}>{line}</span>
 												</span>
 											))}
 									</h1>
@@ -66,7 +66,7 @@ const contactHeadingLines = [t.contact.knockKnock, t.contact.startWhen];
 							class="relative z-10 mt-8 flex flex-col sm:mt-0 sm:w-full sm:flex-row md:w-1/2 md:self-end lg:mt-0 md:justify-end lg:gap-20"
 							aria-label={t.contact.alternativeContacts}
 						>
-							<ul class="relative flex h-fit list-[square] flex-col gap-2.5 pl-5 pr-10 text-[1.25rem] sm:mt-0 sm:w-fit sm:gap-x-12 sm:pr-24">
+								<ul class="hero-filter-list relative flex h-fit list-[square] flex-col gap-2.5 pl-5 pr-10 text-[18px] sm:mt-0 sm:w-fit sm:gap-x-12 sm:pr-24">
 								{
 									contactLinks.map((contactLink, index) => (
 										<>
@@ -106,7 +106,7 @@ const contactHeadingLines = [t.contact.knockKnock, t.contact.startWhen];
 			</HeroStructure>
 
 		<div id="contact-form" class="">
-			<ContactForm client:load translations={t.form} />
+			<ContactForm client:load translations={t.form} submitClassName="border border-button-white" />
 		</div>
 	</div>
 
