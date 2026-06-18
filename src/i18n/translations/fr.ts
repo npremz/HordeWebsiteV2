@@ -142,7 +142,7 @@ export const fr = {
       agencyLine1: 'Agence de site web',
       agencyLine2: 'basée à Bruxelles',
       bottomLine1: 'Des sites web',
-      bottomLine2: 'Optimisés',
+      bottomLine2: 'Optimises',
     },
     about: {
       titleLine1: "Qu'est-ce que",

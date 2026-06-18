@@ -14,11 +14,11 @@ const {
   class: className = "",
 } = Astro.props;
 
-const repeatedWords = Array.from({ length: 4 }, () => words).flat();
+const repeatedWords = Array.from({ length: 8 }, () => words).flat();
 ---
 
-<div class:list={["words-marquee section-label", className]} aria-label={words.join(" - ")}>
-  <div class="words-marquee__track" aria-hidden="true">
+<div class:list={["words-marquee section-label", className]} aria-hidden="true">
+  <div class="words-marquee__track">
     {
       [0, 1].map(() => (
         <div class="words-marquee__group">

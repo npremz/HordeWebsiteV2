@@ -11,7 +11,7 @@ const steps = t.homepage.demarche.steps;
 
 const sectionClass = "py-16 text-black sm:py-24 sm:pb-32 md:pb-50";
 const headingClass = "text-[1.5rem] leading-[1.08] sm:pr-8 sm:text-[2rem] md:text-[2.5rem] lg:max-w-1/2 lg:p-0";
-const gridClass = "space-y-16 sm:grid sm:grid-cols-2 sm:space-y-0 sm:gap-x-24 md:grid-cols-3 md:gap-x-16";
+const gridClass = "space-y-16 sm:grid sm:grid-cols-2 sm:gap-x-24 md:grid-cols-3 md:gap-x-16";
 ---
 
 <section id="demarche" class={sectionClass}>
@@ -32,7 +32,7 @@ const gridClass = "space-y-16 sm:grid sm:grid-cols-2 sm:space-y-0 sm:gap-x-24 md
         </span>
         <div class="flex flex-col w-full mt-5 sm:justify-between">
           <div class="flex justify-between items-end">
-            <h3 class="text-[1.5rem] lg:text-[2rem] leading-[1.2]">{step.title}</h3>
+            <h3 class="text-[1.5rem] lg:text-[2rem] leading-[1.2] min-h-[2lh]">{step.title}</h3>
           </div>
           <hr class:list={[
             "border-lines",
