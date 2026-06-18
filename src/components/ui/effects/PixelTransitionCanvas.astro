@@ -59,7 +59,7 @@ const instanceId = `bg-canvas-${Math.random().toString(36).slice(2, 10)}`;
 	</div>
 )}
 
-<script is:inline define:vars={{ instanceId }}>
+<script is:inline define:vars={{ instanceId }} data-astro-rerun>
   (function () {
     var canvas = document.querySelector('canvas[data-bg-canvas-id="' + instanceId + '"]');
     if (!canvas) return;

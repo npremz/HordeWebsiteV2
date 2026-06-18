@@ -149,7 +149,7 @@ const t = useTranslations(lang);
     window.addEventListener("load", initHeroWeather, { once: true });
   }
 
-  document.addEventListener("astro:after-swap", () => {
+  document.addEventListener("astro:page-load", () => {
     setTimeout(initHeroWeather, 50);
   });
 </script>
