@@ -26,6 +26,12 @@ const projects = (await getLocalizedProjects(lang)).slice(0, 3);
         alt=""
         class="w-full h-full object-cover"
       />
+      <div
+        id="project-home-hover-placeholder"
+        class="hidden w-full h-full bg-white border border-lines items-center justify-center"
+      >
+        <span class="section-label">{t.projects.inProgress}</span>
+      </div>
     </div>
   </div>
 
@@ -38,17 +44,20 @@ const projects = (await getLocalizedProjects(lang)).slice(0, 3);
       <>
         {i > 0 && <li aria-hidden="true" class="h-0 border-t border-lines"></li>}
         <li>
-          <a
-            href={getProjectHref(project.slug, lang)}
-            data-project-home-item
-            data-image={project.featuredImage.src || ""}
-            class="project-home-link relative block pt-8 pb-7 sm:pt-10 sm:pb-9"
-          >
-            <span class="project-home-link__text">
-              <span class="project-home-link__text-base">{project.shortTitle}</span>
-              <span class="project-home-link__text-overlay" aria-hidden="true">{project.shortTitle}</span>
-            </span>
-          </a>
+          {
+            <a
+              href={getProjectHref(project.slug, lang)}
+              data-project-home-item
+              data-image={project.featuredImage.src || ""}
+              data-in-progress={project.inProgress}
+              class="project-home-link relative block pt-8 pb-7 sm:pt-10 sm:pb-9"
+            >
+              <span class="project-home-link__text">
+                <span class="project-home-link__text-base">{project.shortTitle}</span>
+                <span class="project-home-link__text-overlay" aria-hidden="true">{project.shortTitle}</span>
+              </span>
+            </a>
+          }
         </li>
       </>
     ))}
@@ -124,12 +133,14 @@ const projects = (await getLocalizedProjects(lang)).slice(0, 3);
 
     const container = document.getElementById("project-home-hover-image");
     const img = document.getElementById("project-home-hover-img") as HTMLImageElement | null;
+    const placeholder = document.getElementById("project-home-hover-placeholder");
     const projectItems = document.querySelectorAll("[data-project-home-item]");
 
-    if (!container || !img || !projectItems.length) return;
+    if (!container || !img || !placeholder || !projectItems.length) return;
 
     const containerEl = container as HTMLElement;
     const imageEl = img;
+    const placeholderEl = placeholder as HTMLElement;
     let mouseX = 0;
     let mouseY = 0;
     let currentX = 0;
@@ -187,6 +198,18 @@ const projects = (await getLocalizedProjects(lang)).slice(0, 3);
 
     function showImage(element: HTMLElement) {
       const imageSrc = element.dataset.image;
+      const inProgress = element.dataset.inProgress === "true";
+
+      imageEl.classList.toggle("hidden", inProgress);
+      placeholderEl.classList.toggle("hidden", !inProgress);
+      placeholderEl.classList.toggle("flex", inProgress);
+
+      if (inProgress) {
+        imageEl.removeAttribute("src");
+        targetScale = 1;
+        startAnimation();
+        return;
+      }
 
       if (!imageSrc) {
         targetScale = 0;
