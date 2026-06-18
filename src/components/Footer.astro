@@ -34,6 +34,11 @@ const { logo, logoAlt = "Logo", items: menuItems = [] } = navigation;
 
 // Dark mode colors
 const currentLogo = isDark ? "/images/logo_white.svg" : logo;
+const currentLogoDimensions = currentLogo === "/images/logo_white.svg"
+	? { width: 63, height: 16 }
+	: { width: 54, height: 16 };
+const currentLogoDisplayWidth = 48;
+const currentLogoDisplayHeight = Math.round((currentLogoDimensions.height / currentLogoDimensions.width) * currentLogoDisplayWidth * 100) / 100;
 const strokeColor = isDark ? "#4C4B4B" : "#B1B1B1";
 const textColorClass = isDark ? "text-button-white" : "text-black";
 ---
@@ -184,7 +189,10 @@ const textColorClass = isDark ? "text-button-white" : "text-black";
 							<img
 								src={currentLogo}
 								alt={logoAlt}
-								class="logo-size w-12"
+								class="logo-size"
+								width={currentLogoDimensions.width}
+								height={currentLogoDimensions.height}
+								style={`width: ${currentLogoDisplayWidth}px; height: ${currentLogoDisplayHeight}px;`}
 								loading="lazy"
 								decoding="async"
 							/>
