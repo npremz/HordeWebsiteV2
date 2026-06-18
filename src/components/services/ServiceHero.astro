@@ -4,6 +4,7 @@ import HeroStructure from "../blog/HeroStructure.astro";
 import { formatHeadingHtml } from "../../utils/heading-html";
 import ServiceShapeMorph from "./ServiceShapeMorph.astro";
 import type { ServiceData } from "./types";
+import { type Locale, useTranslations } from "../../i18n";
 
 interface Props {
   service: ServiceData;
@@ -22,6 +23,13 @@ const serviceShapeKeyBySlug: Record<string, string> = {
 
 const serviceShapeName = serviceShapeKeyBySlug[service.slug] ?? 'neutral';
 const serviceHeadingLines = service.h1.split(/\r?\n|<br\s*\/?>/i).map((line) => line.trim()).filter(Boolean);
+const lang: Locale = service.seoUrl.startsWith('/en/') ? 'en' : 'fr';
+const t = useTranslations(lang);
+const breadcrumbItems = [
+  { label: t.servicesPage.breadcrumbHome, href: `/${lang}` },
+  { label: t.servicesPage.breadcrumbServices, href: `/${lang}/services` },
+  { label: service.shortName || service.h1 },
+];
 ---
 
 <section
@@ -35,7 +43,8 @@ const serviceHeadingLines = service.h1.split(/\r?\n|<br\s*\/?>/i).map((line) => 
   />
   <HeroStructure
     background="dark"
-    showBreadcrumbs={false}
+    breadcrumbItems={breadcrumbItems}
+    breadcrumbAriaLabel={t.servicesPage.breadcrumbAriaLabel}
     showHorizontalLine={false}
     showVerticalLine={false}
     showObliqueLines={true}
