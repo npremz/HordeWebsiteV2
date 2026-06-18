@@ -4,14 +4,14 @@ items:
   - label: Home
     url: /en
     isExternal: false
-  - label: About
-    url: /en/about
-    isExternal: false
   - label: Services
     url: /en/services
     isExternal: false
   - label: Projects
     url: /en/projets
+    isExternal: false
+  - label: About
+    url: /en/about
     isExternal: false
   - label: Blog
     url: /en/blog
