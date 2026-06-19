@@ -5,6 +5,7 @@ import { formatHeadingHtml } from "../../utils/heading-html";
 import ServiceShapeMorph from "./ServiceShapeMorph.astro";
 import type { ServiceData } from "./types";
 import { type Locale, useTranslations } from "../../i18n";
+import { getShortBreadcrumbLabel } from "../../utils/breadcrumb-label";
 
 interface Props {
   service: ServiceData;
@@ -28,7 +29,7 @@ const t = useTranslations(lang);
 const breadcrumbItems = [
   { label: t.servicesPage.breadcrumbHome, href: `/${lang}` },
   { label: t.servicesPage.breadcrumbServices, href: `/${lang}/services` },
-  { label: service.shortName || service.h1 },
+  { label: getShortBreadcrumbLabel(service.shortName || service.h1) },
 ];
 ---
 

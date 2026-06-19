@@ -4,6 +4,7 @@ import Footer from '../../../components/Footer.astro';
 import HeroStructure from '../../../components/blog/HeroStructure.astro';
 import { Image } from 'astro:assets';
 import { SUPPORTED_LOCALES, type Locale, useTranslations } from '../../../i18n';
+import { getShortBreadcrumbLabel } from '../../../utils/breadcrumb-label';
 import { splitHeadingLines } from '../../../utils/split-heading-lines';
 import {
 	getBlogIndexHref,
@@ -200,7 +201,7 @@ const breadcrumbAriaLabel = t.blogPage.breadcrumbAriaLabel;
 const breadcrumbItems = [
 	{ label: t.blogPage.breadcrumbHome, href: `/${lang}` },
 	{ label: 'Blog', href: getBlogIndexHref(lang) },
-	{ label: `${title.trim().split(/\s+/)[0]}...` },
+	{ label: getShortBreadcrumbLabel(title) },
 ];
 const authorIntroLabel = t.blogPage.authorIntro;
 const heroAuthorLabel = authorRole ? `${authorName} - ${authorRole}` : authorName;
