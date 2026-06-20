@@ -1,0 +1,54 @@
+---
+interface Props {
+  class?: string;
+  squareClass?: string;
+  contentClass?: string;
+}
+
+const { class: className = "", squareClass = "", contentClass = "" } = Astro.props;
+
+const backgroundCircleOffsets = [-250, -200, -150, -100, -50, 50, 100, 150, 200, 250];
+const hasContent = Astro.slots.has("default");
+---
+
+<div
+  class:list={[
+    "text-lines",
+    hasContent
+      ? "relative z-0 mx-auto h-[426px] max-w-full aspect-square lg:h-[490px]"
+      : "pointer-events-none absolute inset-x-0 -z-10 w-full sm:inset-x-1/2 sm:w-screen sm:-translate-x-1/2",
+    className,
+  ]}
+  aria-hidden={hasContent ? undefined : "true"}
+>
+  <div
+    class:list={[
+      hasContent
+        ? "relative center-x flex h-full aspect-square justify-center"
+        : "absolute center-x flex -translate-y-1/2 justify-center h-[426px] aspect-square sm:w-[unset] 2xl:h-[490px]",
+      "lg:h-[490px]",
+      squareClass,
+    ]}
+    style={hasContent ? undefined : "top: var(--shape-center-y, 50%);"}
+    data-projects-shape-square
+  >
+    <svg
+      class="h-full aspect-square overflow-visible"
+      viewBox="0 0 100 100"
+      fill="none"
+      aria-hidden="true"
+    >
+      <rect x="0" y="0" width="100" height="100" stroke="currentColor" vector-effect="non-scaling-stroke" />
+      {
+        backgroundCircleOffsets.map((offset) => (
+          <circle cx={50 + offset} cy="50" r="50" stroke="currentColor" vector-effect="non-scaling-stroke" />
+        ))
+      }
+    </svg>
+    {hasContent && (
+      <div class:list={["absolute inset-0 z-10", contentClass]}>
+        <slot />
+      </div>
+    )}
+  </div>
+</div>

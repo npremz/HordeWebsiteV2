@@ -1,198 +1,392 @@
 ---
+import { Image } from 'astro:assets';
 import Layout from '../../../layouts/Layout.astro';
 import Footer from '../../../components/Footer.astro';
-import Wrapped from '../../../components/ui/Wrapped.astro';
-import { Image } from 'astro:assets';
+import HeroStructure from '../../../components/blog/HeroStructure.astro';
+import ProjectsListingPage from '../../../components/projects/ProjectsListingPage.astro';
 import { SUPPORTED_LOCALES, type Locale, useTranslations } from '../../../i18n';
-import { getCollection } from 'astro:content';
-import { formatHeadingHtml } from '../../../utils/heading-html';
+import { splitHeadingLines } from '../../../utils/split-heading-lines';
+import {
+  type LocalizedProjectGalleryRow,
+  type ProjectEntry,
+  getLocalizedProjectDescriptionParagraphs,
+  getLocalizedProjects,
+  getProjects,
+  localizeProject,
+} from '../../../lib/content/projects';
+import {
+  type ProjectServiceSlug,
+  type ProjectService,
+  getProjectServiceDescription,
+  getProjectServiceEntries,
+  getProjectHref,
+  getProjectIndexHref,
+  getProjectServiceHref,
+  getLocalizedProjectServiceLabel,
+  getProjectServiceTitle,
+  getProjectServices,
+} from '../../../lib/projectServices';
 
 export const prerender = true;
 
+type ProjectPageProps = {
+  kind: 'project';
+  project: ProjectEntry;
+  lang: Locale;
+};
+
+type ServicePageProps = {
+  kind: 'service';
+  service: ProjectService;
+  lang: Locale;
+};
+
 export async function getStaticPaths() {
-	const projects = await getCollection('projects');
+  const projects = await getProjects();
+  const services = await getProjectServiceEntries();
+  const projectSlugs = new Set(projects.map((project) => project.data.slug));
 
-	return SUPPORTED_LOCALES.flatMap((lang) =>
-		projects
-			.filter((project) => !project.data.inProgress)
-			.map((project) => ({
-				params: { lang, slug: project.data.slug },
-				props: { project, lang },
-			}))
-	);
+  const projectPaths = SUPPORTED_LOCALES.flatMap((lang) =>
+    projects
+      .filter((project) => !project.data.inProgress)
+      .map((project) => ({
+        params: { lang, slug: project.data.slug },
+        props: { kind: 'project', project, lang },
+      })),
+  );
+
+  const servicePaths = SUPPORTED_LOCALES.flatMap((lang) =>
+    services
+      .filter((service) => !projectSlugs.has(service.data.slug))
+      .map((service) => ({
+        params: { lang, slug: service.data.slug },
+        props: { kind: 'service', service, lang },
+      })),
+  );
+
+  return [...projectPaths, ...servicePaths];
 }
 
-const { project, lang } = Astro.props as { project: any; lang: Locale };
+const props = Astro.props as ProjectPageProps | ServicePageProps;
+const { lang } = props;
+const switchLang: Locale = lang === 'fr' ? 'en' : 'fr';
 const t = useTranslations(lang);
+const projectCopy = t.projectSingle;
+const projectFilterLabels: Record<string, { fr: string; en: string }> = {
+  'creation-ecommerce': { fr: 'E-commerce', en: 'E-commerce' },
+  'optimisation-site-web': { fr: 'Optimisation', en: 'Optimization' },
+  'creation-landing-page': { fr: 'Landing Page', en: 'Landing Page' },
+  'creation-mvp-saas': { fr: 'Saas Mvp', en: 'Saas Mvp' },
+  'refonte-site-web': { fr: 'Refonte', en: 'Redesign' },
+};
 
-// Champs localisés
-const fullTitle = lang === 'fr' ? project.data.fullTitle_fr : project.data.fullTitle_en;
-const shortTitle = lang === 'fr' ? project.data.shortTitle_fr : project.data.shortTitle_en;
-const titleDisplay = lang === 'fr' ? project.data.titleDisplay_fr : project.data.titleDisplay_en;
-const seoDescription = lang === 'fr' ? project.data.seoDescription_fr : project.data.seoDescription_en;
+const allLocalizedProjects = await getLocalizedProjects(lang);
+const singleWorkProjectSlugs = ['e-putch', 'merly'];
+const singleWorkProjects = singleWorkProjectSlugs
+  .map((slug) => allLocalizedProjects.find((project) => project.slug === slug))
+  .filter((project): project is (typeof allLocalizedProjects)[number] => Boolean(project));
+const singleWorkCount = `(${String(singleWorkProjects.length).padStart(2, '0')})`;
+const projectServices = await getProjectServiceEntries();
+const serviceFilterProjects = allLocalizedProjects.filter((project) => !project.inProgress);
+const serviceFilters = projectServices
+  .filter((service) =>
+    serviceFilterProjects.some((project) => project.services.includes(service.data.slug)),
+  )
+  .map((service) => ({
+    label: projectFilterLabels[service.data.slug]?.[lang] || getLocalizedProjectServiceLabel(service, lang),
+    href: getProjectServiceHref(service.data.slug, lang),
+  }));
 
-// Description - lire le contenu brut du fichier MDX
-const allDescriptions = import.meta.glob('../../../content/projects/*/description_*.mdx', { query: '?raw', import: 'default' });
-const descriptionPath = `../../../content/projects/${project.data.slug}/description_${lang}.mdx`;
-let descriptionContent = '';
-if (allDescriptions[descriptionPath]) {
-	descriptionContent = await allDescriptions[descriptionPath]() as string;
+function getDisplayTitle(project: (typeof allLocalizedProjects)[number]): string {
+  return project.shortTitle.replace(/-/g, '').toUpperCase();
 }
 
-// Galerie
-const gallery = project.data.gallery || [];
+let pageTitle = '';
+let pageDescription = '';
+let pageRobots: 'index, follow' | 'noindex, follow' | undefined;
+let alternateUrl: string | undefined;
+let pageContent:
+  | {
+      kind: 'project';
+      project: ProjectEntry;
+      shortTitle: string;
+      shortTitleLines: string[];
+      titleDisplay: string;
+      featuredImage: ProjectEntry['data']['featuredImage'];
+      featuredImageAlt: string;
+      gallery: LocalizedProjectGalleryRow[];
+      services: ProjectServiceSlug[];
+      projectTypes: string[];
+      externalUrl?: string;
+      descriptionParagraphs: string[];
+      breadcrumbItems: { label: string; href?: string }[];
+    }
+  | {
+      kind: 'service';
+      serviceSlug: ProjectServiceSlug;
+      service: ProjectService;
+      projects: typeof allLocalizedProjects;
+      breadcrumbItems: { label: string; href?: string }[];
+    };
 
-// Types de projet
-const projectTypes = project.data.projectTypes || [];
+if (props.kind === 'project') {
+  const localizedProject = localizeProject(props.project, lang);
+  const descriptionParagraphs = await getLocalizedProjectDescriptionParagraphs(props.project.data.slug, lang);
 
-// URL externe du projet
-const externalUrl = project.data.externalUrl;
+  pageTitle = localizedProject.fullTitle;
+  pageDescription = localizedProject.seoDescription;
+  alternateUrl = new URL(getProjectHref(props.project.data.slug, switchLang), Astro.site).href;
+  pageContent = {
+    kind: 'project',
+    project: props.project,
+    shortTitle: localizedProject.shortTitle,
+    shortTitleLines: splitHeadingLines(localizedProject.shortTitle),
+    titleDisplay: localizedProject.titleDisplay,
+    featuredImage: localizedProject.featuredImage,
+    featuredImageAlt: localizedProject.featuredImageAlt,
+    gallery: localizedProject.gallery,
+    services: getProjectServices(props.project),
+    projectTypes: localizedProject.projectTypes,
+    externalUrl: localizedProject.externalUrl,
+    descriptionParagraphs,
+    breadcrumbItems: [
+      { label: projectCopy.breadcrumbHome, href: `/${lang}` },
+      { label: projectCopy.breadcrumbProjects, href: getProjectIndexHref(lang) },
+      { label: localizedProject.shortTitle },
+    ],
+  };
+} else {
+  const service = props.service;
+  const projects = allLocalizedProjects.filter(
+    (project) => !project.inProgress && project.services.includes(service.data.slug),
+  );
 
-// Autres projets (pour le bouton)
-const allProjects = await getCollection('projects');
-const otherProjects = allProjects
-	.filter((p) => p.data.slug !== project.data.slug && !p.data.inProgress)
-	.sort((a, b) => (a.data.order || 0) - (b.data.order || 0));
+  pageTitle = getProjectServiceTitle(service, lang);
+  pageDescription = getProjectServiceDescription(service, lang);
+  alternateUrl = new URL(getProjectServiceHref(service.data.slug, switchLang), Astro.site).href;
+  pageRobots = projects.length > 2 ? 'index, follow' : 'noindex, follow';
+  pageContent = {
+    kind: 'service',
+    serviceSlug: service.data.slug,
+    service,
+    projects,
+    breadcrumbItems: [
+      { label: projectCopy.breadcrumbHome, href: `/${lang}` },
+      { label: projectCopy.breadcrumbProjects, href: getProjectIndexHref(lang) },
+      { label: getLocalizedProjectServiceLabel(service, lang) },
+    ],
+  };
+}
 ---
 
-<Layout lang={lang} title={fullTitle} description={seoDescription}>
-	<div class="fixed inset-0 bg-bg-light -z-10" aria-hidden="true"></div>
-	<div id="page-content" class="relative z-10">
-		<!-- Titre -->
-		<header class="pt-50 md:pt-78 mb-10">
-			<div class="flex flex-col sm:flex-row sm:justify-between font-display gap-5 leading-none">
-				<h1 class="leading-none text-[2rem] md:text-[2.5rem] lg:text-[3rem] uppercase" set:html={formatHeadingHtml(titleDisplay || fullTitle)} />
-			</div>
-		</header>
+<Layout
+  lang={lang}
+  title={pageTitle}
+  description={pageDescription}
+  alternateUrl={alternateUrl}
+  robots={pageRobots}
+  variant="dark"
+  headerVariant="dark"
+  showContainerLines={pageContent.kind !== 'service'}
+>
+  {(pageContent.kind === 'service' || pageContent.kind === 'project') && (
+    <div class="fixed inset-0 -z-10 bg-black" aria-hidden="true"></div>
+  )}
 
-		<div class="lg:flex lg:justify-between lg:mb-22">
-			<!-- Description -->
-			{descriptionContent && (
-				<div>
-					<h2 class="section-label hidden sm:block mb-8">Résumé du projet</h2>
-					<section class="sm:mb-16 md:max-w-[700px] lg:mb-0">
-						{descriptionContent.split(/\n\n+/).filter(Boolean).map((paragraph: string) => (
-							<p class="mb-10" set:html={paragraph.trim()} />
-						))}
-					</section>
-				</div>
-			)}
+  {pageContent.kind === 'project' ? (
+    <article id="page-content" class="project-page relative">
+      <HeroStructure
+        background="dark"
+        showHorizontalLine={false}
+        showVerticalLine={true}
+        showObliqueLines={true}
+        ariaLabelledby="project-intro"
+        breadcrumbItems={pageContent.breadcrumbItems}
+        breadcrumbAriaLabel={projectCopy.breadcrumbAriaLabel}
+        spacingClass="pt-16 pb-24 sm:pt-32 sm:pb-28 lg:pt-40 lg:pb-32 2xl:pb-40"
+        contentClass="h-[426px] justify-start lg:h-[490px]"
+      >
+        <div class="project-hero mx-auto flex h-[426px] w-full items-center justify-center lg:h-[490px]">
+          <div class="relative isolate flex flex-col items-center justify-center ">
+            <div class="relative z-10 flex items-center justify-center gap-8">
+              <svg class="page-hero-heading-svg h-8 sm:h-10" viewBox="0 0 6 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M4.39106 0H6C3.62011 4.16285 1.84358 8.70413 1.84358 15.0688C1.84358 21.2959 3.62011 25.8372 6 30H4.39106C2.07821 26.5252 0 21.2959 0 15.0688C0 8.63532 2.07821 3.47477 4.39106 0Z" fill="white"/>
+              </svg>
+              <h1 id="project-intro" class="page-hero-reveal-clip font-display mt-1 text-[50px] uppercase">
+                {pageContent.shortTitleLines.map((line, index) => (
+                  <span class="page-hero-reveal-line" style={`--hero-reveal-order: ${index}`}>{line}</span>
+                ))}
+              </h1>
+              <svg class="page-hero-heading-svg h-8 sm:h-10" viewBox="0 0 6 29" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M1.60894 28.7998L-2.86102e-06 28.7998C2.37989 24.8035 4.15642 20.4438 4.15643 14.3337C4.15643 8.35576 2.37989 3.99612 -2.38339e-07 -0.000210312L1.60894 -0.000210177C3.92179 3.33557 6 8.35576 6 14.3337C6 20.5099 3.92179 25.464 1.60894 28.7998Z" fill="white"/>
+              </svg>
+            </div>
+          </div>
+        </div>
+      </HeroStructure>
+      <div class="relative z-1 -mt-54 sm:-mt-66 md:-mt-85 lg:-mt-97 2xl:-mt-106">
+        {pageContent.externalUrl && (
+          <div class="w-full flex text-[1.125rem] lg:text-[1.375rem] justify-between ">
+            <span>2025©</span>
+            <a href={pageContent.externalUrl} target="_blank" rel="noopener noreferrer" class="underline-hover">
+              {projectCopy.externalUrl} (↗)
+            </a>
+          </div>
+        )}
+        <div class="md:flex md:gap-10 mt-10 sm:mt-24 md:mt-40 lg:mt-36 2xl:mt-48">
+          {pageContent.services.length > 0 && (
+            <nav aria-label={projectCopy.projectServices} class="md:mt-0 text-[1.25rem] md:flex md:flex-col md:justify-between md:w-1/2">
+              <div class="sm:flex sm:gap-8">
+                <p>{projectCopy.serviceFilterLabel}</p>
+                <ul class="mt-5 sm:mt-0 sm:flex sm:gap-4">
+                  {pageContent.services.map((serviceSlug) => (
+                    <li>
+                      <a href={getProjectServiceHref(serviceSlug, lang)} class="underline-hover">
+                        {getLocalizedProjectServiceLabel(projectServices.find((service) => service.data.slug === serviceSlug)!, lang)}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <span class="hidden md:block mt-10 sm:mt-16 text-[1.125rem]">(↓)</span>
+            </nav>
+          )}
 
-			<!-- Types de projet -->
-			<div class="lg:flex lg:flex-col lg: justify-between">
-				{projectTypes.length > 0 && (
-					<div class="hidden sm:flex flex-col gap-6 items-end lg:mb-0 lg:gap-8">
-						<h2 class="section-label ">Type de projet</h2>
-						<ul class="flex flex-col text-[1.25rem] leading-none gap-4 text-right">
-							{projectTypes.map((type: string) => (
-								<li>{type}</li>
-							))}
-						</ul>
-					</div>
-				)}
-				<div class="mb-10 sm:mb-32 sm:-mt-[1.414rem] lg:mt-0 lg:mb-10">
-					<Wrapped>
-						{externalUrl && (
-							<a
-								href={externalUrl}
-								target="_blank"
-								rel="noopener noreferrer"
-								class="cursor-pointer uppercase font-mono text-[1rem]"
-								title={lang === 'fr' ? 'Voir le site' : 'View website'}
-							>
-									{lang === 'fr' ? 'Voir le site' : 'View website'} →
-							</a>
-						)}
-					</Wrapped>
-				</div>
-			</div>
-		</div>
+          <div class="hidden md:flex md:w-1/2 justify-end">
+            {pageContent.descriptionParagraphs.length > 0 && (
+              <section class="project-description flex flex-col gap-10 sm:gap-16 md:gap-8 text-[1.125rem] sm:max-w-[500px]">
+                {pageContent.descriptionParagraphs.map((paragraph) => (
+                  <p>{paragraph}</p>
+                ))}
+              </section>
+            )}
+          </div>
+        </div>
+      </div>
+      <main class="project-content mt-10 sm:mt-16 md:mt-50 lg:max-w-[1000px] lg:mx-auto">
 
-		<!-- Galerie -->
-		{gallery.length > 0 && (
-			<section class="grid grid-cols-2 gap-[0.625rem] sm:gap-5 md:gap-6 lg:gap-10 mb-10 sm:mb-16">
-				{gallery.map((row: any, index: number) => {
-					const alt1 = lang === 'fr'
-						? (row.alt1_fr || `${shortTitle} - Horde, agence web UX Bruxelles`)
-						: (row.alt1_en || `${shortTitle} - Horde, Brussels UX web agency`);
-					const alt2 = lang === 'fr'
-						? (row.alt2_fr || `${shortTitle} - Horde, agence web UX Bruxelles`)
-						: (row.alt2_en || `${shortTitle} - Horde, Brussels UX web agency`);
-					const isFirst = index === 0;
+        <div class="md:hidden">
+          {pageContent.descriptionParagraphs.length > 0 && (
+            <section class="project-description flex flex-col gap-10 sm:gap-16 text-[1.125rem] sm:max-w-[500px]">
+              {pageContent.descriptionParagraphs.map((paragraph) => (
+                <p>{paragraph}</p>
+              ))}
+            </section>
+          )}
+        </div>
 
-					return row.layout === 'full' ? (
-						<Image
-							src={row.image1}
-							alt={alt1}
-							class="col-span-2 w-full h-full object-cover"
-							widths={[250, 500, 800, 1200]}
-							sizes="(max-width: 640px) calc(100vw - 2rem), (max-width: 1024px) calc(100vw - 4rem), calc(100vw - 12rem)"
-							loading={isFirst ? "eager" : "lazy"}
-							fetchpriority={isFirst ? "high" : "auto"}
-							decoding="async"
-							format="webp"
-							quality={80}
-						/>
-					) : (
-						<>
-							<Image
-								src={row.image1}
-								alt={alt1}
-								class="w-full h-full object-cover"
-								widths={[150, 300, 500, 800]}
-								sizes="(max-width: 640px) calc(50vw - 1rem), (max-width: 1024px) calc(50vw - 2rem), calc(50vw - 6rem)"
-								loading={isFirst ? "eager" : "lazy"}
-								fetchpriority={isFirst ? "high" : "auto"}
-								decoding="async"
-								format="webp"
-								quality={80}
-							/>
-							{row.image2 && (
-								<Image
-									src={row.image2}
-									alt={alt2}
-									class="w-full h-full object-cover"
-									widths={[150, 300, 500, 800]}
-									sizes="(max-width: 640px) calc(50vw - 1rem), (max-width: 1024px) calc(50vw - 2rem), calc(50vw - 6rem)"
-									loading={isFirst ? "eager" : "lazy"}
-									fetchpriority={isFirst ? "high" : "auto"}
-									decoding="async"
-									format="webp"
-									quality={80}
-								/>
-							)}
-						</>
-					);
-				})}
-			</section>
-		)}
+        <span class="block md:hidden mt-10 sm:mt-16 text-[1.125rem]">(↓)</span>
 
-		<!-- Boutons -->
-		<nav class="mb-10 flex flex-col sm:flex-row gap-4">
-			<a
-				href={`/${lang}/projets`}
-				class="group relative overflow-hidden font-mono text-[1rem] leading-none uppercase py-6 px-5 flex justify-center w-full md:w-fit border border-lines-dark bg-black text-white transition-colors duration-300 ease-in-out cursor-pointer"
-				title={lang === 'fr' ? 'Autres projets' : 'Other projects'}
-			>
-				<span class="absolute inset-0 bg-bg-light translate-x-[calc(-100%-1px)] group-hover:translate-x-0 transition-transform duration-400 ease-[cubic-bezier(0.25,0.46,0.45,0.94)]"></span>
-				<span class="relative z-10 text-white group-hover:text-black transition-colors duration-300">
-					{lang === 'fr' ? 'Autres projets' : 'Other projects'}
-				</span>
-			</a>
-		</nav>
+        {pageContent.gallery.length > 0 && (
+          <section class="project-gallery bg-black mt-16 sm:mt-32 flex flex-col gap-2.5 sm:gap-5" aria-label={projectCopy.gallery}>
+            {pageContent.gallery.map((row: LocalizedProjectGalleryRow) => (
+              <div
+                class:list={[
+                  'project-gallery-row gap-2.5 sm:gap-5',
+                  row.layout === 'half' && row.image2 ? 'grid grid-cols-2' : 'grid grid-cols-1',
+                  `project-gallery-row--${row.layout}`,
+                ]}
+              >
+                <Image src={row.image1} alt={row.alt1} class="w-full" />
+                {row.image2 && <Image src={row.image2} alt={row.alt2 || row.alt1} class="w-full" />}
+              </div>
+            ))}
+          </section>
+        )}
 
-		<!-- Types de projet -->
-		{projectTypes.length > 0 && (
-			<div class="flex sm:hidden flex-col gap-6 items-end">
-				<h2 class="section-label">Type de projet</h2>
-				<ul class="flex flex-col text-[1.25rem] leading-none gap-4 text-right">
-					{projectTypes.map((type: string) => (
-						<li>{type}</li>
-					))}
-				</ul>
-			</div>
-		)}
-	</div>
+        {singleWorkProjects.length > 0 && (
+          <nav class="project-work-nav mt-16 sm:mt-24 text-button-white" aria-label={projectCopy.allWork}>
+            <a
+              href={getProjectIndexHref(lang)}
+              class="project-work-row grid min-h-[78px] place-items-center border-b border-lines-dark py-6 sm:py-10 lg:py-12 text-center font-display text-[2.25rem] sm:text-[3rem] uppercase leading-none tracking-normal sm:min-h-[108px] md:min-h-[120px] lg:text-[5rem]"
+            >
+              <span>
+                {projectCopy.allWork}
+                <span class="ml-1 text-[1.125rem] font-sans leading-none">
+                  {singleWorkCount}
+                </span>
+              </span>
+            </a>
 
-	<Footer lang={lang} hideOverflow={false} />
+            <ol>
+              {singleWorkProjects.map((project) => {
+                const href = project.inProgress ? undefined : getProjectHref(project.slug, lang);
+                const RowTag = project.inProgress ? 'div' : 'a';
+
+                return (
+                  <li>
+                    <RowTag
+                      href={href}
+                      class:list={[
+                        'project-work-row grid min-h-[78px] place-items-center py-6 text-center sm:min-h-[108px] md:min-h-[120px] sm:py-10 lg:py-12',
+                        project === singleWorkProjects.at(-1) ? '' : 'border-b border-lines-dark',
+                      ]}
+                      title={project.shortTitle}
+                    >
+                      <span class="font-display text-[2.25rem] uppercase leading-none tracking-normal sm:text-center sm:text-[3rem] lg:text-[5rem]">
+                        {getDisplayTitle(project)}
+                      </span>
+                    </RowTag>
+                  </li>
+                );
+              })}
+            </ol>
+          </nav>
+        )}
+      </main>
+
+      <style>
+        .project-hero,
+        .project-content {
+          position: relative;
+          z-index: 1;
+        }
+
+        .project-work-row {
+          position: relative;
+          isolation: isolate;
+          left: 50%;
+          width: min(1300px, 100vw);
+          transform: translateX(-50%);
+        }
+
+        .project-work-row::before {
+          content: "";
+          position: absolute;
+          inset: 0;
+          z-index: -1;
+          background: var(--color-bg-light);
+          transform: scaleY(0);
+          transform-origin: bottom center;
+          transition: transform 0.28s ease-out;
+        }
+
+        @media (hover: hover) {
+          a.project-work-row:hover {
+            color: var(--color-black);
+          }
+
+          a.project-work-row:hover::before {
+            transform: scaleY(1);
+          }
+        }
+
+      </style>
+    </article>
+  ) : (
+    <ProjectsListingPage
+      projects={pageContent.projects}
+      lang={lang}
+      intro={t.projectsPage.servicePageHeading.replace(
+        '{service}',
+        getLocalizedProjectServiceLabel(pageContent.service, lang),
+      )}
+      allLabel={projectCopy.allProjects}
+      filters={serviceFilters}
+      activeHref={getProjectServiceHref(pageContent.serviceSlug, lang)}
+      variant="dark"
+    />
+  )}
+
+  <Footer lang={lang} variant="dark" hideOverflow={false} />
 </Layout>

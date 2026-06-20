@@ -1,7 +1,8 @@
 ---
-import Wrapped from "../ui/Wrapped.astro";
+import BracketInline from "../ui/decor/BracketInline.astro";
 import { DEFAULT_LOCALE, type Locale, useTranslations } from "../../i18n";
-import { getCollection } from "astro:content";
+import { getLocalizedProjects } from "../../lib/content/projects";
+import { getProjectHref, getProjectIndexHref } from "../../lib/projectServices";
 import { formatHeadingHtml } from "../../utils/heading-html";
 
 interface Props {
@@ -11,19 +12,7 @@ interface Props {
 const { lang = DEFAULT_LOCALE } = Astro.props;
 const t = useTranslations(lang);
 
-// Récupérer les projets depuis Keystatic (collection unique multilingue)
-const rawProjects = await getCollection('projects');
-
-// Transformer et trier les projets (limité aux 3 premiers pour l'index)
-const projects = rawProjects
-	.sort((a, b) => (a.data.order || 0) - (b.data.order || 0))
-	.slice(0, 3)
-	.map((project) => ({
-		name: lang === 'fr' ? project.data.shortTitle_fr : project.data.shortTitle_en,
-		slug: project.data.slug,
-		image: project.data.featuredImage.src,
-		inProgress: project.data.inProgress,
-	}));
+const projects = (await getLocalizedProjects(lang)).slice(0, 3);
 ---
 
 <div class="flex flex-col">
@@ -33,15 +22,15 @@ const projects = rawProjects
 		<h2 set:html={formatHeadingHtml(t.projects.title)} />
 		<!-- Bouton desktop (lg+) -->
 		<a
-			href={`/${lang}/projets`}
+			href={getProjectIndexHref(lang)}
 			title={t.projects.otherProjects}
-			class="hidden lg:flex group relative overflow-hidden font-mono text-[1rem] leading-none uppercase py-6 px-5 justify-center w-fit border border-lines bg-black text-white transition-colors duration-300 ease-in-out cursor-pointer self-end"
+			class="hidden lg:flex group relative overflow-hidden font-mono text-[1rem] leading-none uppercase py-6 px-5 justify-center w-fit border border-lines bg-black text-button-white transition-colors duration-300 ease-in-out cursor-pointer self-end"
 		>
 			<span
-				class="absolute inset-0 bg-bg-light translate-x-[calc(-100%-1px)] group-hover:translate-x-0 transition-transform duration-400 ease-[cubic-bezier(0.25,0.46,0.45,0.94)]"
+				class="absolute inset-0 bg-button-white translate-x-[calc(-100%-1px)] group-hover:translate-x-0 transition-transform duration-400 ease-[cubic-bezier(0.25,0.46,0.45,0.94)]"
 			></span>
 			<span
-				class="relative z-10 text-white group-hover:text-black transition-colors duration-300"
+				class="relative z-10 text-button-white group-hover:text-black transition-colors duration-300"
 			>
 				{t.projects.otherProjects}
 			</span>
@@ -75,13 +64,13 @@ const projects = rawProjects
 			projects.map((project, index) => (
 				<li
 					class="project-item"
-					data-image={project.image || ""}
+					data-image={project.featuredImage.src || ""}
 					data-in-progress={project.inProgress}
 				>
 						{!project.inProgress ? (
 							<a
-								href={`/${lang}/projets/${project.slug}`}
-								title={project.name}
+								href={getProjectHref(project.slug, lang)}
+								title={project.shortTitle}
 								class:list={[
 									"project-link flex justify-between py-5 xl:py-8 px-8 lg:px-9",
 									index === 0
@@ -89,8 +78,8 @@ const projects = rawProjects
 									: "border-b border-x border-lines",
 							]}
 						>
-							<p>{project.name}</p>
-							<Wrapped class="text-[1rem] font-mono">→</Wrapped>
+							<p>{project.shortTitle}</p>
+							<BracketInline class="text-[1rem] font-mono">→</BracketInline>
 						</a>
 					) : (
 						<div
@@ -102,12 +91,12 @@ const projects = rawProjects
 							]}
 						>
 							<p>
-								{project.name}{" "}
+								{project.shortTitle}{" "}
 								<span class="section-label">
 									{t.projects.inProgress}
 								</span>
 							</p>
-							<Wrapped class="text-[1rem] font-mono">→</Wrapped>
+							<BracketInline class="text-[1rem] font-mono">→</BracketInline>
 						</div>
 					)}
 				</li>
@@ -117,15 +106,15 @@ const projects = rawProjects
 
 	<!-- Bouton mobile (<lg) -->
 	<a
-		href={`/${lang}/projets`}
+		href={getProjectIndexHref(lang)}
 		title={t.projects.otherProjects}
-		class="lg:hidden group relative overflow-hidden font-mono text-[1rem] leading-none uppercase py-6 px-5 flex justify-center w-full border border-lines bg-black text-white transition-colors duration-300 ease-in-out cursor-pointer mt-10 sm:mt-16"
+		class="lg:hidden group relative overflow-hidden font-mono text-[1rem] leading-none uppercase py-6 px-5 flex justify-center w-full border border-lines bg-black text-button-white transition-colors duration-300 ease-in-out cursor-pointer mt-10 sm:mt-16"
 	>
 		<span
-			class="absolute inset-0 bg-bg-light translate-x-[calc(-100%-1px)] group-hover:translate-x-0 transition-transform duration-400 ease-[cubic-bezier(0.25,0.46,0.45,0.94)]"
+			class="absolute inset-0 bg-button-white translate-x-[calc(-100%-1px)] group-hover:translate-x-0 transition-transform duration-400 ease-[cubic-bezier(0.25,0.46,0.45,0.94)]"
 		></span>
 		<span
-			class="relative z-10 text-white group-hover:text-black transition-colors duration-300"
+			class="relative z-10 text-button-white group-hover:text-black transition-colors duration-300"
 		>
 			{t.projects.otherProjects}
 		</span>
@@ -159,7 +148,7 @@ const projects = rawProjects
 
 	@media (hover: hover) {
 		.project-link:hover {
-			color: var(--color-bg-light);
+			color: var(--color-button-white);
 		}
 
 		.project-link:hover::before {
@@ -171,7 +160,7 @@ const projects = rawProjects
 		}
 
 		.project-link:hover :global(.wrapped) {
-			color: var(--color-bg-light) !important;
+			color: var(--color-button-white) !important;
 		}
 	}
 </style>
@@ -188,12 +177,14 @@ const projects = rawProjects
 		const img = document.getElementById(
 			"project-hover-img",
 		) as HTMLImageElement;
-		const placeholder = document.getElementById(
-			"project-hover-placeholder",
-		);
-		const projectItems = document.querySelectorAll(".project-item");
+			const placeholder = document.getElementById(
+				"project-hover-placeholder",
+			);
+			const projectItems = document.querySelectorAll(".project-item");
 
-		if (!container || !img || !placeholder) return;
+			if (!container || !img || !placeholder) return;
+			const containerEl = container as HTMLElement;
+			const placeholderEl = placeholder as HTMLElement;
 
 		let mouseX = 0;
 		let mouseY = 0;
@@ -238,11 +229,11 @@ const projects = rawProjects
 			// Rotation avec inertie
 			currentRotation += (targetRotation - currentRotation) * rotEase;
 
-			container.style.left = `${currentX}px`;
-			container.style.top = `${currentY}px`;
-			container.style.transform = `translate(-50%, -50%) scale(${currentScale}) rotate(${currentRotation}deg)`;
-			container.style.opacity =
-				targetScale === 0 && currentScale < 0.01 ? "0" : "1";
+				containerEl.style.left = `${currentX}px`;
+				containerEl.style.top = `${currentY}px`;
+				containerEl.style.transform = `translate(-50%, -50%) scale(${currentScale}) rotate(${currentRotation}deg)`;
+				containerEl.style.opacity =
+					targetScale === 0 && currentScale < 0.01 ? "0" : "1";
 
 			const isAnimating =
 				Math.abs(currentX - mouseX) > 0.1 ||
@@ -271,13 +262,13 @@ const projects = rawProjects
 
 			if (inProgress || !imageSrc) {
 				img.classList.add("hidden");
-				placeholder.classList.remove("hidden");
-			} else {
-				img.src = imageSrc;
-				img.classList.remove("hidden");
-				placeholder.classList.add("hidden");
+					placeholderEl.classList.remove("hidden");
+				} else {
+					img.src = imageSrc;
+					img.classList.remove("hidden");
+					placeholderEl.classList.add("hidden");
+				}
 			}
-		}
 
 		projectItems.forEach((item) => {
 			const element = item as HTMLElement;

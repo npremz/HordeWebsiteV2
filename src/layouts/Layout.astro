@@ -3,13 +3,12 @@ import { ClientRouter } from 'astro:transitions';
 import SEO from '../components/SEO.astro';
 import '../styles/global.css';
 import Header from '../components/Header.astro';
-import HeaderNew from '../components/HeaderNew.astro';
-import Container from '../components/ui/Container.astro';
-import { DEFAULT_LOCALE, type Locale, useTranslations } from '../i18n';
+import Container from '../components/ui/layout/Container.astro';
+import { DEFAULT_LOCALE, HTML_LOCALE_CODES, type Locale, useTranslations } from '../i18n';
 
 // Preload critical fonts
 import fontDisplay from '../assets/fonts/PPNeueMachina-Light.woff2';
-import fontBody from '../assets/fonts/PPNeueMontreal-Regular.woff2';
+import fontBody from '../assets/fonts/PPNeueMontreal-Book.woff2';
 
 interface Props {
   // i18n
@@ -28,12 +27,15 @@ interface Props {
   publishedTime?: string;
   modifiedTime?: string;
   author?: string;
+  authorUrl?: string;
   siteNameAsPrefix?: boolean;
 
   // Layout props
   class?: string;
   variant?: 'light' | 'dark';
   headerVariant?: 'light' | 'dark';
+  showContainerLines?: boolean;
+  isHomepage?: boolean;
 }
 
 const {
@@ -50,20 +52,22 @@ const {
   publishedTime,
   modifiedTime,
   author,
+  authorUrl,
   siteNameAsPrefix,
   class: className,
   variant = 'light',
   headerVariant,
+  showContainerLines = true,
+  isHomepage = false,
 } = Astro.props;
 
 const t = useTranslations(lang);
 const isDark = variant === 'dark';
-const bodyClasses = isDark ? 'bg-black text-bg-light' : 'bg-bg text-black';
-const finalHeaderVariant = headerVariant ?? variant;
+const bodyClasses = isDark ? 'bg-black text-button-white' : 'bg-bg text-black';
 ---
 
 <!doctype html>
-<html lang={lang}>
+<html lang={HTML_LOCALE_CODES[lang]}>
   <head>
     <!-- Preload critical fonts for faster LCP -->
     <link rel="preload" href={fontDisplay} as="font" type="font/woff2" crossorigin />
@@ -83,12 +87,13 @@ const finalHeaderVariant = headerVariant ?? variant;
       publishedTime={publishedTime}
       modifiedTime={modifiedTime}
       author={author}
+      authorUrl={authorUrl}
       siteNameAsPrefix={siteNameAsPrefix}
     />
     <ClientRouter />
 
     <!-- Plausible Analytics -->
-    <script defer data-domain="hordeagence.com" src="https://stats.hordeagence.com/js/script.js"></script>
+    <script is:inline defer data-domain="hordeagence.com" src="https://stats.hordeagence.com/js/script.js"></script>
     <script>
       // Tracker les navigations SPA (Astro view transitions)
       document.addEventListener('astro:page-load', () => {
@@ -98,12 +103,11 @@ const finalHeaderVariant = headerVariant ?? variant;
       });
     </script>
   </head>
-  <body class={`${bodyClasses} ${className || ''}`}>
+  <body class:list={[bodyClasses, className, { 'is-homepage': isHomepage }]}>
     <a href="#main-content" class="skip-link" title={t.a11y.skipToContent}>{t.a11y.skipToContent}</a>
 
-    <!-- <Header lang={lang} variant={finalHeaderVariant} /> -->
-    <HeaderNew lang={lang} alternateUrl={alternateUrl} />
-    <Container variant={variant}>
+    <Header lang={lang} alternateUrl={alternateUrl} theme={headerVariant} />
+    <Container variant={variant} showLines={showContainerLines}>
       <main id="main-content">
         <slot />
       </main>

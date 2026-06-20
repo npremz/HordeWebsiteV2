@@ -30,6 +30,7 @@ const projectsCollection = defineCollection({
       alt2_fr: z.string().optional(),
       alt2_en: z.string().optional(),
     })).default([]),
+    services: z.array(z.string()).default([]),
     projectTypes: z.array(z.string()).default([]),
     externalUrl: z.string().url().optional(),
     inProgress: z.boolean().default(false),
@@ -64,6 +65,7 @@ const categoriesCollection = defineCollection({
   loader: glob({ pattern: '**/*.yaml', base: './src/content/categories' }),
   schema: z.object({
     slug: z.string(),
+    slug_en: z.string().optional(),
     name_fr: z.string(),
     name_en: z.string(),
     description_fr: z.string().optional(),
@@ -95,9 +97,12 @@ const postsCollection = defineCollection({
     author: z.string(), // slug de l'auteur (relation)
     category: z.string(), // slug de la catégorie (relation)
     tags: z.array(z.string()).default([]),
+    tags_en: z.array(z.string()).optional(),
     publishedDate: z.coerce.date(),
     modifiedDate: z.coerce.date().optional(),
     readingTime: z.number().optional(),
+    keyTakeaways_fr: z.array(z.string()).default([]),
+    keyTakeaways_en: z.array(z.string()).default([]),
     featured: z.boolean().default(false),
     draft: z.boolean().default(false),
     seoRobots: z.string().optional(),
@@ -108,9 +113,155 @@ const postsCollection = defineCollection({
   }),
 });
 
+const serviceTranslationSchema = z.object({
+  seoUrl: z.string().optional(),
+  seoPrimaryKeyword: z.string().optional(),
+  seoSecondaryKeywords: z.array(z.string()).optional(),
+  seoTitle: z.string().optional(),
+  seoDescription: z.string().optional(),
+  seoInternalLinks: z.array(z.string()).optional(),
+  h1: z.string().optional(),
+  shortName: z.string().optional(),
+  footerTitle: z.string().optional(),
+  intro: z.string().optional(),
+  problemTitle: z.string().optional(),
+  problemBlocks: z.array(
+    z.object({
+      kind: z.enum(['paragraph', 'item', 'list']),
+      title: z.string().optional(),
+      body: z.string().optional(),
+      items: z.array(z.string()).default([]),
+    })
+  ).optional(),
+  offerTitle: z.string().optional(),
+  offerItems: z.array(
+    z.object({
+      title: z.string(),
+      body: z.string(),
+    })
+  ).optional(),
+  methodTitle: z.string().optional(),
+  methodSteps: z.array(
+    z.object({
+      title: z.string(),
+      body: z.string(),
+    })
+  ).optional(),
+  deliverablesTitle: z.string().optional(),
+  deliverables: z.array(z.string()).optional(),
+  exclusionsTitle: z.string().optional(),
+  exclusionsParagraphs: z.array(z.string()).optional(),
+  faqTitle: z.string().optional(),
+  faqItems: z.array(
+    z.object({
+      question: z.string(),
+      answer: z.string(),
+    })
+  ).optional(),
+  ctaTitle: z.string().optional(),
+  ctaParagraphs: z.array(z.string()).optional(),
+  primaryCtaLabel: z.string().optional(),
+  primaryCtaUrl: z.string().optional(),
+  secondaryCtaLabel: z.string().optional(),
+  secondaryCtaUrl: z.string().optional(),
+  reassurance: z.string().optional(),
+  recommendedLinks: z.array(
+    z.object({
+      anchor: z.string(),
+      url: z.string(),
+    })
+  ).optional(),
+});
+
+const servicesCollection = defineCollection({
+  loader: glob({ pattern: '**/*.yaml', base: './src/content/services' }),
+  schema: z.object({
+    slug: z.string(),
+    seoUrl: z.string(),
+    seoPrimaryKeyword: z.string(),
+    seoSecondaryKeywords: z.array(z.string()).default([]),
+    seoTitle: z.string(),
+    seoDescription: z.string(),
+    seoRobots: z.string().default('index, follow'),
+    seoInternalLinks: z.array(z.string()).default([]),
+    h1: z.string(),
+    shortName: z.string().optional(),
+    footerTitle: z.string().optional(),
+    footerOrder: z.number().optional(),
+    translations: z.object({
+      en: serviceTranslationSchema.optional(),
+    }).optional(),
+    intro: z.string(),
+    problemTitle: z.string(),
+    problemTitleLeft: z.string().optional(),
+    problemTitleRight: z.string().optional(),
+    problemBlocks: z.array(
+      z.object({
+        kind: z.enum(['paragraph', 'item', 'list']),
+        title: z.string().optional(),
+        body: z.string().optional(),
+        items: z.array(z.string()).default([]),
+      })
+    ).default([]),
+    offerTitle: z.string(),
+    offerTitleLeft: z.string().optional(),
+    offerTitleRight: z.string().optional(),
+    offerItems: z.array(
+      z.object({
+        title: z.string(),
+        body: z.string(),
+      })
+    ).default([]),
+    methodTitle: z.string(),
+    methodTitleLeft: z.string().optional(),
+    methodTitleRight: z.string().optional(),
+    methodSteps: z.array(
+      z.object({
+        title: z.string(),
+        body: z.string(),
+      })
+    ).default([]),
+    deliverablesTitle: z.string(),
+    deliverablesTitleLeft: z.string().optional(),
+    deliverablesTitleRight: z.string().optional(),
+    deliverables: z.array(z.string()).default([]),
+    exclusionsTitle: z.string(),
+    exclusionsTitleLeft: z.string().optional(),
+    exclusionsTitleRight: z.string().optional(),
+    exclusionsParagraphs: z.array(z.string()).default([]),
+    faqTitle: z.string(),
+    faqTitleLeft: z.string().optional(),
+    faqTitleRight: z.string().optional(),
+    faqItems: z.array(
+      z.object({
+        question: z.string(),
+        answer: z.string(),
+      })
+    ).default([]),
+    ctaTitle: z.string(),
+    ctaTitleLeft: z.string().optional(),
+    ctaTitleRight: z.string().optional(),
+    ctaParagraphs: z.array(z.string()).default([]),
+    primaryCtaLabel: z.string().optional(),
+    primaryCtaUrl: z.string().optional(),
+    secondaryCtaLabel: z.string().optional(),
+    secondaryCtaUrl: z.string().optional(),
+    reassurance: z.string().optional(),
+    recommendedLinks: z.array(
+      z.object({
+        anchor: z.string(),
+        url: z.string(),
+      })
+    ).default([]),
+    notes: z.array(z.string()).default([]),
+    order: z.number().default(0),
+  }),
+});
+
 export const collections = {
   projects: projectsCollection,
   authors: authorsCollection,
   categories: categoriesCollection,
   posts: postsCollection,
+  services: servicesCollection,
 };

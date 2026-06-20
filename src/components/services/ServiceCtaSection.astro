@@ -1,0 +1,61 @@
+---
+import ContactForm from "../ui/forms/ContactForm";
+import type { FormTranslations } from "../ui/forms/ContactForm";
+import { formatHeadingHtml } from "../../utils/heading-html";
+import type { ServiceData } from "./types";
+import ServiceSection from "./ServiceSection.astro";
+import AnimatedUnderlineLink from "../ui/links/AnimatedUnderlineLink.astro";
+
+interface Props {
+  service: ServiceData;
+  formTranslations: FormTranslations;
+}
+
+const { service, formTranslations } = Astro.props;
+
+const sectionClass = "mt-16 md:mt-24";
+const titleClass = "flex flex-col gap-5 text-[1.5rem] leading-tight sm:flex-row sm:justify-between sm:text-[2rem] md:text-[2.5rem]";
+const bodyClass = "text-[1.125rem] max-w-[900px]";
+---
+
+<ServiceSection
+  id="service-cta"
+  sectionKey="cta"
+  titleId="service-cta-title"
+  class={sectionClass}
+>
+  <h2 id="service-cta-title" class={titleClass}>
+    <span set:html={formatHeadingHtml(service.ctaTitle)} class="sm:pr-4" />
+  </h2>
+  <div class="mt-5 sm:mt-10">
+    <div class="space-y-8 md:max-w-[650px]">
+      {service.ctaParagraphs.map((paragraph) => {
+        const emailRegex = /(hello@hordeagence\.com)/;
+        const parts = paragraph.split(emailRegex);
+        return (
+          <p class={bodyClass}>
+            {parts.map((part) =>
+              part === 'hello@hordeagence.com'
+                ? <AnimatedUnderlineLink href="mailto:hello@hordeagence.com" label={part} />
+                : part
+            )}
+          </p>
+        );
+      })}
+    </div>
+
+    <div id="contact-form" class="mt-[120px]">
+      <ContactForm
+        client:visible
+        translations={formTranslations}
+        variant="light"
+        hideNeedField={true}
+        source={{
+          type: 'service-page',
+          pagePath: service.seoUrl,
+          serviceSlug: service.slug,
+        }}
+      />
+    </div>
+  </div>
+</ServiceSection>

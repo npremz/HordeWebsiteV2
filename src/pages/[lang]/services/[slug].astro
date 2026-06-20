@@ -1,0 +1,51 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import Footer from '../../../components/Footer.astro';
+import ServiceHero from '../../../components/services/ServiceHero.astro';
+import ServiceOfferSection from '../../../components/services/ServiceOfferSection.astro';
+import ServiceMethodSection from '../../../components/services/ServiceMethodSection.astro';
+import ServiceDeliverablesSection from '../../../components/services/ServiceDeliverablesSection.astro';
+import ServiceExclusionsSection from '../../../components/services/ServiceExclusionsSection.astro';
+import ServiceFaqSection from '../../../components/services/ServiceFaqSection.astro';
+import ServiceCtaSection from '../../../components/services/ServiceCtaSection.astro';
+import { SUPPORTED_LOCALES, type Locale, useTranslations } from '../../../i18n';
+import { type ServiceEntry, getServices, localizeServiceEntry } from '../../../lib/content/services';
+
+export const prerender = true;
+
+export async function getStaticPaths() {
+  const services = await getServices();
+
+  return SUPPORTED_LOCALES.flatMap((lang) =>
+    services.map((service) => ({
+      params: { lang, slug: service.data.slug },
+      props: { service, lang },
+    })),
+  );
+}
+
+const { service, lang } = Astro.props as { service: ServiceEntry; lang: Locale };
+const t = useTranslations(lang);
+const localizedService = localizeServiceEntry(service, lang);
+---
+
+<Layout
+  lang={lang}
+  title={localizedService.data.seoTitle}
+  description={localizedService.data.seoDescription}
+  robots={localizedService.data.seoRobots as 'index, follow' | 'noindex, follow' | 'noindex, nofollow'}
+  headerVariant="dark"
+>
+  <div class="fixed inset-0 bg-bg -z-10" aria-hidden="true"></div>
+  <article data-service-slug={localizedService.data.slug}>
+    <ServiceHero service={localizedService.data} />
+    <ServiceOfferSection service={localizedService.data} />
+    <ServiceMethodSection service={localizedService.data} />
+    <ServiceDeliverablesSection service={localizedService.data} lang={lang} />
+    <ServiceExclusionsSection service={localizedService.data} lang={lang} />
+    <ServiceFaqSection service={localizedService.data} />
+    <ServiceCtaSection service={localizedService.data} formTranslations={t.form} />
+  </article>
+
+  <Footer lang={lang} hideOverflow={false} />
+</Layout>

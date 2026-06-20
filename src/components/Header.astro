@@ -1,0 +1,1243 @@
+---
+import {
+  DEFAULT_LOCALE,
+  type Locale,
+  useTranslations,
+  getLocalizedPath,
+  getPathWithoutLocale,
+} from '../i18n';
+import { getNavigation } from '../lib/site-data';
+
+interface Props {
+  lang?: Locale;
+  alternateUrl?: string;
+  theme?: 'light' | 'dark';
+}
+
+const { lang = DEFAULT_LOCALE, alternateUrl, theme = 'light' } = Astro.props;
+const t = useTranslations(lang);
+const isDark = theme === 'dark';
+
+const currentPath = getPathWithoutLocale(Astro.url.pathname);
+const showSiteIntro = currentPath === '/';
+const switchLang = lang === 'fr' ? 'en' : 'fr';
+const switchUrl = alternateUrl || getLocalizedPath(currentPath, switchLang);
+const startProjectUrl = getLocalizedPath('/contact', lang);
+const languageItems = [
+  { locale: 'fr' as const, label: 'Fr', href: switchLang === 'fr' ? switchUrl : getLocalizedPath(currentPath, 'fr') },
+  { locale: 'en' as const, label: 'Eng', href: switchLang === 'en' ? switchUrl : getLocalizedPath(currentPath, 'en') },
+];
+
+const navigation = await getNavigation(lang);
+const {
+  logo = '/images/logo.svg',
+  logoAlt = 'Logo',
+  items = [],
+  ctaButton,
+} = navigation;
+
+const emailUrl = ctaButton?.url || 'mailto:hello@hordeagence.com';
+const emailLabel = ctaButton?.label || 'hello@hordeagence.com';
+const textClasses = isDark ? 'text-button-white' : 'text-black';
+const desktopLinkClasses = isDark
+  ? 'text-button-white/85 hover:text-button-white'
+  : 'text-black/70 hover:text-black';
+
+---
+
+{showSiteIntro && (
+  <div class="site-intro" data-site-intro aria-hidden="true">
+    <div class="site-intro__logo-clip" data-site-intro-logo></div>
+  </div>
+)}
+
+<header class:list={['site-header fixed inset-x-0 top-0 z-[9999] pointer-events-none', textClasses]} data-theme={theme}>
+  <div class="relative z-[3] md:hidden" data-header-surface="mobile">
+    <div class="site-header__mobile-fixed pl-[15px] pr-[24px]" data-mobile-fixed>
+      <div class="relative z-[5] flex h-full items-center justify-between gap-4" data-mobile-row>
+        <div class="flex items-center">
+          <a
+            href={`/${lang}`}
+            class="pointer-events-auto inline-flex items-center text-button-white"
+            title={logoAlt}
+            aria-label={logoAlt}
+          >
+            <img
+              src={logo}
+              alt={logoAlt}
+              class="site-header__mobile-logo block h-[12px] w-[41px] max-w-full"
+              width="54"
+              height="16"
+              decoding="async"
+            />
+          </a>
+          <div class="site-header__desktop-breadcrumb site-header__sm-breadcrumb hidden items-center sm:flex md:hidden" data-header-breadcrumb-slot></div>
+        </div>
+
+        <button
+          type="button"
+          class="site-header__menu-toggle pointer-events-auto cursor-pointer relative inline-flex gap-2.5 text-[16px] items-center justify-center bg-transparent p-0 text-current"
+          data-header-toggle
+          data-open-label={t.nav.openMenu}
+          data-close-label={t.nav.closeMenu}
+          data-menu-text={t.nav.menu}
+          data-close-text={t.nav.close}
+          data-menu-open="false"
+          aria-expanded="false"
+          aria-controls="site-header-mobile-panel"
+          aria-label={t.nav.openMenu}
+        >
+          <span data-header-toggle-label>{t.nav.menu}</span>
+          <span class="relative flex h-4 w-[29px] flex-col justify-center" aria-hidden="true">
+            <span class="site-header__menu-toggle-line absolute left-0 block h-px w-full bg-current"></span>
+            <span class="site-header__menu-toggle-line absolute left-0 block h-px w-full bg-current"></span>
+          </span>
+        </button>
+      </div>
+
+    </div>
+
+    <div
+      id="site-header-mobile-panel"
+      class:list={[
+        'site-header__mobile-panel pointer-events-auto fixed inset-0 z-[2] flex min-h-[100dvh] flex-col bg-[var(--color-black)] px-[15px] pt-[120px] pb-(--gutter) text-button-white',
+      ]}
+      data-header-panel
+      hidden
+    >
+      <div class="flex flex-1 items-start">
+        <nav aria-label="Navigation principale" class="w-full">
+          <ul class="site-header__menu-hover-list m-0 flex list-none flex-col items-end gap-[15px] p-0">
+            {items.map((item) => (
+              <li>
+                <a
+                  href={item.url}
+                  class="site-header__menu-hover-item inline-flex text-right items-center text-[18px] leading-none tracking-[-0.02em] transition-opacity duration-200"
+                  target={item.isExternal ? '_blank' : undefined}
+                  rel={item.isExternal ? 'noopener noreferrer' : undefined}
+                >
+                  {item.label}
+                </a>
+              </li>
+            ))}
+            <li class="ml-auto mt-[20px] h-px w-[25px] bg-lines-dark" aria-hidden="true"></li>
+            <li>
+              <a
+                href={switchUrl}
+                hreflang={switchLang}
+                class="site-header__menu-hover-item inline-flex gap-2.5 text-right items-center text-[18px] leading-none tracking-[-0.02em] transition-opacity duration-200"
+              >
+                {t.nav.switchLang}
+                <span aria-hidden="true" class="text-[12px]">( ↗ )</span>
+              </a>
+            </li>
+            <li>
+              <a
+                href={emailUrl}
+                class="site-header__menu-hover-item inline-flex gap-2.5 text-right items-center text-[18px] leading-none tracking-[-0.02em] transition-opacity duration-200"
+              >
+                {emailLabel}
+                <span aria-hidden="true" class="text-[12px]">( ↗ )</span>
+              </a>
+            </li>
+            <li>
+              <a
+                href={startProjectUrl}
+                class="site-header__menu-hover-item inline-flex gap-2.5 text-right items-center text-[18px] leading-none tracking-[-0.02em] transition-opacity duration-200"
+              >
+                {t.nav.startProject}
+                <span aria-hidden="true" class="text-[12px]">( ↗ )</span>
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+
+    <div class="site-header__mobile-reveal" data-header-reveal aria-hidden="true" hidden></div>
+  </div>
+
+  <div class="hidden md:block slg:hidden" data-header-surface="tablet">
+    <div class="site-header__tablet-fixed left-[15px] right-[10px] top-[5px] px-[20px]">
+      <div class="relative flex h-full items-center justify-between gap-6">
+        <div class="site-header__desktop-logo-group flex items-center text-button-white">
+          <a
+            href={`/${lang}`}
+            class="inline-flex items-center text-button-white"
+            title={logoAlt}
+            aria-label={logoAlt}
+          >
+            <span class="logo-animated logo-animated--mark-static h-[12px]">
+              <svg class="logo-full" width="285" height="12" viewBox="0 0 329 15" preserveAspectRatio="xMinYMin meet" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <g class="logo-full__letter" style="--i:0">
+                  <path d="M2.91466 14.9988H0V8.99963H2.91466V14.9988Z" fill="currentColor"/>
+                  <path d="M26.2299 14.9988H23.3153V8.99963H26.2299V14.9988Z" fill="currentColor"/>
+                  <path d="M23.3153 8.99963H2.91466V6.0004H23.3153V8.99963Z" fill="currentColor"/>
+                  <path d="M2.91466 6.0004H0V0.000537426H2.91466V6.0004Z" fill="currentColor"/>
+                  <path d="M26.2299 5.9997L23.3153 6.0004V0.000537426H26.2299V5.9997Z" fill="currentColor"/>
+                </g>
+                <g class="logo-full__letter" style="--i:1">
+                  <path d="M52.9454 14.9995H32.5448V11.9996H52.9454V14.9995Z" fill="currentColor"/>
+                  <path d="M32.5448 11.9996L29.6302 11.9989V2.99977H32.5448V11.9996Z" fill="currentColor"/>
+                  <path d="M55.8601 11.9989L52.9454 11.9996V2.99977H55.8601V11.9989Z" fill="currentColor"/>
+                  <path d="M52.9454 2.99977H32.5448V0.000537426H52.9454V2.99977Z" fill="currentColor"/>
+                </g>
+                <g class="logo-full__letter" style="--i:2">
+                  <path d="M62.175 6.0004H82.5762V8.99963H85.4902V14.9988H82.5756L82.5762 8.99963H62.175V14.9988H59.2603V2.99977H62.175V6.0004Z" fill="currentColor"/>
+                  <path d="M85.4902 5.9997L82.5762 6.0004L82.5756 3.00047L62.175 2.99977V0.000537426H85.4902V5.9997Z" fill="currentColor"/>
+                </g>
+                <g class="logo-full__letter" style="--i:3">
+                  <path d="M112.206 0.000537426V3.00047H91.8051V11.9996H112.206V3.00047L115.12 2.99977V14.9995H88.8905V0.000537426H112.206Z" fill="currentColor"/>
+                </g>
+                <g class="logo-full__letter" style="--i:4">
+                  <path d="M121.435 6.0004H144.751V8.99963H121.435V11.9996H144.751V14.9995L118.521 14.9988V2.99977H121.435V6.0004Z" fill="currentColor"/>
+                  <path d="M144.751 3.00047L121.435 2.99977V0.000537426H144.751V3.00047Z" fill="currentColor"/>
+                </g>
+                <g class="logo-full__letter" style="--i:5">
+                  <path d="M157.38 14.9986H154.465V9.19893H157.38V14.9986Z" fill="currentColor"/>
+                  <path d="M180.695 14.9986H177.781V9.19893H180.695V14.9986Z" fill="currentColor"/>
+                  <path d="M177.781 9.19893H157.38V6.1997H177.781V9.19893Z" fill="currentColor"/>
+                  <path d="M180.695 6.1997H177.781V3.19977H157.38V6.1997H154.465V0.200534H180.695V6.1997Z" fill="currentColor"/>
+                </g>
+                <g class="logo-full__letter" style="--i:6">
+                  <path d="M187.01 12.0001H207.411V15H184.096V3.20116H187.01V12.0001Z" fill="currentColor"/>
+                  <path d="M210.326 11.9994L207.411 12.0001V9.00014H189.924V6.00091H210.326V11.9994Z" fill="currentColor"/>
+                  <path d="M210.326 3.20046L187.01 3.20116V0.201232H210.326V3.20046Z" fill="currentColor"/>
+                </g>
+                <g class="logo-full__letter" style="--i:7">
+                  <path d="M216.64 5.99986H239.956V8.99909H216.64V11.999H239.956V14.9989L213.726 14.9983V2.99923H216.64V5.99986Z" fill="currentColor"/>
+                  <path d="M239.956 2.99993L216.64 2.99923V0H239.956V2.99993Z" fill="currentColor"/>
+                </g>
+                <g class="logo-full__letter" style="--i:8">
+                  <path d="M266.672 0V2.99993H246.271V14.9989H243.356V0H266.672Z" fill="currentColor"/>
+                  <path d="M269.586 14.9983H266.672V2.99993L269.586 2.99923V14.9983Z" fill="currentColor"/>
+                </g>
+                <g class="logo-full__letter" style="--i:9">
+                  <path d="M275.901 11.999H299.216V14.9989L272.986 14.9983V2.99923H275.901V11.999Z" fill="currentColor"/>
+                  <path d="M299.216 2.99993L275.901 2.99923V0H299.216V2.99993Z" fill="currentColor"/>
+                </g>
+                <g class="logo-full__letter" style="--i:10">
+                  <path d="M305.531 5.99986H328.846V8.99909H305.531V11.999H328.846V14.9989L302.616 14.9983V2.99923H305.531V5.99986Z" fill="currentColor"/>
+                  <path d="M328.846 2.99993L305.531 2.99923V0H328.846V2.99993Z" fill="currentColor"/>
+                </g>
+              </svg>
+              <svg class="logo-mark" width="41" height="12" viewBox="0 0 54 16" preserveAspectRatio="xMinYMin meet" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <g class="logo-mark__part" style="--i:0">
+                  <rect x="0" y="0" width="3.14058" height="6.28149" fill="currentColor"/>
+                  <rect x="0.00976562" y="9.4223" width="3.19997" height="6.17166" fill="currentColor"/>
+                  <rect x="3.1416" y="6.28129" width="21.9841" height="3.14074" fill="currentColor"/>
+                  <rect x="25.1289" y="0" width="3.14058" height="6.28149" fill="currentColor"/>
+                  <rect x="25.1523" y="9.4223" width="3.08568" height="6.17166" fill="currentColor"/>
+                </g>
+                <g class="logo-mark__part" style="--i:1">
+                  <rect x="27.7676" y="0" width="22.9791" height="3.14074" fill="currentColor"/>
+                  <rect x="28.2656" y="6.28129" width="21.9841" height="3.14074" fill="currentColor"/>
+                  <rect x="50.25" y="0" width="3.14058" height="6.28149" fill="currentColor"/>
+                  <rect x="50.2959" y="9.4223" width="3.08568" height="6.17166" fill="currentColor"/>
+                  <path d="M58.2872 14.061V10.5816H59.3254C59.6498 10.5816 59.9093 10.6167 60.104 10.687C60.304 10.7573 60.4473 10.8681 60.5338 11.0195C60.6258 11.1655 60.6717 11.3548 60.6717 11.5873C60.6717 11.7982 60.6122 11.9793 60.4933 12.1307C60.3743 12.2821 60.1959 12.4037 59.958 12.4957L60.9313 14.061H60.2824L59.447 12.6417H58.8468V14.061H58.2872ZM58.8468 12.2118H59.3254C59.5795 12.2118 59.7687 12.1604 59.8931 12.0577C60.0229 11.955 60.0878 11.8036 60.0878 11.6035C60.0878 11.3764 60.0175 11.225 59.8769 11.1493C59.7417 11.0682 59.547 11.0276 59.2929 11.0276H58.8468V12.2118ZM59.3416 15.6831C58.882 15.6831 58.4494 15.5966 58.0439 15.4236C57.6383 15.2506 57.2815 15.0127 56.9733 14.7099C56.6705 14.4017 56.4326 14.0448 56.2595 13.6393C56.0865 13.2337 56 12.8012 56 12.3416C56 11.8766 56.0865 11.444 56.2595 11.0439C56.4326 10.6383 56.6705 10.2842 56.9733 9.98138C57.2815 9.67318 57.6383 9.43257 58.0439 9.25954C58.4494 9.08651 58.882 9 59.3416 9C59.8066 9 60.2392 9.08651 60.6393 9.25954C61.0448 9.43257 61.399 9.67318 61.7018 9.98138C62.01 10.2842 62.2506 10.6383 62.4236 11.0439C62.5966 11.444 62.6832 11.8766 62.6832 12.3416C62.6832 12.8012 62.5966 13.2337 62.4236 13.6393C62.2506 14.0448 62.01 14.4017 61.7018 14.7099C61.399 15.0127 61.0448 15.2506 60.6393 15.4236C60.2392 15.5966 59.8066 15.6831 59.3416 15.6831ZM59.3416 15.2289C59.7417 15.2289 60.1148 15.1559 60.4608 15.0099C60.8123 14.8586 61.1205 14.6504 61.3855 14.3854C61.6504 14.1205 61.8559 13.815 62.0019 13.4689C62.1533 13.1175 62.229 12.7417 62.229 12.3416C62.229 11.9414 62.1533 11.5684 62.0019 11.2223C61.8559 10.8708 61.6504 10.5626 61.3855 10.2977C61.1205 10.0327 60.8123 9.82728 60.4608 9.68129C60.1148 9.52989 59.7417 9.45419 59.3416 9.45419C58.9415 9.45419 58.5657 9.52989 58.2142 9.68129C57.8681 9.82728 57.5626 10.0327 57.2977 10.2977C57.0328 10.5626 56.8246 10.8708 56.6732 11.2223C56.5272 11.5684 56.4542 11.9414 56.4542 12.3416C56.4542 12.7417 56.5272 13.1175 56.6732 13.4689C56.8246 13.815 57.0328 14.1205 57.2977 14.3854C57.5626 14.6504 57.8681 14.8586 58.2142 15.0099C58.5657 15.1559 58.9415 15.2289 59.3416 15.2289Z" fill="currentColor"/>
+                </g>
+              </svg>
+            </span>
+          </a>
+          <div class="site-header__desktop-breadcrumb hidden items-center md:flex slg:hidden" data-header-breadcrumb-slot></div>
+        </div>
+
+        <nav
+          aria-label="Navigation tablette"
+          class="pointer-events-auto flex h-full items-center"
+        >
+          <ul class="site-header__menu-hover-list m-0 flex list-none items-center justify-end gap-[30px] p-0 text-[16px] leading-none text-button-white">
+            {items.map((item) => (
+              <li>
+                <a
+                  href={item.url}
+                  class="site-header__menu-hover-item inline-flex items-center whitespace-nowrap transition-opacity duration-200"
+                  target={item.isExternal ? '_blank' : undefined}
+                  rel={item.isExternal ? 'noopener noreferrer' : undefined}
+                >
+                  {item.label}
+                </a>
+              </li>
+            ))}
+            <li class="site-header__desktop-language inline-flex items-center gap-2 whitespace-nowrap normal-case">
+              {languageItems.map((languageItem, index) => (
+                <>
+                  {languageItem.locale === lang ? (
+                    <span aria-current="page">{languageItem.label}</span>
+                  ) : (
+                    <a href={languageItem.href} hreflang={languageItem.locale} class="site-header__language-inactive transition-colors duration-200">
+                      {languageItem.label}
+                    </a>
+                  )}
+                  {index < languageItems.length - 1 && <span class="text-lines-dark" aria-hidden="true">/</span>}
+                </>
+              ))}
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </div>
+
+  <div class="hidden slg:block" data-header-surface="desktop">
+    <div class="site-header__desktop-fixed fixed left-[5px] right-[5px] top-[5px] z-[6]" data-desktop-fixed>
+      <div class="site-header__desktop-bar relative flex items-center justify-between bg-black px-[20px]" data-desktop-row>
+        <div class="site-header__desktop-logo-group flex h-[42px] items-center text-button-white">
+          <a href={`/${lang}`} class="inline-flex items-center text-button-white" title={logoAlt} aria-label={logoAlt}>
+            <span class="order-1 inline-flex items-center gap-[15px]">
+            <span class="logo-animated logo-animated--mark-static h-[13px]">
+              <svg class="logo-full" width="285" height="12" viewBox="0 0 329 15" preserveAspectRatio="xMinYMin meet" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <g class="logo-full__letter" style="--i:0">
+                  <path d="M2.91466 14.9988H0V8.99963H2.91466V14.9988Z" fill="currentColor"/>
+                  <path d="M26.2299 14.9988H23.3153V8.99963H26.2299V14.9988Z" fill="currentColor"/>
+                  <path d="M23.3153 8.99963H2.91466V6.0004H23.3153V8.99963Z" fill="currentColor"/>
+                  <path d="M2.91466 6.0004H0V0.000537426H2.91466V6.0004Z" fill="currentColor"/>
+                  <path d="M26.2299 5.9997L23.3153 6.0004V0.000537426H26.2299V5.9997Z" fill="currentColor"/>
+                </g>
+                <g class="logo-full__letter" style="--i:1">
+                  <path d="M52.9454 14.9995H32.5448V11.9996H52.9454V14.9995Z" fill="currentColor"/>
+                  <path d="M32.5448 11.9996L29.6302 11.9989V2.99977H32.5448V11.9996Z" fill="currentColor"/>
+                  <path d="M55.8601 11.9989L52.9454 11.9996V2.99977H55.8601V11.9989Z" fill="currentColor"/>
+                  <path d="M52.9454 2.99977H32.5448V0.000537426H52.9454V2.99977Z" fill="currentColor"/>
+                </g>
+                <g class="logo-full__letter" style="--i:2">
+                  <path d="M62.175 6.0004H82.5762V8.99963H85.4902V14.9988H82.5756L82.5762 8.99963H62.175V14.9988H59.2603V2.99977H62.175V6.0004Z" fill="currentColor"/>
+                  <path d="M85.4902 5.9997L82.5762 6.0004L82.5756 3.00047L62.175 2.99977V0.000537426H85.4902V5.9997Z" fill="currentColor"/>
+                </g>
+                <g class="logo-full__letter" style="--i:3">
+                  <path d="M112.206 0.000537426V3.00047H91.8051V11.9996H112.206V3.00047L115.12 2.99977V14.9995H88.8905V0.000537426H112.206Z" fill="currentColor"/>
+                </g>
+                <g class="logo-full__letter" style="--i:4">
+                  <path d="M121.435 6.0004H144.751V8.99963H121.435V11.9996H144.751V14.9995L118.521 14.9988V2.99977H121.435V6.0004Z" fill="currentColor"/>
+                  <path d="M144.751 3.00047L121.435 2.99977V0.000537426H144.751V3.00047Z" fill="currentColor"/>
+                </g>
+                <g class="logo-full__letter" style="--i:5">
+                  <path d="M157.38 14.9986H154.465V9.19893H157.38V14.9986Z" fill="currentColor"/>
+                  <path d="M180.695 14.9986H177.781V9.19893H180.695V14.9986Z" fill="currentColor"/>
+                  <path d="M177.781 9.19893H157.38V6.1997H177.781V9.19893Z" fill="currentColor"/>
+                  <path d="M180.695 6.1997H177.781V3.19977H157.38V6.1997H154.465V0.200534H180.695V6.1997Z" fill="currentColor"/>
+                </g>
+                <g class="logo-full__letter" style="--i:6">
+                  <path d="M187.01 12.0001H207.411V15H184.096V3.20116H187.01V12.0001Z" fill="currentColor"/>
+                  <path d="M210.326 11.9994L207.411 12.0001V9.00014H189.924V6.00091H210.326V11.9994Z" fill="currentColor"/>
+                  <path d="M210.326 3.20046L187.01 3.20116V0.201232H210.326V3.20046Z" fill="currentColor"/>
+                </g>
+                <g class="logo-full__letter" style="--i:7">
+                  <path d="M216.64 5.99986H239.956V8.99909H216.64V11.999H239.956V14.9989L213.726 14.9983V2.99923H216.64V5.99986Z" fill="currentColor"/>
+                  <path d="M239.956 2.99993L216.64 2.99923V0H239.956V2.99993Z" fill="currentColor"/>
+                </g>
+                <g class="logo-full__letter" style="--i:8">
+                  <path d="M266.672 0V2.99993H246.271V14.9989H243.356V0H266.672Z" fill="currentColor"/>
+                  <path d="M269.586 14.9983H266.672V2.99993L269.586 2.99923V14.9983Z" fill="currentColor"/>
+                </g>
+                <g class="logo-full__letter" style="--i:9">
+                  <path d="M275.901 11.999H299.216V14.9989L272.986 14.9983V2.99923H275.901V11.999Z" fill="currentColor"/>
+                  <path d="M299.216 2.99993L275.901 2.99923V0H299.216V2.99993Z" fill="currentColor"/>
+                </g>
+                <g class="logo-full__letter" style="--i:10">
+                  <path d="M305.531 5.99986H328.846V8.99909H305.531V11.999H328.846V14.9989L302.616 14.9983V2.99923H305.531V5.99986Z" fill="currentColor"/>
+                  <path d="M328.846 2.99993L305.531 2.99923V0H328.846V2.99993Z" fill="currentColor"/>
+                </g>
+              </svg>
+              <svg class="logo-mark" width="44" height="13" viewBox="0 0 54 16" preserveAspectRatio="xMinYMin meet" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <g class="logo-mark__part" style="--i:0">
+                  <rect x="0" y="0" width="3.14058" height="6.28149" fill="currentColor"/>
+                  <rect x="0.00976562" y="9.4223" width="3.19997" height="6.17166" fill="currentColor"/>
+                  <rect x="3.1416" y="6.28129" width="21.9841" height="3.14074" fill="currentColor"/>
+                  <rect x="25.1289" y="0" width="3.14058" height="6.28149" fill="currentColor"/>
+                  <rect x="25.1523" y="9.4223" width="3.08568" height="6.17166" fill="currentColor"/>
+                </g>
+                <g class="logo-mark__part" style="--i:1">
+                  <rect x="27.7676" y="0" width="22.9791" height="3.14074" fill="currentColor"/>
+                  <rect x="28.2656" y="6.28129" width="21.9841" height="3.14074" fill="currentColor"/>
+                  <rect x="50.25" y="0" width="3.14058" height="6.28149" fill="currentColor"/>
+                  <rect x="50.2959" y="9.4223" width="3.08568" height="6.17166" fill="currentColor"/>
+                  <path d="M58.2872 14.061V10.5816H59.3254C59.6498 10.5816 59.9093 10.6167 60.104 10.687C60.304 10.7573 60.4473 10.8681 60.5338 11.0195C60.6258 11.1655 60.6717 11.3548 60.6717 11.5873C60.6717 11.7982 60.6122 11.9793 60.4933 12.1307C60.3743 12.2821 60.1959 12.4037 59.958 12.4957L60.9313 14.061H60.2824L59.447 12.6417H58.8468V14.061H58.2872ZM58.8468 12.2118H59.3254C59.5795 12.2118 59.7687 12.1604 59.8931 12.0577C60.0229 11.955 60.0878 11.8036 60.0878 11.6035C60.0878 11.3764 60.0175 11.225 59.8769 11.1493C59.7417 11.0682 59.547 11.0276 59.2929 11.0276H58.8468V12.2118ZM59.3416 15.6831C58.882 15.6831 58.4494 15.5966 58.0439 15.4236C57.6383 15.2506 57.2815 15.0127 56.9733 14.7099C56.6705 14.4017 56.4326 14.0448 56.2595 13.6393C56.0865 13.2337 56 12.8012 56 12.3416C56 11.8766 56.0865 11.444 56.2595 11.0439C56.4326 10.6383 56.6705 10.2842 56.9733 9.98138C57.2815 9.67318 57.6383 9.43257 58.0439 9.25954C58.4494 9.08651 58.882 9 59.3416 9C59.8066 9 60.2392 9.08651 60.6393 9.25954C61.0448 9.43257 61.399 9.67318 61.7018 9.98138C62.01 10.2842 62.2506 10.6383 62.4236 11.0439C62.5966 11.444 62.6832 11.8766 62.6832 12.3416C62.6832 12.8012 62.5966 13.2337 62.4236 13.6393C62.2506 14.0448 62.01 14.4017 61.7018 14.7099C61.399 15.0127 61.0448 15.2506 60.6393 15.4236C60.2392 15.5966 59.8066 15.6831 59.3416 15.6831ZM59.3416 15.2289C59.7417 15.2289 60.1148 15.1559 60.4608 15.0099C60.8123 14.8586 61.1205 14.6504 61.3855 14.3854C61.6504 14.1205 61.8559 13.815 62.0019 13.4689C62.1533 13.1175 62.229 12.7417 62.229 12.3416C62.229 11.9414 62.1533 11.5684 62.0019 11.2223C61.8559 10.8708 61.6504 10.5626 61.3855 10.2977C61.1205 10.0327 60.8123 9.82728 60.4608 9.68129C60.1148 9.52989 59.7417 9.45419 59.3416 9.45419C58.9415 9.45419 58.5657 9.52989 58.2142 9.68129C57.8681 9.82728 57.5626 10.0327 57.2977 10.2977C57.0328 10.5626 56.8246 10.8708 56.6732 11.2223C56.5272 11.5684 56.4542 11.9414 56.4542 12.3416C56.4542 12.7417 56.5272 13.1175 56.6732 13.4689C56.8246 13.815 57.0328 14.1205 57.2977 14.3854C57.5626 14.6504 57.8681 14.8586 58.2142 15.0099C58.5657 15.1559 58.9415 15.2289 59.3416 15.2289Z" fill="currentColor"/>
+                </g>
+              </svg>
+            </span>
+            <span class="font-sans text-[16px] leading-none whitespace-nowrap">Horde Agence</span>
+            </span>
+          </a>
+          <div class="site-header__desktop-breadcrumb site-header__slg-breadcrumb hidden items-center slg:flex" data-header-breadcrumb-slot></div>
+        </div>
+
+        <nav
+          aria-label="Navigation desktop"
+          class="site-header__desktop-menu pointer-events-auto flex h-[42px] items-center"
+        >
+          <ul class="site-header__menu-hover-list m-0 flex list-none items-center gap-[30px] p-0 text-[16px] leading-none text-button-white">
+            {items.map((item) => (
+              <li>
+                <a
+                  href={item.url}
+                  class="site-header__menu-hover-item inline-flex items-center whitespace-nowrap transition-opacity duration-200"
+                  target={item.isExternal ? '_blank' : undefined}
+                  rel={item.isExternal ? 'noopener noreferrer' : undefined}
+                >
+                  {item.label}
+                </a>
+              </li>
+            ))}
+            <li class="site-header__desktop-language inline-flex items-center gap-2 whitespace-nowrap normal-case">
+              {languageItems.map((languageItem, index) => (
+                <>
+                  {languageItem.locale === lang ? (
+                    <span aria-current="page">{languageItem.label}</span>
+                  ) : (
+                    <a href={languageItem.href} hreflang={languageItem.locale} class="site-header__language-inactive transition-colors duration-200">
+                      {languageItem.label}
+                    </a>
+                  )}
+                  {index < languageItems.length - 1 && <span class="text-lines-dark" aria-hidden="true">/</span>}
+                </>
+              ))}
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </div>
+</header>
+
+<style is:global>
+  html.is-site-intro-playing,
+  html.is-site-intro-playing body {
+    overflow: hidden;
+  }
+
+  .site-intro {
+    position: fixed;
+    inset: 0;
+    z-index: 10000;
+    display: none;
+    place-items: center;
+    overflow: hidden;
+    background: var(--color-black);
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transition:
+      opacity 720ms cubic-bezier(0.65, 0, 0.35, 1),
+      visibility 0s linear 720ms;
+  }
+
+  .site-intro.is-active {
+    display: grid;
+  }
+
+  .site-intro.is-leaving {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+  }
+
+  .site-intro__logo-clip {
+    display: block;
+    width: clamp(220px, 28vw, 420px);
+    overflow: hidden;
+    color: var(--color-button-white);
+  }
+
+  .site-intro__logo-clip .site-intro__logo {
+    display: block;
+    width: 100%;
+    height: auto;
+    color: currentColor;
+    overflow: visible;
+  }
+
+  .site-intro__logo .logo-full__letter {
+    transform: translateY(-18px);
+    transition: transform 320ms cubic-bezier(0.4, 0, 0.2, 1);
+    transition-delay: calc(var(--i, 0) * 22ms);
+  }
+
+  .site-intro.is-started .site-intro__logo .logo-full__letter {
+    transform: translateY(0);
+  }
+
+  .site-intro.is-logo-leaving .site-intro__logo .logo-full__letter {
+    transform: translateY(18px);
+    transition-duration: 280ms;
+    transition-delay: calc(var(--i, 0) * 22ms);
+  }
+
+  .site-header.is-intro-revealing .site-header__mobile-fixed,
+  .site-header.is-intro-revealing .site-header__tablet-fixed,
+  .site-header.is-intro-revealing .site-header__desktop-bar {
+    overflow: hidden;
+  }
+
+  .site-header.is-intro-revealing .site-header__mobile-fixed [data-mobile-row],
+  .site-header.is-intro-revealing .site-header__tablet-fixed > div,
+  .site-header.is-intro-revealing .site-header__desktop-bar > * {
+    animation: site-header-intro-reveal 720ms cubic-bezier(0.77, 0, 0.18, 1) both;
+  }
+
+  .site-header.is-intro-revealing .site-header__desktop-bar > :last-child {
+    animation-delay: 90ms;
+  }
+
+  .site-header.is-intro-revealing .site-header__menu-hover-list > li,
+  .site-header.is-intro-revealing [data-header-toggle],
+  .site-header.is-intro-revealing .site-header__desktop-logo-group a > span > span:last-child {
+    overflow: hidden;
+  }
+
+  .site-header.is-intro-revealing .site-header__menu-hover-list > li > a,
+  .site-header.is-intro-revealing .site-header__menu-hover-list > li > span,
+  .site-header.is-intro-revealing [data-header-toggle-label],
+  .site-header.is-intro-revealing .site-header__desktop-logo-group a > span > span:last-child {
+    animation: site-header-text-reveal 620ms cubic-bezier(0.77, 0, 0.18, 1) both;
+  }
+
+  .site-header.is-intro-revealing .site-header__menu-hover-list > li:nth-child(2) > :is(a, span) { animation-delay: 45ms; }
+  .site-header.is-intro-revealing .site-header__menu-hover-list > li:nth-child(3) > :is(a, span) { animation-delay: 90ms; }
+  .site-header.is-intro-revealing .site-header__menu-hover-list > li:nth-child(4) > :is(a, span) { animation-delay: 135ms; }
+  .site-header.is-intro-revealing .site-header__menu-hover-list > li:nth-child(5) > :is(a, span) { animation-delay: 180ms; }
+  .site-header.is-intro-revealing .site-header__menu-hover-list > li:nth-child(6) > :is(a, span) { animation-delay: 225ms; }
+
+  @keyframes site-header-intro-reveal {
+    from {
+      opacity: 0;
+      transform: translateY(140%);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes site-header-text-reveal {
+    from {
+      transform: translateY(125%);
+    }
+
+    to {
+      transform: translateY(0);
+    }
+  }
+
+  .site-header__desktop-fixed {
+    pointer-events: auto;
+  }
+
+  .site-header__desktop-bar {
+    height: 42px;
+    width: 100%;
+  }
+
+  .site-header__desktop-logo-group {
+    color: var(--color-button-white);
+  }
+
+  .site-header__desktop-logo-group .logo-animated--mark-static {
+    width: 44px;
+  }
+
+  .site-header__desktop-logo-group .logo-animated,
+  .site-header__desktop-logo-group .logo-full,
+  .site-header__desktop-logo-group .logo-mark {
+    color: inherit;
+  }
+
+  .site-header__desktop-breadcrumb:empty {
+    display: none;
+  }
+
+  .site-header__desktop-breadcrumb:not(:empty) {
+    gap: 25px;
+    margin-left: 25px;
+  }
+
+  @media (min-width: 1256px) and (max-width: 1511.98px) {
+    .site-header__slg-breadcrumb:not(:empty) {
+      margin-left: 15px;
+    }
+  }
+
+  .site-header__sm-breadcrumb:not(:empty) {
+    margin-left: 25px;
+  }
+
+  .site-header__desktop-breadcrumb:not(:empty)::before,
+  .site-header__desktop-language::before {
+    content: "";
+    width: 1px;
+    height: 20px;
+    flex: 0 0 auto;
+    background: var(--color-lines-dark);
+  }
+
+  .site-header__desktop-language {
+    gap: 8px;
+    margin-left: -5px;
+  }
+
+  .site-header__desktop-language::before {
+    margin-right: 17px;
+  }
+
+  .site-header__desktop-breadcrumb .breadcrumbs,
+  .site-header__desktop-breadcrumb .breadcrumbs__list,
+  .site-header__desktop-breadcrumb .breadcrumbs__item,
+  .site-header__desktop-breadcrumb .breadcrumbs__link,
+  .site-header__desktop-breadcrumb .breadcrumbs__current {
+    font-size: 16px !important;
+    line-height: 1;
+  }
+
+  .site-header__desktop-breadcrumb .breadcrumbs__list {
+    justify-content: flex-start;
+  }
+
+  .site-header__desktop-breadcrumb .breadcrumbs__current {
+    color: var(--color-button-white);
+    border-bottom-color: rgb(255 255 255 / 0.6);
+  }
+
+  .site-header__desktop-breadcrumb .breadcrumbs__link,
+  .site-header__desktop-breadcrumb .breadcrumbs__separator {
+    color: rgb(255 255 255 / 0.45);
+  }
+
+  .site-header__language-inactive {
+    color: var(--color-lines-dark);
+  }
+
+  .site-header__language-inactive:hover {
+    color: var(--color-button-white);
+  }
+
+  .site-header__tablet-fixed {
+    position: fixed;
+    z-index: 5;
+    height: 42px;
+    background: var(--color-black);
+    color: #fff;
+    pointer-events: auto;
+  }
+
+  .site-header__desktop-toggle-line {
+    top: 50%;
+    transform-origin: center;
+    transition: transform 180ms ease-out;
+  }
+
+  .site-header__desktop-toggle-line:first-child {
+    transform: translateY(-0.2375rem);
+  }
+
+  .site-header__desktop-toggle-line:last-child {
+    transform: translateY(0.2375rem);
+  }
+
+  .site-header__desktop-toggle[data-menu-open='true'] .site-header__desktop-toggle-line:first-child {
+    transform: translateY(0);
+  }
+
+  .site-header__desktop-toggle[data-menu-open='true'] .site-header__desktop-toggle-line:last-child {
+    transform: translateY(0);
+  }
+
+  .site-header__desktop-curtain {
+    position: absolute;
+    right: 2rem;
+    top: var(--desktop-header-height, 86px);
+    width: 511px;
+    max-width: calc(100vw - 4rem);
+    opacity: 0;
+    transform: translateY(-8px);
+    transition: opacity 220ms ease, transform 220ms ease;
+  }
+
+  .site-header__desktop-curtain.is-open {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .site-header__mobile-fixed {
+    position: relative;
+    z-index: 5;
+    height: 42px;
+    width: 100vw;
+    background: var(--color-black);
+    color: #fff;
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 220ms ease, transform 220ms ease, background-color 220ms ease, color 220ms ease;
+    pointer-events: none;
+  }
+
+  .site-header__mobile-fixed.is-solid {
+    background: var(--color-black);
+    color: #fff;
+  }
+
+  .site-header__mobile-fixed.is-hidden {
+    opacity: 0;
+    transform: translateY(calc(-100% - var(--gutter)));
+  }
+
+  .site-header__mobile-fixed [data-mobile-row] {
+    pointer-events: none;
+  }
+
+  .site-header__mobile-fixed:not(.is-hidden) [data-mobile-row] {
+    pointer-events: auto;
+  }
+
+  .site-header__mobile-logo {
+    filter: brightness(0) invert(1);
+  }
+
+  .site-header__mobile-fixed.is-solid .site-header__mobile-logo {
+    filter: brightness(0) invert(1);
+  }
+
+  .site-header__mobile-reveal {
+    position: fixed;
+    inset-inline: 0;
+    top: 0;
+    height: 100vh;
+    background: var(--color-black);
+    transform: translateY(-100%);
+    transition: transform 360ms cubic-bezier(0.2, 0.8, 0.2, 1);
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  .site-header__mobile-reveal.is-open {
+    transform: translateY(0);
+  }
+
+  .site-header__mobile-panel {
+    opacity: 0;
+    transform: translateY(-16px);
+    transition: opacity 220ms ease, transform 280ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+
+  .site-header__mobile-panel.is-open {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .site-header__menu-toggle-line {
+    top: 50%;
+    transform-origin: center;
+    transition: transform 180ms ease-out;
+  }
+
+  .site-header__menu-toggle::before {
+    content: "";
+    position: absolute;
+    left: -20px;
+    top: 50%;
+    width: 1px;
+    height: 25px;
+    background: var(--color-lines-dark);
+    transform: translateY(-50%);
+  }
+
+  .site-header__menu-toggle-line:first-child {
+    transform: translateY(-0.2375rem);
+  }
+
+  .site-header__menu-toggle-line:last-child {
+    transform: translateY(0.2375rem);
+  }
+
+  .site-header__menu-toggle[data-menu-open='true'] .site-header__menu-toggle-line:first-child {
+    transform: translateY(0);
+  }
+
+  .site-header__menu-toggle[data-menu-open='true'] .site-header__menu-toggle-line:last-child {
+    transform: translateY(0);
+  }
+
+  .site-header__mobile-footer-link {
+    position: relative;
+  }
+
+  .site-header__mobile-footer-link--arrow {
+    padding-left: 1.25rem;
+  }
+
+  .site-header__mobile-footer-link--arrow::before {
+    content: "\2192";
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-52%) translateX(0);
+    transition: transform 180ms ease-out;
+  }
+
+  .site-header__mobile-footer-link--arrow:hover::before {
+    transform: translateY(-52%) translateX(2px);
+  }
+
+  .nav-link-hover {
+    isolation: isolate;
+    transition: color 0.3s ease-out, opacity 0.2s ease-out;
+  }
+
+  .nav-link-hover::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-color: var(--color-black);
+    z-index: -1;
+    transform: scaleY(0);
+    transform-origin: top center;
+    transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  @media (hover: hover) {
+    .site-header__menu-hover-list:has(.site-header__menu-hover-item:hover) .site-header__menu-hover-item {
+      opacity: 0.5;
+    }
+
+    .site-header__menu-hover-list:has(.site-header__menu-hover-item:hover) .site-header__menu-hover-item:hover {
+      opacity: 1;
+      color: #fff;
+    }
+
+    .site-header__menu-hover-item::after {
+      display: none;
+    }
+
+    .nav-link-hover:hover {
+      color: #fff;
+    }
+    .nav-link-hover:hover::after {
+      transform: scaleY(1);
+    }
+  }
+
+  .logo-animated {
+    color: var(--color-button-white);
+    display: inline-block;
+    position: relative;
+    height: 12px;
+    line-height: 0;
+  }
+
+  .logo-full {
+    display: block;
+    color: var(--color-button-white);
+    overflow: hidden;
+  }
+
+  .logo-mark {
+    display: block;
+    color: var(--color-button-white);
+    position: absolute;
+    left: 0;
+    top: 0;
+    overflow: hidden;
+  }
+
+  .logo-animated--mark-static {
+    width: 41px;
+  }
+
+  .logo-animated--mark-static .logo-full {
+    display: none;
+  }
+
+  .logo-animated--mark-static .logo-mark {
+    position: static;
+  }
+
+  .logo-animated--mark-static .logo-mark__part {
+    transform: translateY(0);
+    transition: none;
+  }
+
+  .logo-full__letter {
+    transition: transform 320ms cubic-bezier(0.4, 0, 0.2, 1);
+    transition-delay: calc(var(--i, 0) * 22ms + 220ms);
+  }
+
+  .logo-mark__part {
+    transform: translateY(18px);
+    transition: transform 280ms cubic-bezier(0.4, 0, 0.2, 1);
+    transition-delay: calc(var(--i, 0) * 60ms);
+  }
+
+  .logo-animated.is-scrolled .logo-full__letter {
+    transform: translateY(-18px);
+    transition: transform 280ms cubic-bezier(0.4, 0, 0.2, 1);
+    transition-delay: calc(var(--i, 0) * 22ms);
+  }
+
+  .logo-animated.is-scrolled .logo-mark__part {
+    transform: translateY(0);
+    transition: transform 320ms cubic-bezier(0.4, 0, 0.2, 1);
+    transition-delay: calc(var(--i, 0) * 60ms + 220ms);
+  }
+
+</style>
+
+<script>
+  const SITE_INTRO_STORAGE_KEY = 'horde-site-intro-played';
+  let siteIntroHasPlayed = false;
+  let siteHeroRevealTimeout: number | undefined;
+
+  function hasSiteIntroPlayed() {
+    try {
+      return siteIntroHasPlayed || sessionStorage.getItem(SITE_INTRO_STORAGE_KEY) === 'true';
+    } catch {
+      return siteIntroHasPlayed;
+    }
+  }
+
+  function rememberSiteIntroPlayed() {
+    siteIntroHasPlayed = true;
+
+    try {
+      sessionStorage.setItem(SITE_INTRO_STORAGE_KEY, 'true');
+    } catch {
+      // Keep the in-memory fallback when storage is unavailable.
+    }
+  }
+
+  function revealSiteIntroContent() {
+    document.documentElement.classList.add('is-site-intro-content-revealing');
+    window.clearTimeout(siteHeroRevealTimeout);
+    siteHeroRevealTimeout = window.setTimeout(() => {
+      document.documentElement.classList.add('is-site-hero-complete');
+    }, 1800);
+  }
+
+  function initSiteIntro() {
+    const intro = document.querySelector('[data-site-intro]');
+    const header = document.querySelector('.site-header');
+    const introLogoSlot = intro?.querySelector('[data-site-intro-logo]');
+    const headerWordmark = header?.querySelector('.logo-full');
+
+    if (!(intro instanceof HTMLElement)) {
+      revealSiteIntroContent();
+      return;
+    }
+
+    if (
+      !(header instanceof HTMLElement) ||
+      !(introLogoSlot instanceof HTMLElement) ||
+      !(headerWordmark instanceof SVGElement)
+    ) {
+      return;
+    }
+
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    if (hasSiteIntroPlayed() || prefersReducedMotion) {
+      intro.remove();
+      revealSiteIntroContent();
+      return;
+    }
+
+    rememberSiteIntroPlayed();
+    const introLogo = headerWordmark.cloneNode(true) as SVGElement;
+    introLogo.classList.add('site-intro__logo');
+    introLogoSlot.replaceChildren(introLogo);
+    intro.classList.add('is-active');
+    document.documentElement.classList.add('is-site-intro-playing');
+
+    window.setTimeout(() => {
+      intro.classList.add('is-started');
+    }, 40);
+
+    window.setTimeout(() => {
+      intro.classList.add('is-logo-leaving');
+    }, 980);
+
+    window.setTimeout(() => {
+      header.classList.add('is-intro-revealing');
+      revealSiteIntroContent();
+      intro.classList.add('is-leaving');
+    }, 1420);
+
+    window.setTimeout(() => {
+      intro.remove();
+      header.classList.remove('is-intro-revealing');
+      document.documentElement.classList.remove('is-site-intro-playing');
+    }, 2240);
+  }
+
+  function initHeader() {
+    const headers = document.querySelectorAll('.site-header');
+
+    headers.forEach((header) => {
+      const toggle = header.querySelector('[data-header-toggle]');
+      const panel = header.querySelector('[data-header-panel]');
+      const reveal = header.querySelector('[data-header-reveal]');
+      const label = header.querySelector('[data-header-toggle-label]');
+      const mobileFixed = header.querySelector('[data-mobile-fixed]');
+      const desktopFixed = header.querySelector('[data-desktop-fixed]');
+	      const desktopRow = header.querySelector('[data-desktop-row]');
+	      const desktopToggle = header.querySelector('[data-desktop-toggle]');
+	      const desktopCurtain = header.querySelector('[data-desktop-curtain]');
+	      const headerSurfaces = header.querySelectorAll('[data-header-surface]');
+
+      if (
+        !(toggle instanceof HTMLButtonElement) ||
+        !(panel instanceof HTMLElement) ||
+        !(reveal instanceof HTMLElement) ||
+        !(label instanceof HTMLElement) ||
+        !(mobileFixed instanceof HTMLElement)
+      ) {
+        return;
+      }
+
+      if (toggle.dataset.headerBound === 'true') {
+        return;
+      }
+
+      let closeTimeout: number | undefined;
+      let mobileLastScrollY = window.scrollY;
+      let isMobileHiddenByScroll = false;
+      const MOBILE_SCROLL_DELTA_THRESHOLD = 8;
+      const MOBILE_HIDE_OFFSET = 110;
+	      const MOBILE_SOLID_OFFSET = 6;
+	      const MOBILE_BREAKPOINT = 1256;
+	      const TABLET_BREAKPOINT = 768;
+
+	      const isMobileViewport = () => window.innerWidth < MOBILE_BREAKPOINT;
+
+	      const applyHeaderA11yState = () => {
+	        const activeSurface =
+	          window.innerWidth < TABLET_BREAKPOINT
+	            ? 'mobile'
+	            : window.innerWidth < MOBILE_BREAKPOINT
+	              ? 'tablet'
+	              : 'desktop';
+	        const isMenuOpen = toggle.getAttribute('aria-expanded') === 'true';
+
+	        headerSurfaces.forEach((surface) => {
+	          if (!(surface instanceof HTMLElement)) return;
+	          const isActive = surface.dataset.headerSurface === activeSurface;
+	          surface.toggleAttribute('inert', !isActive);
+	          surface.setAttribute('aria-hidden', isActive ? 'false' : 'true');
+	        });
+
+	        document.querySelectorAll('.skip-link, main, footer').forEach((region) => {
+	          if (!(region instanceof HTMLElement)) return;
+	          region.toggleAttribute('inert', isMenuOpen);
+	          region.setAttribute('aria-hidden', isMenuOpen ? 'true' : 'false');
+	        });
+	      };
+
+	      const applyMobileHeaderState = () => {
+	        if (!isMobileViewport()) {
+	          mobileFixed.classList.remove('is-hidden');
+	          mobileFixed.classList.remove('is-solid');
+	          applyHeaderA11yState();
+	          return;
+	        }
+
+        const currentScrollY = window.scrollY;
+        const isAtTop = currentScrollY <= MOBILE_SOLID_OFFSET;
+        const isMenuOpen = toggle.getAttribute('aria-expanded') === 'true';
+        const shouldHide = !isAtTop && isMobileHiddenByScroll && !isMenuOpen;
+
+	        mobileFixed.classList.toggle('is-hidden', shouldHide);
+	        mobileFixed.classList.toggle('is-solid', !isAtTop);
+	        applyHeaderA11yState();
+	      };
+
+      const handleMobileScroll = () => {
+        if (!isMobileViewport()) return;
+
+        const currentScrollY = window.scrollY;
+        const delta = currentScrollY - mobileLastScrollY;
+
+        if (currentScrollY <= MOBILE_SOLID_OFFSET) {
+          isMobileHiddenByScroll = false;
+          mobileLastScrollY = currentScrollY;
+          applyMobileHeaderState();
+          return;
+        }
+
+        if (Math.abs(delta) < MOBILE_SCROLL_DELTA_THRESHOLD) return;
+
+        if (delta > 0 && currentScrollY > MOBILE_HIDE_OFFSET) {
+          isMobileHiddenByScroll = true;
+        } else if (delta < 0) {
+          isMobileHiddenByScroll = false;
+        }
+
+        mobileLastScrollY = currentScrollY;
+        applyMobileHeaderState();
+      };
+
+      const handleMobileResize = () => {
+        if (!isMobileViewport()) {
+          isMobileHiddenByScroll = false;
+        }
+        mobileLastScrollY = window.scrollY;
+        applyMobileHeaderState();
+      };
+
+      const closeMenu = (immediate = false) => {
+        toggle.dataset.menuOpen = 'false';
+        toggle.setAttribute('aria-expanded', 'false');
+        toggle.setAttribute('aria-label', toggle.dataset.openLabel || 'Open menu');
+        label.textContent = toggle.dataset.menuText || 'Menu';
+        panel.classList.remove('is-open');
+        reveal.classList.remove('is-open');
+        window.clearTimeout(closeTimeout);
+
+	        if (immediate) {
+	          panel.hidden = true;
+	          reveal.hidden = true;
+	          applyMobileHeaderState();
+	          applyHeaderA11yState();
+	          return;
+	        }
+
+        closeTimeout = window.setTimeout(() => {
+          if (toggle.getAttribute('aria-expanded') === 'false') {
+            panel.hidden = true;
+            reveal.hidden = true;
+          }
+	        }, 360);
+	        applyMobileHeaderState();
+	        applyHeaderA11yState();
+	      };
+
+      const openMenu = () => {
+        toggle.dataset.menuOpen = 'true';
+        toggle.setAttribute('aria-expanded', 'true');
+        toggle.setAttribute('aria-label', toggle.dataset.closeLabel || 'Close menu');
+        label.textContent = toggle.dataset.closeText || 'Close';
+        window.clearTimeout(closeTimeout);
+	        panel.hidden = false;
+	        reveal.hidden = false;
+	        isMobileHiddenByScroll = false;
+	        applyMobileHeaderState();
+	        applyHeaderA11yState();
+
+        requestAnimationFrame(() => {
+          panel.classList.add('is-open');
+          reveal.classList.add('is-open');
+        });
+      };
+
+      toggle.addEventListener('click', () => {
+        const isOpen = toggle.getAttribute('aria-expanded') === 'true';
+        if (isOpen) {
+          closeMenu();
+        } else {
+          openMenu();
+        }
+      });
+
+      panel.querySelectorAll('a').forEach((link) => {
+        link.addEventListener('click', () => {
+          closeMenu();
+        });
+      });
+
+	      closeMenu(true);
+	      applyMobileHeaderState();
+	      applyHeaderA11yState();
+	      window.addEventListener('scroll', handleMobileScroll, { passive: true });
+	      window.addEventListener('resize', handleMobileResize, { passive: true });
+      toggle.dataset.headerBound = 'true';
+
+      const breadcrumbSlots = header.querySelectorAll('[data-header-breadcrumb-slot]');
+      const breadcrumbSource = document.querySelector('.hero-breadcrumb-source');
+      breadcrumbSlots.forEach((breadcrumbSlot) => {
+        breadcrumbSlot.replaceChildren();
+        if (breadcrumbSource instanceof HTMLElement) {
+          const breadcrumb = breadcrumbSource.cloneNode(true) as HTMLElement;
+          breadcrumb.className = 'breadcrumbs breadcrumbs--dark';
+          breadcrumbSlot.append(breadcrumb);
+        }
+      });
+
+      if (
+        desktopFixed instanceof HTMLElement &&
+        desktopRow instanceof HTMLElement &&
+        desktopToggle instanceof HTMLButtonElement &&
+        desktopCurtain instanceof HTMLElement &&
+        desktopFixed.dataset.desktopBound !== 'true'
+      ) {
+        const rowHeight = desktopRow.getBoundingClientRect().height;
+        if (rowHeight > 0) {
+          desktopFixed.style.setProperty('--desktop-header-height', `${rowHeight}px`);
+        }
+
+        let desktopCloseTimeout: number | undefined;
+
+        const setToggleState = (open: boolean) => {
+          const text = open ? (desktopToggle.dataset.closeText || 'Fermer') : (desktopToggle.dataset.menuText || 'Menu');
+          desktopToggle.dataset.menuOpen = open ? 'true' : 'false';
+          desktopToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+          const fixedLabel = header.querySelector('[data-desktop-toggle-label]');
+          if (fixedLabel) fixedLabel.textContent = text;
+        };
+
+        const closeDesktopMenu = (immediate = false) => {
+          setToggleState(false);
+          desktopCurtain.classList.remove('is-open');
+          window.clearTimeout(desktopCloseTimeout);
+
+          if (immediate) {
+            desktopCurtain.hidden = true;
+            return;
+          }
+
+          desktopCloseTimeout = window.setTimeout(() => {
+            if (desktopToggle.getAttribute('aria-expanded') === 'false') {
+              desktopCurtain.hidden = true;
+            }
+          }, 220);
+        };
+
+        const openDesktopMenu = () => {
+          setToggleState(true);
+          window.clearTimeout(desktopCloseTimeout);
+          desktopCurtain.hidden = false;
+
+          requestAnimationFrame(() => {
+            desktopCurtain.classList.add('is-open');
+          });
+        };
+
+        desktopToggle.addEventListener('click', () => {
+          const isOpen = desktopToggle.getAttribute('aria-expanded') === 'true';
+          if (isOpen) {
+            closeDesktopMenu();
+          } else {
+            openDesktopMenu();
+          }
+        });
+
+        desktopCurtain.querySelectorAll('a').forEach((link) => {
+          link.addEventListener('click', () => {
+            closeDesktopMenu();
+          });
+        });
+
+        closeDesktopMenu(true);
+
+        desktopFixed.dataset.desktopBound = 'true';
+      }
+    });
+  }
+
+  initSiteIntro();
+  initHeader();
+  document.addEventListener('astro:before-swap', () => {
+    window.clearTimeout(siteHeroRevealTimeout);
+    document.documentElement.classList.remove('is-site-intro-content-revealing', 'is-site-hero-complete');
+  });
+  document.addEventListener('astro:after-swap', () => {
+    initSiteIntro();
+    initHeader();
+  });
+</script>

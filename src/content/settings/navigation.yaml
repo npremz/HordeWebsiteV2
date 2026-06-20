@@ -8,7 +8,7 @@ items:
     url: '/#methods-container'
     isExternal: false
   - label: Services
-    url: '/#services-section'
+    url: /services
     isExternal: false
   - label: Contact
     url: /contact

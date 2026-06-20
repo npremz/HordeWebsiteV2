@@ -1,0 +1,175 @@
+---
+import CtaButton from "../ui/actions/CtaButton.astro";
+import HeroStructure from "../blog/HeroStructure.astro";
+import { formatHeadingHtml } from "../../utils/heading-html";
+import ServiceShapeMorph from "./ServiceShapeMorph.astro";
+import type { ServiceData } from "./types";
+import { type Locale, useTranslations } from "../../i18n";
+import { getShortBreadcrumbLabel } from "../../utils/breadcrumb-label";
+
+interface Props {
+  service: ServiceData;
+}
+
+const { service } = Astro.props;
+
+const serviceShapeKeyBySlug: Record<string, string> = {
+  'audit-offert': 'audit',
+  'refonte-site-web': 'refonte',
+  'creation-ecommerce': 'ecommerce',
+  'creation-landing-page': 'landing',
+  'creation-mvp-saas': 'sass',
+  'optimisation-site-web': 'opti',
+};
+
+const serviceShapeName = serviceShapeKeyBySlug[service.slug] ?? 'neutral';
+const serviceHeadingLines = service.h1.split(/\r?\n|<br\s*\/?>/i).map((line) => line.trim()).filter(Boolean);
+const lang: Locale = service.seoUrl.startsWith('/en/') ? 'en' : 'fr';
+const t = useTranslations(lang);
+const breadcrumbItems = [
+  { label: t.servicesPage.breadcrumbHome, href: `/${lang}` },
+  { label: t.servicesPage.breadcrumbServices, href: `/${lang}/services` },
+  { label: getShortBreadcrumbLabel(service.shortName || service.h1) },
+];
+---
+
+<section
+  id="service-hero"
+  class="relative left-1/2 w-screen -translate-x-1/2 overflow-hidden bg-black text-button-white"
+  data-service-section="hero"
+>
+  <div
+    class="pointer-events-none absolute left-1/2 top-0 z-0 h-full w-px -translate-x-1/2 bg-lines-dark"
+    aria-hidden="true"
+  />
+  <HeroStructure
+    background="dark"
+    breadcrumbItems={breadcrumbItems}
+    breadcrumbAriaLabel={t.servicesPage.breadcrumbAriaLabel}
+    showHorizontalLine={false}
+    showVerticalLine={false}
+    showObliqueLines={true}
+    contentClass="h-[426px] justify-center lg:h-[490px]"
+    class=" bg-transparent!"
+  >
+    <div class="flex items-center justify-center h-[426px] lg:h-[490px]">
+      <div class="flex">
+        <svg class="h-[30px] pr-4 sm:pr-5" viewBox="0 0 11 52" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M8.05028 0H11C6.63687 7.2156 3.37989 15.0872 3.37989 26.1193C3.37989 36.9128 6.63687 44.7844 11 52H8.05028C3.81006 45.9771 0 36.9128 0 26.1193C0 14.9679 3.81006 6.02294 8.05028 0Z" fill="white"/>
+        </svg>
+        <div class="relative">
+          <ServiceShapeMorph
+            id="service-shape"
+            shape={serviceShapeName}
+            initialShape="neutral"
+            hero
+            class="size-45 sm:size-55 2xl:h-76 2xl:w-76"
+          />
+        </div>
+        <svg class="h-[30px] pl-4 sm:pl-5 self-end" viewBox="0 0 11 52" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M2.94972 52L-4.76837e-06 52C4.36313 44.7844 7.62011 36.9128 7.62011 25.8807C7.62011 15.0872 4.36313 7.21559 -2.22387e-07 -4.77635e-06L2.94972 -4.51848e-06C7.18995 6.02293 11 15.0872 11 25.8807C11 37.0321 7.18994 45.9771 2.94972 52Z" fill="white"/>
+        </svg>
+      </div>
+    </div>
+  </HeroStructure>
+
+  <div class="relative z-10 mx-auto max-w-[1320px] px-(--gutter) pb-16 sm:pb-16 md:pb-16 2xl:pb-25 md:-mt-44 lg:-mt-36 lg:px-0">
+    <div class="lg:flex lg:justify-between lg:items-end">
+      <div class="page-hero-service-copy flex flex-col gap-5">
+        <span class="page-hero-reveal-clip text-[1.5625rem]">
+          <span class="page-hero-reveal-line" style="--hero-reveal-order: 0">Notre service de</span>
+        </span>
+        <h1
+          class="font-display text-[2.25rem] sm:text-[50px] uppercase leading-none max-w-[600px] lg:max-w-[900px]"
+        >
+          {serviceHeadingLines.map((line, index) => (
+            <span class="page-hero-reveal-clip">
+              <span class="page-hero-reveal-line" style={`--hero-reveal-order: ${index + 1}`} set:html={formatHeadingHtml(line)} />
+            </span>
+          ))}
+        </h1>
+        <p class="page-hero-reveal-clip lg:mt-0 text-[18px] text-[#FFFFFF] md:max-w-[830px] lg:max-w-[900px]">
+          <span class="page-hero-reveal-line" style={`--hero-reveal-order: ${serviceHeadingLines.length + 1}`}>{service.intro}</span>
+        </p>
+      </div>
+      <div class="lg:max-w-[460px]">
+        {service.primaryCtaLabel && service.primaryCtaUrl && (
+          <div class="mt-8 sm:mt-10 lg:mt-16 flex">
+            <CtaButton
+              href={service.primaryCtaUrl}
+              label={service.primaryCtaLabel}
+              variant="light"
+              class="border border-button-white"
+            />
+          </div>
+        )}
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  import {
+    createServiceShapeAnimator,
+    getServiceShapeName,
+  } from "../../lib/serviceShapeMorph";
+
+  function initServiceHeroShapeMorph() {
+    const heroShape = document.querySelector<SVGSVGElement>("[data-service-hero-shape]");
+
+    if (!heroShape || heroShape.dataset.initialized === "true") return;
+    heroShape.dataset.initialized = "true";
+
+    const cells = heroShape.querySelectorAll<SVGPathElement>("[data-service-shape-cell]");
+    if (cells.length === 0) return;
+
+    const targetShape = getServiceShapeName(heroShape.dataset.serviceShapeName);
+    const animator = createServiceShapeAnimator(cells, "neutral");
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    let fallbackTimeout: number | null = null;
+    let hasMorphed = false;
+
+    function morphToTarget() {
+      if (hasMorphed) return;
+      hasMorphed = true;
+
+      if (fallbackTimeout) {
+        window.clearTimeout(fallbackTimeout);
+        fallbackTimeout = null;
+      }
+
+      if (prefersReducedMotion) {
+        animator.draw(targetShape);
+        return;
+      }
+
+      animator.animateTo(targetShape);
+    }
+
+    if (prefersReducedMotion) {
+      morphToTarget();
+      return;
+    }
+
+    heroShape.addEventListener("animationend", (event) => {
+      if (event.animationName !== "page-hero-shape-reveal") return;
+      morphToTarget();
+    });
+
+    fallbackTimeout = window.setTimeout(morphToTarget, 1200);
+
+    document.addEventListener(
+      "astro:before-swap",
+      () => {
+        if (fallbackTimeout) {
+          window.clearTimeout(fallbackTimeout);
+        }
+        animator.cancel();
+      },
+      { once: true },
+    );
+  }
+
+  initServiceHeroShapeMorph();
+  document.addEventListener("astro:page-load", initServiceHeroShapeMorph);
+</script>

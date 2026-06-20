@@ -1,0 +1,249 @@
+---
+import { DEFAULT_LOCALE, type Locale, useTranslations } from '../../i18n';
+import { getServiceSummaries } from '../../lib/content/services';
+import ServiceShapeMorph from '../services/ServiceShapeMorph.astro';
+
+interface Props {
+  lang?: Locale;
+  showHeader?: boolean;
+  spacingClass?: string;
+}
+
+const {
+  lang = DEFAULT_LOCALE,
+  showHeader = true,
+  spacingClass = "py-25 text-button-white sm:py-50",
+} = Astro.props;
+const t = useTranslations(lang);
+const services = await getServiceSummaries(lang);
+const serviceShapeKeyBySlug: Record<string, string> = {
+  'audit-offert': 'audit',
+  'refonte-site-web': 'refonte',
+  'creation-ecommerce': 'ecommerce',
+  'creation-landing-page': 'landing',
+  'creation-mvp-saas': 'sass',
+  'optimisation-site-web': 'opti',
+};
+
+const headingClass = "text-[1.5rem] sm:text-[2rem] md:text-[2.5rem] lg:text-[3rem]";
+const listOffsetClass = "mt-8 sm:mt-12 md:mt-20";
+const rowLinkClass = "service-link flex items-center justify-between pt-8 pb-7 sm:pt-10 sm:pb-9";
+const rowTitleClass = "max-w-[280px] text-[1.25rem] leading-none sm:max-w-[unset] sm:text-[1.5rem] md:text-[2rem]";
+---
+
+<section id="services" class:list={["relative", spacingClass]}>
+  {
+    showHeader && (
+      <div class="flex justify-between gap-4">
+        <h2 class={headingClass}>{t.homepage.services.title}</h2>
+        <svg class="hidden sm:block mt-2 md:mt-4" width="47" height="20" viewBox="0 0 47 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect width="7" height="20" transform="matrix(1 4.37114e-08 8.74228e-08 -1 0 20)" fill="#F4F1F8"/>
+          <rect width="7" height="20" transform="matrix(1 4.37114e-08 8.74228e-08 -1 14 20)" fill="#F4F1F8"/>
+          <g class="decorative-diagonal-spin">
+            <rect width="7" height="20" transform="matrix(0.707107 0.707107 0.707107 -0.707107 27.4531 14.5938)" fill="#F4F1F8"/>
+          </g>
+        </svg>
+      </div>
+    )
+  }
+
+  <div
+    class="service-shape-preview hidden md:block"
+    aria-hidden="true"
+    data-service-shape-preview
+  >
+    <ServiceShapeMorph
+      shape="neutral"
+      initialShape="neutral"
+      class="service-shape-preview__svg"
+    />
+  </div>
+
+  <ol class:list={[showHeader && listOffsetClass]} data-service-shape-list>
+    {services.map((service) => (
+      <li
+        class="service-item border-b border-lines-dark last:border-b-0"
+        data-service-shape={serviceShapeKeyBySlug[service.slug] || 'neutral'}
+      >
+        <a
+          href={service.url}
+          title={service.title}
+          class={rowLinkClass}
+        >
+          <span class:list={['service-link__label', rowTitleClass]}>
+            <span class="service-link__label-base">
+              {service.title}
+            </span>
+            <span class="service-link__label-overlay" aria-hidden="true">
+              {service.title}
+            </span>
+          </span>
+          <span class="service-link__icon shrink-0 text-[18px]">
+            <span class="service-link__icon-base">(→)</span>
+            <span class="service-link__icon-overlay" aria-hidden="true">(→)</span>
+          </span>
+        </a>
+      </li>
+    ))}
+  </ol>
+</section>
+
+<style>
+  .service-link {
+    position: relative;
+    isolation: isolate;
+  }
+
+  .service-link::before {
+    content: "";
+    position: absolute;
+    top: 10px;
+    right: -10px;
+    bottom: 10px;
+    left: -10px;
+    background-color: #FFFFFF;
+    z-index: -1;
+    transform: scaleY(0);
+    transform-origin: center bottom;
+  }
+
+  .service-link__label,
+  .service-link__icon {
+    position: relative;
+    z-index: 1;
+    display: block;
+    overflow: hidden;
+    margin-block: -0.05em;
+    padding-block: 0.05em;
+  }
+
+  .service-link__icon {
+    display: inline-flex;
+  }
+
+  .service-link__label-base,
+  .service-link__icon-base,
+  .service-link__label-overlay,
+  .service-link__icon-overlay {
+    display: block;
+    transition: transform 0.15s ease-out;
+  }
+
+  .service-link__label-overlay,
+  .service-link__icon-overlay {
+    position: absolute;
+    inset: 0.05em 0;
+    transform: translateY(110%);
+    color: var(--color-black);
+  }
+
+  @media (hover: hover) {
+    .service-link::before {
+      transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    .service-link:hover::before {
+      transform: scaleY(1);
+    }
+
+    .service-link:hover .service-link__label-base,
+    .service-link:hover .service-link__icon-base {
+      transform: translateY(-110%);
+    }
+
+    .service-link:hover .service-link__label-overlay,
+    .service-link:hover .service-link__icon-overlay {
+      transform: translateY(0);
+    }
+
+    .service-link:hover :global(.wrapped) {
+      color: inherit !important;
+    }
+  }
+
+  #services {
+    --service-shape-x: 62%;
+  }
+
+  .service-shape-preview {
+    --service-shape-size: 250px;
+    --service-shape-y: 0px;
+    pointer-events: none;
+    position: absolute;
+    left: calc(var(--service-shape-x) - (var(--service-shape-size) / 2));
+    top: 0;
+    z-index: 30;
+    width: var(--service-shape-size);
+    aspect-ratio: 305 / 304;
+    opacity: 0;
+    transform: translateY(calc(var(--service-shape-y) - 50%)) scale(0.96);
+    transition:
+      opacity 0.2s ease-out,
+      transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: transform, opacity;
+  }
+
+  .service-shape-preview.is-visible {
+    opacity: 1;
+    transform: translateY(calc(var(--service-shape-y) - 50%)) scale(1);
+  }
+
+  .service-shape-preview__svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+</style>
+
+<script>
+  import {
+    createServiceShapeAnimator,
+    getServiceShapeName,
+  } from "../../lib/serviceShapeMorph";
+
+  function initServiceShapePreview() {
+    const preview = document.querySelector<HTMLElement>("[data-service-shape-preview]");
+    const list = document.querySelector<HTMLElement>("[data-service-shape-list]");
+    const serviceItems = document.querySelectorAll<HTMLElement>(".service-item[data-service-shape]");
+
+    if (!preview || !list || serviceItems.length === 0) return;
+    if (preview.dataset.initialized === "true") return;
+    preview.dataset.initialized = "true";
+
+    const cells = preview.querySelectorAll<SVGPathElement>("[data-service-shape-cell]");
+    if (cells.length === 0) return;
+
+    const animator = createServiceShapeAnimator(cells, "neutral");
+
+    serviceItems.forEach((item) => {
+      item.addEventListener("mouseenter", () => {
+        const section = preview.closest("#services") as HTMLElement | null;
+        const itemRect = item.getBoundingClientRect();
+        const sectionRect = section?.getBoundingClientRect();
+        const centerY = sectionRect ? itemRect.top - sectionRect.top + itemRect.height / 2 : 0;
+        const shapeName = getServiceShapeName(item.dataset.serviceShape);
+
+        preview.style.setProperty("--service-shape-y", `${centerY}px`);
+        preview.classList.add("is-visible");
+        animator.animateTo(shapeName);
+      });
+
+    });
+
+    list.addEventListener("mouseleave", () => {
+      preview.classList.remove("is-visible");
+      animator.animateTo("neutral");
+    });
+
+    document.addEventListener(
+      "astro:before-swap",
+      () => {
+        animator.cancel();
+      },
+      { once: true },
+    );
+  }
+
+  initServiceShapePreview();
+  document.addEventListener("astro:page-load", initServiceShapePreview);
+</script>

@@ -6,7 +6,7 @@ export const fr = {
     close: 'Close',
     openMenu: 'Ouvrir le menu',
     closeMenu: 'Fermer le menu',
-    switchLang: 'English version',
+    switchLang: 'English',
   },
 
   // Hero Section
@@ -134,6 +134,70 @@ export const fr = {
     cta: 'Nous découvrir',
   },
 
+  // New Homepage
+  homepage: {
+    hero: {
+      topLine1: 'Nous',
+      topLine2: 'Concevons',
+      agencyLine1: 'Agence de site web',
+      agencyLine2: 'basée à Bruxelles',
+      bottomLine1: 'Des sites web',
+      bottomLine2: 'Optimises',
+    },
+    about: {
+      titleLine1: "Qu'est-ce que",
+      titleLine2: 'la Horde ?',
+      description:
+        'Horde est une agence web bruxelloise qui conçoit des sites web ultra-rapides et qui transforme vos visiteurs en client. ↓ Audit offert, refonte ou création from scratch → on livre des sites légers, bien référencés et pensés pour durer.',
+      cta: 'Prendre contact',
+    },
+    projects: {
+      countLabel: 'Nos derniers projets',
+    },
+    services: {
+      title: 'Nos services de création de site web',
+    },
+    demarche: {
+      title: 'Une méthode claire pour créer un site web rapide et utile',
+      expectationLine1: 'Ce à quoi vous pouvez',
+      expectationLine2: 'vous attendre',
+      expectationLine3: 'en travaillant',
+      expectationLine4: 'avec nous',
+      cta: 'Demander un audit offert',
+      steps: [
+        {
+          number: '1',
+          title: 'Audit SEO, UX et performance offert',
+          quote: 'On identifie ce qui bloque avant de proposer quoi que ce soit.',
+          description:
+            'On analyse votre site actuel ou votre projet : vitesse, structure SEO, expérience mobile, parcours utilisateur et points de conversion. Vous repartez avec les priorités claires, sans jargon et sans engagement.',
+        },
+        {
+          number: '2',
+          title: 'Plan d’action et création sur mesure',
+          quote: 'Le site doit répondre à un objectif business, pas seulement être joli.',
+          description:
+            'On choisit la bonne approche pour votre contexte : refonte, optimisation, landing page, site vitrine, e-commerce ou MVP. Design, contenu, technique et CMS sont pensés ensemble pour créer un site rapide, clair et durable.',
+        },
+        {
+          number: '3',
+          title: 'Mise en ligne et autonomie',
+          quote: 'Pas de dépendance inutile : vous gardez les clés du projet.',
+          description:
+            "On livre un site prêt à évoluer : performant, bien structuré, documenté et simple à gérer. Votre équipe peut modifier les contenus, ajouter des pages et faire vivre le site sans dépendre de nous pour chaque changement.",
+        },
+      ],
+    },
+    us: {
+      titleLine1: 'une équipe à taille',
+      titleLine2: 'humaine',
+      description:
+        'On est une agence de petite taille qui met en avant le côté humain, on prend le temps avec vous de trouver les solutions qui vous conviennent et on vous aide à ce que votre présence numérique soit à la hauteur de vos projets.',
+      cta: 'Notre culture',
+    },
+    fallbackDescription: 'Agence web spécialisée en performance et UX.',
+  },
+
   // Project Section
   projects: {
     title: 'Projets\nselectionnés',
@@ -146,16 +210,33 @@ export const fr = {
     title: 'Projets de sites web rapides à Bruxelles',
     description: 'Explorez nos réalisations de sites web rapides à Bruxelles : vitrines, e-commerce et interfaces sur mesure pensées pour la conversion.',
     heading: 'Nos derniers\nprojets',
+    intro: 'Divers articles sur la technologie, le design et notre expérience',
+    servicePageHeading: "Projets, méthodes et retours d'expérience autour de {service}",
+    all: 'Tous',
     projectCount: 'Nombre projets',
     viewGrid: 'Grille',
     viewList: 'Liste',
+    filtersLabel: 'Filtres',
+  },
+
+  // Single Project Page
+  projectSingle: {
+    breadcrumbHome: 'Accueil',
+    breadcrumbProjects: 'Projets',
+    projectServices: 'Services liés à ce projet',
+    serviceFilterLabel: 'Filtrer par services :',
+    externalUrl: 'Voir le site',
+    gallery: 'Galerie',
+    allProjects: 'Tous',
+    allWork: 'Tous les projets',
+    breadcrumbAriaLabel: 'Fil d’Ariane',
   },
 
   // Blog Page
   blogPage: {
     title: 'Blog site rapide : performance web et UX',
     description: 'Guides concrets pour accélérer votre site web, améliorer l\'UX et optimiser les performances. Par Horde Agence, agence web à Bruxelles.',
-    heading: 'Nos derniers\narticles rien que\npour vous',
+    heading: 'Divers articles sur la technologie, le\ndesign et notre expérience',
     articleCount: 'Nombre articles',
     viewGrid: 'Grille',
     viewList: 'Liste',
@@ -171,6 +252,44 @@ export const fr = {
     shareArticle: 'Partager',
     tableOfContents: 'Sommaire',
     about: 'À propos de l\'auteur',
+    allLabel: 'Tous',
+    filtersLabel: 'Filtres',
+    categoriesAriaLabel: 'Catégories principales',
+    breadcrumbAriaLabel: 'Fil d’Ariane',
+    breadcrumbHome: 'Accueil',
+    authorIntro: 'Écrit par',
+    authorBioLabel: 'À propos de l’auteur',
+    keyTakeaways: 'En bref',
+    copyLink: 'Copier le lien',
+    taggedArticles: 'Articles tagués',
+    categoryArticles: 'Articles sur',
+    categoryPageHeading: "Articles, méthodes et retours d'expérience sur {category}",
+    listingTitleSuffix: 'Blog Horde',
+    tagPageTitle: 'Articles sur {tag} | Horde',
+    tagPageDescription:
+      "Retrouvez nos articles sur {tag} : conseils, analyses et retours d'expérience autour du web, du design et de la performance.",
+    tagPageHeading: "Articles, méthodes et retours d'expérience autour de {tag}",
+    articleSingular: 'article',
+    articlePlural: 'articles',
+    tagLabel: 'Tag',
+    noTagArticles: 'Aucun article avec ce tag pour le moment.',
+    noCategoryArticles: 'Aucun article dans cette catégorie pour le moment.',
+    rssTitle: 'Blog Horde - Agence Web UX Bruxelles',
+    rssDescription: 'Articles sur la performance web, l’UX design et le développement de sites rapides par Horde Agence.',
+    emptyContent: "Contenu de l’article à venir...",
+  },
+
+  // Services Page
+  servicesPage: {
+    title: 'Services web à Bruxelles',
+    description:
+      'Une approche consultative pour comprendre vos utilisateurs et créer des expériences digitales qui relient durablement votre marque à son audience.',
+    heading: 'La bonne solution pour\nfaire grandir votre business',
+    intro:
+      'Audit, refonte web, e-commerce, landing page, MVP SaaS ou optimisation : on choisit la bonne approche pour créer un site rapide, clair et pensé pour le SEO, l’UX et la conversion.',
+    breadcrumbHome: 'Accueil',
+    breadcrumbServices: 'Services',
+    breadcrumbAriaLabel: 'Fil d’Ariane',
   },
 
   // Footer
@@ -185,10 +304,19 @@ export const fr = {
   contact: {
     title: 'Contact agence web à Bruxelles',
     description: 'Parlons de votre projet de site web rapide sur mesure avec Horde Agence à Bruxelles : audit site web offert et accompagnement de A à Z.',
-    knockKnock: 'Toc, toc.',
-    startWhen: 'On commence quand\nvotre nouveau projet ?',
+    knockKnock: 'Toc-toc, dites-nous bonjour !',
+    startWhen: 'Hâte d’entendre vos idées pour votre projet.',
     alternativeContacts: 'Contacts Alternatifs',
     bookCall: 'Réserver un appel',
+    breadcrumbAriaLabel: 'Fil d’Ariane',
+    breadcrumbHome: 'Accueil',
+    breadcrumbContact: 'Contact',
+  },
+
+  authorsPage: {
+    label: 'Auteur',
+    articlesByAuthor: 'Articles signés',
+    emptyState: 'Aucun article publié pour le moment.',
   },
 
   // Contact Form
@@ -207,12 +335,21 @@ export const fr = {
     errorMessage: 'Une erreur est survenue. Veuillez réessayer.',
     requiredField: 'Champ obligatoire',
     invalidEmail: 'Adresse email invalide',
+    maxLengthPrefix: 'Max',
+    maxLengthSuffix: 'caractères',
     options: {
-      auditPerformance: 'Audit & performance',
-      optimisationRefonte: 'Optimisation & refonte',
-      fromScratchMvp: 'From scratch & MVP',
-      autre: 'Autre',
+      auditOffert: 'Audit (offert)',
+      creationEcommerce: 'E-Commerce',
+      creationLandingPage: 'Landing Page',
+      creationMvpSaas: 'Saas Mvp',
+      optimisationSiteWeb: 'Optimisation',
+      refonteSiteWeb: 'Refonte',
+      autre: 'Autres',
     },
+  },
+
+  serviceSingle: {
+    exclusionsContactPrefix: 'Encore des zones d’ombre sur ce service ? N’hésitez pas à nous contacter par e-mail à l’adresse',
   },
 
   // 404 Page
@@ -235,9 +372,99 @@ export const fr = {
     backHome: "Retour à l'accueil",
   },
 
+  legalPages: {
+    privacy: {
+      title: 'Politique de confidentialité',
+      description: 'Politique de confidentialité de Horde Agence. Découvrez comment nous protégeons vos données personnelles.',
+      updatedAt: 'Janvier 2025',
+      sections: [
+        {
+          heading: 'Introduction',
+          html: '<p>Horde Agence s’engage à protéger la vie privée des utilisateurs de son site web. Cette politique de confidentialité explique comment nous collectons, utilisons et protégeons vos informations personnelles conformément au Règlement Général sur la Protection des Données (RGPD).</p>',
+        },
+        {
+          heading: 'Responsable du traitement',
+          html: '<p>Le responsable du traitement des données est :<br><strong>Horde Agence</strong><br>Bruxelles, Belgique<br>Email : <a href="mailto:hello@hordeagence.com" title="hello@hordeagence.com">hello@hordeagence.com</a></p>',
+        },
+        {
+          heading: 'Données collectées',
+          html: '<p>Nous collectons les données suivantes :</p><ul><li><strong>Données de contact</strong> : nom, email, société (via le formulaire de contact)</li><li><strong>Données de navigation</strong> : adresse IP, type de navigateur, pages visitées</li><li><strong>Cookies</strong> : voir notre <a href="/fr/cookies" title="Politique des cookies">politique des cookies</a></li></ul>',
+        },
+        {
+          heading: 'Finalités du traitement',
+          html: '<p>Vos données sont utilisées pour :</p><ul><li>Répondre à vos demandes de contact</li><li>Améliorer notre site web et nos services</li><li>Analyser l’utilisation du site via Plausible Analytics (statistiques agrégées)</li><li>Respecter nos obligations légales</li></ul>',
+        },
+        {
+          heading: 'Vos droits',
+          html: '<p>Conformément au RGPD, vous disposez des droits suivants :</p><ul><li><strong>Droit d’accès</strong> : obtenir une copie de vos données</li><li><strong>Droit de rectification</strong> : corriger vos données</li><li><strong>Droit à l’effacement</strong> : supprimer vos données</li><li><strong>Droit à la portabilité</strong> : recevoir vos données dans un format structuré</li><li><strong>Droit d’opposition</strong> : vous opposer au traitement</li></ul><p>Pour exercer ces droits, contactez-nous à <a href="mailto:hello@hordeagence.com" title="hello@hordeagence.com">hello@hordeagence.com</a>.</p>',
+        },
+      ],
+    },
+    cookies: {
+      title: 'Politique des cookies',
+      description: 'Politique d’utilisation des cookies sur le site Horde Agence.',
+      updatedAt: 'Janvier 2025',
+      sections: [
+        {
+          heading: 'Qu’est-ce qu’un cookie ?',
+          html: '<p>Un cookie est un petit fichier texte stocké sur votre appareil (ordinateur, tablette, smartphone) lorsque vous visitez un site web. Les cookies permettent au site de mémoriser vos actions et préférences pendant une période donnée.</p>',
+        },
+        {
+          heading: 'Cookies que nous utilisons',
+          html: '<h3>Cookies essentiels</h3><p>Ces cookies sont nécessaires au fonctionnement du site. Ils vous permettent de naviguer et d’utiliser les fonctionnalités de base.</p><h3>Cookies analytiques</h3><p>Nous utilisons Plausible Analytics (instance servie via <code>stats.hordeagence.com</code>) pour comprendre comment les visiteurs interagissent avec notre site. Les données sont utilisées à des fins statistiques agrégées.</p>',
+        },
+        {
+          heading: 'Gestion des cookies',
+          html: '<p>Vous pouvez contrôler et/ou supprimer les cookies comme vous le souhaitez dans les paramètres de votre navigateur.</p>',
+        },
+        {
+          heading: 'Contact',
+          html: '<p>Pour toute question, contactez-nous à <a href="mailto:hello@hordeagence.com" title="hello@hordeagence.com">hello@hordeagence.com</a>.</p>',
+        },
+      ],
+    },
+    legalNotices: {
+      title: 'Mentions Légales',
+      description: 'Mentions légales de Horde Agence. Retrouvez les informations juridiques concernant notre société.',
+      updatedAt: 'Janvier 2026',
+      sections: [
+        {
+          heading: 'Éditeur du site',
+          html: '<p>Le présent site est édité par :<br><strong>Horde Agence</strong><br>Activité exercée dans le cadre d’une affiliation à Smart Belgique (SMartCoop).<br>Siège d’activité : Bruxelles, Belgique<br>Email : <a href="mailto:hello@hordeagence.com" title="hello@hordeagence.com">hello@hordeagence.com</a></p>',
+        },
+        {
+          heading: 'Hébergement',
+          html: '<p>Le site est hébergé par :<br><strong>Hostinger</strong><br>Hostinger International Ltd.<br>https://www.hostinger.com</p>',
+        },
+        {
+          heading: 'Mesure d’audience',
+          html: '<p>Nous utilisons Plausible Analytics pour mesurer l’audience du site. L’instance est servie depuis <code>stats.hordeagence.com</code>. Cet outil est orienté respect de la vie privée et utilisé pour des statistiques de fréquentation agrégées.</p>',
+        },
+        {
+          heading: 'Propriété intellectuelle',
+          html: '<p>L’ensemble de ce site relève de la législation belge et internationale sur le droit d’auteur et la propriété intellectuelle. Tous les droits de reproduction sont réservés, y compris pour les documents téléchargeables et les représentations iconographiques et photographiques.</p><p>La reproduction de tout ou partie de ce site sur quelque support que ce soit est formellement interdite sauf autorisation expresse de Horde Agence.</p>',
+        },
+        {
+          heading: 'Données personnelles',
+          html: '<p>Pour toute information concernant la collecte et le traitement de vos données personnelles, nous vous invitons à consulter notre <a href="/fr/confidentialite" title="Politique de confidentialité">Politique de confidentialité</a>.</p>',
+        },
+        {
+          heading: 'Droit applicable',
+          html: '<p>Les présentes mentions légales sont soumises au droit belge. En cas de litige, les tribunaux de Bruxelles seront seuls compétents.</p>',
+        },
+      ],
+    },
+  },
+
+  seo: {
+    serviceDescription: 'Agence web experte en création de sites ultra-rapides, refonte, e-commerce et optimisation SEO à Bruxelles',
+    serviceSlogan: 'Des sites rapides, utiles et pensés pour durer',
+  },
+
   // Accessibility
   a11y: {
     skipToContent: 'Aller au contenu principal',
+    scrollToContent: 'Aller au contenu',
   },
 
   // About Page
@@ -278,6 +505,6 @@ export const fr = {
     alexAlt: 'Alexandre, co-fondateur de Horde',
     nicoAlt: 'Nicolas, co-fondateur de Horde',
   },
-} as const;
+};
 
 export type Translations = typeof fr;

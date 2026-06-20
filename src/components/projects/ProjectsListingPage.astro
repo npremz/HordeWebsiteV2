@@ -1,0 +1,127 @@
+---
+import { type Locale, useTranslations } from '../../i18n';
+import type { LocalizedProject } from '../../lib/content/projects';
+import { getProjectIndexHref } from '../../lib/projectServices';
+import { splitHeadingLines } from '../../utils/split-heading-lines';
+import HeroStructure from '../blog/HeroStructure.astro';
+import ProjectIndexList from './ProjectIndexList.astro';
+
+interface Props {
+  projects: LocalizedProject[];
+  lang: Locale;
+  intro: string;
+  allLabel: string;
+  filters: { label: string; href: string }[];
+  activeHref?: string;
+  variant?: 'light' | 'dark';
+}
+
+const { projects, lang, intro, allLabel, filters, activeHref, variant = 'dark' } = Astro.props;
+const t = useTranslations(lang);
+const projectCount = String(projects.length).padStart(2, '0');
+const isDark = variant === 'dark';
+const filterLinks = [{ label: allLabel, href: getProjectIndexHref(lang) }, ...filters];
+const currentHref = activeHref || getProjectIndexHref(lang);
+const filterListLabel = t.projectsPage.filtersLabel;
+const introLines = splitHeadingLines(intro);
+const breadcrumbAriaLabel = t.projectSingle.breadcrumbAriaLabel;
+const breadcrumbItems = [
+  { label: t.projectSingle.breadcrumbHome, href: `/${lang}` },
+  { label: t.projectSingle.breadcrumbProjects },
+];
+---
+
+<div
+  id="page-content"
+  class:list={[
+    'relative z-10',
+    isDark ? 'bg-black text-button-white full-width-dark-bg' : 'text-black',
+  ]}
+>
+  <HeroStructure
+    background={isDark ? 'dark' : 'light'}
+    showHorizontalLine={false}
+    showVerticalLine={false}
+    showObliqueLines={false}
+    ariaLabelledby="projects-intro"
+    breadcrumbItems={breadcrumbItems}
+    breadcrumbAriaLabel={breadcrumbAriaLabel}
+    contentClass="sm:h-[426px] lg:h-[490px]"
+  >
+    <div class="w-full sm:flex sm:flex-col sm:gap-8">
+      <div class="flex w-full sm:h-1/2 sm:items-end">
+        <div class="w-full sm:flex sm:justify-between">
+          <div id="projects-copy-lockup" class="relative z-10 flex max-w-[450px] flex-col gap-4 sm:gap-8 lg:w-1/2 lg:max-w-[600px]">
+            <h1 id="projects-intro" class="text-[1.5rem] leading-tight sm:text-[2rem] lg:text-[2.5rem]">
+              {introLines.map((line, index) => (
+                <span class="page-hero-reveal-clip">
+                  <span class="page-hero-reveal-line" style={`--hero-reveal-order: ${index}`}>{line}</span>
+                </span>
+              ))}
+            </h1>
+          </div>
+          <svg class="page-hero-heading-svg hidden sm:block" width="35" height="21" viewBox="0 0 35 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="28" width="7" height="21" fill="white"/>
+            <rect x="21" y="14" width="7" height="7" fill="white"/>
+            <rect x="21" width="7" height="7" fill="white"/>
+            <rect x="7" y="7" width="7" height="7" fill="white"/>
+            <rect width="7" height="21" fill="white"/>
+          </svg>
+        </div>
+      </div>
+
+      <div class="sm:h-1/2 md:flex md:justify-end">
+        <nav
+          class="relative z-10 mt-8 flex flex-col sm:mt-0 sm:w-full sm:flex-row md:w-1/2 md:self-end lg:mt-0 md:justify-end lg:gap-20"
+          aria-label={filterListLabel}
+        >
+          <ul class="hero-filter-list relative flex h-fit list-[square] flex-col gap-1 pl-5 pr-10 text-[18px] sm:mt-0 sm:w-fit sm:flex-row sm:flex-wrap sm:gap-x-12 sm:pr-24 md:pr-0">
+            {
+              filterLinks.map((filter, index) => (
+                <>
+                  <li class="shrink-0">
+                    <a
+                      href={filter.href}
+                      class:list={[
+                        'underline-hover',
+                        filter.href === currentHref && (isDark ? 'text-button-white' : 'text-black'),
+                      ]}
+                      title={filter.label}
+                      aria-current={filter.href === currentHref ? 'page' : undefined}
+                    >
+                      {filter.label}
+                    </a>
+                  </li>
+                  {((filterLinks.length === 2 && index === 0) || (filterLinks.length > 2 && index === 1)) && (
+                    <li class="hidden list-none sm:block sm:h-0 sm:basis-full sm:overflow-hidden sm:p-0" aria-hidden="true" />
+                  )}
+                </>
+              ))
+            }
+          </ul>
+          <svg
+            class="absolute bottom-0 right-0 z-10 text-current"
+            width="8"
+            height="35"
+            viewBox="0 0 8 35"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            aria-hidden="true"
+          >
+            <path
+              d="M1.95527 35L-4.1008e-05 35C2.89218 30.1433 5.05117 24.8452 5.05117 17.4197C5.05117 10.1548 2.89219 4.85665 -3.78207e-05 -6.1196e-07L1.95527 -4.47859e-07C4.76602 4.0539 7.29163 10.1548 7.29163 17.4197C7.29163 24.9255 4.76602 30.9461 1.95527 35Z"
+              fill="currentColor"
+            />
+          </svg>
+        </nav>
+      </div>
+    </div>
+  </HeroStructure>
+
+  <ProjectIndexList
+    projects={projects}
+    lang={lang}
+    countLabel={`(${projectCount})`}
+    variant={variant}
+  />
+</div>

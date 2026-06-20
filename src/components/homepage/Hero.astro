@@ -1,0 +1,121 @@
+---
+import { DEFAULT_LOCALE, type Locale, useTranslations } from "../../i18n";
+import ProjectsShapeBand from "../projects/ProjectsShapeBand.astro";
+import HeroWeather from "./HeroWeather.astro";
+
+interface Props {
+  lang?: Locale;
+}
+
+const { lang = DEFAULT_LOCALE } = Astro.props;
+const t = useTranslations(lang);
+---
+
+<section id="hero" class="home-hero px-4 pt-36 pb-32 sm:mx-5 md:pt-50 md:pb-40 lg:pt-55 lg:pb-30 2xl:pt-85 2xl:pb-60">
+    <div class="relative mx-auto flex flex-col items-center justify-center">
+      <div class="relative @container w-full">
+        <ProjectsShapeBand contentClass="home-hero__content h-full p-4 flex flex-col justify-between text-black">
+          <span class="mt-2 block font-display text-[2rem] uppercase leading-none sm:text-[2.5rem] lg:text-[3rem] 2xl:text-[3.75rem]">
+            <span class="home-hero__text-clip"><span class="home-hero__text" style="--intro-order: 0">{t.homepage.hero.topLine1}</span></span>
+            <span class="home-hero__text-clip"><span class="home-hero__text" style="--intro-order: 1">{t.homepage.hero.topLine2}</span></span>
+          </span>
+          <h1 class="text-[0.875rem] leading-tight uppercase font-mono text-right absolute bottom-1/2 right-4 mb-2 sm:mb-4 lg:mb-3">
+            <span class="home-hero__text-clip"><span class="home-hero__text" style="--intro-order: 4">{t.homepage.hero.agencyLine1}</span></span>
+            <span class="home-hero__text-clip"><span class="home-hero__text" style="--intro-order: 5">{t.homepage.hero.agencyLine2}</span></span>
+          </h1>
+          <div class="absolute top-1/2 -mt-px w-screen center-x">
+            <div class="h-px w-full bg-lines"></div>
+          </div>
+          <div class="absolute top-1/2 left-4 mt-2 sm:mt-4 lg:mt-3">
+            <HeroWeather lang={lang} animated />
+          </div>
+          <span class="block self-end text-right font-display text-[2rem] uppercase leading-none sm:text-[2.5rem] lg:text-[3rem] 2xl:text-[3.75rem]">
+            <span class="home-hero__text-clip"><span class="home-hero__text" style="--intro-order: 6">{t.homepage.hero.bottomLine1}</span></span>
+            <span class="home-hero__text-clip"><span class="home-hero__text" style="--intro-order: 7">{t.homepage.hero.bottomLine2}</span></span>
+          </span>
+        </ProjectsShapeBand>
+      </div>
+    </div>
+</section>
+
+<style is:global>
+  .home-hero__content {
+    left: 50%;
+    right: auto;
+    width: 100vw;
+    max-width: 100%;
+    transform: translateX(-50%);
+  }
+
+  .home-hero [data-projects-shape-square] > svg rect,
+  .home-hero [data-projects-shape-square] > svg circle {
+    opacity: 0;
+    transform-box: fill-box;
+    transform-origin: center;
+    transform: scale(0.92);
+  }
+
+  html.is-site-intro-content-revealing .home-hero [data-projects-shape-square] > svg rect,
+  html.is-site-intro-content-revealing .home-hero [data-projects-shape-square] > svg circle {
+    animation: home-hero-shape-reveal 520ms cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  }
+
+  html.is-site-intro-content-revealing .home-hero [data-projects-shape-square] > svg rect {
+    animation-delay: 80ms;
+  }
+
+  html.is-site-intro-content-revealing .home-hero [data-projects-shape-square] > svg circle {
+    animation-delay: calc(140ms + var(--shape-index, 0) * 55ms);
+  }
+
+  .home-hero [data-projects-shape-square] > svg circle:nth-of-type(1) { --shape-index: 0; }
+  .home-hero [data-projects-shape-square] > svg circle:nth-of-type(2) { --shape-index: 1; }
+  .home-hero [data-projects-shape-square] > svg circle:nth-of-type(3) { --shape-index: 2; }
+  .home-hero [data-projects-shape-square] > svg circle:nth-of-type(4) { --shape-index: 3; }
+  .home-hero [data-projects-shape-square] > svg circle:nth-of-type(5) { --shape-index: 4; }
+  .home-hero [data-projects-shape-square] > svg circle:nth-of-type(6) { --shape-index: 5; }
+  .home-hero [data-projects-shape-square] > svg circle:nth-of-type(7) { --shape-index: 6; }
+  .home-hero [data-projects-shape-square] > svg circle:nth-of-type(8) { --shape-index: 7; }
+  .home-hero [data-projects-shape-square] > svg circle:nth-of-type(9) { --shape-index: 8; }
+  .home-hero [data-projects-shape-square] > svg circle:nth-of-type(10) { --shape-index: 9; }
+
+  .home-hero__text-clip {
+    display: block;
+    overflow: hidden;
+  }
+
+  .home-hero__text {
+    display: block;
+    transform: translateY(110%);
+  }
+
+  html.is-site-intro-content-revealing .home-hero__text {
+    animation: home-hero-text-reveal 720ms cubic-bezier(0.77, 0, 0.18, 1) forwards;
+    animation-delay: calc(420ms + var(--intro-order, 0) * 90ms);
+  }
+
+  @keyframes home-hero-shape-reveal {
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  @keyframes home-hero-text-reveal {
+    to {
+      transform: translateY(0);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .home-hero [data-projects-shape-square] > svg rect,
+    .home-hero [data-projects-shape-square] > svg circle {
+      opacity: 1;
+      transform: none;
+    }
+
+    .home-hero__text {
+      transform: none;
+    }
+  }
+</style>

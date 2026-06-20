@@ -1,0 +1,44 @@
+---
+import { formatHeadingHtml } from "../../utils/heading-html";
+import type { ServiceData } from "./types";
+import ServiceSection from "./ServiceSection.astro";
+
+interface Props {
+  service: ServiceData;
+}
+
+const { service } = Astro.props;
+
+const sectionClass = "full-width-white-bg mt-16 py-8 sm:mt-24 sm:py-16 md:mt-32 md:py-24 md:pb-32";
+const titleClass = "text-[1.5rem] leading-none pb-16 sm:text-[2rem] md:text-[2.5rem] md:pb-24";
+const gridClass = "space-y-16 sm:grid sm:grid-cols-2 sm:gap-x-32 sm:items-start md:grid-cols-3 md:gap-x-16 md:gap-y-16 lg:grid-cols-4 lg:gap-y-16";
+---
+
+<ServiceSection
+  id="service-method"
+  sectionKey="method"
+  titleId="service-method-title"
+  class={sectionClass}
+>
+  <h2
+    id="service-method-title"
+    class={titleClass}
+    set:html={formatHeadingHtml(service.methodTitle)}
+  />
+  <div class={gridClass}>
+    {service.methodSteps.map((step, index) => (
+      <article class="flex h-full flex-col">
+        <span class="font-mono text-[1rem] leading-none whitespace-nowrap">
+          {String(index + 1).padStart(2, "0")}
+        </span>
+        <div class="mt-5 flex w-full flex-1 flex-col">
+          <div class="flex min-h-[3.75rem] items-end justify-between sm:min-h-[4.5rem] lg:min-h-[5.5rem]">
+            <h3 class="text-[1.5rem] lg:text-[2rem] leading-[1.2]">{step.title}</h3>
+          </div>
+          <hr class="mt-5 w-full border-lines sm:mt-10 lg:mt-10" />
+          <p class="mt-5 text-[1.125rem] sm:mt-10 lg:mt-10">{step.body}</p>
+        </div>
+      </article>
+    ))}
+  </div>
+</ServiceSection>

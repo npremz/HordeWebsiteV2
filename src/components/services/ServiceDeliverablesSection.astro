@@ -1,0 +1,207 @@
+---
+import { formatHeadingHtml } from "../../utils/heading-html";
+import type { ServiceData } from "./types";
+import type { Locale } from "../../i18n";
+import ServiceSection from "./ServiceSection.astro";
+
+interface Props {
+  service: ServiceData;
+  lang?: Locale;
+}
+
+const { service } = Astro.props;
+
+const sectionClass = "mt-16 md:mt-24";
+const titleClass = "pr-4 text-[1.5rem] leading-none sm:text-[2rem] md:text-[2.5rem] lg:w-1/2";
+const listOffsetClass = "mt-16 sm:mt-24 md:mt-32 lg:mt-16";
+---
+
+<ServiceSection
+  id="service-deliverables"
+  sectionKey="deliverables"
+  titleId="service-deliverables-title"
+  class={sectionClass}
+>
+  <div class="relative">
+    <div class="flex flex-col">
+      <h2
+        id="service-deliverables-title"
+        class={titleClass}
+        set:html={formatHeadingHtml(service.deliverablesTitle)}
+      />
+    </div>
+    <svg class="decorative-diagonal-box absolute right-0 top-2" width="24" height="24" viewBox="-2 -2 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <g class="decorative-diagonal-spin">
+        <rect width="7" height="20" transform="matrix(0.707107 0.707107 0.707107 -0.707107 0 14.1406)" fill="#16191B"/>
+      </g>
+    </svg>
+
+  </div>
+  <div class={listOffsetClass}>
+    <ul class="space-y-5 sm:space-y-6 md:space-y-6">
+      {service.deliverables.map((item, index) => (
+        <li
+          class="service-deliverable-item flex items-center gap-5"
+          data-deliverable-item
+          data-deliverable-text={item}
+          style={`--deliverable-index: ${index}; --deliverable-progress: 0;`}
+        >
+          <span class="service-deliverable-pill" data-deliverable-pill>
+            <span class="service-deliverable-pill__inner" data-deliverable-inner>
+              <span class="pr-4 block">{String(index + 1).padStart(1, "0")}/</span>
+              <span class="service-deliverable-pill__text" data-deliverable-visible-text></span>
+            </span>
+          </span>
+        </li>
+      ))}
+    </ul>
+  </div>
+</ServiceSection>
+
+<script is:inline>
+  (() => {
+    const section = document.querySelector('#service-deliverables');
+    if (!(section instanceof HTMLElement)) return;
+
+    const items = Array.from(section.querySelectorAll('[data-deliverable-item]'));
+    if (!items.length) return;
+
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      items.forEach((item) => {
+        const fullText = item.dataset.deliverableText || '';
+        const visibleText = item.querySelector('[data-deliverable-visible-text]');
+        if (visibleText) {
+          visibleText.textContent = fullText;
+        }
+      });
+      return;
+    }
+
+    let ticking = false;
+    let usingLenis = false;
+    let lenisPolling = 0;
+
+    const clamp = (value, min, max) => Math.min(Math.max(value, min), max);
+
+    const updateProgress = () => {
+      const rect = section.getBoundingClientRect();
+      const viewportHeight = window.innerHeight || 1;
+      const start = viewportHeight * 0.85;
+      const end = -rect.height * 0.15;
+      const raw = (start - rect.top) / (start - end);
+      const sectionProgress = clamp(raw, 0, 1);
+
+      items.forEach((item, index) => {
+        const itemStart = index * 0.12;
+        const itemProgress = clamp((sectionProgress - itemStart) / 0.26, 0, 1);
+        const fullText = item.dataset.deliverableText || '';
+        const visibleText = item.querySelector('[data-deliverable-visible-text]');
+        const visibleChars = Math.round(fullText.length * itemProgress);
+
+        item.style.setProperty('--deliverable-progress', itemProgress.toFixed(4));
+
+        if (visibleText) {
+          visibleText.textContent = fullText.slice(0, visibleChars);
+        }
+      });
+
+      ticking = false;
+    };
+
+    const onScroll = () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(updateProgress);
+    };
+
+    const cleanup = () => {
+      window.removeEventListener('scroll', onScroll);
+      window.removeEventListener('resize', onResize);
+      if (usingLenis && window.lenis) {
+        window.lenis.off('scroll', onScroll);
+      }
+      if (lenisPolling) {
+        window.clearInterval(lenisPolling);
+      }
+      document.removeEventListener('astro:before-swap', cleanup);
+    };
+
+    const tryAttachLenis = () => {
+      if (usingLenis || !window.lenis) return;
+      usingLenis = true;
+      window.removeEventListener('scroll', onScroll);
+      window.lenis.on('scroll', onScroll);
+      if (lenisPolling) {
+        window.clearInterval(lenisPolling);
+      }
+    };
+
+    const onResize = () => {
+      onScroll();
+    };
+
+    updateProgress();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onResize, { passive: true });
+
+    if (window.lenis) {
+      tryAttachLenis();
+    } else {
+      lenisPolling = window.setInterval(tryAttachLenis, 500);
+      window.setTimeout(() => {
+        if (lenisPolling) {
+          window.clearInterval(lenisPolling);
+        }
+      }, 5000);
+    }
+
+    document.addEventListener('astro:before-swap', cleanup);
+  })();
+</script>
+
+<style>
+  .service-deliverable-pill {
+    display: inline-flex;
+    max-width: 100%;
+    background: #fff;
+    min-height: 100%;
+  }
+
+  .service-deliverable-pill__inner {
+    display: flex;
+    align-items: center;
+    padding: 0.625rem;
+    white-space: nowrap;
+    font-size: 1.125rem;
+    line-height: 1.4;
+  }
+
+  .service-deliverable-pill__text {
+    min-width: 0.5ch;
+  }
+
+  @media (min-width: 640px) {
+    .service-deliverable-pill__inner {
+      padding: 1.25rem;
+      font-size: 1.375rem;
+      text-align: left;
+    }
+  }
+
+  @media (max-width: 639px) {
+    .service-deliverable-pill {
+      width: 100%;
+    }
+
+    .service-deliverable-pill__inner {
+      width: 100%;
+      white-space: normal;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .service-deliverable-pill__text {
+      min-width: auto;
+    }
+  }
+</style>

@@ -1,0 +1,193 @@
+---
+import { Image } from 'astro:assets';
+import { type Locale, useTranslations } from '../../i18n';
+import { getBlogPostHref, type LocalizedPost } from '../../lib/content/blog';
+import { formatHeadingHtml } from '../../utils/heading-html';
+import HeroStructure from './HeroStructure.astro';
+import WordsMarquee from '../ui/effects/WordsMarquee.astro';
+
+interface FilterLink {
+  href: string;
+  label: string;
+  current?: boolean;
+}
+
+interface Props {
+  lang: Locale;
+  posts: LocalizedPost[];
+  heading: string;
+  description?: string;
+  filters: FilterLink[];
+}
+
+const { lang, posts, heading, description, filters } = Astro.props;
+const t = useTranslations(lang);
+
+const breadcrumbItems = [
+  { label: t.blogPage.breadcrumbHome, href: `/${lang}` },
+  { label: 'Blog' },
+];
+
+function formatDate(date: Date, locale: Locale): string {
+  return new Intl.DateTimeFormat(locale === 'fr' ? 'fr-BE' : 'en-US', {
+    day: '2-digit',
+    month: 'short',
+    year: 'numeric',
+  }).format(date);
+}
+
+const headingLines = heading.split(/\r?\n|<br\s*\/?>/i).map((line) => line.trim()).filter(Boolean);
+---
+
+<article id="page-content" class="bg-button-white text-black">
+  <HeroStructure
+    background="dark"
+    showHorizontalLine={false}
+    showVerticalLine={false}
+    showObliqueLines={false}
+    ariaLabelledby="blog-intro"
+    breadcrumbItems={breadcrumbItems}
+    breadcrumbAriaLabel={t.blogPage.breadcrumbAriaLabel}
+    contentClass="sm:h-[426px] lg:h-[490px]"
+  >
+    <div class="w-full sm:flex sm:flex-col sm:gap-8">
+      <div class="flex w-full sm:h-1/2 sm:items-end">
+        <div class="w-full sm:flex sm:justify-between">
+          <div class="relative z-10 flex max-w-[450px] flex-col gap-4 sm:gap-8 lg:w-1/2 lg:max-w-[600px]">
+            <h1
+              id="blog-intro"
+              class="text-[1.5rem] leading-tight sm:text-[2rem] lg:text-[2.5rem]"
+            >
+              {headingLines.map((line, index) => (
+                <span class="page-hero-reveal-clip">
+                  <span class="page-hero-reveal-line" style={`--hero-reveal-order: ${index * 4}`} set:html={formatHeadingHtml(line)} />
+                </span>
+              ))}
+            </h1>
+            {description && (
+              <p class="page-hero-reveal-clip text-[1.125rem] leading-tight text-button-white/70">
+                <span class="page-hero-reveal-line" style={`--hero-reveal-order: ${headingLines.length * 4}`}>{description}</span>
+              </p>
+            )}
+          </div>
+          <svg class="page-hero-heading-svg hidden sm:block" width="47" height="20" viewBox="0 0 47 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="7" height="20" transform="matrix(1 4.37114e-08 8.74228e-08 -1 0 20)" fill="#F4F1F8"/>
+            <rect width="7" height="20" transform="matrix(1 4.37114e-08 8.74228e-08 -1 14 20)" fill="#F4F1F8"/>
+            <g class="decorative-diagonal-spin">
+              <rect width="7" height="20" transform="matrix(0.707107 0.707107 0.707107 -0.707107 27.4531 14.5938)" fill="#F4F1F8"/>
+            </g>
+          </svg>
+        </div>
+      </div>
+
+      <div class="sm:h-1/2 md:flex md:justify-end">
+        <nav
+          class="relative z-10 mt-8 flex flex-col sm:mt-0 sm:w-full sm:flex-row md:w-1/2 md:self-end md:justify-end lg:mt-0 lg:gap-20"
+          aria-label={t.blogPage.categoriesAriaLabel}
+        >
+          <ul class="hero-filter-list relative flex h-fit list-[square] flex-col gap-1 pl-5 pr-10 text-[18px] sm:mt-0 sm:w-fit sm:flex-row sm:flex-wrap sm:gap-x-12 sm:pr-24 md:pr-0">
+            {filters.map((filter, index) => (
+              <>
+                <li class:list={['shrink-0', filter.current && 'text-button-white']}>
+                  <a
+                    href={filter.href}
+                    class:list={[
+                      'underline-hover',
+                      filter.current && 'text-button-white',
+                    ]}
+                    aria-current={filter.current ? 'page' : undefined}
+                  >
+                    {filter.label}
+                  </a>
+                </li>
+                {index === 1 && filters.length > 2 && (
+                  <li class="hidden list-none sm:block sm:h-0 sm:basis-full sm:overflow-hidden sm:p-0" aria-hidden="true" />
+                )}
+              </>
+            ))}
+          </ul>
+          <svg
+            class="absolute bottom-0 right-0 z-10 text-current"
+            width="8"
+            height="35"
+            viewBox="0 0 8 35"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            aria-hidden="true"
+          >
+            <path
+              d="M1.95527 35L-4.1008e-05 35C2.89218 30.1433 5.05117 24.8452 5.05117 17.4197C5.05117 10.1548 2.89219 4.85665 -3.78207e-05 -6.1196e-07L1.95527 -4.47859e-07C4.76602 4.0539 7.29163 10.1548 7.29163 17.4197C7.29163 24.9255 4.76602 30.9461 1.95527 35Z"
+              fill="currentColor"
+            />
+          </svg>
+        </nav>
+      </div>
+    </div>
+  </HeroStructure>
+
+  <WordsMarquee />
+
+  <div class="relative z-0 full-width-white-bg">
+    <main class="mx-auto w-full max-w-[1300px] py-16 text-black sm:py-24">
+      {posts.length > 0 ? (
+        <ol class="grid gap-12 sm:gap-16 md:mx-auto md:max-w-[1000px]">
+          {posts.map((post) => (
+            <li class="border-b border-lines pb-10 sm:pb-0">
+              <article class="grid gap-6 sm:grid-cols-[minmax(180px,200px)_1fr] sm:gap-10 sm:pb-16 md:grid-cols-[minmax(180px,276px)_1fr]">
+                <a href={getBlogPostHref(post.slug, lang)} class="block" aria-label={post.title}>
+                  <Image
+                    src={post.listingImage}
+                    alt={post.listingImageAlt}
+                    class="aspect-square w-full object-cover"
+                    widths={[320, 480, 640]}
+                    sizes="(max-width: 640px) 100vw, 320px"
+                    loading="lazy"
+                    decoding="async"
+                    format="webp"
+                  />
+                </a>
+
+                <div class="flex flex-col sm:justify-between">
+                  <div>
+                    <h2 class="font-sans text-[1.5rem] leading-tight md:max-w-[500px]">
+                      <a href={getBlogPostHref(post.slug, lang)}>
+                        {post.title}
+                      </a>
+                    </h2>
+
+                    <div class="mt-5 flex items-center gap-2">
+                      <p class="text-[1.125rem] leading-none">{post.categoryName}</p>
+                      <span>-</span>
+                      <p class="text-[1.125rem] leading-none">
+                        {post.readingTime} {t.blogPage.minRead}
+                      </p>
+                    </div>
+                  </div>
+
+                  <div class="mt-5 flex flex-col sm:mt-5 sm:flex-row-reverse sm:items-center sm:justify-between">
+                    <p class="mt-5 text-[1.125rem] leading-none sm:mt-0">
+                      {t.blogPage.by} {post.authorName} - {formatDate(new Date(post.publishedDate), lang)}
+                    </p>
+
+                    <a
+                      href={getBlogPostHref(post.slug, lang)}
+                      class="underline-hover mt-5 w-fit leading-none sm:mt-0"
+                    >
+                      {t.blogPage.readMore} (→)
+                    </a>
+                  </div>
+                </div>
+              </article>
+            </li>
+          ))}
+        </ol>
+      ) : (
+        <div class="py-16 text-center">
+          <p class="text-xl text-black/60">
+            {t.blogPage.emptyContent}
+          </p>
+        </div>
+      )}
+    </main>
+  </div>
+</article>

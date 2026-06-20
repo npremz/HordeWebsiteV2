@@ -1,0 +1,56 @@
+---
+import {
+  getServiceShapeName,
+  getShapePathData,
+  type ServiceShapeName,
+} from "../../lib/serviceShapeMorph";
+
+interface Props {
+  id?: string;
+  class?: string;
+  shape: string;
+  initialShape?: ServiceShapeName;
+  hero?: boolean;
+}
+
+const {
+  id,
+  class: className = "",
+  shape,
+  initialShape = "neutral",
+  hero = false,
+} = Astro.props;
+
+const shapeName = getServiceShapeName(shape);
+const initialPaths = getShapePathData(initialShape);
+---
+
+<svg
+  id={id}
+  class={className}
+  width="305"
+  height="304"
+  viewBox="0 0 305 304"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+  data-service-shape-morph
+  data-service-shape-name={shapeName}
+  data-service-hero-shape={hero ? "" : undefined}
+  aria-hidden="true"
+>
+  <rect x="3.5" y="3.5" width="297" height="297" fill="white" stroke="#C9C9C9" vector-effect="non-scaling-stroke" />
+  <path d="M102.5 3.5V300.5M201.5 3.5V300.5M3.5 102.5H300.5M3.5 201.5H300.5" stroke="#C9C9C9" vector-effect="non-scaling-stroke" />
+  {initialPaths.map((pathData) => (
+    <path
+      data-service-shape-cell
+      d={pathData}
+      fill="white"
+      stroke="#C9C9C9"
+      vector-effect="non-scaling-stroke"
+    />
+  ))}
+  <rect width="7" height="7" fill="white" />
+  <rect y="297" width="7" height="7" fill="white" />
+  <rect x="298" width="7" height="7" fill="white" />
+  <rect x="298" y="297" width="7" height="7" fill="white" />
+</svg>

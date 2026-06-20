@@ -21,7 +21,7 @@ function getMatchedBot(userAgent: string): string | null {
   return null;
 }
 
-export const onRequest = defineMiddleware(({ url, redirect, request, isPrerendered }, next) => {
+export const onRequest = defineMiddleware(async ({ url, redirect, request, isPrerendered }, next) => {
   const shouldTrackBotLogs = SHOULD_LOG_BOT_CRAWLS && !isPrerendered;
 
   if (url.pathname === '/') {
@@ -43,10 +43,9 @@ export const onRequest = defineMiddleware(({ url, redirect, request, isPrerender
   const matchedBot = getMatchedBot(request.headers.get('user-agent') || '');
   if (!matchedBot) return next();
 
-  return next().then((response) => {
-    const ip = request.headers.get('x-forwarded-for') || '-';
-    const safePath = `${url.pathname}${url.search}`.replace(/\s+/g, '');
-    console.log(`[bot-crawl] bot=${matchedBot} method=${request.method} status=${response.status} path=${safePath} ip=${ip}`);
-    return response;
-  });
+  const response = await next();
+  const ip = request.headers.get('x-forwarded-for') || '-';
+  const safePath = `${url.pathname}${url.search}`.replace(/\s+/g, '');
+  console.log(`[bot-crawl] bot=${matchedBot} method=${request.method} status=${response.status} path=${safePath} ip=${ip}`);
+  return response;
 });

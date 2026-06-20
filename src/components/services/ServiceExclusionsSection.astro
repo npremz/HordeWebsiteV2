@@ -1,0 +1,39 @@
+---
+import { formatHeadingHtml } from "../../utils/heading-html";
+import type { ServiceData } from "./types";
+import ServiceSection from "./ServiceSection.astro";
+import AnimatedUnderlineLink from "../ui/links/AnimatedUnderlineLink.astro";
+import { type Locale, useTranslations } from "../../i18n";
+
+interface Props {
+  service: ServiceData;
+  lang: Locale;
+}
+
+const { service, lang } = Astro.props;
+const t = useTranslations(lang);
+
+const sectionClass = "full-width-white-bg mt-16 py-12 sm:mt-25 sm:py-16 sm:pb-24 md:mt-32 md:pt-24 md:pb-32";
+const titleClass = "flex justify-between text-[1.5rem] leading-none sm:text-[2rem] md:text-[2.5rem]";
+---
+
+<ServiceSection
+  id="service-exclusions"
+  sectionKey="exclusions"
+  titleId="service-exclusions-title"
+  class={sectionClass}
+>
+  <h2 id="service-exclusions-title" class={titleClass}>
+    <span set:html={formatHeadingHtml(service.exclusionsTitle)} />
+    <span class="block">[ ! ]</span>
+  </h2>
+  <div class="mt-10 sm:mt-16">
+    {service.exclusionsParagraphs.map((paragraph) => (
+      <p class="text-[1.375rem] sm:text-[1.5rem]">{paragraph}</p>
+    ))}
+  </div>
+  <p class="mt-8 text-[1.125rem] leading-normal sm:mt-10 md:mt-16 md:max-w-[630px]">
+    {t.serviceSingle.exclusionsContactPrefix}{" "}
+    <AnimatedUnderlineLink href="mailto:hello@hordeagence.com" label="hello@hordeagence.com" />
+  </p>
+</ServiceSection>

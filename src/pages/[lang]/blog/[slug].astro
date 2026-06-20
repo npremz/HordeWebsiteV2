@@ -1,15 +1,25 @@
 ---
 import Layout from '../../../layouts/Layout.astro';
 import Footer from '../../../components/Footer.astro';
-import Wrapped from '../../../components/ui/Wrapped.astro';
+import HeroStructure from '../../../components/blog/HeroStructure.astro';
 import { Image } from 'astro:assets';
 import { SUPPORTED_LOCALES, type Locale, useTranslations } from '../../../i18n';
-import { getCollection } from 'astro:content';
+import { getShortBreadcrumbLabel } from '../../../utils/breadcrumb-label';
+import { splitHeadingLines } from '../../../utils/split-heading-lines';
+import {
+	getBlogIndexHref,
+	getBlogPostHref,
+	getBlogTagHref,
+	type PostEntry,
+	getLocalizedPostContent,
+	getLocalizedPosts,
+	getPosts,
+} from '../../../lib/content/blog';
 
 export const prerender = true;
 
 export async function getStaticPaths() {
-	const posts = await getCollection('posts');
+	const posts = await getPosts();
 
 	return SUPPORTED_LOCALES.flatMap((lang) =>
 		posts
@@ -21,48 +31,33 @@ export async function getStaticPaths() {
 	);
 }
 
-const { post, lang } = Astro.props as { post: any; lang: Locale };
+const { post, lang } = Astro.props as { post: PostEntry; lang: Locale };
 const t = useTranslations(lang);
+const allLocalizedPosts = await getLocalizedPosts(lang);
+const currentPost = allLocalizedPosts.find((entry) => entry.entry.id === post.id);
 
-// Récupérer auteurs et catégories
-const rawAuthors = await getCollection('authors');
-const rawCategories = await getCollection('categories');
-
-const authorsMap = new Map(rawAuthors.map((a) => [a.data.slug, a.data]));
-const categoriesMap = new Map(rawCategories.map((c) => [c.data.slug, c.data]));
-
-// Données localisées
-const title = lang === 'fr' ? post.data.title_fr : post.data.title_en;
-const excerpt = lang === 'fr' ? post.data.excerpt_fr : post.data.excerpt_en;
-const seoDescription = lang === 'fr' ? post.data.seoDescription_fr : post.data.seoDescription_en;
-const featuredImageAlt = lang === 'fr' ? post.data.featuredImageAlt_fr : post.data.featuredImageAlt_en;
-
-// Auteur
-const author = authorsMap.get(post.data.author);
-const authorName = author?.name || 'Horde';
-const authorRole = author ? (lang === 'fr' ? author.role_fr : author.role_en) : '';
-const authorBio = author ? (lang === 'fr' ? author.bio_fr : author.bio_en) : '';
-const authorAvatar = author?.avatar;
-
-// Catégorie
-const category = categoriesMap.get(post.data.category);
-const categoryName = category ? (lang === 'fr' ? category.name_fr : category.name_en) : '';
-
-// Tags
-const tags = post.data.tags || [];
-
-// Dates
-const publishedDate = post.data.publishedDate;
-const modifiedDate = post.data.modifiedDate;
-const readingTime = post.data.readingTime || 5;
-
-// Contenu - Keystatic stocke le MDX dans des fichiers séparés
-const allContents = import.meta.glob('../../../content/posts/*/content_*.mdx', { query: '?raw', import: 'default' });
-const contentPath = `../../../content/posts/${post.data.slug}/content_${lang}.mdx`;
-let articleContent = '';
-if (allContents[contentPath]) {
-	articleContent = await allContents[contentPath]() as string;
+if (!currentPost) {
+	throw new Error(`Missing localized blog post for ${post.id} (${lang})`);
 }
+
+const title = currentPost.title;
+const titleLines = splitHeadingLines(title);
+const excerpt = currentPost.excerpt;
+const seoDescription = currentPost.seoDescription;
+const featuredImageAlt = currentPost.featuredImageAlt;
+const authorName = currentPost.authorName;
+const authorRole = currentPost.authorRole || '';
+const authorBio = currentPost.authorBio || '';
+const authorAvatar = currentPost.authorAvatar;
+const authorSocial = currentPost.authorSocial;
+const authorPagePath: string | undefined = undefined;
+const categoryName = currentPost.categoryName;
+const tags = currentPost.tags;
+const keyTakeaways = currentPost.keyTakeaways;
+const publishedDate = currentPost.publishedDate;
+const modifiedDate = currentPost.modifiedDate;
+const readingTime = currentPost.readingTime;
+const articleContent = await getLocalizedPostContent(post.data.slug, lang);
 
 // Générer un slug à partir d'un texte (gère les accents français)
 function slugify(text: string): string {
@@ -90,17 +85,15 @@ function extractHeadings(content: string): { id: string; text: string }[] {
 const tableOfContents = extractHeadings(articleContent);
 
 // Articles connexes (même catégorie, excluant l'article actuel)
-const rawPosts = await getCollection('posts');
-const relatedPosts = rawPosts
-	.filter((p) => !p.data.draft && p.data.slug !== post.data.slug && p.data.category === post.data.category)
-	.sort((a, b) => new Date(b.data.publishedDate).getTime() - new Date(a.data.publishedDate).getTime())
+const relatedPosts = allLocalizedPosts
+	.filter((entry) => entry.entry.data.slug !== post.data.slug && entry.categorySlug === currentPost.categorySlug)
 	.slice(0, 3)
-	.map((p) => ({
-		slug: lang === 'fr' ? p.data.slug_fr : p.data.slug,
-		title: lang === 'fr' ? p.data.title_fr : p.data.title_en,
-		image: p.data.featuredImage,
-		imageAlt: lang === 'fr' ? p.data.featuredImageAlt_fr : p.data.featuredImageAlt_en,
-		readingTime: p.data.readingTime || 5,
+	.map((entry) => ({
+		slug: entry.slug,
+		title: entry.title,
+		image: entry.featuredImage,
+		imageAlt: entry.featuredImageAlt,
+		readingTime: entry.readingTime,
 	}));
 
 // Parser le markdown simplifié
@@ -121,6 +114,7 @@ function parseMarkdown(content: string): string {
 
 	// Séparer en blocs par lignes vides
 	const blocks = html.split(/\n\n+/);
+	let isSourcesSection = false;
 
 	const processedBlocks = blocks.map(block => {
 		block = block.trim();
@@ -135,26 +129,37 @@ function parseMarkdown(content: string): string {
 		if (block.startsWith('## ')) {
 			const title = block.slice(3);
 			const id = slugify(title);
-			return `<h2 class="text-[2rem] leading-tight max-w-[400px] mt-16 sm:mt-32 mb-10 sm:mb-16 scroll-mt-24" id="${id}">${applyInlineFormatting(title)}</h2>`;
+			isSourcesSection = ['sources', 'references'].includes(id);
+			if (isSourcesSection) {
+				return `<h2 class="text-[1.375rem] md:text-[32px] mt-24 mb-10 scroll-mt-24" id="${id}">${applyInlineFormatting(title)}</h2>`;
+			}
+			return `<h2 class="text-[1.5rem] md:text-[32px] leading-tight mt-24 sm:mt-24 mb-10 sm:mb-10 scroll-mt-24" id="${id}">${applyInlineFormatting(title)}</h2>`;
 		}
 
 		// Titres H3
 		if (block.startsWith('### ')) {
 			const title = block.slice(4);
-			return `<h3 class="text-[1.5rem] mt-12 mb-10">${applyInlineFormatting(title)}</h3>`;
+			isSourcesSection = false;
+			return `<h3 class="text-[1.5rem] mt-16 mb-10">${applyInlineFormatting(title)}</h3>`;
 		}
 
 		// Listes à puces (bloc qui commence par - ou *)
 		if (block.match(/^[-*] /m)) {
 			const items = block.split('\n')
 				.filter(line => line.match(/^[-*] /))
-				.map(line => `<li class="ml-4">${applyInlineFormatting(line.slice(2))}</li>`)
+				.map(line => isSourcesSection
+					? `<li class="flex gap-4 py-6 first:pt-0 last:pb-0 leading-relaxed"><span class="section-label mt-1">/</span><span>${applyInlineFormatting(line.slice(2))}</span></li>`
+					: `<li class="ml-4">${applyInlineFormatting(line.slice(2))}</li>`)
 				.join('\n');
-			return `<ul class="list-disc list-outside flex flex-col gap-10 py-10 sm:py-16 border-t border-b border-lines mb-6 pl-4">${items}</ul>`;
+			if (isSourcesSection) {
+				return `<ul class="flex flex-col divide-y divide-lines text-[1.125rem]">${items}</ul>`;
+			}
+				return `<ul class="list-disc list-outside flex flex-col gap-10 py-10 border-t border-b border-lines mb-6 pl-4">${items}</ul>`;
 		}
 
 		// Paragraphe normal
-		return `<p class="mb-10 sm:mb-16 leading-relaxed">${applyInlineFormatting(block)}</p>`;
+		isSourcesSection = false;
+			return `<p class="mb-10 text-[1.125rem] leading-relaxed">${applyInlineFormatting(block)}</p>`;
 	});
 
 	return processedBlocks.filter(b => b).join('\n\n');
@@ -174,14 +179,14 @@ function applyInlineFormatting(text: string): string {
 	result = result.replace(/\*([^*]+)\*/g, '<em>$1</em>');
 
 	// Liens
-	result = result.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" title="$1" class="underline! underline-offset-4 hover:opacity-70 transition-opacity">$1</a>');
+	result = result.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" title="$1" class="underline-hover">$1</a>');
 
 	return result;
 }
 
 // Formater la date
 function formatDate(date: Date, locale: string): string {
-	return new Intl.DateTimeFormat(locale === 'fr' ? 'fr-FR' : 'en-US', {
+	return new Intl.DateTimeFormat(locale === 'fr' ? 'fr-BE' : 'en-US', {
 		day: 'numeric',
 		month: 'long',
 		year: 'numeric',
@@ -189,19 +194,36 @@ function formatDate(date: Date, locale: string): string {
 }
 
 // Slug localisé
-const currentSlug = lang === 'fr' ? post.data.slug_fr : post.data.slug;
-const alternateSlug = lang === 'fr' ? post.data.slug : post.data.slug_fr;
+const currentSlug = currentPost.slug;
+const alternateSlug = currentPost.alternateSlug;
 const switchLang = lang === 'fr' ? 'en' : 'fr';
+const breadcrumbAriaLabel = t.blogPage.breadcrumbAriaLabel;
+const breadcrumbItems = [
+	{ label: t.blogPage.breadcrumbHome, href: `/${lang}` },
+	{ label: 'Blog', href: getBlogIndexHref(lang) },
+	{ label: getShortBreadcrumbLabel(title) },
+];
+const authorIntroLabel = t.blogPage.authorIntro;
+const heroAuthorLabel = authorRole ? `${authorName} - ${authorRole}` : authorName;
+const readingTimeLabel = t.blogPage.minRead;
+const updatedDate = modifiedDate || publishedDate;
 
 // URL de partage
 const siteUrl = (Astro.site?.toString() || 'https://hordeagence.com').replace(/\/$/, '');
 const articleUrl = `${siteUrl}/${lang}/blog/${currentSlug}`;
+const authorUrl: string | undefined = authorPagePath ? `${siteUrl}${authorPagePath}` : undefined;
 const shareUrl = articleUrl;
+const tagShareLinkClasses = 'underline-hover w-fit inline-flex text-[1.125rem] leading-[1.375rem] font-[375] text-black cursor-pointer';
+const authorSameAs = [
+	authorSocial?.twitter ? `https://twitter.com/${authorSocial.twitter}` : null,
+	authorSocial?.linkedin || null,
+	authorSocial?.github ? `https://github.com/${authorSocial.github}` : null,
+].filter(Boolean);
 // URL pour le switch de langue (avec le slug de l'autre langue)
 const alternateUrl = `${siteUrl}/${switchLang}/blog/${alternateSlug}`;
-const imageUrl = post.data.featuredImage.src?.startsWith('http')
-	? post.data.featuredImage.src
-	: `${siteUrl}${post.data.featuredImage.src}`;
+const imageUrl = currentPost.featuredImage.src?.startsWith('http')
+	? currentPost.featuredImage.src
+	: `${siteUrl}${currentPost.featuredImage.src}`;
 
 // Schema.org JSON-LD
 const schemaOrg = {
@@ -220,11 +242,14 @@ const schemaOrg = {
 				"@type": "Person",
 				"name": authorName,
 				"jobTitle": authorRole,
-				...(author?.social?.twitter && { "sameAs": `https://twitter.com/${author.social.twitter}` }),
+				...(authorUrl ? { "url": authorUrl } : {}),
+				...(authorAvatar ? { "image": `${siteUrl}${authorAvatar.src}` } : {}),
+				...(authorSameAs.length > 0 ? { "sameAs": authorSameAs } : {}),
 			},
 			"publisher": {
 				"@type": "Organization",
-				"name": "Horde",
+				"@id": `${siteUrl}#organization`,
+				"name": "Horde Agence",
 				"url": siteUrl,
 				"logo": {
 					"@type": "ImageObject",
@@ -235,21 +260,34 @@ const schemaOrg = {
 				"@type": "WebPage",
 				"@id": articleUrl
 			},
-			"articleSection": categoryName,
-			"keywords": tags.join(", "),
-			"wordCount": articleContent.split(/\s+/).length,
-			"timeRequired": `PT${readingTime}M`,
-			"inLanguage": lang === 'fr' ? 'fr-FR' : 'en-US'
-		},
-		// BreadcrumbList
-		{
+				"articleSection": categoryName,
+				"keywords": tags.join(", "),
+				"wordCount": articleContent.split(/\s+/).length,
+				"timeRequired": `PT${readingTime}M`,
+				"abstract": excerpt,
+				"inLanguage": lang === 'fr' ? 'fr-BE' : 'en-US'
+			},
+			...(keyTakeaways.length > 0
+				? [{
+					"@type": "ItemList",
+					"@id": `${articleUrl}#takeaways`,
+					"name": t.blogPage.keyTakeaways,
+					"itemListElement": keyTakeaways.map((item: string, index: number) => ({
+						"@type": "ListItem",
+						"position": index + 1,
+						"name": item,
+					})),
+				}]
+				: []),
+			// BreadcrumbList
+			{
 			"@type": "BreadcrumbList",
 			"@id": `${articleUrl}#breadcrumb`,
 			"itemListElement": [
 				{
 					"@type": "ListItem",
 					"position": 1,
-					"name": lang === 'fr' ? 'Accueil' : 'Home',
+					"name": t.blogPage.breadcrumbHome,
 					"item": `${siteUrl}/${lang}`
 				},
 				{
@@ -270,145 +308,221 @@ const schemaOrg = {
 };
 ---
 
-<Layout lang={lang} alternateUrl={alternateUrl} title={title} description={seoDescription} ogType="article" publishedTime={publishedDate.toISOString()} modifiedTime={modifiedDate?.toISOString()} author={authorName}>
+<Layout
+	lang={lang}
+	alternateUrl={alternateUrl}
+	title={title}
+	description={seoDescription}
+	ogType="article"
+	publishedTime={publishedDate.toISOString()}
+	modifiedTime={modifiedDate?.toISOString()}
+	author={authorName}
+	authorUrl={authorUrl}
+	variant="light"
+	headerVariant="dark"
+	showContainerLines={false}
+>
 	<!-- Schema.org JSON-LD -->
-	<script type="application/ld+json" set:html={JSON.stringify(schemaOrg)} />
+	<script is:inline type="application/ld+json" set:html={JSON.stringify(schemaOrg)} />
 
 	<div class="fixed inset-0 bg-bg -z-10" aria-hidden="true"></div>
 	<article id="page-content" class="relative z-10 bg-bg">
-		<!-- Header Article -->
-		<header class="pt-50 sm:pt-78 pb-10 sm:pb-16 border-b border-lines">
-			<!-- Breadcrumbs -->
-			<nav aria-label="Breadcrumb" class="mb-8">
-				<ol class="flex items-center gap-2 section-label flex-wrap">
-					<li><a href={`/${lang}`} class="hover:text-black transition-colors" title={lang === 'fr' ? 'Accueil' : 'Home'}>{lang === 'fr' ? 'Accueil' : 'Home'}</a></li>
-					<li><span class="mx-1">/</span></li>
-					<li class="hidden sm:block"><a href={`/${lang}/blog`} class="hover:text-black transition-colors" title="Blog">Blog</a></li>
-					<li class="hidden sm:block"><span class="mx-1">/</span></li>
-					<li><a href={`/${lang}/blog/category/${post.data.category}`} class="hover:text-black transition-colors" title={categoryName}>{categoryName}</a></li>
-					<li><span class="mx-1">/</span></li>
-					<li aria-current="page" class="text-black truncate max-w-[150px] sm:max-w-[250px] md:max-w-[350px]">{title}</li>
-				</ol>
-			</nav>
-
-			<div class="md:flex md:flex-row-reverse md:justify-between md:items-end md:mb-16">
-				<!-- Catégorie + Temps de lecture -->
-				<div class="flex items-center gap-3 section-label mb-8 leading-none md:mb-0">
-					<span>{readingTime} {t.blogPage.minRead}</span>
-				</div>
-
-				<!-- Titre -->
-				<h1 class="font-display text-[2rem] md:text-[2.5rem] lg:text-[3rem] leading-[1.1] uppercase mb-8 sm:mb-16 md:mb-0 max-w-130 md:max-w-180 ">
-					{title}
-				</h1>
-			</div>
-
-			<!-- Meta: Auteur + Date -->
-			<div class="flex flex-col p-5 sm:p-8 border border-lines sm:flex-row sm:justify-between sm:items-end gap-4 sm:gap-8 mb-10 sm:mb-24">
-				<!-- Auteur -->
-				<div class="flex items-center gap-4">
-					{authorAvatar && (
-						<Image
-							src={authorAvatar}
-							alt={authorName}
-							class="h-full w-[72px] sm:w-[100px] aspect-square object-cover"
-							widths={[72, 100]}
-							height={100}
-						/>
-					)}
-					<div class="sm:h-[100px] flex flex-col justify-between">
-						<p class="text-[1.375rem]">{authorName}</p>
-						{authorRole && <p class="section-label max-w-[170px]">{authorRole}</p>}
+		<div class="full-width-white-bg">
+		<div class="relative left-1/2 w-screen -translate-x-1/2 bg-black">
+		<HeroStructure
+			class="relative z-0"
+			background="dark"
+			showHorizontalLine={false}
+			showVerticalLine={true}
+			showObliqueLines={false}
+			ariaLabelledby="blog-post-intro"
+			breadcrumbItems={breadcrumbItems}
+			breadcrumbAriaLabel={breadcrumbAriaLabel}
+			spacingClass="pt-16 pb-0 sm:pt-32 lg:pt-40"
+			contentClass="sm:h-[426px] lg:h-[490px]"
+		>
+			<div class="w-full sm:flex sm:flex-col sm:gap-8">
+				<div class="flex w-full sm:h-1/2 sm:items-end">
+					<div class="w-full sm:flex sm:justify-between">
+						<div class="relative z-10 flex max-w-[450px] flex-col gap-4 sm:gap-8 lg:w-1/2 lg:max-w-[700px]">
+								<h1
+									id="blog-post-intro"
+									class="text-[1.5rem] leading-tight sm:text-[2rem] lg:text-[2.5rem]"
+								>
+									{titleLines.map((line, index) => (
+										<span class="page-hero-reveal-clip">
+											<span class="page-hero-reveal-line" style={`--hero-reveal-order: ${index}`}>{line}</span>
+										</span>
+									))}
+								</h1>
+						</div>
+						<svg class="page-hero-heading-svg hidden sm:block" width="47" height="20" viewBox="0 0 47 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+							<rect width="7" height="20" transform="matrix(1 4.37114e-08 8.74228e-08 -1 0 20)" fill="#F4F1F8"/>
+							<rect width="7" height="20" transform="matrix(1 4.37114e-08 8.74228e-08 -1 14 20)" fill="#F4F1F8"/>
+							<g class="decorative-diagonal-spin">
+								<rect width="7" height="20" transform="matrix(0.707107 0.707107 0.707107 -0.707107 27.4531 14.5938)" fill="#F4F1F8"/>
+							</g>
+						</svg>
 					</div>
 				</div>
-				<!-- Dates -->
-				<div class="section-label sm:max-w-30">
-					<p>
-						<span >{t.blogPage.publishedOn}</span>{" "}
-						<time datetime={publishedDate.toISOString()}>{formatDate(publishedDate, lang)}</time>
-					</p>
-					{modifiedDate && (
-						<p >
-							<span >{t.blogPage.updatedOn}</span>{" "}
-							<time datetime={modifiedDate.toISOString()}>{formatDate(modifiedDate, lang)}</time>
+
+				<div class="sm:h-1/2 md:flex md:justify-end">
+					<div class="relative z-10 mt-8 flex flex-col sm:mt-0 sm:w-full sm:flex-row lg:mt-0 md:w-1/2 md:self-end md:justify-end lg:gap-20">
+						<p class="relative h-fit sm:w-fit list-[square] pl-5 pr-10 text-[1.25rem] sm:mt-0 sm:pr-24 md:pr-0">
+							<span class="list-item">
+								<span class="inline-grid gap-2 sm:grid-cols-[auto_1fr] sm:gap-8">
+									<span>{authorIntroLabel}:</span>
+									{authorPagePath ? (
+										<a href={authorPagePath} class="transition-opacity max-w-[250px] sm:mx-8 duration-200 hover:opacity-65">
+											{heroAuthorLabel}
+										</a>
+									) : (
+										<span>{heroAuthorLabel}</span>
+									)}
+								</span>
+							</span>
 						</p>
-					)}
+						<svg
+							class="absolute right-0 bottom-0 z-10 text-current"
+							width="8"
+							height="35"
+							viewBox="0 0 8 35"
+							fill="none"
+							xmlns="http://www.w3.org/2000/svg"
+							aria-hidden="true"
+						>
+							<path
+								d="M1.95527 35L-4.1008e-05 35C2.89218 30.1433 5.05117 24.8452 5.05117 17.4197C5.05117 10.1548 2.89219 4.85665 -3.78207e-05 -6.1196e-07L1.95527 -4.47859e-07C4.76602 4.0539 7.29163 10.1548 7.29163 17.4197C7.29163 24.9255 4.76602 30.9461 1.95527 35Z"
+								fill="currentColor"
+							/>
+						</svg>
+					</div>
 				</div>
 			</div>
-			<div class="flex justify-end">
-				<Wrapped class:list={"font-mono leading-none text-[1rem] align-"}>↓</Wrapped>
-			</div>
-		</header>
+		</HeroStructure>
 
-		<!-- Image principale -->
-		<figure class="py-10 sm:py-24 border-b border-lines mb-10 sm:mb-24 max-w-3xl mx-auto">
-			<Image
-				src={post.data.featuredImage}
-				alt={featuredImageAlt}
-				class="w-full h-auto object-cover"
-				widths={[400, 800, 1200, 1600]}
-				sizes="(max-width: 768px) 100vw, 768px"
-				loading="eager"
-				fetchpriority="high"
-				decoding="async"
-				format="webp"
-				quality={85}
-			/>
-		</figure>
+		<div class="relative z-20 isolate text-button-white lg:-mt-54">
+			<div class="relative z-20 mx-auto max-w-[1320px] px-(--gutter) lg:px-0">
+				<div class="blog-post-meta-block text-[1.125rem] pt-4 sm:pt-50 md:pt-16 text-button-white flex lg:flex-col-reverse justify-between items-end lg:items-start">
+					<div class="lg:mt-8">
+						<p>
+							<span>{t.blogPage.publishedOn}</span>{" "}
+							<time datetime={publishedDate.toISOString()}>{formatDate(publishedDate, lang)}</time>
+						</p>
+						<p>
+							<span>{t.blogPage.updatedOn}</span>{" "}
+							<time datetime={updatedDate.toISOString()}>{formatDate(updatedDate, lang)}</time>
+						</p>
+					</div>
+					<p>{readingTime} {readingTimeLabel}</p>
+				</div>
+
+				<!-- Image principale -->
+				<div class="relative z-30 mt-16 sm:mt-6 md:mt-16 lg:mt-20 mb-10 flex h-[330px] md:h-[455px] max-w-[1000px] items-center justify-center overflow-hidden bg-white sm:mb-24 mx-auto">
+					<div class="pointer-events-none absolute left-1/2 top-1/2 z-0 h-full w-px -translate-x-1/2 -translate-y-1/2 bg-lines" aria-hidden="true"></div>
+					<div class="pointer-events-none absolute left-1/2 top-1/2 z-0 h-px w-full -translate-x-1/2 -translate-y-1/2 bg-lines" aria-hidden="true"></div>
+					<div class="pointer-events-none absolute left-1/2 top-1/2 z-0 h-px w-[120%] -translate-x-1/2 -translate-y-1/2 rotate-45 bg-lines" aria-hidden="true"></div>
+					<div class="pointer-events-none absolute left-1/2 top-1/2 z-0 h-px w-[120%] -translate-x-1/2 -translate-y-1/2 -rotate-45 bg-lines" aria-hidden="true"></div>
+					<figure class="relative z-10 aspect-square w-[250px] md:w-[330px] bg-black flex justify-center items-center">
+						<Image
+							src={currentPost.featuredImage}
+							alt={featuredImageAlt}
+							class="w-full h-auto object-cover"
+							widths={[400, 800, 1200, 1600]}
+							sizes="(max-width: 768px) 100vw, 768px"
+							loading="eager"
+							fetchpriority="high"
+							decoding="async"
+							format="webp"
+							quality={85}
+						/>
+					</figure>
+				</div>
+			</div>
+		</div>
+		</div>
 
 		<!-- Layout 2 colonnes: Contenu + Sidebar -->
 		<div>
 			<!-- Contenu principal -->
-			<div class="lg:flex-1 max-w-3xl mx-auto">
-				<!-- Extrait / Chapô -->
-				<p class="text-[1.625rem] sm:text-[2rem] md:text-[2.5rem] pb-10 sm:pb-24 border-b border-lines">
-					{excerpt}
-				</p>
+			<div class="lg:flex-1 max-w-[1000px] mx-auto">
+				{keyTakeaways.length > 0 && (
+					<section class="mt-10 sm:mt-16" aria-label={t.blogPage.keyTakeaways}>
+							<h2 class="text-[1.375rem] md:text-[32px] mb-10">{t.blogPage.keyTakeaways}</h2>
+						<ul class="flex flex-col divide-y divide-lines text-[1.125rem]">
+							{keyTakeaways.map((item: string) => (
+								<li class="flex gap-4 py-6 first:pt-0 last:pb-0 leading-relaxed">
+									<span class="section-label mt-1">/</span>
+									<span>{item}</span>
+								</li>
+							))}
+						</ul>
+					</section>
+				)}
 
 				<!-- Sommaire (rendu côté serveur pour SEO) -->
 				{tableOfContents.length > 0 && (
-					<nav class="mt-10 sm:mt-24 pb-10" aria-label={lang === 'fr' ? 'Sommaire' : 'Table of contents'}>
-						<h2 class="section-label mb-8">{lang === 'fr' ? 'Sommaire' : 'Table of contents'}</h2>
-						<ol class="flex flex-col gap-2.5">
-							{tableOfContents.map((heading, index) => (
-								<li class="pb-2.5 border-b border-lines">
-									<a
-										href={`#${heading.id}`}
-										class="flex items-baseline gap-3 hover:text-black/60 transition-colors"
-										title={heading.text}
-									>
-										<span class="section-label">{String(index + 1).padStart(2, '0')}</span>
-										<span>{heading.text}</span>
-									</a>
-								</li>
-							))}
+					<nav class="mt-24" aria-label={t.blogPage.tableOfContents}>
+							<h2 class="text-[1.375rem] md:text-[32px] mb-8">{t.blogPage.tableOfContents}</h2>
+							<ol class="flex flex-col gap-6">
+								{tableOfContents.map((heading, index) => (
+									<li>
+										<a
+											href={`#${heading.id}`}
+											class="toc-service-link flex items-center gap-10"
+											title={heading.text}
+										>
+											<span class="text-[1.125rem]">{String(index + 1)}/</span>
+											<span class="toc-service-link__label flex-1">
+												<span class="toc-service-link__base">{heading.text}</span>
+												<span class="toc-service-link__overlay" aria-hidden="true">{heading.text}</span>
+											</span>
+											<span class="toc-service-link__icon shrink-0 text-[18px]">
+												<span class="toc-service-link__base">(→)</span>
+												<span class="toc-service-link__overlay" aria-hidden="true">(→)</span>
+											</span>
+										</a>
+									</li>
+								))}
 						</ol>
 					</nav>
 				)}
 
+				<!-- Extrait / Chapô -->
+				<div class="relative my-24">
+					<svg class="h-8 absolute top-0 left-0" viewBox="0 0 6 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+						<path d="M4.39106 0H6C3.62011 4.16285 1.84358 8.70413 1.84358 15.0688C1.84358 21.2959 3.62011 25.8372 6 30H4.39106C2.07821 26.5252 0 21.2959 0 15.0688C0 8.63532 2.07821 3.47477 4.39106 0Z" fill="#16191B"/>
+					</svg>
+					<p class="text-[1.5rem] leading-[2rem] px-8 indent-16 ">
+						{excerpt}
+					</p>
+					<svg class="h-8 absolute bottom-0 right-0" viewBox="0 0 7 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+						<path d="M1.67598 30L-9.53674e-07 30C2.47905 25.8372 4.32961 21.2959 4.32961 14.9312C4.32961 8.70413 2.47905 4.16284 8.80026e-07 -7.81488e-07L1.67598 -5.71927e-07C4.0852 3.47477 6.25 8.70413 6.25 14.9312C6.25 21.3647 4.0852 26.5252 1.67598 30Z" fill="#16191B"/>
+					</svg>
+				</div>
+
 				<!-- Contenu de l'article -->
 				<div class="prose prose-lg text-[1.375rem] max-w-none mb-16" set:html={parseMarkdown(articleContent)} />
 				{!articleContent && (
-					<p class="text-black/60 italic">Contenu de l'article à venir...</p>
+					<p class="text-black/60 italic">{t.blogPage.emptyContent}</p>
 				)}
 
 			</div>
-			<div class="max-w-3xl mx-auto lg:max-w-none">
+			<div class="max-w-[1000px] mx-auto lg:max-w-none">
 				<!-- Tags + Partage (2 colonnes sur lg) -->
-				<div class="lg:flex lg:gap-16 pt-10 sm:pt-16 lg:pt-24 sm:mt-24 border-t border-lines mb-10 sm:mb-16 lg:pb-24 lg:mb-0">
+				<div class="flex sm:justify-between lg:gap-16 pt-10 sm:pt-16 lg:pt-24 pb-24">
 					<!-- Tags -->
 					{tags.length > 0 && (
-						<div class="mb-10 lg:mb-0 lg:flex-1">
-							<h2 class="section-label mb-4">{t.blogPage.tags}</h2>
-							<div class="flex flex-wrap gap-2 md:gap-4">
+						<div class="lg:mb-0 lg:flex-1 sm:max-w-[300px]">
+							<h2 class="section-label mb-10">{t.blogPage.tags}</h2>
+							<div class="flex flex-wrap gap-5">
 								{tags.map((tag: string) => (
 									<a
-										href={`/${lang}/blog/tag/${slugify(tag)}`}
-										class="group relative overflow-hidden py-6 px-5 border border-lines text-[1rem] font-mono uppercase leading-none"
+										href={getBlogTagHref(tag, lang)}
+										class={tagShareLinkClasses}
 										title={tag}
 									>
-										<span class="absolute inset-0 bg-black translate-x-[calc(-100%-1px)] group-hover:translate-x-0 transition-transform duration-400 ease-[cubic-bezier(0.25,0.46,0.45,0.94)]"></span>
-										<span class="relative z-10 transition-colors duration-300 group-hover:text-white">{tag}</span>
+										{tag}
 									</a>
 								))}
 							</div>
@@ -416,138 +530,90 @@ const schemaOrg = {
 					)}
 
 					<!-- Partage -->
-					<div class="lg:flex-1">
-						<h2 class="section-label mb-4">{t.blogPage.shareArticle}</h2>
-						<div class="flex flex-wrap gap-2 md:gap-4">
+					<div class="lg:flex-1 flex flex-col items-end">
+						<h2 class="section-label mb-10">{t.blogPage.shareArticle}</h2>
+						<div class="flex flex-wrap sm:flex-col sm:flex-nowrap justify-end sm:items-end gap-5 ">
 							<a
 								href={`https://twitter.com/intent/tweet?url=${encodeURIComponent(shareUrl)}&text=${encodeURIComponent(title)}`}
 								target="_blank"
 								rel="noopener noreferrer"
-								class="group relative overflow-hidden py-6 px-5 border border-lines font-mono text-[1rem] uppercase leading-none"
+								class={tagShareLinkClasses}
 								title="Twitter"
 							>
-								<span class="absolute inset-0 bg-black translate-x-[calc(-100%-1px)] group-hover:translate-x-0 transition-transform duration-400 ease-[cubic-bezier(0.25,0.46,0.45,0.94)]"></span>
-								<span class="relative z-10 transition-colors duration-300 group-hover:text-white">Twitter</span>
+								Twitter
 							</a>
 							<a
 								href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(shareUrl)}`}
 								target="_blank"
 								rel="noopener noreferrer"
-								class="group relative overflow-hidden py-6 px-5 border border-lines font-mono text-[1rem] uppercase leading-none"
+								class={tagShareLinkClasses}
 								title="LinkedIn"
 							>
-								<span class="absolute inset-0 bg-black translate-x-[calc(-100%-1px)] group-hover:translate-x-0 transition-transform duration-400 ease-[cubic-bezier(0.25,0.46,0.45,0.94)]"></span>
-								<span class="relative z-10 transition-colors duration-300 group-hover:text-white">LinkedIn</span>
+								LinkedIn
 							</a>
 							<button
 								type="button"
-								class="copy-link group relative overflow-hidden py-6 px-5 border border-lines font-mono text-[1rem] uppercase leading-none cursor-pointer"
+								class={`copy-link bg-transparent p-0 ${tagShareLinkClasses}`}
 								data-url={shareUrl}
 							>
-								<span class="absolute inset-0 bg-black translate-x-[calc(-100%-1px)] group-hover:translate-x-0 transition-transform duration-400 ease-[cubic-bezier(0.25,0.46,0.45,0.94)]"></span>
-								<span class="relative z-10 transition-colors duration-300 group-hover:text-white">{lang === 'fr' ? 'Copier le lien' : 'Copy link'}</span>
+								<span>{t.blogPage.copyLink}</span>
 							</button>
 						</div>
 					</div>
 				</div>
+			</div>
+		</div>
+		</div>
 
+			<div class="max-w-[1000px] mt-16 sm:mt-24 mx-auto lg:max-w-none">
 				<!-- Bio Auteur -->
-				{author && (
-					<h2 class="section-label mb-8">{t.blogPage.about}</h2>
-					<div class="mb-16 p-6 md:p-8 border border-lines">
-						{/* Mobile: photo + nom/rôle côte à côte, description en dessous */}
-						<div class="flex gap-4 mb-5 md:hidden">
-							{authorAvatar && (
-								<Image
-									src={authorAvatar}
-									alt={authorName}
-									class="w-20 h-20 aspect-square object-cover shrink-0"
-									width={80}
-									height={80}
-								/>
-							)}
-							<div class="flex flex-col">
-								<p class="text-[1.375rem]">{authorName}</p>
-								{authorRole && <p class="section-label">{authorRole}</p>}
-							</div>
-						</div>
-						<div class="md:hidden">
-							{authorBio && <p class="leading-relaxed">{authorBio}</p>}
-							{author.social && (
-								<div class="flex gap-4 mt-8">
-									{author.social.twitter && (
-										<a href={`https://twitter.com/${author.social.twitter}`} target="_blank" rel="noopener noreferrer" class="text-black/60 hover:text-black transition-colors" title="Twitter">
+				{(authorBio || authorAvatar || authorSocial || authorPagePath) && (
+					<div class="flex justify-between">
+						<h2 class="text-[1.25rem] sm:text-[1.5rem] mb-10">{t.blogPage.authorIntro} :</h2>
+						<div class="flex flex-col items-end sm:items-start gap-6 md:w-1/2 lg:w-[430px]">
+							<p class="sm:text-[1.5rem]">Nicolas Prémont</p>
+							{authorSocial && (
+								<div class="flex gap-5">
+									{authorSocial.twitter && (
+										<a href={`https://twitter.com/${authorSocial.twitter}`} target="_blank" rel="noopener noreferrer" class="underline-hover text-black/60 hover:text-black transition-colors" title="Twitter">
 											Twitter
 										</a>
 									)}
-									{author.social.linkedin && (
-										<a href={author.social.linkedin} target="_blank" rel="noopener noreferrer" class="text-black/60 hover:text-black transition-colors" title="LinkedIn">
+									{authorSocial.linkedin && (
+										<a href={authorSocial.linkedin} target="_blank" rel="noopener noreferrer" class="underline-hover text-black/60 hover:text-black transition-colors" title="LinkedIn">
 											LinkedIn
 										</a>
 									)}
-									{author.social.github && (
-										<a href={`https://github.com/${author.social.github}`} target="_blank" rel="noopener noreferrer" class="text-black/60 hover:text-black transition-colors" title="GitHub">
+									{authorSocial.github && (
+										<a href={`https://github.com/${authorSocial.github}`} target="_blank" rel="noopener noreferrer" class="underline-hover text-black/60 hover:text-black transition-colors" title="GitHub">
 											GitHub
 										</a>
 									)}
 								</div>
 							)}
 						</div>
-						{/* Desktop (md+): photo à gauche, nom/rôle inline + description à droite */}
-						<div class="hidden md:flex md:gap-8">
-							{authorAvatar && (
-								<div class="shrink-0">
-									<Image
-										src={authorAvatar}
-										alt={authorName}
-										class="w-auto h-full aspect-square object-cover"
-										width={160}
-										height={160}
-									/>
-								</div>
+					</div>
+					<div class="mt-16">
+						<div class="md:flex lg:justify-between">
+							{authorBio && (
+								<p class="md:w-1/2">{t.blogPage.authorBioLabel}: </p>
+								<p class="leading-relaxed mt-10 md:mt-0 md:w-1/2 lg:w-[430px]">
+									{authorBio}
+								</p>
 							)}
-							<div class="flex-1">
-								<div class="flex items-baseline gap-4 mb-4">
-									<p class="text-[1.375rem]">{authorName}</p>
-									{authorRole && <p class="section-label">{authorRole}</p>}
-								</div>
-								<div class="lg:flex lg:justify-between lg:gap-8">
-									{authorBio && <p class="leading-relaxed lg:max-w-135">{authorBio}</p>}
-									{/* Liens réseaux - en ligne avec bio sur lg+ */}
-									{author.social && (
-										<div class="flex lg:flex-col gap-4 mt-8 lg:mt-0 shrink-0">
-											{author.social.twitter && (
-												<a href={`https://twitter.com/${author.social.twitter}`} target="_blank" rel="noopener noreferrer" class="text-black/60 hover:text-black transition-colors" title="Twitter">
-													Twitter
-												</a>
-											)}
-											{author.social.linkedin && (
-												<a href={author.social.linkedin} target="_blank" rel="noopener noreferrer" class="text-black/60 hover:text-black transition-colors" title="LinkedIn">
-													LinkedIn
-												</a>
-											)}
-											{author.social.github && (
-												<a href={`https://github.com/${author.social.github}`} target="_blank" rel="noopener noreferrer" class="text-black/60 hover:text-black transition-colors" title="GitHub">
-													GitHub
-												</a>
-											)}
-										</div>
-									)}
-								</div>
-							</div>
 						</div>
+						{/* Desktop (md+): photo à gauche, nom/rôle inline + description à droite */}
 					</div>
 				)}
 				</div>
-		</div>
 
 		<!-- Articles connexes -->
 		{relatedPosts.length > 0 && (
-			<section class="mt-16 md:mt-24 pt-10 border-t border-lines">
-				<h2 class="font-display text-[1.5rem] md:text-[2rem] uppercase mb-10">{t.blogPage.relatedArticles}</h2>
-				<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-					{relatedPosts.map((related, index) => (
-						<a href={`/${lang}/blog/${related.slug}`} class="group" title={related.title}>
+			<section class="mt-10 sm:mt-16 pt-24 border-t border-lines">
+				<h2 class=" text-[1.5rem] md:text-[2rem] mb-10">{t.blogPage.relatedArticles}</h2>
+				<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+					{relatedPosts.map((related) => (
+						<a href={getBlogPostHref(related.slug, lang)} class="group" title={related.title}>
 							<div class="overflow-hidden mb-4 aspect-square">
 								<Image
 									src={related.image}
@@ -561,8 +627,8 @@ const schemaOrg = {
 									quality={75}
 								/>
 							</div>
-							<p class="text-[0.75rem] font-mono uppercase text-black/60 mb-2">{related.readingTime} {t.blogPage.minRead}</p>
 							<h3 class="text-[1.125rem] leading-tight">{related.title}</h3>
+							<p class="text-[0.875rem] font-mono uppercase text-black/90 mt-5">{related.readingTime} {t.blogPage.minRead}</p>
 						</a>
 					))}
 				</div>
@@ -570,38 +636,95 @@ const schemaOrg = {
 		)}
 
 		<!-- Bouton retour -->
-		<nav class="mt-16 mb-10 flex justify-end max-w-3xl mx-auto lg:max-w-none">
-			<a
-				href={`/${lang}/blog`}
-				class="group relative overflow-hidden font-mono text-[1rem] leading-none uppercase py-6 px-5 flex justify-center w-full md:w-fit border border-lines-dark bg-black text-white transition-colors duration-300 ease-in-out cursor-pointer"
-				title={t.blogPage.allArticles}
-			>
-				<span class="absolute inset-0 bg-bg translate-x-[calc(-100%-1px)] group-hover:translate-x-0 transition-transform duration-400 ease-[cubic-bezier(0.25,0.46,0.45,0.94)]"></span>
-				<span class="relative z-10 text-white group-hover:text-black transition-colors duration-300">
-					{t.blogPage.allArticles}
-				</span>
-			</a>
-		</nav>
+			<nav class="mt-16 mb-10 flex justify-start max-w-[1000px] mx-auto lg:max-w-none">
+				<a
+					href={getBlogIndexHref(lang)}
+					class="underline-hover w-fit text-[1.125rem] lg:text-[1.375rem]"
+					title={t.blogPage.allArticles}
+				>
+					{t.blogPage.allArticles} (↗)
+				</a>
+			</nav>
 	</article>
 
 	<Footer lang={lang} hideOverflow={false} />
 </Layout>
 
-<style>
-	/* Prose styles */
-	.prose h2 {
+	<style>
+		.toc-service-link {
+			position: relative;
+			isolation: isolate;
+		}
+
+		.toc-service-link::before {
+			content: "";
+			position: absolute;
+			top: -6px;
+			right: -10px;
+			bottom: -6px;
+			left: -10px;
+			z-index: -1;
+			background-color: var(--color-black);
+			transform: scaleY(0);
+			transform-origin: center bottom;
+		}
+
+		.toc-service-link__label,
+		.toc-service-link__icon {
+			position: relative;
+			z-index: 1;
+			display: block;
+			overflow: hidden;
+			margin-block: -0.05em;
+			padding-block: 0.05em;
+		}
+
+		.toc-service-link__icon {
+			display: inline-flex;
+		}
+
+		.toc-service-link__base,
+		.toc-service-link__overlay {
+			display: block;
+			transition: transform 0.15s ease-out;
+		}
+
+		.toc-service-link__overlay {
+			position: absolute;
+			inset: 0.05em 0;
+			color: var(--color-button-white);
+			transform: translateY(110%);
+		}
+
+		@media (hover: hover) {
+			.toc-service-link::before {
+				transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+			}
+
+			.toc-service-link:hover::before {
+				transform: scaleY(1);
+			}
+
+			.toc-service-link:hover {
+				color: var(--color-button-white);
+			}
+
+			.toc-service-link:hover .toc-service-link__base {
+				transform: translateY(-110%);
+			}
+
+			.toc-service-link:hover .toc-service-link__overlay {
+				transform: translateY(0);
+			}
+		}
+
+		/* Prose styles */
+		.prose h2 {
 		scroll-margin-top: 6rem;
 	}
 
 	.prose a {
-		text-decoration: underline;
-		text-underline-offset: 3px;
-		transition: color 0.2s;
-	}
-
-	.prose a:hover {
-		color: var(--color-black);
-		opacity: 0.7;
+		text-decoration: none;
 	}
 
 	.prose blockquote {
@@ -620,7 +743,7 @@ const schemaOrg = {
 
 	.prose pre {
 		background: var(--color-black);
-		color: var(--color-bg-light);
+		color: var(--color-button-white);
 		padding: 1.5rem;
 		overflow-x: auto;
 		margin: 1.5rem 0;

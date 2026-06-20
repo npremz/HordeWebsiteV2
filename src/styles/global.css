@@ -2,7 +2,7 @@
 
 @font-face {
   font-family: 'PP Neue Montreal';
-  src: url('../assets/fonts/PPNeueMontreal-Regular.woff2') format('woff2');
+  src: url('../assets/fonts/PPNeueMontreal-Book.woff2') format('woff2');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -55,19 +55,19 @@
 
 @media only screen and (min-width: 640px) {
   :root {
-    --gutter: 2rem
+    --gutter: 3rem
   }
 }
 
 @media only screen and (min-width: 1024px) {
   :root {
-    --gutter: 6rem
+    --gutter: 4rem
   }
 }
 
 @media only screen and (min-width: 1512px) {
   :root {
-    --gutter: 8rem
+    --gutter: 6rem
   }
 }
 
@@ -79,20 +79,27 @@
   --breakpoint-xl: 1920px;
   --breakpoint-2xl: 2560px;
 
-  --color-bg: #D0CDCB;
-  --color-bg-light: #F4F3F3;
-  --color-black: #222121;
-  --color-lines: #B1B1B1;
+  --color-bg: #C5C1CD;
+  --color-bg-light: #E3DEE3;
+  --color-button-white: #FFFFFF;
+  --color-black: #16191B;
+  --color-lines: #9E9AA4;
   --color-lines-dark: #4C4B4B;
   --color-err: #FF5858;
+  --color-white: #F4F1F8;
   --spacing-lines: calc(100% + 2 * var(--gutter));
 
   --font-sans: 'PP Neue Montreal', system-ui, sans-serif;
   --font-mono: 'PP Fraktion Mono', monospace;
   --font-display: 'PP Neue Machina', system-ui, sans-serif;
+  --tracking-display: -0.03em;
 }
 
 @layer base {
+  .font-display {
+    letter-spacing: var(--tracking-display);
+  }
+
   html {
     font-family: var(--font-sans);
     font-size: 1rem;
@@ -179,6 +186,10 @@ body {
   overflow-x: clip;
 }
 
+body:not(.is-homepage) h1 {
+  letter-spacing: -0.02em;
+}
+
 /* ==========================================
    REUSABLE UTILITY CLASSES
    ========================================== */
@@ -190,13 +201,13 @@ body {
 
   /* Section headers - monospace uppercase labels */
   .section-label {
-    @apply font-mono text-[1rem] uppercase text-black/70;
+    @apply font-mono text-[0.875rem] uppercase text-black;
   }
 
   /* Dark variant for dark backgrounds */
   .bg-black .section-label,
   [data-theme="dark"] .section-label {
-    @apply text-white/70;
+    @apply text-button-white/70;
   }
 
   /* Display headings - large decorative titles */
@@ -229,6 +240,56 @@ body {
   /* CTA link hover effect (subtler) */
   .link-hover-subtle {
     @apply hover:opacity-90 transition-opacity duration-300;
+  }
+
+  .underline-hover {
+    position: relative;
+    padding-bottom: 2px;
+    text-decoration: none;
+  }
+
+  .underline-hover::after {
+    content: "";
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    height: 1px;
+    background: currentColor;
+    transform: scaleX(1);
+    transform-origin: right center;
+  }
+
+  .hero-filter-list li::marker {
+    font-size: 0.9em;
+  }
+
+  @media (hover: hover) {
+    .underline-hover:hover::after {
+      animation: underline-hover-line 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+  }
+
+  @keyframes underline-hover-line {
+    0% {
+      transform: scaleX(1);
+      transform-origin: right center;
+    }
+
+    45% {
+      transform: scaleX(0);
+      transform-origin: right center;
+    }
+
+    46% {
+      transform: scaleX(0);
+      transform-origin: left center;
+    }
+
+    100% {
+      transform: scaleX(1);
+      transform-origin: left center;
+    }
   }
 
   /* -----------------------------------------
@@ -285,6 +346,26 @@ body {
     background-color: var(--color-bg-light);
   }
 
+  .full-width-dark-bg {
+    @apply relative;
+  }
+
+  .full-width-dark-bg::before {
+    content: "";
+    @apply absolute top-0 left-1/2 -translate-x-1/2 w-screen h-full -z-1;
+    background-color: var(--color-black);
+  }
+
+  .full-width-white-bg {
+    @apply relative;
+  }
+
+  .full-width-white-bg::before {
+    content: "";
+    @apply absolute top-0 left-1/2 -translate-x-1/2 w-screen h-full -z-1;
+    background-color: var(--color-white);
+  }
+
   /* -----------------------------------------
      Visual Elements
      ----------------------------------------- */
@@ -300,7 +381,7 @@ body {
 
   /* Logo sizing (responsive) */
   .logo-size {
-    @apply h-[17px] w-auto sm:h-auto sm:w-20 md:w-28;
+    @apply w-auto sm:h-auto sm:w-20 md:w-28;
   }
 }
 
@@ -312,6 +393,50 @@ svg polygon {
   vector-effect: non-scaling-stroke;
 }
 
+.decorative-diagonal-spin {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: decorative-diagonal-spin 1.6s steps(6, end) infinite;
+}
+
+.decorative-diagonal-box {
+  overflow: visible;
+}
+
+@keyframes decorative-diagonal-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 .font-neuebit {
   font-family: 'PP Neue Bit', system-ui, sans-serif;
+}
+
+/* Service offer grid - 3 columns on desktop */
+@media (min-width: 1024px) {
+  .offer-grid {
+    grid-template-columns: repeat(3, auto);
+    justify-content: space-between;
+  }
+}
+
+/* Contact form responsive overrides (TSX not scanned by Tailwind 4) */
+.form-control {
+  display: block;
+  line-height: 1.1;
+  min-height: calc(1em + 2.5rem);
+}
+
+@media (min-width: 1024px) {
+  .form-input-py {
+    padding-top: 20px !important;
+    padding-bottom: 20px !important;
+  }
+  .form-control {
+    min-height: calc(1em + 40px);
+  }
+  .form-gap {
+    gap: 60px !important;
+  }
 }

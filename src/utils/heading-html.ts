@@ -3,6 +3,7 @@ export function formatHeadingHtml(value: string | null | undefined): string {
 
   return value
     .replace(/\r\n/g, "\n")
+    .replace(/\\n/g, "\n")
     .replace(/<br\s*\/?>/gi, " <br> ")
     .replace(/\n/g, " <br> ");
 }

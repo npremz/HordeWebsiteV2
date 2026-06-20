@@ -1,0 +1,103 @@
+---
+import type { Locale } from "../../i18n";
+import type { LocalizedProject } from "../../lib/content/projects";
+import { getProjectHref } from "../../lib/projectServices";
+
+interface Props {
+  projects: LocalizedProject[];
+  lang: Locale;
+  countLabel: string;
+  variant?: 'light' | 'dark';
+}
+
+const { projects, lang, countLabel, variant = 'light' } = Astro.props;
+const isDark = variant === 'dark';
+
+const displayMetaBySlug: Record<string, { type: string }> = {
+  "cafe-belga": { type: "Landing page" },
+  "e-putch": { type: "Landing page" },
+  merly: { type: "Case study" },
+};
+
+function getDisplayTitle(project: LocalizedProject): string {
+  return project.shortTitle.replace(/-/g, "").toUpperCase();
+}
+
+function getDisplayType(project: LocalizedProject): string {
+  return displayMetaBySlug[project.slug]?.type || project.projectTypes[0] || "";
+}
+
+function getDisplayYear(project: LocalizedProject): string {
+  const year = new Date(project.entry.data.publishedDate).getFullYear();
+  return Number.isFinite(year) ? String(year) : "";
+}
+---
+
+<div
+  class="projects-index mx-auto w-full max-w-[1300px]"
+  data-variant={variant}
+>
+
+  <ol class="">
+    {
+      projects.map((project) => {
+        const href = project.inProgress ? undefined : getProjectHref(project.slug, lang);
+        const RowTag = project.inProgress ? "div" : "a";
+
+        return (
+          <li class:list={['border-b last:border-b-0', isDark ? 'border-lines-dark' : 'border-lines']}>
+            <RowTag
+              href={href}
+              class="project-row grid min-h-[78px] grid-cols-1 items-center gap-4 pt-8 pb-7 text-center sm:min-h-[108px] sm:pt-10 sm:pb-9 md:min-h-[120px] md:grid-cols-[minmax(110px,1fr)_minmax(0,2.5fr)_minmax(70px,1fr)] md:text-left"
+              title={project.shortTitle}
+            >
+              <span class="hidden font-mono text-[14px] uppercase leading-none tracking-[0.08em] md:block">
+                {getDisplayType(project)}
+              </span>
+              <span class="font-display text-[2rem] uppercase leading-none tracking-normal sm:text-center sm:text-[3rem] lg:text-[5rem]">
+                {getDisplayTitle(project)}
+              </span>
+              <span class="hidden justify-self-end font-mono text-[14px] leading-none tracking-[0.08em] md:block">
+                {getDisplayYear(project)}
+              </span>
+            </RowTag>
+          </li>
+        );
+      })
+    }
+  </ol>
+</div>
+
+<style>
+  .project-row {
+    position: relative;
+    isolation: isolate;
+  }
+
+  .project-row::before {
+    content: "";
+    position: absolute;
+    top: 10px;
+    right: -10px;
+    bottom: 10px;
+    left: -10px;
+    z-index: -1;
+    background: #FFFFFF;
+    transform: scaleY(0);
+    transform-origin: bottom center;
+  }
+
+  @media (hover: hover) {
+    .project-row::before {
+      transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    a.project-row:hover {
+      color: var(--color-black);
+    }
+
+    a.project-row:hover::before {
+      transform: scaleY(1);
+    }
+  }
+</style>

@@ -1,0 +1,417 @@
+import {
+  useEffect,
+  useRef,
+  useState,
+  type ChangeEventHandler,
+  type FormEventHandler,
+} from 'react';
+import { getCtaButtonClasses, type CtaButtonVariant } from '../actions/cta-button-classes';
+
+interface FormData {
+  besoin: string;
+  objectif: string;
+  societe: string;
+  nom: string;
+  email: string;
+}
+
+export interface FormSource {
+  type: 'contact-page' | 'service-page';
+  pagePath?: string;
+  serviceSlug?: string;
+}
+
+interface FormErrors {
+  besoin?: string;
+  objectif?: string;
+  nom?: string;
+  email?: string;
+}
+
+export interface FormTranslations {
+  needLabel: string;
+  objectifLabel: string;
+  objectifPlaceholder: string;
+  nameLabel: string;
+  namePlaceholder: string;
+  emailLabel: string;
+  companyLabel: string;
+  companyPlaceholder: string;
+  submit: string;
+  submitting: string;
+  successMessage: string;
+  errorMessage: string;
+  requiredField: string;
+  invalidEmail: string;
+  maxLengthPrefix: string;
+  maxLengthSuffix: string;
+  options: {
+    auditOffert: string;
+    creationEcommerce: string;
+    creationLandingPage: string;
+    creationMvpSaas: string;
+    optimisationSiteWeb: string;
+    refonteSiteWeb: string;
+    autre: string;
+  };
+}
+
+interface ContactFormProps {
+  translations: FormTranslations;
+  variant?: 'light' | 'dark';
+  hideNeedField?: boolean;
+  source?: FormSource;
+  submitClassName?: string;
+}
+
+export default function ContactForm({
+  translations: t,
+  variant = 'dark',
+  hideNeedField = false,
+  source,
+  submitClassName,
+}: ContactFormProps) {
+  const defaultBesoin = hideNeedField ? '' : 'audit-offert';
+
+  const [formData, setFormData] = useState<FormData>({
+    besoin: defaultBesoin,
+    objectif: '',
+    societe: '',
+    nom: '',
+    email: '',
+  });
+
+  const [errors, setErrors] = useState<FormErrors>({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
+
+  const resizeTextarea = () => {
+    const textarea = textareaRef.current;
+    if (textarea) {
+      textarea.style.height = 'auto';
+      textarea.style.height = textarea.scrollHeight + 'px';
+    }
+  };
+
+  useEffect(() => {
+    resizeTextarea();
+  }, [formData.objectif]);
+
+  const besoinOptions = [
+    { value: 'audit-offert', label: t.options.auditOffert },
+    { value: 'creation-ecommerce', label: t.options.creationEcommerce },
+    { value: 'creation-landing-page', label: t.options.creationLandingPage },
+    { value: 'creation-mvp-saas', label: t.options.creationMvpSaas },
+    { value: 'optimisation-site-web', label: t.options.optimisationSiteWeb },
+    { value: 'refonte-site-web', label: t.options.refonteSiteWeb },
+    { value: 'autre', label: t.options.autre },
+  ];
+
+  const MAX_LENGTHS = {
+    objectif: 2000,
+    nom: 100,
+    email: 254,
+    societe: 200,
+  };
+
+  const validateForm = (): boolean => {
+    const newErrors: FormErrors = {};
+    const maxLengthMessage = (maxLength: number) => `${t.maxLengthPrefix} ${maxLength} ${t.maxLengthSuffix}`;
+
+    if (!hideNeedField && !formData.besoin) {
+      newErrors.besoin = t.requiredField;
+    }
+
+    if (!formData.objectif.trim()) {
+      newErrors.objectif = t.requiredField;
+    } else if (formData.objectif.length > MAX_LENGTHS.objectif) {
+      newErrors.objectif = maxLengthMessage(MAX_LENGTHS.objectif);
+    }
+
+    if (!formData.nom.trim()) {
+      newErrors.nom = t.requiredField;
+    } else if (formData.nom.length > MAX_LENGTHS.nom) {
+      newErrors.nom = maxLengthMessage(MAX_LENGTHS.nom);
+    }
+
+    if (!formData.email.trim()) {
+      newErrors.email = t.requiredField;
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+      newErrors.email = t.invalidEmail;
+    } else if (formData.email.length > MAX_LENGTHS.email) {
+      newErrors.email = maxLengthMessage(MAX_LENGTHS.email);
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleSubmit: FormEventHandler<HTMLFormElement> = async (e) => {
+    e.preventDefault();
+
+    if (!validateForm()) {
+      return;
+    }
+
+    setIsSubmitting(true);
+    setSubmitStatus('idle');
+
+    try {
+      const payload = {
+        objectif: formData.objectif,
+        societe: formData.societe,
+        nom: formData.nom,
+        email: formData.email,
+        ...(formData.besoin ? { besoin: formData.besoin } : {}),
+        ...(source ? { source } : {}),
+      };
+
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(payload),
+      });
+
+      if (response.ok) {
+        setSubmitStatus('success');
+        setFormData({
+          besoin: defaultBesoin,
+          objectif: '',
+          societe: '',
+          nom: '',
+          email: '',
+        });
+      } else {
+        setSubmitStatus('error');
+      }
+    } catch {
+      setSubmitStatus('error');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const handleChange = (field: keyof FormData, value: string) => {
+    setFormData((prev) => ({ ...prev, [field]: value }));
+    if (errors[field as keyof FormErrors]) {
+      setErrors((prev) => ({ ...prev, [field]: undefined }));
+    }
+  };
+
+  const handleNeedChange: ChangeEventHandler<HTMLInputElement> = (e) => {
+    handleChange('besoin', e.target.value);
+  };
+
+  const handleObjectifInput: FormEventHandler<HTMLTextAreaElement> = (e) => {
+    handleChange('objectif', e.currentTarget.value);
+  };
+
+  const handleNameChange: ChangeEventHandler<HTMLInputElement> = (e) => {
+    handleChange('nom', e.target.value);
+  };
+
+  const handleEmailChange: ChangeEventHandler<HTMLInputElement> = (e) => {
+    handleChange('email', e.target.value);
+  };
+
+  const handleCompanyChange: ChangeEventHandler<HTMLInputElement> = (e) => {
+    handleChange('societe', e.target.value);
+  };
+
+  const ctaVariant: CtaButtonVariant = variant === 'dark' ? 'light' : 'dark';
+  const submitCta = getCtaButtonClasses(
+    ctaVariant,
+    false,
+    [
+      'disabled:opacity-50 disabled:cursor-not-allowed self-center md:self-end',
+      submitClassName,
+    ].filter(Boolean).join(' '),
+  );
+
+  return (
+    <form className="flex flex-col gap-10 form-gap" onSubmit={(e) => void handleSubmit(e)} noValidate>
+      {!hideNeedField && (
+        <fieldset className='flex flex-col gap-5 '>
+          <div className={`relative flex flex-col md:flex-row md:gap-16 lg:gap-32 md:items-center w-full border-b transition-colors ${errors.besoin
+            ? 'border-err'
+            : variant === 'dark' ? 'border-[#A29FA9]' : 'border-lines'
+            }`}>
+            <legend className='text-[16px] block md:w-36 md:pb-4 md:shrink-0 relative'>
+              {t.needLabel}<span aria-hidden="true">*</span>
+            </legend>
+            {errors.besoin && (
+              <span id="besoin-error" role="alert" className="sr-only">{errors.besoin}</span>
+            )}
+            <div className="w-full flex flex-wrap gap-5 lg:gap-[2.5rem] mt-5 pb-5 md:pb-10">
+              {besoinOptions.map((option) => (
+                <label
+                  key={option.value}
+                    className={`text-[1.375rem] border-b transition-all duration-300 ease-in-out cursor-pointer ${formData.besoin === option.value
+                    ? (variant === 'dark' ? 'text-button-white border-white' : 'text-black border-black')
+                    : errors.besoin
+                      ? 'border-err text-err'
+                      : (variant === 'dark' ? 'text-[#A29FA9] border-transparent hover:text-button-white hover:border-white' : 'text-[#A29FA9] border-transparent hover:text-black hover:border-black')
+                    }`}
+                >
+                  <input
+                    type="radio"
+                    name="besoin"
+                    value={option.value}
+                    checked={formData.besoin === option.value}
+                    onChange={handleNeedChange}
+                    className="sr-only "
+                    aria-describedby={errors.besoin ? 'besoin-error' : undefined}
+                  />
+                  {option.label}
+                </label>
+              ))}
+            </div>
+          </div>
+        </fieldset>
+      )}
+
+      <div className={`flex flex-col md:flex-row md:items-center md:gap-16 lg:gap-32 sm:gap-5 border-b transition-colors ${errors.objectif
+        ? 'border-err'
+        : variant === 'dark' ? 'border-[#A29FA9] focus-within:border-lines' : 'border-lines focus-within:border-black'
+        }`}>
+        <label htmlFor="objectif" className='text-[16px] block md:w-36 md:shrink-0 relative'>
+          {t.objectifLabel}<span aria-hidden="true">*</span>
+          {errors.objectif && (
+            <span aria-hidden="true" className="md:hidden text-err absolute right-0 top-0">{errors.objectif}</span>
+          )}
+        </label>
+        <div className="relative flex-1">
+          {errors.objectif && (
+            <span id="objectif-error" role="alert" className="sr-only">{errors.objectif}</span>
+          )}
+          <textarea
+            ref={textareaRef}
+            id="objectif"
+            name="objectif"
+            rows={1}
+            maxLength={MAX_LENGTHS.objectif}
+            className={`form-control py-5 form-input-py w-full text-2xl sm:text-[2rem] bg-transparent focus:outline-none focus-visible:outline-none transition-colors resize-none overflow-hidden ${errors.objectif ? 'placeholder:text-err' : ''}`}
+            placeholder={t.objectifPlaceholder}
+            value={formData.objectif}
+            onInput={handleObjectifInput}
+            aria-required="true"
+            aria-invalid={!!errors.objectif}
+            aria-describedby={errors.objectif ? 'objectif-error' : undefined}
+          />
+          {errors.objectif && (
+            <span aria-hidden="true" className="section-label text-err block mt-1 absolute right-[30px] top-6 lg:top-8 xl:top-12 hidden md:block">
+              {errors.objectif}
+            </span>
+          )}
+        </div>
+      </div>
+
+      <div className={`flex flex-col md:flex-row md:items-center md:gap-16 lg:gap-32 sm:gap-5 border-b transition-colors ${errors.nom
+        ? 'border-err'
+        : variant === 'dark' ? 'border-[#A29FA9] focus-within:border-lines' : 'border-lines focus-within:border-black'
+        }`}>
+        <label htmlFor="nom" className='text-[16px] block md:w-36 md:shrink-0 relative'>
+          {t.nameLabel}<span aria-hidden="true">*</span>
+          {errors.nom && (
+            <span aria-hidden="true" className="md:hidden text-err absolute right-0 top-0">{errors.nom}</span>
+          )}
+        </label>
+        <div className="relative flex-1">
+          {errors.nom && (
+            <span id="nom-error" role="alert" className="sr-only">{errors.nom}</span>
+          )}
+          <input
+            type="text"
+            id="nom"
+            name="nom"
+            maxLength={MAX_LENGTHS.nom}
+            className={`form-control py-5 form-input-py w-full text-2xl sm:text-[2rem] bg-transparent focus:outline-none focus-visible:outline-none transition-colors ${errors.nom ? 'placeholder:text-err' : ''}`}
+            placeholder={t.namePlaceholder}
+            value={formData.nom}
+            onChange={handleNameChange}
+            aria-required="true"
+            aria-invalid={!!errors.nom}
+            aria-describedby={errors.nom ? 'nom-error' : undefined}
+          />
+          {errors.nom && (
+            <span aria-hidden="true" className="section-label text-err block mt-1 absolute right-[30px] top-6 lg:top-8 xl:top-12 hidden md:block">
+              {errors.nom}
+            </span>
+          )}
+        </div>
+      </div>
+
+      <div className={`flex flex-col md:flex-row md:items-center md:gap-16 lg:gap-32 sm:gap-5 border-b transition-colors ${errors.email
+        ? 'border-err'
+        : variant === 'dark' ? 'border-[#A29FA9] focus-within:border-lines' : 'border-lines focus-within:border-black'
+        }`}>
+        <label htmlFor="email" className='text-[16px] block md:w-36 md:shrink-0 relative'>
+          {t.emailLabel}<span aria-hidden="true">*</span>
+          {errors.email && (
+            <span aria-hidden="true" className="md:hidden text-err absolute right-0 top-0">{errors.email}</span>
+          )}
+        </label>
+        <div className="relative flex-1">
+          {errors.email && (
+            <span id="email-error" role="alert" className="sr-only">{errors.email}</span>
+          )}
+          <input
+            type="email"
+            id="email"
+            name="email"
+            maxLength={MAX_LENGTHS.email}
+            className={`form-control py-5 form-input-py w-full text-2xl sm:text-[2rem] bg-transparent focus:outline-none focus-visible:outline-none transition-colors ${errors.email ? 'placeholder:text-err' : ''}`}
+            placeholder="@"
+            value={formData.email}
+            onChange={handleEmailChange}
+            aria-required="true"
+            aria-invalid={!!errors.email}
+            aria-describedby={errors.email ? 'email-error' : undefined}
+          />
+          {errors.email && (
+            <span aria-hidden="true" className="section-label text-err block mt-1 absolute right-[30px] top-6 lg:top-8 xl:top-12 hidden md:block">
+              {errors.email}
+            </span>
+          )}
+        </div>
+      </div>
+
+      <div className={`flex flex-col md:flex-row md:items-center md:gap-16 lg:gap-32 sm:gap-5 border-b transition-colors ${variant === 'dark' ? 'border-[#A29FA9] focus-within:border-lines' : 'border-lines focus-within:border-black'}`}>
+        <label htmlFor="societe" className='text-[16px] block md:w-36 md:shrink-0'>{t.companyLabel}</label>
+        <input
+          type="text"
+          id="societe"
+          name="societe"
+          maxLength={MAX_LENGTHS.societe}
+          className="form-control py-5 form-input-py flex-1 text-2xl sm:text-[2rem] bg-transparent focus:outline-none focus-visible:outline-none transition-colors"
+          placeholder={t.companyPlaceholder}
+          value={formData.societe}
+          onChange={handleCompanyChange}
+        />
+      </div>
+
+      <div className='mt-5 sm:mt-10 xl:mt-16 flex flex-col md:flex-row md:gap-16 lg:gap-32 md:justify-end'>
+        <button type="submit" disabled={isSubmitting} className={submitCta.classes}>
+          <span className={submitCta.overlay} aria-hidden="true"></span>
+          <span className={submitCta.labelTrack}>
+            <span className={submitCta.labelBase}>{isSubmitting ? t.submitting : t.submit}</span>
+          </span>
+          <span className={submitCta.labelOverlay} aria-hidden="true">
+            <span className={submitCta.labelOverlayText}>{isSubmitting ? t.submitting : t.submit}</span>
+          </span>
+        </button>
+      </div>
+
+      {submitStatus === 'success' && (
+        <p role="status">{t.successMessage}</p> 
+      )}
+
+      {submitStatus === 'error' && (
+        <p role="alert">{t.errorMessage}</p>
+      )}
+    </form>
+  );
+}

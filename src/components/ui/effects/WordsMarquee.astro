@@ -1,0 +1,88 @@
+---
+interface Props {
+  words?: string[];
+  class?: string;
+}
+
+const {
+  words = [
+    "Technologie",
+    "Performance web",
+    "Design",
+    "Stratégie",
+  ],
+  class: className = "",
+} = Astro.props;
+
+const repeatedWords = Array.from({ length: 8 }, () => words).flat();
+---
+
+<div class:list={["words-marquee section-label", className]} aria-hidden="true">
+  <div class="words-marquee__track">
+    {
+      [0, 1].map(() => (
+        <div class="words-marquee__group">
+          {repeatedWords.map((word) => (
+            <span class="words-marquee__item">{word}</span>
+          ))}
+        </div>
+      ))
+    }
+  </div>
+</div>
+
+<style>
+  .words-marquee {
+    --words-marquee-bg: #C5C1CD;
+    height: 30px;
+    position: relative;
+    left: 50%;
+    width: 100vw;
+    overflow: hidden;
+    background: var(--words-marquee-bg);
+    color: var(--color-black);
+    display: flex;
+    align-items: center;
+    transform: translateX(-50%);
+    white-space: nowrap;
+  }
+
+  .words-marquee__track {
+    display: flex;
+    width: max-content;
+    animation: words-marquee-scroll 22s linear infinite;
+    will-change: transform;
+  }
+
+  .words-marquee__group {
+    display: flex;
+    align-items: center;
+    flex: 0 0 auto;
+  }
+
+  .words-marquee__item {
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .words-marquee__item::after {
+    content: "-";
+    padding-inline: 0.75rem;
+  }
+
+  @keyframes words-marquee-scroll {
+    from {
+      transform: translate3d(0, 0, 0);
+    }
+
+    to {
+      transform: translate3d(-50%, 0, 0);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .words-marquee__track {
+      animation-duration: 60s;
+    }
+  }
+</style>

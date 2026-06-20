@@ -1,8 +1,8 @@
 ---
 import Layout from '../../layouts/Layout.astro';
-import ContactForm from '../../components/ui/ContactForm';
-import Wrapped from '../../components/ui/Wrapped.astro';
+import ContactForm from '../../components/ui/forms/ContactForm';
 import Footer from '../../components/Footer.astro';
+import HeroStructure from '../../components/blog/HeroStructure.astro';
 import { SUPPORTED_LOCALES, type Locale, useTranslations } from '../../i18n';
 
 export const prerender = true;
@@ -15,74 +15,100 @@ export function getStaticPaths() {
 
 const { lang } = Astro.params as { lang: Locale };
 const t = useTranslations(lang);
+const breadcrumbAriaLabel = t.contact.breadcrumbAriaLabel;
+const breadcrumbItems = [
+	{ label: t.contact.breadcrumbHome, href: `/${lang}` },
+	{ label: t.contact.breadcrumbContact },
+];
+const contactLinks = [
+	{ href: 'mailto:hello@hordeagence.com', label: 'hello@hordeagence.com' },
+	{ href: 'https://calendly.com/ni-premont/30min', label: t.contact.bookCall },
+];
+const contactHeadingLines = [t.contact.knockKnock, t.contact.startWhen];
 ---
-
-<style>
-	.contact-link {
-		position: relative;
-		display: inline-block;
-		border-bottom: 1px solid rgba(177, 177, 177, 0.5);
-	}
-
-	.contact-link::after {
-		content: '';
-		position: absolute;
-		bottom: -1px;
-		left: 0;
-		width: 100%;
-		height: 1px;
-		background-color: currentColor;
-		transform: scaleX(0);
-		transform-origin: left center;
-		transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-	}
-
-	.contact-link:hover::after {
-		transform: scaleX(1);
-	}
-</style>
 
 <Layout lang={lang} title={t.contact.title} variant="dark" description={t.contact.description}>
 	<div id="page-content">
-		<div class="mt-40 sm:mt-50 lg:mt-80 xl:mt-96 flex flex-col md:flex-row md:justify-between md:items-start gap-10 sm:gap-16">
-			<div class="flex flex-col gap-4 sm:gap-8 shrink-0">
-				<div class="section-label">{t.contact.knockKnock}</div>
-				<h1 class="font-display uppercase leading-none text-[1.5rem] sm:text-[2rem] md:text-[3.125rem] max-w-[350px] sm:max-w-[485px]">{t.contact.startWhen.replace(/\n/g, ' ')}</h1>
-			</div>
-			<div class="flex flex-col gap-4 sm:gap-8 text-right">
-				<div class="section-label">{t.contact.alternativeContacts}</div>
-				<ul class="flex flex-col gap-2.5 text-[1.25rem] sm:text-[1.5rem]">
-					<li><a href="mailto:hello@hordeagence.com" class="contact-link" title="hello@hordeagence.com">hello@hordeagence.com</a></li>
-					<li><a href="https://calendly.com/ni-premont/30min" class="contact-link" title={t.contact.bookCall}>{t.contact.bookCall}</a></li>
-				</ul>
-				<button class="cursor-pointer scroll-to-btn ml-auto" data-scroll-target="#contact-form" data-scroll-offset="-100"><Wrapped variant='dark' class="font-mono text-bg-light text-[1rem]">↓</Wrapped></button>
-			</div>
-		</div>
-		<hr class="mt-8 sm:mt-16 md:mt-24 border-lines-dark" />
+			<HeroStructure
+				background="dark"
+				showHorizontalLine={false}
+				showVerticalLine={false}
+				showObliqueLines={false}
+				ariaLabelledby="contact-intro"
+				breadcrumbItems={breadcrumbItems}
+				breadcrumbAriaLabel={breadcrumbAriaLabel}
+				contentClass="sm:h-[426px] lg:h-[490px]"
+			>
+				<div class="w-full sm:flex sm:flex-col sm:gap-8">
+					<div class="flex w-full sm:h-1/2 sm:items-end">
+						<div class="w-full sm:flex sm:justify-between">
+								<div class="relative z-10 flex max-w-[640px] flex-col gap-4 sm:gap-8 lg:w-2/3 lg:max-w-none">
+										<h1 id="contact-intro" class="text-[1.5rem] leading-tight sm:text-[2rem] lg:text-[2.5rem]">
+											{contactHeadingLines.map((line, index) => (
+												<span class="page-hero-reveal-clip">
+													<span class="page-hero-reveal-line lg:whitespace-nowrap" style={`--hero-reveal-order: ${index}`}>{line}</span>
+												</span>
+											))}
+									</h1>
+							</div>
+							<svg class="page-hero-heading-svg hidden sm:block" width="47" height="20" viewBox="0 0 47 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+								<rect width="7" height="20" transform="matrix(1 4.37114e-08 8.74228e-08 -1 0 20)" fill="#F4F1F8"/>
+								<rect width="7" height="20" transform="matrix(1 4.37114e-08 8.74228e-08 -1 14 20)" fill="#F4F1F8"/>
+								<g class="decorative-diagonal-spin">
+									<rect width="7" height="20" transform="matrix(0.707107 0.707107 0.707107 -0.707107 27.4531 14.5938)" fill="#F4F1F8"/>
+								</g>
+							</svg>
+						</div>
+					</div>
 
-		<div id="contact-form">
-			<ContactForm client:load translations={t.form} />
+					<div class="sm:h-1/2 md:flex md:justify-end">
+						<nav
+							class="relative z-10 mt-8 flex flex-col sm:mt-0 sm:w-full sm:flex-row md:w-1/2 md:self-end lg:mt-0 md:justify-end lg:gap-20"
+							aria-label={t.contact.alternativeContacts}
+						>
+								<ul class="hero-filter-list relative flex h-fit list-[square] flex-col gap-2.5 pl-5 pr-10 text-[18px] sm:mt-0 sm:w-fit sm:gap-x-12 sm:pr-24">
+								{
+									contactLinks.map((contactLink, index) => (
+										<>
+											<li class="shrink-0">
+												<a
+													href={contactLink.href}
+													class="underline-hover"
+													title={contactLink.label}
+												>
+													{contactLink.label}
+												</a>
+											</li>
+											{index === 1 && contactLinks.length > 2 && (
+												<li class="hidden list-none sm:block sm:h-0 sm:basis-full sm:overflow-hidden sm:p-0" aria-hidden="true" />
+											)}
+										</>
+									))
+								}
+							</ul>
+							<svg
+								class="absolute bottom-0 right-0 z-10 text-current"
+								width="8"
+								height="35"
+								viewBox="0 0 8 35"
+								fill="none"
+								xmlns="http://www.w3.org/2000/svg"
+								aria-hidden="true"
+							>
+								<path
+									d="M1.95527 35L-4.1008e-05 35C2.89218 30.1433 5.05117 24.8452 5.05117 17.4197C5.05117 10.1548 2.89219 4.85665 -3.78207e-05 -6.1196e-07L1.95527 -4.47859e-07C4.76602 4.0539 7.29163 10.1548 7.29163 17.4197C7.29163 24.9255 4.76602 30.9461 1.95527 35Z"
+									fill="currentColor"
+								/>
+							</svg>
+						</nav>
+					</div>
+				</div>
+			</HeroStructure>
+
+		<div id="contact-form" class="">
+			<ContactForm client:visible translations={t.form} submitClassName="border border-button-white" />
 		</div>
 	</div>
 
 	<Footer lang={lang} variant="dark" hideOverflow={false} />
 </Layout>
-
-<script>
-	function initScrollButtons() {
-		const scrollButtons = document.querySelectorAll('.scroll-to-btn');
-
-		scrollButtons.forEach(btn => {
-			btn.addEventListener('click', () => {
-				const target = btn.getAttribute('data-scroll-target');
-				const offset = Number(btn.getAttribute('data-scroll-offset')) || 0;
-				if (target && (window as any).lenis) {
-					(window as any).lenis.scrollTo(target, { duration: 1.2, offset });
-				}
-			});
-		});
-	}
-
-	initScrollButtons();
-	document.addEventListener('astro:after-swap', initScrollButtons);
-</script>

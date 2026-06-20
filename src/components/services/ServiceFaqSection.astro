@@ -1,0 +1,194 @@
+---
+import type { ServiceData } from "./types";
+import ServiceSection from "./ServiceSection.astro";
+
+interface Props {
+  service: ServiceData;
+}
+
+const { service } = Astro.props;
+
+const sectionClass = "full-width-dark-bg py-8 text-button-white sm:py-16 md:py-24 md:pb-32";
+const titleClass = "text-[1.5rem] leading-[1.2] sm:text-[2rem] md:text-[2.5rem]";
+---
+
+<ServiceSection
+  id="service-faq"
+  sectionKey="faq"
+  titleId="service-faq-title"
+  class={sectionClass}
+>
+  <h2
+    id="service-faq-title"
+    class={titleClass}
+  >
+    {service.faqTitle}
+  </h2>
+  <div class="mt-10 md:mt-16 lg:mt-32">
+    {service.faqItems.map((item, index) => (
+      <div class="faq-item border-b border-lines-dark transition-colors duration-300">
+        <div class="faq-panel relative transition-colors duration-300 ease-out">
+          <button
+            type="button"
+            class="faq-trigger w-full gap-2 flex justify-between py-10 text-left items-center cursor-pointer group"
+            aria-expanded="false"
+            aria-controls={`faq-content-${index}`}
+          >
+            <span class="faq-question text-[1.25rem] sm:text-[1.5rem] md:text-[2rem]">
+              <span class="faq-question-base" set:html={item.question} />
+              <span class="faq-question-overlay" aria-hidden="true" set:html={item.question} />
+            </span>
+            <span class="faq-icon h-fit shrink-0 font-mono text-[18px]" aria-hidden="true">
+              <span class="faq-icon-base">(<span class="icon-plus">+</span><span class="icon-minus hidden">-</span>)</span>
+              <span class="faq-icon-overlay">(<span class="icon-plus">+</span><span class="icon-minus hidden">-</span>)</span>
+            </span>
+          </button>
+          <div
+            id={`faq-content-${index}`}
+            class="faq-content grid grid-rows-[0fr] transition-[grid-template-rows] duration-500 ease-out"
+          >
+            <div class="overflow-hidden">
+              <div class="faq-content-inner pb-10 opacity-0 transition-all duration-500 ease-out delay-0">
+                <p class="text-[18px] leading-relaxed max-w-3xl">
+                  {item.answer}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    ))}
+  </div>
+</ServiceSection>
+
+<style>
+  .faq-trigger[aria-expanded="true"] .icon-plus {
+    display: none;
+  }
+
+  .faq-trigger[aria-expanded="true"] .icon-minus {
+    display: inline;
+  }
+
+  .faq-item.is-open .faq-content {
+    grid-template-rows: 1fr;
+  }
+
+  .faq-panel::before {
+    content: "";
+    position: absolute;
+    top: 10px;
+    right: -20px;
+    bottom: 10px;
+    left: -20px;
+    z-index: -1;
+    background: #FFFFFF;
+    transform: scaleY(0);
+    transform-origin: center bottom;
+  }
+
+  .faq-item.is-open .faq-panel::before {
+    transform: scaleY(1);
+  }
+
+  .faq-question,
+  .faq-icon {
+    position: relative;
+    z-index: 1;
+    display: block;
+    overflow: hidden;
+  }
+
+  .faq-icon {
+    display: inline-flex;
+  }
+
+  .faq-question-base,
+  .faq-question-overlay,
+  .faq-icon-base,
+  .faq-icon-overlay {
+    display: block;
+    transition: transform 0.15s ease-out;
+  }
+
+  .faq-question-overlay,
+  .faq-icon-overlay {
+    position: absolute;
+    inset: 0;
+    transform: translateY(100%);
+    color: var(--color-black);
+  }
+
+  .faq-item.is-open .faq-panel {
+    color: var(--color-black);
+  }
+
+  .faq-item.is-open .faq-content-inner {
+    opacity: 1;
+    transition-delay: 150ms;
+  }
+
+  .faq-item.is-open .faq-question-base,
+  .faq-trigger:hover .faq-question-base,
+  .faq-item.is-open .faq-icon-base,
+  .faq-trigger:hover .faq-icon-base {
+    transform: translateY(-100%);
+  }
+
+  .faq-item.is-open .faq-question-overlay,
+  .faq-trigger:hover .faq-question-overlay,
+  .faq-item.is-open .faq-icon-overlay,
+  .faq-trigger:hover .faq-icon-overlay {
+    transform: translateY(0);
+  }
+
+  @media (hover: hover) {
+    .faq-panel::before {
+      transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+  }
+
+  .faq-item:hover .faq-panel::before {
+    transform: scaleY(1);
+  }
+
+  .faq-item:hover .faq-trigger {
+    color: var(--color-black);
+  }
+</style>
+
+<script>
+  function initFaqAccordion() {
+    const triggers = document.querySelectorAll(".faq-trigger");
+
+    triggers.forEach((trigger) => {
+      trigger.addEventListener("click", () => {
+        const isExpanded = trigger.getAttribute("aria-expanded") === "true";
+        const faqItem = trigger.closest(".faq-item");
+
+        if (!faqItem) return;
+
+        triggers.forEach((otherTrigger) => {
+          if (otherTrigger !== trigger) {
+            otherTrigger.setAttribute("aria-expanded", "false");
+            const otherItem = otherTrigger.closest(".faq-item");
+            if (otherItem) {
+              otherItem.classList.remove("is-open");
+            }
+          }
+        });
+
+        if (isExpanded) {
+          trigger.setAttribute("aria-expanded", "false");
+          faqItem.classList.remove("is-open");
+        } else {
+          trigger.setAttribute("aria-expanded", "true");
+          faqItem.classList.add("is-open");
+        }
+      });
+    });
+  }
+
+  initFaqAccordion();
+  document.addEventListener("astro:after-swap", initFaqAccordion);
+</script>

@@ -4,14 +4,14 @@ items:
   - label: Accueil
     url: /fr
     isExternal: false
-  - label: À propos
-    url: /fr/about
-    isExternal: false
   - label: Services
-    url: '/fr/#services-section'
+    url: /fr/services
     isExternal: false
   - label: Projets
     url: /fr/projets
+    isExternal: false
+  - label: Notre Culture
+    url: /fr/about
     isExternal: false
   - label: Blog
     url: /fr/blog

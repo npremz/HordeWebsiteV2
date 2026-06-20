@@ -1,0 +1,100 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import Footer from '../../../components/Footer.astro';
+import HeroStructure from '../../../components/blog/HeroStructure.astro';
+import Services from '../../../components/homepage/Services.astro';
+import { SUPPORTED_LOCALES, type Locale, useTranslations } from '../../../i18n';
+import { splitHeadingLines } from '../../../utils/split-heading-lines';
+
+export const prerender = true;
+
+export function getStaticPaths() {
+  return SUPPORTED_LOCALES.map((lang) => ({
+    params: { lang },
+  }));
+}
+
+const { lang } = Astro.params as { lang: Locale };
+const t = useTranslations(lang);
+const pageCopy = t.servicesPage;
+const headingLines = splitHeadingLines(pageCopy.heading);
+
+const breadcrumbItems = [
+  { label: pageCopy.breadcrumbHome, href: `/${lang}` },
+  { label: pageCopy.breadcrumbServices },
+];
+---
+
+<Layout
+  lang={lang}
+  title={pageCopy.title}
+  description={pageCopy.description}
+  variant="dark"
+  headerVariant="dark"
+  showContainerLines={false}
+>
+  <article id="page-content" class="text-button-white">
+    <HeroStructure
+      background="dark"
+      showHorizontalLine={false}
+      showVerticalLine={false}
+      showObliqueLines={false}
+      ariaLabelledby="services-intro"
+      breadcrumbItems={breadcrumbItems}
+      breadcrumbAriaLabel={pageCopy.breadcrumbAriaLabel}
+      contentClass="sm:h-[426px] lg:h-[490px]"
+    >
+      <div class="w-full sm:flex sm:flex-col sm:gap-8">
+        <div class="flex w-full sm:h-1/2 sm:items-end">
+          <div class="w-full sm:flex sm:justify-between">
+            <div class="relative z-10 flex max-w-[450px] flex-col gap-4 sm:gap-8 lg:w-1/2 lg:max-w-[600px]">
+              <h1
+                id="services-intro"
+                class="text-[1.5rem] leading-tight sm:text-[2rem] lg:text-[2.5rem]"
+              >
+                {headingLines.map((line, index) => (
+                  <span class="page-hero-reveal-clip">
+                    <span class="page-hero-reveal-line" style={`--hero-reveal-order: ${index}`}>{line}</span>
+                  </span>
+                ))}
+              </h1>
+            </div>
+            <svg class="page-hero-heading-svg hidden sm:block" width="47" height="20" viewBox="0 0 47 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect width="7" height="20" transform="matrix(1 4.37114e-08 8.74228e-08 -1 0 20)" fill="#F4F1F8"/>
+              <rect width="7" height="20" transform="matrix(1 4.37114e-08 8.74228e-08 -1 14 20)" fill="#F4F1F8"/>
+              <g class="decorative-diagonal-spin">
+                <rect width="7" height="20" transform="matrix(0.707107 0.707107 0.707107 -0.707107 27.4531 14.5938)" fill="#F4F1F8"/>
+              </g>
+            </svg>
+          </div>
+        </div>
+
+        <div class="sm:h-1/2 md:flex md:justify-end">
+          <div class="relative z-10 mt-8 flex flex-col sm:mt-0 sm:w-full sm:flex-row md:w-1/2 md:self-end md:justify-end lg:gap-20">
+            <p class="page-hero-reveal-clip relative max-w-[560px] pr-10! text-[1.25rem] leading-[1.27] text-[#FFFFFF] sm:pr-24 md:pr-0">
+              <span class="page-hero-reveal-line" style={`--hero-reveal-order: ${headingLines.length}`}>{pageCopy.intro}</span>
+            </p>
+            <svg
+              class="absolute right-0 bottom-0 z-10 text-current"
+              width="8"
+              height="35"
+              viewBox="0 0 8 35"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
+            >
+              <path
+                d="M1.95527 35L-4.1008e-05 35C2.89218 30.1433 5.05117 24.8452 5.05117 17.4197C5.05117 10.1548 2.89219 4.85665 -3.78207e-05 -6.1196e-07L1.95527 -4.47859e-07C4.76602 4.0539 7.29163 10.1548 7.29163 17.4197C7.29163 24.9255 4.76602 30.9461 1.95527 35Z"
+                fill="currentColor"
+              />
+            </svg>
+          </div>
+        </div>
+      </div>
+    </HeroStructure>
+
+    <Services lang={lang} showHeader={false} spacingClass="text-button-white" />
+  </article>
+
+  <Footer lang={lang} variant="dark" hideOverflow={false} />
+</Layout>

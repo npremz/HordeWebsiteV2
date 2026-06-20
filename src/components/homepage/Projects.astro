@@ -1,0 +1,265 @@
+---
+import { DEFAULT_LOCALE, type Locale, useTranslations } from '../../i18n';
+import { getLocalizedProjects } from '../../lib/content/projects';
+import { getProjectHref } from '../../lib/projectServices';
+
+interface Props {
+  lang?: Locale;
+}
+
+const { lang = DEFAULT_LOCALE } = Astro.props;
+const t = useTranslations(lang);
+const projects = (await getLocalizedProjects(lang)).slice(0, 3);
+---
+
+<section id="projects" class="pt-16 sm:py-32 md:pb-80 lg:pb-120 sm:mx-5 sm:overflow-hidden">
+  <div
+    id="project-home-hover-image"
+    class="hidden md:block pointer-events-none fixed z-50 overflow-visible opacity-0"
+    style="transform: translate(-50%, -50%) scale(0); will-change: transform;"
+    aria-hidden="true"
+  >
+    <div class="w-[315px] h-[315px] overflow-hidden">
+      <img
+        id="project-home-hover-img"
+        src=""
+        alt=""
+        class="w-full h-full object-cover"
+      />
+      <div
+        id="project-home-hover-placeholder"
+        class="hidden w-full h-full bg-white border border-lines items-center justify-center"
+      >
+        <span class="section-label">{t.projects.inProgress}</span>
+      </div>
+    </div>
+  </div>
+
+  <h2 class="font-sans text-[25px] text-center">
+    {t.homepage.projects.countLabel}
+    <span class="font-mono text-[14px]">({projects.length.toString().padStart(2, '0')})</span>
+  </h2>
+  <ul class="mt-6 font-display uppercase text-[2.25rem] sm:text-[4rem] md:text-[5rem] text-center">
+    {projects.map((project, i) => (
+      <>
+        {i > 0 && <li aria-hidden="true" class="h-0 border-t border-lines"></li>}
+        <li>
+          {
+            <a
+              href={getProjectHref(project.slug, lang)}
+              data-project-home-item
+              data-image={project.featuredImage.src || ""}
+              data-in-progress={project.inProgress}
+              class="project-home-link relative block pt-8 pb-7 sm:pt-10 sm:pb-9"
+            >
+              <span class="project-home-link__text">
+                <span class="project-home-link__text-base">{project.shortTitle}</span>
+                <span class="project-home-link__text-overlay" aria-hidden="true">{project.shortTitle}</span>
+              </span>
+            </a>
+          }
+        </li>
+      </>
+    ))}
+  </ul>
+</section>
+
+<style>
+  .project-home-link::before {
+    content: "";
+    position: absolute;
+    top: 10px;
+    right: -20px;
+    bottom: 10px;
+    left: -20px;
+    z-index: -1;
+    background-color: var(--color-black);
+    transform: scaleY(0);
+    transform-origin: center bottom;
+  }
+
+  .project-home-link {
+    isolation: isolate;
+  }
+
+  .project-home-link__text {
+    position: relative;
+    z-index: 1;
+    display: block;
+    overflow: hidden;
+    margin-block: -0.05em;
+    padding-block: 0.05em;
+  }
+
+  .project-home-link__text-base,
+  .project-home-link__text-overlay {
+    display: block;
+    transition: transform 0.15s ease-out;
+  }
+
+  .project-home-link__text-overlay {
+    position: absolute;
+    inset: 0.05em 0;
+    color: var(--color-button-white);
+    transform: translateY(110%);
+  }
+
+  @media (hover: hover) {
+    .project-home-link::before {
+      transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    .project-home-link:hover::before {
+      transform: scaleY(1);
+    }
+
+    .project-home-link:hover .project-home-link__text-base {
+      transform: translateY(-110%);
+    }
+
+    .project-home-link:hover .project-home-link__text-overlay {
+      transform: translateY(0);
+    }
+  }
+</style>
+
+<script>
+  function initProjectHomeHoverImage() {
+    const isMobile =
+      window.matchMedia("(max-width: 768px)").matches ||
+      "ontouchstart" in window;
+
+    if (isMobile || !window.matchMedia("(hover: hover)").matches) return;
+
+    const container = document.getElementById("project-home-hover-image");
+    const img = document.getElementById("project-home-hover-img") as HTMLImageElement | null;
+    const placeholder = document.getElementById("project-home-hover-placeholder");
+    const projectItems = document.querySelectorAll("[data-project-home-item]");
+
+    if (!container || !img || !placeholder || !projectItems.length) return;
+
+    const containerEl = container as HTMLElement;
+    const imageEl = img;
+    const placeholderEl = placeholder as HTMLElement;
+    let mouseX = 0;
+    let mouseY = 0;
+    let currentX = 0;
+    let currentY = 0;
+    let velocityX = 0;
+    let currentRotation = 0;
+    let targetRotation = 0;
+    let currentScale = 0;
+    let targetScale = 0;
+    let isHovering = false;
+    let animationId: number | null = null;
+
+    function animate() {
+      const posEase = 0.1;
+      const scaleEase = 0.08;
+      const rotEase = 0.06;
+
+      const prevX = currentX;
+      currentX += (mouseX - currentX) * posEase;
+      currentY += (mouseY - currentY) * posEase;
+
+      velocityX = currentX - prevX;
+      targetRotation = isHovering ? Math.max(-12, Math.min(12, velocityX * 2.5)) : 0;
+      currentScale += (targetScale - currentScale) * scaleEase;
+
+      if (targetScale === 0 && currentScale < 0.01) {
+        currentScale = 0;
+      }
+
+      currentRotation += (targetRotation - currentRotation) * rotEase;
+
+      containerEl.style.left = `${currentX}px`;
+      containerEl.style.top = `${currentY}px`;
+      containerEl.style.transform = `translate(-50%, -50%) scale(${currentScale}) rotate(${currentRotation}deg)`;
+      containerEl.style.opacity = targetScale === 0 && currentScale < 0.01 ? "0" : "1";
+
+      const isAnimating =
+        Math.abs(currentX - mouseX) > 0.1 ||
+        Math.abs(currentY - mouseY) > 0.1 ||
+        Math.abs(currentScale - targetScale) > 0.01 ||
+        Math.abs(currentRotation - targetRotation) > 0.1;
+
+      if (isAnimating) {
+        animationId = requestAnimationFrame(animate);
+      } else {
+        animationId = null;
+      }
+    }
+
+    function startAnimation() {
+      if (!animationId) {
+        animationId = requestAnimationFrame(animate);
+      }
+    }
+
+    function showImage(element: HTMLElement) {
+      const imageSrc = element.dataset.image;
+      const inProgress = element.dataset.inProgress === "true";
+
+      imageEl.classList.toggle("hidden", inProgress);
+      placeholderEl.classList.toggle("hidden", !inProgress);
+      placeholderEl.classList.toggle("flex", inProgress);
+
+      if (inProgress) {
+        imageEl.removeAttribute("src");
+        targetScale = 1;
+        startAnimation();
+        return;
+      }
+
+      if (!imageSrc) {
+        targetScale = 0;
+        startAnimation();
+        return;
+      }
+
+      imageEl.src = imageSrc;
+      targetScale = 1;
+      startAnimation();
+    }
+
+    projectItems.forEach((item) => {
+      const element = item as HTMLElement;
+
+      element.addEventListener("mouseenter", (event) => {
+        mouseX = event.clientX;
+        mouseY = event.clientY;
+        isHovering = true;
+        currentX = mouseX;
+        currentY = mouseY;
+        currentScale = 0;
+        currentRotation = 0;
+        showImage(element);
+      });
+
+      element.addEventListener("mouseleave", () => {
+        isHovering = false;
+        targetScale = 0;
+        startAnimation();
+      });
+
+      element.addEventListener("mousemove", (event) => {
+        mouseX = event.clientX;
+        mouseY = event.clientY;
+        startAnimation();
+      });
+    });
+
+    document.addEventListener(
+      "astro:before-swap",
+      () => {
+        if (animationId) {
+          cancelAnimationFrame(animationId);
+        }
+      },
+      { once: true },
+    );
+  }
+
+  initProjectHomeHoverImage();
+  document.addEventListener("astro:after-swap", initProjectHomeHoverImage);
+</script>

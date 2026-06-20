@@ -1,0 +1,33 @@
+---
+interface Props {
+  class?: string;
+  as?: "div" | "section" | "article" | "main";
+  variant?: "light" | "dark";
+  showLines?: boolean;
+}
+
+const {
+  class: className = "",
+  as: Tag = "div",
+  variant = "light",
+  showLines: showLinesProp = true,
+} = Astro.props as Props;
+const isDark = variant === "dark";
+const showLines = showLinesProp && !isDark;
+---
+
+<Tag
+  class:list={[
+    "-mt-10 mx-auto px-(--gutter) lg:max-w-[1320px] lg:px-0",
+    className,
+  ]}
+>
+  <div
+    class:list={[
+      "w-full relative z-9998",
+      { "sm:border-l sm:border-r sm:border-lines": showLines },
+    ]}
+  >
+    <slot />
+  </div>
+</Tag>

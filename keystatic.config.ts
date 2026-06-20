@@ -318,6 +318,10 @@ const categoriesSchema = {
       validation: { isRequired: true },
     },
   }),
+  slug_en: fields.text({
+    label: 'Identifiant (slug EN)',
+    description: 'Laisser vide pour utiliser le slug principal.',
+  }),
   name_fr: fields.text({
     label: 'Nom (FR)',
     validation: { isRequired: true },
@@ -429,8 +433,15 @@ const blogPostsSchema = {
   tags: fields.array(
     fields.text({ label: 'Tag', validation: { isRequired: true } }),
     {
-      label: 'Tags',
+      label: 'Tags (FR)',
       itemLabel: (props) => props.value || 'Nouveau tag',
+    }
+  ),
+  tags_en: fields.array(
+    fields.text({ label: 'Tag', validation: { isRequired: true } }),
+    {
+      label: 'Tags (EN)',
+      itemLabel: (props) => props.value || 'New tag',
     }
   ),
   publishedDate: fields.date({
@@ -623,6 +634,17 @@ const projectsSchema = {
       },
     }
   ),
+  services: fields.array(
+    fields.relationship({
+      label: 'Service',
+      collection: 'services',
+    }),
+    {
+      label: 'Services filtrables',
+      description: 'Services utilisés pour les pages SEO /projets/[service].',
+      itemLabel: (props) => props.value || 'Service',
+    }
+  ),
   projectTypes: fields.array(
     fields.text({ label: 'Tag', validation: { isRequired: true } }),
     {
@@ -665,6 +687,347 @@ const projectsSchema = {
   }),
 };
 
+const serviceTranslationFields = () => ({
+  seoUrl: fields.text({ label: 'URL' }),
+  seoPrimaryKeyword: fields.text({ label: 'Mot-clé principal' }),
+  seoSecondaryKeywords: fields.array(fields.text({ label: 'Mot-clé' }), {
+    label: 'Mots-clés secondaires',
+    itemLabel: (props) => props.value || 'Mot-clé',
+  }),
+  seoTitle: fields.text({ label: 'Title SEO' }),
+  seoDescription: fields.text({
+    label: 'Meta description',
+    multiline: true,
+  }),
+  seoInternalLinks: fields.array(fields.text({ label: 'Lien interne' }), {
+    label: 'Liens internes SEO',
+    itemLabel: (props) => props.value || 'Lien',
+  }),
+  h1: fields.text({ label: 'H1' }),
+  shortName: fields.text({ label: 'Nom court (section homepage)' }),
+  footerTitle: fields.text({ label: 'Titre footer' }),
+  intro: fields.text({ label: 'Chapeau', multiline: true }),
+  problemTitle: fields.text({ label: 'Titre section problème' }),
+  problemBlocks: fields.array(
+    fields.object({
+      kind: fields.select({
+        label: 'Type de bloc',
+        options: [
+          { label: 'Paragraphe', value: 'paragraph' },
+          { label: 'Item avec titre', value: 'item' },
+          { label: 'Liste', value: 'list' },
+        ],
+        defaultValue: 'paragraph',
+      }),
+      title: fields.text({ label: 'Titre' }),
+      body: fields.text({ label: 'Texte', multiline: true }),
+      items: fields.array(fields.text({ label: 'Item' }), {
+        label: 'Items de liste',
+        itemLabel: (props) => props.value || 'Item',
+      }),
+    }),
+    {
+      label: 'Blocs section problème',
+      itemLabel: (props) => props.fields.title.value || props.fields.body.value || 'Bloc',
+    }
+  ),
+  offerTitle: fields.text({ label: "Titre section offre" }),
+  offerItems: fields.array(
+    fields.object({
+      title: fields.text({ label: 'Titre' }),
+      body: fields.text({ label: 'Texte', multiline: true }),
+    }),
+    {
+      label: "Blocs section offre",
+      itemLabel: (props) => props.fields.title.value || 'Bloc',
+    }
+  ),
+  methodTitle: fields.text({ label: 'Titre section méthode' }),
+  methodSteps: fields.array(
+    fields.object({
+      title: fields.text({ label: 'Titre étape' }),
+      body: fields.text({ label: 'Texte étape', multiline: true }),
+    }),
+    {
+      label: 'Étapes de méthode',
+      itemLabel: (props) => props.fields.title.value || 'Étape',
+    }
+  ),
+  deliverablesTitle: fields.text({ label: 'Titre section livrables' }),
+  deliverables: fields.array(fields.text({ label: 'Livrable' }), {
+    label: 'Livrables',
+    itemLabel: (props) => props.value || 'Livrable',
+  }),
+  exclusionsTitle: fields.text({ label: 'Titre section exclusions' }),
+  exclusionsParagraphs: fields.array(fields.text({ label: 'Paragraphe' }), {
+    label: 'Paragraphes section exclusions',
+    itemLabel: (props) => props.value || 'Paragraphe',
+  }),
+  faqTitle: fields.text({ label: 'Titre section FAQ' }),
+  faqItems: fields.array(
+    fields.object({
+      question: fields.text({ label: 'Question' }),
+      answer: fields.text({ label: 'Réponse', multiline: true }),
+    }),
+    {
+      label: 'Questions / réponses',
+      itemLabel: (props) => props.fields.question.value || 'FAQ',
+    }
+  ),
+  ctaTitle: fields.text({ label: 'Titre CTA' }),
+  ctaParagraphs: fields.array(fields.text({ label: 'Paragraphe' }), {
+    label: 'Paragraphes CTA',
+    itemLabel: (props) => props.value || 'Paragraphe',
+  }),
+  primaryCtaLabel: fields.text({ label: 'Label CTA principal' }),
+  primaryCtaUrl: fields.text({ label: 'URL CTA principal' }),
+  secondaryCtaLabel: fields.text({ label: 'Label CTA secondaire' }),
+  secondaryCtaUrl: fields.text({ label: 'URL CTA secondaire' }),
+  reassurance: fields.text({ label: 'Texte de réassurance', multiline: true }),
+  recommendedLinks: fields.array(
+    fields.object({
+      anchor: fields.text({ label: 'Ancre' }),
+      url: fields.text({ label: 'URL' }),
+    }),
+    {
+      label: 'Maillage interne recommandé',
+      itemLabel: (props) => props.fields.anchor.value || 'Lien',
+    }
+  ),
+});
+
+const servicesSchema = {
+  slug: fields.slug({
+    name: {
+      label: 'Identifiant (slug)',
+      description: 'Identifiant unique du service (ex: audit-offert)',
+      validation: { isRequired: true },
+    },
+  }),
+  seoUrl: fields.text({
+    label: 'URL',
+    validation: { isRequired: true },
+  }),
+  seoPrimaryKeyword: fields.text({
+    label: 'Mot-clé principal',
+    validation: { isRequired: true },
+  }),
+  seoSecondaryKeywords: fields.array(
+    fields.text({ label: 'Mot-clé', validation: { isRequired: true } }),
+    {
+      label: 'Mots-clés secondaires',
+      itemLabel: (props) => props.value || 'Mot-clé',
+    }
+  ),
+  seoTitle: fields.text({
+    label: 'Title SEO',
+    validation: { isRequired: true },
+  }),
+  seoDescription: fields.text({
+    label: 'Meta description',
+    validation: { isRequired: true, length: { min: 50, max: 160 } },
+    multiline: true,
+  }),
+  seoRobots: fields.select({
+    label: 'Indexation',
+    options: [
+      { label: 'Indexer et suivre les liens', value: 'index, follow' },
+      { label: 'Ne pas indexer, suivre les liens', value: 'noindex, follow' },
+      { label: 'Ne pas indexer, ne pas suivre', value: 'noindex, nofollow' },
+    ],
+    defaultValue: 'index, follow',
+  }),
+  seoInternalLinks: fields.array(
+    fields.text({ label: 'Lien interne', validation: { isRequired: true } }),
+    {
+      label: 'Liens internes SEO',
+      itemLabel: (props) => props.value || 'Lien',
+    }
+  ),
+  h1: fields.text({
+    label: 'H1',
+    validation: { isRequired: true },
+  }),
+  shortName: fields.text({
+    label: 'Nom court (section homepage)',
+    description: 'Nom affiché dans la liste des services sur la page d\'accueil. Si vide, le H1 est utilisé.',
+  }),
+  footerTitle: fields.text({
+    label: 'Titre footer',
+    description: 'Titre affiché dans la liste des services du footer. Si vide, le nom court puis le H1 sont utilisés.',
+  }),
+  footerOrder: fields.integer({
+    label: "Ordre dans le footer",
+    description: "Tri spécifique au footer. Si vide, l'ordre d'affichage du service est utilisé.",
+  }),
+  translations: fields.object(
+    {
+      en: fields.object(serviceTranslationFields(), {
+        label: 'Traduction anglaise',
+      }),
+    },
+    {
+      label: 'Traductions',
+    }
+  ),
+  intro: fields.text({
+    label: 'Chapeau',
+    validation: { isRequired: true },
+    multiline: true,
+  }),
+  problemTitle: fields.text({
+    label: 'Titre section problème',
+    validation: { isRequired: true },
+  }),
+  problemBlocks: fields.array(
+    fields.object({
+      kind: fields.select({
+        label: 'Type de bloc',
+        options: [
+          { label: 'Paragraphe', value: 'paragraph' },
+          { label: 'Item avec titre', value: 'item' },
+          { label: 'Liste', value: 'list' },
+        ],
+        defaultValue: 'paragraph',
+      }),
+      title: fields.text({
+        label: 'Titre',
+      }),
+      body: fields.text({
+        label: 'Texte',
+        multiline: true,
+      }),
+      items: fields.array(
+        fields.text({ label: 'Item', validation: { isRequired: true } }),
+        {
+          label: 'Items de liste',
+          itemLabel: (props) => props.value || 'Item',
+        }
+      ),
+    }),
+    {
+      label: 'Blocs section problème',
+      itemLabel: (props) => {
+        const kind = props.fields.kind.value;
+        if (kind === 'list') return 'Liste';
+        return props.fields.title.value || props.fields.body.value || 'Bloc';
+      },
+    }
+  ),
+  offerTitle: fields.text({
+    label: "Titre section offre",
+    validation: { isRequired: true },
+  }),
+  offerItems: fields.array(
+    fields.object({
+      title: fields.text({ label: 'Titre', validation: { isRequired: true } }),
+      body: fields.text({ label: 'Texte', validation: { isRequired: true }, multiline: true }),
+    }),
+    {
+      label: "Blocs section offre",
+      itemLabel: (props) => props.fields.title.value || 'Bloc',
+    }
+  ),
+  methodTitle: fields.text({
+    label: 'Titre section méthode',
+    validation: { isRequired: true },
+  }),
+  methodSteps: fields.array(
+    fields.object({
+      title: fields.text({ label: 'Titre étape', validation: { isRequired: true } }),
+      body: fields.text({ label: 'Texte étape', validation: { isRequired: true }, multiline: true }),
+    }),
+    {
+      label: 'Étapes de méthode',
+      itemLabel: (props) => props.fields.title.value || 'Étape',
+    }
+  ),
+  deliverablesTitle: fields.text({
+    label: 'Titre section livrables',
+    validation: { isRequired: true },
+  }),
+  deliverables: fields.array(
+    fields.text({ label: 'Livrable', validation: { isRequired: true } }),
+    {
+      label: 'Livrables',
+      itemLabel: (props) => props.value || 'Livrable',
+    }
+  ),
+  exclusionsTitle: fields.text({
+    label: 'Titre section exclusions',
+    validation: { isRequired: true },
+  }),
+  exclusionsParagraphs: fields.array(
+    fields.text({ label: 'Paragraphe', validation: { isRequired: true } }),
+    {
+      label: 'Paragraphes section exclusions',
+      itemLabel: (props) => props.value || 'Paragraphe',
+    }
+  ),
+  faqTitle: fields.text({
+    label: 'Titre section FAQ',
+    validation: { isRequired: true },
+  }),
+  faqItems: fields.array(
+    fields.object({
+      question: fields.text({ label: 'Question', validation: { isRequired: true } }),
+      answer: fields.text({ label: 'Réponse', validation: { isRequired: true }, multiline: true }),
+    }),
+    {
+      label: 'Questions / réponses',
+      itemLabel: (props) => props.fields.question.value || 'FAQ',
+    }
+  ),
+  ctaTitle: fields.text({
+    label: 'Titre CTA',
+    validation: { isRequired: true },
+  }),
+  ctaParagraphs: fields.array(
+    fields.text({ label: 'Paragraphe', validation: { isRequired: true } }),
+    {
+      label: 'Paragraphes CTA',
+      itemLabel: (props) => props.value || 'Paragraphe',
+    }
+  ),
+  primaryCtaLabel: fields.text({
+    label: 'Label CTA principal',
+  }),
+  primaryCtaUrl: fields.text({
+    label: 'URL CTA principal',
+  }),
+  secondaryCtaLabel: fields.text({
+    label: 'Label CTA secondaire',
+  }),
+  secondaryCtaUrl: fields.text({
+    label: 'URL CTA secondaire',
+  }),
+  reassurance: fields.text({
+    label: 'Texte de réassurance',
+    multiline: true,
+  }),
+  recommendedLinks: fields.array(
+    fields.object({
+      anchor: fields.text({ label: 'Ancre', validation: { isRequired: true } }),
+      url: fields.text({ label: 'URL', validation: { isRequired: true } }),
+    }),
+    {
+      label: 'Maillage interne recommandé',
+      itemLabel: (props) => props.fields.anchor.value || 'Lien',
+    }
+  ),
+  notes: fields.array(
+    fields.text({ label: 'Note', validation: { isRequired: true } }),
+    {
+      label: 'Notes rédactionnelles',
+      itemLabel: (props) => props.value || 'Note',
+    }
+  ),
+  order: fields.integer({
+    label: "Ordre d'affichage",
+    defaultValue: 0,
+  }),
+};
+
 // Build localized singletons
 const singletons: Record<string, ReturnType<typeof singleton>> = {};
 
@@ -694,7 +1057,7 @@ for (const locale of LOCALES) {
 }
 
 // Collections
-const collections: Record<string, ReturnType<typeof collection>> = {};
+const collections: Record<string, any> = {};
 
 // Collection projets (multilingue)
 collections['projects'] = collection({
@@ -702,6 +1065,13 @@ collections['projects'] = collection({
   slugField: 'slug',
   path: 'src/content/projects/*',
   schema: projectsSchema,
+});
+
+collections['services'] = collection({
+  label: 'Services',
+  slugField: 'slug',
+  path: 'src/content/services/*',
+  schema: servicesSchema,
 });
 
 // Collections blog
