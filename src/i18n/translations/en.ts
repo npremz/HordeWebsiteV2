@@ -465,6 +465,7 @@ export const en: Translations = {
   // Accessibility
   a11y: {
     skipToContent: 'Skip to main content',
+    scrollToContent: 'Skip to content',
   },
 
   // About Page

@@ -242,6 +242,9 @@ export default function ContactForm({
             <legend className='text-[16px] block md:w-36 md:pb-4 md:shrink-0 relative'>
               {t.needLabel}<span aria-hidden="true">*</span>
             </legend>
+            {errors.besoin && (
+              <span id="besoin-error" role="alert" className="sr-only">{errors.besoin}</span>
+            )}
             <div className="w-full flex flex-wrap gap-5 lg:gap-[2.5rem] mt-5 pb-5 md:pb-10">
               {besoinOptions.map((option) => (
                 <label
@@ -277,10 +280,13 @@ export default function ContactForm({
         <label htmlFor="objectif" className='text-[16px] block md:w-36 md:shrink-0 relative'>
           {t.objectifLabel}<span aria-hidden="true">*</span>
           {errors.objectif && (
-            <span id="objectif-error" role="alert" className="md:hidden text-err absolute right-0 top-0">{errors.objectif}</span>
+            <span aria-hidden="true" className="md:hidden text-err absolute right-0 top-0">{errors.objectif}</span>
           )}
         </label>
         <div className="relative flex-1">
+          {errors.objectif && (
+            <span id="objectif-error" role="alert" className="sr-only">{errors.objectif}</span>
+          )}
           <textarea
             ref={textareaRef}
             id="objectif"
@@ -296,7 +302,7 @@ export default function ContactForm({
             aria-describedby={errors.objectif ? 'objectif-error' : undefined}
           />
           {errors.objectif && (
-            <span id="objectif-error" role="alert" className="section-label text-err block mt-1 absolute right-[30px] top-6 lg:top-8 xl:top-12 hidden md:block">
+            <span aria-hidden="true" className="section-label text-err block mt-1 absolute right-[30px] top-6 lg:top-8 xl:top-12 hidden md:block">
               {errors.objectif}
             </span>
           )}
@@ -310,10 +316,13 @@ export default function ContactForm({
         <label htmlFor="nom" className='text-[16px] block md:w-36 md:shrink-0 relative'>
           {t.nameLabel}<span aria-hidden="true">*</span>
           {errors.nom && (
-            <span className="md:hidden text-err absolute right-0 top-0">{errors.nom}</span>
+            <span aria-hidden="true" className="md:hidden text-err absolute right-0 top-0">{errors.nom}</span>
           )}
         </label>
         <div className="relative flex-1">
+          {errors.nom && (
+            <span id="nom-error" role="alert" className="sr-only">{errors.nom}</span>
+          )}
           <input
             type="text"
             id="nom"
@@ -328,7 +337,7 @@ export default function ContactForm({
             aria-describedby={errors.nom ? 'nom-error' : undefined}
           />
           {errors.nom && (
-            <span id="nom-error" role="alert" className="section-label text-err block mt-1 absolute right-[30px] top-6 lg:top-8 xl:top-12 hidden md:block">
+            <span aria-hidden="true" className="section-label text-err block mt-1 absolute right-[30px] top-6 lg:top-8 xl:top-12 hidden md:block">
               {errors.nom}
             </span>
           )}
@@ -342,10 +351,13 @@ export default function ContactForm({
         <label htmlFor="email" className='text-[16px] block md:w-36 md:shrink-0 relative'>
           {t.emailLabel}<span aria-hidden="true">*</span>
           {errors.email && (
-            <span className="md:hidden text-err absolute right-0 top-0">{errors.email}</span>
+            <span aria-hidden="true" className="md:hidden text-err absolute right-0 top-0">{errors.email}</span>
           )}
         </label>
         <div className="relative flex-1">
+          {errors.email && (
+            <span id="email-error" role="alert" className="sr-only">{errors.email}</span>
+          )}
           <input
             type="email"
             id="email"
@@ -360,7 +372,7 @@ export default function ContactForm({
             aria-describedby={errors.email ? 'email-error' : undefined}
           />
           {errors.email && (
-            <span id="email-error" role="alert" className="section-label text-err block mt-1 absolute right-[30px] top-6 lg:top-8 xl:top-12 hidden md:block">
+            <span aria-hidden="true" className="section-label text-err block mt-1 absolute right-[30px] top-6 lg:top-8 xl:top-12 hidden md:block">
               {errors.email}
             </span>
           )}

@@ -76,12 +76,14 @@ const typewriterWords = t.hero.typewriterWords;
 		<button
 			class="hidden md:block mt-4 sm:mt-8 font-mono uppercase text-sm cursor-pointer scroll-to-btn slg:translate-x-[12.5%]"
 			data-scroll-target={scrollTarget}
+			aria-label={t.a11y.scrollToContent}
 			><BracketInline class="text-[1rem]">↓</BracketInline></button
 		>
 	</div>
 	<button
 		class="md:hidden absolute mt-0 bottom-8 left-1/2 -translate-x-1/2 sm:left-0 sm:translate-0 font-mono uppercase text-sm sm:bottom-24 md:relative md:bottom-0 cursor-pointer scroll-to-btn"
 		data-scroll-target={scrollTarget}
+		aria-label={t.a11y.scrollToContent}
 		><BracketInline class="text-[1rem]">↓</BracketInline></button
 	>
 </section>

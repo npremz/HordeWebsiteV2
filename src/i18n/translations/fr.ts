@@ -464,6 +464,7 @@ export const fr = {
   // Accessibility
   a11y: {
     skipToContent: 'Aller au contenu principal',
+    scrollToContent: 'Aller au contenu',
   },
 
   // About Page

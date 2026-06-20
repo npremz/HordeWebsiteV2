@@ -52,7 +52,7 @@ const desktopLinkClasses = isDark
 )}
 
 <header class:list={['site-header fixed inset-x-0 top-0 z-[9999] pointer-events-none', textClasses]} data-theme={theme}>
-  <div class="relative z-[3] md:hidden">
+  <div class="relative z-[3] md:hidden" data-header-surface="mobile">
     <div class="site-header__mobile-fixed pl-[15px] pr-[24px]" data-mobile-fixed>
       <div class="relative z-[5] flex h-full items-center justify-between gap-4" data-mobile-row>
         <div class="flex items-center">
@@ -157,7 +157,7 @@ const desktopLinkClasses = isDark
     <div class="site-header__mobile-reveal" data-header-reveal aria-hidden="true" hidden></div>
   </div>
 
-  <div class="hidden md:block slg:hidden">
+  <div class="hidden md:block slg:hidden" data-header-surface="tablet">
     <div class="site-header__tablet-fixed left-[15px] right-[10px] top-[5px] px-[20px]">
       <div class="relative flex h-full items-center justify-between gap-6">
         <div class="site-header__desktop-logo-group flex items-center text-button-white">
@@ -279,7 +279,7 @@ const desktopLinkClasses = isDark
     </div>
   </div>
 
-  <div class="hidden slg:block">
+  <div class="hidden slg:block" data-header-surface="desktop">
     <div class="site-header__desktop-fixed fixed left-[5px] right-[5px] top-[5px] z-[6]" data-desktop-fixed>
       <div class="site-header__desktop-bar relative flex items-center justify-between bg-black px-[20px]" data-desktop-row>
         <div class="site-header__desktop-logo-group flex h-[42px] items-center text-button-white">
@@ -977,9 +977,10 @@ const desktopLinkClasses = isDark
       const label = header.querySelector('[data-header-toggle-label]');
       const mobileFixed = header.querySelector('[data-mobile-fixed]');
       const desktopFixed = header.querySelector('[data-desktop-fixed]');
-      const desktopRow = header.querySelector('[data-desktop-row]');
-      const desktopToggle = header.querySelector('[data-desktop-toggle]');
-      const desktopCurtain = header.querySelector('[data-desktop-curtain]');
+	      const desktopRow = header.querySelector('[data-desktop-row]');
+	      const desktopToggle = header.querySelector('[data-desktop-toggle]');
+	      const desktopCurtain = header.querySelector('[data-desktop-curtain]');
+	      const headerSurfaces = header.querySelectorAll('[data-header-surface]');
 
       if (
         !(toggle instanceof HTMLButtonElement) ||
@@ -1000,26 +1001,52 @@ const desktopLinkClasses = isDark
       let isMobileHiddenByScroll = false;
       const MOBILE_SCROLL_DELTA_THRESHOLD = 8;
       const MOBILE_HIDE_OFFSET = 110;
-      const MOBILE_SOLID_OFFSET = 6;
-      const MOBILE_BREAKPOINT = 1256;
+	      const MOBILE_SOLID_OFFSET = 6;
+	      const MOBILE_BREAKPOINT = 1256;
+	      const TABLET_BREAKPOINT = 768;
 
-      const isMobileViewport = () => window.innerWidth < MOBILE_BREAKPOINT;
+	      const isMobileViewport = () => window.innerWidth < MOBILE_BREAKPOINT;
 
-      const applyMobileHeaderState = () => {
-        if (!isMobileViewport()) {
-          mobileFixed.classList.remove('is-hidden');
-          mobileFixed.classList.remove('is-solid');
-          return;
-        }
+	      const applyHeaderA11yState = () => {
+	        const activeSurface =
+	          window.innerWidth < TABLET_BREAKPOINT
+	            ? 'mobile'
+	            : window.innerWidth < MOBILE_BREAKPOINT
+	              ? 'tablet'
+	              : 'desktop';
+	        const isMenuOpen = toggle.getAttribute('aria-expanded') === 'true';
+
+	        headerSurfaces.forEach((surface) => {
+	          if (!(surface instanceof HTMLElement)) return;
+	          const isActive = surface.dataset.headerSurface === activeSurface;
+	          surface.toggleAttribute('inert', !isActive);
+	          surface.setAttribute('aria-hidden', isActive ? 'false' : 'true');
+	        });
+
+	        document.querySelectorAll('.skip-link, main, footer').forEach((region) => {
+	          if (!(region instanceof HTMLElement)) return;
+	          region.toggleAttribute('inert', isMenuOpen);
+	          region.setAttribute('aria-hidden', isMenuOpen ? 'true' : 'false');
+	        });
+	      };
+
+	      const applyMobileHeaderState = () => {
+	        if (!isMobileViewport()) {
+	          mobileFixed.classList.remove('is-hidden');
+	          mobileFixed.classList.remove('is-solid');
+	          applyHeaderA11yState();
+	          return;
+	        }
 
         const currentScrollY = window.scrollY;
         const isAtTop = currentScrollY <= MOBILE_SOLID_OFFSET;
         const isMenuOpen = toggle.getAttribute('aria-expanded') === 'true';
         const shouldHide = !isAtTop && isMobileHiddenByScroll && !isMenuOpen;
 
-        mobileFixed.classList.toggle('is-hidden', shouldHide);
-        mobileFixed.classList.toggle('is-solid', !isAtTop);
-      };
+	        mobileFixed.classList.toggle('is-hidden', shouldHide);
+	        mobileFixed.classList.toggle('is-solid', !isAtTop);
+	        applyHeaderA11yState();
+	      };
 
       const handleMobileScroll = () => {
         if (!isMobileViewport()) return;
@@ -1063,21 +1090,23 @@ const desktopLinkClasses = isDark
         reveal.classList.remove('is-open');
         window.clearTimeout(closeTimeout);
 
-        if (immediate) {
-          panel.hidden = true;
-          reveal.hidden = true;
-          applyMobileHeaderState();
-          return;
-        }
+	        if (immediate) {
+	          panel.hidden = true;
+	          reveal.hidden = true;
+	          applyMobileHeaderState();
+	          applyHeaderA11yState();
+	          return;
+	        }
 
         closeTimeout = window.setTimeout(() => {
           if (toggle.getAttribute('aria-expanded') === 'false') {
             panel.hidden = true;
             reveal.hidden = true;
           }
-        }, 360);
-        applyMobileHeaderState();
-      };
+	        }, 360);
+	        applyMobileHeaderState();
+	        applyHeaderA11yState();
+	      };
 
       const openMenu = () => {
         toggle.dataset.menuOpen = 'true';
@@ -1085,10 +1114,11 @@ const desktopLinkClasses = isDark
         toggle.setAttribute('aria-label', toggle.dataset.closeLabel || 'Close menu');
         label.textContent = toggle.dataset.closeText || 'Close';
         window.clearTimeout(closeTimeout);
-        panel.hidden = false;
-        reveal.hidden = false;
-        isMobileHiddenByScroll = false;
-        applyMobileHeaderState();
+	        panel.hidden = false;
+	        reveal.hidden = false;
+	        isMobileHiddenByScroll = false;
+	        applyMobileHeaderState();
+	        applyHeaderA11yState();
 
         requestAnimationFrame(() => {
           panel.classList.add('is-open');
@@ -1111,10 +1141,11 @@ const desktopLinkClasses = isDark
         });
       });
 
-      closeMenu(true);
-      applyMobileHeaderState();
-      window.addEventListener('scroll', handleMobileScroll, { passive: true });
-      window.addEventListener('resize', handleMobileResize, { passive: true });
+	      closeMenu(true);
+	      applyMobileHeaderState();
+	      applyHeaderA11yState();
+	      window.addEventListener('scroll', handleMobileScroll, { passive: true });
+	      window.addEventListener('resize', handleMobileResize, { passive: true });
       toggle.dataset.headerBound = 'true';
 
       const breadcrumbSlots = header.querySelectorAll('[data-header-breadcrumb-slot]');
