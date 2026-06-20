@@ -53,6 +53,16 @@ const t = useTranslations(lang);
 const ogLocale = OG_LOCALE_CODES[lang];
 const siteSettings = await getSiteSettings(lang);
 
+function normalizeSeoUrl(url: string): string {
+  const parsedUrl = new URL(url, Astro.site);
+
+  if (!parsedUrl.pathname.endsWith('/') && !/\.[^/]+$/.test(parsedUrl.pathname)) {
+    parsedUrl.pathname = `${parsedUrl.pathname}/`;
+  }
+
+  return parsedUrl.href;
+}
+
 // Get alternate URLs for hreflang
 const siteUrl = Astro.site?.href || 'https://hordeagence.com';
 const baseAlternateUrls = getAlternateUrls(Astro.url.pathname, siteUrl);
@@ -61,7 +71,7 @@ const baseAlternateUrls = getAlternateUrls(Astro.url.pathname, siteUrl);
 const alternateUrlProp = Astro.props.alternateUrl;
 const switchLang = lang === 'fr' ? 'en' : 'fr';
 const alternateUrls = alternateUrlProp
-  ? { ...baseAlternateUrls, [switchLang]: alternateUrlProp }
+  ? { ...baseAlternateUrls, [switchLang]: normalizeSeoUrl(alternateUrlProp) }
   : baseAlternateUrls;
 
 const {
@@ -89,8 +99,8 @@ const fullTitle = siteNameAsPrefix
 
 // Resolve canonical URL
 const canonicalURL = canonical
-  ? new URL(canonical, Astro.site).href
-  : new URL(Astro.url.pathname, Astro.site).href;
+  ? normalizeSeoUrl(canonical)
+  : normalizeSeoUrl(Astro.url.pathname);
 
 // Resolve OG image URL
 const ogImageURL = ogImage
@@ -110,7 +120,7 @@ const sameAs = [
 ];
 const structuredServiceDescription = t.seo.serviceDescription;
 const structuredServiceSlogan = t.seo.serviceSlogan;
-const structuredContactUrl = `${normalizedSiteUrl}/${lang}/contact`;
+const structuredContactUrl = `${normalizedSiteUrl}/${lang}/contact/`;
 ---
 
 <!-- Essential Meta Tags -->

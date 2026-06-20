@@ -1,5 +1,10 @@
 import { SUPPORTED_LOCALES, DEFAULT_LOCALE, type Locale, isValidLocale } from './config';
 
+function withTrailingSlash(path: string): string {
+  if (path === '/') return path;
+  return path.endsWith('/') ? path : `${path}/`;
+}
+
 export function getLocaleFromUrl(url: URL): Locale {
   const [, lang] = url.pathname.split('/');
   if (isValidLocale(lang)) {
@@ -19,9 +24,9 @@ export function getPathWithoutLocale(pathname: string): string {
 export function getLocalizedPath(path: string, locale: Locale): string {
   const cleanPath = getPathWithoutLocale(path);
   if (cleanPath === '/') {
-    return `/${locale}`;
+    return `/${locale}/`;
   }
-  return `/${locale}${cleanPath}`;
+  return withTrailingSlash(`/${locale}${cleanPath}`);
 }
 
 export function getAlternateUrls(
@@ -33,7 +38,7 @@ export function getAlternateUrls(
 
   return SUPPORTED_LOCALES.reduce(
     (acc, locale) => {
-      const localizedPath = path === '/' ? `/${locale}` : `/${locale}${path}`;
+      const localizedPath = path === '/' ? `/${locale}/` : withTrailingSlash(`/${locale}${path}`);
       acc[locale] = `${baseUrl}${localizedPath}`;
       return acc;
     },

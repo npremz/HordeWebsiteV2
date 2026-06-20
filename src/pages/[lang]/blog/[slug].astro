@@ -50,7 +50,7 @@ const authorRole = currentPost.authorRole || '';
 const authorBio = currentPost.authorBio || '';
 const authorAvatar = currentPost.authorAvatar;
 const authorSocial = currentPost.authorSocial;
-const authorPagePath = currentPost.authorSlug ? `/${lang}/authors/${currentPost.authorSlug}` : undefined;
+const authorPagePath: string | undefined = undefined;
 const categoryName = currentPost.categoryName;
 const tags = currentPost.tags;
 const keyTakeaways = currentPost.keyTakeaways;
@@ -211,7 +211,7 @@ const updatedDate = modifiedDate || publishedDate;
 // URL de partage
 const siteUrl = (Astro.site?.toString() || 'https://hordeagence.com').replace(/\/$/, '');
 const articleUrl = `${siteUrl}/${lang}/blog/${currentSlug}`;
-const authorUrl = authorPagePath ? `${siteUrl}${authorPagePath}` : undefined;
+const authorUrl: string | undefined = authorPagePath ? `${siteUrl}${authorPagePath}` : undefined;
 const shareUrl = articleUrl;
 const tagShareLinkClasses = 'underline-hover w-fit inline-flex text-[1.125rem] leading-[1.375rem] font-[375] text-black cursor-pointer';
 const authorSameAs = [
@@ -242,9 +242,9 @@ const schemaOrg = {
 				"@type": "Person",
 				"name": authorName,
 				"jobTitle": authorRole,
-				...(authorUrl && { "url": authorUrl }),
-				...(authorAvatar && { "image": `${siteUrl}${authorAvatar.src}` }),
-				...(authorSameAs.length > 0 && { "sameAs": authorSameAs }),
+				...(authorUrl ? { "url": authorUrl } : {}),
+				...(authorAvatar ? { "image": `${siteUrl}${authorAvatar.src}` } : {}),
+				...(authorSameAs.length > 0 ? { "sameAs": authorSameAs } : {}),
 			},
 			"publisher": {
 				"@type": "Organization",

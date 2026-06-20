@@ -282,7 +282,7 @@ export const en: Translations = {
 
   // Services Page
   servicesPage: {
-    title: 'Services',
+    title: 'Web design services in Brussels',
     description:
       'We take a consultative approach to create digital experiences that build lasting connections between brands and people.',
     heading: 'The right solution to make\nyour business grow',

@@ -281,7 +281,7 @@ export const fr = {
 
   // Services Page
   servicesPage: {
-    title: 'Services',
+    title: 'Services web à Bruxelles',
     description:
       'Une approche consultative pour comprendre vos utilisateurs et créer des expériences digitales qui relient durablement votre marque à son audience.',
     heading: 'La bonne solution pour\nfaire grandir votre business',

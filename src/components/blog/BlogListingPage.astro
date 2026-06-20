@@ -132,7 +132,7 @@ const headingLines = heading.split(/\r?\n|<br\s*\/?>/i).map((line) => line.trim(
       {posts.length > 0 ? (
         <ol class="grid gap-12 sm:gap-16 md:mx-auto md:max-w-[1000px]">
           {posts.map((post) => (
-            <li class="border-b border-lines">
+            <li class="border-b border-lines pb-10 sm:pb-0">
               <article class="grid gap-6 sm:grid-cols-[minmax(180px,200px)_1fr] sm:gap-10 sm:pb-16 md:grid-cols-[minmax(180px,276px)_1fr]">
                 <a href={getBlogPostHref(post.slug, lang)} class="block" aria-label={post.title}>
                   <Image

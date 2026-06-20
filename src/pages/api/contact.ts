@@ -4,8 +4,6 @@ import { z } from 'zod';
 
 export const prerender = false;
 
-const resend = new Resend(import.meta.env.RESEND_API_KEY);
-
 const besoinValues = [
   'audit-offert',
   'creation-ecommerce',
@@ -41,6 +39,16 @@ const besoinLabels: Record<string, string> = {
 
 export const POST: APIRoute = async ({ request }) => {
   try {
+    const resendApiKey = import.meta.env.RESEND_API_KEY;
+
+    if (!resendApiKey) {
+      console.error('Contact API error: RESEND_API_KEY is missing');
+      return new Response(
+        JSON.stringify({ error: 'Configuration email manquante' }),
+        { status: 500, headers: { 'Content-Type': 'application/json' } }
+      );
+    }
+
     const rawData = await request.json();
 
     const result = contactSchema.safeParse(rawData);
@@ -61,6 +69,7 @@ export const POST: APIRoute = async ({ request }) => {
         ? 'Page contact'
         : 'Formulaire non specifie';
     const subjectLabel = besoinLabel || sourceLabel;
+    const resend = new Resend(resendApiKey);
 
     const { error } = await resend.emails.send({
       from: 'Horde Website <noreply@hordeagence.com>',
