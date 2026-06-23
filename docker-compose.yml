@@ -16,3 +16,5 @@ services:
       - KEYSTATIC_GITHUB_CLIENT_SECRET=${KEYSTATIC_GITHUB_CLIENT_SECRET:-}
       - KEYSTATIC_SECRET=${KEYSTATIC_SECRET:-}
       - RESEND_API_KEY=${RESEND_API_KEY}
+      - CONTACT_EMAIL_FROM=${CONTACT_EMAIL_FROM:-Horde Website <noreply@hordeagence.com>}
+      - CONTACT_EMAIL_TO=${CONTACT_EMAIL_TO:-hello@hordeagence.com}
