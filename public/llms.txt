@@ -2,6 +2,8 @@
 
 > Horde Agence est une agence web basee a Bruxelles. Nous concevons des sites web sur mesure, rapides, bien references et simples a maintenir.
 
+Derniere mise a jour: 2026-06-23
+
 ## Identite
 
 - Nom: Horde Agence
@@ -15,55 +17,68 @@
 
 ## Positionnement
 
-Horde Agence accompagne les entreprises qui veulent un site plus rapide, plus clair et plus utile commercialement. L'agence travaille avec une approche senior-only: pas d'intermediaires, pas de chefs de projet, pas de process lourds. Les missions couvrent l'audit, l'optimisation, la refonte et la creation de sites ou d'applications web.
+Horde Agence accompagne les entreprises qui veulent un site plus rapide, plus clair et plus utile commercialement. L'agence travaille avec une approche senior-only: pas d'intermediaires, pas de chefs de projet et pas de process lourd. Les missions couvrent l'audit, l'optimisation, la refonte, la creation de landing pages, le e-commerce et les MVP SaaS.
 
 ## Equipe
 
-- Nicolas Premont, cofondateur et developpeur. 9 ans d'experience. Specialites: performance web, SEO technique, architecture front-end et developpement sur mesure.
-- Alexandre, cofondateur et designer UX. 9 ans d'experience. Specialites: recherche utilisateur, interfaces, identite visuelle et parcours de conversion.
+- Nicolas Premont, cofondateur et developpeur. Specialites: performance web, SEO technique, architecture front-end et developpement sur mesure.
+- Julien Designer, cofondateur et designer UX. Specialites: recherche utilisateur, interfaces, identite visuelle et parcours de conversion.
 
 ## Services
 
-### Audit et performance
+### Audit site web offert
 
-- Audit UX/UI
-- Audit SEO technique
-- Analyse Core Web Vitals
-- Rapport de recommandations
-- Diagnostic vitesse et points de friction
+- URL FR: https://hordeagence.com/fr/services/audit-offert
+- Objectif: identifier les vrais blocages SEO, vitesse, UX, UI, accessibilite et compatibilite.
+- Livrables: analyse initiale, session de 30 minutes et plan d'action clair.
 
-### Optimisation et refonte
+### Refonte site web
 
-- Optimisation des performances
-- Refonte UI/UX
-- Migration technique
-- Responsive et mobile-first
-- Amelioration des Core Web Vitals
+- URL FR: https://hordeagence.com/fr/services/refonte-site-web
+- Objectif: moderniser un site existant sans repartir inutilement de zero.
+- Axes: audit de l'existant, architecture UX, design UI, developpement axe performance, migration et lancement.
 
-### Creation sur mesure et MVP
+### Creation site e-commerce
 
-- Identite visuelle
-- Site vitrine
-- Application web
-- MVP et prototypage
-- E-commerce
+- URL FR: https://hordeagence.com/fr/services/creation-ecommerce
+- Objectif: creer ou migrer une boutique rapide, claire et pensee pour l'achat.
+- Axes: Shopify, e-commerce sur mesure, headless commerce, UX d'achat, performance, SEO e-commerce, paiement et logistique.
+
+### Creation landing page
+
+- URL FR: https://hordeagence.com/fr/services/creation-landing-page
+- Objectif: creer une page dediee a une campagne, une offre ou un lancement.
+- Axes: copywriting oriente conversion, design sans distraction, performance mobile-first, integrations et mise en ligne.
+
+### Creation MVP SaaS
+
+- URL FR: https://hordeagence.com/fr/services/creation-mvp-saas
+- Objectif: transformer une idee produit en premiere version utilisable.
+- Axes: cadrage produit, UX, prototypage, developpement, mise en production et suivi post-lancement.
+
+### Optimisation site web
+
+- URL FR: https://hordeagence.com/fr/services/optimisation-site-web
+- Objectif: ameliorer les Core Web Vitals, la vitesse percue, le SEO technique et la stabilite d'un site existant.
+- Axes: LCP, INP, CLS, infrastructure, cache, diagnostic, plan priorise, implementation et validation.
 
 ## Methode
 
 1. Audit offert: analyse SEO, vitesse et UX pour identifier les vrais blocages.
-2. Moteur Horde: architecture technique concue pour livrer des interfaces ultra-rapides.
-3. Cooperation directe: echanges en direct via Slack ou WhatsApp, sans intermediaire.
+2. Moteur Horde: architecture technique concue pour livrer des interfaces rapides, legeres et maintenables.
+3. Cooperation directe: echanges en direct, sans intermediaire, avec les personnes qui produisent le travail.
 
 ## Pages publiques principales
 
 - Accueil FR: https://hordeagence.com/fr
-- A propos: https://hordeagence.com/fr/about
-- Projets: https://hordeagence.com/fr/projets
-- Blog: https://hordeagence.com/fr/blog
-- Contact: https://hordeagence.com/fr/contact
-- Mentions legales: https://hordeagence.com/fr/mentions-legales
-- Confidentialite: https://hordeagence.com/fr/confidentialite
-- Cookies: https://hordeagence.com/fr/cookies
+- A propos FR: https://hordeagence.com/fr/about
+- Services FR: https://hordeagence.com/fr/services
+- Projets FR: https://hordeagence.com/fr/projets
+- Blog FR: https://hordeagence.com/fr/blog
+- Contact FR: https://hordeagence.com/fr/contact
+- Mentions legales FR: https://hordeagence.com/fr/mentions-legales
+- Confidentialite FR: https://hordeagence.com/fr/confidentialite
+- Cookies FR: https://hordeagence.com/fr/cookies
 
 Les equivalents anglais sont accessibles sous `/en/...`.
 
@@ -90,7 +105,7 @@ Les equivalents anglais sont accessibles sous `/en/...`.
 - Statut: en cours
 - Type: application web, UX design, developpement
 - Publication de reference: 2024-03-01
-- Visibilite: projet non public en detail (`noindex`)
+- Visibilite: projet liste mais page detail non indexee (`noindex, follow`)
 
 ## Blog
 
@@ -100,7 +115,6 @@ Les equivalents anglais sont accessibles sous `/en/...`.
 - Date: 2026-01-30
 - Categorie: performance web
 - Tags: Core Web Vitals, vitesse de chargement, SEO technique, UX mobile
-- Resume: explique ce qu'est un site vraiment rapide en 2026, pourquoi la vitesse agit sur le SEO, l'experience et les conversions, et comment Horde optimise concretement les performances.
 
 ### Pourquoi avoir un site web quand les reseaux sociaux marchent deja ?
 
@@ -108,7 +122,6 @@ Les equivalents anglais sont accessibles sous `/en/...`.
 - Date: 2026-02-11
 - Categorie: strategie
 - Tags: strategie digitale, site web vs reseaux sociaux, acquisition organique, independance numerique
-- Resume: montre pourquoi une marque ne doit pas dependre uniquement des plateformes sociales, et pourquoi le site web reste la base de la visibilite, de la credibilite et de la relation client.
 
 ### Ce que votre site vous coute vraiment (sans que vous le sachiez)
 
@@ -116,7 +129,6 @@ Les equivalents anglais sont accessibles sous `/en/...`.
 - Date: 2026-02-26
 - Categorie: strategie
 - Tags: cout site web, pertes de conversion, SEO technique, audit performance
-- Resume: detaille les pertes cachees liees a un site lent ou mal pense: conversions, SEO, credibilite et maintenance.
 
 ### Combien coute une refonte de site web en 2026
 
@@ -124,11 +136,10 @@ Les equivalents anglais sont accessibles sous `/en/...`.
 - Date: 2026-03-03
 - Categorie: strategie
 - Tags: refonte site web, budget web, devis web, prix site web, UX design
-- Resume: donne des fourchettes de prix realistes, les facteurs qui font varier un budget et les erreurs qui font exploser le cout d'une refonte.
 
 ## Stack technique du site
 
-- Astro 5
+- Astro 6
 - React 19 et Preact
 - Tailwind CSS 4
 - Keystatic CMS
@@ -136,12 +147,15 @@ Les equivalents anglais sont accessibles sous `/en/...`.
 - Node.js
 - Lenis
 - Matter.js
+- Resend
+- Zod
+- TypeScript
 
 ## Legal
 
 - Droit applicable: droit belge
 - Base juridique: Bruxelles
-- Copyright footer: ©2026 Horde Agence
+- Copyright footer: 2026 Horde Agence
 
 ## Ressource detaillee
 
