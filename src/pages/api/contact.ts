@@ -31,15 +31,25 @@ const besoinLabels: Record<string, string> = {
   'audit-offert': 'Audit site web (offert)',
   'creation-ecommerce': 'Création site e-commerce',
   'creation-landing-page': 'Landing page sur mesure',
-  'creation-mvp-saas': 'Creation Sass MVP',
+  'creation-mvp-saas': 'Création SaaS MVP',
   'optimisation-site-web': 'Optimisation site web',
   'refonte-site-web': 'Refonte de site web',
   'autre': 'Autres',
 };
 
+const getEnv = (key: string) => import.meta.env[key] || process.env[key] || '';
+
+const escapeHtml = (value: string) =>
+  value
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+
 export const POST: APIRoute = async ({ request }) => {
   try {
-    const resendApiKey = import.meta.env.RESEND_API_KEY;
+    const resendApiKey = getEnv('RESEND_API_KEY');
 
     if (!resendApiKey) {
       console.error('Contact API error: RESEND_API_KEY is missing');
@@ -69,22 +79,48 @@ export const POST: APIRoute = async ({ request }) => {
         ? 'Page contact'
         : 'Formulaire non specifie';
     const subjectLabel = besoinLabel || sourceLabel;
+    const from = getEnv('CONTACT_EMAIL_FROM') || 'Horde Website <noreply@hordeagence.com>';
+    const to = (getEnv('CONTACT_EMAIL_TO') || 'hello@hordeagence.com')
+      .split(',')
+      .map((recipient: string) => recipient.trim())
+      .filter(Boolean);
+
+    if (to.length === 0) {
+      console.error('Contact API error: CONTACT_EMAIL_TO is empty');
+      return new Response(
+        JSON.stringify({ error: 'Configuration email invalide' }),
+        { status: 500, headers: { 'Content-Type': 'application/json' } }
+      );
+    }
+
+    const emailText = [
+      'Nouvelle demande de contact',
+      besoinLabel ? `Besoin : ${besoinLabel}` : null,
+      `Source : ${sourceLabel}`,
+      source?.pagePath ? `Page : ${source.pagePath}` : null,
+      `Objectif : ${objectif}`,
+      `Nom : ${nom}`,
+      `Email : ${email}`,
+      societe ? `Société : ${societe}` : null,
+    ].filter(Boolean).join('\n');
+
     const resend = new Resend(resendApiKey);
 
     const { error } = await resend.emails.send({
-      from: 'Horde Website <noreply@hordeagence.com>',
-      to: ['hello@hordeagence.com'],
+      from,
+      to,
       replyTo: email,
       subject: `Nouveau contact - ${subjectLabel}`,
+      text: emailText,
       html: `
         <h2>Nouvelle demande de contact</h2>
-        ${besoinLabel ? `<p><strong>Besoin :</strong> ${besoinLabel}</p>` : ''}
-        <p><strong>Source :</strong> ${sourceLabel}</p>
-        ${source?.pagePath ? `<p><strong>Page :</strong> ${source.pagePath}</p>` : ''}
-        <p><strong>Objectif :</strong> ${objectif}</p>
-        <p><strong>Nom :</strong> ${nom}</p>
-        <p><strong>Email :</strong> ${email}</p>
-        ${societe ? `<p><strong>Société :</strong> ${societe}</p>` : ''}
+        ${besoinLabel ? `<p><strong>Besoin :</strong> ${escapeHtml(besoinLabel)}</p>` : ''}
+        <p><strong>Source :</strong> ${escapeHtml(sourceLabel)}</p>
+        ${source?.pagePath ? `<p><strong>Page :</strong> ${escapeHtml(source.pagePath)}</p>` : ''}
+        <p><strong>Objectif :</strong> ${escapeHtml(objectif)}</p>
+        <p><strong>Nom :</strong> ${escapeHtml(nom)}</p>
+        <p><strong>Email :</strong> ${escapeHtml(email)}</p>
+        ${societe ? `<p><strong>Société :</strong> ${escapeHtml(societe)}</p>` : ''}
       `,
     });
 
