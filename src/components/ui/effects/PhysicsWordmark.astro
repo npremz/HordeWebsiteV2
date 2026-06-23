@@ -687,18 +687,30 @@ const shapeColor = dark ? "var(--color-lines-dark)" : "var(--color-lines)";
     // Cleanup ancien observer
     if (observer) observer.disconnect();
 
-    // Adapter rootMargin selon la taille de l'écran
-    // Sur mobile, utiliser une marge plus petite pour éviter de bloquer le trigger
+    // Garder une zone d'observation réelle même sur les écrans larges mais peu hauts.
+    // Un rootMargin fixe à -400px en haut/bas peut annuler le trigger sous ~800px de haut.
     const isMobile = window.innerWidth < 768;
-    const rootMargin = isMobile ? "-100px 0px" : "-400px 0px";
+    const desiredMargin = isMobile ? 100 : 400;
+    const minimumTriggerArea = isMobile ? 120 : 180;
+    const maxVerticalMargin = Math.max(
+      0,
+      Math.floor((window.innerHeight - minimumTriggerArea) / 2),
+    );
+    const verticalMargin = Math.min(desiredMargin, maxVerticalMargin);
+    const rootMargin = `-${verticalMargin}px 0px`;
+
+    const triggerPhysics = () => {
+      if (hasTriggered) return;
+      hasTriggered = true;
+      initPhysics();
+      observer?.disconnect();
+    };
 
     observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting && !hasTriggered) {
-            hasTriggered = true;
-            initPhysics();
-            observer?.disconnect();
+            triggerPhysics();
           }
         });
       },
@@ -706,6 +718,13 @@ const shapeColor = dark ? "var(--color-lines-dark)" : "var(--color-lines)";
     );
 
     observer.observe(container);
+
+    const rect = container.getBoundingClientRect();
+    const triggerTop = verticalMargin;
+    const triggerBottom = window.innerHeight - verticalMargin;
+    if (rect.bottom >= triggerTop && rect.top <= triggerBottom) {
+      requestAnimationFrame(triggerPhysics);
+    }
   }
 
   // Init au chargement
