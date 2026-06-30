@@ -115,16 +115,17 @@ translations:
         documentation of what changed.
     faqTitle: Answers to common questions
     faqItems:
-      - question: Does my site need to use a specific technology?
+      - question: Can you optimize WordPress, Webflow, Shopify or custom websites?
         answer: >-
-          No. We optimize WordPress, Webflow, Shopify, Next.js and custom sites.
-          Some operations require code access; we adapt to your constraints.
-      - question: Do we need to redesign the whole site?
+          Yes. We optimize WordPress, Webflow, Shopify, Next.js and custom
+          sites. Some operations require code access; we adapt to your
+          constraints.
+      - question: Do we need a full redesign to improve Core Web Vitals?
         answer: >-
           Not necessarily. Many performance gains are possible without touching
           the design. If a redesign is the better option, we explain why with
           data.
-      - question: How long does it take?
+      - question: How long does website optimization take?
         answer: >-
           Quick wins such as images, cache and render-blocking can be handled in
           a week. Deeper work takes 1 to 3 weeks depending on complexity.
@@ -133,7 +134,7 @@ translations:
           It depends on the starting point. On sites with PageSpeed scores below
           50, moving into the 80-95 range is common. SEO impact is visible in
           Search Console over 6 to 12 weeks.
-      - question: How much does it cost?
+      - question: How much does website optimization cost?
         answer: >-
           It depends on the depth of the work. We quote after the initial
           diagnostic, which is free.
@@ -233,17 +234,17 @@ exclusionsParagraphs:
     Vitals dans le vert, et une documentation de ce qui a été fait et pourquoi.
 faqTitle: Nos réponses aux questions fréquentes
 faqItems:
-  - question: Mon site doit-il être sur une techno particulière ?
+  - question: Optimisez-vous les sites WordPress, Webflow, Shopify ou sur mesure ?
     answer: >-
       Non. On optimise WordPress, Webflow, Shopify, Next.js, sites custom.
       Certaines opérations nécessitent un accès au code. On s'adapte selon les
       contraintes.
-  - question: Est-ce qu'il faut refaire le site ?
+  - question: Faut-il refaire le site pour améliorer les Core Web Vitals ?
     answer: >-
       Pas nécessairement. Beaucoup de gains de performance sont obtenus sans
       toucher au design. Si la refonte est la meilleure option, on vous le dira
       clairement avec une justification chiffrée.
-  - question: Combien de temps ça prend ?
+  - question: Combien de temps prend une optimisation de site web ?
     answer: >-
       Les quick wins (images, cache, render-blocking) se règlent en une semaine.
       Les optimisations plus profondes (refactoring JS, infrastructure) prennent
@@ -253,7 +254,7 @@ faqItems:
       Ça dépend de l'état de départ. Sur des sites avec des scores PageSpeed <
       50, on obtient régulièrement des passages à 80–95. L'impact SEO se voit
       dans Google Search Console sur 6 à 12 semaines.
-  - question: Combien ça coûte ?
+  - question: Combien coûte une optimisation de site web ?
     answer: >-
       Ça dépend de la profondeur de l'intervention. On chiffre après le
       diagnostic initial, qui est gratuit. Pas de devis sans avoir regardé votre

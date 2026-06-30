@@ -114,24 +114,27 @@ translations:
         constraints.
     faqTitle: Answers to common questions
     faqItems:
-      - question: Shopify or WooCommerce?
+      - question: Shopify or WooCommerce for an e-commerce website?
         answer: >-
           For most projects, Shopify. It is faster to launch, more stable and
           requires less maintenance. WooCommerce can make sense if you are
           already on WordPress with a limited catalogue.
-      - question: How much does an e-commerce website cost?
+      - question: How much does an e-commerce website in Brussels cost?
         answer: >-
           A custom Shopify store usually ranges from 5,000 EUR to 12,000 EUR. A
-          custom e-commerce build with specific logic starts around 15,000 EUR.
-      - question: Can I manage products myself afterward?
+          custom e-commerce build with specific logic starts around 15,000 EUR,
+          depending on catalogue size, payment, logistics and integrations.
+      - question: Can I manage products and orders myself afterward?
         answer: >-
           Yes. That is non-negotiable. We train your team and document
-          everything so you do not depend on us to add products.
-      - question: Do you handle SEO after launch?
+          everything so you do not depend on us to add products, update prices
+          or manage orders.
+      - question: Is e-commerce SEO included at launch?
         answer: >-
-          We deliver a site with solid SEO foundations. Ongoing SEO content and
-          link building are not our core service, but we can refer specialists.
-      - question: Can my current store be migrated?
+          We deliver a store with solid technical SEO foundations: clean URLs,
+          product metadata, performance, structured data and canonical rules.
+          Ongoing content SEO and link building can be handled with partners.
+      - question: Can my current online store be migrated?
         answer: >-
           In almost every case, yes. We evaluate product data, orders, reviews
           and redirects during the initial audit.
@@ -233,27 +236,29 @@ exclusionsParagraphs:
     vos transporteurs et vos contraintes logistiques.
 faqTitle: Nos réponses aux questions fréquentes
 faqItems:
-  - question: Shopify ou WooCommerce ?
+  - question: Shopify ou WooCommerce pour créer un site e-commerce ?
     answer: >-
       Pour la grande majorité des projets, Shopify. Plus rapide à lancer, plus
       stable, moins de maintenance. WooCommerce a du sens si vous êtes déjà sur
       WordPress et que votre catalogue est limité. On en discute selon votre
       situation.
-  - question: Combien coûte un e-commerce ?
+  - question: Combien coûte un site e-commerce à Bruxelles ?
     answer: >-
       Un Shopify sur mesure : entre 5 000 € et 12 000 €. Un e-commerce custom
       avec logique spécifique : à partir de 15 000 €. Les variables principales
       : taille du catalogue, intégrations, niveau de personnalisation.
-  - question: Je peux gérer mes produits moi-même après ?
+  - question: Puis-je gérer les produits et commandes moi-même après ?
     answer: >-
       Oui, c'est une condition non négociable. On forme votre équipe et on
-      documente tout. Vous ne dépendez pas de nous pour ajouter un produit.
-  - question: Vous gérez aussi le SEO après la mise en ligne ?
+      documente tout. Vous ne dépendez pas de nous pour ajouter un produit,
+      modifier un prix ou gérer les commandes.
+  - question: Le SEO e-commerce est-il inclus à la mise en ligne ?
     answer: >-
-      On livre un site avec des bases SEO solides. L'accompagnement SEO continu
-      (production de contenu, netlinking) n'est pas notre métier. Mais on peut
-      vous orienter vers des spécialistes.
-  - question: Mon site actuel peut-il être migré ?
+      On livre une boutique avec des bases SEO techniques solides : URLs
+      propres, métadonnées produits, performance, données structurées et règles
+      canoniques. Le contenu SEO continu et le netlinking peuvent être gérés
+      avec des partenaires.
+  - question: Mon site e-commerce actuel peut-il être migré ?
     answer: >-
       Dans la quasi-totalité des cas, oui. On évalue la migration lors de
       l'audit initial : données produits, commandes, avis, redirections.

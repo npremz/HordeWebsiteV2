@@ -114,28 +114,28 @@ translations:
         product decision looks risky, we say it.
     faqTitle: Answers to common questions
     faqItems:
-      - question: How much does an MVP cost?
+      - question: How much does SaaS MVP development in Brussels cost?
         answer: >-
           Usually between 5,000 EUR and 20,000 EUR depending on complexity. A
           B2C MVP with auth, basic CRUD and Stripe is closer to 5-10k. A SaaS
           with complex logic, roles and integrations costs more.
-      - question: How long before something can be tested?
+      - question: How long does it take to build a testable MVP?
         answer: >-
           First usable screens: 3 to 5 weeks. A complete deployable MVP: 6 to 10
           weeks.
-      - question: Can you continue after the MVP?
+      - question: Can you continue development after the MVP launch?
         answer: >-
           Depending on results, yes, we can continue in iterations. It is not
           automatic; we reassess with you at each step.
-      - question: Can we take over the code afterward?
+      - question: Can we take over the MVP code afterward?
         answer: >-
           Yes. Documented code, repository on your account and no proprietary
           dependency that locks you in.
-      - question: Do you help define the product?
+      - question: Do you help define the MVP scope?
         answer: >-
           Yes. It is part of the work, not a separate upsell. We do not code
           before understanding what you need to validate.
-      - question: What technologies do you use?
+      - question: What technologies do you use for SaaS MVP development?
         answer: >-
           We adapt the stack: React, Next.js or Astro on the frontend, Node.js
           and TypeScript on the backend, PostgreSQL or Supabase, Clerk or
@@ -244,32 +244,32 @@ exclusionsParagraphs:
     on le dit.
 faqTitle: Nos réponses aux questions fréquentes
 faqItems:
-  - question: Combien coûte un MVP ?
+  - question: Combien coûte le développement d'un MVP SaaS à Bruxelles ?
     answer: >-
       Entre 5 000 € et 20 000 € selon la complexité. Un MVP B2C avec
       authentification, CRUD de base et Stripe : plutôt 5–10k. Un SaaS avec
       logique métier complexe, rôles multiples et intégrations tierces : plus.
       On chiffre après le cadrage, pas avant.
-  - question: Combien de temps pour avoir quelque chose à tester ?
+  - question: Combien de temps faut-il pour développer un MVP testable ?
     answer: >-
       Les premiers écrans utilisables : 3 à 5 semaines. Un MVP complet
       déployable : 6 à 10 semaines. On évite les projets qui s'éternisent et ne
       testent jamais la réalité du marché.
-  - question: Vous continuez après le MVP ?
+  - question: Pouvez-vous continuer le développement après le lancement du MVP ?
     answer: >-
       Selon les résultats, on peut continuer en mode itérations. Ce n'est pas
       automatique. On réévalue avec vous à chaque étape.
-  - question: On peut prendre la main sur le code après ?
+  - question: Peut-on reprendre la main sur le code du MVP après ?
     answer: >-
       Oui, c'est une condition de base. Code documenté, repository sur votre
       compte, pas de dépendances propriétaires qui vous enferment. Vous pouvez
       internaliser le développement à tout moment.
-  - question: Vous aidez aussi à définir le produit ?
+  - question: Aidez-vous à définir le périmètre du MVP ?
     answer: >-
       C'est une partie de notre travail, pas un service séparé facturé en plus.
       On ne commence pas à coder sans avoir compris ce que vous cherchez à
       valider.
-  - question: Quelles technologies utilisez-vous ?
+  - question: Quelles technologies utilisez-vous pour développer un MVP SaaS ?
     answer: >-
       On adapte la stack au projet : React / Next.js / Astro en frontend,
       Node.js + TypeScript en backend, PostgreSQL ou Supabase, Clerk ou Supabase
