@@ -114,15 +114,17 @@ translations:
         development; design and development work together here.
     faqTitle: Answers to common questions
     faqItems:
-      - question: How much does a redesign cost?
+      - question: How much does a website redesign in Brussels cost?
         answer: >-
           Usually between 2,000 EUR and 8,000 EUR depending on complexity, page
-          count and features. We detail the scope after the audit.
-      - question: Will my SEO be impacted?
+          count, content work and features. We detail the scope after auditing
+          your current website so the quote reflects the real migration effort.
+      - question: Will a website redesign affect my SEO?
         answer: >-
-          Not if redirects and SEO migration are handled seriously. A well-run
-          redesign often improves SEO over 3 to 6 months.
-      - question: How long does it take?
+          Not negatively if redirects, URLs, metadata, headings and indexation
+          are handled seriously. A well-run redesign often improves technical
+          SEO and organic visibility over 3 to 6 months.
+      - question: How long does a website redesign take?
         answer: >-
           Usually 3 to 6 weeks depending on project scope. We define and follow
           the schedule from the scoping phase.
@@ -134,8 +136,11 @@ translations:
         answer: >-
           We can work with your copywriter or recommend one. Copywriting is not
           included by default.
-      - question: Can I see examples of redesigns?
-        answer: Yes, see `/en/projets` for relevant project cases.
+      - question: Can I see examples of website redesign projects?
+        answer: >-
+          Yes. Our projects page shows selected websites and interfaces designed
+          for brands, independent businesses and Belgian SMEs, including
+          redesign, creation and optimization work.
     ctaTitle: Tell us about your project
     ctaParagraphs:
       - >-
@@ -242,16 +247,18 @@ exclusionsParagraphs:
     et développement vont ensemble.
 faqTitle: Nos réponses aux questions fréquentes
 faqItems:
-  - question: Combien coûte une refonte ?
+  - question: Combien coûte une refonte de site web à Bruxelles ?
     answer: >-
       Entre 2 000 € et 8 000 € selon la complexité, le nombre de pages et les
-      fonctionnalités. On détaille ça dans notre guide → lien vers article blog
-      "combien coûte une refonte".
-  - question: Mon référencement sera-t-il impacté ?
+      fonctionnalités. On détaille le périmètre après l'audit de votre site
+      actuel, pour chiffrer correctement l'UX, le contenu, le développement et
+      la migration SEO.
+  - question: Comment éviter une perte de SEO pendant une refonte ?
     answer: >-
-      Pas si on travaille sérieusement les redirections et la migration SEO. Une
-      refonte bien exécutée améliore le référencement sur 3 à 6 mois.
-  - question: Combien de temps ça prend ?
+      On prépare les redirections, les URLs, les balises, les titres, les
+      contenus importants et l'indexation avant la mise en ligne. Une refonte
+      bien exécutée peut améliorer le référencement sur 3 à 6 mois.
+  - question: Combien de temps prend une refonte de site web ?
     answer: >-
       De 3 à 6 semaines selon l'étendue du projet. On établit un planning dès le
       cadrage et on le tient.
@@ -264,8 +271,11 @@ faqItems:
     answer: >-
       On peut travailler avec votre rédacteur ou vous recommander quelqu'un. La
       rédaction n'est pas incluse par défaut.
-  - question: Je peux voir des exemples de vos refontes ?
-    answer: Oui, lien vers `/fr/projets` avec les cas pertinents mis en avant.
+  - question: Pouvez-vous montrer des exemples de refontes de sites web ?
+    answer: >-
+      Oui. La page projets présente des sites web et interfaces sur mesure
+      réalisés pour des marques, indépendants et PME belges, avec des cas de
+      création, refonte et optimisation.
 ctaTitle: Parlez-nous de votre projet
 ctaParagraphs:
   - >-

@@ -123,28 +123,28 @@ translations:
         days. We do serious work in reasonable timelines.
     faqTitle: Answers to common questions
     faqItems:
-      - question: Do you write the content?
+      - question: Do you write the landing page copy?
         answer: >-
           Yes, copywriting is included if you want it. You provide the brief and
           we write, or you provide copy and we structure and optimize it.
-      - question: How much does it cost?
+      - question: How much does a landing page in Brussels cost?
         answer: >-
           Usually between 1,200 EUR and 4,000 EUR depending on complexity,
           sections, video and CRM integrations.
-      - question: Will the page be optimized for SEO?
+      - question: Can a landing page be optimized for SEO?
         answer: >-
           For ad pages, not necessarily; that is not always their job. For
           organic landing pages, yes: tags, structure and performance are
           planned accordingly.
-      - question: Do you handle hosting?
+      - question: Do you publish the landing page on my domain?
         answer: >-
           We publish on your domain and hosting, or recommend a setup. We do not
           resell hosting with hidden margin.
-      - question: Can you create variants for testing?
+      - question: Can you create landing page variants for A/B testing?
         answer: >-
           Yes. We can create 2 to 3 message variants for an A/B test at a lower
           rate for the same page.
-      - question: What is the timeline?
+      - question: How long does it take to create a landing page?
         answer: >-
           A simple landing page takes 1 to 2 weeks. A more complex one with
           animations, video and multiple integrations takes 2 to 4 weeks.
@@ -255,30 +255,30 @@ exclusionsParagraphs:
     des délais raisonnables.
 faqTitle: Nos réponses aux questions fréquentes
 faqItems:
-  - question: Vous rédigez le contenu ?
+  - question: Rédigez-vous le contenu de la landing page ?
     answer: >-
       Oui, la rédaction est incluse si vous le souhaitez. Vous fournissez le
       brief (offre, cible, ton) et on rédige. Vous pouvez aussi fournir votre
       propre texte qu'on structure et optimise.
-  - question: Combien ça coûte ?
+  - question: Combien coûte une landing page à Bruxelles ?
     answer: >-
       Entre 1 200 € et 4 000 € selon la complexité. Une page épurée avec
       formulaire d'un côté, une page avec plusieurs sections, vidéo et
       intégrations CRM de l'autre.
-  - question: La page sera-t-elle optimisée pour le SEO ?
+  - question: Une landing page peut-elle être optimisée pour le SEO ?
     answer: >-
       Pour les pages publicitaires, non nécessairement : ce n'est pas leur rôle.
       Pour les pages destinées au trafic organique, oui : balises, structure,
       performance. On cadre ça ensemble selon l'objectif.
-  - question: Vous faites aussi l'hébergement ?
+  - question: Publiez-vous la landing page sur mon domaine ?
     answer: >-
       On livre la page sur votre domaine et votre hébergeur, ou on peut
       recommander une solution. On ne vous vend pas de l'hébergement à marge.
-  - question: J'ai besoin de plusieurs variantes pour tester. C'est possible ?
+  - question: Pouvez-vous créer plusieurs variantes pour un test A/B ?
     answer: >-
       Oui. On peut créer 2 à 3 variantes avec des messages différents pour un
       test A/B. Le prix est réduit pour les variantes d'une même page.
-  - question: Quel délai ?
+  - question: Combien de temps faut-il pour créer une landing page ?
     answer: >-
       Une landing page simple : 1 à 2 semaines. Une landing page complexe avec
       animations, vidéo, intégrations multiples : 2 à 4 semaines.

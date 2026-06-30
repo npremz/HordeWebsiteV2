@@ -106,16 +106,16 @@ translations:
         audit is yours.
     faqTitle: Answers to common questions
     faqItems:
-      - question: Who runs the audit?
+      - question: Who runs the free website audit?
         answer: >-
           Nicolas and Alexandre, Horde's founders, with 9 years of experience on
           web projects for Belgian SMEs, startups and brands.
-      - question: Is my website a good fit?
+      - question: Is my website a good fit for a SEO, UX and performance audit?
         answer: >-
           We audit showcase websites, e-commerce, web apps and landing pages.
           Accepted technologies include WordPress, Odoo, Wix, Webflow, Shopify
           and custom websites.
-      - question: How does the audit work?
+      - question: How does the free website audit work?
         answer: >-
           We schedule a date and run an initial analysis beforehand. During the
           exchange, we identify your blockers together and suggest concrete
@@ -210,16 +210,16 @@ exclusionsParagraphs:
     échange vous appartient.
 faqTitle: Nos réponses aux questions fréquentes
 faqItems:
-  - question: Qui fait l'audit ?
+  - question: Qui réalise l'audit de site web offert ?
     answer: >-
       Nicolas et Alexandre, fondateurs de Horde, avec 9 ans d'expérience sur des
       projets web pour des PME, startups et marques belges.
-  - question: Mon site est-il adapté ?
+  - question: Mon site est-il adapté à un audit SEO, UX et performance ?
     answer: >-
       On audite tous les types de sites : vitrines, e-commerce, applications
       web, landing pages. Technologies acceptées : WordPress, Odoo, Wix,
       Webflow, Shopify, sites custom.
-  - question: Comment se déroule l'audit ?
+  - question: Comment se déroule l'audit de site web gratuit ?
     answer: >-
       On fixe une date, on réalise une première analyse en amont. Lors de
       l'échange, on identifie ensemble vos points de blocage et on vous propose
