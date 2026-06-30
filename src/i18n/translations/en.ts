@@ -140,8 +140,8 @@ export const en: Translations = {
     hero: {
       topLine1: 'We',
       topLine2: 'Design',
-      agencyLine1: 'Web agency',
-      agencyLine2: 'based in Brussels',
+      agencyLine1: 'Web agency in',
+      agencyLine2: 'Brussels',
       bottomLine1: 'Optimized',
       bottomLine2: 'websites',
     },
@@ -149,14 +149,14 @@ export const en: Translations = {
       titleLine1: 'What is',
       titleLine2: 'Horde?',
       description:
-        'Horde is a Brussels web agency that designs ultra-fast websites and turns visitors into clients. ↓ Free audit, redesign, or from-scratch creation → we deliver lightweight, well-referenced websites built to last.',
+        'Horde is a web agency in Brussels that designs ultra-fast websites and turns visitors into clients. ↓ Free audit, redesign, or from-scratch creation → we deliver lightweight, well-referenced websites built to last.',
       cta: 'Get in touch',
     },
     projects: {
       countLabel: 'Our latest projects',
     },
     services: {
-      title: 'Our website creation services',
+      title: 'Website design and development services in Brussels',
     },
     demarche: {
       title: 'A clear method to build a fast, useful website',
