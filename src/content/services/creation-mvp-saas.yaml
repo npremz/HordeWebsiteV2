@@ -1,49 +1,49 @@
 slug: creation-mvp-saas
-seoUrl: /fr/services/creation-mvp-saas
-seoPrimaryKeyword: développement mvp saas bruxelles
+seoUrl: /fr/services/developpement-mvp-bruxelles
+seoPrimaryKeyword: développement mvp bruxelles
 seoSecondaryKeywords:
   - développement application web bruxelles
   - prototype produit digital
   - mvp startup belgique
   - créer saas belgique
   - agence développement produit bruxelles
-seoTitle: Développement MVP SaaS à Bruxelles
+seoTitle: Développement MVP à Bruxelles | Horde
 seoDescription: >-
   Lancez votre MVP SaaS rapidement avec une base technique solide. Cadrage,
   développement et mise en production : on construit ce que vous avez besoin de
   tester.
 seoRobots: index, follow
 seoInternalLinks:
-  - /fr/services/audit-offert
+  - /fr/services/audit-seo-technique-bruxelles
   - /fr/services/creation-landing-page
   - /fr/projets
   - /fr/contact
-h1: Création MVP et application web à Bruxelles
-shortName: Creation Sass MVP
-footerTitle: Saas Mvp
+h1: Développement MVP et application web à Bruxelles
+shortName: Développement MVP
+footerTitle: MVP / Web app
 footerOrder: 4
 translations:
   en:
-    seoUrl: /en/services/creation-mvp-saas
-    seoPrimaryKeyword: saas mvp development brussels
+    seoUrl: /en/services/mvp-development-brussels
+    seoPrimaryKeyword: mvp development brussels
     seoSecondaryKeywords:
       - web app development brussels
       - digital product prototype
       - startup mvp belgium
       - build saas belgium
       - product development agency brussels
-    seoTitle: SaaS MVP development in Brussels
+    seoTitle: MVP development in Brussels | Horde
     seoDescription: >-
       Launch your SaaS MVP quickly with a solid technical base. Scope, build and
       production release: we create what you need to test.
     seoInternalLinks:
-      - /en/services/audit-offert
+      - /en/services/technical-seo-audit-brussels
       - /en/services/creation-landing-page
       - /en/projets
       - /en/contact
-    h1: SaaS MVP and web app development in Brussels
-    shortName: SaaS MVP creation
-    footerTitle: Saas Mvp
+    h1: MVP and web app development in Brussels
+    shortName: MVP development
+    footerTitle: MVP / Web app
     intro: >-
       An MVP is not a half-built product. It is the smallest scope that lets you
       test a business hypothesis with real users without wasting 18 months of
@@ -156,7 +156,7 @@ translations:
       - anchor: landing page for your launch
         url: /en/services/creation-landing-page
       - anchor: audit your existing app
-        url: /en/services/audit-offert
+        url: /en/services/technical-seo-audit-brussels
       - anchor: our work
         url: /en/projets
       - anchor: contact us
@@ -290,7 +290,7 @@ recommendedLinks:
   - anchor: landing page pour votre lancement
     url: /fr/services/creation-landing-page
   - anchor: audit de votre application existante
-    url: /fr/services/audit-offert
+    url: /fr/services/audit-seo-technique-bruxelles
   - anchor: nos réalisations
     url: /fr/projets
   - anchor: nous contacter

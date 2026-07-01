@@ -71,6 +71,32 @@ function shouldIncludeInSitemap(page) {
 // https://astro.build/config
 export default defineConfig({
   site: siteUrl,
+  redirects: {
+    '/fr/services/audit-offert': {
+      status: 301,
+      destination: '/fr/services/audit-seo-technique-bruxelles',
+    },
+    '/en/services/audit-offert': {
+      status: 301,
+      destination: '/en/services/technical-seo-audit-brussels',
+    },
+    '/fr/services/refonte-site-web': {
+      status: 301,
+      destination: '/fr/services/refonte-site-web-bruxelles',
+    },
+    '/en/services/refonte-site-web': {
+      status: 301,
+      destination: '/en/services/website-redesign-brussels',
+    },
+    '/fr/services/creation-mvp-saas': {
+      status: 301,
+      destination: '/fr/services/developpement-mvp-bruxelles',
+    },
+    '/en/services/creation-mvp-saas': {
+      status: 301,
+      destination: '/en/services/mvp-development-brussels',
+    },
+  },
   // Astro 5: 'hybrid' n'existe plus. Utiliser 'server' + prerender: true sur les pages statiques
   output: isProd ? 'server' : 'static',
   adapter: node({ mode: 'standalone' }),

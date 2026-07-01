@@ -14,9 +14,9 @@ seoDescription: >-
   perf.
 seoRobots: index, follow
 seoInternalLinks:
-  - /fr/services/audit-offert
+  - /fr/services/audit-seo-technique-bruxelles
   - /fr/services/creation-ecommerce
-  - /fr/services/creation-mvp-saas
+  - /fr/services/developpement-mvp-bruxelles
   - /fr/contact
 h1: Création de landing page
 shortName: Landing page sur mesure
@@ -37,9 +37,9 @@ translations:
       A landing page that turns clicks into leads or sales. Built for Google
       Ads, SEO or social campaigns, fast to ship and performance-focused.
     seoInternalLinks:
-      - /en/services/audit-offert
+      - /en/services/technical-seo-audit-brussels
       - /en/services/creation-ecommerce
-      - /en/services/creation-mvp-saas
+      - /en/services/mvp-development-brussels
       - /en/contact
     h1: Landing page development
     shortName: Custom landing page
@@ -162,11 +162,11 @@ translations:
     reassurance: Reply within 24h. Delivery in 1 to 2 weeks.
     recommendedLinks:
       - anchor: audit your current page
-        url: /en/services/audit-offert
+        url: /en/services/technical-seo-audit-brussels
       - anchor: complete online store
         url: /en/services/creation-ecommerce
       - anchor: SaaS product or app
-        url: /en/services/creation-mvp-saas
+        url: /en/services/mvp-development-brussels
       - anchor: contact us
         url: /en/contact
 intro: >-
@@ -296,11 +296,11 @@ secondaryCtaUrl: /fr/projets
 reassurance: Réponse sous 24h. Livraison en 1 à 2 semaines.
 recommendedLinks:
   - anchor: audit de votre page actuelle
-    url: /fr/services/audit-offert
+    url: /fr/services/audit-seo-technique-bruxelles
   - anchor: boutique en ligne complète
     url: /fr/services/creation-ecommerce
   - anchor: produit SaaS ou application
-    url: /fr/services/creation-mvp-saas
+    url: /fr/services/developpement-mvp-bruxelles
   - anchor: nous contacter
     url: /fr/contact
 notes:

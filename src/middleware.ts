@@ -28,14 +28,14 @@ export const onRequest = defineMiddleware(async ({ url, redirect, request, isPre
     // During static prerender (staging), let the page itself handle redirect to avoid Astro's slow default redirect page.
     if (isPrerendered && !IS_PROD) return next();
 
-    if (!shouldTrackBotLogs) return redirect(`/${DEFAULT_LOCALE}/`, 302);
+    if (!shouldTrackBotLogs) return redirect(`/${DEFAULT_LOCALE}/`, 301);
 
     const matchedBot = getMatchedBot(request.headers.get('user-agent') || '');
-    if (!matchedBot) return redirect(`/${DEFAULT_LOCALE}/`, 302);
+    if (!matchedBot) return redirect(`/${DEFAULT_LOCALE}/`, 301);
 
     const ip = request.headers.get('x-forwarded-for') || '-';
-    console.log(`[bot-crawl] bot=${matchedBot} method=${request.method} status=302 path=/ ip=${ip}`);
-    return redirect(`/${DEFAULT_LOCALE}/`, 302);
+    console.log(`[bot-crawl] bot=${matchedBot} method=${request.method} status=301 path=/ ip=${ip}`);
+    return redirect(`/${DEFAULT_LOCALE}/`, 301);
   }
 
   if (!shouldTrackBotLogs) return next();

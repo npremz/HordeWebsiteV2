@@ -12,7 +12,7 @@ seoDescription: >-
   votre e-commerce sur Shopify ou sur mesure, avec UX et performance au centre.
 seoRobots: index, follow
 seoInternalLinks:
-  - /fr/services/audit-offert
+  - /fr/services/audit-seo-technique-bruxelles
   - /fr/services/creation-landing-page
   - /fr/projets
   - /fr/contact
@@ -34,7 +34,7 @@ translations:
       A fast online store built for SEO and conversion. We create Shopify or
       custom e-commerce websites with UX and performance at the core.
     seoInternalLinks:
-      - /en/services/audit-offert
+      - /en/services/technical-seo-audit-brussels
       - /en/services/creation-landing-page
       - /en/projets
       - /en/contact
@@ -152,7 +152,7 @@ translations:
     reassurance: First exchange with no commitment. Reply within 24h.
     recommendedLinks:
       - anchor: audit your current store
-        url: /en/services/audit-offert
+        url: /en/services/technical-seo-audit-brussels
       - anchor: product landing pages
         url: /en/services/creation-landing-page
       - anchor: our work
@@ -276,7 +276,7 @@ secondaryCtaUrl: /fr/projets
 reassurance: Premier échange sans engagement. Réponse sous 24h.
 recommendedLinks:
   - anchor: audit de votre boutique actuelle
-    url: /fr/services/audit-offert
+    url: /fr/services/audit-seo-technique-bruxelles
   - anchor: landing pages produit
     url: /fr/services/creation-landing-page
   - anchor: nos réalisations

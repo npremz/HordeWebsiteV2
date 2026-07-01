@@ -13,8 +13,8 @@ seoDescription: >-
   avec un plan d'action priorisé. Résultats mesurables, sans refonte complète.
 seoRobots: index, follow
 seoInternalLinks:
-  - /fr/services/audit-offert
-  - /fr/services/refonte-site-web
+  - /fr/services/audit-seo-technique-bruxelles
+  - /fr/services/refonte-site-web-bruxelles
   - /fr/contact
 h1: Optimisation de site web
 shortName: Optimisation site web
@@ -35,8 +35,8 @@ translations:
       Is your website slow or poorly ranked? We improve LCP, INP, CLS and
       technical SEO with a prioritized action plan, without a full redesign.
     seoInternalLinks:
-      - /en/services/audit-offert
-      - /en/services/refonte-site-web
+      - /en/services/technical-seo-audit-brussels
+      - /en/services/website-redesign-brussels
       - /en/contact
     h1: Website optimization
     shortName: Website optimization
@@ -146,14 +146,14 @@ translations:
       - >-
         You can also email us at hello@hordeagence.com
     primaryCtaLabel: Request a free audit
-    primaryCtaUrl: /en/services/audit-offert
+    primaryCtaUrl: /en/services/technical-seo-audit-brussels
     secondaryCtaLabel: Contact us
     secondaryCtaUrl: /en/contact
     recommendedLinks:
       - anchor: free 48h audit
-        url: /en/services/audit-offert
+        url: /en/services/technical-seo-audit-brussels
       - anchor: performance-focused redesign
-        url: /en/services/refonte-site-web
+        url: /en/services/website-redesign-brussels
       - anchor: contact us
         url: /en/contact
 intro: >-
@@ -267,14 +267,14 @@ ctaParagraphs:
   - >-
     Ou vous pouvez nous envoyer un e-mail à l'adresse hello@hordeagence.com
 primaryCtaLabel: Demander un audit gratuit
-primaryCtaUrl: /fr/services/audit-offert
+primaryCtaUrl: /fr/services/audit-seo-technique-bruxelles
 secondaryCtaLabel: Nous contacter
 secondaryCtaUrl: /fr/contact
 recommendedLinks:
   - anchor: audit gratuit de 48h
-    url: /fr/services/audit-offert
+    url: /fr/services/audit-seo-technique-bruxelles
   - anchor: refonte orientée performance
-    url: /fr/services/refonte-site-web
+    url: /fr/services/refonte-site-web-bruxelles
   - anchor: nous contacter
     url: /fr/contact
 notes:

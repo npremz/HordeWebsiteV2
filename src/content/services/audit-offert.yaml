@@ -1,43 +1,43 @@
 slug: audit-offert
-seoUrl: /fr/services/audit-offert
-seoPrimaryKeyword: audit site web gratuit bruxelles
+seoUrl: /fr/services/audit-seo-technique-bruxelles
+seoPrimaryKeyword: audit seo technique bruxelles
 seoSecondaryKeywords:
-  - audit seo gratuit
   - audit performance site web
+  - core web vitals bruxelles
+  - audit ux ui bruxelles
   - analyse site web bruxelles
-  - diagnostic site web
-seoTitle: Audit de site web offert à Bruxelles | Horde
+seoTitle: Audit SEO technique à Bruxelles | Horde
 seoDescription: >-
-  On analyse votre site gratuitement : vitesse, SEO technique, UX et
-  conversions. Résultats concrets sous 48h, sans engagement.
+  Audit SEO technique, UX et performance : identifiez les blocages qui freinent
+  votre trafic et vos conversions, avec un plan d'action priorisé.
 seoRobots: index, follow
 seoInternalLinks:
   - /fr/services/optimisation-site-web
-  - /fr/services/refonte-site-web
+  - /fr/services/refonte-site-web-bruxelles
   - /fr/contact
-h1: Audit de site web offert
-shortName: Audit site web (offert)
+h1: Audit SEO technique et performance à Bruxelles
+shortName: Audit SEO technique
 footerTitle: Audit (Offert)
 footerOrder: 0
 translations:
   en:
-    seoUrl: /en/services/audit-offert
-    seoPrimaryKeyword: free website audit brussels
+    seoUrl: /en/services/technical-seo-audit-brussels
+    seoPrimaryKeyword: technical seo audit brussels
     seoSecondaryKeywords:
-      - free seo audit
       - website performance audit
+      - core web vitals brussels
+      - ux ui audit brussels
       - website analysis brussels
-      - website diagnostic
-    seoTitle: Free website audit in Brussels | Horde
+    seoTitle: Technical SEO audit in Brussels | Horde
     seoDescription: >-
-      We review your website for free: speed, technical SEO, UX and conversions.
-      Clear findings within 48h, with no commitment.
+      Technical SEO, UX and performance audit: identify what blocks your traffic
+      and conversions with a prioritized action plan.
     seoInternalLinks:
       - /en/services/optimisation-site-web
-      - /en/services/refonte-site-web
+      - /en/services/website-redesign-brussels
       - /en/contact
-    h1: Free website audit
-    shortName: Website audit (free)
+    h1: Technical SEO and performance audit in Brussels
+    shortName: Technical SEO audit
     footerTitle: Audit (Free)
     intro: >-
       We look at what is holding your website back: speed, technical SEO, UX and
@@ -138,7 +138,7 @@ translations:
       - anchor: performance optimization
         url: /en/services/optimisation-site-web
       - anchor: conversion-focused redesign
-        url: /en/services/refonte-site-web
+        url: /en/services/website-redesign-brussels
       - anchor: contact us
         url: /en/contact
 intro: >-
@@ -242,7 +242,7 @@ recommendedLinks:
   - anchor: optimisation des performances
     url: /fr/services/optimisation-site-web
   - anchor: refonte orientée conversion
-    url: /fr/services/refonte-site-web
+    url: /fr/services/refonte-site-web-bruxelles
   - anchor: nous contacter
     url: /fr/contact
 notes:
