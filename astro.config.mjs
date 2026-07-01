@@ -38,6 +38,7 @@ const noindexSitemapPaths = new Set([
   '/en/projets/audit-offert',
   '/en/projets/creation-ecommerce',
   '/en/projets/creation-landing-page',
+  '/en/projets/creation-site-vitrine',
   '/en/projets/creation-mvp-saas',
   '/en/projets/optimisation-site-web',
   '/en/projets/refonte-site-web',
@@ -46,6 +47,7 @@ const noindexSitemapPaths = new Set([
   '/fr/projets/audit-offert',
   '/fr/projets/creation-ecommerce',
   '/fr/projets/creation-landing-page',
+  '/fr/projets/creation-site-vitrine',
   '/fr/projets/creation-mvp-saas',
   '/fr/projets/optimisation-site-web',
   '/fr/projets/refonte-site-web',
@@ -71,6 +73,40 @@ function shouldIncludeInSitemap(page) {
 // https://astro.build/config
 export default defineConfig({
   site: siteUrl,
+  redirects: {
+    '/fr/services/audit-offert': {
+      status: 301,
+      destination: '/fr/services/audit-seo-technique-bruxelles',
+    },
+    '/en/services/audit-offert': {
+      status: 301,
+      destination: '/en/services/technical-seo-audit-brussels',
+    },
+    '/fr/services/refonte-site-web': {
+      status: 301,
+      destination: '/fr/services/refonte-site-web-bruxelles',
+    },
+    '/en/services/refonte-site-web': {
+      status: 301,
+      destination: '/en/services/website-redesign-brussels',
+    },
+    '/fr/services/creation-mvp-saas': {
+      status: 301,
+      destination: '/fr/services/developpement-mvp-bruxelles',
+    },
+    '/en/services/creation-mvp-saas': {
+      status: 301,
+      destination: '/en/services/mvp-development-brussels',
+    },
+    '/fr/services/creation-site-web': {
+      status: 301,
+      destination: '/fr/services/creation-site-vitrine-bruxelles',
+    },
+    '/en/services/website-creation': {
+      status: 301,
+      destination: '/en/services/showcase-website-brussels',
+    },
+  },
   // Astro 5: 'hybrid' n'existe plus. Utiliser 'server' + prerender: true sur les pages statiques
   output: isProd ? 'server' : 'static',
   adapter: node({ mode: 'standalone' }),

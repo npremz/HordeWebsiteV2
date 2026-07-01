@@ -1,5 +1,5 @@
 slug: refonte-site-web
-seoUrl: /fr/services/refonte-site-web
+seoUrl: /fr/services/refonte-site-web-bruxelles
 seoPrimaryKeyword: refonte site web bruxelles
 seoSecondaryKeywords:
   - refonte ux ui
@@ -13,16 +13,16 @@ seoDescription: >-
   architecture claire pour convertir davantage. Devis sous 48h.
 seoRobots: index, follow
 seoInternalLinks:
-  - /fr/services/audit-offert
+  - /fr/services/audit-seo-technique-bruxelles
   - /fr/services/optimisation-site-web
   - /fr/projets
   - /fr/contact
-h1: Refonte de site web
+h1: Refonte de site web orientée UX et conversion
 footerTitle: Refonte Web
 footerOrder: 1
 translations:
   en:
-    seoUrl: /en/services/refonte-site-web
+    seoUrl: /en/services/website-redesign-brussels
     seoPrimaryKeyword: website redesign brussels
     seoSecondaryKeywords:
       - ux ui redesign
@@ -35,11 +35,11 @@ translations:
       We redesign your website without starting blindly from zero: UX/UI, speed,
       technical SEO and clear architecture to convert more visitors.
     seoInternalLinks:
-      - /en/services/audit-offert
+      - /en/services/technical-seo-audit-brussels
       - /en/services/optimisation-site-web
       - /en/projets
       - /en/contact
-    h1: Website redesign
+    h1: Website redesign for UX and conversion
     shortName: Website redesign
     footerTitle: Web Redesign
     intro: >-
@@ -155,7 +155,7 @@ translations:
     reassurance: Reply within 48h. Free first exchange, no commitment.
     recommendedLinks:
       - anchor: free audit before redesign
-        url: /en/services/audit-offert
+        url: /en/services/technical-seo-audit-brussels
       - anchor: optimization without a full redesign
         url: /en/services/optimisation-site-web
       - anchor: our work
@@ -290,7 +290,7 @@ secondaryCtaUrl: /fr/projets
 reassurance: Réponse sous 48h. Premier échange gratuit, sans engagement.
 recommendedLinks:
   - anchor: audit gratuit avant refonte
-    url: /fr/services/audit-offert
+    url: /fr/services/audit-seo-technique-bruxelles
   - anchor: optimisation sans refonte complète
     url: /fr/services/optimisation-site-web
   - anchor: nos réalisations
@@ -310,4 +310,4 @@ notes:
   - >-
     Ton : sérieux, structuré, sans sur-vente. On est une agence qui fait du bon
     travail, pas "la meilleure agence de Bruxelles".
-order: 5
+order: 6
