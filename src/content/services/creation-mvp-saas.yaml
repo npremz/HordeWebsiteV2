@@ -21,7 +21,7 @@ seoInternalLinks:
 h1: Développement MVP et application web à Bruxelles
 shortName: Développement MVP
 footerTitle: MVP / Web app
-footerOrder: 5
+footerOrder: 4
 translations:
   en:
     seoUrl: /en/services/mvp-development-brussels
@@ -316,4 +316,4 @@ notes:
     Le passage sur ce qu'on n'est pas (usine offshore) est important pour
     qualifier les leads — on cherche des clients qui veulent de la qualité, pas
     du volume.
-order: 4
+order: 3

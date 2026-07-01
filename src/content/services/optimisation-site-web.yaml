@@ -19,7 +19,7 @@ seoInternalLinks:
 h1: Optimisation de site web
 shortName: Optimisation site web
 footerTitle: Optimisation
-footerOrder: 6
+footerOrder: 5
 translations:
   en:
     seoUrl: /en/services/optimisation-site-web
@@ -291,4 +291,4 @@ notes:
   - >-
     Les chiffres (25% de perte, scores < 50 → 80-95) doivent rester réalistes et
     vérifiables, pas gonflés.
-order: 5
+order: 4
