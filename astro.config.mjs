@@ -95,7 +95,7 @@ export default defineConfig({
       destination: '/en/services/mvp-development-brussels',
     },
   },
-  // Astro 5: 'hybrid' n'existe plus. Utiliser 'server' + prerender: true sur les pages statiques
+  // Astro 7: utiliser 'server' + prerender: true sur les pages statiques.
   output: isProd ? 'server' : 'static',
   adapter: node({ mode: 'standalone' }),
   build: {
@@ -123,11 +123,6 @@ export default defineConfig({
         'react/jsx-runtime',
         'react/jsx-dev-runtime',
       ],
-      esbuildOptions: {
-        define: {
-          'process.env.NODE_ENV': '"development"',
-        },
-      },
     },
     server: {
       strictPort: true,

@@ -2,7 +2,7 @@
 
 ## Projet
 
-HordeWebsiteV2 est un site Astro 5 pour Horde Agence.
+HordeWebsiteV2 est un site Astro 7 pour Horde Agence.
 - Site marketing multilingue `fr` / `en`
 - Pages majoritairement statiques, avec `output: 'server'` en prod pour les endpoints runtime
 - Stack principale: Astro, Tailwind v4 et React pour le formulaire interactif

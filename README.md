@@ -1,6 +1,6 @@
 # Horde Website V2
 
-Site marketing multilingue de Horde Agence, construit avec Astro 6, Tailwind CSS 4 et quelques îlots React.
+Site marketing multilingue de Horde Agence, construit avec Astro 7, Tailwind CSS 4 et quelques îlots React.
 
 ## Développement
 

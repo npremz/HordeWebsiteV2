@@ -243,7 +243,7 @@ Le formulaire couvre notamment les besoins suivants:
 
 Dependances principales relevees dans le projet:
 
-- Astro 6
+- Astro 7
 - React 19
 - Tailwind CSS 4
 - @astrojs/node

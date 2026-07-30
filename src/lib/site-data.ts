@@ -1,5 +1,5 @@
 import yaml from "js-yaml";
-import { z } from "zod";
+import { z } from "astro/zod";
 import { DEFAULT_LOCALE, type Locale } from "../i18n";
 
 export interface SiteSettingsData {
@@ -57,7 +57,7 @@ const navigationItemSchema = z.object({
 const siteSettingsSchema: z.ZodType<SiteSettingsData> = z.object({
   siteName: z.string(),
   homepageTitle: z.string(),
-  siteUrl: z.string().url(),
+  siteUrl: z.url(),
   defaultDescription: z.string().min(50).max(160),
   locale: z.string(),
   defaultOgImage: z.string(),
@@ -83,7 +83,7 @@ const footerSchema: z.ZodType<FooterData> = z.object({
   })),
   socialLinks: z.array(z.object({
     platform: z.string(),
-    url: z.string().url(),
+    url: z.url(),
   })).optional(),
   legalLinks: z.array(navigationItemSchema),
   copyright: z.string().optional(),

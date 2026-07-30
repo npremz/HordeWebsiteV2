@@ -139,7 +139,7 @@ Les equivalents anglais sont accessibles sous `/en/...`.
 
 ## Stack technique du site
 
-- Astro 6
+- Astro 7
 - React 19
 - Tailwind CSS 4
 - Node.js
