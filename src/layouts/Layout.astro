@@ -23,6 +23,8 @@ interface Props {
   ogType?: 'website' | 'article';
   ogImage?: string;
   ogImageAlt?: string;
+  ogImageWidth?: number;
+  ogImageHeight?: number;
   twitterCard?: 'summary' | 'summary_large_image';
   publishedTime?: string;
   modifiedTime?: string;
@@ -48,6 +50,8 @@ const {
   ogType,
   ogImage,
   ogImageAlt,
+  ogImageWidth,
+  ogImageHeight,
   twitterCard,
   publishedTime,
   modifiedTime,
@@ -83,6 +87,8 @@ const bodyClasses = isDark ? 'bg-black text-button-white' : 'bg-bg text-black';
       ogType={ogType}
       ogImage={ogImage}
       ogImageAlt={ogImageAlt}
+      ogImageWidth={ogImageWidth}
+      ogImageHeight={ogImageHeight}
       twitterCard={twitterCard}
       publishedTime={publishedTime}
       modifiedTime={modifiedTime}
