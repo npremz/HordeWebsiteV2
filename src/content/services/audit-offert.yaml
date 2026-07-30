@@ -29,18 +29,11 @@ translations:
       - core web vitals brussels
       - ux ui audit brussels
       - website analysis brussels
-<<<<<<< HEAD
       - website diagnostic
     seoTitle: Free website audit in Brussels
     seoDescription: >-
       Get a free review of your website’s speed, technical SEO, UX and conversion
       journey, with clear priorities delivered within 48 hours.
-=======
-    seoTitle: Technical SEO audit in Brussels | Horde
-    seoDescription: >-
-      Technical SEO, UX and performance audit: identify what blocks your traffic
-      and conversions with a prioritized action plan.
->>>>>>> 35e8722802f7740a950a5992bedb4088fd53f193
     seoInternalLinks:
       - /en/services/optimisation-site-web
       - /en/services/website-redesign-brussels
