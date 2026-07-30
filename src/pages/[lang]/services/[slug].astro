@@ -17,10 +17,16 @@ export async function getStaticPaths() {
   const services = await getServices();
 
   return SUPPORTED_LOCALES.flatMap((lang) =>
-    services.map((service) => ({
-      params: { lang, slug: service.data.slug },
-      props: { service, lang },
-    })),
+    services.map((service) => {
+      const localizedService = localizeServiceEntry(service, lang);
+      const seoUrlSegments = localizedService.data.seoUrl.split('/').filter(Boolean);
+      const slug = seoUrlSegments[seoUrlSegments.length - 1] || service.data.slug;
+
+      return {
+        params: { lang, slug },
+        props: { service, lang },
+      };
+    }),
   );
 }
 
