@@ -207,10 +207,10 @@ export const fr = {
 
   // Projects Page
   projectsPage: {
-    title: 'Projets de sites web rapides à Bruxelles',
-    description: 'Explorez nos réalisations de sites web rapides à Bruxelles : vitrines, e-commerce et interfaces sur mesure pensées pour la conversion.',
+    title: 'Portfolio web : nos projets sur mesure à Bruxelles',
+    description: 'Découvrez les sites et interfaces conçus par Horde à Bruxelles : stratégie, identité, UX, développement sur mesure et performance web.',
     heading: 'Nos derniers\nprojets',
-    intro: 'Divers articles sur la technologie, le design et notre expérience',
+    intro: 'Sites et interfaces conçus\nsur mesure à Bruxelles',
     servicePageHeading: "Projets, méthodes et retours d'expérience autour de {service}",
     all: 'Tous',
     projectCount: 'Nombre projets',
@@ -234,8 +234,8 @@ export const fr = {
 
   // Blog Page
   blogPage: {
-    title: 'Blog site rapide : performance web et UX',
-    description: 'Guides concrets pour accélérer votre site web, améliorer l\'UX et optimiser les performances. Par Horde Agence, agence web à Bruxelles.',
+    title: 'Guides SEO, UX et performance web',
+    description: 'Guides concrets sur la création et la refonte de sites, l’UX, le SEO technique et la performance web, par l’équipe de Horde à Bruxelles.',
     heading: 'Divers articles sur la technologie, le\ndesign et notre expérience',
     articleCount: 'Nombre articles',
     viewGrid: 'Grille',
@@ -281,9 +281,9 @@ export const fr = {
 
   // Services Page
   servicesPage: {
-    title: 'Services web à Bruxelles',
+    title: 'Création, refonte et optimisation web à Bruxelles',
     description:
-      'Une approche consultative pour comprendre vos utilisateurs et créer des expériences digitales qui relient durablement votre marque à son audience.',
+      'Audit, refonte, e-commerce, landing page, MVP ou optimisation : découvrez les services de Horde pour créer un site rapide, clair et conçu pour convertir.',
     heading: 'La bonne solution pour\nfaire grandir votre business',
     intro:
       'Audit, refonte web, e-commerce, landing page, MVP SaaS ou optimisation : on choisit la bonne approche pour créer un site rapide, clair et pensé pour le SEO, l’UX et la conversion.',
@@ -302,8 +302,8 @@ export const fr = {
 
   // Contact Page
   contact: {
-    title: 'Contact agence web à Bruxelles',
-    description: 'Parlons de votre projet de site web rapide sur mesure avec Horde Agence à Bruxelles : audit site web offert et accompagnement de A à Z.',
+    title: 'Contactez notre agence web à Bruxelles',
+    description: 'Parlez-nous de votre site, refonte, e-commerce ou MVP. Horde vous répond avec des priorités claires et vous propose un premier audit sans engagement.',
     knockKnock: 'Toc-toc, dites-nous bonjour !',
     startWhen: 'Hâte d’entendre vos idées pour votre projet.',
     alternativeContacts: 'Contacts Alternatifs',
@@ -469,8 +469,8 @@ export const fr = {
 
   // About Page
   aboutPage: {
-    title: 'À propos de Horde, agence web à Bruxelles',
-    description: 'Découvrez Horde Agence à Bruxelles : un designer et un développeur pour créer des sites web sur mesure, rapides et durables.',
+    title: 'L’équipe derrière Horde, agence web à Bruxelles',
+    description: 'Découvrez les deux experts derrière Horde : un designer et un développeur qui créent à Bruxelles des sites sur mesure, rapides et simples à faire évoluer.',
     heroTitle1: 'Deux\ncerveaux,',
     heroTitle2: 'Une\nvision',
     scrollDown: '↓',

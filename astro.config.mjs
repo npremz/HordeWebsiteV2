@@ -10,10 +10,12 @@ import node from '@astrojs/node';
 
 const PORT = parseInt(process.env.PORT || '4328', 10);
 
-// Production = hordeagence.com (mode server pour Keystatic GitHub)
+// Production = hordeagence.com (mode server)
+// Keystatic admin is opt-in because its route bundle is heavy in Docker builds.
+// Enable with ENABLE_KEYSTATIC=1 only when the production CMS route is needed.
 // Staging/Dev = static
 const isProd = process.env.SITE_ENV === 'production';
-const enableKeystatic = isProd || process.env.ENABLE_KEYSTATIC === '1';
+const enableKeystatic = process.env.ENABLE_KEYSTATIC === '1';
 const siteUrl = (process.env.PUBLIC_SITE_URL || (isProd ? 'https://hordeagence.com' : 'https://waf.hordagency.com')).replace(/\/$/, '');
 
 if (isProd && siteUrl !== 'https://hordeagence.com') {
@@ -34,6 +36,7 @@ const redirectSourcePaths = new Set([
 
 const noindexSitemapPaths = new Set([
   '/en/blog/category/performance-web',
+  '/en/blog/category/strategy',
   '/en/blog/category/ux-design',
   '/en/projets/audit-offert',
   '/en/projets/creation-ecommerce',
@@ -42,6 +45,7 @@ const noindexSitemapPaths = new Set([
   '/en/projets/optimisation-site-web',
   '/en/projets/refonte-site-web',
   '/fr/blog/category/performance-web',
+  '/fr/blog/category/strategie',
   '/fr/blog/category/ux-design',
   '/fr/projets/audit-offert',
   '/fr/projets/creation-ecommerce',

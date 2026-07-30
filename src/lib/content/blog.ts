@@ -29,6 +29,7 @@ export interface LocalizedPost {
   slug: string;
   alternateSlug: string;
   title: string;
+  seoTitle: string;
   excerpt: string;
   seoDescription: string;
   featuredImage: PostEntry['data']['featuredImage'];
@@ -39,6 +40,8 @@ export interface LocalizedPost {
   modifiedDate?: Date;
   readingTime: number;
   featured: boolean;
+  seoRobots: 'index, follow' | 'noindex, follow' | 'noindex, nofollow';
+  ogImage?: string;
   tags: string[];
   keyTakeaways: string[];
   authorSlug: string;
@@ -73,19 +76,33 @@ export function slugifyTag(tag: string): string {
 }
 
 export function getBlogIndexHref(lang: Locale): string {
-  return `/${lang}/blog`;
+  return `/${lang}/blog/`;
 }
 
 export function getBlogPostHref(slug: string, lang: Locale): string {
-  return `/${lang}/blog/${slug}`;
+  return `/${lang}/blog/${slug}/`;
 }
 
 export function getBlogCategoryHref(slug: string, lang: Locale): string {
-  return `/${lang}/blog/category/${slug}`;
+  return `/${lang}/blog/category/${slug}/`;
 }
 
 export function getBlogTagHref(tag: string, lang: Locale): string {
-  return `/${lang}/blog/tag/${slugifyTag(tag)}`;
+  return `/${lang}/blog/tag/${slugifyTag(tag)}/`;
+}
+
+export function isPostPublished(post: PostEntry, now = new Date()): boolean {
+  return !post.data.draft && post.data.publishedDate.getTime() <= now.getTime();
+}
+
+function normalizeSeoRobots(
+  value?: string,
+): 'index, follow' | 'noindex, follow' | 'noindex, nofollow' {
+  if (value === 'noindex, follow' || value === 'noindex, nofollow') {
+    return value;
+  }
+
+  return 'index, follow';
 }
 
 export function getPostTags(post: PostEntry, lang: Locale): string[] {
@@ -160,6 +177,7 @@ export function localizePost(
     slug: lang === 'fr' ? post.data.slug_fr : post.data.slug,
     alternateSlug: lang === 'fr' ? post.data.slug : post.data.slug_fr,
     title: lang === 'fr' ? post.data.title_fr : post.data.title_en,
+    seoTitle: lang === 'fr' ? post.data.seoTitle_fr : post.data.seoTitle_en,
     excerpt: lang === 'fr' ? post.data.excerpt_fr : post.data.excerpt_en,
     seoDescription: lang === 'fr' ? post.data.seoDescription_fr : post.data.seoDescription_en,
     featuredImage: post.data.featuredImage,
@@ -170,6 +188,8 @@ export function localizePost(
     modifiedDate: post.data.modifiedDate,
     readingTime: post.data.readingTime || 5,
     featured: post.data.featured,
+    seoRobots: normalizeSeoRobots(post.data.seoRobots),
+    ogImage: post.data.ogImage,
     tags: getPostTags(post, lang),
     keyTakeaways: lang === 'fr' ? post.data.keyTakeaways_fr || [] : post.data.keyTakeaways_en || [],
     authorSlug: post.data.author,
@@ -213,7 +233,7 @@ export async function getLocalizedPosts(
   });
 
   return posts
-    .filter((post) => includeDrafts || !post.data.draft)
+    .filter((post) => includeDrafts || isPostPublished(post))
     .sort((a, b) => new Date(b.data.publishedDate).getTime() - new Date(a.data.publishedDate).getTime())
     .map((post) => localizePost(post, lang, { authorMap, categoryMap }));
 }
@@ -232,11 +252,11 @@ export async function getLocalizedPostsByTag(tag: string, lang: Locale): Promise
 }
 
 export async function getLocalizedTags(lang: Locale): Promise<string[]> {
-  const posts = await getPosts();
+  const posts = await getLocalizedPosts(lang);
   const tags = new Set<string>();
 
   posts.forEach((post) => {
-    getPostTags(post, lang).forEach((tag) => tags.add(tag));
+    post.tags.forEach((tag) => tags.add(tag));
   });
 
   return Array.from(tags);
@@ -244,7 +264,7 @@ export async function getLocalizedTags(lang: Locale): Promise<string[]> {
 
 export async function getAlternateTagSlug(tag: string, lang: Locale): Promise<string | undefined> {
   const targetLang: Locale = lang === 'fr' ? 'en' : 'fr';
-  const posts = await getPosts();
+  const posts = (await getPosts()).filter((post) => isPostPublished(post));
 
   for (const post of posts) {
     const sourceTags = getPostTags(post, lang);

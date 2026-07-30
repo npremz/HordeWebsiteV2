@@ -6,10 +6,11 @@ seoSecondaryKeywords:
   - core web vitals bruxelles
   - audit ux ui bruxelles
   - analyse site web bruxelles
-seoTitle: Audit SEO technique à Bruxelles | Horde
+  - diagnostic site web
+seoTitle: Audit de site web offert à Bruxelles
 seoDescription: >-
-  Audit SEO technique, UX et performance : identifiez les blocages qui freinent
-  votre trafic et vos conversions, avec un plan d'action priorisé.
+  Recevez un diagnostic gratuit de votre site : vitesse, SEO technique, UX et
+  conversions, avec des priorités concrètes sous 48 h et sans engagement.
 seoRobots: index, follow
 seoInternalLinks:
   - /fr/services/optimisation-site-web
@@ -28,10 +29,11 @@ translations:
       - core web vitals brussels
       - ux ui audit brussels
       - website analysis brussels
-    seoTitle: Technical SEO audit in Brussels | Horde
+      - website diagnostic
+    seoTitle: Free website audit in Brussels
     seoDescription: >-
-      Technical SEO, UX and performance audit: identify what blocks your traffic
-      and conversions with a prioritized action plan.
+      Get a free review of your website’s speed, technical SEO, UX and conversion
+      journey, with clear priorities delivered within 48 hours.
     seoInternalLinks:
       - /en/services/optimisation-site-web
       - /en/services/website-redesign-brussels

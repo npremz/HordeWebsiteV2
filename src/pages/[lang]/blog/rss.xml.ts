@@ -26,7 +26,7 @@ export async function GET(context: APIContext) {
       title: post.title,
       description: post.excerpt,
       pubDate: new Date(post.publishedDate),
-      link: `${getBlogPostHref(post.slug, lang)}/`,
+      link: getBlogPostHref(post.slug, lang),
     })),
     customData: `<language>${lang === 'fr' ? 'fr-BE' : 'en-US'}</language>`,
   });

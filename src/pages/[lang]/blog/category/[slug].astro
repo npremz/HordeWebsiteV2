@@ -60,7 +60,7 @@ const pageDescription =
   localizedCategory.description ||
   `${t.blogPage.categoryArticles} ${localizedCategory.name}.`;
 const heading = t.blogPage.categoryPageHeading.replace('{category}', localizedCategory.name);
-const robots = posts.length > 2 ? 'index, follow' : 'noindex, follow';
+const robots = posts.length >= 5 ? 'index, follow' : 'noindex, follow';
 ---
 
 <Layout
@@ -77,6 +77,7 @@ const robots = posts.length > 2 ? 'index, follow' : 'noindex, follow';
     lang={lang}
     posts={posts}
     heading={heading}
+    description={pageDescription}
     filters={filters}
   />
 
