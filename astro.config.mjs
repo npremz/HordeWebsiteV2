@@ -3,19 +3,13 @@ import { defineConfig } from 'astro/config';
 import tailwindcss from '@tailwindcss/vite';
 
 import react from '@astrojs/react';
-import markdoc from '@astrojs/markdoc';
-import keystatic from '@keystatic/astro';
 import sitemap from '@astrojs/sitemap';
 import node from '@astrojs/node';
 
 const PORT = parseInt(process.env.PORT || '4328', 10);
 
-// Production = hordeagence.com (mode server)
-// Keystatic admin is opt-in because its route bundle is heavy in Docker builds.
-// Enable with ENABLE_KEYSTATIC=1 only when the production CMS route is needed.
-// Staging/Dev = static
+// Production uses the Node server for runtime endpoints such as the contact form.
 const isProd = process.env.SITE_ENV === 'production';
-const enableKeystatic = process.env.ENABLE_KEYSTATIC === '1';
 const siteUrl = (process.env.PUBLIC_SITE_URL || (isProd ? 'https://hordeagence.com' : 'https://waf.hordagency.com')).replace(/\/$/, '');
 
 if (isProd && siteUrl !== 'https://hordeagence.com') {
@@ -112,9 +106,7 @@ export default defineConfig({
     port: PORT
   },
   integrations: [
-    react({ include: ['**/keystatic/**', '**/components/**/*.tsx'] }),
-    markdoc(),
-    ...(enableKeystatic ? [keystatic()] : []),
+    react({ include: ['**/components/**/*.tsx'] }),
     sitemap({
       filter: shouldIncludeInSitemap,
     })
@@ -147,8 +139,6 @@ export default defineConfig({
     },
     build: {
       reportCompressedSize: false,
-      // Keystatic admin bundle is intentionally large and route-scoped.
-      chunkSizeWarningLimit: 3000,
     },
   },
 });
