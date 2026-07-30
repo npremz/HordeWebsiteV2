@@ -36,6 +36,7 @@ const redirectSourcePaths = new Set([
 
 const noindexSitemapPaths = new Set([
   '/en/blog/category/performance-web',
+  '/en/blog/category/strategy',
   '/en/blog/category/ux-design',
   '/en/projets/audit-offert',
   '/en/projets/creation-ecommerce',
@@ -44,6 +45,7 @@ const noindexSitemapPaths = new Set([
   '/en/projets/optimisation-site-web',
   '/en/projets/refonte-site-web',
   '/fr/blog/category/performance-web',
+  '/fr/blog/category/strategie',
   '/fr/blog/category/ux-design',
   '/fr/projets/audit-offert',
   '/fr/projets/creation-ecommerce',

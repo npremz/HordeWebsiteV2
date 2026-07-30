@@ -367,6 +367,16 @@ const blogPostsSchema = {
     label: 'Titre (EN)',
     validation: { isRequired: true },
   }),
+  seoTitle_fr: fields.text({
+    label: 'Titre SEO (FR)',
+    description: 'Title affiché dans les moteurs de recherche (sans « | Horde Agence »)',
+    validation: { isRequired: true, length: { max: 55 } },
+  }),
+  seoTitle_en: fields.text({
+    label: 'Titre SEO (EN)',
+    description: 'Search title without the automatic « | Horde Agence » suffix',
+    validation: { isRequired: true, length: { max: 55 } },
+  }),
   excerpt_fr: fields.text({
     label: 'Extrait (FR)',
     description: 'Résumé affiché dans les listes (max 200 caractères)',

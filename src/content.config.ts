@@ -83,6 +83,8 @@ const postsCollection = defineCollection({
     // Champs localisés
     title_fr: z.string(),
     title_en: z.string(),
+    seoTitle_fr: z.string(),
+    seoTitle_en: z.string(),
     excerpt_fr: z.string(),
     excerpt_en: z.string(),
     seoDescription_fr: z.string(),

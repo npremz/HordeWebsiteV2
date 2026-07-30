@@ -208,10 +208,10 @@ export const en: Translations = {
 
   // Projects Page
   projectsPage: {
-    title: 'Fast website projects in Brussels',
-    description: 'Explore our fast website projects in Brussels: showcase sites, e-commerce and custom high-performance interfaces built to convert.',
+    title: 'Web design portfolio: custom projects in Brussels',
+    description: 'Explore websites and digital products designed by Horde in Brussels, combining strategy, brand identity, UX, custom development and performance.',
     heading: 'Our latest\nprojects',
-    intro: 'Various articles about technology, design, and our experience',
+    intro: 'Custom websites and digital\nproducts built in Brussels',
     servicePageHeading: 'Projects, methods and field notes around {service}',
     all: 'All',
     projectCount: 'Project count',
@@ -235,8 +235,8 @@ export const en: Translations = {
 
   // Blog Page
   blogPage: {
-    title: 'Fast website blog: web performance and UX',
-    description: 'Actionable guides to speed up your website, improve UX, and build reliable web experiences. By Horde Agence, a web agency in Brussels.',
+    title: 'Website strategy, SEO and performance guides',
+    description: 'Practical guides on website strategy, redesign, UX, technical SEO and web performance from Horde’s design and development team in Brussels.',
     heading: 'Articles about technology, design,\nand our experience building for the web',
     articleCount: 'Article count',
     viewGrid: 'Grid',
@@ -282,9 +282,9 @@ export const en: Translations = {
 
   // Services Page
   servicesPage: {
-    title: 'Web design services in Brussels',
+    title: 'Web design, redesign and optimization in Brussels',
     description:
-      'We take a consultative approach to create digital experiences that build lasting connections between brands and people.',
+      'Explore Horde’s website audit, redesign, e-commerce, landing page, SaaS MVP and optimization services for faster, clearer digital experiences.',
     heading: 'The right solution to make\nyour business grow',
     intro:
       'Audit, web redesign, e-commerce, landing page, SaaS MVP or optimization: we choose the right approach to build a fast, clear website designed for SEO, UX and conversion.',
@@ -303,8 +303,8 @@ export const en: Translations = {
 
   // Contact Page
   contact: {
-    title: 'Contact a web agency in Brussels',
-    description: 'Let\'s discuss your fast custom website project with Horde Agence in Brussels: free website audit, performance guidance and end-to-end support.',
+    title: 'Contact our web agency in Brussels',
+    description: 'Tell Horde about your website, redesign, e-commerce or MVP project. Get a clear first assessment, practical next steps and direct expert support.',
     knockKnock: 'Knock knock, say hello!',
     startWhen: 'We can’t wait to hear your ideas for your project.',
     alternativeContacts: 'Alternative Contacts',
@@ -470,8 +470,8 @@ export const en: Translations = {
 
   // About Page
   aboutPage: {
-    title: 'About Horde, web agency in Brussels',
-    description: 'Meet Horde Agence, a Brussels web agency focused on fast custom websites, clean UX, and reliable delivery.',
+    title: 'Meet Horde, a web agency in Brussels',
+    description: 'Meet the designer and developer behind Horde, building fast custom websites in Brussels with clear UX, reliable code and direct collaboration.',
     heroTitle1: 'Two\nminds,',
     heroTitle2: 'One\nvision',
     scrollDown: '↓',

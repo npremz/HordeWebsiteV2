@@ -29,6 +29,7 @@ export interface LocalizedPost {
   slug: string;
   alternateSlug: string;
   title: string;
+  seoTitle: string;
   excerpt: string;
   seoDescription: string;
   featuredImage: PostEntry['data']['featuredImage'];
@@ -176,6 +177,7 @@ export function localizePost(
     slug: lang === 'fr' ? post.data.slug_fr : post.data.slug,
     alternateSlug: lang === 'fr' ? post.data.slug : post.data.slug_fr,
     title: lang === 'fr' ? post.data.title_fr : post.data.title_en,
+    seoTitle: lang === 'fr' ? post.data.seoTitle_fr : post.data.seoTitle_en,
     excerpt: lang === 'fr' ? post.data.excerpt_fr : post.data.excerpt_en,
     seoDescription: lang === 'fr' ? post.data.seoDescription_fr : post.data.seoDescription_en,
     featuredImage: post.data.featuredImage,

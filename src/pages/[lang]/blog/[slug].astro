@@ -42,6 +42,7 @@ if (!currentPost) {
 }
 
 const title = currentPost.title;
+const seoTitle = currentPost.seoTitle;
 const titleLines = splitHeadingLines(title);
 const excerpt = currentPost.excerpt;
 const seoDescription = currentPost.seoDescription;
@@ -322,7 +323,7 @@ const schemaOrg = {
 <Layout
 	lang={lang}
 	alternateUrl={alternateUrl}
-	title={title}
+	title={seoTitle}
 	description={seoDescription}
 	robots={currentPost.seoRobots}
 	ogType="article"

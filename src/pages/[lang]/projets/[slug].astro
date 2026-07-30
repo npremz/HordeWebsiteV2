@@ -252,7 +252,7 @@ if (props.kind === 'project') {
             </nav>
           )}
 
-          <div class="hidden md:flex md:w-1/2 justify-end">
+          <div class="mt-10 sm:mt-16 md:mt-0 md:flex md:w-1/2 md:justify-end">
             {pageContent.descriptionParagraphs.length > 0 && (
               <section class="project-description flex flex-col gap-10 sm:gap-16 md:gap-8 text-[1.125rem] sm:max-w-[500px]">
                 {pageContent.descriptionParagraphs.map((paragraph) => (
@@ -263,18 +263,7 @@ if (props.kind === 'project') {
           </div>
         </div>
       </div>
-      <main class="project-content mt-10 sm:mt-16 md:mt-50 lg:max-w-[1000px] lg:mx-auto">
-
-        <div class="md:hidden">
-          {pageContent.descriptionParagraphs.length > 0 && (
-            <section class="project-description flex flex-col gap-10 sm:gap-16 text-[1.125rem] sm:max-w-[500px]">
-              {pageContent.descriptionParagraphs.map((paragraph) => (
-                <p>{paragraph}</p>
-              ))}
-            </section>
-          )}
-        </div>
-
+      <main class="project-content md:mt-50 lg:max-w-[1000px] lg:mx-auto">
         <span class="block md:hidden mt-10 sm:mt-16 text-[1.125rem]">(↓)</span>
 
         {pageContent.gallery.length > 0 && (
