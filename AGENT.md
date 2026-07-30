@@ -36,7 +36,7 @@ npm run indexnow:posts
 - Les services sont actuellement générés uniquement en `fr`.
 - Le SEO est centralisé dans `src/components/SEO.astro`; ne duplique pas canonicals, hreflang ou JSON-LD ailleurs sans raison.
 - Le formulaire de contact dépend de `RESEND_API_KEY`.
-- npm est le gestionnaire de paquets de référence; garder uniquement `package-lock.json`.
+- npm 10.9.8 est le gestionnaire de paquets de référence, comme dans l'image Docker Node 22; garder uniquement `package-lock.json`.
 
 ## Conventions pratiques
 
