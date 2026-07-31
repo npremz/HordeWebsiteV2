@@ -1,5 +1,6 @@
-import { defineCollection, z } from 'astro:content';
+import { defineCollection } from 'astro:content';
 import { glob } from 'astro/loaders';
+import { z } from 'astro/zod';
 
 // Schema pour les projets (multilingue)
 const projectsCollection = defineCollection({
@@ -32,7 +33,7 @@ const projectsCollection = defineCollection({
     })).default([]),
     services: z.array(z.string()).default([]),
     projectTypes: z.array(z.string()).default([]),
-    externalUrl: z.string().url().optional(),
+    externalUrl: z.url().optional(),
     inProgress: z.boolean().default(false),
     publishedDate: z.coerce.date(),
     order: z.number().default(0),
@@ -54,7 +55,7 @@ const authorsCollection = defineCollection({
     avatar: image(),
     social: z.object({
       twitter: z.string().optional(),
-      linkedin: z.string().url().optional(),
+      linkedin: z.url().optional(),
       github: z.string().optional(),
     }).optional(),
   }),

@@ -1,6 +1,6 @@
 import type { APIRoute } from 'astro';
+import { z } from 'astro/zod';
 import { Resend } from 'resend';
-import { z } from 'zod';
 
 export const prerender = false;
 
@@ -18,7 +18,7 @@ const contactSchema = z.object({
   besoin: z.enum(besoinValues).optional(),
   objectif: z.string().min(1).max(2000),
   nom: z.string().min(1).max(100),
-  email: z.string().email().max(254),
+  email: z.email().max(254),
   societe: z.string().max(200).optional().default(''),
   source: z.object({
     type: z.enum(['contact-page', 'service-page']),
@@ -65,7 +65,7 @@ export const POST: APIRoute = async ({ request }) => {
 
     if (!result.success) {
       return new Response(
-        JSON.stringify({ error: 'Données invalides', details: result.error.flatten() }),
+        JSON.stringify({ error: 'Données invalides', details: z.flattenError(result.error) }),
         { status: 400, headers: { 'Content-Type': 'application/json' } }
       );
     }
