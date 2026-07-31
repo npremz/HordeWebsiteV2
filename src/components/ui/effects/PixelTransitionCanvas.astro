@@ -59,14 +59,20 @@ const instanceId = `bg-canvas-${Math.random().toString(36).slice(2, 10)}`;
 	</div>
 )}
 
-<script is:inline define:vars={{ instanceId }} data-astro-rerun>
+<script is:inline data-astro-rerun>
   (function () {
-    var canvas = document.querySelector('canvas[data-bg-canvas-id="' + instanceId + '"]');
+    // `define:vars` injects a top-level `const` in inline scripts. When Astro
+    // reruns that script after a view transition, the global binding still
+    // exists and aborts the whole initialization. Pick the newly swapped-in
+    // canvas from the DOM instead, and guard against duplicate setup.
+    var canvas = document.querySelector('canvas[data-bg-canvas-id]:not([data-bg-canvas-initialized])');
     if (!canvas) return;
 
     var ctx = canvas.getContext('2d');
     if (!ctx) return;
 
+    canvas.setAttribute('data-bg-canvas-initialized', 'true');
+    var instanceId = canvas.getAttribute('data-bg-canvas-id');
     var overlay = document.querySelector('[data-bg-canvas-overlay="true"][data-bg-canvas-id="' + instanceId + '"]');
     var targetId = canvas.getAttribute('data-target-id') || 'page-content';
     var stopTargetId = canvas.getAttribute('data-stop-target-id');
@@ -128,7 +134,10 @@ const instanceId = `bg-canvas-${Math.random().toString(36).slice(2, 10)}`;
     }
 
     function getScrollY() {
-      return window.lenis ? window.lenis.scroll : window.scrollY;
+      // Lenis persists between Astro view transitions and its cached value can
+      // briefly belong to the previous page. The native scroll position is the
+      // source of truth for layout measurements on the newly swapped page.
+      return window.scrollY;
     }
 
     function getAbsoluteTop(element) {
@@ -367,6 +376,29 @@ const instanceId = `bg-canvas-${Math.random().toString(36).slice(2, 10)}`;
       }, 150);
     }
 
+    function resetAfterPageLoad() {
+      if (state.destroyed) return;
+
+      if (state.frameId !== null) {
+        cancelAnimationFrame(state.frameId);
+        state.frameId = null;
+      }
+      state.pendingRender = false;
+
+      resizeCanvas();
+      clearCanvas();
+      resetOverlay();
+
+      // Wait until Astro and Lenis have both applied the navigation scroll
+      // reset before measuring the Home sections again.
+      state.frameId = requestAnimationFrame(function () {
+        state.frameId = requestAnimationFrame(function () {
+          state.frameId = null;
+          render();
+        });
+      });
+    }
+
     function cleanup() {
       if (state.destroyed) return;
       state.destroyed = true;
@@ -374,6 +406,7 @@ const instanceId = `bg-canvas-${Math.random().toString(36).slice(2, 10)}`;
       window.removeEventListener('resize', onResize);
       window.removeEventListener('scroll', onScroll);
       document.removeEventListener('astro:before-swap', cleanup);
+      document.removeEventListener('astro:page-load', resetAfterPageLoad);
 
       if (window.lenis) {
         window.lenis.off('scroll', onScroll);
@@ -409,6 +442,7 @@ const instanceId = `bg-canvas-${Math.random().toString(36).slice(2, 10)}`;
     }
 
     document.addEventListener('astro:before-swap', cleanup);
+    document.addEventListener('astro:page-load', resetAfterPageLoad, { once: true });
 
     resizeCanvas();
     resetOverlay();
