@@ -111,7 +111,7 @@ function parseMarkdown(content: string): string {
 			.replace(/&/g, '&amp;')
 			.replace(/</g, '&lt;')
 			.replace(/>/g, '&gt;');
-		return `\n<div class="pb-10 sm:pb-16 border-b border-lines"><pre class="bg-bg-light p-4 overflow-x-auto text-[1rem]"><code class="language-${lang || 'text'}">${escaped}</code></pre></div>\n`;
+		return `\n<div class="article-code-block"><pre><code class="language-${lang || 'text'}">${escaped}</code></pre></div>\n`;
 	});
 
 	// Séparer en blocs par lignes vides
@@ -132,17 +132,14 @@ function parseMarkdown(content: string): string {
 			const title = block.slice(3);
 			const id = slugify(title);
 			isSourcesSection = ['sources', 'references'].includes(id);
-			if (isSourcesSection) {
-				return `<h2 class="text-[1.375rem] md:text-[32px] mt-24 mb-10 scroll-mt-24" id="${id}">${applyInlineFormatting(title)}</h2>`;
-			}
-			return `<h2 class="text-[1.5rem] md:text-[32px] leading-tight mt-24 sm:mt-24 mb-10 sm:mb-10 scroll-mt-24" id="${id}">${applyInlineFormatting(title)}</h2>`;
+			return `<h2 id="${id}">${applyInlineFormatting(title)}</h2>`;
 		}
 
 		// Titres H3
 		if (block.startsWith('### ')) {
 			const title = block.slice(4);
 			isSourcesSection = false;
-			return `<h3 class="text-[1.5rem] mt-16 mb-10">${applyInlineFormatting(title)}</h3>`;
+			return `<h3>${applyInlineFormatting(title)}</h3>`;
 		}
 
 		// Listes à puces (bloc qui commence par - ou *)
@@ -150,18 +147,18 @@ function parseMarkdown(content: string): string {
 			const items = block.split('\n')
 				.filter(line => line.match(/^[-*] /))
 				.map(line => isSourcesSection
-					? `<li class="flex gap-4 py-6 first:pt-0 last:pb-0 leading-relaxed"><span class="section-label mt-1">/</span><span>${applyInlineFormatting(line.slice(2))}</span></li>`
-					: `<li class="ml-4">${applyInlineFormatting(line.slice(2))}</li>`)
+					? `<li><span class="article-list-marker">/</span><span>${applyInlineFormatting(line.slice(2))}</span></li>`
+					: `<li>${applyInlineFormatting(line.slice(2))}</li>`)
 				.join('\n');
 			if (isSourcesSection) {
-				return `<ul class="flex flex-col divide-y divide-lines text-[1.125rem]">${items}</ul>`;
+				return `<ul class="article-sources">${items}</ul>`;
 			}
-				return `<ul class="list-disc list-outside flex flex-col gap-10 py-10 border-t border-b border-lines mb-6 pl-4">${items}</ul>`;
+			return `<ul>${items}</ul>`;
 		}
 
 		// Paragraphe normal
 		isSourcesSection = false;
-			return `<p class="mb-10 text-[1.125rem] leading-relaxed">${applyInlineFormatting(block)}</p>`;
+			return `<p>${applyInlineFormatting(block)}</p>`;
 	});
 
 	return processedBlocks.filter(b => b).join('\n\n');
@@ -172,10 +169,10 @@ function applyInlineFormatting(text: string): string {
 	let result = text;
 
 	// Code inline (avant gras/italique pour éviter les conflits)
-	result = result.replace(/`([^`]+)`/g, '<code class="px-1.5 py-0.5 bg-lines rounded text-[0.875em]">$1</code>');
+	result = result.replace(/`([^`]+)`/g, '<code>$1</code>');
 
 	// Gras (font-medium au lieu de bold)
-	result = result.replace(/\*\*([^*]+)\*\*/g, '<strong class="font-medium">$1</strong>');
+	result = result.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
 
 	// Italique
 	result = result.replace(/\*([^*]+)\*/g, '<em>$1</em>');
@@ -190,7 +187,7 @@ function applyInlineFormatting(text: string): string {
 				? `${href}/`
 				: href;
 
-		return `<a href="${normalizedHref}" title="${label}" class="underline-hover">${label}</a>`;
+		return `<a href="${normalizedHref}" title="${label}">${label}</a>`;
 	});
 
 	return result;
@@ -435,7 +432,7 @@ const schemaOrg = {
 				</div>
 
 				<!-- Image principale -->
-				<div class="relative z-30 mt-16 sm:mt-6 md:mt-16 lg:mt-20 mb-10 flex h-[330px] md:h-[455px] max-w-[1000px] items-center justify-center overflow-hidden bg-white sm:mb-24 mx-auto">
+				<div class="relative z-30 mt-16 sm:mt-6 md:mt-16 lg:mt-20 flex h-[330px] md:h-[455px] max-w-[1000px] items-center justify-center overflow-hidden bg-white mx-auto">
 					<div class="pointer-events-none absolute left-1/2 top-1/2 z-0 h-full w-px -translate-x-1/2 -translate-y-1/2 bg-lines" aria-hidden="true"></div>
 					<div class="pointer-events-none absolute left-1/2 top-1/2 z-0 h-px w-full -translate-x-1/2 -translate-y-1/2 bg-lines" aria-hidden="true"></div>
 					<div class="pointer-events-none absolute left-1/2 top-1/2 z-0 h-px w-[120%] -translate-x-1/2 -translate-y-1/2 rotate-45 bg-lines" aria-hidden="true"></div>
@@ -459,72 +456,62 @@ const schemaOrg = {
 		</div>
 		</div>
 
-		<!-- Layout 2 colonnes: Contenu + Sidebar -->
-		<div>
-			<!-- Contenu principal -->
-			<div class="lg:flex-1 max-w-[1000px] mx-auto">
+		<!-- Système éditorial : rail de navigation + colonne de lecture mesurée -->
+		<div class="editorial-layout">
+			<aside class="reading-rail" aria-label={t.blogPage.tableOfContents}>
+				<div class="reading-rail__sticky">
+					<div class="reading-progress" aria-hidden="true">
+						<span class="reading-progress__label">{readingTime} {readingTimeLabel}</span>
+						<span class="reading-progress__track"><span class="reading-progress__value"></span></span>
+					</div>
+
+					{tableOfContents.length > 0 && (
+						<nav class="article-toc" aria-label={t.blogPage.tableOfContents}>
+							<p class="section-label article-toc__eyebrow">{t.blogPage.tableOfContents}</p>
+							<ol id="toc">
+								{tableOfContents.map((heading, index) => (
+									<li>
+										<a href={`#${heading.id}`} title={heading.text}>
+											<span>{String(index + 1).padStart(2, '0')}</span>
+											<span>{heading.text}</span>
+										</a>
+									</li>
+								))}
+							</ol>
+						</nav>
+					)}
+				</div>
+			</aside>
+
+			<section class="reading-column" aria-label={title}>
+				<p class="article-kicker section-label">{categoryName} · {readingTime} {readingTimeLabel}</p>
+
+				<div class="article-lede">
+					<span aria-hidden="true">(</span>
+					<p>{excerpt}</p>
+					<span aria-hidden="true">)</span>
+				</div>
+
 				{keyTakeaways.length > 0 && (
-					<section class="mt-10 sm:mt-16" aria-label={t.blogPage.keyTakeaways}>
-							<h2 class="text-[1.375rem] md:text-[32px] mb-10">{t.blogPage.keyTakeaways}</h2>
-						<ul class="flex flex-col divide-y divide-lines text-[1.125rem]">
-							{keyTakeaways.map((item: string) => (
-								<li class="flex gap-4 py-6 first:pt-0 last:pb-0 leading-relaxed">
-									<span class="section-label mt-1">/</span>
-									<span>{item}</span>
+					<section class="key-takeaways" aria-label={t.blogPage.keyTakeaways}>
+						<p class="section-label">{t.blogPage.keyTakeaways}</p>
+						<ul>
+							{keyTakeaways.map((item: string, index: number) => (
+								<li>
+									<span>{String(index + 1).padStart(2, '0')}</span>
+									<p>{item}</p>
 								</li>
 							))}
 						</ul>
 					</section>
 				)}
 
-				<!-- Sommaire (rendu côté serveur pour SEO) -->
-				{tableOfContents.length > 0 && (
-					<nav class="mt-24" aria-label={t.blogPage.tableOfContents}>
-							<h2 class="text-[1.375rem] md:text-[32px] mb-8">{t.blogPage.tableOfContents}</h2>
-							<ol class="flex flex-col gap-6">
-								{tableOfContents.map((heading, index) => (
-									<li>
-										<a
-											href={`#${heading.id}`}
-											class="toc-service-link flex items-center gap-10"
-											title={heading.text}
-										>
-											<span class="text-[1.125rem]">{String(index + 1)}/</span>
-											<span class="toc-service-link__label flex-1">
-												<span class="toc-service-link__base">{heading.text}</span>
-												<span class="toc-service-link__overlay" aria-hidden="true">{heading.text}</span>
-											</span>
-											<span class="toc-service-link__icon shrink-0 text-[18px]">
-												<span class="toc-service-link__base">(→)</span>
-												<span class="toc-service-link__overlay" aria-hidden="true">(→)</span>
-											</span>
-										</a>
-									</li>
-								))}
-						</ol>
-					</nav>
-				)}
-
-				<!-- Extrait / Chapô -->
-				<div class="relative my-24">
-					<svg class="h-8 absolute top-0 left-0" viewBox="0 0 6 30" fill="none" xmlns="http://www.w3.org/2000/svg">
-						<path d="M4.39106 0H6C3.62011 4.16285 1.84358 8.70413 1.84358 15.0688C1.84358 21.2959 3.62011 25.8372 6 30H4.39106C2.07821 26.5252 0 21.2959 0 15.0688C0 8.63532 2.07821 3.47477 4.39106 0Z" fill="#16191B"/>
-					</svg>
-					<p class="text-[1.5rem] leading-[2rem] px-8 indent-16 ">
-						{excerpt}
-					</p>
-					<svg class="h-8 absolute bottom-0 right-0" viewBox="0 0 7 30" fill="none" xmlns="http://www.w3.org/2000/svg">
-						<path d="M1.67598 30L-9.53674e-07 30C2.47905 25.8372 4.32961 21.2959 4.32961 14.9312C4.32961 8.70413 2.47905 4.16284 8.80026e-07 -7.81488e-07L1.67598 -5.71927e-07C4.0852 3.47477 6.25 8.70413 6.25 14.9312C6.25 21.3647 4.0852 26.5252 1.67598 30Z" fill="#16191B"/>
-					</svg>
-				</div>
-
-				<!-- Contenu de l'article -->
-				<div class="prose prose-lg text-[1.375rem] max-w-none mb-16" set:html={parseMarkdown(articleContent)} />
+				<div class="prose" set:html={parseMarkdown(articleContent)} />
 				{!articleContent && (
 					<p class="text-black/60 italic">{t.blogPage.emptyContent}</p>
 				)}
-
-			</div>
+			</section>
+		</div>
 			<div class="max-w-[1000px] mx-auto lg:max-w-none">
 				<!-- Tags + Partage (2 colonnes sur lg) -->
 				<div class="flex sm:justify-between lg:gap-16 pt-10 sm:pt-16 lg:pt-24 pb-24">
@@ -670,136 +657,297 @@ const schemaOrg = {
 </Layout>
 
 	<style>
-		.toc-service-link {
-			position: relative;
-			isolation: isolate;
+		.editorial-layout {
+			display: grid;
+			grid-template-columns: minmax(0, 1fr);
+			gap: 3.5rem;
+			max-width: 67.5rem;
+			margin: 0 auto;
+			padding-top: clamp(4rem, 8vw, 7.5rem);
 		}
 
-		.toc-service-link::before {
-			content: "";
-			position: absolute;
-			top: -6px;
-			right: -10px;
-			bottom: -6px;
-			left: -10px;
-			z-index: -1;
-			background-color: var(--color-black);
-			transform: scaleY(0);
-			transform-origin: center bottom;
+		.reading-column {
+			min-width: 0;
+			max-width: 42rem;
+			margin-inline: auto;
 		}
 
-		.toc-service-link__label,
-		.toc-service-link__icon {
-			position: relative;
-			z-index: 1;
-			display: block;
-			overflow: hidden;
-			margin-block: -0.05em;
-			padding-block: 0.05em;
+		.article-kicker {
+			margin-bottom: 2rem;
+			color: rgb(22 25 27 / 65%);
 		}
 
-		.toc-service-link__icon {
-			display: inline-flex;
+		.article-lede {
+			display: grid;
+			grid-template-columns: auto minmax(0, 1fr) auto;
+			gap: 0.65rem;
+			padding-bottom: clamp(3rem, 7vw, 5rem);
+			font-size: clamp(1.55rem, 3vw, 2.15rem);
+			line-height: 1.22;
+			letter-spacing: -0.025em;
+			text-wrap: pretty;
 		}
 
-		.toc-service-link__base,
-		.toc-service-link__overlay {
-			display: block;
-			transition: transform 0.15s ease-out;
+		.article-lede > span:last-child {
+			align-self: end;
 		}
 
-		.toc-service-link__overlay {
-			position: absolute;
-			inset: 0.05em 0;
+		.key-takeaways {
+			margin-bottom: clamp(4rem, 8vw, 6.5rem);
+			padding: 1.5rem 0 0;
+			border-top: 1px solid var(--color-lines);
+		}
+
+		.key-takeaways > .section-label {
+			margin-bottom: 1rem;
+		}
+
+		.key-takeaways li {
+			display: grid;
+			grid-template-columns: 2rem minmax(0, 1fr);
+			gap: 1rem;
+			padding: 1.25rem 0;
+			border-bottom: 1px solid var(--color-lines);
+			font-size: 1.075rem;
+			line-height: 1.55;
+		}
+
+		.key-takeaways li > span {
+			padding-top: 0.12rem;
+			font-family: var(--font-mono);
+			font-size: 0.75rem;
+			color: rgb(22 25 27 / 58%);
+		}
+
+		.reading-rail {
+			min-width: 0;
+			width: 100%;
+			max-width: 42rem;
+			margin-inline: auto;
+		}
+
+		.reading-progress {
+			display: none;
+		}
+
+		.article-toc {
+			padding-top: 0;
+		}
+
+		.article-toc__eyebrow {
+			margin-bottom: 1rem;
+		}
+
+		#toc {
+			display: grid;
+			gap: 0;
+		}
+
+		#toc a {
+			display: grid;
+			grid-template-columns: 2rem minmax(0, 1fr);
+			gap: 0.75rem;
+			padding: 0.75rem 0;
+			border-bottom: 1px solid rgb(158 154 164 / 65%);
+			font-size: 0.95rem;
+			line-height: 1.3;
+			color: rgb(22 25 27 / 62%);
+			transition: color 180ms ease, padding-left 180ms ease;
+		}
+
+		#toc a > span:first-child {
+			font-family: var(--font-mono);
+			font-size: 0.7rem;
+			padding-top: 0.15rem;
+		}
+
+		#toc a:hover,
+		#toc a.active {
+			padding-left: 0.35rem;
+			color: var(--color-black);
+		}
+
+		/* Une mesure de 42rem garde les paragraphes autour de 60–70 caractères. */
+		.prose {
+			font-size: clamp(1.125rem, 1.25vw, 1.25rem);
+			line-height: 1.7;
+			letter-spacing: -0.006em;
+			text-wrap: pretty;
+		}
+
+		.prose :global(p) {
+			margin-bottom: 1.65em;
+		}
+
+		.prose :global(h2) {
+			margin: 3.25em 0 1.1em;
+			scroll-margin-top: 7rem;
+			font-size: clamp(1.85rem, 3vw, 2.65rem);
+			line-height: 1.08;
+			letter-spacing: -0.035em;
+			text-wrap: balance;
+		}
+
+		.prose :global(h2:first-child) {
+			margin-top: 0;
+		}
+
+		.prose :global(h3) {
+			margin: 2.5em 0 0.85em;
+			font-size: clamp(1.4rem, 2vw, 1.75rem);
+			line-height: 1.18;
+			letter-spacing: -0.02em;
+			text-wrap: balance;
+		}
+
+		.prose :global(strong) {
+			font-weight: 500;
+		}
+
+		.prose :global(a) {
+			text-decoration-line: underline;
+			text-decoration-thickness: 1px;
+			text-underline-offset: 0.18em;
+			transition: opacity 180ms ease;
+		}
+
+		.prose :global(a:hover) {
+			opacity: 0.62;
+		}
+
+		.prose :global(ul:not(.article-sources)) {
+			display: grid;
+			gap: 0.8rem;
+			margin: 2.25rem 0 2.5rem;
+			padding: 1.75rem 0 1.75rem 1.4rem;
+			border-top: 1px solid var(--color-lines);
+			border-bottom: 1px solid var(--color-lines);
+			list-style: square outside;
+		}
+
+		.prose :global(li::marker) {
+			font-size: 0.7em;
+		}
+
+		.prose :global(blockquote) {
+			margin: 3rem 0;
+			padding: 0.5rem 0 0.5rem 1.5rem;
+			border-left: 2px solid var(--color-black);
+			font-size: 1.25em;
+			line-height: 1.45;
+			letter-spacing: -0.015em;
+		}
+
+		.prose :global(code) {
+			padding: 0.12rem 0.35rem;
+			background: rgb(158 154 164 / 35%);
+			border-radius: 0.15rem;
+			font-family: var(--font-mono);
+			font-size: 0.82em;
+		}
+
+		.prose :global(.article-code-block) {
+			width: min(52rem, calc(100vw - 2 * var(--gutter)));
+			margin: 3rem 0;
+		}
+
+		.prose :global(pre) {
+			padding: 1.5rem;
+			overflow-x: auto;
+			background: var(--color-black);
 			color: var(--color-button-white);
-			transform: translateY(110%);
+			font-size: 0.9rem;
+			line-height: 1.6;
 		}
 
-		@media (hover: hover) {
-			.toc-service-link::before {
-				transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+		.prose :global(pre code) {
+			padding: 0;
+			background: transparent;
+		}
+
+		.prose :global(.article-sources) {
+			margin: 2rem 0;
+			border-top: 1px solid var(--color-lines);
+		}
+
+		.prose :global(.article-sources li) {
+			display: grid;
+			grid-template-columns: 1rem minmax(0, 1fr);
+			gap: 0.75rem;
+			padding: 1rem 0;
+			border-bottom: 1px solid var(--color-lines);
+			font-size: 0.9em;
+		}
+
+		.prose :global(.article-list-marker) {
+			font-family: var(--font-mono);
+			font-size: 0.75rem;
+		}
+
+		.prose :global(img) {
+			width: 100%;
+			height: auto;
+			margin: 3rem 0;
+		}
+
+		@media (min-width: 1256px) {
+			.editorial-layout {
+				grid-template-columns: 15rem minmax(0, 42rem);
+				gap: clamp(4rem, 7vw, 8rem);
+				align-items: stretch;
 			}
 
-			.toc-service-link:hover::before {
-				transform: scaleY(1);
+			.reading-column {
+				align-self: start;
 			}
 
-			.toc-service-link:hover {
-				color: var(--color-button-white);
+			.reading-rail__sticky {
+				position: sticky;
+				top: 6.5rem;
 			}
 
-			.toc-service-link:hover .toc-service-link__base {
-				transform: translateY(-110%);
+			.reading-rail,
+			.reading-column {
+				margin-inline: 0;
 			}
 
-			.toc-service-link:hover .toc-service-link__overlay {
-				transform: translateY(0);
+			.reading-progress {
+				display: grid;
+				gap: 0.75rem;
+				margin-bottom: 2.25rem;
+				font-family: var(--font-mono);
+				font-size: 0.72rem;
+				text-transform: uppercase;
+			}
+
+			.reading-progress__track {
+				display: block;
+				height: 2px;
+				background: rgb(158 154 164 / 65%);
+			}
+
+			.reading-progress__value {
+				display: block;
+				width: 0;
+				height: 100%;
+				background: var(--color-black);
+				transition: width 80ms linear;
 			}
 		}
 
-		/* Prose styles */
-		.prose h2 {
-		scroll-margin-top: 6rem;
-	}
+		@media (max-width: 1255px) {
+			.article-toc {
+				margin-bottom: 1rem;
+			}
+		}
 
-	.prose a {
-		text-decoration: none;
-	}
-
-	.prose blockquote {
-		border-left: 2px solid var(--color-lines);
-		padding-left: 1.5rem;
-		font-style: italic;
-		color: rgba(0, 0, 0, 0.7);
-	}
-
-	.prose code {
-		background: var(--color-lines);
-		padding: 0.125rem 0.375rem;
-		border-radius: 0.25rem;
-		font-size: 0.875em;
-	}
-
-	.prose pre {
-		background: var(--color-black);
-		color: var(--color-button-white);
-		padding: 1.5rem;
-		overflow-x: auto;
-		margin: 1.5rem 0;
-	}
-
-	.prose pre code {
-		background: none;
-		padding: 0;
-	}
-
-	.prose li > p:last-child {
-		margin-bottom: 0;
-	}
-
-	.prose img {
-		width: 100%;
-		height: auto;
-		margin: 2rem 0;
-	}
-
-	/* TOC active state */
-	#toc a {
-		display: block;
-		padding: 0.5rem 0;
-		color: rgba(0, 0, 0, 0.6);
-		border-left: 2px solid transparent;
-		padding-left: 1rem;
-		margin-left: -1rem;
-		transition: all 0.2s;
-	}
-
-	#toc a:hover,
-	#toc a.active {
-		color: var(--color-black);
-		border-left-color: var(--color-black);
-	}
-</style>
+		@media (prefers-reduced-motion: reduce) {
+			#toc a,
+			.reading-progress__value {
+				transition: none;
+			}
+		}
+	</style>
 
 <script>
 	function initTOC() {
@@ -807,17 +955,6 @@ const schemaOrg = {
 		const headings = document.querySelectorAll('.prose h2');
 
 		if (!toc || headings.length === 0) return;
-
-		// Générer la TOC
-		toc.innerHTML = '';
-		headings.forEach((heading) => {
-			const li = document.createElement('li');
-			const a = document.createElement('a');
-			a.href = `#${heading.id}`;
-			a.textContent = heading.textContent;
-			li.appendChild(a);
-			toc.appendChild(li);
-		});
 
 		// Highlight active heading on scroll
 		const observer = new IntersectionObserver(
@@ -837,6 +974,24 @@ const schemaOrg = {
 		);
 
 		headings.forEach((heading) => observer.observe(heading));
+	}
+
+	function initReadingProgress() {
+		const article = document.querySelector('.reading-column');
+		const progress = document.querySelector<HTMLElement>('.reading-progress__value');
+		if (!article || !progress) return;
+
+		const updateProgress = () => {
+			const rect = article.getBoundingClientRect();
+			const viewportAnchor = window.innerHeight * 0.35;
+			const readableDistance = Math.max(1, rect.height - window.innerHeight * 0.5);
+			const completed = Math.min(1, Math.max(0, (viewportAnchor - rect.top) / readableDistance));
+			progress.style.width = `${completed * 100}%`;
+		};
+
+		updateProgress();
+		window.addEventListener('scroll', updateProgress, { passive: true });
+		window.addEventListener('resize', updateProgress, { passive: true });
 	}
 
 	function initCopyLink() {
@@ -860,9 +1015,11 @@ const schemaOrg = {
 	}
 
 	initTOC();
+	initReadingProgress();
 	initCopyLink();
 	document.addEventListener('astro:after-swap', () => {
 		initTOC();
+		initReadingProgress();
 		initCopyLink();
 	});
 </script>
