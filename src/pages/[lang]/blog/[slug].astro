@@ -211,7 +211,7 @@ const alternateSlug = currentPost.alternateSlug;
 const switchLang = lang === 'fr' ? 'en' : 'fr';
 const breadcrumbAriaLabel = t.blogPage.breadcrumbAriaLabel;
 const breadcrumbItems = [
-	{ label: t.blogPage.breadcrumbHome, href: `/${lang}` },
+	{ label: t.blogPage.breadcrumbHome, href: `/${lang}/` },
 	{ label: 'Blog', href: getBlogIndexHref(lang) },
 	{ label: getShortBreadcrumbLabel(title) },
 ];

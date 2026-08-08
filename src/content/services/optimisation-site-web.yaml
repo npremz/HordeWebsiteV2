@@ -1,5 +1,5 @@
 slug: optimisation-site-web
-seoUrl: /fr/services/optimisation-site-web
+seoUrl: /fr/services/optimisation-site-web/
 seoPrimaryKeyword: optimisation site web bruxelles
 seoSecondaryKeywords:
   - améliorer core web vitals
@@ -13,16 +13,16 @@ seoDescription: >-
   grâce à un plan d’action priorisé, sans lancer une refonte complète.
 seoRobots: index, follow
 seoInternalLinks:
-  - /fr/services/audit-seo-technique-bruxelles
-  - /fr/services/refonte-site-web-bruxelles
-  - /fr/contact
+  - /fr/services/audit-seo-technique-bruxelles/
+  - /fr/services/refonte-site-web-bruxelles/
+  - /fr/contact/
 h1: Optimisation de site web
 shortName: Optimisation site web
 footerTitle: Optimisation
 footerOrder: 5
 translations:
   en:
-    seoUrl: /en/services/optimisation-site-web
+    seoUrl: /en/services/optimisation-site-web/
     seoPrimaryKeyword: website optimization brussels
     seoSecondaryKeywords:
       - improve core web vitals
@@ -35,9 +35,9 @@ translations:
       Improve website speed, Core Web Vitals and technical SEO with a prioritized
       action plan that fixes bottlenecks without a complete redesign.
     seoInternalLinks:
-      - /en/services/technical-seo-audit-brussels
-      - /en/services/website-redesign-brussels
-      - /en/contact
+      - /en/services/technical-seo-audit-brussels/
+      - /en/services/website-redesign-brussels/
+      - /en/contact/
     h1: Website optimization
     shortName: Website optimization
     footerTitle: Optimization
@@ -146,16 +146,16 @@ translations:
       - >-
         You can also email us at hello@hordeagence.com
     primaryCtaLabel: Request a free audit
-    primaryCtaUrl: /en/services/technical-seo-audit-brussels
+    primaryCtaUrl: /en/services/technical-seo-audit-brussels/
     secondaryCtaLabel: Contact us
-    secondaryCtaUrl: /en/contact
+    secondaryCtaUrl: /en/contact/
     recommendedLinks:
       - anchor: free 48h audit
-        url: /en/services/technical-seo-audit-brussels
+        url: /en/services/technical-seo-audit-brussels/
       - anchor: performance-focused redesign
-        url: /en/services/website-redesign-brussels
+        url: /en/services/website-redesign-brussels/
       - anchor: contact us
-        url: /en/contact
+        url: /en/contact/
 intro: >-
   Un site qui charge en 4 secondes perd en moyenne 25% de ses visiteurs avant
   même qu'ils voient votre contenu. On améliore les performances techniques sans
@@ -267,16 +267,16 @@ ctaParagraphs:
   - >-
     Ou vous pouvez nous envoyer un e-mail à l'adresse hello@hordeagence.com
 primaryCtaLabel: Demander un audit gratuit
-primaryCtaUrl: /fr/services/audit-seo-technique-bruxelles
+primaryCtaUrl: /fr/services/audit-seo-technique-bruxelles/
 secondaryCtaLabel: Nous contacter
-secondaryCtaUrl: /fr/contact
+secondaryCtaUrl: /fr/contact/
 recommendedLinks:
   - anchor: audit gratuit de 48h
-    url: /fr/services/audit-seo-technique-bruxelles
+    url: /fr/services/audit-seo-technique-bruxelles/
   - anchor: refonte orientée performance
-    url: /fr/services/refonte-site-web-bruxelles
+    url: /fr/services/refonte-site-web-bruxelles/
   - anchor: nous contacter
-    url: /fr/contact
+    url: /fr/contact/
 notes:
   - >-
     Ton : technique mais accessible. Le lecteur cible est un décideur (DG,

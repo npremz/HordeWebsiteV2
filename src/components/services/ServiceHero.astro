@@ -27,8 +27,8 @@ const serviceHeadingLines = service.h1.split(/\r?\n|<br\s*\/?>/i).map((line) => 
 const lang: Locale = service.seoUrl.startsWith('/en/') ? 'en' : 'fr';
 const t = useTranslations(lang);
 const breadcrumbItems = [
-  { label: t.servicesPage.breadcrumbHome, href: `/${lang}` },
-  { label: t.servicesPage.breadcrumbServices, href: `/${lang}/services` },
+  { label: t.servicesPage.breadcrumbHome, href: `/${lang}/` },
+  { label: t.servicesPage.breadcrumbServices, href: `/${lang}/services/` },
   { label: getShortBreadcrumbLabel(service.shortName || service.h1) },
 ];
 ---

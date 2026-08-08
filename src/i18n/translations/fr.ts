@@ -388,7 +388,7 @@ export const fr = {
         },
         {
           heading: 'Données collectées',
-          html: '<p>Nous collectons les données suivantes :</p><ul><li><strong>Données de contact</strong> : nom, email, société (via le formulaire de contact)</li><li><strong>Données de navigation</strong> : adresse IP, type de navigateur, pages visitées</li><li><strong>Cookies</strong> : voir notre <a href="/fr/cookies" title="Politique des cookies">politique des cookies</a></li></ul>',
+          html: '<p>Nous collectons les données suivantes :</p><ul><li><strong>Données de contact</strong> : nom, email, société (via le formulaire de contact)</li><li><strong>Données de navigation</strong> : adresse IP, type de navigateur, pages visitées</li><li><strong>Cookies</strong> : voir notre <a href="/fr/cookies/" title="Politique des cookies">politique des cookies</a></li></ul>',
         },
         {
           heading: 'Finalités du traitement',
@@ -446,7 +446,7 @@ export const fr = {
         },
         {
           heading: 'Données personnelles',
-          html: '<p>Pour toute information concernant la collecte et le traitement de vos données personnelles, nous vous invitons à consulter notre <a href="/fr/confidentialite" title="Politique de confidentialité">Politique de confidentialité</a>.</p>',
+          html: '<p>Pour toute information concernant la collecte et le traitement de vos données personnelles, nous vous invitons à consulter notre <a href="/fr/confidentialite/" title="Politique de confidentialité">Politique de confidentialité</a>.</p>',
         },
         {
           heading: 'Droit applicable',

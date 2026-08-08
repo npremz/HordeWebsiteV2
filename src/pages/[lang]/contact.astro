@@ -17,7 +17,7 @@ const { lang } = Astro.params as { lang: Locale };
 const t = useTranslations(lang);
 const breadcrumbAriaLabel = t.contact.breadcrumbAriaLabel;
 const breadcrumbItems = [
-	{ label: t.contact.breadcrumbHome, href: `/${lang}` },
+	{ label: t.contact.breadcrumbHome, href: `/${lang}/` },
 	{ label: t.contact.breadcrumbContact },
 ];
 const contactLinks = [

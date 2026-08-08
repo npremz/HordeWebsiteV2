@@ -52,7 +52,7 @@ const textColorClass = isDark ? "text-button-white" : "text-black";
 
 	<div class:list={[innerBg && "footer-inner-bg", "py-16 lg:pt-24"]}>
 	<a
-		href={`/${lang}/contact`}
+		href={`/${lang}/contact/`}
 		class="footer-logo-wrapper footer-svg-parallax z-9999 block"
 		aria-label={t.footer.contactAriaLabel}
 		title={t.footer.contactAriaLabel}
@@ -185,7 +185,7 @@ const textColorClass = isDark ? "text-button-white" : "text-black";
 			<div class="sm:absolute sm:left-1/2 sm:-translate-x-1/2">
 				{
 					currentLogo ? (
-						<a href={`/${lang}`} class="" title={logoAlt}>
+						<a href={`/${lang}/`} class="" title={logoAlt}>
 							<img
 								src={currentLogo}
 								alt={logoAlt}
@@ -199,7 +199,7 @@ const textColorClass = isDark ? "text-button-white" : "text-black";
 						</a>
 					) : (
 						<a
-							href={`/${lang}`}
+							href={`/${lang}/`}
 							class="text-xl font-display"
 							title={logoAlt}
 						>

@@ -27,6 +27,33 @@ function assertSingleTag(html, pattern, label, relativePath) {
   }
 }
 
+function isLocalizedPageUrl(url) {
+  let pathname;
+
+  try {
+    const parsedUrl = new URL(url, "https://hordeagence.com");
+    if (parsedUrl.origin !== "https://hordeagence.com") return false;
+    pathname = parsedUrl.pathname;
+  } catch {
+    return false;
+  }
+
+  return /^\/(fr|en)(\/|$)/.test(pathname) && !/\/[^/]+\.[^/]+$/.test(pathname);
+}
+
+function assertCanonicalInternalLinks(html, relativePath) {
+  const hrefs = [...html.matchAll(/<a\b[^>]*\bhref="([^"]+)"/g)].map((match) => match[1]);
+
+  for (const href of hrefs) {
+    if (!isLocalizedPageUrl(href)) continue;
+
+    const pathname = new URL(href, "https://hordeagence.com").pathname;
+    if (!pathname.endsWith("/")) {
+      errors.push(`${relativePath}: internal link must use its trailing-slash canonical: ${href}`);
+    }
+  }
+}
+
 const files = await listFiles(buildRoot);
 const htmlFiles = files.filter((file) => file.endsWith(".html"));
 
@@ -38,11 +65,30 @@ for (const file of htmlFiles) {
   assertSingleTag(html, /<title>[^<]+<\/title>/g, "title", relativePath);
   assertSingleTag(html, /<meta name="description" content="[^"]+">/g, "meta description", relativePath);
   assertSingleTag(html, /<link rel="canonical" href="[^"]+">/g, "canonical", relativePath);
+  assertCanonicalInternalLinks(html, relativePath);
+
+  const canonical = html.match(/<link rel="canonical" href="([^"]+)">/)?.[1];
+  if (canonical && isLocalizedPageUrl(canonical) && !new URL(canonical).pathname.endsWith("/")) {
+    errors.push(`${relativePath}: canonical must end with a trailing slash: ${canonical}`);
+  }
 
   if (!relativePath.endsWith("404/index.html")) {
     for (const hreflang of ["fr-BE", "en-US", "x-default"]) {
       const pattern = new RegExp(`<link rel="alternate" hreflang="${hreflang}" href="[^"]+">`, "g");
       assertSingleTag(html, pattern, `hreflang ${hreflang}`, relativePath);
+    }
+  }
+}
+
+for (const sitemapFile of files.filter((file) => /sitemap.*\.xml$/.test(file))) {
+  const sitemap = await fs.readFile(sitemapFile, "utf8");
+  const relativePath = path.relative(buildRoot, sitemapFile);
+  const locations = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map((match) => match[1]);
+
+  for (const location of locations) {
+    if (!isLocalizedPageUrl(location)) continue;
+    if (!new URL(location).pathname.endsWith("/")) {
+      errors.push(`${relativePath}: sitemap URL must end with a trailing slash: ${location}`);
     }
   }
 }

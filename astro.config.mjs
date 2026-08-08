@@ -69,30 +69,33 @@ function shouldIncludeInSitemap(page) {
 // https://astro.build/config
 export default defineConfig({
   site: siteUrl,
+  // Keep routing aligned with canonical URLs, hreflang links and the sitemap.
+  // In production, Astro permanently redirects /page to /page/.
+  trailingSlash: 'always',
   redirects: {
-    '/fr/services/audit-offert': {
+    '/fr/services/audit-offert/': {
       status: 301,
-      destination: '/fr/services/audit-seo-technique-bruxelles',
+      destination: '/fr/services/audit-seo-technique-bruxelles/',
     },
-    '/en/services/audit-offert': {
+    '/en/services/audit-offert/': {
       status: 301,
-      destination: '/en/services/technical-seo-audit-brussels',
+      destination: '/en/services/technical-seo-audit-brussels/',
     },
-    '/fr/services/refonte-site-web': {
+    '/fr/services/refonte-site-web/': {
       status: 301,
-      destination: '/fr/services/refonte-site-web-bruxelles',
+      destination: '/fr/services/refonte-site-web-bruxelles/',
     },
-    '/en/services/refonte-site-web': {
+    '/en/services/refonte-site-web/': {
       status: 301,
-      destination: '/en/services/website-redesign-brussels',
+      destination: '/en/services/website-redesign-brussels/',
     },
-    '/fr/services/creation-mvp-saas': {
+    '/fr/services/creation-mvp-saas/': {
       status: 301,
-      destination: '/fr/services/developpement-mvp-bruxelles',
+      destination: '/fr/services/developpement-mvp-bruxelles/',
     },
-    '/en/services/creation-mvp-saas': {
+    '/en/services/creation-mvp-saas/': {
       status: 301,
-      destination: '/en/services/mvp-development-brussels',
+      destination: '/en/services/mvp-development-brussels/',
     },
   },
   // Astro 7: utiliser 'server' + prerender: true sur les pages statiques.
