@@ -1,5 +1,5 @@
 slug: creation-mvp-saas
-seoUrl: /fr/services/developpement-mvp-bruxelles
+seoUrl: /fr/services/developpement-mvp-bruxelles/
 seoPrimaryKeyword: développement mvp bruxelles
 seoSecondaryKeywords:
   - développement application web bruxelles
@@ -13,17 +13,17 @@ seoDescription: >-
   mise en production rapide, sans construire de fonctions inutiles.
 seoRobots: index, follow
 seoInternalLinks:
-  - /fr/services/audit-seo-technique-bruxelles
-  - /fr/services/creation-landing-page
-  - /fr/projets
-  - /fr/contact
+  - /fr/services/audit-seo-technique-bruxelles/
+  - /fr/services/creation-landing-page/
+  - /fr/projets/
+  - /fr/contact/
 h1: Développement MVP et application web à Bruxelles
 shortName: Développement MVP
 footerTitle: MVP / Web app
 footerOrder: 4
 translations:
   en:
-    seoUrl: /en/services/mvp-development-brussels
+    seoUrl: /en/services/mvp-development-brussels/
     seoPrimaryKeyword: mvp development brussels
     seoSecondaryKeywords:
       - web app development brussels
@@ -36,10 +36,10 @@ translations:
       Validate your product idea with a reliable SaaS MVP, from scope and UX to
       web development and launch, without building unnecessary features.
     seoInternalLinks:
-      - /en/services/technical-seo-audit-brussels
-      - /en/services/creation-landing-page
-      - /en/projets
-      - /en/contact
+      - /en/services/technical-seo-audit-brussels/
+      - /en/services/creation-landing-page/
+      - /en/projets/
+      - /en/contact/
     h1: MVP and web app development in Brussels
     shortName: MVP development
     footerTitle: MVP / Web app
@@ -147,19 +147,19 @@ translations:
       - >-
         You can also email us at hello@hordeagence.com
     primaryCtaLabel: Let's discuss your project
-    primaryCtaUrl: /en/contact
+    primaryCtaUrl: /en/contact/
     secondaryCtaLabel: View our work
-    secondaryCtaUrl: /en/projets
+    secondaryCtaUrl: /en/projets/
     reassurance: Free first scoping exchange. Reply within 24h.
     recommendedLinks:
       - anchor: landing page for your launch
-        url: /en/services/creation-landing-page
+        url: /en/services/creation-landing-page/
       - anchor: audit your existing app
-        url: /en/services/technical-seo-audit-brussels
+        url: /en/services/technical-seo-audit-brussels/
       - anchor: our work
-        url: /en/projets
+        url: /en/projets/
       - anchor: contact us
-        url: /en/contact
+        url: /en/contact/
 intro: >-
   Un MVP, ce n'est pas un produit à moitié fait. C'est le périmètre minimal qui
   vous permet de tester une hypothèse business avec de vrais utilisateurs, sans
@@ -281,19 +281,19 @@ ctaParagraphs:
   - >-
     Ou vous pouvez nous envoyer un e-mail à l'adresse hello@hordeagence.com
 primaryCtaLabel: Discutons de votre projet
-primaryCtaUrl: /fr/contact
+primaryCtaUrl: /fr/contact/
 secondaryCtaLabel: Voir nos réalisations
-secondaryCtaUrl: /fr/projets
+secondaryCtaUrl: /fr/projets/
 reassurance: Premier échange de cadrage gratuit. Réponse sous 24h.
 recommendedLinks:
   - anchor: landing page pour votre lancement
-    url: /fr/services/creation-landing-page
+    url: /fr/services/creation-landing-page/
   - anchor: audit de votre application existante
-    url: /fr/services/audit-seo-technique-bruxelles
+    url: /fr/services/audit-seo-technique-bruxelles/
   - anchor: nos réalisations
-    url: /fr/projets
+    url: /fr/projets/
   - anchor: nous contacter
-    url: /fr/contact
+    url: /fr/contact/
 notes:
   - >-
     Le lecteur cible : un fondateur de startup, un product manager en grande

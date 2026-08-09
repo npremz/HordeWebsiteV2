@@ -389,7 +389,7 @@ export const en: Translations = {
         },
         {
           heading: 'Data Collected',
-          html: '<p>We collect the following data:</p><ul><li><strong>Contact data</strong>: name, email, company (via the contact form)</li><li><strong>Navigation data</strong>: IP address, browser type, pages visited</li><li><strong>Cookies</strong>: see our <a href="/en/cookies" title="Cookie Policy">cookie policy</a></li></ul>',
+          html: '<p>We collect the following data:</p><ul><li><strong>Contact data</strong>: name, email, company (via the contact form)</li><li><strong>Navigation data</strong>: IP address, browser type, pages visited</li><li><strong>Cookies</strong>: see our <a href="/en/cookies/" title="Cookie Policy">cookie policy</a></li></ul>',
         },
         {
           heading: 'Purposes of Processing',
@@ -447,7 +447,7 @@ export const en: Translations = {
         },
         {
           heading: 'Personal Data',
-          html: '<p>For information regarding the collection and processing of your personal data, please see our <a href="/en/confidentialite" title="Privacy Policy">Privacy Policy</a>.</p>',
+          html: '<p>For information regarding the collection and processing of your personal data, please see our <a href="/en/confidentialite/" title="Privacy Policy">Privacy Policy</a>.</p>',
         },
         {
           heading: 'Applicable Law',

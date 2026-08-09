@@ -1,5 +1,5 @@
 slug: creation-landing-page
-seoUrl: /fr/services/creation-landing-page
+seoUrl: /fr/services/creation-landing-page/
 seoPrimaryKeyword: création landing page bruxelles
 seoSecondaryKeywords:
   - landing page conversion
@@ -13,17 +13,17 @@ seoDescription: >-
   rapide et optimisée pour Google Ads, le SEO et les campagnes sociales.
 seoRobots: index, follow
 seoInternalLinks:
-  - /fr/services/audit-seo-technique-bruxelles
-  - /fr/services/creation-ecommerce
-  - /fr/services/developpement-mvp-bruxelles
-  - /fr/contact
+  - /fr/services/audit-seo-technique-bruxelles/
+  - /fr/services/creation-ecommerce/
+  - /fr/services/developpement-mvp-bruxelles/
+  - /fr/contact/
 h1: Création de landing page
 shortName: Landing page sur mesure
 footerTitle: Landing page
 footerOrder: 3
 translations:
   en:
-    seoUrl: /en/services/creation-landing-page
+    seoUrl: /en/services/creation-landing-page/
     seoPrimaryKeyword: landing page development brussels
     seoSecondaryKeywords:
       - conversion landing page
@@ -36,10 +36,10 @@ translations:
       Turn campaign clicks into leads or sales with a fast custom landing page
       optimized for Google Ads, organic search and social campaigns.
     seoInternalLinks:
-      - /en/services/technical-seo-audit-brussels
-      - /en/services/creation-ecommerce
-      - /en/services/mvp-development-brussels
-      - /en/contact
+      - /en/services/technical-seo-audit-brussels/
+      - /en/services/creation-ecommerce/
+      - /en/services/mvp-development-brussels/
+      - /en/contact/
     h1: Landing page development
     shortName: Custom landing page
     footerTitle: Landing page
@@ -155,19 +155,19 @@ translations:
       - >-
         You can also email us at hello@hordeagence.com
     primaryCtaLabel: Request a quick quote
-    primaryCtaUrl: /en/contact
+    primaryCtaUrl: /en/contact/
     secondaryCtaLabel: View our work
-    secondaryCtaUrl: /en/projets
+    secondaryCtaUrl: /en/projets/
     reassurance: Reply within 24h. Delivery in 1 to 2 weeks.
     recommendedLinks:
       - anchor: audit your current page
-        url: /en/services/technical-seo-audit-brussels
+        url: /en/services/technical-seo-audit-brussels/
       - anchor: complete online store
-        url: /en/services/creation-ecommerce
+        url: /en/services/creation-ecommerce/
       - anchor: SaaS product or app
-        url: /en/services/mvp-development-brussels
+        url: /en/services/mvp-development-brussels/
       - anchor: contact us
-        url: /en/contact
+        url: /en/contact/
 intro: >-
   Une landing page a un seul objectif : transformer un visiteur en client, en
   inscription ou en acheteur. Chaque élément (le titre, la hiérarchie visuelle,
@@ -289,19 +289,19 @@ ctaParagraphs:
   - >-
     Ou vous pouvez nous envoyer un e-mail à l'adresse hello@hordeagence.com
 primaryCtaLabel: Demander un devis rapide
-primaryCtaUrl: /fr/contact
+primaryCtaUrl: /fr/contact/
 secondaryCtaLabel: Voir nos réalisations
-secondaryCtaUrl: /fr/projets
+secondaryCtaUrl: /fr/projets/
 reassurance: Réponse sous 24h. Livraison en 1 à 2 semaines.
 recommendedLinks:
   - anchor: audit de votre page actuelle
-    url: /fr/services/audit-seo-technique-bruxelles
+    url: /fr/services/audit-seo-technique-bruxelles/
   - anchor: boutique en ligne complète
-    url: /fr/services/creation-ecommerce
+    url: /fr/services/creation-ecommerce/
   - anchor: produit SaaS ou application
-    url: /fr/services/developpement-mvp-bruxelles
+    url: /fr/services/developpement-mvp-bruxelles/
   - anchor: nous contacter
-    url: /fr/contact
+    url: /fr/contact/
 notes:
   - >-
     Le lecteur cible : un responsable marketing, un CEO de startup, un

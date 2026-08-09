@@ -1,5 +1,5 @@
 slug: creation-ecommerce
-seoUrl: /fr/services/creation-ecommerce
+seoUrl: /fr/services/creation-ecommerce/
 seoPrimaryKeyword: création site e-commerce bruxelles
 seoSecondaryKeywords:
   - agence ecommerce belgique
@@ -12,17 +12,17 @@ seoDescription: >-
   parcours d’achat fluide, SEO e-commerce, performance et autonomie.
 seoRobots: index, follow
 seoInternalLinks:
-  - /fr/services/audit-seo-technique-bruxelles
-  - /fr/services/creation-landing-page
-  - /fr/projets
-  - /fr/contact
+  - /fr/services/audit-seo-technique-bruxelles/
+  - /fr/services/creation-landing-page/
+  - /fr/projets/
+  - /fr/contact/
 h1: Création de site e-commerce
 shortName: Création site e-commerce
 footerTitle: E-Commerce
 footerOrder: 2
 translations:
   en:
-    seoUrl: /en/services/creation-ecommerce
+    seoUrl: /en/services/creation-ecommerce/
     seoPrimaryKeyword: ecommerce website development brussels
     seoSecondaryKeywords:
       - ecommerce agency belgium
@@ -34,10 +34,10 @@ translations:
       Launch a fast Shopify or custom online store built to sell, with
       frictionless buying journeys, e-commerce SEO and easy content management.
     seoInternalLinks:
-      - /en/services/technical-seo-audit-brussels
-      - /en/services/creation-landing-page
-      - /en/projets
-      - /en/contact
+      - /en/services/technical-seo-audit-brussels/
+      - /en/services/creation-landing-page/
+      - /en/projets/
+      - /en/contact/
     h1: E-commerce website development
     shortName: E-commerce website
     footerTitle: E-Commerce
@@ -146,19 +146,19 @@ translations:
       - >-
         You can also email us at hello@hordeagence.com
     primaryCtaLabel: Let's discuss your project
-    primaryCtaUrl: /en/contact
+    primaryCtaUrl: /en/contact/
     secondaryCtaLabel: View our work
-    secondaryCtaUrl: /en/projets
+    secondaryCtaUrl: /en/projets/
     reassurance: First exchange with no commitment. Reply within 24h.
     recommendedLinks:
       - anchor: audit your current store
-        url: /en/services/technical-seo-audit-brussels
+        url: /en/services/technical-seo-audit-brussels/
       - anchor: product landing pages
-        url: /en/services/creation-landing-page
+        url: /en/services/creation-landing-page/
       - anchor: our work
-        url: /en/projets
+        url: /en/projets/
       - anchor: contact us
-        url: /en/contact
+        url: /en/contact/
 intro: >-
   Un e-commerce qui convertit, ce n'est pas qu'une belle boutique. C'est un site
   rapide, des parcours d'achat sans friction, et un référencement qui attire la
@@ -270,19 +270,19 @@ ctaParagraphs:
   - >-
     Ou vous pouvez nous envoyer un e-mail à l'adresse hello@hordeagence.com
 primaryCtaLabel: Discutons de votre projet
-primaryCtaUrl: /fr/contact
+primaryCtaUrl: /fr/contact/
 secondaryCtaLabel: Voir nos réalisations
-secondaryCtaUrl: /fr/projets
+secondaryCtaUrl: /fr/projets/
 reassurance: Premier échange sans engagement. Réponse sous 24h.
 recommendedLinks:
   - anchor: audit de votre boutique actuelle
-    url: /fr/services/audit-seo-technique-bruxelles
+    url: /fr/services/audit-seo-technique-bruxelles/
   - anchor: landing pages produit
-    url: /fr/services/creation-landing-page
+    url: /fr/services/creation-landing-page/
   - anchor: nos réalisations
-    url: /fr/projets
+    url: /fr/projets/
   - anchor: nous contacter
-    url: /fr/contact
+    url: /fr/contact/
 notes:
   - >-
     Le lecteur cible : une PME ou un indépendant qui veut vendre en ligne, ou

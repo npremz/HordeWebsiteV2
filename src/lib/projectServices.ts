@@ -54,11 +54,11 @@ export function getLocalizedProjectServiceLabel(service: ProjectService, lang: L
 }
 
 export function getProjectIndexHref(lang: Locale): string {
-  return `/${lang}/projets`;
+  return `/${lang}/projets/`;
 }
 
 export function getProjectHref(slug: string, lang: Locale): string {
-  return `${getProjectIndexHref(lang)}/${slug}`;
+  return `${getProjectIndexHref(lang)}${slug}/`;
 }
 
 export function getProjectServiceHref(slug: ProjectServiceSlug, lang: Locale): string {

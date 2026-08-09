@@ -51,13 +51,20 @@ const desktopLinkClasses = isDark
   </div>
 )}
 
-<header class:list={['site-header fixed inset-x-0 top-0 z-[10001] pointer-events-auto', textClasses]} data-theme={theme}>
+<header
+  class:list={[
+    'site-header fixed inset-x-0 top-0 z-[10001] pointer-events-auto',
+    textClasses,
+    { 'is-intro-pending': showSiteIntro },
+  ]}
+  data-theme={theme}
+>
   <div class="relative z-[3] md:hidden" data-header-surface="mobile">
     <div class="site-header__mobile-fixed pl-[15px] pr-[24px]" data-mobile-fixed>
       <div class="relative z-[5] flex h-full items-center justify-between gap-4" data-mobile-row>
         <div class="flex items-center">
           <a
-            href={`/${lang}`}
+            href={`/${lang}/`}
             class="pointer-events-auto inline-flex items-center text-button-white"
             title={logoAlt}
             aria-label={logoAlt}
@@ -162,7 +169,7 @@ const desktopLinkClasses = isDark
       <div class="relative flex h-full items-center justify-between gap-6">
         <div class="site-header__desktop-logo-group flex items-center text-button-white">
           <a
-            href={`/${lang}`}
+            href={`/${lang}/`}
             class="inline-flex items-center text-button-white"
             title={logoAlt}
             aria-label={logoAlt}
@@ -283,7 +290,7 @@ const desktopLinkClasses = isDark
     <div class="site-header__desktop-fixed fixed left-[5px] right-[5px] top-[5px] z-[6]" data-desktop-fixed>
       <div class="site-header__desktop-bar relative flex items-center justify-between bg-black px-[20px]" data-desktop-row>
         <div class="site-header__desktop-logo-group flex h-[42px] items-center text-button-white">
-          <a href={`/${lang}`} class="inline-flex items-center text-button-white" title={logoAlt} aria-label={logoAlt}>
+          <a href={`/${lang}/`} class="inline-flex items-center text-button-white" title={logoAlt} aria-label={logoAlt}>
             <span class="order-1 inline-flex items-center gap-[15px]">
             <span class="logo-animated logo-animated--mark-static h-[13px]">
               <svg class="logo-full" width="285" height="12" viewBox="0 0 329 15" preserveAspectRatio="xMinYMin meet" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -461,6 +468,12 @@ const desktopLinkClasses = isDark
     transform: translateY(18px);
     transition-duration: 280ms;
     transition-delay: calc(var(--i, 0) * 22ms);
+  }
+
+  /* This state is rendered with the homepage HTML so the header cannot flash
+     before JavaScript decides whether the session intro should play. */
+  .site-header.is-intro-pending {
+    visibility: hidden;
   }
 
   .site-header.is-intro-revealing .site-header__mobile-fixed,
@@ -916,6 +929,9 @@ const desktopLinkClasses = isDark
     const headerWordmark = header?.querySelector('.logo-full');
 
     if (!(intro instanceof HTMLElement)) {
+      if (header instanceof HTMLElement) {
+        header.classList.remove('is-intro-pending');
+      }
       revealSiteIntroContent();
       return;
     }
@@ -925,6 +941,9 @@ const desktopLinkClasses = isDark
       !(introLogoSlot instanceof HTMLElement) ||
       !(headerWordmark instanceof SVGElement)
     ) {
+      if (header instanceof HTMLElement) {
+        header.classList.remove('is-intro-pending');
+      }
       return;
     }
 
@@ -932,6 +951,7 @@ const desktopLinkClasses = isDark
 
     if (hasSiteIntroPlayed() || prefersReducedMotion) {
       intro.remove();
+      header.classList.remove('is-intro-pending');
       revealSiteIntroContent();
       return;
     }
@@ -953,6 +973,7 @@ const desktopLinkClasses = isDark
 
     window.setTimeout(() => {
       header.classList.add('is-intro-revealing');
+      header.classList.remove('is-intro-pending');
       revealSiteIntroContent();
       intro.classList.add('is-leaving');
     }, 1420);

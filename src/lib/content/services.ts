@@ -32,10 +32,11 @@ export async function getServices(): Promise<ServiceEntry[]> {
 
 function localizeServiceUrl(url: string | undefined, lang: Locale, slug: string): string {
   if (url) {
-    return url.replace(/^\/(fr|en)\//, `/${lang}/`);
+    const localizedUrl = url.replace(/^\/(fr|en)\//, `/${lang}/`);
+    return localizedUrl.endsWith('/') ? localizedUrl : `${localizedUrl}/`;
   }
 
-  return `/${lang}/services/${slug}`;
+  return `/${lang}/services/${slug}/`;
 }
 
 export function localizeServiceData(service: ServiceData, lang: Locale): LocalizedServiceData {

@@ -2,22 +2,22 @@ logo: /images/logo.svg
 logoAlt: Logo Horde - Agence web Bruxelles
 items:
   - label: Accueil
-    url: /fr
+    url: /fr/
     isExternal: false
   - label: Services
-    url: /fr/services
+    url: /fr/services/
     isExternal: false
   - label: Projets
-    url: /fr/projets
+    url: /fr/projets/
     isExternal: false
   - label: Notre Culture
-    url: /fr/about
+    url: /fr/about/
     isExternal: false
   - label: Blog
-    url: /fr/blog
+    url: /fr/blog/
     isExternal: false
   - label: Contact
-    url: /fr/contact
+    url: /fr/contact/
     isExternal: false
 ctaButton:
   label: hello@hordeagence.com
