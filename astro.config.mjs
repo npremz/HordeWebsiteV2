@@ -58,7 +58,6 @@ function shouldIncludeInSitemap(page) {
     if (redirectSourcePaths.has(normalizedPath)) return false;
     if (/^\/[a-z]{2}\/404$/.test(normalizedPath)) return false;
     if (/^\/(fr|en)\/(cookies|mentions-legales|confidentialite)$/.test(normalizedPath)) return false;
-    if (/^\/(fr|en)\/blog\/tag\//.test(normalizedPath)) return false;
     if (noindexSitemapPaths.has(normalizedPath)) return false;
     return true;
   } catch {

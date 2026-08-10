@@ -309,7 +309,6 @@ Projet d'application web en cours de realisation. Le projet est liste dans le po
 - Derniere modification: 2026-03-09
 - Categorie: performance web
 - Temps de lecture: 3 minutes
-- Tags: Core Web Vitals, vitesse de chargement, SEO technique, UX mobile
 - Resume: explique ce qu'est un site vraiment rapide en 2026, pourquoi la vitesse agit sur le SEO, l'experience et les conversions, et comment Horde optimise concretement les performances.
 
 Points abordes:
@@ -328,7 +327,6 @@ Points abordes:
 - Derniere modification: 2026-03-09
 - Categorie: strategie
 - Temps de lecture: 5 minutes
-- Tags: strategie digitale, site web vs reseaux sociaux, acquisition organique, independance numerique
 - Resume: montre pourquoi une marque ne doit pas dependre uniquement des plateformes sociales, et pourquoi le site web reste la base de la visibilite, de la credibilite et de la relation client.
 
 Points abordes:
@@ -347,7 +345,6 @@ Points abordes:
 - Derniere modification: 2026-03-09
 - Categorie: strategie
 - Temps de lecture: 4 minutes
-- Tags: cout site web, pertes de conversion, SEO technique, audit performance
 - Resume: detaille les pertes cachees liees a un site lent ou mal pense: conversions, SEO, credibilite et maintenance.
 
 Points abordes:
@@ -366,7 +363,6 @@ Points abordes:
 - Derniere modification: 2026-03-09
 - Categorie: strategie
 - Temps de lecture: 6 minutes
-- Tags: refonte site web, budget web, devis web, prix site web, UX design
 - Resume: donne des fourchettes de prix realistes, les facteurs qui font varier un budget et les erreurs qui font exploser le cout d'une refonte.
 
 Points abordes:

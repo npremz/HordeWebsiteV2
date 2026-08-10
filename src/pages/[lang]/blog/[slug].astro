@@ -9,7 +9,6 @@ import { splitHeadingLines } from '../../../utils/split-heading-lines';
 import {
 	getBlogIndexHref,
 	getBlogPostHref,
-	getBlogTagHref,
 	type PostEntry,
 	getLocalizedPostContent,
 	getLocalizedPosts,
@@ -54,7 +53,6 @@ const authorAvatar = currentPost.authorAvatar;
 const authorSocial = currentPost.authorSocial;
 const authorPagePath = `/${lang}/about/`;
 const categoryName = currentPost.categoryName;
-const tags = currentPost.tags;
 const keyTakeaways = currentPost.keyTakeaways;
 const publishedDate = currentPost.publishedDate;
 const modifiedDate = currentPost.modifiedDate;
@@ -222,7 +220,7 @@ const siteUrl = (Astro.site?.toString() || 'https://hordeagence.com').replace(/\
 const articleUrl = new URL(getBlogPostHref(currentSlug, lang), siteUrl).href;
 const authorUrl = new URL(authorPagePath, siteUrl).href;
 const shareUrl = articleUrl;
-const tagShareLinkClasses = 'underline-hover w-fit inline-flex text-[1.125rem] leading-[1.375rem] font-[375] text-black cursor-pointer';
+const shareLinkClasses = 'underline-hover w-fit inline-flex text-[1.125rem] leading-[1.375rem] font-[375] text-black cursor-pointer';
 const authorSameAs = [
 	authorSocial?.twitter ? `https://twitter.com/${authorSocial.twitter}` : null,
 	authorSocial?.linkedin || null,
@@ -270,7 +268,6 @@ const schemaOrg = {
 				"@id": articleUrl
 			},
 				"articleSection": categoryName,
-				"keywords": tags.join(", "),
 				"wordCount": articleContent.split(/\s+/).length,
 				"timeRequired": `PT${readingTime}M`,
 				"abstract": excerpt,
@@ -513,35 +510,15 @@ const schemaOrg = {
 			</section>
 		</div>
 			<div class="max-w-[1000px] mx-auto lg:max-w-none">
-				<!-- Tags + Partage (2 colonnes sur lg) -->
-				<div class="flex sm:justify-between lg:gap-16 pt-10 sm:pt-16 lg:pt-24 pb-24">
-					<!-- Tags -->
-					{tags.length > 0 && (
-						<div class="lg:mb-0 lg:flex-1 sm:max-w-[300px]">
-							<h2 class="section-label mb-10">{t.blogPage.tags}</h2>
-							<div class="flex flex-wrap gap-5">
-								{tags.map((tag: string) => (
-									<a
-										href={getBlogTagHref(tag, lang)}
-										class={tagShareLinkClasses}
-										title={tag}
-									>
-										{tag}
-									</a>
-								))}
-							</div>
-						</div>
-					)}
-
-					<!-- Partage -->
-					<div class="lg:flex-1 flex flex-col items-end">
+				<div class="flex justify-end pt-10 sm:pt-16 lg:pt-24 pb-24">
+					<div class="flex flex-col items-end">
 						<h2 class="section-label mb-10">{t.blogPage.shareArticle}</h2>
 						<div class="flex flex-wrap sm:flex-col sm:flex-nowrap justify-end sm:items-end gap-5 ">
 							<a
 								href={`https://twitter.com/intent/tweet?url=${encodeURIComponent(shareUrl)}&text=${encodeURIComponent(title)}`}
 								target="_blank"
 								rel="noopener noreferrer"
-								class={tagShareLinkClasses}
+								class={shareLinkClasses}
 								title="Twitter"
 							>
 								Twitter
@@ -550,14 +527,14 @@ const schemaOrg = {
 								href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(shareUrl)}`}
 								target="_blank"
 								rel="noopener noreferrer"
-								class={tagShareLinkClasses}
+								class={shareLinkClasses}
 								title="LinkedIn"
 							>
 								LinkedIn
 							</a>
 							<button
 								type="button"
-								class={`copy-link bg-transparent p-0 ${tagShareLinkClasses}`}
+								class={`copy-link bg-transparent p-0 ${shareLinkClasses}`}
 								data-url={shareUrl}
 							>
 								<span>{t.blogPage.copyLink}</span>
@@ -565,9 +542,8 @@ const schemaOrg = {
 						</div>
 					</div>
 				</div>
+				</div>
 			</div>
-		</div>
-		</div>
 
 			<div class="max-w-[1000px] mt-16 sm:mt-24 mx-auto lg:max-w-none">
 				<!-- Bio Auteur -->
@@ -625,12 +601,12 @@ const schemaOrg = {
 									src={related.image}
 									alt={related.imageAlt}
 									class="w-full h-full object-cover transition-transform duration-400 group-hover:scale-105"
-									widths={[250, 400]}
-									sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+									widths={[320, 480, 640, 800, 960, 1200]}
+									sizes="(max-width: 639px) calc(100vw - 2rem), (max-width: 767px) calc(50vw - 2rem), (max-width: 1023px) calc(33vw - 2rem), min(25vw, 300px)"
 									loading="lazy"
 									decoding="async"
 									format="webp"
-									quality={75}
+									quality={88}
 								/>
 							</div>
 							<h3 class="text-[1.125rem] leading-tight">{related.title}</h3>
@@ -653,7 +629,7 @@ const schemaOrg = {
 			</nav>
 	</article>
 
-	<Footer lang={lang} hideOverflow={false} />
+	<Footer slot="footer" lang={lang} hideOverflow={false} />
 </Layout>
 
 	<style>

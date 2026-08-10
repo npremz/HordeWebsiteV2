@@ -114,28 +114,24 @@ Les equivalents anglais sont accessibles sous `/en/...`.
 - URL: https://hordeagence.com/fr/blog/c-est-quoi-un-site-vraiment-rapide
 - Date: 2026-01-30
 - Categorie: performance web
-- Tags: Core Web Vitals, vitesse de chargement, SEO technique, UX mobile
 
 ### Pourquoi avoir un site web quand les reseaux sociaux marchent deja ?
 
 - URL: https://hordeagence.com/fr/blog/pourquoi-avoir-un-site-web-reseaux-sociaux
 - Date: 2026-02-11
 - Categorie: strategie
-- Tags: strategie digitale, site web vs reseaux sociaux, acquisition organique, independance numerique
 
 ### Ce que votre site vous coute vraiment (sans que vous le sachiez)
 
 - URL: https://hordeagence.com/fr/blog/ce-que-votre-site-vous-coute-vraiment
 - Date: 2026-02-26
 - Categorie: strategie
-- Tags: cout site web, pertes de conversion, SEO technique, audit performance
 
 ### Combien coute une refonte de site web en 2026
 
 - URL: https://hordeagence.com/fr/blog/combien-coute-refonte-site-web
 - Date: 2026-03-03
 - Categorie: strategie
-- Tags: refonte site web, budget web, devis web, prix site web, UX design
 
 ## Stack technique du site
 

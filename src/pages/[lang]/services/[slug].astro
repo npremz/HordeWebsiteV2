@@ -53,5 +53,5 @@ const localizedService = localizeServiceEntry(service, lang);
     <ServiceCtaSection service={localizedService.data} formTranslations={t.form} />
   </article>
 
-  <Footer lang={lang} hideOverflow={false} />
+  <Footer slot="footer" lang={lang} hideOverflow={false} />
 </Layout>

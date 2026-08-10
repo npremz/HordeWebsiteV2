@@ -45,6 +45,10 @@ function assertCanonicalInternalLinks(html, relativePath) {
   const hrefs = [...html.matchAll(/<a\b[^>]*\bhref="([^"]+)"/g)].map((match) => match[1]);
 
   for (const href of hrefs) {
+    if (/^\/(fr|en)\/blog\/tag\//.test(href)) {
+      errors.push(`${relativePath}: obsolete blog tag link found: ${href}`);
+    }
+
     if (!isLocalizedPageUrl(href)) continue;
 
     const pathname = new URL(href, "https://hordeagence.com").pathname;
@@ -56,6 +60,13 @@ function assertCanonicalInternalLinks(html, relativePath) {
 
 const files = await listFiles(buildRoot);
 const htmlFiles = files.filter((file) => file.endsWith(".html"));
+const obsoleteTagPages = htmlFiles.filter((file) =>
+  /(^|\/)(fr|en)\/blog\/tag\//.test(path.relative(buildRoot, file)),
+);
+
+if (obsoleteTagPages.length > 0) {
+  errors.push(`obsolete blog tag pages found: ${obsoleteTagPages.join(", ")}`);
+}
 
 for (const file of htmlFiles) {
   const relativePath = path.relative(buildRoot, file);

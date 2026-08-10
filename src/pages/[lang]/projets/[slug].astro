@@ -263,7 +263,7 @@ if (props.kind === 'project') {
           </div>
         </div>
       </div>
-      <main class="project-content md:mt-50 lg:max-w-[1000px] lg:mx-auto">
+      <div class="project-content md:mt-50 lg:max-w-[1000px] lg:mx-auto">
         <span class="block md:hidden mt-10 sm:mt-16 text-[1.125rem]">(↓)</span>
 
         {pageContent.gallery.length > 0 && (
@@ -322,7 +322,7 @@ if (props.kind === 'project') {
             </ol>
           </nav>
         )}
-      </main>
+      </div>
 
       <style>
         .project-hero,
@@ -377,5 +377,5 @@ if (props.kind === 'project') {
     />
   )}
 
-  <Footer lang={lang} variant="dark" hideOverflow={false} />
+  <Footer slot="footer" lang={lang} variant="dark" hideOverflow={false} />
 </Layout>

@@ -989,6 +989,8 @@ const desktopLinkClasses = isDark
     const headers = document.querySelectorAll('.site-header');
 
     headers.forEach((header) => {
+      if (!(header instanceof HTMLElement)) return;
+
       const toggle = header.querySelector('[data-header-toggle]');
       const panel = header.querySelector('[data-header-panel]');
       const reveal = header.querySelector('[data-header-reveal]');
@@ -1159,6 +1161,14 @@ const desktopLinkClasses = isDark
         });
       });
 
+      header.addEventListener('keydown', (event: KeyboardEvent) => {
+        if (event.key !== 'Escape' || toggle.getAttribute('aria-expanded') !== 'true') return;
+
+        event.preventDefault();
+        closeMenu();
+        toggle.focus();
+      });
+
 	      closeMenu(true);
 	      applyMobileHeaderState();
 	      applyHeaderA11yState();
@@ -1239,6 +1249,14 @@ const desktopLinkClasses = isDark
           link.addEventListener('click', () => {
             closeDesktopMenu();
           });
+        });
+
+        header.addEventListener('keydown', (event: KeyboardEvent) => {
+          if (event.key !== 'Escape' || desktopToggle.getAttribute('aria-expanded') !== 'true') return;
+
+          event.preventDefault();
+          closeDesktopMenu();
+          desktopToggle.focus();
         });
 
         closeDesktopMenu(true);
