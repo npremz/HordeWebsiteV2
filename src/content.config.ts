@@ -98,9 +98,7 @@ const postsCollection = defineCollection({
     thumbnailImageAlt_fr: z.string().optional(),
     thumbnailImageAlt_en: z.string().optional(),
     author: z.string(), // slug de l'auteur (relation)
-    category: z.string(), // slug de la catégorie (relation)
-    tags: z.array(z.string()).default([]),
-    tags_en: z.array(z.string()).optional(),
+    category: z.enum(['strategie', 'performance-web', 'ux-design']),
     publishedDate: z.coerce.date(),
     modifiedDate: z.coerce.date().optional(),
     readingTime: z.number().optional(),

@@ -128,7 +128,7 @@ const headingLines = heading.split(/\r?\n|<br\s*\/?>/i).map((line) => line.trim(
   <WordsMarquee />
 
   <div class="relative z-0 full-width-white-bg">
-    <main class="mx-auto w-full max-w-[1300px] py-16 text-black sm:py-24">
+    <div class="mx-auto w-full max-w-[1300px] py-16 text-black sm:py-24">
       {posts.length > 0 ? (
         <ol class="grid gap-12 sm:gap-16 md:mx-auto md:max-w-[1000px]">
           {posts.map((post) => (
@@ -188,6 +188,6 @@ const headingLines = heading.split(/\r?\n|<br\s*\/?>/i).map((line) => line.trim(
           </p>
         </div>
       )}
-    </main>
+    </div>
   </div>
 </article>

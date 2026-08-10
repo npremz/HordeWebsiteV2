@@ -42,7 +42,6 @@ export interface LocalizedPost {
   featured: boolean;
   seoRobots: 'index, follow' | 'noindex, follow' | 'noindex, nofollow';
   ogImage?: string;
-  tags: string[];
   keyTakeaways: string[];
   authorSlug: string;
   authorName: string;
@@ -65,16 +64,6 @@ const postContentModules = import.meta.glob('../../content/posts/*/content_*.mdx
   import: 'default',
 });
 
-export function slugifyTag(tag: string): string {
-  return tag
-    .toLowerCase()
-    .normalize('NFD')
-    .replace(/[\u0300-\u036f]/g, '')
-    .replace(/[^a-z0-9]+/g, '-')
-    .replace(/-+/g, '-')
-    .replace(/(^-|-$)/g, '');
-}
-
 export function getBlogIndexHref(lang: Locale): string {
   return `/${lang}/blog/`;
 }
@@ -85,10 +74,6 @@ export function getBlogPostHref(slug: string, lang: Locale): string {
 
 export function getBlogCategoryHref(slug: string, lang: Locale): string {
   return `/${lang}/blog/category/${slug}/`;
-}
-
-export function getBlogTagHref(tag: string, lang: Locale): string {
-  return `/${lang}/blog/tag/${slugifyTag(tag)}/`;
 }
 
 export function isPostPublished(post: PostEntry, now = new Date()): boolean {
@@ -103,14 +88,6 @@ function normalizeSeoRobots(
   }
 
   return 'index, follow';
-}
-
-export function getPostTags(post: PostEntry, lang: Locale): string[] {
-  if (lang === 'en') {
-    return post.data.tags_en?.length ? post.data.tags_en : post.data.tags;
-  }
-
-  return post.data.tags;
 }
 
 export async function getPosts(): Promise<PostEntry[]> {
@@ -190,7 +167,6 @@ export function localizePost(
     featured: post.data.featured,
     seoRobots: normalizeSeoRobots(post.data.seoRobots),
     ogImage: post.data.ogImage,
-    tags: getPostTags(post, lang),
     keyTakeaways: lang === 'fr' ? post.data.keyTakeaways_fr || [] : post.data.keyTakeaways_en || [],
     authorSlug: post.data.author,
     authorName: author?.name || 'Horde',
@@ -244,41 +220,6 @@ export async function getLocalizedPostsByCategory(
 ): Promise<LocalizedPost[]> {
   const posts = await getLocalizedPosts(lang);
   return posts.filter((post) => post.categorySlug === categorySlug);
-}
-
-export async function getLocalizedPostsByTag(tag: string, lang: Locale): Promise<LocalizedPost[]> {
-  const posts = await getLocalizedPosts(lang);
-  return posts.filter((post) => post.tags.includes(tag));
-}
-
-export async function getLocalizedTags(lang: Locale): Promise<string[]> {
-  const posts = await getLocalizedPosts(lang);
-  const tags = new Set<string>();
-
-  posts.forEach((post) => {
-    post.tags.forEach((tag) => tags.add(tag));
-  });
-
-  return Array.from(tags);
-}
-
-export async function getAlternateTagSlug(tag: string, lang: Locale): Promise<string | undefined> {
-  const targetLang: Locale = lang === 'fr' ? 'en' : 'fr';
-  const posts = (await getPosts()).filter((post) => isPostPublished(post));
-
-  for (const post of posts) {
-    const sourceTags = getPostTags(post, lang);
-    const tagIndex = sourceTags.findIndex((sourceTag) => slugifyTag(sourceTag) === slugifyTag(tag));
-
-    if (tagIndex === -1) {
-      continue;
-    }
-
-    const targetTags = getPostTags(post, targetLang);
-    return slugifyTag(targetTags[tagIndex] || targetTags[0] || tag);
-  }
-
-  return undefined;
 }
 
 export async function getLocalizedAuthorPosts(

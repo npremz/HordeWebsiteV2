@@ -84,7 +84,9 @@ export default function ContactForm({
   const [errors, setErrors] = useState<FormErrors>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
+  const formRef = useRef<HTMLFormElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const shouldFocusFirstErrorRef = useRef(false);
 
   const resizeTextarea = () => {
     const textarea = textareaRef.current;
@@ -97,6 +99,15 @@ export default function ContactForm({
   useEffect(() => {
     resizeTextarea();
   }, [formData.objectif]);
+
+  useEffect(() => {
+    if (!shouldFocusFirstErrorRef.current) return;
+
+    shouldFocusFirstErrorRef.current = false;
+    formRef.current
+      ?.querySelector<HTMLElement>('[aria-invalid="true"]')
+      ?.focus();
+  }, [errors]);
 
   const besoinOptions = [
     { value: 'audit-offert', label: t.options.auditOffert },
@@ -151,6 +162,7 @@ export default function ContactForm({
     e.preventDefault();
 
     if (!validateForm()) {
+      shouldFocusFirstErrorRef.current = true;
       return;
     }
 
@@ -232,7 +244,7 @@ export default function ContactForm({
   );
 
   return (
-    <form className="flex flex-col gap-10 form-gap" onSubmit={(e) => void handleSubmit(e)} noValidate>
+    <form ref={formRef} className="flex flex-col gap-10 form-gap" onSubmit={(e) => void handleSubmit(e)} noValidate>
       {!hideNeedField && (
         <fieldset className='flex flex-col gap-5 '>
           <div className={`relative flex flex-col md:flex-row md:gap-16 lg:gap-32 md:items-center w-full border-b transition-colors ${errors.besoin
@@ -263,6 +275,7 @@ export default function ContactForm({
                     checked={formData.besoin === option.value}
                     onChange={handleNeedChange}
                     className="sr-only "
+                    aria-invalid={!!errors.besoin}
                     aria-describedby={errors.besoin ? 'besoin-error' : undefined}
                   />
                   {option.label}
