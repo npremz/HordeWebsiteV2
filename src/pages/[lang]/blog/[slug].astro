@@ -140,6 +140,27 @@ function parseMarkdown(content: string): string {
 			return `<h3>${applyInlineFormatting(title)}</h3>`;
 		}
 
+		// Tableaux Markdown simples, enveloppés pour rester lisibles sur mobile
+		if (block.startsWith('|')) {
+			const rows = block
+				.split('\n')
+				.map((line) => line.trim())
+				.filter(Boolean)
+				.map((line) => line.replace(/^\||\|$/g, '').split('|').map((cell) => cell.trim()));
+			const separator = rows[1];
+			const isTable = separator?.every((cell) => /^:?-{3,}:?$/.test(cell));
+
+			if (isTable) {
+				const [headings, , ...bodyRows] = rows;
+				const head = headings.map((cell) => `<th scope="col">${applyInlineFormatting(cell)}</th>`).join('');
+				const body = bodyRows
+					.map((row) => `<tr>${row.map((cell) => `<td>${applyInlineFormatting(cell)}</td>`).join('')}</tr>`)
+					.join('');
+
+				return `<div class="article-table"><table><thead><tr>${head}</tr></thead><tbody>${body}</tbody></table></div>`;
+			}
+		}
+
 		// Listes à puces (bloc qui commence par - ou *)
 		if (block.match(/^[-*] /m)) {
 			const items = block.split('\n')
@@ -827,6 +848,42 @@ const schemaOrg = {
 			margin: 3rem 0;
 		}
 
+		.prose :global(.article-table) {
+			width: min(52rem, calc(100vw - 2 * var(--gutter)));
+			margin: 2.75rem 0 3rem;
+			overflow-x: auto;
+			border-top: 1px solid var(--color-black);
+			border-bottom: 1px solid var(--color-black);
+		}
+
+		.prose :global(table) {
+			width: 100%;
+			min-width: 38rem;
+			border-collapse: collapse;
+			text-align: left;
+			font-size: 0.86em;
+			line-height: 1.45;
+		}
+
+		.prose :global(th),
+		.prose :global(td) {
+			padding: 1rem 1.25rem 1rem 0;
+			vertical-align: top;
+			border-bottom: 1px solid var(--color-lines);
+		}
+
+		.prose :global(th) {
+			font-family: var(--font-mono);
+			font-size: 0.78em;
+			font-weight: 500;
+			letter-spacing: 0.04em;
+			text-transform: uppercase;
+		}
+
+		.prose :global(tbody tr:last-child td) {
+			border-bottom: 0;
+		}
+
 		.prose :global(pre) {
 			padding: 1.5rem;
 			overflow-x: auto;
@@ -880,6 +937,27 @@ const schemaOrg = {
 			.reading-rail__sticky {
 				position: sticky;
 				top: 6.5rem;
+				display: flex;
+				max-height: calc(100dvh - 8rem);
+				min-height: 0;
+				flex-direction: column;
+			}
+
+			.article-toc {
+				display: flex;
+				min-height: 0;
+				flex: 1;
+				flex-direction: column;
+				overflow: hidden;
+			}
+
+			#toc {
+				min-height: 0;
+				overflow-y: auto;
+				overscroll-behavior: contain;
+				padding-right: 0.75rem;
+				scrollbar-color: rgb(22 25 27 / 35%) transparent;
+				scrollbar-width: thin;
 			}
 
 			.reading-rail,
