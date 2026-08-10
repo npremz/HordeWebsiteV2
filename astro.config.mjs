@@ -3,19 +3,13 @@ import { defineConfig } from 'astro/config';
 import tailwindcss from '@tailwindcss/vite';
 
 import react from '@astrojs/react';
-import markdoc from '@astrojs/markdoc';
-import keystatic from '@keystatic/astro';
 import sitemap from '@astrojs/sitemap';
 import node from '@astrojs/node';
 
 const PORT = parseInt(process.env.PORT || '4328', 10);
 
-// Production = hordeagence.com (mode server)
-// Keystatic admin is opt-in because its route bundle is heavy in Docker builds.
-// Enable with ENABLE_KEYSTATIC=1 only when the production CMS route is needed.
-// Staging/Dev = static
+// Production uses the Node server for runtime endpoints such as the contact form.
 const isProd = process.env.SITE_ENV === 'production';
-const enableKeystatic = process.env.ENABLE_KEYSTATIC === '1';
 const siteUrl = (process.env.PUBLIC_SITE_URL || (isProd ? 'https://hordeagence.com' : 'https://waf.hordagency.com')).replace(/\/$/, '');
 
 if (isProd && siteUrl !== 'https://hordeagence.com') {
@@ -75,33 +69,36 @@ function shouldIncludeInSitemap(page) {
 // https://astro.build/config
 export default defineConfig({
   site: siteUrl,
+  // Keep routing aligned with canonical URLs, hreflang links and the sitemap.
+  // In production, Astro permanently redirects /page to /page/.
+  trailingSlash: 'always',
   redirects: {
-    '/fr/services/audit-offert': {
+    '/fr/services/audit-offert/': {
       status: 301,
-      destination: '/fr/services/audit-seo-technique-bruxelles',
+      destination: '/fr/services/audit-seo-technique-bruxelles/',
     },
-    '/en/services/audit-offert': {
+    '/en/services/audit-offert/': {
       status: 301,
-      destination: '/en/services/technical-seo-audit-brussels',
+      destination: '/en/services/technical-seo-audit-brussels/',
     },
-    '/fr/services/refonte-site-web': {
+    '/fr/services/refonte-site-web/': {
       status: 301,
-      destination: '/fr/services/refonte-site-web-bruxelles',
+      destination: '/fr/services/refonte-site-web-bruxelles/',
     },
-    '/en/services/refonte-site-web': {
+    '/en/services/refonte-site-web/': {
       status: 301,
-      destination: '/en/services/website-redesign-brussels',
+      destination: '/en/services/website-redesign-brussels/',
     },
-    '/fr/services/creation-mvp-saas': {
+    '/fr/services/creation-mvp-saas/': {
       status: 301,
-      destination: '/fr/services/developpement-mvp-bruxelles',
+      destination: '/fr/services/developpement-mvp-bruxelles/',
     },
-    '/en/services/creation-mvp-saas': {
+    '/en/services/creation-mvp-saas/': {
       status: 301,
-      destination: '/en/services/mvp-development-brussels',
+      destination: '/en/services/mvp-development-brussels/',
     },
   },
-  // Astro 5: 'hybrid' n'existe plus. Utiliser 'server' + prerender: true sur les pages statiques
+  // Astro 7: utiliser 'server' + prerender: true sur les pages statiques.
   output: isProd ? 'server' : 'static',
   adapter: node({ mode: 'standalone' }),
   build: {
@@ -112,9 +109,7 @@ export default defineConfig({
     port: PORT
   },
   integrations: [
-    react({ include: ['**/keystatic/**', '**/components/**/*.tsx'] }),
-    markdoc(),
-    ...(enableKeystatic ? [keystatic()] : []),
+    react({ include: ['**/components/**/*.tsx'] }),
     sitemap({
       filter: shouldIncludeInSitemap,
     })
@@ -131,11 +126,6 @@ export default defineConfig({
         'react/jsx-runtime',
         'react/jsx-dev-runtime',
       ],
-      esbuildOptions: {
-        define: {
-          'process.env.NODE_ENV': '"development"',
-        },
-      },
     },
     server: {
       strictPort: true,
@@ -147,8 +137,6 @@ export default defineConfig({
     },
     build: {
       reportCompressedSize: false,
-      // Keystatic admin bundle is intentionally large and route-scoped.
-      chunkSizeWarningLimit: 3000,
     },
   },
 });

@@ -243,12 +243,9 @@ Le formulaire couvre notamment les besoins suivants:
 
 Dependances principales relevees dans le projet:
 
-- Astro 6
+- Astro 7
 - React 19
-- Preact 10
 - Tailwind CSS 4
-- Keystatic CMS
-- Markdoc
 - @astrojs/node
 - @astrojs/rss
 - @astrojs/sitemap

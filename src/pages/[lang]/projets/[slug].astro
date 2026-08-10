@@ -150,7 +150,7 @@ if (props.kind === 'project') {
     externalUrl: localizedProject.externalUrl,
     descriptionParagraphs,
     breadcrumbItems: [
-      { label: projectCopy.breadcrumbHome, href: `/${lang}` },
+      { label: projectCopy.breadcrumbHome, href: `/${lang}/` },
       { label: projectCopy.breadcrumbProjects, href: getProjectIndexHref(lang) },
       { label: localizedProject.shortTitle },
     ],
@@ -171,7 +171,7 @@ if (props.kind === 'project') {
     service,
     projects,
     breadcrumbItems: [
-      { label: projectCopy.breadcrumbHome, href: `/${lang}` },
+      { label: projectCopy.breadcrumbHome, href: `/${lang}/` },
       { label: projectCopy.breadcrumbProjects, href: getProjectIndexHref(lang) },
       { label: getLocalizedProjectServiceLabel(service, lang) },
     ],

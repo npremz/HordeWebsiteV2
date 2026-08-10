@@ -1,5 +1,5 @@
-import { createReader } from "@keystatic/core/reader";
-import keystaticConfig from "../../keystatic.config";
+import yaml from "js-yaml";
+import { z } from "astro/zod";
 import { DEFAULT_LOCALE, type Locale } from "../i18n";
 
 export interface SiteSettingsData {
@@ -48,8 +48,58 @@ export interface FooterData {
   copyright?: string;
 }
 
-const reader = createReader(process.cwd(), keystaticConfig);
-const singletonCache = new Map<string, Promise<unknown | null>>();
+const navigationItemSchema = z.object({
+  label: z.string(),
+  url: z.string(),
+  isExternal: z.boolean().optional(),
+});
+
+const siteSettingsSchema: z.ZodType<SiteSettingsData> = z.object({
+  siteName: z.string(),
+  homepageTitle: z.string(),
+  siteUrl: z.url(),
+  defaultDescription: z.string().min(50).max(160),
+  locale: z.string(),
+  defaultOgImage: z.string(),
+  defaultOgImageAlt: z.string(),
+  twitterSite: z.string().optional(),
+});
+
+const navigationSchema: z.ZodType<NavigationData> = z.object({
+  logo: z.string().optional(),
+  logoAlt: z.string().optional(),
+  items: z.array(navigationItemSchema),
+  ctaButton: z.object({
+    label: z.string().optional(),
+    url: z.string().optional(),
+  }).optional(),
+});
+
+const footerSchema: z.ZodType<FooterData> = z.object({
+  description: z.string().optional(),
+  columns: z.array(z.object({
+    title: z.string(),
+    links: z.array(navigationItemSchema),
+  })),
+  socialLinks: z.array(z.object({
+    platform: z.string(),
+    url: z.url(),
+  })).optional(),
+  legalLinks: z.array(navigationItemSchema),
+  copyright: z.string().optional(),
+});
+
+const settingsFiles = import.meta.glob<string>(
+  [
+    "../content/settings_fr/*.yaml",
+    "../content/settings_en/*.yaml",
+  ],
+  {
+    eager: true,
+    import: "default",
+    query: "?raw",
+  },
+);
 
 const defaultSiteSettings: SiteSettingsData = {
   siteName: "Horde Agence",
@@ -77,36 +127,30 @@ const defaultFooter: FooterData = {
   copyright: "",
 };
 
-async function readSingleton<T>(key: string): Promise<T | null> {
-  if (!singletonCache.has(key)) {
-    singletonCache.set(
-      key,
-      (async () => {
-        try {
-          const singleton = reader.singletons[key as keyof typeof reader.singletons];
-          return singleton ? await singleton.read() : null;
-        } catch {
-          return null;
-        }
-      })(),
-    );
-  }
+function readSettingsFile<T extends object>(
+  name: "site" | "navigation" | "footer",
+  lang: Locale,
+  schema: z.ZodType<T>,
+): T | null {
+  const source = settingsFiles[`../content/settings_${lang}/${name}.yaml`];
+  if (!source) return null;
 
-  return (await singletonCache.get(key)) as T | null;
+  return schema.parse(yaml.load(source));
 }
 
-async function readLocalizedSingleton<T extends object>(
-  prefix: "siteSettings" | "navigation" | "footer",
+async function readLocalizedSettings<T extends object>(
+  name: "site" | "navigation" | "footer",
   lang: Locale,
   fallback: T,
+  schema: z.ZodType<T>,
 ): Promise<T> {
-  const localized = await readSingleton<Partial<T>>(`${prefix}_${lang}`);
+  const localized = readSettingsFile(name, lang, schema);
   if (localized) {
     return { ...fallback, ...localized };
   }
 
   if (lang !== DEFAULT_LOCALE) {
-    const defaultLocaleValue = await readSingleton<Partial<T>>(`${prefix}_${DEFAULT_LOCALE}`);
+    const defaultLocaleValue = readSettingsFile(name, DEFAULT_LOCALE, schema);
     if (defaultLocaleValue) {
       return { ...fallback, ...defaultLocaleValue };
     }
@@ -116,15 +160,15 @@ async function readLocalizedSingleton<T extends object>(
 }
 
 export async function getSiteSettings(lang: Locale): Promise<SiteSettingsData> {
-  return readLocalizedSingleton("siteSettings", lang, defaultSiteSettings);
+  return readLocalizedSettings("site", lang, defaultSiteSettings, siteSettingsSchema);
 }
 
 export async function getNavigation(lang: Locale): Promise<NavigationData> {
-  return readLocalizedSingleton("navigation", lang, defaultNavigation);
+  return readLocalizedSettings("navigation", lang, defaultNavigation, navigationSchema);
 }
 
 export async function getFooter(lang: Locale): Promise<FooterData> {
-  return readLocalizedSingleton("footer", lang, defaultFooter);
+  return readLocalizedSettings("footer", lang, defaultFooter, footerSchema);
 }
 
 export async function getSiteChrome(lang: Locale): Promise<{
