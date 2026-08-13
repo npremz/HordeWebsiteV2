@@ -1,0 +1,52 @@
+slug: ai-for-associations-common-good
+slug_fr: ia-associations-projets-interet-general
+title_fr: L’IA au service du commun, pas seulement du capital
+title_en: AI for the common good, not only for capital
+seoTitle_fr: IA pour les associations et le bien commun
+seoTitle_en: AI for nonprofits and the common good
+excerpt_fr: >-
+  L’IA fait gagner du temps et réduit certains coûts. Chez Horde, nous voulons
+  partager cet avantage avec les associations et les projets communautaires.
+excerpt_en: >-
+  AI saves time and lowers some costs. At Horde, we want to share that advantage
+  with nonprofits and community-led projects.
+seoDescription_fr: >-
+  Comment l’IA peut-elle aider les associations ? Horde partage ses gains de
+  productivité pour rendre des projets numériques ambitieux plus accessibles.
+seoDescription_en: >-
+  How can AI help nonprofits? Horde shares its productivity gains to make
+  ambitious digital projects more accessible to community organizations.
+featuredImageAlt_fr: Un groupe conçoit ensemble un projet numérique au service de sa communauté
+featuredImageAlt_en: A group designing a digital project for its community together
+featuredImage: /src/assets/images/blog/ai-for-associations/featuredImage.png
+thumbnailImage: /src/assets/images/blog/ai-for-associations/featuredImage.png
+thumbnailImageAlt_fr: L’IA pour les associations et les projets communautaires
+thumbnailImageAlt_en: AI for nonprofits and community-led projects
+author: nicolas-premont
+category: strategie
+tags:
+  - IA pour les associations
+  - Intérêt général
+  - Projets communautaires
+  - Numérique responsable
+tags_en:
+  - AI for nonprofits
+  - Common good
+  - Community projects
+  - Responsible technology
+publishedDate: 2026-08-13
+modifiedDate: 2026-08-13
+readingTime: 7
+keyTakeaways_fr:
+  - L’avantage technologique ne devrait pas être réservé aux organisations qui disposent déjà des plus gros budgets.
+  - Horde partage une partie des gains de productivité liés à l’IA sous la forme de prix plus accessibles ou de projets plus ambitieux.
+  - >-
+    L’IA reste un outil : les choix, la compréhension du terrain et la
+    responsabilité du résultat restent humains.
+keyTakeaways_en:
+  - Technological advantage should not be reserved for organizations that already have the largest budgets.
+  - Horde shares part of its AI productivity gains through more accessible pricing or more ambitious project scopes.
+  - AI remains a tool; decisions, local understanding, and responsibility for the result remain human.
+featured: false
+draft: false
+seoRobots: index, follow
