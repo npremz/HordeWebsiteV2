@@ -1,0 +1,46 @@
+slug: ai-can-create-interfaces-not-experiences
+slug_fr: ia-interfaces-experiences-utilisateur
+title_fr: L’IA sait créer des interfaces. Elle ne sait pas encore créer des expériences.
+title_en: AI Can Create Interfaces. It Still Cannot Create Experiences.
+seoTitle_fr: 'IA et UX : pourquoi l’expérience reste humaine'
+seoTitle_en: 'AI and UX: Why Experience Still Needs Humans'
+excerpt_fr: >-
+  L’IA produit rapidement des interfaces convaincantes. Une expérience fluide
+  exige encore d’observer les usages, de hiérarchiser et de savoir quoi retirer.
+excerpt_en: >-
+  AI can produce convincing interfaces quickly. A fluid experience still
+  requires observing real use, setting priorities and knowing what to remove.
+seoDescription_fr: >-
+  L’IA génère des interfaces, mais une UX fluide exige du jugement humain, des
+  tests utilisateurs et la capacité de supprimer le contenu parasite.
+seoDescription_en: >-
+  AI generates interfaces, but fluid UX still requires human judgment, user
+  testing and the ability to remove distracting content and friction.
+featuredImageAlt_fr: >-
+  Une main retire une carte superflue au-dessus d’un parcours numérique simple
+  entouré de composants d’interface
+featuredImageAlt_en: >-
+  A hand removes an unnecessary card above a simple digital journey surrounded
+  by interface components
+featuredImage: /src/assets/images/blog/ai-can-create-interfaces-not-experiences/featuredImage.png
+thumbnailImage: /src/assets/images/blog/ai-can-create-interfaces-not-experiences/featuredImage.png
+thumbnailImageAlt_fr: Une main simplifie un parcours numérique encombré
+thumbnailImageAlt_en: A hand simplifies a cluttered digital journey
+author: julien-designer
+category: ux-design
+publishedDate: 2026-08-29
+modifiedDate: 2026-08-29
+readingTime: 9
+keyTakeaways_fr:
+  - Une interface est un ensemble d’écrans. L’expérience dépend du parcours, du contexte et de ce que la personne ressent pendant l’usage.
+  - L’IA rend l’ajout de contenu et de fonctionnalités très facile, alors qu’une bonne UX demande souvent de hiérarchiser et de supprimer.
+  - Le jugement humain ne remplace pas les preuves. Il doit s’appuyer sur l’observation, les tests utilisateurs et les données d’usage.
+  - L’IA est particulièrement utile pour accélérer l’exploration et les itérations, sans lui déléguer la décision finale.
+keyTakeaways_en:
+  - An interface is a collection of screens. Experience depends on the journey, context and what a person feels while using it.
+  - AI makes adding content and features easy, while good UX often requires prioritising and removing them.
+  - Human judgment is not a substitute for evidence. It must be grounded in observation, user testing and usage data.
+  - AI is most useful for accelerating exploration and iteration without being given the final decision.
+featured: false
+draft: false
+seoRobots: index, follow
