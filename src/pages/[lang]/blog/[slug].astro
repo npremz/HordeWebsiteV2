@@ -175,6 +175,15 @@ function parseMarkdown(content: string): string {
 			return `<ul>${items}</ul>`;
 		}
 
+		// Listes ordonnées Markdown (1. élément, 2. élément, etc.)
+		if (block.match(/^\d+\.\s+/m)) {
+			const items = block.split('\n')
+				.filter(line => line.match(/^\d+\.\s+/))
+				.map(line => `<li>${applyInlineFormatting(line.replace(/^\d+\.\s+/, ''))}</li>`)
+				.join('\n');
+			return `<ol class="article-ordered-list">${items}</ol>`;
+		}
+
 		// Paragraphe normal
 		isSourcesSection = false;
 			return `<p>${applyInlineFormatting(block)}</p>`;
@@ -824,6 +833,16 @@ const schemaOrg = {
 
 		.prose :global(li::marker) {
 			font-size: 0.7em;
+		}
+
+		.prose :global(ol.article-ordered-list) {
+			display: grid;
+			gap: 0.8rem;
+			margin: 2.25rem 0 2.5rem;
+			padding: 1.75rem 0 1.75rem 1.75rem;
+			border-top: 1px solid var(--color-lines);
+			border-bottom: 1px solid var(--color-lines);
+			list-style: decimal outside;
 		}
 
 		.prose :global(blockquote) {
