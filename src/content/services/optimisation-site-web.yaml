@@ -42,10 +42,10 @@ translations:
     shortName: Website optimization
     footerTitle: Optimization
     intro: >-
-      A website that loads in 4 seconds can lose visitors before they even see
-      your content. We improve technical performance without starting from
-      scratch and without touching what already works.
-    problemTitle: Your website may be suffering from this
+      Website optimization starts with measurements, not a redesign. We examine
+      the pages and journeys that matter, fix identified bottlenecks and compare
+      the results with the original baseline.
+    problemTitle: Signs that call for a technical diagnosis
     problemBlocks:
       - kind: list
         items:
@@ -56,8 +56,9 @@ translations:
           - Bounce rate is high without a clear explanation
       - kind: paragraph
         body: >-
-          If one of these sounds familiar, the issue is probably technical, not
-          only related to your content.
+          These signals can have several causes. The diagnostic separates code,
+          infrastructure, third-party scripts and content issues before work is
+          estimated.
         items: []
     offerTitle: Main optimization areas
     offerItems:
@@ -104,15 +105,15 @@ translations:
       - Before/after measurements for each treated area
       - 30-day Google Search Console follow-up
       - Documentation of what was done and why
-    exclusionsTitle: What we avoid doing
+    exclusionsTitle: What optimization means in practice
     exclusionsParagraphs:
       - >-
-        We do not install a magic cache plugin and call it optimization. We do
-        not promise +50% traffic in 3 weeks. And we do not sell a monthly plan
-        to monitor metrics you can already see in Google Search Console.
+        A cache plugin can help, but it is not a diagnosis. We document the
+        bottlenecks, the corrections and the measurements used to validate the
+        work. Traffic growth is not presented as a direct or guaranteed result.
       - >-
-        What we deliver: a measurably faster site, healthier Core Web Vitals and
-        documentation of what changed.
+        Targets are agreed after the initial measurements. Results depend on the
+        platform, hosting, third-party scripts and the level of code access.
     faqTitle: Answers to common questions
     faqItems:
       - question: Can you optimize WordPress, Webflow, Shopify or custom websites?
@@ -131,9 +132,9 @@ translations:
           a week. Deeper work takes 1 to 3 weeks depending on complexity.
       - question: What results should I expect?
         answer: >-
-          It depends on the starting point. On sites with PageSpeed scores below
-          50, moving into the 80-95 range is common. SEO impact is visible in
-          Search Console over 6 to 12 weeks.
+          The diagnostic establishes a baseline for the pages in scope. We then
+          report the change for each metric and any remaining limitation. A
+          PageSpeed score or SEO gain cannot be guaranteed before that review.
       - question: How much does website optimization cost?
         answer: >-
           It depends on the depth of the work. We quote after the initial
@@ -141,8 +142,8 @@ translations:
     ctaTitle: Start with an audit
     ctaParagraphs:
       - >-
-        Fill in the form with your details and a member of our team will contact
-        you for a no-commitment consultation.
+        Send us the website address and the performance issue you are seeing. We
+        will start by checking whether an optimization mission is appropriate.
       - >-
         You can also email us at hello@hordeagence.com
     primaryCtaLabel: Request a free audit
@@ -157,10 +158,10 @@ translations:
       - anchor: contact us
         url: /en/contact/
 intro: >-
-  Un site qui charge en 4 secondes perd en moyenne 25% de ses visiteurs avant
-  même qu'ils voient votre contenu. On améliore les performances techniques sans
-  repartir de zéro et sans toucher à ce qui fonctionne déjà.
-problemTitle: Votre site souffre peut-être de ça
+  Une optimisation commence par des mesures, pas par une refonte. On examine les
+  pages et les parcours importants, on corrige les blocages identifiés, puis on
+  compare les résultats avec l'état de départ.
+problemTitle: Les signes qui justifient un diagnostic technique
 problemBlocks:
   - kind: list
     items:
@@ -171,8 +172,9 @@ problemBlocks:
       - Le taux de rebond est élevé sans explication claire
   - kind: paragraph
     body: >-
-      Si vous vous reconnaissez dans un de ces cas, le problème est probablement
-      technique, et pas dans votre contenu.
+      Ces signaux peuvent avoir plusieurs causes. Le diagnostic distingue les
+      problèmes de code, d'infrastructure, de scripts tiers et de contenu avant
+      de chiffrer une intervention.
     items: []
 offerTitle: Les axes principaux pour l'optimisation
 offerItems:
@@ -214,7 +216,7 @@ methodSteps:
     body: >-
       Mesures avant/après, suivi Google Search Console sur 30 jours. On livre
       des métriques, pas des promesses.
-deliverablesTitle: Résumé du produit Apres livraison
+deliverablesTitle: Ce qui est livré
 deliverables:
   - Rapport de diagnostic avec scores de départ documentés
   - Plan d'action priorisé (quick wins + optimisations structurelles)
@@ -222,21 +224,22 @@ deliverables:
   - Mesures avant/après sur chaque axe traité
   - Suivi Google Search Console sur 30 jours
   - Documentation de ce qui a été fait et pourquoi
-exclusionsTitle: Les choses qu'on évite de faire
+exclusionsTitle: Ce qu'on entend par optimisation
 exclusionsParagraphs:
   - >-
-    On n'installe pas un plugin "cache magique" et on appelle ça une
-    optimisation. On ne promet pas +50% de trafic en 3 semaines. On ne vous vend
-    pas un abonnement mensuel pour surveiller des métriques que vous pouvez voir
-    vous-même dans Google Search Console.
+    Un plugin de cache peut aider, mais il ne remplace pas un diagnostic. On
+    documente les blocages, les corrections et les mesures utilisées pour
+    valider le travail. La hausse de trafic n'est pas présentée comme une
+    conséquence directe ou garantie.
   - >-
-    Ce qu'on livre : un site mesurément plus rapide, avec des scores Core Web
-    Vitals dans le vert, et une documentation de ce qui a été fait et pourquoi.
+    Les objectifs sont fixés après les premières mesures. Le résultat dépend de
+    la plateforme, de l'hébergement, des scripts tiers et du niveau d'accès au
+    code.
 faqTitle: Nos réponses aux questions fréquentes
 faqItems:
   - question: Optimisez-vous les sites WordPress, Webflow, Shopify ou sur mesure ?
     answer: >-
-      Non. On optimise WordPress, Webflow, Shopify, Next.js, sites custom.
+      Oui. On optimise WordPress, Webflow, Shopify, Next.js et les sites sur mesure.
       Certaines opérations nécessitent un accès au code. On s'adapte selon les
       contraintes.
   - question: Faut-il refaire le site pour améliorer les Core Web Vitals ?
@@ -251,9 +254,9 @@ faqItems:
       1 à 3 semaines selon la complexité.
   - question: Quels résultats attendre ?
     answer: >-
-      Ça dépend de l'état de départ. Sur des sites avec des scores PageSpeed <
-      50, on obtient régulièrement des passages à 80–95. L'impact SEO se voit
-      dans Google Search Console sur 6 à 12 semaines.
+      Le diagnostic établit un point de départ sur les pages concernées. On
+      documente ensuite l'évolution de chaque métrique et les limites restantes.
+      Aucun score PageSpeed ni gain SEO ne peut être garanti avant cette analyse.
   - question: Combien coûte une optimisation de site web ?
     answer: >-
       Ça dépend de la profondeur de l'intervention. On chiffre après le
@@ -262,8 +265,8 @@ faqItems:
 ctaTitle: Commençons par un audit
 ctaParagraphs:
   - >-
-    Remplissez le formulaire avec vos coordonnées, et un membre de notre équipe
-    vous contactera pour une consultation sans engagement.
+    Envoyez-nous l'adresse du site et le problème de performance observé. On
+    commence par vérifier si une mission d'optimisation est pertinente.
   - >-
     Ou vous pouvez nous envoyer un e-mail à l'adresse hello@hordeagence.com
 primaryCtaLabel: Demander un audit gratuit
@@ -288,7 +291,5 @@ notes:
     L'argument central : l'optimisation sans refonte complète — c'est le point
     de différenciation par rapport à une agence qui vend systématiquement des
     refontes.
-  - >-
-    Les chiffres (25% de perte, scores < 50 → 80-95) doivent rester réalistes et
-    vérifiables, pas gonflés.
+  - Les résultats sont formulés à partir de mesures avant/après, jamais garantis à l'avance.
 order: 4
