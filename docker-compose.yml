@@ -7,7 +7,7 @@ services:
     container_name: ${CONTAINER_NAME:-hordenew}
     restart: unless-stopped
     ports:
-      - "${PORT:-4328}:${PORT:-4328}"
+      - "127.0.0.1:${PORT:-4328}:${PORT:-4328}"
     environment:
       - PORT=${PORT:-4328}
       - SITE_ENV=${SITE_ENV:-}
