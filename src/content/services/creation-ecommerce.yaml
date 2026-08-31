@@ -8,8 +8,8 @@ seoSecondaryKeywords:
   - site vente en ligne sur mesure
 seoTitle: Création de site e-commerce à Bruxelles
 seoDescription: >-
-  Créez une boutique Shopify ou sur mesure, rapide et pensée pour vendre :
-  parcours d’achat fluide, SEO e-commerce, performance et autonomie.
+  Création de boutiques Shopify ou sur mesure à Bruxelles : parcours d'achat,
+  performance, SEO technique, paiements, logistique et gestion du catalogue.
 seoRobots: index, follow
 seoInternalLinks:
   - /fr/services/audit-seo-technique-bruxelles/
@@ -31,8 +31,8 @@ translations:
       - custom online store
     seoTitle: E-commerce website development in Brussels
     seoDescription: >-
-      Launch a fast Shopify or custom online store built to sell, with
-      frictionless buying journeys, e-commerce SEO and easy content management.
+      Shopify and custom e-commerce development in Brussels, covering purchase
+      journeys, performance, technical SEO, payments and catalogue management.
     seoInternalLinks:
       - /en/services/technical-seo-audit-brussels/
       - /en/services/creation-landing-page/
@@ -42,32 +42,30 @@ translations:
     shortName: E-commerce website
     footerTitle: E-Commerce
     intro: >-
-      An e-commerce website that converts is not just a good-looking store. It
-      is fast, has frictionless purchase journeys and attracts the right
-      audience through search. We build stores that make your products easy to
-      buy.
-    problemTitle: What separates an e-commerce site that sells from one that does not
+      An online store has to make a large number of details work together:
+      catalogue structure, mobile navigation, payment, logistics and content
+      management. We design and build these parts as one purchase journey.
+    problemTitle: Where an online purchase journey usually breaks down
     problemBlocks:
       - kind: paragraph
         body: >-
-          Most online stores lose customers on details that seem small: two extra
-          seconds of loading time, a 12-step address form or product images that
-          take too long on mobile. These frictions add up and show in cart
-          abandonment.
+          Slow product pages, unclear delivery information and unnecessary form
+          fields all make a purchase harder. We identify these points before
+          deciding how the store should look or which platform to use.
         items: []
       - kind: paragraph
         body: >-
-          The e-commerce websites we build have one goal: help users complete
-          the purchase. Every decision supports that, from the technical base to
-          the size of the buttons.
+          The catalogue, checkout and back office also have to work for the
+          people who operate the store. A smooth customer journey is not useful
+          if every product update becomes a technical task.
         items: []
     offerTitle: Our e-commerce solutions
     offerItems:
       - title: Shopify stores
         body: >-
           Setup, custom theme or advanced customization, selected apps and an
-          optimized checkout. Shopify is our recommendation for most stores: it
-          is robust, scalable and maintained.
+          optimized checkout. Shopify suits many stores because hosting,
+          security updates and the core checkout are managed by the platform.
       - title: Custom e-commerce
         body: >-
           For needs Shopify does not cover: complex catalogues, specific
@@ -76,7 +74,8 @@ translations:
       - title: E-commerce migration
         body: >-
           If your current store no longer fits, we migrate to a better platform
-          without losing order history, customer reviews or existing SEO value.
+          with a migration plan for products, orders, reviews, URLs and
+          redirects. What can be transferred depends on the source platform.
     methodTitle: Our e-commerce standards
     methodSteps:
       - title: UX & purchase journey
@@ -85,8 +84,9 @@ translations:
           checkout and clear error handling. We map the journey before designing.
       - title: Technical performance
         body: >-
-          WebP/AVIF images, lazy loading, minimal JavaScript and healthy Core Web
-          Vitals. A slow mobile store leaves money on the table.
+          Responsive images, controlled third-party scripts and tests on key
+          mobile pages. Performance is measured before launch instead of being
+          assumed from the chosen platform.
       - title: E-commerce SEO
         body: >-
           Product structured data, canonical tags for variants, product sitemap
@@ -99,26 +99,26 @@ translations:
           you will never use.
     deliverablesTitle: What is delivered
     deliverables:
-      - Store live in production, fast on mobile and desktop
-      - Healthy Core Web Vitals
+      - Store live in production and tested on mobile and desktop
+      - Performance report for the main purchase journey
       - Technical e-commerce SEO in place from launch
       - Training for catalogue and order management
       - Documentation for settings and integrations
       - 30-day post-launch monitoring included
-    exclusionsTitle: What we avoid doing
+    exclusionsTitle: What is checked before development starts
     exclusionsParagraphs:
       - >-
-        We do not deliver a default Shopify install with a free theme and a few
-        apps. We do not launch without testing the mobile checkout. And we do
-        not code before understanding your catalogue, carriers and logistics
-        constraints.
+        The scope is based on your catalogue, product variants, payment methods,
+        carriers and internal workflows. Mobile checkout tests and launch
+        checks are included in the delivery plan.
     faqTitle: Answers to common questions
     faqItems:
       - question: Shopify or WooCommerce for an e-commerce website?
         answer: >-
-          For most projects, Shopify. It is faster to launch, more stable and
-          requires less maintenance. WooCommerce can make sense if you are
-          already on WordPress with a limited catalogue.
+          Shopify is often a good fit when you want the platform to manage
+          hosting, updates and checkout. WooCommerce can make sense when the
+          store is closely tied to an existing WordPress site. We compare both
+          against the catalogue, integrations and maintenance constraints.
       - question: How much does an e-commerce website in Brussels cost?
         answer: >-
           A custom Shopify store usually ranges from 5,000 EUR to 12,000 EUR. A
@@ -136,13 +136,14 @@ translations:
           Ongoing content SEO and link building can be handled with partners.
       - question: Can my current online store be migrated?
         answer: >-
-          In almost every case, yes. We evaluate product data, orders, reviews
-          and redirects during the initial audit.
+          It depends on the source platform and the quality of its exports. The
+          initial audit covers products, orders, reviews, customer data and URL
+          redirects so the transferable scope is explicit.
     ctaTitle: Tell us about your store
     ctaParagraphs:
       - >-
-        Fill in the form with your details and a member of our team will contact
-        you for a no-commitment consultation.
+        Tell us about your catalogue, current platform and operational needs. We
+        will use that context to prepare the first discussion.
       - >-
         You can also email us at hello@hordeagence.com
     primaryCtaLabel: Let's discuss your project
@@ -160,33 +161,32 @@ translations:
       - anchor: contact us
         url: /en/contact/
 intro: >-
-  Un e-commerce qui convertit, ce n'est pas qu'une belle boutique. C'est un site
-  rapide, des parcours d'achat sans friction, et un référencement qui attire la
-  bonne audience. On conçoit des boutiques qui rendent vos produits accessibles,
-  parce qu'une interface ne devrait pas être un frein à votre business.
-problemTitle: Ce qui sépare un e-commerce qui vend d'un qui ne vend pas
+  Une boutique en ligne doit faire fonctionner beaucoup de détails ensemble :
+  catalogue, navigation mobile, paiement, logistique et gestion du contenu. On
+  conçoit ces éléments comme un seul parcours d'achat, côté client comme côté
+  équipe.
+problemTitle: Là où un parcours d'achat se complique
 problemBlocks:
   - kind: paragraph
     body: >-
-      La plupart des boutiques en ligne perdent des clients sur des détails qui
-      semblent anodins : un temps de chargement de 2 secondes de trop, un
-      formulaire d'adresse en 12 étapes, des photos qui mettent 4s à s'afficher
-      sur mobile. Ces frictions s'accumulent et se mesurent dans le taux
-      d'abandon de panier.
+      Des pages produit lentes, des informations de livraison difficiles à
+      trouver ou des champs inutiles compliquent l'achat. On repère ces points
+      avant de choisir la plateforme ou de dessiner l'interface.
     items: []
   - kind: paragraph
     body: >-
-      Les e-commerces qu'on construit ont un but en tête : que les utilisateurs
-      aillent jusqu'au bout. Chaque décision va dans ce sens, de la base
-      technique jusqu'à la taille des boutons.
+      Le catalogue, le checkout et le back-office doivent aussi rester simples
+      pour l'équipe qui gère la boutique. Un parcours client fluide ne suffit
+      pas si chaque mise à jour produit devient une intervention technique.
     items: []
 offerTitle: Nos solutions en e-commerce
 offerItems:
   - title: Boutiques Shopify
     body: >-
       Configuration, thème sur mesure ou personnalisation poussée, apps
-      sélectionnées, checkout optimisé. Shopify est notre recommandation pour la
-      majorité des boutiques. C'est robuste, évolutif, maintenu.
+      sélectionnées et checkout configuré. Shopify convient à de nombreuses
+      boutiques parce que l'hébergement, les mises à jour de sécurité et le
+      checkout central sont gérés par la plateforme.
   - title: E-commerces sur mesure
     body: >-
       Pour les besoins spécifiques que Shopify ne couvre pas : catalogue
@@ -195,8 +195,8 @@ offerItems:
   - title: Migration e-commerce
     body: >-
       Vous avez une boutique existante qui ne répond plus à vos besoins ? On
-      migre vers une nouvelle plateforme sans perdre l'historique de commandes,
-      les avis clients, et le référencement acquis.
+      prépare la migration des produits, commandes, avis, URLs et redirections.
+      Ce qui peut être repris dépend de la plateforme d'origine.
 methodTitle: Nos standards pour un e-commerce
 methodSteps:
   - title: UX & parcours d'achat
@@ -206,9 +206,9 @@ methodSteps:
       parcours avant de dessiner quoi que ce soit.
   - title: Performance technique
     body: >-
-      Images en WebP/AVIF avec lazy loading, JS minimal, Core Web Vitals dans le
-      vert. Un e-commerce lent sur mobile laisse de l'argent sur la table. Pour
-      nous, la rapidité est un standard.
+      Images responsives, scripts tiers maîtrisés et tests sur les principales
+      pages mobiles. La performance est mesurée avant la mise en ligne, pas
+      déduite de la plateforme choisie.
   - title: SEO e-commerce
     body: >-
       Données structurées produits (schema.org), balises canoniques pour les
@@ -219,29 +219,28 @@ methodSteps:
       Intégration Stripe, Mollie, Bancontact, PayPal. Connexion aux
       transporteurs (Bpost, DPD, Sendcloud). On configure ce dont vous avez
       besoin, pas un catalogue de fonctionnalités que vous n'utiliserez jamais.
-deliverablesTitle: Résumé du produit Après livraison
+deliverablesTitle: Ce qui est livré
 deliverables:
-  - Boutique en production, rapide sur mobile et desktop
-  - Core Web Vitals dans le vert
+  - Boutique en production et testée sur mobile et desktop
+  - Rapport de performance sur le parcours d'achat principal
   - SEO e-commerce technique en place dès le lancement
   - Formation à la gestion du catalogue et des commandes
   - Documentation des paramètres et des intégrations
   - Monitoring 30 jours post-lancement inclus
-exclusionsTitle: Les choses qu'on évite de faire
+exclusionsTitle: Ce qu'on vérifie avant de développer
 exclusionsParagraphs:
   - >-
-    On ne livre pas une installation Shopify par défaut avec un thème gratuit et
-    quelques apps. On ne met pas non plus en ligne sans avoir testé le tunnel de
-    commande sur mobile. Et on ne code pas sans avoir compris votre catalogue,
-    vos transporteurs et vos contraintes logistiques.
+    Le périmètre part de votre catalogue, des variantes, des moyens de paiement,
+    des transporteurs et de vos processus internes. Les tests du checkout mobile
+    et les vérifications de mise en ligne font partie du plan de livraison.
 faqTitle: Nos réponses aux questions fréquentes
 faqItems:
   - question: Shopify ou WooCommerce pour créer un site e-commerce ?
     answer: >-
-      Pour la grande majorité des projets, Shopify. Plus rapide à lancer, plus
-      stable, moins de maintenance. WooCommerce a du sens si vous êtes déjà sur
-      WordPress et que votre catalogue est limité. On en discute selon votre
-      situation.
+      Shopify est souvent pertinent lorsque vous voulez déléguer à la plateforme
+      l'hébergement, les mises à jour et le checkout. WooCommerce peut convenir
+      si la boutique dépend étroitement d'un site WordPress existant. On compare
+      les deux selon le catalogue, les intégrations et la maintenance prévue.
   - question: Combien coûte un site e-commerce à Bruxelles ?
     answer: >-
       Un Shopify sur mesure : entre 5 000 € et 12 000 €. Un e-commerce custom
@@ -260,13 +259,15 @@ faqItems:
       avec des partenaires.
   - question: Mon site e-commerce actuel peut-il être migré ?
     answer: >-
-      Dans la quasi-totalité des cas, oui. On évalue la migration lors de
-      l'audit initial : données produits, commandes, avis, redirections.
+      Cela dépend de la plateforme d'origine et de la qualité de ses exports.
+      L'audit couvre les produits, commandes, avis, données clients et
+      redirections afin de définir précisément ce qui peut être repris.
 ctaTitle: Parlez-nous de votre boutique
 ctaParagraphs:
   - >-
-    Remplissez le formulaire avec vos coordonnées, et un membre de notre équipe
-    vous contactera pour une consultation sans engagement.
+    Parlez-nous de votre catalogue, de votre plateforme actuelle et de vos
+    contraintes opérationnelles. On partira de ce contexte lors du premier
+    échange.
   - >-
     Ou vous pouvez nous envoyer un e-mail à l'adresse hello@hordeagence.com
 primaryCtaLabel: Discutons de votre projet

@@ -9,8 +9,8 @@ seoSecondaryKeywords:
   - page produit conversion
 seoTitle: Création de landing page à Bruxelles
 seoDescription: >-
-  Transformez vos clics en leads ou en ventes avec une landing page sur mesure,
-  rapide et optimisée pour Google Ads, le SEO et les campagnes sociales.
+  Landing page sur mesure à Bruxelles pour vos campagnes : message, design,
+  développement, performance mobile, formulaires et suivi des conversions.
 seoRobots: index, follow
 seoInternalLinks:
   - /fr/services/audit-seo-technique-bruxelles/
@@ -33,8 +33,8 @@ translations:
       - product page conversion
     seoTitle: Landing page development in Brussels
     seoDescription: >-
-      Turn campaign clicks into leads or sales with a fast custom landing page
-      optimized for Google Ads, organic search and social campaigns.
+      Custom landing pages in Brussels for campaigns, including messaging,
+      design, development, mobile performance, forms and conversion tracking.
     seoInternalLinks:
       - /en/services/technical-seo-audit-brussels/
       - /en/services/creation-ecommerce/
@@ -44,17 +44,17 @@ translations:
     shortName: Custom landing page
     footerTitle: Landing page
     intro: >-
-      A landing page has one goal: turn a visitor into a client, signup or
-      buyer. The headline, visual hierarchy, CTA and speed all serve that goal.
-      We create pages that do the job.
+      A landing page gives one audience a clear next step. Its message, visual
+      hierarchy, form and tracking are designed around the campaign rather than
+      inherited from a general-purpose homepage.
     problemTitle: What it is for
     problemBlocks:
       - kind: item
         title: Google Ads and Meta Ads campaigns
         body: >-
-          A dedicated landing page converts better than a generic homepage:
-          tighter message match, focused copy and no leaks to unrelated pages.
-          It can also improve campaign Quality Score.
+          A dedicated page keeps the message consistent between the ad and the
+          destination. It removes unrelated navigation and makes the expected
+          action clear.
         items: []
       - kind: item
         title: Product or offer launches
@@ -86,12 +86,13 @@ translations:
           social-heavy footer. The layout guides the eye to the CTA.
       - title: Mobile-first performance
         body: >-
-          Most ad clicks happen on mobile. We build performance-first with
-          optimized images, minimal JavaScript and fast loading.
+          We test the page on mobile and keep images, fonts and JavaScript under
+          control. The aim is a page that remains usable on slower connections.
       - title: Integrations
         body: >-
           CRM-connected forms, Meta pixel, Google Tag Manager and conversion
-          events. Tracking is configured correctly from the start.
+          events. We verify the events before launch and document what is being
+          measured.
     methodTitle: Our method for a strong page
     methodSteps:
       - title: Brief
@@ -110,16 +111,16 @@ translations:
     deliverables:
       - Page live on your domain
       - Structured copy optimized for the objective
-      - PageSpeed score above 90 on mobile
+      - Mobile performance report on the production page
       - Tracking configured (GTM, conversion events, pixel)
       - CRM connection if needed
       - A/B variants available at a reduced rate
-    exclusionsTitle: What we avoid doing
+    exclusionsTitle: What the scope does not hide
     exclusionsParagraphs:
       - >-
-        We do not ship a surface-level Unbounce or Webflow template. We do not
-        promise a fake conversion rate. And we do not rush a weak page in three
-        days. We do serious work in reasonable timelines.
+        The quote distinguishes original work from any existing template or
+        platform configuration. It also states what is required from your team,
+        including copy approval, assets and access to tracking tools.
     faqTitle: Answers to common questions
     faqItems:
       - question: Do you write the landing page copy?
@@ -147,11 +148,11 @@ translations:
         answer: >-
           A simple landing page takes 1 to 2 weeks. A more complex one with
           animations, video and multiple integrations takes 2 to 4 weeks.
-    ctaTitle: Launch your next campaign with a page built to convert
+    ctaTitle: Prepare the page for your next campaign
     ctaParagraphs:
       - >-
-        Fill in the form with your details and a member of our team will contact
-        you for a no-commitment consultation.
+        Send us the offer, audience, traffic source and expected launch date. We
+        will confirm a suitable scope and timeline.
       - >-
         You can also email us at hello@hordeagence.com
     primaryCtaLabel: Request a quick quote
@@ -169,18 +170,17 @@ translations:
       - anchor: contact us
         url: /en/contact/
 intro: >-
-  Une landing page a un seul objectif : transformer un visiteur en client, en
-  inscription ou en acheteur. Chaque élément (le titre, la hiérarchie visuelle,
-  le CTA, la vitesse) est là pour ça. On crée des pages qui font le job.
+  Une landing page donne une prochaine étape claire à une audience précise. Son
+  message, sa hiérarchie visuelle, son formulaire et son suivi sont conçus pour
+  la campagne, plutôt qu'hérités d'une page d'accueil généraliste.
 problemTitle: Pour quoi faire
 problemBlocks:
   - kind: item
     title: Campagnes Google Ads et Meta Ads
     body: >-
-      Une landing page dédiée convertit mieux qu'une page d'accueil générique.
-      Cohérence entre l'annonce et la page, message ciblé, pas de fuite vers
-      d'autres pages. Le Quality Score de vos campagnes s'améliore avec ça
-      aussi.
+      Une page dédiée garde le même message entre l'annonce et sa destination.
+      Elle retire les chemins de navigation inutiles et rend l'action attendue
+      immédiatement compréhensible.
     items: []
   - kind: item
     title: Lancement de produit ou d'offre
@@ -215,14 +215,14 @@ offerItems:
       et rien d'autre.
   - title: Performance mobile-first
     body: >-
-      Plus de 60% des clics publicitaires viennent du mobile. On développe en
-      performance-first : images optimisées, JS minimal, chargement < 2s. Un
-      score PageSpeed dans le vert améliore directement vos coûts publicitaires.
+      On teste la page sur mobile et on maîtrise le poids des images, des polices
+      et du JavaScript. L'objectif est de garder une page utilisable, y compris
+      sur une connexion plus lente.
   - title: Intégrations
     body: >-
       Formulaire connecté à votre CRM (HubSpot, Brevo, Mailchimp), pixel Meta,
-      Google Tag Manager, events de conversion. On configure le tracking
-      correctement dès le départ.
+      Google Tag Manager et événements de conversion. On vérifie les événements
+      avant la mise en ligne et on documente ce qui est mesuré.
 methodTitle: Notre méthode pour une bonne page
 methodSteps:
   - title: Brief
@@ -237,21 +237,20 @@ methodSteps:
     body: La maquette validée, on développe. Performance et mobile au centre.
   - title: Intégrations & mise en ligne
     body: Tracking, CRM, formulaire. On livre sur votre domaine.
-deliverablesTitle: Résumé du produit Après livraison
+deliverablesTitle: Ce qui est livré
 deliverables:
   - Page en production sur votre domaine
   - Copywriting structuré et optimisé pour l'objectif
-  - Score PageSpeed > 90 sur mobile
+  - Rapport de performance mobile sur la page en production
   - Tracking configuré (GTM, events de conversion, pixel)
   - Connexion CRM si nécessaire
   - Variantes A/B disponibles à tarif réduit
-exclusionsTitle: Les choses qu'on évite de faire
+exclusionsTitle: Ce que le périmètre ne cache pas
 exclusionsParagraphs:
   - >-
-    On ne livre pas un template Unbounce ou Webflow personnalisé en surface. On
-    ne promet pas un "taux de conversion de X%". Et on ne fait pas de rush en 3
-    jours qui produit quelque chose de médiocre. On fait du travail sérieux dans
-    des délais raisonnables.
+    Le devis distingue le travail original d'une éventuelle configuration de
+    template ou de plateforme. Il précise aussi ce qui est attendu de votre
+    équipe : validation des textes, médias et accès aux outils de mesure.
 faqTitle: Nos réponses aux questions fréquentes
 faqItems:
   - question: Rédigez-vous le contenu de la landing page ?
@@ -281,11 +280,11 @@ faqItems:
     answer: >-
       Une landing page simple : 1 à 2 semaines. Une landing page complexe avec
       animations, vidéo, intégrations multiples : 2 à 4 semaines.
-ctaTitle: Lancez votre prochaine campagne avec une page qui convertit
+ctaTitle: Préparons la page de votre prochaine campagne
 ctaParagraphs:
   - >-
-    Remplissez le formulaire avec vos coordonnées, et un membre de notre équipe
-    vous contactera pour une consultation sans engagement.
+    Envoyez-nous l'offre, la cible, la source de trafic et la date de lancement
+    souhaitée. On vous confirme un périmètre et un délai adaptés.
   - >-
     Ou vous pouvez nous envoyer un e-mail à l'adresse hello@hordeagence.com
 primaryCtaLabel: Demander un devis rapide

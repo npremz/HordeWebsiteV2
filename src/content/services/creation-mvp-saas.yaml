@@ -31,7 +31,7 @@ translations:
       - startup mvp belgium
       - build saas belgium
       - product development agency brussels
-    seoTitle: MVP development in Brussels | Horde
+    seoTitle: MVP development in Brussels
     seoDescription: >-
       Validate your product idea with a reliable SaaS MVP, from scope and UX to
       web development and launch, without building unnecessary features.
@@ -45,8 +45,8 @@ translations:
     footerTitle: MVP / Web app
     intro: >-
       An MVP is not a half-built product. It is the smallest scope that lets you
-      test a business hypothesis with real users without wasting 18 months of
-      development. We help define that scope, then build it.
+      test a business hypothesis with real users before committing to a broader
+      product. We help define that scope, then build it.
     problemTitle: What "minimal" really means
     problemBlocks:
       - kind: paragraph
@@ -56,9 +56,9 @@ translations:
         items: []
       - kind: list
         items:
-          - Spending 6 months building an admin back office before one user tests the product
-          - Building an architecture "ready for one million users" from day one
-          - Adding features because they might be useful without validation
+          - Building a complete admin back office before users test the core journey
+          - Designing for hypothetical scale before the first usage data exists
+          - Adding features because they might be useful without defining how to validate them
       - kind: paragraph
         body: >-
           We work differently: we scope first, then build only what answers the
@@ -102,12 +102,12 @@ translations:
       - Monitoring configured for errors and uptime
       - Product management training if needed
       - Access to every environment, staging and production
-    exclusionsTitle: What we avoid doing
+    exclusionsTitle: How we work with your product decisions
     exclusionsParagraphs:
       - >-
-        We are not an offshore code factory. We do not handle ten projects in
-        parallel. We work with a limited number of clients, take time to
-        understand the product and build with you.
+        We work with a limited number of projects so the people making product
+        and technical decisions stay involved throughout delivery. You have
+        access to the test environment and the work in progress.
       - >-
         We also do not commit to features whose value we do not understand. If a
         product decision looks risky, we say it.
@@ -142,8 +142,8 @@ translations:
     ctaTitle: Tell us about your idea
     ctaParagraphs:
       - >-
-        Fill in the form with your details and a member of our team will contact
-        you for a no-commitment consultation.
+        Tell us which hypothesis the MVP needs to test, who will use it and what
+        already exists. We will use that context for the first scoping exchange.
       - >-
         You can also email us at hello@hordeagence.com
     primaryCtaLabel: Let's discuss your project
@@ -162,9 +162,9 @@ translations:
         url: /en/contact/
 intro: >-
   Un MVP, ce n'est pas un produit à moitié fait. C'est le périmètre minimal qui
-  vous permet de tester une hypothèse business avec de vrais utilisateurs, sans
-  gaspiller 18 mois de développement. On vous aide à définir ce périmètre, puis
-  on le construit.
+  permet de tester une hypothèse avec de vrais utilisateurs avant d'engager un
+  développement plus large. On vous aide à définir ce périmètre, puis à le
+  construire.
 problemTitle: Ce que "minimal" veut dire vraiment
 problemBlocks:
   - kind: paragraph
@@ -176,14 +176,14 @@ problemBlocks:
   - kind: list
     items:
       - >-
-        Passer 6 mois à coder un back-office admin avant qu'un seul utilisateur
-        ait testé le produit
+        Construire un back-office complet avant que les utilisateurs aient testé
+        le parcours principal
       - >-
-        Construire une architecture "scalable pour 1 million d'utilisateurs" dès
-        le départ
+        Dimensionner l'architecture pour une échelle hypothétique avant d'avoir
+        les premières données d'usage
       - >-
-        Ajouter des fonctionnalités parce que "ça pourrait être utile" sans
-        validation
+        Ajouter des fonctionnalités sans définir comment leur utilité sera
+        vérifiée
   - kind: paragraph
     body: >-
       On travaille autrement : on cadre d'abord, on construit ensuite uniquement
@@ -211,7 +211,7 @@ offerItems:
       Hébergement configuré, monitoring en place, documentation technique. On ne
       disparaît pas après le lancement, on suit les premiers retours et on
       itère.
-methodTitle: Notre plan Pour un MVP
+methodTitle: Notre plan pour un MVP
 methodSteps:
   - title: Cadrage (1 semaine)
     body: Périmètre MVP défini, hypothèses identifiées, périmètre signé.
@@ -223,20 +223,20 @@ methodSteps:
     body: Hébergement configuré, monitoring, documentation.
   - title: Suivi post-lancement
     body: On suit les premiers retours et on itère avec vous.
-deliverablesTitle: Résumé du produit Après livraison
+deliverablesTitle: Ce qui est livré
 deliverables:
   - Application déployée en production
-  - Code source sur votre repository, sans dépendances propriétaires
+  - Code source sur votre dépôt, sans verrouillage propriétaire
   - Documentation technique et fonctionnelle
   - Monitoring configuré (erreurs, uptime)
   - Formation à la gestion du produit si besoin
   - Accès à tous les environnements (staging, prod)
-exclusionsTitle: Les choses qu'on évite de faire
+exclusionsTitle: Comment on travaille les décisions produit
 exclusionsParagraphs:
   - >-
-    On n'est pas une usine à code offshore. On ne prend pas en charge 10 projets
-    en parallèle. On travaille avec un nombre limité de clients à la fois, on
-    prend le temps de vraiment comprendre votre projet, on construit ensemble.
+    On travaille sur un nombre limité de projets afin que les personnes qui
+    prennent les décisions produit et techniques restent impliquées pendant la
+    réalisation. Vous avez accès à l'environnement de test et au travail en cours.
   - >-
     On ne s'engage pas non plus sur des fonctionnalités dont on ne comprend pas
     l'utilité. Si on pense qu'une décision de product design est problématique,
@@ -276,8 +276,8 @@ faqItems:
 ctaTitle: Parlons de votre idée
 ctaParagraphs:
   - >-
-    Remplissez le formulaire avec vos coordonnées, et un membre de notre équipe
-    vous contactera pour une consultation sans engagement.
+    Dites-nous quelle hypothèse le MVP doit tester, qui va l'utiliser et ce qui
+    existe déjà. On partira de ce contexte pour le premier échange de cadrage.
   - >-
     Ou vous pouvez nous envoyer un e-mail à l'adresse hello@hordeagence.com
 primaryCtaLabel: Discutons de votre projet
