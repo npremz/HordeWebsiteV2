@@ -25,16 +25,16 @@ thumbnailImageAlt_en: Horde Agence | What your website is really costing you
 author: nicolas-premont
 category: strategie
 publishedDate: 2026-02-26
-modifiedDate: 2026-03-09
-readingTime: 4
+modifiedDate: 2026-09-07
+readingTime: 7
 keyTakeaways_fr:
-  - Le coût caché d'un site ordinaire vient surtout des conversions perdues, du SEO qui stagne et de la crédibilité abîmée.
-  - Des problèmes techniques discrets peuvent faire perdre du chiffre d'affaires sans alerte visible.
-  - Un audit sérieux sert à quantifier les pertes et à prioriser ce qu'il faut corriger avant de lancer une refonte.
+  - "Le coût réel d'un site se calcule avec vos données : trafic qualifié, taux de conversion, marge par client, temps interne et dépenses techniques."
+  - Une perte estimée doit être présentée comme un scénario, puis vérifiée avec Analytics, Search Console, le CRM et des tests du parcours.
+  - Un audit permet de distinguer une optimisation ciblée d'une refonte et de prioriser les corrections selon leur impact et leur effort.
 keyTakeaways_en:
-  - The hidden cost of an average website mainly comes from lost conversions, stagnant SEO, and weakened credibility.
-  - Subtle technical issues can reduce revenue without any visible warning.
-  - A serious audit helps quantify those losses and prioritize fixes before a redesign.
+  - "A website's real cost should be calculated from your data: qualified traffic, conversion rate, margin per client, staff time and technical spend."
+  - Any estimated loss is a scenario to verify with Analytics, Search Console, CRM data and journey testing, not guaranteed recovered revenue.
+  - An audit helps distinguish focused optimisation from a redesign and prioritises fixes by likely impact and effort.
 featured: false
 draft: false
 seoRobots: index, follow

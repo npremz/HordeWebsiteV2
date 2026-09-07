@@ -1,57 +1,106 @@
-## What is a (really) fast website?
+A genuinely fast website is not simply one that “feels instant” on the designer’s computer. In 2026, it should display its main content quickly, respond without a perceptible delay and remain visually stable for the large majority of visitors, including people on mobile devices and imperfect connections.
 
-It's simple, you can test it on this site: it's a website that loads instantly, whether you're on a computer, tablet, or mobile, whether you're at the office or on the train with a weak 4G signal.
+Core Web Vitals provide the most useful shared benchmark. A page is considered good when at least 75% of visits meet all three thresholds:
 
-**The reality:** More than half of global web traffic now comes from mobile, often with an unstable connection. A site designed for these conditions means fewer visitors leave frustrated.
+| Metric | Good threshold | What the visitor experiences |
+| --- | --- | --- |
+| LCP | 2.5 seconds or less | The main content appears quickly |
+| INP | 200 milliseconds or less | Clicks and interactions respond quickly |
+| CLS | 0.1 or less | The layout does not jump during use |
 
-## Why it matters:
+These are the thresholds documented by [web.dev for Core Web Vitals](https://web.dev/articles/defining-core-web-vitals-thresholds). They create a common language for performance, but they do not replace observing the journey or reading commercial data.
 
-**Bounce rate:** A slow site means a visitor leaves as quickly as they arrived. The numbers speak for themselves: **53% of mobile users abandon a site that takes more than 3 seconds to load** (Google). Every second counts.
+## Website speed has to be measured in the real world
 
-**User experience:** Every second of waiting in your purchase journey is an opportunity for your visitors to abandon or postpone, often never returning. Google and Deloitte studies show that even marginal speed improvements can lift conversions, while bounce probability climbs sharply when load time moves from 1 second to 5 seconds.
+The same website can feel very fast on a recent laptop with fibre broadband and painful on a mid-range phone. One Lighthouse test is therefore not enough.
 
-Users perceive a slow site as less reliable, less professional. Not meeting that expectation means losing trust from the very first seconds.
+[PageSpeed Insights separates two kinds of evidence](https://developers.google.com/speed/docs/insights/v5/about):
 
-**Organic search:** A high-performing site responds better to SEO mechanics. Google includes page experience and Core Web Vitals in its ranking systems. It's not the only SEO signal, but when results are otherwise comparable, a better experience can make the difference.
+* **Field data**, from the Chrome User Experience Report or your own monitoring, describes what real visitors experienced across different devices and networks.
+* **Lab data**, collected in a controlled environment, helps reproduce a problem and diagnose its cause.
 
-**Digital footprint:** A lightweight and fast site runs even on modest devices. It transfers less data, uses fewer resources, and is usually cheaper to operate.
+A Lighthouse score of 100 on one Tuesday morning does not prove that every customer receives a good experience. A middling score does not automatically signal a commercial disaster either. The technical results must be interpreted against important pages, the devices people actually use and the steps in the journey.
 
-## The numbers speak for themselves:
+The useful sequence is straightforward: examine field data when it is available, use lab tools to diagnose, fix the cause and measure again. That is also the method behind our [website performance optimisation](/en/services/optimisation-site-web/) work.
 
-Rakuten 24 measured a **33.13% conversion increase** after focused Core Web Vitals work. QuintoAndar linked an **80% reduction in INP** to a **36% year-over-year lift in conversions**. Housing.com reported **38% more conversions** and a **40% lower bounce rate** after speeding up its mobile experience.
+## Why speed deserves business priority
 
-**For an e-commerce site doing €100K/month, a meaningful speed improvement can quickly represent several thousand euros in annual revenue.**
+### It removes friction before the message is even read
 
-### **The result?**
+A visitor cannot understand an offer if the content has not appeared, the button responds late or the layout shifts as they try to click. Performance is not a technical layer added after design. It is part of the experience.
 
-So you get it, a really fast site is better for everyone.
+Case studies cannot promise the same outcome for every company, but they show that the effect can be measurable. Rakuten 24 associated its Core Web Vitals work with a 33.13% increase in conversion rate. QuintoAndar linked an 80% reduction in INP with a 36% year-over-year increase in conversions. Those results appear in [web.dev’s performance case studies](https://web.dev/case-studies) and depend on each company’s context; they are not multipliers to apply to your own revenue.
 
-* **For you:** Easier to maintain, better SEO, users who don't face a technical wall.
-* **For your users:** A smooth experience, a phone that doesn't overheat in 30 seconds of browsing, and a message received without friction.
-* **For the digital environment:** Minimal server costs, a site that works on grandma's smartphone, and relaxed maintenance.
+A more defensible estimate starts with your data:
 
-## How do we do it?
+**monthly qualified visits × conversion-rate gap × average gross profit per client × 12**
 
-Optimized code, intelligently compressed images, lazy loading, global CDN, strategic caching. No heavy frameworks, no unnecessary plugins. Just what's needed, ultra-optimized.
+The result is a working scenario, not a forecast. Our guide to [the real cost of an underperforming website](/en/blog/what-your-website-really-costs/) explains how to test it without turning an assumption into a promise.
 
-**Core Web Vitals:** Google notably measures performance with 3 key metrics (LCP, INP, CLS). We optimize your site to excel on all 3 indicators.
+### It contributes to SEO without replacing relevance
 
-## Test it yourself
+Google says its systems use Core Web Vitals and seek to reward good page experience. It also makes clear that strong scores do not guarantee top rankings: relevant, useful content remains the priority. Its guidance on [page experience in Google Search](https://developers.google.com/search/docs/appearance/page-experience) covers security, mobile presentation, intrusive interstitials and content clarity as well as performance metrics.
 
-Open your current site and this one at the same time. The difference is immediate. Your visitors feel it too, with every visit.
+Two shortcuts should therefore be avoided: “speed does not matter” and “speed is enough to rank”. A fast website removes a technical disadvantage and makes the experience better. It cannot create a clear proposition, credible evidence or relevant content on its own.
 
-And it just so happens that ultra-fast sites are our standard and what we deliver.
+### It makes the website more resilient
 
-If you want to understand what your site's slowness is actually costing you in conversions and revenue, we broke down the numbers in [this article](/en/blog/what-your-website-really-costs).
+A lightweight site transfers less data and depends less on device power. It is more likely to withstand variable networks, older phones and traffic peaks. It also tends to be easier to maintain when that lightness comes from deliberate architecture instead of layers of emergency fixes.
 
-Wondering how to apply this to your project? **→ [Contact us](/en/contact)**
+This quiet quality helps a website stand apart too. A dramatic animation is quickly forgotten; a journey that consistently responds well builds trust. We explore that wider point in our guide to [building a distinctive website in 2026](/en/blog/how-to-make-your-website-stand-out-2026/).
+
+## What actually makes a page slow
+
+The cause is rarely a single “bad score”. Several constraints usually overlap.
+
+| Symptom | Common causes | First check |
+| --- | --- | --- |
+| Slow LCP | Oversized hero image, slow server response, render-blocking resource | Identify the LCP element and its loading chain |
+| High INP | Excessive JavaScript, long tasks, third-party scripts, complex components | Find slow interactions and main-thread work |
+| Unstable CLS | Images without dimensions, late fonts, injected content | Observe what shifts and reserve the required space |
+| Much slower mobile result | Large bundle, unsuitable media, CPU-heavy work | Test a representative device and connection |
+| Performance varies by day | Advertising, analytics, chat, APIs or inconsistent caching | Compare field data by page and time period |
+
+The most effective fixes are often concrete: serve correctly sized images, use WebP or AVIF where appropriate, defer non-critical media, reduce shipped JavaScript, optimise fonts, cache stable content and challenge every third-party service.
+
+Framework choice is not the whole explanation. A site without a framework can be slow, while a carefully designed application can remain fast. What matters is the work the network, browser and server must perform to complete the journey.
+
+## How to audit website speed without chasing the wrong target
+
+### 1. Select the pages that matter
+
+The homepage is not always the best starting point. Include organic landing pages, service pages, the basket, forms and every step directly connected to a conversion.
+
+### 2. Separate field evidence from diagnosis
+
+Read CrUX and Search Console data when it exists. Then use Lighthouse, browser developer tools or WebPageTest to understand the cause. If a smaller site has too little CrUX traffic, add privacy-conscious real-user monitoring or repeat tests on representative devices.
+
+### 3. Prioritise by impact and effort
+
+A multi-megabyte hero image may be a quick win. A booking service that blocks every interaction requires a more structural decision. Rank each fix by its likely effect on important pages, its cost and the risk introduced by the change.
+
+### 4. Measure before and after
+
+Record the pages, configuration and dates used for testing. Then monitor field data over several weeks, because CrUX reports reflect a rolling 28-day window. Without a baseline, a genuine improvement cannot be separated from ordinary variation.
+
+A [technical SEO and performance audit](/en/services/technical-seo-audit-brussels/) creates this diagnosis and a practical order of action.
+
+## Optimisation or redesign?
+
+Poor performance does not automatically justify rebuilding a website. Focused optimisation can be enough when the architecture, content and CMS still serve the business.
+
+A [website redesign](/en/services/website-redesign-brussels/) makes more sense when slowness overlaps with confusing architecture, an obstructive CMS, unmaintainable components or a journey that needs to be reconsidered from end to end. Measurement turns that choice into an evidence-led decision instead of a reaction to an old visual style.
+
+## The real standard for a fast website
+
+A truly fast website is fast for the people using it, on the pages that matter and under the conditions they encounter. It earns good Core Web Vitals, but more importantly it lets content and actions arrive without friction.
+
+Want to know where your site is losing time and what to fix first? [Request a performance audit](/en/contact/).
 
 ## Sources
 
-* [Statcounter - Mobile vs desktop market share worldwide](https://gs.statcounter.com/platform-market-share/desktop-mobile-tablet)
-* [Think with Google - Take Note, Web Publishers: A Speedy Mobile Site Is the New Standard](https://www.thinkwithgoogle.com/intl/en-apac/marketing-strategies/app-and-mobile/mobile-need-for-speed/)
-* [Google Search Central - Understanding page experience in Google Search results](https://developers.google.com/search/docs/appearance/page-experience)
-* [web.dev - Milliseconds make millions](https://web.dev/case-studies/milliseconds-make-millions)
-* [web.dev - How Rakuten 24's investment in Core Web Vitals increased revenue per visitor by 53.37% and conversion rate by 33.13%](https://web.dev/case-studies/rakuten)
-* [web.dev - How QuintoAndar reduced INP by 80%, increasing conversions by 36%](https://web.dev/case-studies/quintoandar-inp)
-* [web.dev - Housing.com increases conversions and lowers bounce rate by 40% with new PWA](https://web.dev/case-studies/housing)
+* [web.dev: How the Core Web Vitals metrics thresholds were defined](https://web.dev/articles/defining-core-web-vitals-thresholds)
+* [Google for Developers: About PageSpeed Insights](https://developers.google.com/speed/docs/insights/v5/about)
+* [Google Search Central: Understanding page experience in Google Search results](https://developers.google.com/search/docs/appearance/page-experience)
+* [web.dev: Rakuten 24 Core Web Vitals case study](https://web.dev/case-studies/rakuten)
+* [web.dev: QuintoAndar INP case study](https://web.dev/case-studies/quintoandar-inp)

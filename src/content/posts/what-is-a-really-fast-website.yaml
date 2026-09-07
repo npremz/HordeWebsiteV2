@@ -1,22 +1,21 @@
 slug: what-is-a-really-fast-website
 slug_fr: c-est-quoi-un-site-vraiment-rapide
-title_fr: En 2026, c'est quoi un site (vraiment) rapide?
-title_en: In 2026, What is a (really) fast website
+title_fr: En 2026, c'est quoi un site (vraiment) rapide ?
+title_en: What makes a website really fast in 2026?
 seoTitle_fr: 'Site web rapide : Core Web Vitals en 2026'
 seoTitle_en: Fast websites and Core Web Vitals in 2026
 excerpt_fr: >-
-  53% des utilisateurs abandonnent après 3s d'attente. Un site rapide est notre
-  standard : chargement instantané sur tous appareils. Meilleur SEO, meilleure
-  expérience.
+  Un site rapide ne se résume pas à un score Lighthouse. Voici les bons seuils
+  LCP, INP et CLS, les mesures à regarder et les corrections qui comptent.
 excerpt_en: >-
-  53% of users leave after 3s. A fast site is our standard: instant loading on
-  all devices. Better SEO, better experience.
+  A fast website is more than a Lighthouse score. Learn the right LCP, INP and
+  CLS thresholds, what to measure and which improvements matter most.
 seoDescription_fr: >-
   LCP, INP, CLS, mobile et poids des pages : découvrez comment mesurer et
   améliorer la vitesse d’un site pour renforcer SEO, UX et conversions.
 seoDescription_en: >-
   Learn how LCP, INP, CLS, mobile performance and page weight affect website
-  speed, technical SEO, user experience and conversion.
+  speed, technical SEO, user experience and conversion in 2026.
 featuredImageAlt_fr: Horde Agence | Lighthouse de hordeagence.com
 featuredImageAlt_en: Horde Agence | Lighthouse score of hordeagence.com
 featuredImage: /src/assets/images/blog/what-is-a-really-fast-website/featuredImage.jpg
@@ -25,17 +24,19 @@ thumbnailImage: >-
 author: nicolas-premont
 category: performance-web
 publishedDate: 2026-01-30
-modifiedDate: 2026-03-09
-readingTime: 3
+modifiedDate: 2026-09-07
+readingTime: 7
 keyTakeaways_fr:
-  - Un site vraiment rapide se juge surtout sur mobile, dans des conditions de connexion imparfaites.
-  - La vitesse influence directement le SEO, le taux de rebond et les conversions.
-  - Les Core Web Vitals, les images, le cache et le poids du code sont les leviers techniques prioritaires.
+  - Un bon résultat Core Web Vitals signifie un LCP de 2,5 s ou moins, un INP de 200 ms ou moins et un CLS de 0,1 ou moins au 75e percentile.
+  - Les données réelles de CrUX décrivent l'expérience vécue ; Lighthouse sert surtout à diagnostiquer et à reproduire les problèmes.
+  - Les images, le JavaScript, les polices, le cache et les services tiers sont les premiers postes à examiner avant une refonte.
 keyTakeaways_en:
-  - A truly fast website should be evaluated on mobile and under imperfect connection conditions.
-  - Speed directly impacts SEO, bounce rate, and conversions.
-  - Core Web Vitals, images, caching, and code weight are the main technical levers.
+  - Good Core Web Vitals mean an LCP of 2.5 seconds or less, INP of 200 milliseconds or less and CLS of 0.1 or less at the 75th percentile.
+  - CrUX field data describes real user experience, while Lighthouse is primarily a diagnostic and reproduction tool.
+  - Images, JavaScript, fonts, caching and third-party services are the first areas to inspect before considering a redesign.
 featured: false
 draft: false
 seoRobots: index, follow
 ogImage: /images/og/what-is-a-really-fast-website/ogImage.jpg
+thumbnailImageAlt_fr: Illustration d'un audit de performance web et des Core Web Vitals
+thumbnailImageAlt_en: Illustration of a website performance and Core Web Vitals audit
