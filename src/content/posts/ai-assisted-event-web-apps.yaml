@@ -1,0 +1,46 @@
+slug: ai-assisted-event-web-apps
+slug_fr: webapp-evenementielle-ia
+title_fr: "Deux semaines pour créer une webapp événementielle : ce que l’IA change vraiment"
+title_en: "Two Weeks to Build an Event Web App: What AI Really Changes"
+seoTitle_fr: "Webapp événementielle : produire un MVP avec l’IA"
+seoTitle_en: "Event Web Apps: Building an MVP with AI"
+excerpt_fr: >-
+  L’IA n’a pas besoin d’être visible dans le produit. Elle rend possible la
+  création rapide de webapps sur mesure pour un événement ou un workshop.
+excerpt_en: >-
+  AI does not have to be visible in the product. It makes the rapid creation of
+  bespoke web apps for an event or participatory workshop possible.
+seoDescription_fr: >-
+  Deux projets concrets montrent comment l’IA accélère la production de webapps
+  sur mesure pour des événements, des workshops et des présentations.
+seoDescription_en: >-
+  Two real projects show how AI speeds up the production of bespoke web apps
+  for events, participatory workshops and investor presentations.
+featuredImageAlt_fr: >-
+  Une interface centrale relie des équipes de workshop et un écran de
+  présentation synchronisé
+featuredImageAlt_en: >-
+  A central interface connects workshop teams with a synchronised presentation
+  display
+featuredImage: /src/assets/images/blog/ai-assisted-event-web-apps/featuredImage.png
+thumbnailImage: /src/assets/images/blog/ai-assisted-event-web-apps/featuredImage.png
+thumbnailImageAlt_fr: Une webapp pilote des équipes et un affichage événementiel
+thumbnailImageAlt_en: A web app controls teams and an event display
+author: nicolas-premont
+category: strategie
+publishedDate: 2026-09-07
+modifiedDate: 2026-09-07
+readingTime: 9
+keyTakeaways_fr:
+  - L’IA transforme surtout la production du logiciel. Elle ne doit pas nécessairement apparaître dans l’expérience proposée au public.
+  - Pour deux workshops à 42, une webapp a permis de gérer les équipes, de piloter les supports et de synchroniser les données avec l’affichage.
+  - Une autre plateforme a transformé la présentation d’une startup en expérience interactive pour ses investisseurs.
+  - Un premier produit de qualité peut être réalisé en environ deux semaines lorsque le besoin, les parcours et les intégrations sont bien cadrés.
+keyTakeaways_en:
+  - AI primarily changes how software is produced. It does not necessarily have to appear in the experience presented to the audience.
+  - For two workshops at 42, a web app managed teams, controlled supporting interfaces and synchronised data with the event display.
+  - Another platform turned a startup presentation into an interactive experience for investors.
+  - A quality first product can be built in about two weeks when the need, journeys and integrations are tightly scoped.
+featured: false
+draft: false
+seoRobots: index, follow
