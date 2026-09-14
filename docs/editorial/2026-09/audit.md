@@ -1,5 +1,13 @@
 # Audit du lot de septembre 2026
 
+**Historique de la première livraison, pas validation de la version actuelle.**
+La relecture a montré que les notes ci-dessous surestimaient la clarté et
+l'utilité des ateliers. Elles ne doivent plus servir d'autorisation éditoriale.
+Les ateliers ont été retirés et le pilote français sur les références réécrit.
+Consulter [revision-clarte.md](revision-clarte.md) pour l'état actuel. Les tests
+ci-dessous décrivent uniquement l'ancienne version ; ils ne prouvent pas que
+le lecteur comprenait l'article.
+
 Revue du 14 septembre 2026. Périmètre : quatre nouveaux articles FR/EN, deux
 versions enrichies FR/EN et les composants nécessaires à leur démonstration.
 Validation finale de la voix et de la signature des auteurs : à faire sur staging.

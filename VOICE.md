@@ -37,6 +37,17 @@ détail compte, nous pouvons le montrer, et nous vous laissons juger ».
 
 ## Structure d'un article
 
+Retour de relecture du lot de septembre : partir d'une situation reconnaissable
+et placer les exemples à côté de ce qu'ils expliquent. Les blocs d'atelier
+standardisés ont été retirés. Une interaction doit avoir une utilité propre ;
+elle n'est ni obligatoire ni un signe de qualité en soi. Le lecteur n'a pas à
+apprendre notre méthode d'analyse avant de comprendre l'article.
+
+Le titre éditorial peut être une question directe. Une formule mémorable ne doit
+pas rendre le sujet ambigu. Un score de contenu ou une CI verte ne remplace pas
+la validation de la compréhension par le lecteur. Lorsqu'un pilote français est
+demandé, le faire valider avant d'étendre la réécriture à l'anglais et au lot.
+
 1. **Réponse nette.** Les premières lignes répondent à la question ou énoncent
    la thèse. Ne pas commencer par une définition encyclopédique du secteur.
 2. **Tension utile.** Montrer ce que l'intuition, la mode ou le discours du

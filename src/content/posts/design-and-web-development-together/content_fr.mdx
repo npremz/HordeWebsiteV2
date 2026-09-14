@@ -2,7 +2,7 @@ Faire travailler le design et le développement web ensemble consiste à partage
 
 Une maquette peut être impeccable et son implémentation décevante sans que personne ait mal travaillé. Il suffit qu’une décision importante soit restée implicite : que fait le bouton lorsque le texte s’allonge ? Où apparaît une erreur ? Quel élément garde la priorité sur mobile ?
 
-La [direction artistique d’une interface](/fr/blog/direction-artistique-interface-web/) pose une intention. Le travail commun consiste à préserver cette intention dans un système qui répond. L’atelier ci-dessus propose un petit formulaire fictif pour rendre cette différence tangible, sans prétendre reproduire une maquette ou un projet client.
+La [direction artistique d’une interface](/fr/blog/direction-artistique-interface-web/) pose une intention. Le travail commun consiste à préserver cette intention dans un système qui répond. Prenons un cas simple : un formulaire de demande de participation à une activité.
 
 ## Une capture décrit un état, pas un comportement
 
@@ -18,33 +18,33 @@ Cette conversation n’exige pas d’avoir tout dessiné. Elle exige de rendre v
 
 Pour un composant important, documentez quatre choses : sa tâche, ses états, ce qui peut varier et ce qui doit rester vrai. Quelques lignes précises valent mieux qu’une longue spécification qui répète les pixels visibles.
 
-Voici le contrat de notre démonstration. La personne essaie de vérifier une demande de participation. Le formulaire doit rendre la saisie obligatoire compréhensible, expliquer une erreur sans effacer le texte et confirmer une vérification locale sans annoncer une réservation réelle.
+Sur ce formulaire, l’équipe doit décider quels champs sont obligatoires, comment expliquer une erreur sans effacer la saisie et ce que le message final confirme réellement.
 
 | Élément | Décision | Vérification |
 | --- | --- | --- |
 | Libellé | Le bouton décrit la prochaine étape | La version longue revient à la ligne sans être coupée |
 | Largeur | Le composant dépend de son conteneur | Le champ et l’action restent utilisables en mode étroit |
 | Erreur | Le problème est écrit près du champ | Une saisie vide affiche le message et place le focus sur le champ |
-| Confirmation | Le résultat n’exagère pas ce qui a eu lieu | Le message précise que rien n’a été envoyé |
+| Confirmation | Le résultat n’exagère pas ce qui a eu lieu | Le message distingue une demande reçue d’une place confirmée |
 | Saisie | Une erreur ne remet pas le formulaire à zéro | Le prénom reste présent après la vérification |
 
-Ce contrat est volontairement limité. Il n’inclut ni paiement, ni places disponibles, ni panne réseau. Sur un vrai service de réservation, ces cas demanderaient des décisions supplémentaires, pas une confiance implicite dans cette démo.
+Le tableau ne couvre pas tout le service. S’il comporte un paiement, un nombre limité de places ou une attente réseau, il faut aussi préciser ce qui se passe dans ces situations.
 
 ## Éprouver le composant avec du contenu qui résiste
 
-Commencez par activer le libellé long, puis le conteneur étroit. Le texte prend davantage de place ; le bouton doit l’accepter. Une hauteur fixe calibrée sur le libellé court donnerait un résultat plus fragile.
+Sur votre prototype, essayez un libellé plus long, puis réduisez la largeur disponible. Le texte prend davantage de place ; le bouton doit l’accepter. Une hauteur fixe calibrée sur le libellé court donnerait un résultat plus fragile.
 
 Le but n’est pas de préserver à tout prix la silhouette initiale. C’est de préserver la hiérarchie et l’action. Un bouton plus haut peut être acceptable. Un texte masqué pour garder l’alignement ne l’est pas forcément.
 
 La même méthode s’applique aux cartes d’équipe, aux prix, aux noms d’événements et aux blocs de témoignages. Demandez un exemple court, un exemple long et un cas incomplet. Utilisez des contenus plausibles pour l’organisation plutôt que du faux latin qui ne révèle pas les vrais problèmes.
 
-Le critère WCAG de [redistribution du contenu](https://www.w3.org/WAI/WCAG22/Understanding/reflow.html) encadre notamment l’accès au contenu lorsque l’espace disponible se réduit, avec certaines exceptions. Notre bouton de largeur réduite n’est pas un audit WCAG : c’est une façon de rendre un risque visible tôt. La vérification de la page complète, du zoom et des autres contenus reste nécessaire.
+Le critère WCAG de [redistribution du contenu](https://www.w3.org/WAI/WCAG22/Understanding/reflow.html) encadre notamment l’accès au contenu lorsque l’espace disponible se réduit, avec certaines exceptions. Tester un bouton dans un espace réduit permet de repérer un risque tôt, mais ne constitue pas un audit WCAG. La vérification de la page complète, du zoom et des autres contenus reste nécessaire.
 
 ## Concevoir l’erreur comme une partie du parcours
 
-Essayez maintenant de vérifier la demande sans prénom. Le champ reçoit un message précis et le focus y revient. Remplissez-le, puis recommencez. La confirmation explique la portée limitée de l’action.
+Si un prénom obligatoire manque, comment la personne le découvre-t-elle ? Le message doit indiquer ce qu’elle peut corriger. Après correction, la confirmation doit expliquer ce qui s’est réellement passé.
 
-Dans le code de cette démonstration, le champ est associé à son message avec `aria-describedby`. Son état invalide est indiqué avec `aria-invalid`. Les messages dynamiques utilisent une région d’annonce polie. Ce sont des décisions inspectables, pas un certificat d’accessibilité.
+Le design et le développement doivent également prévoir comment atteindre le champ à corriger au clavier et comment le message sera annoncé par un lecteur d’écran. Un texte d’erreur dessiné sur la maquette ne règle pas ces comportements.
 
 Le tutoriel [WAI sur la validation des formulaires](https://www.w3.org/WAI/tutorials/forms/validation/) explique les besoins de retour et de correction. Il rappelle aussi que la validation côté client ne suffit pas à garantir des données valides côté serveur. Dans un service réel, le serveur doit rester responsable des règles et de la sécurité.
 
@@ -64,7 +64,7 @@ L’IA peut aider à produire des variantes ou à repérer des cas oubliés. Ell
 
 Une comparaison visuelle reste utile : marges, proportions, couleurs et rendu typographique participent à la qualité. Mais elle doit être accompagnée d’une tâche à réaliser dans le navigateur.
 
-Pour le formulaire de l’atelier, la recette tient en quelques actions : réduire la largeur, allonger le bouton, parcourir au clavier, envoyer une saisie vide, corriger et lire le résultat. Dans un produit réel, ajoutez le chargement, l’échec du serveur, le double envoi et la reprise après interruption selon les risques du service.
+Pour un premier contrôle de ce formulaire, la recette tient en quelques actions : réduire la largeur, allonger le bouton, parcourir au clavier, envoyer une saisie vide, corriger et lire le résultat. Complétez avec le chargement, l’échec du serveur, le double envoi et la reprise après interruption selon les risques du service.
 
 Documentez ce qui a été vérifié, sur quel environnement, et ce qui reste inconnu. « Testé sur mobile » est peu exploitable sans taille d’écran, navigateur ni tâche. « Conforme » ne doit pas être utilisé lorsque seule une petite partie du parcours a été inspectée.
 

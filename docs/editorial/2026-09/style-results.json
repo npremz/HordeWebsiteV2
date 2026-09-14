@@ -5,17 +5,17 @@
     "proseParagraphs": 27,
     "paragraphsOver150Words": 0,
     "h2Count": 7,
-    "sentenceWordMean": 14.32,
+    "sentenceWordMean": 14.45,
     "sentenceWordStdDev": 7.17,
-    "proseTypeTokenRatio": 0.482,
+    "proseTypeTokenRatio": 0.48,
     "frequentParagraphOpeners": [
       [
-        "une",
+        "pour",
         5
       ],
       [
-        "pour",
-        4
+        "une",
+        5
       ],
       [
         "la",
@@ -31,9 +31,9 @@
     "proseParagraphs": 30,
     "paragraphsOver150Words": 0,
     "h2Count": 7,
-    "sentenceWordMean": 12.25,
-    "sentenceWordStdDev": 7.45,
-    "proseTypeTokenRatio": 0.486,
+    "sentenceWordMean": 12.36,
+    "sentenceWordStdDev": 7.53,
+    "proseTypeTokenRatio": 0.483,
     "frequentParagraphOpeners": [
       [
         "for",
@@ -57,13 +57,13 @@
     "proseParagraphs": 29,
     "paragraphsOver150Words": 0,
     "h2Count": 8,
-    "sentenceWordMean": 14.15,
-    "sentenceWordStdDev": 5.94,
-    "proseTypeTokenRatio": 0.48,
+    "sentenceWordMean": 14.93,
+    "sentenceWordStdDev": 5.9,
+    "proseTypeTokenRatio": 0.467,
     "frequentParagraphOpeners": [
       [
         "le",
-        5
+        7
       ],
       [
         "une",
@@ -83,16 +83,16 @@
     "proseParagraphs": 34,
     "paragraphsOver150Words": 0,
     "h2Count": 8,
-    "sentenceWordMean": 12.29,
-    "sentenceWordStdDev": 4.88,
-    "proseTypeTokenRatio": 0.464,
+    "sentenceWordMean": 12.67,
+    "sentenceWordStdDev": 4.78,
+    "proseTypeTokenRatio": 0.454,
     "frequentParagraphOpeners": [
       [
-        "a",
-        3
+        "for",
+        4
       ],
       [
-        "for",
+        "a",
         3
       ],
       [
@@ -106,24 +106,24 @@
   {
     "slug": "analyse-web-interface-without-copying",
     "locale": "fr",
-    "proseParagraphs": 30,
+    "proseParagraphs": 20,
     "paragraphsOver150Words": 0,
-    "h2Count": 7,
-    "sentenceWordMean": 14.23,
-    "sentenceWordStdDev": 5.72,
-    "proseTypeTokenRatio": 0.472,
+    "h2Count": 5,
+    "sentenceWordMean": 15.25,
+    "sentenceWordStdDev": 6.67,
+    "proseTypeTokenRatio": 0.48,
     "frequentParagraphOpeners": [
       [
+        "la",
+        3
+      ],
+      [
         "pour",
-        3
+        2
       ],
       [
-        "une",
-        3
-      ],
-      [
-        "cette",
-        3
+        "ce",
+        2
       ]
     ],
     "stylePhraseOccurrences": {},
@@ -135,9 +135,9 @@
     "proseParagraphs": 34,
     "paragraphsOver150Words": 0,
     "h2Count": 7,
-    "sentenceWordMean": 13.8,
-    "sentenceWordStdDev": 5.84,
-    "proseTypeTokenRatio": 0.43,
+    "sentenceWordMean": 13.66,
+    "sentenceWordStdDev": 5.88,
+    "proseTypeTokenRatio": 0.431,
     "frequentParagraphOpeners": [
       [
         "the",
@@ -161,20 +161,20 @@
     "proseParagraphs": 34,
     "paragraphsOver150Words": 0,
     "h2Count": 9,
-    "sentenceWordMean": 14.36,
-    "sentenceWordStdDev": 6.44,
+    "sentenceWordMean": 14.47,
+    "sentenceWordStdDev": 6.47,
     "proseTypeTokenRatio": 0.465,
     "frequentParagraphOpeners": [
       [
         "le",
-        6
+        5
       ],
       [
         "un",
         4
       ],
       [
-        "pour",
+        "les",
         3
       ]
     ],
@@ -187,8 +187,8 @@
     "proseParagraphs": 37,
     "paragraphsOver150Words": 0,
     "h2Count": 9,
-    "sentenceWordMean": 12.4,
-    "sentenceWordStdDev": 5.87,
+    "sentenceWordMean": 12.48,
+    "sentenceWordStdDev": 5.85,
     "proseTypeTokenRatio": 0.459,
     "frequentParagraphOpeners": [
       [
@@ -210,12 +210,12 @@
   {
     "slug": "ai-can-create-interfaces-not-experiences",
     "locale": "fr",
-    "proseParagraphs": 53,
+    "proseParagraphs": 51,
     "paragraphsOver150Words": 0,
     "h2Count": 10,
-    "sentenceWordMean": 15.78,
-    "sentenceWordStdDev": 7.2,
-    "proseTypeTokenRatio": 0.397,
+    "sentenceWordMean": 15.92,
+    "sentenceWordStdDev": 7.44,
+    "proseTypeTokenRatio": 0.399,
     "frequentParagraphOpeners": [
       [
         "une",
@@ -236,16 +236,16 @@
   {
     "slug": "ai-can-create-interfaces-not-experiences",
     "locale": "en",
-    "proseParagraphs": 53,
+    "proseParagraphs": 51,
     "paragraphsOver150Words": 0,
     "h2Count": 10,
-    "sentenceWordMean": 13.64,
-    "sentenceWordStdDev": 6.15,
-    "proseTypeTokenRatio": 0.41,
+    "sentenceWordMean": 13.99,
+    "sentenceWordStdDev": 6.36,
+    "proseTypeTokenRatio": 0.417,
     "frequentParagraphOpeners": [
       [
         "the",
-        10
+        9
       ],
       [
         "ai",
@@ -262,24 +262,24 @@
   {
     "slug": "how-to-make-your-website-stand-out-2026",
     "locale": "fr",
-    "proseParagraphs": 45,
+    "proseParagraphs": 43,
     "paragraphsOver150Words": 0,
     "h2Count": 9,
-    "sentenceWordMean": 14.89,
-    "sentenceWordStdDev": 6.84,
-    "proseTypeTokenRatio": 0.444,
+    "sentenceWordMean": 14.87,
+    "sentenceWordStdDev": 6.85,
+    "proseTypeTokenRatio": 0.448,
     "frequentParagraphOpeners": [
       [
         "un",
         10
       ],
       [
-        "pour",
+        "le",
         4
       ],
       [
-        "le",
-        4
+        "pour",
+        3
       ]
     ],
     "stylePhraseOccurrences": {},
@@ -288,12 +288,12 @@
   {
     "slug": "how-to-make-your-website-stand-out-2026",
     "locale": "en",
-    "proseParagraphs": 45,
+    "proseParagraphs": 43,
     "paragraphsOver150Words": 0,
     "h2Count": 9,
-    "sentenceWordMean": 13.85,
+    "sentenceWordMean": 13.66,
     "sentenceWordStdDev": 6.69,
-    "proseTypeTokenRatio": 0.452,
+    "proseTypeTokenRatio": 0.456,
     "frequentParagraphOpeners": [
       [
         "a",

@@ -25,7 +25,8 @@ results = []
 for slug in SLUGS:
     for lang in ["fr", "en"]:
         source = (ROOT / "src/content/posts" / slug / f"content_{lang}.mdx").read_text()
-        text = re.sub(r"\[([^\]]+)\]\([^)]+\)", r"\1", source)
+        text = re.sub(r"!\[[^\]]*\]\([^)]+\)", "", source)
+        text = re.sub(r"\[([^\]]+)\]\([^)]+\)", r"\1", text)
         paragraphs = [p for p in text.split("\n\n") if p and not p.startswith(("#", "|", "- ", "* ", "1."))]
         sentences = [words(s) for s in re.split(r"[.!?]+(?:\s|$)", " ".join(paragraphs)) if words(s)]
         lengths = [len(s) for s in sentences]

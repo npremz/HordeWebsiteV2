@@ -224,3 +224,9 @@ Vérifier les pages et liens le jour de sortie ; relire les réactions à J+7 ;
 examiner GSC/GA4 à J+28 avec le contexte du faible recul. Le contrôle de septembre
 ne fournit ni volume de recherche certifié, ni prévision de classement, ni
 mesure d’impact. Noter aussi les demandes commerciales qui citent un exemple.
+# En attente de révision éditoriale
+
+Les propositions ci-dessous correspondent à la première livraison et ne doivent
+pas être envoyées telles quelles. Les ateliers ont été retirés ; l'article sur
+les références est en réécriture française. Réaligner ces publications après
+validation du pilote et de sa version anglaise. Rien n'a été diffusé.

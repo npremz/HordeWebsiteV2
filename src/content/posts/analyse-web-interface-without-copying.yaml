@@ -1,18 +1,18 @@
 slug: analyse-web-interface-without-copying
 slug_fr: analyser-interface-web-sans-copier
-title_fr: Une référence n’est utile que si l’on comprend pourquoi elle fonctionne.
+title_fr: Comment s’inspirer d’un site web sans le copier
 title_en: A reference is useful when you understand why it works.
-seoTitle_fr: Analyser une interface web sans la copier
+seoTitle_fr: S’inspirer d’un site web sans le copier
 seoTitle_en: Analyse a web interface without copying it
 excerpt_fr: >-
-  Une capture inspire une apparence. Une analyse aide à décider. Décryptons trois
-  références documentées pour en tirer des principes, pas des copies.
+  Vous avez repéré un site qui vous plaît. Avec deux captures du Rijksmuseum,
+  voyons quoi en retenir pour votre projet, sans reproduire son identité.
 excerpt_en: >-
   A screenshot suggests a look. Analysis helps you decide. Explore three documented
   references and extract useful principles without copying their appearance.
 seoDescription_fr: >-
-  Analysez une interface sans copier son style : tâche, hiérarchie, erreurs et contexte.
-  Trois références GOV.UK et Primer, avec une méthode réutilisable.
+  Comment s’inspirer d’un site web sans le copier ? Deux captures du Rijksmuseum
+  pour expliquer ce qui vous plaît et choisir ce qui convient à votre projet.
 seoDescription_en: >-
   Learn to analyse interfaces through tasks, hierarchy, errors and context.
   Three GOV.UK and Primer examples make the method concrete and reusable.
@@ -21,19 +21,17 @@ featuredImageAlt_en: A blue magnifying lens reveals the structure of three laven
 featuredImage: /src/assets/images/blog/analyse-web-interface-without-copying/featuredImage.png
 author: alexandre-potakowski
 category: ux-design
-workshop: references
 publishedDate: 2026-09-22
 readingTime: 7
 keyTakeaways_fr:
-  - Analysez d’abord la tâche, le contexte et le comportement, puis le traitement visuel.
-  - Séparez ce que vous observez, l’explication que vous proposez et ce qui reste à vérifier.
-  - Un motif documenté n’est pas automatiquement adapté à un autre public ou à une autre tâche.
-  - La bonne sortie d’une analyse est une règle de décision et ses limites, pas une maquette à reproduire.
+  - "Précisez ce qui vous plaît dans un site : ses images, ses titres ou la façon de trouver une information."
+  - Gardez les idées qui servent votre projet, avec vos propres contenus et votre identité.
+  - Une référence aide à expliquer une intention ; elle ne remplace pas les choix à faire pour votre public.
 keyTakeaways_en:
   - Start with the task, context and behaviour before examining visual treatment.
   - Separate observations, proposed explanations and questions still to be tested.
   - A documented pattern is not automatically appropriate for another audience or task.
   - The useful output is a decision rule with limits, not a screen to reproduce.
 featured: false
-draft: false
+draft: true
 seoRobots: index, follow

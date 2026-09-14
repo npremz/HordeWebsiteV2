@@ -129,3 +129,9 @@ LinkedIn : une thèse, un exemple tiré de l'atelier et le lien au jour de sorti
 Email : récapitulatif bilingue disponible pour le lot de fin septembre. Les textes
 sont préparés dans distribution.md ; aucun message externe n'est envoyé pendant
 la phase de relecture staging.
+# Statut après relecture
+
+Ce document conserve les briefs de la première livraison. Le brief de l'article
+sur les références et les propositions d'ateliers sont remplacés par
+[revision-clarte.md](revision-clarte.md). Ne pas réintroduire ces modules ni lancer
+une nouvelle production en lot avant validation du pilote français.

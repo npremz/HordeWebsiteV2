@@ -2,7 +2,7 @@ To analyse a web interface without copying it, start with the task it organises,
 
 A reference becomes useful when it answers a specific question: how do we show unfinished work? How can someone recover from an error? What should a service say before any content exists? **Borrow the reasoning, not the identity.**
 
-This complements [web art direction](/en/blog/art-direction-for-web-interfaces/). Familiar patterns can support usability without requiring every organisation to look the same. We will examine three documented public references. The workshop contains original teaching sketches, not screenshots or findings from user tests.
+This complements [web art direction](/en/blog/art-direction-for-web-interfaces/). Familiar patterns can support usability without requiring every organisation to look the same. We will examine three documented public references. The examples below illustrate the documented principles; they are not findings from user tests.
 
 ## Choose references for the questions they answer
 
@@ -36,25 +36,25 @@ It is also fine to have a visual preference. Just label it as a preference. The 
 
 The [GOV.UK task list](https://design-system.service.gov.uk/components/task-list/) associates tasks with statuses. Its documentation reserves the pattern for sufficiently complex journeys that may span sessions or allow a flexible order. It encourages simplification first.
 
-Our sketch uses a fictional application: contact details are complete, documents are missing and submission is not yet available. The interesting decision is not the status colour. It is making remaining work visible alongside each task.
+Consider a fictional application: contact details are complete, documents are missing and submission is not yet available. The interesting decision is not the status colour. It is making remaining work visible alongside each task.
 
 A reusable rule might be: when someone resumes an interrupted process, show what is complete, what is missing and what blocks the next step. That rule can survive a different visual identity, vocabulary and layout.
 
 By contrast, a booking that requires only a date and a name may not need a task list. Adding one could make the process look more complicated without helping anyone. Good analysis can conclude, “This pattern is not for us.”
 
-The question to investigate would be whether someone can return after an interruption and continue without rereading the whole application. The sketch does not answer that question; it makes the proposed mechanism visible.
+The question to investigate would be whether someone can return after an interruption and continue without rereading the whole application. Describing the proposed structure does not answer that question.
 
 ## Reference two: support repair, not just failure reporting
 
 The [GOV.UK error summary](https://design-system.service.gov.uk/components/error-summary/) collects problems, links them to relevant fields and specifies moving focus to the summary. Summary messages and field messages should match.
 
-Our sketch reduces this to a missing date. “Check before continuing” frames a repairable situation. “Date: enter your preferred day” identifies the expected information. It does more than report a generic failure.
+Consider a missing date. “Check before continuing” frames a repairable situation. “Date: enter your preferred day” identifies the expected information. It does more than report a generic failure.
 
 The principle we retain is a relationship: provide an overview of the problem and a precise route to where it can be corrected. Copying only a red box, without its links, focus behaviour and associated messages, would reproduce the appearance while losing the interaction.
 
 This matters when [AI generates a plausible interface](/en/blog/ai-can-create-interfaces-not-experiences/) too. An error state may look convincing in a picture while being difficult to reach with a keyboard or impossible to fix without losing input.
 
-For a real form, inspect field navigation, announcements, retained values and the state after correction. Our explanatory panel does not implement the complete GOV.UK component and is not a ready-to-deploy replacement.
+For a real form, inspect field navigation, announcements, retained values and the state after correction. The explanation here is not a ready-to-deploy implementation of the complete GOV.UK component.
 
 ## Reference three: explain why content is absent
 

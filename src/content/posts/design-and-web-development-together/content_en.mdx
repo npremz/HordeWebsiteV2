@@ -2,7 +2,7 @@ Connecting web design and development means sharing decisions about behaviour, n
 
 A polished mockup can become a disappointing interface without anyone being careless. An important decision may simply have stayed implicit: what happens when the button label grows? Where does an error appear? Which element keeps priority on mobile?
 
-[Art direction for an interface](/en/blog/art-direction-for-web-interfaces/) establishes an intention. The shared task is to preserve that intention in something that responds. The fictional form above makes this concrete. It does not reproduce a client project or claim to implement an existing Figma file.
+[Art direction for an interface](/en/blog/art-direction-for-web-interfaces/) establishes an intention. The shared task is to preserve that intention in something that responds. Consider a simple example: a form requesting a place at an activity.
 
 ## A screenshot describes a state, not a behaviour
 
@@ -18,37 +18,37 @@ That conversation does not require every screen to be drawn. It requires the tea
 
 For an important component, document its task, its states, what may vary and what must remain true. A few precise lines are more useful than a long specification that only repeats visible pixel values.
 
-Here is the contract for our example. Someone is checking a request to join a workshop. The form should make a required field understandable, explain a problem without erasing input and confirm a local check without claiming that a real booking exists.
+For this form, the team needs to agree which fields are required, how to explain an error without erasing input and what the final message actually confirms.
 
 | Element | Decision | Acceptance check |
 | --- | --- | --- |
 | Label | The button describes the next step | A longer label wraps without being clipped |
 | Width | The component responds to its container | The field and action stay usable in narrow mode |
 | Error | The problem is written beside the field | Empty submission shows a message and focuses the field |
-| Confirmation | The result does not exaggerate what happened | The message says nothing has been sent |
+| Confirmation | The result does not exaggerate what happened | The message distinguishes a received request from a confirmed place |
 | Input | An error does not reset the whole form | The name remains after the check |
 
-This contract is deliberately limited. It does not cover payment, available places or network failure. A real booking service would need additional decisions about those cases, not an assumption that this example has solved them.
+This table does not cover the entire service. Payment, limited availability and network failure require additional decisions when they apply.
 
 Notice that the contract describes outcomes rather than prescribing every implementation detail. It leaves room for technical judgment while making the intended experience reviewable.
 
 ## Use content that puts the design under pressure
 
-Enable the long label, then the narrow container. The text needs more room, and the button should accommodate it. A fixed height chosen for the shorter label would be more fragile.
+On your prototype, try a longer label, then reduce the available width. The text needs more room, and the button should accommodate it. A fixed height chosen for the shorter label would be more fragile.
 
 The aim is not to preserve the initial silhouette at any cost. It is to preserve hierarchy and the action. A taller button may be fine. Hiding useful text to preserve an alignment may not be.
 
 Apply the same approach to team cards, prices, event names and testimonials. Ask for a short example, a long example and an incomplete one. Use plausible organisational content instead of placeholder Latin that conceals the real constraints.
 
-The WCAG [reflow criterion](https://www.w3.org/WAI/WCAG22/Understanding/reflow.html) addresses access to content as available space decreases, with defined exceptions. Our narrow-container control is not a WCAG audit. It is a way to expose one risk early. Whole-page behaviour, zoom and other content still need checking.
+The WCAG [reflow criterion](https://www.w3.org/WAI/WCAG22/Understanding/reflow.html) addresses access to content as available space decreases, with defined exceptions. Checking a button in a narrow space can reveal a risk early, but is not a WCAG audit. Whole-page behaviour, zoom and other content still need checking.
 
 Treat the awkward example as design material, not as an edge case to hide from a presentation. If a service routinely has long event names, that is normal content for the service.
 
 ## Design recovery as part of the journey
 
-Try checking the request without entering a name. The field receives a specific message and focus returns to it. Add a name and submit again. The confirmation explains the limited scope of the action.
+If a required name is missing, how does the person find out? The message needs to explain what they can correct. After correction, the confirmation should describe what actually happened.
 
-In this demo’s code, `aria-describedby` connects the field with its message, `aria-invalid` identifies the invalid state, and dynamic messages use a polite live region. These are inspectable decisions, not an accessibility certificate.
+Design and development also need to agree how someone reaches the field by keyboard and how a screen reader announces the message. Drawing an error on a mockup does not establish those behaviours.
 
 The [WAI form validation tutorial](https://www.w3.org/WAI/tutorials/forms/validation/) explains feedback and correction needs. It also makes clear that client-side validation alone cannot ensure valid server-side data. A real service needs server-side rules and security checks.
 
@@ -72,7 +72,7 @@ Record meaningful compromises where the next person can find them. “We kept th
 
 Visual comparison still matters. Spacing, proportions, colour and typography contribute to quality. But pair it with a task performed in the browser.
 
-For this example, the review is short: reduce the width, extend the label, navigate by keyboard, submit an empty field, correct it and read the result. In a real product, add loading, server failure, duplicate submission and recovery after interruption where the service’s risks require them.
+For an initial review of this form, start with these actions: reduce the width, extend the label, navigate by keyboard, submit an empty field, correct it and read the result. Then add loading, server failure, duplicate submission and recovery after interruption where the service’s risks require them.
 
 Document what was checked, in which environment and what remains unknown. “Tested on mobile” is not very useful without a viewport, browser or task. Do not claim conformance after inspecting only a small part of the experience.
 

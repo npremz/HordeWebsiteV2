@@ -2,8 +2,16 @@
 
 Quatre créations bilingues et deux enrichissements bilingues, préparés le
 14 septembre. La validation éditoriale finale appartient à Nicolas et Alexandre.
-`draft: false` signifie ici que les contrôles techniques permettent la
-programmation ; cela ne constitue pas une autorisation de publier en production.
+
+Après relecture, les ateliers standardisés sont retirés des six articles, dans
+les deux langues. Le nouveau pilote à valider est **« Comment s'inspirer d'un
+site web sans le copier »**, réécrit en français avec deux captures réelles.
+L'anglais conserve provisoirement son ancien angle, avec nettoyage des renvois
+aux ateliers. Sa réécriture attend la validation du français.
+
+Cette paire est repassée en `draft: true` pour empêcher toute sortie automatique
+avant cette validation. Elle reste accessible sur staging. Voir
+[revision-clarte.md](revision-clarte.md) pour le périmètre et les contrôles actuels.
 
 ## Les pages à relire
 
@@ -12,69 +20,64 @@ programmation ; cela ne constitue pas une autorisation de publier en production.
 | 15/09 | Direction artistique | [Lire](https://waf.hordagency.com/fr/blog/direction-artistique-interface-web/) | [Read](https://waf.hordagency.com/en/blog/art-direction-for-web-interfaces/) |
 | 17/09 | Mise à jour IA et expérience | [Lire](https://waf.hordagency.com/fr/blog/ia-interfaces-experiences-utilisateur/) | [Read](https://waf.hordagency.com/en/blog/ai-can-create-interfaces-not-experiences/) |
 | 18/09 | Design et développement | [Lire](https://waf.hordagency.com/fr/blog/design-developpement-web-ensemble/) | [Read](https://waf.hordagency.com/en/blog/design-and-web-development-together/) |
-| 22/09 | Analyser une référence | [Lire](https://waf.hordagency.com/fr/blog/analyser-interface-web-sans-copier/) | [Read](https://waf.hordagency.com/en/blog/analyse-web-interface-without-copying/) |
+| 22/09, à confirmer | S'inspirer sans copier, pilote FR | [Lire la nouvelle version](https://waf.hordagency.com/fr/blog/analyser-interface-web-sans-copier/) | [Ancienne version, à réécrire après validation FR](https://waf.hordagency.com/en/blog/analyse-web-interface-without-copying/) |
 | 24/09 | Mise à jour différenciation | [Lire](https://waf.hordagency.com/fr/blog/comment-creer-site-web-qui-se-demarque-2026/) | [Read](https://waf.hordagency.com/en/blog/how-to-make-your-website-stand-out-2026/) |
 | 29/09 | Brief d’expérience | [Lire](https://waf.hordagency.com/fr/blog/brief-design-web-cadrer-experience/) | [Read](https://waf.hordagency.com/en/blog/web-design-brief-before-screens/) |
 
 Les URLs de production utilisent les mêmes chemins sur `https://hordeagence.com`.
 Le sélecteur de langue relie les deux versions. Les quatre créations apparaissent
-sur staging avant leur date avec un badge Planifié. Tout le staging est noindex.
+sur staging avant leur date avec une indication d'aperçu. Tout le staging est noindex.
 
 ## Comment faire la revue en une session
 
 1. Lire le début, les points clés et la conclusion de chaque version française.
-2. Essayer l’atelier : changer la direction, éprouver le formulaire, ouvrir les
-   références, remplir et télécharger un brief.
+2. Lire le pilote français : chaque capture explique-t-elle le passage qui
+   l'accompagne ? Peut-on dire ce que l'article aide à faire sans vocabulaire de designer ?
 3. Vérifier le point de vue : correspond-il réellement à ce que Horde veut
    défendre et à ce que l’auteur accepte de signer ?
-4. Relire l’anglais comme une version autonome, pas seulement comparer les mots.
+4. Après validation du pilote FR, réécrire son anglais puis le relire comme une
+   version autonome. Ne pas valider les deux langues comme déjà alignées.
 5. Noter une décision par ligne : approuvé, retouches précises ou report.
 6. Confirmer les dates. Si la validation arrive après une date proposée, la
    repousser avant fusion pour éviter un rattrapage public involontaire.
 
-Les exemples sont pédagogiques et fictifs. Aucune inscription n’est envoyée par
-les ateliers. Le brief est téléchargé localement, sans compte ni envoi des champs
-au serveur. Aucun résultat client ni test utilisateur n’a été inventé.
+Les captures du pilote proviennent du site public du Rijksmuseum, observé le
+14 septembre. Ce n'est pas un projet Horde. Les autres exemples décrits dans le
+lot sont hypothétiques. Aucun résultat client ni test utilisateur n'a été inventé.
+Il n'y a plus de formulaire de démonstration ni de téléchargement de brief.
 
 ## Livrables du pipeline
 
 - `briefs.md` : intentions, différenciation, preuves et sources primaires.
 - `images.md` : prompts exacts et chemins des quatre couvertures GPT-Image-2.
-- `audit.md` : contrôle qualité, chiffres de contenu, tests et réserves.
-- `distribution.md` : six publications LinkedIn FR/EN et un email FR/EN préparés.
+- `revision-clarte.md` : état actuel, changements, chiffres et validation restante.
+- `audit.md` : historique de la première livraison, notes éditoriales retirées.
+- `distribution.md` : propositions initiales mises en attente, à réviser avant tout envoi.
 - `browser-check.cjs` : test reproductible des douze pages en deux tailles.
 - `style-check.py` et `style-results.json` : diagnostics descriptifs de rédaction.
 
 Les contenus sont dans `src/content/posts/`, avec un YAML commun et deux corps
 MDX par article. Les quatre nouvelles couvertures sont conservées dans
 `src/assets/images/blog/<slug>/featuredImage.png`. Les deux mises à jour gardent
-leurs images existantes. Les ateliers sont rendus par
-`src/components/blog/BlogWorkshop.astro`, hors du parseur Markdown simplifié.
-Le champ YAML facultatif `workshop` active le module avec la version de contenu.
-Le déploiement du composant seul n’ajoute donc pas les ateliers aux anciennes
-versions des deux articles à mettre à jour.
+leurs images existantes. Les captures sont des images locales insérées dans le
+corps français ; `src/lib/content/blog-inline-images.ts` valide leur syntaxe.
+Astro produit les versions WebP adaptées aux écrans. Le composant d'atelier et
+son champ YAML ont été supprimés ; leurs versions précédentes restent dans Git.
 
 ## Ce que la suite en production doit encore faire
 
-Unités de transfert, à examiner sur une branche de préparation issue de master :
-
-- `7601cbe` : stratégie, calendrier et premier socle de programmation, déjà préparés.
-- `4ab7222` : ateliers optionnels, aperçu staging et contrôles de publication.
-- `7d22c40` : quatre créations avec couvertures et dates.
-- `7a3e4c4` : mise à jour IA, prévue pour le 17/09.
-- `ca1e9f1` : mise à jour différenciation, prévue pour le 24/09.
-
-Ce sont des repères de revue, pas une commande de fusion aveugle : master et
-staging portent aussi leurs autres évolutions, à réconcilier selon l’état réel
-du dépôt au moment du transfert.
+Préparer le transfert depuis master avec les versions finales validées. Les
+anciens commits de la première livraison ne doivent pas être repris seuls : ils
+réintroduiraient les ateliers retirés. Master et staging portent aussi leurs
+autres évolutions, à réconcilier selon l'état réel du dépôt au moment du transfert.
 
 La demande actuelle s’arrête au déploiement de relecture sur staging. Aucun
 article n’a été fusionné dans `master` par ce pipeline et aucune publication
 sociale, soumission IndexNow ou tâche Dokploy n’a été déclenchée.
 
-Après approbation, transférer d’abord le socle technique et les quatre créations.
-Conserver les deux commits de mise à jour comme unités séparées pour leurs PR
-programmées. Ne pas fusionner tout staging dans master si l’on souhaite publier
+Après approbation, transférer le socle technique et seulement les créations
+validées dans les deux langues. Préparer les deux mises à jour dans des PR
+séparées pour leurs dates. Ne pas fusionner tout staging dans master si l’on souhaite publier
 ces nouvelles versions seulement les 17 et 24 septembre : `modifiedDate` n’est
 pas une condition de visibilité.
 
