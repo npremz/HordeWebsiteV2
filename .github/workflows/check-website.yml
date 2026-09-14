@@ -30,6 +30,7 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm run check
+      - run: npm run test:blog-images
       - name: Build and validate production visibility
         env:
           SITE_ENV: production

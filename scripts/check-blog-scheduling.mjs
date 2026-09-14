@@ -40,7 +40,7 @@ for (const lang of ['fr', 'en']) {
     assert.equal(rss.includes(`<link>${origin}${href}</link>`), published && entry.seoRobots === 'index, follow', `RSS visibility: ${href}`);
     if (!visible) { hiddenPaths.push(href); continue; }
     const html = await fs.readFile(filename, 'utf8');
-    assert.equal(/<section\b[^>]*data-blog-workshop=/.test(html), Boolean(entry.workshop), `Workshop opt-in: ${href}`);
+    assert(!html.includes('data-blog-workshop'), `No automatic workshop: ${href}`);
     assert.equal((html.match(/<h1\b/g) || []).length, 1, `Single H1: ${href}`);
     assert(html.includes(`<link rel="canonical" href="${origin}${href}">`), `Canonical: ${href}`);
     const robots = production ? entry.seoRobots : 'noindex, nofollow';
