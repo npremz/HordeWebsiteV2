@@ -1,0 +1,314 @@
+[
+  {
+    "slug": "art-direction-for-web-interfaces",
+    "locale": "fr",
+    "proseParagraphs": 27,
+    "paragraphsOver150Words": 0,
+    "h2Count": 7,
+    "sentenceWordMean": 14.32,
+    "sentenceWordStdDev": 7.17,
+    "proseTypeTokenRatio": 0.482,
+    "frequentParagraphOpeners": [
+      [
+        "une",
+        5
+      ],
+      [
+        "pour",
+        4
+      ],
+      [
+        "la",
+        3
+      ]
+    ],
+    "stylePhraseOccurrences": {},
+    "emDashes": 0
+  },
+  {
+    "slug": "art-direction-for-web-interfaces",
+    "locale": "en",
+    "proseParagraphs": 30,
+    "paragraphsOver150Words": 0,
+    "h2Count": 7,
+    "sentenceWordMean": 12.25,
+    "sentenceWordStdDev": 7.45,
+    "proseTypeTokenRatio": 0.486,
+    "frequentParagraphOpeners": [
+      [
+        "for",
+        4
+      ],
+      [
+        "our",
+        2
+      ],
+      [
+        "a",
+        2
+      ]
+    ],
+    "stylePhraseOccurrences": {},
+    "emDashes": 0
+  },
+  {
+    "slug": "design-and-web-development-together",
+    "locale": "fr",
+    "proseParagraphs": 29,
+    "paragraphsOver150Words": 0,
+    "h2Count": 8,
+    "sentenceWordMean": 14.15,
+    "sentenceWordStdDev": 5.94,
+    "proseTypeTokenRatio": 0.48,
+    "frequentParagraphOpeners": [
+      [
+        "le",
+        5
+      ],
+      [
+        "une",
+        3
+      ],
+      [
+        "la",
+        3
+      ]
+    ],
+    "stylePhraseOccurrences": {},
+    "emDashes": 0
+  },
+  {
+    "slug": "design-and-web-development-together",
+    "locale": "en",
+    "proseParagraphs": 34,
+    "paragraphsOver150Words": 0,
+    "h2Count": 8,
+    "sentenceWordMean": 12.29,
+    "sentenceWordStdDev": 4.88,
+    "proseTypeTokenRatio": 0.464,
+    "frequentParagraphOpeners": [
+      [
+        "a",
+        3
+      ],
+      [
+        "for",
+        3
+      ],
+      [
+        "the",
+        3
+      ]
+    ],
+    "stylePhraseOccurrences": {},
+    "emDashes": 0
+  },
+  {
+    "slug": "analyse-web-interface-without-copying",
+    "locale": "fr",
+    "proseParagraphs": 30,
+    "paragraphsOver150Words": 0,
+    "h2Count": 7,
+    "sentenceWordMean": 14.23,
+    "sentenceWordStdDev": 5.72,
+    "proseTypeTokenRatio": 0.472,
+    "frequentParagraphOpeners": [
+      [
+        "pour",
+        3
+      ],
+      [
+        "une",
+        3
+      ],
+      [
+        "cette",
+        3
+      ]
+    ],
+    "stylePhraseOccurrences": {},
+    "emDashes": 0
+  },
+  {
+    "slug": "analyse-web-interface-without-copying",
+    "locale": "en",
+    "proseParagraphs": 34,
+    "paragraphsOver150Words": 0,
+    "h2Count": 7,
+    "sentenceWordMean": 13.8,
+    "sentenceWordStdDev": 5.84,
+    "proseTypeTokenRatio": 0.43,
+    "frequentParagraphOpeners": [
+      [
+        "the",
+        5
+      ],
+      [
+        "a",
+        4
+      ],
+      [
+        "this",
+        3
+      ]
+    ],
+    "stylePhraseOccurrences": {},
+    "emDashes": 0
+  },
+  {
+    "slug": "web-design-brief-before-screens",
+    "locale": "fr",
+    "proseParagraphs": 34,
+    "paragraphsOver150Words": 0,
+    "h2Count": 9,
+    "sentenceWordMean": 14.36,
+    "sentenceWordStdDev": 6.44,
+    "proseTypeTokenRatio": 0.465,
+    "frequentParagraphOpeners": [
+      [
+        "le",
+        6
+      ],
+      [
+        "un",
+        4
+      ],
+      [
+        "pour",
+        3
+      ]
+    ],
+    "stylePhraseOccurrences": {},
+    "emDashes": 0
+  },
+  {
+    "slug": "web-design-brief-before-screens",
+    "locale": "en",
+    "proseParagraphs": 37,
+    "paragraphsOver150Words": 0,
+    "h2Count": 9,
+    "sentenceWordMean": 12.4,
+    "sentenceWordStdDev": 5.87,
+    "proseTypeTokenRatio": 0.459,
+    "frequentParagraphOpeners": [
+      [
+        "a",
+        6
+      ],
+      [
+        "the",
+        6
+      ],
+      [
+        "for",
+        3
+      ]
+    ],
+    "stylePhraseOccurrences": {},
+    "emDashes": 0
+  },
+  {
+    "slug": "ai-can-create-interfaces-not-experiences",
+    "locale": "fr",
+    "proseParagraphs": 53,
+    "paragraphsOver150Words": 0,
+    "h2Count": 10,
+    "sentenceWordMean": 15.78,
+    "sentenceWordStdDev": 7.2,
+    "proseTypeTokenRatio": 0.397,
+    "frequentParagraphOpeners": [
+      [
+        "une",
+        8
+      ],
+      [
+        "l’ia",
+        7
+      ],
+      [
+        "le",
+        6
+      ]
+    ],
+    "stylePhraseOccurrences": {},
+    "emDashes": 0
+  },
+  {
+    "slug": "ai-can-create-interfaces-not-experiences",
+    "locale": "en",
+    "proseParagraphs": 53,
+    "paragraphsOver150Words": 0,
+    "h2Count": 10,
+    "sentenceWordMean": 13.64,
+    "sentenceWordStdDev": 6.15,
+    "proseTypeTokenRatio": 0.41,
+    "frequentParagraphOpeners": [
+      [
+        "the",
+        10
+      ],
+      [
+        "ai",
+        7
+      ],
+      [
+        "this",
+        4
+      ]
+    ],
+    "stylePhraseOccurrences": {},
+    "emDashes": 0
+  },
+  {
+    "slug": "how-to-make-your-website-stand-out-2026",
+    "locale": "fr",
+    "proseParagraphs": 45,
+    "paragraphsOver150Words": 0,
+    "h2Count": 9,
+    "sentenceWordMean": 14.89,
+    "sentenceWordStdDev": 6.84,
+    "proseTypeTokenRatio": 0.444,
+    "frequentParagraphOpeners": [
+      [
+        "un",
+        10
+      ],
+      [
+        "pour",
+        4
+      ],
+      [
+        "le",
+        4
+      ]
+    ],
+    "stylePhraseOccurrences": {},
+    "emDashes": 0
+  },
+  {
+    "slug": "how-to-make-your-website-stand-out-2026",
+    "locale": "en",
+    "proseParagraphs": 45,
+    "paragraphsOver150Words": 0,
+    "h2Count": 9,
+    "sentenceWordMean": 13.85,
+    "sentenceWordStdDev": 6.69,
+    "proseTypeTokenRatio": 0.452,
+    "frequentParagraphOpeners": [
+      [
+        "a",
+        8
+      ],
+      [
+        "the",
+        5
+      ],
+      [
+        "to",
+        3
+      ]
+    ],
+    "stylePhraseOccurrences": {},
+    "emDashes": 0
+  }
+]

@@ -124,6 +124,12 @@ anglais définitifs seront écrits comme des titres autonomes dans chaque brief.
 
 ### Septembre 2026 — installer le point de vue
 
+Lot pilote rédigé en FR/EN le 14 septembre : [dossier de relecture](editorial/2026-09/README.md),
+[briefs définitifs](editorial/2026-09/briefs.md) et [audit](editorial/2026-09/audit.md).
+Les titres SEO finaux ont été raccourcis dans les métadonnées. Les preuves sont
+des ateliers pédagogiques originaux, explicitement fictifs, plutôt que des cas
+clients non documentés. Les dates ci-dessous restent soumises à validation.
+
 | Date | Action | Entrée SEO, H1 et slugs | Preuve principale et suite utile |
 | --- | --- | --- | --- |
 | 15/09 | Nouveau · E | **SEO :** Direction artistique web : donner une identité à une interface<br>**H1 :** Une interface peut avoir du caractère sans se mettre en travers du chemin.<br>**Slugs :** `direction-artistique-interface-web` / `art-direction-for-web-interfaces` | Décomposer le passage d'un territoire de marque à la typographie, la couleur, la composition et le mouvement ; lien vers Refonte |
