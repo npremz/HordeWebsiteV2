@@ -1,7 +1,7 @@
 slug: ai-can-create-interfaces-not-experiences
 slug_fr: ia-interfaces-experiences-utilisateur
-title_fr: L’IA sait créer des interfaces. Elle ne sait pas encore créer des expériences.
-title_en: AI Can Create Interfaces. It Still Cannot Create Experiences.
+title_fr: L’IA peut créer une interface. Elle ne valide pas seule l’expérience.
+title_en: AI can create an interface. It cannot validate the experience alone.
 seoTitle_fr: 'IA et UX : pourquoi l’expérience reste humaine'
 seoTitle_en: 'AI and UX: Why Experience Still Needs Humans'
 excerpt_fr: >-
@@ -28,19 +28,22 @@ thumbnailImageAlt_fr: Une main simplifie un parcours numérique encombré
 thumbnailImageAlt_en: A hand simplifies a cluttered digital journey
 author: alexandre-potakowski
 category: ux-design
+workshop: review
 publishedDate: 2026-08-29
-modifiedDate: 2026-08-29
-readingTime: 9
+modifiedDate: 2026-09-14
+readingTime: 13
 keyTakeaways_fr:
-  - Une interface est un ensemble d’écrans. L’expérience dépend du parcours, du contexte et de ce que la personne ressent pendant l’usage.
+  - Une interface comprend des commandes, des informations et des comportements. L’expérience dépend aussi du parcours et du contexte réel d’usage.
   - L’IA rend l’ajout de contenu et de fonctionnalités très facile, alors qu’une bonne UX demande souvent de hiérarchiser et de supprimer.
   - Le jugement humain ne remplace pas les preuves. Il doit s’appuyer sur l’observation, les tests utilisateurs et les données d’usage.
   - L’IA est particulièrement utile pour accélérer l’exploration et les itérations, sans lui déléguer la décision finale.
+  - Une revue en six dimensions aide à distinguer les décisions inspectables des hypothèses à tester avec des personnes.
 keyTakeaways_en:
-  - An interface is a collection of screens. Experience depends on the journey, context and what a person feels while using it.
+  - An interface includes controls, information and behaviour. Experience also depends on the journey and real context of use.
   - AI makes adding content and features easy, while good UX often requires prioritising and removing them.
   - Human judgment is not a substitute for evidence. It must be grounded in observation, user testing and usage data.
   - AI is most useful for accelerating exploration and iteration without being given the final decision.
+  - A six-part review separates inspectable decisions from hypotheses that need testing with people.
 featured: false
 draft: false
 seoRobots: index, follow
