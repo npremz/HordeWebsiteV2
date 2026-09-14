@@ -18,18 +18,22 @@ async function readPostFiles() {
 async function buildPostUrls() {
   const files = await readPostFiles();
   const urls = new Set();
+  const now = new Date();
 
   for (const file of files) {
     const raw = await fs.readFile(file, "utf8");
     const data = yaml.load(raw);
     if (!data || data.draft) continue;
 
+    const publishedDate = new Date(data.publishedDate);
+    if (Number.isNaN(publishedDate.getTime()) || publishedDate > now) continue;
+
     if (typeof data.slug === "string" && data.slug.length > 0) {
-      urls.add(`${SITE_URL}/en/blog/${data.slug}`);
+      urls.add(`${SITE_URL}/en/blog/${data.slug}/`);
     }
 
     if (typeof data.slug_fr === "string" && data.slug_fr.length > 0) {
-      urls.add(`${SITE_URL}/fr/blog/${data.slug_fr}`);
+      urls.add(`${SITE_URL}/fr/blog/${data.slug_fr}/`);
     }
   }
 

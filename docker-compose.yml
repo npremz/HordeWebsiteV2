@@ -4,6 +4,7 @@ services:
       context: .
       args:
         - SITE_ENV=${SITE_ENV:-}
+        - BLOG_PREVIEW_UNPUBLISHED=${BLOG_PREVIEW_UNPUBLISHED:-0}
     container_name: ${CONTAINER_NAME:-hordenew}
     restart: unless-stopped
     ports:
@@ -11,6 +12,7 @@ services:
     environment:
       - PORT=${PORT:-4328}
       - SITE_ENV=${SITE_ENV:-}
+      - BLOG_PREVIEW_UNPUBLISHED=${BLOG_PREVIEW_UNPUBLISHED:-0}
       - LOG_BOT_CRAWL=${LOG_BOT_CRAWL:-0}
       - RESEND_API_KEY=${RESEND_API_KEY}
       - CONTACT_EMAIL_FROM=${CONTACT_EMAIL_FROM:-Horde Website <noreply@hordeagence.com>}

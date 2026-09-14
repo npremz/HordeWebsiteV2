@@ -64,6 +64,10 @@ const postContentModules = import.meta.glob('../../content/posts/*/content_*.mdx
   import: 'default',
 });
 
+export function isBlogPreviewEnabled(): boolean {
+  return String(import.meta.env.BLOG_PREVIEW_UNPUBLISHED || '') === '1';
+}
+
 export function getBlogIndexHref(lang: Locale): string {
   return `/${lang}/blog/`;
 }
@@ -192,10 +196,10 @@ export async function getLocalizedCategories(lang: Locale): Promise<LocalizedCat
 export async function getLocalizedPosts(
   lang: Locale,
   options?: {
-    includeDrafts?: boolean;
+    includeUnpublished?: boolean;
   },
 ): Promise<LocalizedPost[]> {
-  const includeDrafts = options?.includeDrafts ?? false;
+  const includeUnpublished = options?.includeUnpublished ?? false;
   const [posts, authors, categories] = await Promise.all([
     getPosts(),
     getLocalizedAuthors(lang),
@@ -209,7 +213,7 @@ export async function getLocalizedPosts(
   });
 
   return posts
-    .filter((post) => includeDrafts || isPostPublished(post))
+    .filter((post) => includeUnpublished || isPostPublished(post))
     .sort((a, b) => new Date(b.data.publishedDate).getTime() - new Date(a.data.publishedDate).getTime())
     .map((post) => localizePost(post, lang, { authorMap, categoryMap }));
 }
@@ -217,8 +221,11 @@ export async function getLocalizedPosts(
 export async function getLocalizedPostsByCategory(
   categorySlug: string,
   lang: Locale,
+  options?: {
+    includeUnpublished?: boolean;
+  },
 ): Promise<LocalizedPost[]> {
-  const posts = await getLocalizedPosts(lang);
+  const posts = await getLocalizedPosts(lang, options);
   return posts.filter((post) => post.categorySlug === categorySlug);
 }
 

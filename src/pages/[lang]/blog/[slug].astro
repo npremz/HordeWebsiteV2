@@ -13,6 +13,7 @@ import {
 	getLocalizedPostContent,
 	getLocalizedPosts,
 	getPosts,
+	isBlogPreviewEnabled,
 	isPostPublished,
 } from '../../../lib/content/blog';
 
@@ -20,10 +21,11 @@ export const prerender = true;
 
 export async function getStaticPaths() {
 	const posts = await getPosts();
+	const includeUnpublished = isBlogPreviewEnabled();
 
 	return SUPPORTED_LOCALES.flatMap((lang) =>
 		posts
-			.filter((post) => isPostPublished(post))
+			.filter((post) => includeUnpublished || isPostPublished(post))
 			.map((post) => ({
 				params: { lang, slug: lang === 'fr' ? post.data.slug_fr : post.data.slug },
 				props: { post, lang },
@@ -33,7 +35,8 @@ export async function getStaticPaths() {
 
 const { post, lang } = Astro.props as { post: PostEntry; lang: Locale };
 const t = useTranslations(lang);
-const allLocalizedPosts = await getLocalizedPosts(lang);
+const previewEnabled = isBlogPreviewEnabled();
+const allLocalizedPosts = await getLocalizedPosts(lang, { includeUnpublished: previewEnabled });
 const currentPost = allLocalizedPosts.find((entry) => entry.entry.id === post.id);
 
 if (!currentPost) {
@@ -244,6 +247,7 @@ const authorIntroLabel = t.blogPage.authorIntro;
 const heroAuthorLabel = authorRole ? `${authorName} - ${authorRole}` : authorName;
 const readingTimeLabel = t.blogPage.minRead;
 const updatedDate = modifiedDate || publishedDate;
+const isUnpublishedPreview = post.data.draft || !isPostPublished(post);
 
 // URL de partage
 const siteUrl = (Astro.site?.toString() || 'https://hordeagence.com').replace(/\/$/, '');
@@ -349,7 +353,7 @@ const schemaOrg = {
 	alternateUrl={alternateUrl}
 	title={seoTitle}
 	description={seoDescription}
-	robots={currentPost.seoRobots}
+	robots={isUnpublishedPreview ? 'noindex, nofollow' : currentPost.seoRobots}
 	ogType="article"
 	ogImage={currentPost.ogImage || imageUrl}
 	ogImageAlt={featuredImageAlt}
@@ -368,6 +372,13 @@ const schemaOrg = {
 
 	<div class="fixed inset-0 bg-bg -z-10" aria-hidden="true"></div>
 	<article id="page-content" class="relative z-10 bg-bg">
+		{isUnpublishedPreview && (
+			<div class="bg-bg-light px-(--gutter) py-3 text-center text-sm font-medium text-black">
+				{lang === 'fr'
+					? `Aperçu staging · ${post.data.draft ? 'brouillon' : `publication prévue le ${formatDate(publishedDate, lang)}`}`
+					: `Staging preview · ${post.data.draft ? 'draft' : `scheduled for ${formatDate(publishedDate, lang)}`}`}
+			</div>
+		)}
 		<div class="full-width-white-bg">
 		<div class="relative left-1/2 w-screen -translate-x-1/2 bg-black">
 		<HeroStructure

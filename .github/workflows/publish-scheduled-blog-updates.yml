@@ -1,0 +1,123 @@
+name: Publish scheduled blog updates
+
+on:
+  schedule:
+    # Runs before the 05:17 Europe/Brussels Dokploy rebuild in both CET and CEST.
+    - cron: '30 2 * * *'
+  workflow_dispatch:
+
+concurrency:
+  group: publish-scheduled-blog-updates
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  merge-due-updates:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Merge approved blog updates whose date is due
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          repository="${GITHUB_REPOSITORY}"
+          today="$(TZ=Europe/Brussels date +%F)"
+
+          mapfile -t pull_requests < <(
+            gh pr list \
+              --repo "${repository}" \
+              --base master \
+              --state open \
+              --label scheduled-blog-update \
+              --limit 100 \
+              --json number \
+              --jq '.[].number'
+          )
+
+          if (( ${#pull_requests[@]} == 0 )); then
+            echo "No scheduled blog update is waiting."
+            exit 0
+          fi
+
+          for number in "${pull_requests[@]}"; do
+            details="$(
+              gh pr view "${number}" \
+                --repo "${repository}" \
+                --json body,isDraft,mergeStateStatus,reviewDecision
+            )"
+
+            is_draft="$(jq -r '.isDraft' <<<"${details}")"
+            merge_state="$(jq -r '.mergeStateStatus' <<<"${details}")"
+            review_decision="$(jq -r '.reviewDecision // ""' <<<"${details}")"
+            publish_date="$(
+              jq -r '.body // ""' <<<"${details}" \
+                | tr -d '\r' \
+                | sed -nE 's/^[[:space:]]*Publish-Date:[[:space:]]*([0-9]{4}-[0-9]{2}-[0-9]{2})[[:space:]]*$/\1/p' \
+                | head -n 1
+            )"
+
+            if [[ -z "${publish_date}" ]]; then
+              echo "PR #${number}: skipped (missing Publish-Date: YYYY-MM-DD)."
+              continue
+            fi
+
+            if ! normalized_date="$(date -d "${publish_date}" +%F 2>/dev/null)" \
+              || [[ "${normalized_date}" != "${publish_date}" ]]; then
+              echo "PR #${number}: skipped (invalid Publish-Date: ${publish_date})."
+              continue
+            fi
+
+            if [[ "${publish_date}" > "${today}" ]]; then
+              echo "PR #${number}: scheduled for ${publish_date}."
+              continue
+            fi
+
+            if [[ "${is_draft}" == "true" ]]; then
+              echo "PR #${number}: skipped (draft PR)."
+              continue
+            fi
+
+            if [[ "${review_decision}" != "APPROVED" ]]; then
+              echo "PR #${number}: skipped (an approval is required)."
+              continue
+            fi
+
+            if [[ "${merge_state}" != "CLEAN" ]]; then
+              echo "PR #${number}: skipped (merge state is ${merge_state})."
+              continue
+            fi
+
+            invalid_path="false"
+            while IFS= read -r changed_path; do
+              case "${changed_path}" in
+                src/content/posts/*|src/assets/images/blog/*)
+                  ;;
+                *)
+                  echo "PR #${number}: disallowed path ${changed_path}."
+                  invalid_path="true"
+                  ;;
+              esac
+            done < <(
+              gh pr view "${number}" \
+                --repo "${repository}" \
+                --json files \
+                --jq '.files[].path'
+            )
+
+            if [[ "${invalid_path}" == "true" ]]; then
+              echo "PR #${number}: skipped (changes are not limited to blog content)."
+              continue
+            fi
+
+            gh pr merge "${number}" \
+              --repo "${repository}" \
+              --squash \
+              --delete-branch
+
+            echo "PR #${number}: merged for publication on ${today}."
+          done

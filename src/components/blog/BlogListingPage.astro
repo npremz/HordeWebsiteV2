@@ -22,6 +22,7 @@ interface Props {
 
 const { lang, posts, heading, description, filters } = Astro.props;
 const t = useTranslations(lang);
+const buildTime = Date.now();
 
 const breadcrumbItems = [
   { label: t.blogPage.breadcrumbHome, href: `/${lang}/` },
@@ -149,6 +150,13 @@ const headingLines = heading.split(/\r?\n|<br\s*\/?>/i).map((line) => line.trim(
 
                 <div class="flex flex-col sm:justify-between">
                   <div>
+                    {(post.entry.data.draft || post.publishedDate.getTime() > buildTime) && (
+                      <p class="mb-3 w-fit bg-bg-light px-2 py-1 text-sm font-medium text-black">
+                        {post.entry.data.draft
+                          ? (lang === 'fr' ? 'Aperçu · Brouillon' : 'Preview · Draft')
+                          : (lang === 'fr' ? 'Aperçu · Publication planifiée' : 'Preview · Scheduled')}
+                      </p>
+                    )}
                     <h2 class="font-sans text-[1.5rem] leading-tight md:max-w-[500px]">
                       <a href={getBlogPostHref(post.slug, lang)}>
                         {post.title}
