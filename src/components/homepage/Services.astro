@@ -1,6 +1,7 @@
 ---
 import { DEFAULT_LOCALE, type Locale, useTranslations } from '../../i18n';
 import { getServiceSummaries } from '../../lib/content/services';
+import { SERVICE_SHAPE_BY_SLUG } from '../../lib/serviceShapeMorph';
 import ServiceShapeMorph from '../services/ServiceShapeMorph.astro';
 
 interface Props {
@@ -16,15 +17,6 @@ const {
 } = Astro.props;
 const t = useTranslations(lang);
 const services = await getServiceSummaries(lang);
-const serviceShapeKeyBySlug: Record<string, string> = {
-  'audit-offert': 'audit',
-  'refonte-site-web': 'refonte',
-  'creation-ecommerce': 'ecommerce',
-  'creation-landing-page': 'landing',
-  'creation-mvp-saas': 'sass',
-  'optimisation-site-web': 'opti',
-};
-
 const headingClass = "text-[1.5rem] sm:text-[2rem] md:text-[2.5rem] lg:text-[3rem]";
 const listOffsetClass = "mt-8 sm:mt-12 md:mt-20";
 const rowLinkClass = "service-link flex items-center justify-between pt-8 pb-7 sm:pt-10 sm:pb-9";
@@ -64,7 +56,7 @@ const rowTitleClass = "max-w-[280px] text-[1.25rem] leading-none sm:max-w-[unset
     {services.map((service) => (
       <li
         class="service-item border-b border-lines-dark last:border-b-0"
-        data-service-shape={serviceShapeKeyBySlug[service.slug] || 'neutral'}
+        data-service-shape={SERVICE_SHAPE_BY_SLUG[service.slug] || 'neutral'}
       >
         <a
           href={service.url}
@@ -215,6 +207,15 @@ const rowTitleClass = "max-w-[280px] text-[1.25rem] leading-none sm:max-w-[unset
     if (cells.length === 0) return;
 
     const animator = createServiceShapeAnimator(cells, "neutral");
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+    function updateShape(shapeName: ReturnType<typeof getServiceShapeName>) {
+      if (prefersReducedMotion.matches) {
+        animator.draw(shapeName);
+      } else {
+        animator.animateTo(shapeName);
+      }
+    }
 
     serviceItems.forEach((item) => {
       item.addEventListener("mouseenter", () => {
@@ -226,14 +227,14 @@ const rowTitleClass = "max-w-[280px] text-[1.25rem] leading-none sm:max-w-[unset
 
         preview.style.setProperty("--service-shape-y", `${centerY}px`);
         preview.classList.add("is-visible");
-        animator.animateTo(shapeName);
+        updateShape(shapeName);
       });
 
     });
 
     list.addEventListener("mouseleave", () => {
       preview.classList.remove("is-visible");
-      animator.animateTo("neutral");
+      updateShape("neutral");
     });
 
     document.addEventListener(

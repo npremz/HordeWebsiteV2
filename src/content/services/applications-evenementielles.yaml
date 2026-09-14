@@ -1,0 +1,333 @@
+slug: applications-evenementielles
+seoUrl: /fr/services/applications-evenementielles/
+seoPrimaryKeyword: application événementielle bruxelles
+seoSecondaryKeywords:
+  - application web événementielle
+  - application pour salon professionnel
+  - animation workshop interactif
+  - présentation produit interactive
+  - affichage événementiel synchronisé
+seoTitle: Création d’applications événementielles à Bruxelles
+seoDescription: >-
+  Applications web pour salons, workshops et présentations produit : faites
+  participer votre public, pilotez l’animation et synchronisez vos écrans avec Horde.
+seoRobots: index, follow
+seoInternalLinks:
+  - /fr/blog/webapp-evenementielle-ia/
+  - /fr/services/developpement-mvp-bruxelles/
+  - /fr/services/creation-landing-page/
+  - /fr/contact/
+h1: Création d’applications<br>événementielles
+shortName: Applications événementielles
+footerTitle: Applications événementielles
+footerOrder: 5
+translations:
+  en:
+    seoUrl: /en/services/event-web-apps/
+    seoPrimaryKeyword: event web app development brussels
+    seoSecondaryKeywords:
+      - interactive event application
+      - trade show web app
+      - interactive workshop app
+      - interactive product presentation
+      - synchronised event display
+    seoTitle: Event web app development in Brussels
+    seoDescription: >-
+      Web apps for trade shows, workshops and product presentations. Let your
+      audience take part, control the session and synchronise your screens with Horde.
+    seoInternalLinks:
+      - /en/blog/ai-assisted-event-web-apps/
+      - /en/services/mvp-development-brussels/
+      - /en/services/creation-landing-page/
+      - /en/contact/
+    h1: Event web app<br>development
+    shortName: Event web apps
+    footerTitle: Event web apps
+    intro: >-
+      Trade shows, workshops, product presentations: we build apps that let your
+      audience take part. Interactive interfaces, host controls and synchronised
+      displays, designed around your event and the people running it.
+    problemTitle: One event, several interfaces to coordinate
+    problemBlocks:
+      - kind: paragraph
+        body: >-
+          Participants follow a session on their phones, the host sets the pace
+          and a screen shows the results. The application connects these roles
+          around the same event schedule, with a clear action for each person.
+        items: []
+    offerTitle: Three ways to bring your event to life
+    offerItems:
+      - title: Trade shows and stands
+        body: >-
+          Let visitors explore a catalogue on a tablet, try a product demo or
+          take part in a quiz. We design short interactions for the pace of a
+          stand, with access by link or QR code and contact collection when it
+          serves your goal.
+      - title: Workshops and team sessions
+        body: >-
+          Organise teams, launch challenges, collect votes and show progress in
+          real time. The host controls each stage from one interface, while
+          participants and the room display receive the information they need.
+      - title: Presentations and launches
+        body: >-
+          Give your audience a way to explore your product: an interactive demo,
+          a simulator, a guided journey or questions during the presentation.
+          The content and interactions follow your message, with host controls
+          when you need to set the pace.
+    methodTitle: From the event schedule to the live session
+    methodSteps:
+      - title: Event scoping
+        body: >-
+          We review the date, audience, schedule, venue and available devices.
+          Together, we define the useful interactions, the roles and the scope
+          to deliver before the event.
+      - title: Prototype
+        body: >-
+          We build a first usable journey to test the idea. You can try the
+          participant experience, the host controls and the presentation screen
+          before approving the design.
+      - title: Development
+        body: >-
+          We build the agreed interfaces, connect the data and configure any
+          synchronisation. You have access to a test version throughout the
+          work so we can adjust the experience together.
+      - title: Rehearsal
+        body: >-
+          We run through the event on the planned devices. We check simultaneous
+          use, display behaviour and connection recovery, then prepare the
+          fallback agreed with your team.
+      - title: Launch and handover
+        body: >-
+          We deploy the application and help your team learn the controls.
+          Hosting duration, event support and any reuse are agreed before
+          launch so everyone knows who handles what.
+    deliverablesTitle: The tools for your event
+    deliverables:
+      - Deployed application and agreed participant interfaces
+      - Host controls adapted to your event schedule
+      - Synchronised display for the planned screens
+      - Tested event journey and rehearsal checklist
+      - User guide and a handover session for your team
+      - Source code and access to the hosting environment
+    exclusionsTitle: A setup prepared for the live session
+    exclusionsParagraphs:
+      - >-
+        We define the scope around your event date, your audience and the
+        equipment available. The planned number of participants, network
+        conditions and display setup are part of the brief and the rehearsal.
+      - >-
+        We agree on hosting duration, who operates the application and the
+        support required during the event. On-site assistance, equipment
+        provision and later editions are scoped separately when needed.
+    faqTitle: Before your event
+    faqItems:
+      - question: How much does an event web app cost?
+        answer: >-
+          The budget depends on the number of interfaces, the interactions, the
+          systems to connect and the support required. We quote an agreed scope
+          after reviewing your event. A tablet demo and a team workshop with
+          synchronised screens involve different amounts of work.
+      - question: How far ahead should we start?
+        answer: >-
+          Some of our tightly scoped projects have reached a first usable
+          version in about two weeks. That is a reference from past work, not a
+          fixed delivery promise. Share your date early so we can plan the
+          prototype, development and a rehearsal before the event.
+      - question: Do participants have to install an app?
+        answer: >-
+          The experience opens in a browser through a link or QR code. We adapt
+          it to the phones, tablets, computers and presentation screens chosen
+          for the event, and test the relevant browsers during preparation.
+      - question: What happens if the venue connection is unreliable?
+        answer: >-
+          We review the venue network during scoping. Depending on the journey,
+          we can plan locally available content, reconnection handling or a
+          simplified fallback. Shared votes, scores and screens need a suitable
+          connection; any offline behaviour must be planned and tested.
+      - question: Can you provide support during the event?
+        answer: >-
+          We can plan support according to your date and our availability. The
+          hours, remote or on-site arrangements and technical contact are
+          defined in the quote. Your team receives a handover before the event.
+      - question: Can we reuse the application for another event?
+        answer: >-
+          Yes. We can plan for content updates and session resets from the
+          start. You receive the source code and access to the environment.
+          Hosting after the event, new editions and additional features are
+          agreed according to your needs.
+    ctaTitle: Tell us about your event
+    ctaParagraphs:
+      - >-
+        Share your date, format, expected audience and what you want people to
+        do. If you already have a schedule or a list of devices, include it so
+        we can define a useful scope together.
+      - >-
+        You can also email us at hello@hordeagence.com
+    primaryCtaLabel: Let’s discuss your event
+    primaryCtaUrl: /en/contact/
+    secondaryCtaLabel: Read about our workshops and interactive presentations
+    secondaryCtaUrl: /en/blog/ai-assisted-event-web-apps/
+    reassurance: Free first conversation, with no commitment. Reply within 24h.
+    recommendedLinks:
+      - anchor: our event web app examples
+        url: /en/blog/ai-assisted-event-web-apps/
+      - anchor: develop a broader web product
+        url: /en/services/mvp-development-brussels/
+      - anchor: a landing page for your launch
+        url: /en/services/creation-landing-page/
+      - anchor: discuss your event
+        url: /en/contact/
+intro: >-
+  Salons, workshops, présentations produit : on crée les applications qui font
+  participer votre public. Interfaces interactives, outils d’animation et
+  affichage synchronisé, pensés pour votre événement et les personnes qui le font vivre.
+problemTitle: Un événement, plusieurs interfaces à coordonner
+problemBlocks:
+  - kind: paragraph
+    body: >-
+      Les participants suivent une session sur leur téléphone, l’animateur donne
+      le rythme et un écran affiche les résultats. L’application relie ces rôles
+      autour du même déroulé, avec une action claire pour chaque personne.
+    items: []
+offerTitle: Trois façons de faire vivre votre événement
+offerItems:
+  - title: Salons et stands
+    body: >-
+      Faites explorer un catalogue sur tablette, essayer une démonstration
+      produit ou participer à un quiz. On conçoit des interactions courtes,
+      adaptées au rythme d’un stand, avec un accès par lien ou QR code et une
+      collecte de contacts quand elle sert votre objectif.
+  - title: Workshops et ateliers
+    body: >-
+      Organisez les équipes, lancez des défis, recueillez des votes et affichez
+      la progression en direct. L’animateur pilote les étapes depuis une
+      interface centrale ; les participants et les écrans de la salle reçoivent
+      les informations au bon moment.
+  - title: Présentations et lancements
+    body: >-
+      Donnez à votre public un moyen d’explorer votre produit : démonstration
+      interactive, simulateur, parcours guidé ou questions pendant la
+      présentation. Les contenus et les interactions suivent votre message,
+      avec un pilotage par le présentateur quand il faut garder le rythme.
+methodTitle: Du déroulé à la mise en service
+methodSteps:
+  - title: Cadrage de l’événement
+    body: >-
+      On passe en revue la date, le public, le déroulé, le lieu et les appareils
+      disponibles. Ensemble, on définit les interactions utiles, les rôles et
+      le périmètre à livrer avant l’événement.
+  - title: Prototype
+    body: >-
+      On construit un premier parcours utilisable pour éprouver l’idée. Vous
+      pouvez tester l’expérience participant, les commandes d’animation et
+      l’écran de présentation avant de valider la conception.
+  - title: Développement
+    body: >-
+      On réalise les interfaces prévues, les connexions aux données et la
+      synchronisation nécessaire. Vous avez accès à une version de test tout
+      au long du travail pour ajuster l’expérience ensemble.
+  - title: Répétition
+    body: >-
+      On déroule l’événement sur les appareils prévus. On vérifie les usages
+      simultanés, l’affichage et la reprise après une coupure de connexion,
+      puis on prépare le scénario de secours convenu avec votre équipe.
+  - title: Mise en service
+    body: >-
+      On déploie l’application et on forme votre équipe au pilotage. La durée
+      d’hébergement, l’assistance pendant l’événement et la réutilisation sont
+      définies avant le lancement pour que chacun sache qui fait quoi.
+deliverablesTitle: Les outils pour le jour J
+deliverables:
+  - Application déployée et interfaces participants prévues
+  - Interface de pilotage adaptée à votre déroulé
+  - Affichage synchronisé sur les écrans prévus
+  - Parcours testé et support de répétition
+  - Guide d’utilisation et prise en main avec votre équipe
+  - Code source et accès à l’hébergement
+exclusionsTitle: Un dispositif préparé pour le jour J
+exclusionsParagraphs:
+  - >-
+    On définit le périmètre autour de votre date, de votre public et du matériel
+    disponible. Le nombre de participants prévu, les conditions de connexion
+    et les écrans font partie du cadrage et de la répétition.
+  - >-
+    On précise ensemble la durée d’hébergement, qui pilote l’application et
+    l’assistance nécessaire pendant l’événement. La présence sur place, la
+    fourniture de matériel et les éditions suivantes font l’objet d’un
+    périmètre distinct selon vos besoins.
+faqTitle: Avant votre événement
+faqItems:
+  - question: Combien coûte une application événementielle ?
+    answer: >-
+      Le budget dépend du nombre d’interfaces, des interactions, des systèmes à
+      connecter et de l’accompagnement prévu. On chiffre un périmètre convenu
+      après avoir étudié votre événement. Une démonstration sur tablette et un
+      workshop par équipes avec des écrans synchronisés demandent des volumes
+      de travail différents.
+  - question: Combien de temps faut-il prévoir ?
+    answer: >-
+      Certains de nos projets bien cadrés ont atteint une première version
+      utilisable en environ deux semaines. C’est un retour d’expérience, pas
+      une promesse de délai fixe. Partagez votre date assez tôt pour prévoir le
+      prototype, le développement et une répétition avant l’événement.
+  - question: Les participants doivent-ils installer une application ?
+    answer: >-
+      L’expérience s’ouvre dans un navigateur, depuis un lien ou un QR code.
+      On l’adapte aux téléphones, tablettes, ordinateurs et écrans de
+      présentation retenus pour l’événement. Les navigateurs concernés sont
+      testés pendant la préparation.
+  - question: Que se passe-t-il si la connexion du lieu est instable ?
+    answer: >-
+      On examine le réseau disponible dès le cadrage. Selon le parcours, on
+      peut prévoir des contenus accessibles localement, une reprise après
+      coupure ou un mode de secours simplifié. Les votes, scores et écrans
+      partagés nécessitent une connexion adaptée ; les usages hors ligne
+      doivent être prévus et testés.
+  - question: Pouvez-vous assurer une assistance le jour J ?
+    answer: >-
+      On peut prévoir un accompagnement selon votre date et nos disponibilités.
+      Les horaires, les modalités à distance ou sur place et le contact
+      technique sont définis dans le devis. Votre équipe bénéficie d’une prise
+      en main avant l’événement.
+  - question: Peut-on réutiliser l’application pour un autre événement ?
+    answer: >-
+      Oui. On peut prévoir dès le départ la mise à jour des contenus et la
+      remise à zéro des sessions. Vous recevez le code source et les accès à
+      l’environnement. L’hébergement après l’événement, les éditions suivantes
+      et les nouvelles fonctions sont définis selon vos besoins.
+ctaTitle: Parlons de votre événement
+ctaParagraphs:
+  - >-
+    Partagez votre date, le format, le public attendu et ce que vous souhaitez
+    lui faire faire. Si vous avez déjà un déroulé ou une liste d’appareils,
+    ajoutez-les pour qu’on puisse définir ensemble un périmètre utile.
+  - >-
+    Ou écrivez-nous à l’adresse hello@hordeagence.com
+primaryCtaLabel: Parlons de votre événement
+primaryCtaUrl: /fr/contact/
+secondaryCtaLabel: Découvrir nos workshops et présentations interactives
+secondaryCtaUrl: /fr/blog/webapp-evenementielle-ia/
+reassurance: Premier échange gratuit et sans engagement. Réponse sous 24h.
+recommendedLinks:
+  - anchor: nos exemples de webapps événementielles
+    url: /fr/blog/webapp-evenementielle-ia/
+  - anchor: développer un produit web plus complet
+    url: /fr/services/developpement-mvp-bruxelles/
+  - anchor: une landing page pour votre lancement
+    url: /fr/services/creation-landing-page/
+  - anchor: parler de votre événement
+    url: /fr/contact/
+notes:
+  - >-
+    Cibles : organisateurs d’événements, agences de communication, équipes
+    marketing, animateurs de workshops et équipes produit.
+  - >-
+    Mettre en avant la participation et la coordination des interfaces public,
+    animateur et affichage, avec une date et un déroulé définis.
+  - >-
+    Les workshops à 42 et la présentation interactive décrits dans l’article
+    constituent les exemples existants. Ne pas inventer de résultats chiffrés.
+  - >-
+    Le délai de deux semaines reste un retour d’expérience sur un périmètre
+    cadré. L’assistance sur place et le fonctionnement hors ligne sont à définir.
+order: 4

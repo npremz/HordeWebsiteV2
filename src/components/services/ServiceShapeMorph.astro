@@ -38,14 +38,14 @@ const initialPaths = getShapePathData(initialShape);
   data-service-hero-shape={hero ? "" : undefined}
   aria-hidden="true"
 >
-  <rect x="3.5" y="3.5" width="297" height="297" fill="white" stroke="#C9C9C9" vector-effect="non-scaling-stroke" />
-  <path d="M102.5 3.5V300.5M201.5 3.5V300.5M3.5 102.5H300.5M3.5 201.5H300.5" stroke="#C9C9C9" vector-effect="non-scaling-stroke" />
+  <rect class="service-shape-background" x="3.5" y="3.5" width="297" height="297" fill="var(--service-shape-background, white)" stroke="var(--service-shape-stroke, #C9C9C9)" vector-effect="non-scaling-stroke" />
+  <path d="M102.5 3.5V300.5M201.5 3.5V300.5M3.5 102.5H300.5M3.5 201.5H300.5" stroke="var(--service-shape-stroke, #C9C9C9)" vector-effect="non-scaling-stroke" />
   {initialPaths.map((pathData) => (
     <path
       data-service-shape-cell
       d={pathData}
       fill="white"
-      stroke="#C9C9C9"
+      stroke="var(--service-shape-stroke, #C9C9C9)"
       vector-effect="non-scaling-stroke"
     />
   ))}
@@ -54,3 +54,22 @@ const initialPaths = getShapePathData(initialShape);
   <rect x="298" width="7" height="7" fill="white" />
   <rect x="298" y="297" width="7" height="7" fill="white" />
 </svg>
+
+<style>
+  [data-service-hero-shape][data-service-shape-name="event"] {
+    --service-shape-background: var(--color-black, #16191B);
+    --service-shape-stroke: #5B5C5C;
+  }
+
+  .service-shape-background,
+  path {
+    transition: fill 520ms ease-out, stroke 520ms ease-out;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .service-shape-background,
+    path {
+      transition: none;
+    }
+  }
+</style>
