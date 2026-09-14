@@ -65,7 +65,9 @@ const postContentModules = import.meta.glob('../../content/posts/*/content_*.mdx
 });
 
 export function isBlogPreviewEnabled(): boolean {
-  return String(import.meta.env.BLOG_PREVIEW_UNPUBLISHED || '') === '1';
+  if (import.meta.env.SITE_ENV === 'production') return false;
+  const setting = String(import.meta.env.BLOG_PREVIEW_UNPUBLISHED || '');
+  return setting === '1' || (setting !== '0' && import.meta.env.SITE_ENV === 'staging');
 }
 
 export function getBlogIndexHref(lang: Locale): string {

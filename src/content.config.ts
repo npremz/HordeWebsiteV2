@@ -102,6 +102,8 @@ const postsCollection = defineCollection({
     publishedDate: z.coerce.date(),
     modifiedDate: z.coerce.date().optional(),
     readingTime: z.number().optional(),
+    // Optional editorial proof, activated with this content version, not by URL.
+    workshop: z.enum(['direction', 'component', 'references', 'brief', 'review']).optional(),
     keyTakeaways_fr: z.array(z.string()).default([]),
     keyTakeaways_en: z.array(z.string()).default([]),
     featured: z.boolean().default(false),

@@ -48,12 +48,18 @@ jobs:
             details="$(
               gh pr view "${number}" \
                 --repo "${repository}" \
-                --json body,isDraft,mergeStateStatus,reviewDecision
+                --json body,isDraft,mergeStateStatus,reviewDecision,headRefOid,files,changedFiles
             )"
 
             is_draft="$(jq -r '.isDraft' <<<"${details}")"
             merge_state="$(jq -r '.mergeStateStatus' <<<"${details}")"
             review_decision="$(jq -r '.reviewDecision // ""' <<<"${details}")"
+            head_sha="$(jq -er '.headRefOid' <<<"${details}")"
+            # Fail closed if GitHub did not return every changed path.
+            if ! jq -e '(.changedFiles > 0) and ((.files | length) == .changedFiles)' <<<"${details}" >/dev/null; then
+              echo "PR #${number}: skipped (incomplete changed-file list)."
+              continue
+            fi
             publish_date="$(
               jq -r '.body // ""' <<<"${details}" \
                 | tr -d '\r' \
@@ -102,12 +108,7 @@ jobs:
                   invalid_path="true"
                   ;;
               esac
-            done < <(
-              gh pr view "${number}" \
-                --repo "${repository}" \
-                --json files \
-                --jq '.files[].path'
-            )
+            done < <(jq -r '.files[].path' <<<"${details}")
 
             if [[ "${invalid_path}" == "true" ]]; then
               echo "PR #${number}: skipped (changes are not limited to blog content)."
@@ -117,7 +118,7 @@ jobs:
             gh pr merge "${number}" \
               --repo "${repository}" \
               --squash \
-              --delete-branch
+              --match-head-commit "${head_sha}"
 
             echo "PR #${number}: merged for publication on ${today}."
           done

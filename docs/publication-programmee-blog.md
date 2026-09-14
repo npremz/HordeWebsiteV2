@@ -11,7 +11,9 @@ les relire ensemble sur staging, puis les publier automatiquement en production.
 | `draft: false` et `publishedDate` future | Visible avec un badge Planifié | Absent |
 | `draft: false` et date atteinte | Visible | Visible après le prochain build |
 
-Le staging doit être construit avec :
+Le staging doit être construit avec `SITE_ENV=staging`. Les brouillons et les
+articles futurs y sont visibles par défaut. La valeur explicite `1` permet
+aussi de forcer cet aperçu dans un build local non productif :
 
 ```dotenv
 SITE_ENV=staging
@@ -27,6 +29,23 @@ BLOG_PREVIEW_UNPUBLISHED=0
 
 Le build refuse volontairement la combinaison `SITE_ENV=production` et
 `BLOG_PREVIEW_UNPUBLISHED=1`.
+
+Le Dockerfile et Compose utilisent `staging` comme valeur de repli ; la
+production doit donc toujours passer explicitement `SITE_ENV=production`.
+`BLOG_PREVIEW_UNPUBLISHED=0` désactive l’aperçu, même sur staging.
+
+Les liens éditoriaux vers un article futur sont rendus en texte simple dans
+un build sans aperçu, puis redeviennent des liens lorsque la cible est publiée.
+Les flux RSS ne contiennent que les articles publiés, y compris sur staging.
+
+Après chaque build, exécuter `npm run check:seo` et `npm run check:blog` avec
+les mêmes variables d’environnement et la même horloge. Le second contrôle
+vérifie routes, liens prématurés, canonicals, robots, schémas, sitemap et RSS.
+
+Le lot de septembre et sa procédure de relecture se trouvent dans
+`docs/editorial/2026-09/README.md`. À ce stade, les dates sont préparées dans le
+dépôt ; le cron Dokploy et les fusions programmées en production restent à
+activer après validation. Un push sur staging ne les active pas.
 
 ## Sécurité du staging
 

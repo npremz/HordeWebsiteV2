@@ -1,0 +1,48 @@
+name: Validate website and blog
+
+on:
+  push:
+    branches: [staging, master]
+  pull_request:
+    branches: [staging, master]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: website-check-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      ASTRO_TELEMETRY_DISABLED: '1'
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v7
+        with:
+          node-version: '22'
+          cache: npm
+      - run: npm ci
+      - run: npm run check
+      - name: Build and validate production visibility
+        env:
+          SITE_ENV: production
+          BLOG_PREVIEW_UNPUBLISHED: '0'
+        run: |
+          npm run build
+          npm run check:seo
+          npm run check:blog
+      - name: Build and validate staging preview
+        env:
+          SITE_ENV: staging
+          BLOG_PREVIEW_UNPUBLISHED: ''
+        run: |
+          npm run build
+          npm run check:seo
+          npm run check:blog
