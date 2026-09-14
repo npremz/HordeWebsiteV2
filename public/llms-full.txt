@@ -2,7 +2,7 @@
 
 > Horde Agence est une agence web basee a Bruxelles, specialisee dans la creation de sites web sur mesure, l'UX design, la performance web, le SEO technique et les interfaces rapides. Le site public est bilingue francais/anglais, avec le francais comme langue principale.
 
-Derniere mise a jour: 2026-06-23
+Derniere mise a jour: 2026-09-14
 
 ## Informations generales
 
@@ -145,6 +145,36 @@ Prestations:
 - choix de stack selon les contraintes du projet
 - frontend possible en React, Next.js ou Astro
 - backend possible en Node.js ou autre architecture adaptee
+
+### Applications evenementielles
+
+- Slug: applications-evenementielles
+- URL FR: https://hordeagence.com/fr/services/applications-evenementielles/
+- URL EN: https://hordeagence.com/en/services/event-web-apps/
+- SEO title FR: Creation d'applications evenementielles a Bruxelles
+- Objectif: faire participer un public et coordonner les interfaces participants, animateur et affichage autour du deroule d'un evenement.
+- Cibles: organisateurs d'evenements, agences de communication, equipes marketing, animateurs de workshops et equipes produit.
+
+Prestations:
+
+- demonstrations, catalogues interactifs et quiz pour salons et stands
+- gestion d'equipes, defis, votes et progression pour workshops
+- simulateurs, parcours guides et presentations produit interactives
+- interfaces de pilotage et affichage synchronise
+- prise en main par l'equipe organisatrice
+
+Process:
+
+- cadrage de la date, du public, du lieu et du materiel
+- prototype du parcours et des interfaces
+- developpement et synchronisation
+- repetition sur les appareils prevus
+- mise en service et transmission
+
+L'hebergement, l'assistance le jour J et la reutilisation sont definis selon le perimetre convenu. Les usages hors ligne sont a prevoir et a tester. Le delai d'environ deux semaines cite dans les exemples existants reste conditionne a un besoin bien cadre.
+
+- Exemples FR: https://hordeagence.com/fr/blog/webapp-evenementielle-ia/
+- Exemples EN: https://hordeagence.com/en/blog/ai-assisted-event-web-apps/
 
 ### Optimisation site web
 

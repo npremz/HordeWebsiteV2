@@ -155,7 +155,7 @@ export const fr = {
       countLabel: 'Nos derniers projets',
     },
     services: {
-      title: 'Nos services de création de site web',
+      title: 'Nos services web et applications',
     },
     demarche: {
       title: 'Une méthode claire pour créer un site web rapide et utile',
@@ -273,12 +273,12 @@ export const fr = {
 
   // Services Page
   servicesPage: {
-    title: 'Création, refonte et optimisation web à Bruxelles',
+    title: 'Services web et applications à Bruxelles',
     description:
-      'Audit, refonte, e-commerce, landing page, MVP ou optimisation : découvrez les services de Horde pour créer un site rapide, clair et conçu pour convertir.',
+      'Audit, refonte, e-commerce, landing page, MVP, applications événementielles et optimisation : découvrez les services web de Horde à Bruxelles.',
     heading: 'La bonne solution pour\nfaire grandir votre business',
     intro:
-      'Audit, refonte web, e-commerce, landing page, MVP SaaS ou optimisation : on choisit la bonne approche pour créer un site rapide, clair et pensé pour le SEO, l’UX et la conversion.',
+      'Audit, refonte, e-commerce, landing page, MVP, applications événementielles ou optimisation : on définit la bonne approche pour votre site, votre produit ou votre événement.',
     breadcrumbHome: 'Accueil',
     breadcrumbServices: 'Services',
     breadcrumbAriaLabel: 'Fil d’Ariane',
@@ -334,6 +334,7 @@ export const fr = {
       creationEcommerce: 'E-Commerce',
       creationLandingPage: 'Landing Page',
       creationMvpSaas: 'Saas Mvp',
+      applicationsEvenementielles: 'Applications événementielles',
       optimisationSiteWeb: 'Optimisation',
       refonteSiteWeb: 'Refonte',
       autre: 'Autres',
@@ -341,6 +342,7 @@ export const fr = {
   },
 
   serviceSingle: {
+    heroLabel: 'Notre service de',
     exclusionsContactPrefix: 'Encore des zones d’ombre sur ce service ? N’hésitez pas à nous contacter par e-mail à l’adresse',
   },
 

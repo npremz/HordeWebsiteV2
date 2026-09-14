@@ -32,10 +32,21 @@ export const SERVICE_SHAPES = {
   ecommerce: shape(["1111", "0010", "1110", "0010", "1010", "1000", "1011", "1000", "1111"]),
   landing: shape(["0101", "1111", "1010", "1001", "1111", "0110", "1010", "0011", "0101"]),
   sass: shape(["1101", "0011", "1110", "0110", "1111", "1001", "1011", "1100", "0111"]),
+  event: shape(["1100", "1111", "1100", "0011", "1100", "0011", "1111", "0011", "1111"]),
   opti: shape(["0010", "1011", "0001", "0111", "1111", "1101", "0100", "1110", "1000"]),
 } satisfies Record<string, ShapeRadii>;
 
 export type ServiceShapeName = keyof typeof SERVICE_SHAPES;
+
+export const SERVICE_SHAPE_BY_SLUG: Record<string, ServiceShapeName> = {
+  'audit-offert': 'audit',
+  'refonte-site-web': 'refonte',
+  'creation-ecommerce': 'ecommerce',
+  'creation-landing-page': 'landing',
+  'creation-mvp-saas': 'sass',
+  'applications-evenementielles': 'event',
+  'optimisation-site-web': 'opti',
+};
 
 export function getServiceShapeName(shapeName: string | undefined): ServiceShapeName {
   return shapeName && shapeName in SERVICE_SHAPES
@@ -119,11 +130,13 @@ export function createServiceShapeAnimator(
 
   function draw(shapeName: ServiceShapeName) {
     cancel();
+    cellList[0]?.ownerSVGElement?.setAttribute("data-service-shape-name", shapeName);
     currentShape = cloneShape(SERVICE_SHAPES[shapeName]);
     drawShape(cellList, currentShape);
   }
 
   function animateTo(shapeName: ServiceShapeName, duration = 520) {
+    cellList[0]?.ownerSVGElement?.setAttribute("data-service-shape-name", shapeName);
     const targetShape = SERVICE_SHAPES[shapeName];
     const startShape = cloneShape(currentShape);
     const startTime = performance.now();

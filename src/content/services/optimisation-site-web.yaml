@@ -19,7 +19,7 @@ seoInternalLinks:
 h1: Optimisation de site web
 shortName: Optimisation site web
 footerTitle: Optimisation
-footerOrder: 5
+footerOrder: 6
 translations:
   en:
     seoUrl: /en/services/optimisation-site-web/
@@ -292,4 +292,4 @@ notes:
     de différenciation par rapport à une agence qui vend systématiquement des
     refontes.
   - Les résultats sont formulés à partir de mesures avant/après, jamais garantis à l'avance.
-order: 4
+order: 5

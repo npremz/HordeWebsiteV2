@@ -38,7 +38,7 @@ const initialPaths = getShapePathData(initialShape);
   data-service-hero-shape={hero ? "" : undefined}
   aria-hidden="true"
 >
-  <rect x="3.5" y="3.5" width="297" height="297" fill="white" stroke="#C9C9C9" vector-effect="non-scaling-stroke" />
+  <rect class="service-shape-background" x="3.5" y="3.5" width="297" height="297" fill="white" stroke="#C9C9C9" vector-effect="non-scaling-stroke" />
   <path d="M102.5 3.5V300.5M201.5 3.5V300.5M3.5 102.5H300.5M3.5 201.5H300.5" stroke="#C9C9C9" vector-effect="non-scaling-stroke" />
   {initialPaths.map((pathData) => (
     <path
