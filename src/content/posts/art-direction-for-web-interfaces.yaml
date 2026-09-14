@@ -1,0 +1,39 @@
+slug: art-direction-for-web-interfaces
+slug_fr: direction-artistique-interface-web
+title_fr: Une interface peut avoir du caractère sans se mettre en travers du chemin.
+title_en: Give an interface character and room to work.
+seoTitle_fr: 'Direction artistique web : identité et usage'
+seoTitle_en: 'Web art direction: identity and usability'
+excerpt_fr: >-
+  Une direction artistique ne se résume pas à une palette. Voici comment donner
+  du caractère à une interface sans compliquer la vie de ses utilisateurs.
+excerpt_en: >-
+  Art direction is more than a palette. Learn how to give an interface a distinct
+  identity while keeping the experience clear and comfortable to use.
+seoDescription_fr: >-
+  Reliez identité de marque et qualité d’usage : typographie, couleur, composition
+  et critères de validation, avec deux variantes à comparer.
+seoDescription_en: >-
+  Connect brand identity with usability through typography, colour and layout.
+  Compare two interactive directions and use a practical review checklist.
+featuredImageAlt_fr: Une arche bleue encadre un passage clair entre des formes lavande et un chemin vert.
+featuredImageAlt_en: A blue arch frames a clear passage between lavender shapes and a lime green path.
+featuredImage: /src/assets/images/blog/art-direction-for-web-interfaces/featuredImage.png
+author: alexandre-potakowski
+category: ux-design
+workshop: direction
+publishedDate: 2026-09-15
+readingTime: 7
+keyTakeaways_fr:
+  - La direction artistique traduit une intention de marque en règles de typographie, de couleur, de composition et de mouvement.
+  - Les zones d’expression peuvent être singulières ; les informations et les actions doivent rester compréhensibles.
+  - Comparer deux variantes avec le même contenu aide à isoler ce que leurs choix visuels changent réellement.
+  - Une préférence esthétique ne prouve ni une meilleure conversion ni une expérience accessible.
+keyTakeaways_en:
+  - Art direction turns brand intent into rules for type, colour, composition and movement.
+  - Expressive areas can be distinctive while information and actions remain understandable.
+  - Comparing variants with identical content helps isolate what the visual choices actually change.
+  - An aesthetic preference does not prove higher conversion or an accessible experience.
+featured: false
+draft: false
+seoRobots: index, follow

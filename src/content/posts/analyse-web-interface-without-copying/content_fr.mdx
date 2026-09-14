@@ -1,0 +1,83 @@
+Pour analyser une interface web sans la copier, partez de la tâche qu’elle organise, observez ses choix et formulez le principe que vous pourriez réutiliser. Une couleur, un arrondi ou un effet peuvent vous plaire. Ils n’expliquent pas encore pourquoi une personne comprend quoi faire.
+
+Une référence devient intéressante lorsqu’elle aide à répondre à une question précise : comment montrer ce qui reste à compléter ? Comment réparer une erreur ? Que dire lorsqu’il n’y a encore aucun contenu ? **On emprunte un raisonnement, pas une identité.**
+
+Cette démarche complète le travail de [direction artistique web](/fr/blog/direction-artistique-interface-web/). Les conventions peuvent soutenir l’usage sans imposer la même apparence à tout le monde. Pour l’illustrer, nous analysons trois références publiques documentées. Les schémas de l’atelier sont des interprétations pédagogiques originales, pas des captures ni des résultats de tests.
+
+## Choisir une référence pour la question qu’elle éclaire
+
+Une galerie de beaux écrans répond à une question de goût. Elle peut être utile pour explorer un ton, une matière ou une composition. Mais elle répond mal à une question de parcours si l’on ne voit ni l’avant, ni l’après, ni les situations d’erreur.
+
+Choisissez donc une référence dont le fonctionnement est observable ou documenté. Notez la personne supposée, la tâche, le point d’entrée et la suite. Si vous ne connaissez pas ces éléments, écrivez « inconnu ». Il est préférable de conserver une lacune que de la remplir par une histoire convaincante.
+
+Pour une inscription à un atelier, un tableau de bord complexe n’est pas forcément une bonne référence. Pour un dossier qui se complète sur plusieurs jours, une page d’achat express ne l’est pas nécessairement davantage. La ressemblance de secteur importe parfois moins que la ressemblance de tâche.
+
+Vous pouvez ainsi regarder un service public pour la correction d’erreurs et un outil de développement pour son premier usage. Cela ne vous oblige ni à adopter leur ton ni à reproduire leur structure entière.
+
+## Séparer observation, interprétation et hypothèse
+
+Nous utilisons trois niveaux de notes. L’observation décrit quelque chose que l’on peut montrer. L’interprétation propose une raison. L’hypothèse dit ce que l’on voudrait vérifier dans son propre contexte.
+
+| Niveau | Exemple de note | Ce que cela ne prouve pas |
+| --- | --- | --- |
+| Observation | Le résumé liste les champs à corriger avant le formulaire | Que tous les visiteurs le remarquent |
+| Interprétation | Il pourrait aider à comprendre l’étendue du problème | Qu’il réduit effectivement l’abandon |
+| Hypothèse | Sur notre formulaire long, ce résumé aiderait à reprendre la correction | Que le même motif est utile sur un champ unique |
+
+Cette séparation évite une formule fréquente : « Ils le font, donc ça marche. » Même une organisation reconnue peut avoir des contraintes différentes, un historique technique ou des compromis invisibles.
+
+Les chiffres ne doivent pas être inventés pour rendre l’analyse plus solide. Sans mesure publiée et pertinente, décrivez le mécanisme et sa limite. L’objectif de cette méthode est une décision mieux argumentée, pas une promesse de conversion.
+
+## Référence 1 : rendre visible le travail restant
+
+Le composant [task list de GOV.UK](https://design-system.service.gov.uk/components/task-list/) associe des tâches à des états. Sa documentation le réserve à des démarches suffisamment complexes, pouvant s’étaler sur plusieurs sessions ou autoriser un ordre flexible. Elle invite d’abord à chercher une simplification.
+
+Dans notre schéma, un dossier fictif distingue les coordonnées renseignées, les pièces manquantes et un envoi encore indisponible. La décision intéressante n’est pas la couleur du statut. C’est le fait de rendre le travail restant visible à côté de chaque tâche.
+
+Nous pourrions retenir cette règle : lorsque quelqu’un reprend une démarche interrompue, lui montrer ce qui est fait, ce qui manque et ce qui bloque la suite. La règle reste utile même si l’identité visuelle, les mots et la mise en page changent.
+
+À l’inverse, une réservation qui demande seulement une date et un nom n’a peut-être besoin d’aucune liste de tâches. L’ajouter donnerait une impression de complexité sans aider la personne. La bonne analyse sait aussi conclure : « Ce motif n’est pas pour nous. »
+
+La question à tester serait la reprise : après une interruption, une personne comprend-elle où continuer sans relire tout le dossier ? Le schéma ne fournit pas cette réponse.
+
+## Référence 2 : aider à réparer plutôt que signaler un échec
+
+L’[error summary de GOV.UK](https://design-system.service.gov.uk/components/error-summary/) rassemble les problèmes, les relie aux champs concernés et prévoit le déplacement du focus vers le résumé. Les messages du résumé et ceux des champs doivent correspondre.
+
+Notre schéma simplifie le principe à une date manquante. « À corriger avant de continuer » annonce un travail possible. « Date : indiquez le jour souhaité » nomme l’information attendue. Le message ne se contente pas d’un échec général.
+
+Ce que nous en retenons est une relation : une vue d’ensemble pour comprendre le problème, puis un accès précis à l’endroit où agir. Reprendre seulement le bloc rouge, sans les liens, le focus ni les messages associés, copierait l’apparence en perdant le comportement.
+
+Cette distinction compte aussi lorsque [l’IA produit une interface convaincante](/fr/blog/ia-interfaces-experiences-utilisateur/). Un état d’erreur peut sembler crédible dans une image tout en étant pénible au clavier ou impossible à corriger sans perdre sa saisie.
+
+Dans un vrai formulaire, il faudrait vérifier la navigation vers les champs, les annonces, la conservation des valeurs et le retour après correction. Notre panneau explicatif n’implémente pas tout le composant GOV.UK et ne doit pas être utilisé comme substitut prêt à déployer.
+
+## Référence 3 : expliquer une absence de contenu
+
+Le composant [Blankslate de Primer](https://primer.style/product/components/blankslate/) organise un état sans contenu avec une explication et, selon le besoin, une action principale ou secondaire. Cette structure aide à donner un sens à une zone qui serait autrement vide.
+
+Pour notre atelier fictif, l’espace annonce qu’aucun atelier n’a été enregistré et propose d’en créer un. Le message relie une situation à une prochaine action. Il ne remplit pas le vide avec une décoration qui laisse la personne se demander si la page a fini de charger.
+
+Mais « vide » recouvre plusieurs réalités. Une première visite, une recherche sans résultat, un accès insuffisant et une panne ne demandent pas le même message. Les traiter avec un seul texte rassurant peut cacher le vrai problème.
+
+La règle que nous garderions serait donc : expliquer pourquoi le contenu manque et proposer une action compatible avec cette cause. Si la cause n’est pas connue, éviter de l’inventer. Un bouton « créer » serait malvenu si les éléments existent mais ne peuvent pas être chargés.
+
+La vérification portera sur la compréhension de l’état et la pertinence de l’action, pas uniquement sur l’agrément de l’illustration.
+
+## Transformer l’analyse en décision pour votre projet
+
+À la fin d’une revue, rédigez une fiche courte : le problème à résoudre, la référence, l’observation, le principe retenu, les différences de contexte et la prochaine vérification. Ajoutez explicitement ce que vous ne reprenez pas.
+
+Par exemple : « Nous retenons l’idée d’un état associé à chaque étape pour permettre une reprise. Nous ne reprenons pas l’apparence GOV.UK. Notre démarche est plus courte ; nous vérifierons d’abord qu’une seule page ne suffit pas. » Cette formulation est exploitable par le design et le développement.
+
+Si l’équipe ne parvient pas à écrire la différence de contexte, revenez au [brief de l’expérience](/fr/blog/brief-design-web-cadrer-experience/). La référence ne peut pas fournir à votre place la connaissance du public ou la priorité de l’organisation.
+
+Une analyse réussie peut conduire à moins de composants, pas davantage. Elle peut aussi montrer qu’un motif conventionnel mérite d’être conservé pendant que la singularité se construit ailleurs : dans le contenu, la composition, les preuves et les détails propres à la marque. C’est ainsi qu’un [site peut se démarquer sans devenir déroutant](/fr/blog/comment-creer-site-web-qui-se-demarque-2026/).
+
+Si vous avez accumulé des références sans parvenir à choisir, [parlons du parcours que vous voulez créer](/fr/contact/). Le bon point de départ n’est pas « quel site préfère-t-on ? », mais « quelle décision cette référence nous aide-t-elle à prendre ? ».
+
+## Sources
+
+- [GOV.UK Design System : task list](https://design-system.service.gov.uk/components/task-list/)
+- [GOV.UK Design System : error summary](https://design-system.service.gov.uk/components/error-summary/)
+- [GitHub Primer : Blankslate](https://primer.style/product/components/blankslate/)

@@ -1,0 +1,86 @@
+Faire travailler le design et le développement web ensemble consiste à partager des décisions sur le comportement, pas seulement à transmettre des écrans. Le designer précise ce que l’interface doit permettre et faire comprendre. Le développeur participe aux choix qui doivent résister au contenu réel, aux différents appareils et aux situations moins confortables.
+
+Une maquette peut être impeccable et son implémentation décevante sans que personne ait mal travaillé. Il suffit qu’une décision importante soit restée implicite : que fait le bouton lorsque le texte s’allonge ? Où apparaît une erreur ? Quel élément garde la priorité sur mobile ?
+
+La [direction artistique d’une interface](/fr/blog/direction-artistique-interface-web/) pose une intention. Le travail commun consiste à préserver cette intention dans un système qui répond. L’atelier ci-dessus propose un petit formulaire fictif pour rendre cette différence tangible, sans prétendre reproduire une maquette ou un projet client.
+
+## Une capture décrit un état, pas un comportement
+
+Une image peut montrer un titre sur deux lignes et un bouton parfaitement aligné. Elle ne dit pas si la hauteur est fixe, si le titre peut en occuper quatre, ni ce qui arrive lorsque la traduction anglaise change les proportions.
+
+Elle ne dit pas non plus comment une personne atteint le bouton au clavier, ce qui se passe après l’envoi ou comment reprendre après une erreur. Ce ne sont pas de petits détails ajoutés à la fin. Ils font partie de l’interface que quelqu’un utilisera réellement.
+
+Le guide de [transmission au développement de Figma](https://www.figma.com/best-practices/guide-to-developer-handoff/) traite notamment de la collaboration, de l’organisation et du contexte à transmettre. Nous en tirons une règle pratique : un fichier bien rangé aide, mais il ne remplace pas une conversation sur les états et les arbitrages.
+
+Cette conversation n’exige pas d’avoir tout dessiné. Elle exige de rendre visibles les questions qui pourraient conduire le développeur à inventer une réponse incompatible avec l’intention du design.
+
+## Écrire un petit contrat de composant
+
+Pour un composant important, documentez quatre choses : sa tâche, ses états, ce qui peut varier et ce qui doit rester vrai. Quelques lignes précises valent mieux qu’une longue spécification qui répète les pixels visibles.
+
+Voici le contrat de notre démonstration. La personne essaie de vérifier une demande de participation. Le formulaire doit rendre la saisie obligatoire compréhensible, expliquer une erreur sans effacer le texte et confirmer une vérification locale sans annoncer une réservation réelle.
+
+| Élément | Décision | Vérification |
+| --- | --- | --- |
+| Libellé | Le bouton décrit la prochaine étape | La version longue revient à la ligne sans être coupée |
+| Largeur | Le composant dépend de son conteneur | Le champ et l’action restent utilisables en mode étroit |
+| Erreur | Le problème est écrit près du champ | Une saisie vide affiche le message et place le focus sur le champ |
+| Confirmation | Le résultat n’exagère pas ce qui a eu lieu | Le message précise que rien n’a été envoyé |
+| Saisie | Une erreur ne remet pas le formulaire à zéro | Le prénom reste présent après la vérification |
+
+Ce contrat est volontairement limité. Il n’inclut ni paiement, ni places disponibles, ni panne réseau. Sur un vrai service de réservation, ces cas demanderaient des décisions supplémentaires, pas une confiance implicite dans cette démo.
+
+## Éprouver le composant avec du contenu qui résiste
+
+Commencez par activer le libellé long, puis le conteneur étroit. Le texte prend davantage de place ; le bouton doit l’accepter. Une hauteur fixe calibrée sur le libellé court donnerait un résultat plus fragile.
+
+Le but n’est pas de préserver à tout prix la silhouette initiale. C’est de préserver la hiérarchie et l’action. Un bouton plus haut peut être acceptable. Un texte masqué pour garder l’alignement ne l’est pas forcément.
+
+La même méthode s’applique aux cartes d’équipe, aux prix, aux noms d’événements et aux blocs de témoignages. Demandez un exemple court, un exemple long et un cas incomplet. Utilisez des contenus plausibles pour l’organisation plutôt que du faux latin qui ne révèle pas les vrais problèmes.
+
+Le critère WCAG de [redistribution du contenu](https://www.w3.org/WAI/WCAG22/Understanding/reflow.html) encadre notamment l’accès au contenu lorsque l’espace disponible se réduit, avec certaines exceptions. Notre bouton de largeur réduite n’est pas un audit WCAG : c’est une façon de rendre un risque visible tôt. La vérification de la page complète, du zoom et des autres contenus reste nécessaire.
+
+## Concevoir l’erreur comme une partie du parcours
+
+Essayez maintenant de vérifier la demande sans prénom. Le champ reçoit un message précis et le focus y revient. Remplissez-le, puis recommencez. La confirmation explique la portée limitée de l’action.
+
+Dans le code de cette démonstration, le champ est associé à son message avec `aria-describedby`. Son état invalide est indiqué avec `aria-invalid`. Les messages dynamiques utilisent une région d’annonce polie. Ce sont des décisions inspectables, pas un certificat d’accessibilité.
+
+Le tutoriel [WAI sur la validation des formulaires](https://www.w3.org/WAI/tutorials/forms/validation/) explique les besoins de retour et de correction. Il rappelle aussi que la validation côté client ne suffit pas à garantir des données valides côté serveur. Dans un service réel, le serveur doit rester responsable des règles et de la sécurité.
+
+Le choix d’un vrai élément [button](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/button) évite également de recréer inutilement le comportement de base d’un bouton. Il faut néanmoins préciser son type et vérifier le parcours complet au clavier. Un bon élément HTML ne corrige pas une mauvaise organisation des actions.
+
+## Décider ensemble avant de figer la maquette
+
+Un passage de relais devient coûteux lorsque toute question ressemble à une remise en cause d’un design déjà vendu comme terminé. Une courte revue avant cette validation permet de distinguer l’intention indispensable de la forme encore négociable.
+
+Pour chaque point délicat, posez trois questions. Qu’est-ce que l’utilisateur doit comprendre ? Quelles contraintes techniques influencent la réponse ? Quelle variante conserve l’intention avec le moins de complexité inutile ?
+
+Par exemple, un effet de transition très personnalisé peut être central dans une expérience événementielle et secondaire dans un formulaire administratif. La décision ne se résume pas à « le design veut une animation » contre « le développement veut la retirer ». Elle porte sur le rôle de cette animation, son coût et ses alternatives.
+
+L’IA peut aider à produire des variantes ou à repérer des cas oubliés. Elle ne dispense pas de choisir les comportements à assumer. C’est précisément le sujet de notre article sur [l’IA et la responsabilité de l’expérience](/fr/blog/ia-interfaces-experiences-utilisateur/).
+
+## Faire une recette de parcours, pas seulement une revue d’images
+
+Une comparaison visuelle reste utile : marges, proportions, couleurs et rendu typographique participent à la qualité. Mais elle doit être accompagnée d’une tâche à réaliser dans le navigateur.
+
+Pour le formulaire de l’atelier, la recette tient en quelques actions : réduire la largeur, allonger le bouton, parcourir au clavier, envoyer une saisie vide, corriger et lire le résultat. Dans un produit réel, ajoutez le chargement, l’échec du serveur, le double envoi et la reprise après interruption selon les risques du service.
+
+Documentez ce qui a été vérifié, sur quel environnement, et ce qui reste inconnu. « Testé sur mobile » est peu exploitable sans taille d’écran, navigateur ni tâche. « Conforme » ne doit pas être utilisé lorsque seule une petite partie du parcours a été inspectée.
+
+La [rapidité perçue et la réactivité](/fr/blog/c-est-quoi-un-site-vraiment-rapide/) font aussi partie de cette recette. Un bouton fidèle à la maquette, mais qui ne donne aucun retour pendant une attente, laisse la personne dans l’incertitude.
+
+## Ce que vous devriez recevoir à la livraison
+
+Vous devriez pouvoir retrouver l’intention, le composant réellement construit, ses états importants et les limites connues. Les décisions doivent être compréhensibles par une autre personne que les deux auteurs initiaux du projet.
+
+Cela n’impose pas une documentation lourde. Pour une petite interface, une fiche courte et des exemples exécutables peuvent suffire. Pour un système plus grand, ces mêmes principes peuvent alimenter une bibliothèque de composants et des tests réutilisables.
+
+Chez Horde, nous défendons cette continuité entre design et code : la qualité de l’expérience se juge dans ce qui est livré, pas seulement dans ce qui est présenté. Si votre [projet de refonte](/fr/services/refonte-site-web-bruxelles/) souffre de cet écart, [parlons du parcours à préserver](/fr/contact/) avant de multiplier les écrans.
+
+## Sources
+
+- [Figma : guide to developer handoff](https://www.figma.com/best-practices/guide-to-developer-handoff/)
+- [W3C : reflow](https://www.w3.org/WAI/WCAG22/Understanding/reflow.html)
+- [WAI : validation des formulaires](https://www.w3.org/WAI/tutorials/forms/validation/)
+- [MDN : élément button](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/button)
