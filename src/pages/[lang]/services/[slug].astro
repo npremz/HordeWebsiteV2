@@ -33,10 +33,13 @@ export async function getStaticPaths() {
 const { service, lang } = Astro.props as { service: ServiceEntry; lang: Locale };
 const t = useTranslations(lang);
 const localizedService = localizeServiceEntry(service, lang);
+const switchLang: Locale = lang === 'fr' ? 'en' : 'fr';
+const alternateUrl = localizeServiceEntry(service, switchLang).data.seoUrl;
 ---
 
 <Layout
   lang={lang}
+  alternateUrl={alternateUrl}
   title={localizedService.data.seoTitle}
   description={localizedService.data.seoDescription}
   robots={localizedService.data.seoRobots as 'index, follow' | 'noindex, follow' | 'noindex, nofollow'}

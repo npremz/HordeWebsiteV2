@@ -2,7 +2,7 @@
 
 > Horde Agence est une agence web basee a Bruxelles. Nous concevons des sites web sur mesure, rapides, bien references et simples a maintenir.
 
-Derniere mise a jour: 2026-06-23
+Derniere mise a jour: 2026-09-14
 
 ## Identite
 
@@ -17,7 +17,7 @@ Derniere mise a jour: 2026-06-23
 
 ## Positionnement
 
-Horde Agence accompagne les entreprises qui veulent un site plus rapide, plus clair et plus utile commercialement. L'agence travaille avec une approche senior-only: pas d'intermediaires, pas de chefs de projet et pas de process lourd. Les missions couvrent l'audit, l'optimisation, la refonte, la creation de landing pages, le e-commerce et les MVP SaaS.
+Horde Agence accompagne les entreprises qui veulent un site plus rapide, plus clair et plus utile commercialement. L'agence travaille avec une approche senior-only: pas d'intermediaires, pas de chefs de projet et pas de process lourd. Les missions couvrent l'audit, l'optimisation, la refonte, la creation de landing pages, le e-commerce, les MVP SaaS et les applications evenementielles.
 
 ## Equipe
 
@@ -55,6 +55,14 @@ Horde Agence accompagne les entreprises qui veulent un site plus rapide, plus cl
 - URL FR: https://hordeagence.com/fr/services/creation-mvp-saas
 - Objectif: transformer une idee produit en premiere version utilisable.
 - Axes: cadrage produit, UX, prototypage, developpement, mise en production et suivi post-lancement.
+
+### Applications evenementielles
+
+- URL FR: https://hordeagence.com/fr/services/applications-evenementielles/
+- URL EN: https://hordeagence.com/en/services/event-web-apps/
+- Objectif: faire participer un public et piloter une experience en direct pendant un salon, un workshop ou une presentation produit.
+- Axes: interfaces participants, outils de pilotage, affichage synchronise, prototype, repetition et mise en service.
+- Exemples: https://hordeagence.com/fr/blog/webapp-evenementielle-ia/
 
 ### Optimisation site web
 

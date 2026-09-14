@@ -156,7 +156,7 @@ export const en: Translations = {
       countLabel: 'Our latest projects',
     },
     services: {
-      title: 'Website design and development services in Brussels',
+      title: 'Our website and web app services',
     },
     demarche: {
       title: 'A clear method to build a fast, useful website',
@@ -274,12 +274,12 @@ export const en: Translations = {
 
   // Services Page
   servicesPage: {
-    title: 'Web design, redesign and optimization in Brussels',
+    title: 'Website and web app services in Brussels',
     description:
-      'Explore Horde’s website audit, redesign, e-commerce, landing page, SaaS MVP and optimization services for faster, clearer digital experiences.',
+      'Explore Horde’s website audit, redesign, e-commerce, landing page, MVP, event web app and optimization services in Brussels.',
     heading: 'The right solution to make\nyour business grow',
     intro:
-      'Audit, web redesign, e-commerce, landing page, SaaS MVP or optimization: we choose the right approach to build a fast, clear website designed for SEO, UX and conversion.',
+      'Audit, redesign, e-commerce, landing page, MVP, event web apps or optimization: we define the right approach for your website, product or event.',
     breadcrumbHome: 'Home',
     breadcrumbServices: 'Services',
     breadcrumbAriaLabel: 'Breadcrumb',
@@ -335,6 +335,7 @@ export const en: Translations = {
       creationEcommerce: 'E-Commerce',
       creationLandingPage: 'Landing Page',
       creationMvpSaas: 'Saas Mvp',
+      applicationsEvenementielles: 'Event web apps',
       optimisationSiteWeb: 'Optimisation',
       refonteSiteWeb: 'Refonte',
       autre: 'Other',
@@ -342,6 +343,7 @@ export const en: Translations = {
   },
 
   serviceSingle: {
+    heroLabel: 'Our service',
     exclusionsContactPrefix: 'Still unclear about this service? Contact us by email at',
   },
 

@@ -50,6 +50,7 @@ export interface FormTranslations {
     creationEcommerce: string;
     creationLandingPage: string;
     creationMvpSaas: string;
+    applicationsEvenementielles: string;
     optimisationSiteWeb: string;
     refonteSiteWeb: string;
     autre: string;
@@ -114,6 +115,7 @@ export default function ContactForm({
     { value: 'creation-ecommerce', label: t.options.creationEcommerce },
     { value: 'creation-landing-page', label: t.options.creationLandingPage },
     { value: 'creation-mvp-saas', label: t.options.creationMvpSaas },
+    { value: 'applications-evenementielles', label: t.options.applicationsEvenementielles },
     { value: 'optimisation-site-web', label: t.options.optimisationSiteWeb },
     { value: 'refonte-site-web', label: t.options.refonteSiteWeb },
     { value: 'autre', label: t.options.autre },

@@ -44,6 +44,15 @@ const bodyClass = "text-[1.125rem] max-w-[900px]";
       })}
     </div>
 
+    {service.secondaryCtaLabel && service.secondaryCtaUrl && (
+      <p class="mt-8 text-[1.125rem]">
+        <AnimatedUnderlineLink href={service.secondaryCtaUrl} label={service.secondaryCtaLabel} />
+      </p>
+    )}
+    {service.reassurance && (
+      <p class="mt-5 text-[1rem]">{service.reassurance}</p>
+    )}
+
     <div id="contact-form" class="mt-[120px]">
       <ContactForm
         client:visible
