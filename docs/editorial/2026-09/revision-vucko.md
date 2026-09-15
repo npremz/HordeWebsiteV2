@@ -108,7 +108,18 @@ ci-dessus provient d'une nouvelle passe complète du build final, avec serveur
 Docker stable et renouvellement de Chromium entre tailles d'écran. Les
 artefacts sont dans `/tmp/horde-vucko-rewrite.HsIlNT/final-artifacts/`.
 
-Vérification du déploiement staging : à effectuer après l'envoi Git.
+Déploiement staging vérifié le 15 septembre, après le push du commit `4065e26` :
+
+- [Validation GitHub réussie](https://github.com/npremz/HordeWebsiteV2/actions/runs/34953819828).
+- Le pilote FR en ligne présente Vucko et ses trois captures, sans Rijksmuseum,
+  avec `noindex, nofollow`. Six cas navigateur réussis sur la paire FR/EN, aux
+  trois largeurs ; artefacts dans `/tmp/horde-vucko-rewrite.HsIlNT/live-artifacts/`.
+- Le texte rendu en ligne correspond exactement au texte du build final testé.
+- `master` reste au commit `d763611`, sans fusion ni déploiement de production.
+  La route FR du pilote sur `https://hordeagence.com/` répond toujours HTTP 404.
+
+Le choix de référence est intégré et présenté pour relecture, pas approuvé pour
+publication. L'anglais et le statut brouillon restent inchangés.
 
 ## Suite après relecture
 
