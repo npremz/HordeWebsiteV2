@@ -8,11 +8,15 @@ les deux langues. Le nouveau pilote à valider est **« Comment s'inspirer d'un
 site web sans le copier »**, réécrit en français avec trois captures réelles de
 Vucko le 15 septembre, après validation du choix de cette référence.
 L'anglais conserve provisoirement son ancien angle, avec nettoyage des renvois
-aux ateliers. Sa réécriture attend la validation du français.
+aux ateliers. Son alignement sur Vucko reste à faire.
 
-Cette paire est repassée en `draft: true` pour empêcher toute sortie automatique
-avant cette validation. Elle reste accessible sur staging. Voir
-[revision-vucko.md](revision-vucko.md) pour le périmètre et les contrôles actuels.
+Le 15 septembre, Nicolas a demandé de retirer le pilote du brouillon : la paire
+est maintenant en `draft: false`, avec la date du 22 septembre conservée. Ce
+statut est partagé par les deux langues ; il ne signifie pas que l'anglais a été
+réécrit ou validé comme traduction du français. Aucune fusion en production.
+Le pilote reste planifié et visible sur staging, absent d'un build de production
+avant sa date. Voir [revision-vucko.md](revision-vucko.md) pour la réécriture et
+la section ci-dessous pour la correction du hero.
 
 ## Les pages à relire
 
@@ -21,7 +25,7 @@ avant cette validation. Elle reste accessible sur staging. Voir
 | 15/09 | Direction artistique | [Lire](https://waf.hordagency.com/fr/blog/direction-artistique-interface-web/) | [Read](https://waf.hordagency.com/en/blog/art-direction-for-web-interfaces/) |
 | 17/09 | Mise à jour IA et expérience | [Lire](https://waf.hordagency.com/fr/blog/ia-interfaces-experiences-utilisateur/) | [Read](https://waf.hordagency.com/en/blog/ai-can-create-interfaces-not-experiences/) |
 | 18/09 | Design et développement | [Lire](https://waf.hordagency.com/fr/blog/design-developpement-web-ensemble/) | [Read](https://waf.hordagency.com/en/blog/design-and-web-development-together/) |
-| 22/09, à confirmer | S'inspirer sans copier, pilote FR | [Lire la nouvelle version](https://waf.hordagency.com/fr/blog/analyser-interface-web-sans-copier/) | [Ancienne version, à réécrire après validation FR](https://waf.hordagency.com/en/blog/analyse-web-interface-without-copying/) |
+| 22/09, date conservée | S'inspirer sans copier, sorti du brouillon | [Lire la nouvelle version](https://waf.hordagency.com/fr/blog/analyser-interface-web-sans-copier/) | [Ancienne version, à aligner sur Vucko](https://waf.hordagency.com/en/blog/analyse-web-interface-without-copying/) |
 | 24/09 | Mise à jour différenciation | [Lire](https://waf.hordagency.com/fr/blog/comment-creer-site-web-qui-se-demarque-2026/) | [Read](https://waf.hordagency.com/en/blog/how-to-make-your-website-stand-out-2026/) |
 | 29/09 | Brief d’expérience | [Lire](https://waf.hordagency.com/fr/blog/brief-design-web-cadrer-experience/) | [Read](https://waf.hordagency.com/en/blog/web-design-brief-before-screens/) |
 
@@ -57,7 +61,7 @@ Il n'y a plus de formulaire de démonstration ni de téléchargement de brief.
 - `revision-clarte.md` : historique du retrait des ateliers et du premier pilote.
 - `audit.md` : historique de la première livraison, notes éditoriales retirées.
 - `distribution.md` : propositions initiales mises en attente, à réviser avant tout envoi.
-- `browser-check.cjs` : test reproductible des douze pages en trois tailles ;
+- `browser-check.cjs` : test reproductible des douze pages en quatre tailles ;
   `BLOG_TEST_PILOT_ONLY=1` limite la passe à la paire du pilote.
 - `style-check.py` et `style-results.json` : diagnostics descriptifs de rédaction.
 
@@ -68,6 +72,37 @@ leurs images existantes. Les captures sont des images locales insérées dans le
 corps français ; `src/lib/content/blog-inline-images.ts` valide leur syntaxe.
 Astro produit les versions WebP adaptées aux écrans. Le composant d'atelier et
 son champ YAML ont été supprimés ; leurs versions précédentes restent dans Git.
+
+## Correction du hero, 15 septembre
+
+Le bandeau d'aperçu placé avant le hero décalait son fond noir de 44 px sur le
+pilote, aux largeurs 375, 768, 1440 et 1920 px. Un article déjà publié, sans ce
+bandeau, gardait son fond à 0 px. Le statut est maintenant dans le hero, au-dessus
+du titre, sur un fond sombre. Aucun style global ou header partagé n'est modifié.
+
+Les tests navigateur vérifient aussi le fond noir en haut du viewport, sa pleine
+largeur et l'absence de chevauchement du statut avec le menu ou le titre. Une
+navigation depuis le listing est exercée sur mobile et grand écran.
+Captures et résultats : `/tmp/horde-blog-hero.OkKKBf/`.
+
+Contrôles de cette correction :
+
+- Validateur Horde : zéro erreur ; avertissement attendu pour la date future.
+  Les corps FR/EN, images, URLs, liens et temps de lecture sont inchangés.
+- Tests d'images : 4/4. Astro : zéro erreur, zéro avertissement et 17 indications
+  préexistantes.
+- Builds et vérifications SEO/programmation réussis : 76 pages HTML et 18 routes
+  de blog visibles en production simulée, six routes futures absentes ; 82 pages
+  HTML et 24 routes visibles en aperçu staging. RSS/sitemaps générés par Astro.
+- Navigateur : 48/48 cas réussis, douze pages FR/EN × 375/768/1440/1920 px,
+  fond du hero à 0 px, captures lisibles, aucun débordement horizontal ni erreur
+  JavaScript, aucune violation axe détectée dans les corps pour les règles testées.
+  Une première passe interrompue par la fermeture de Chromium après 33 cas
+  n'est pas comptée comme réussie ; la passe complète est dans `final/`.
+
+Le contrôle `--built` du skill n'est pas utilisé pour annoncer une publication
+immédiate : l'absence du pilote en production avant le 22 septembre est voulue.
+La séparation aperçu/publication est vérifiée par les contrôles du dépôt.
 
 ## Ce que la suite en production doit encore faire
 

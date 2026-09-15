@@ -14,15 +14,41 @@ const pages = [
   ['ia-interfaces-experiences-utilisateur', 'ai-can-create-interfaces-not-experiences'],
   ['comment-creer-site-web-qui-se-demarque-2026', 'how-to-make-your-website-stand-out-2026'],
 ].filter(([frSlug]) => process.env.BLOG_TEST_PILOT_ONLY !== '1' || frSlug === 'analyser-interface-web-sans-copier');
+
+async function assertHeroAtViewportTop(page, href) {
+  const geometry = await page.locator('[data-blog-hero]').evaluate(element => {
+    const rect = element.getBoundingClientRect();
+    const notice = element.querySelector('[data-blog-publication-status]');
+    return {
+      top: rect.top,
+      left: rect.left,
+      right: rect.right,
+      viewportWidth: innerWidth,
+      background: getComputedStyle(element).backgroundColor,
+      noticeTop: notice?.getBoundingClientRect().top,
+      headingTop: element.querySelector('h1').getBoundingClientRect().top,
+      noticeBottom: notice?.getBoundingClientRect().bottom,
+    };
+  });
+  assert(Math.abs(geometry.top) <= 1, 'Hero offset at viewport top: ' + href + ' ' + JSON.stringify(geometry));
+  assert(geometry.left <= 1 && geometry.right >= geometry.viewportWidth - 1, 'Hero must cover the viewport width: ' + href);
+  assert.equal(geometry.background, 'rgb(22, 25, 27)', 'Hero background: ' + href);
+  if (geometry.noticeTop !== undefined) {
+    assert(geometry.noticeTop >= 48, 'Preview notice hidden behind the fixed navigation: ' + href);
+    assert(geometry.noticeBottom < geometry.headingTop, 'Preview notice overlaps the title: ' + href);
+  }
+  return geometry;
+}
+
 (async () => {
   await fs.mkdir(artifacts, { recursive: true });
   let browser;
   const results = [];
   try {
-    for (const width of [375, 768, 1440]) {
-      // Release Chromium resources between viewport batches on small review hosts.
-      browser = await chromium.launch({ headless: true });
+    for (const width of [375, 768, 1440, 1920]) {
       for (const lang of ['fr', 'en']) {
+        // Release Chromium resources between locale/viewport batches on small review hosts.
+        browser = await chromium.launch({ headless: true });
         for (const [frSlug, enSlug] of pages) {
           const slug = lang === 'fr' ? frSlug : enSlug;
           const context = await browser.newContext({ viewport: { width, height: 1000 }, reducedMotion: 'reduce' });
@@ -35,6 +61,7 @@ const pages = [
           const response = await page.goto(base + href, { waitUntil: 'networkidle' });
           assert.equal(response.status(), 200, slug);
           assert.equal(await page.locator('h1').count(), 1);
+          const heroGeometry = await assertHeroAtViewportTop(page, href);
           assert.equal(await page.locator('meta[name="robots"]').getAttribute('content'), 'noindex, nofollow');
           assert.equal(new URL(await page.locator('link[rel="canonical"]').getAttribute('href')).pathname, href);
           assert.equal(await page.locator('[data-blog-workshop]').count(), 0);
@@ -43,7 +70,15 @@ const pages = [
           const figures = page.locator('.article-figure');
           const isPilot = lang === 'fr' && slug === 'analyser-interface-web-sans-copier';
           assert.equal(await figures.count(), isPilot ? 3 : 0);
+          if (slug === 'analyser-interface-web-sans-copier' || slug === 'analyse-web-interface-without-copying') {
+            const notice = page.locator('[data-blog-publication-status]');
+            if (Date.now() < Date.parse('2026-09-22T00:00:00.000Z')) {
+              assert.equal(await notice.getAttribute('data-blog-publication-status'), 'scheduled');
+              assert(!/brouillon|draft/.test(await notice.innerText()));
+            } else assert.equal(await notice.count(), 0);
+          }
           if (isPilot) {
+            await page.screenshot({ path: path.join(artifacts, 'hero-' + width + '.png') });
             assert.equal((await page.locator('h1').innerText()).replace(/\s+/g, ' ').trim(), 'Comment s’inspirer d’un site web sans le copier');
             assert((await page.locator('.prose > p').first().innerText()).startsWith('Vous préparez'));
             assert((await page.locator('.prose').innerText()).includes('Vucko'));
@@ -83,13 +118,27 @@ const pages = [
           assert.equal(axe.violations.length, 0, JSON.stringify(axe.violations.map(({ id, nodes }) => ({ id, targets: nodes.map(node => node.target) }))));
           assert.deepEqual(errors, []);
           assert.deepEqual(writes, []);
-          results.push({ slug, lang, width, status: 'passed', figures: await figures.count(), axeViolationsInArticleBody: 0 });
+          const figureCount = await figures.count();
+          if (isPilot && [375, 1920].includes(width)) {
+            await page.goto(base + '/fr/blog/', { waitUntil: 'networkidle' });
+            await page.locator('main a[href="' + href + '"]').first().click();
+            await page.waitForURL(base + href);
+            await page.waitForLoadState('networkidle');
+            await page.waitForFunction(() => document.getAnimations().every(animation =>
+              !Number.isFinite(animation.effect?.getComputedTiming().endTime) || animation.playState !== 'running'
+            ));
+            await assertHeroAtViewportTop(page, href);
+            await page.screenshot({ path: path.join(artifacts, 'hero-from-listing-' + width + '.png') });
+            assert.deepEqual(errors, []);
+            assert.deepEqual(writes, []);
+          }
+          results.push({ slug, lang, width, status: 'passed', figures: figureCount, heroTop: heroGeometry.top, axeViolationsInArticleBody: 0 });
           await context.close();
           console.log('PASS ' + width + ' ' + lang + ' ' + slug);
         }
+        await browser.close();
+        browser = undefined;
       }
-      await browser.close();
-      browser = undefined;
     }
   } finally {
     if (browser) await browser.close();

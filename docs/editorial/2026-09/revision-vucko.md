@@ -1,5 +1,10 @@
 # Pilote français : Vucko
 
+Cette page conserve la trace de la réécriture et de sa première validation
+technique. Mise à jour ultérieure du 15 septembre : Nicolas a demandé la sortie
+du brouillon ; `draft: false`, date du 22 septembre conservée, anglais encore
+à aligner. Voir le [README](README.md) pour l'état courant et le correctif du hero.
+
 15 septembre 2026. Choix de référence validé par Nicolas avant réécriture.
 Le texte final reste à relire : l'accord sur Vucko ne vaut pas validation de
 l'article, de sa traduction ou de sa publication.

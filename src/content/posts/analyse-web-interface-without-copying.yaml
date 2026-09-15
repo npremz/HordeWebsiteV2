@@ -33,5 +33,5 @@ keyTakeaways_en:
   - A documented pattern is not automatically appropriate for another audience or task.
   - The useful output is a decision rule with limits, not a screen to reproduce.
 featured: false
-draft: true
+draft: false
 seoRobots: index, follow

@@ -130,8 +130,10 @@ Après la relecture, les ateliers standardisés ont été retirés des six artic
 L'article sur les références est repris d'abord en français. Le choix de Vucko,
 validé le 15 septembre, remplace le Rijksmuseum et recentre l'analyse sur une
 expérience de marque singulière : mise en scène du travail, continuité du
-parcours et précision des contributions. Il reste en brouillon, visible sur
-staging, jusqu'à la validation du français puis de l'anglais. Voir la
+parcours et précision des contributions. À la demande de Nicolas, il est sorti
+du brouillon le 15 septembre, avec la date du 22 septembre conservée. L'anglais
+reste à aligner ; le changement de statut partagé n'est pas une réécriture ni
+une fusion en production. Voir la
 [révision Vucko](editorial/2026-09/revision-vucko.md).
 Les dates ci-dessous restent soumises à validation.
 

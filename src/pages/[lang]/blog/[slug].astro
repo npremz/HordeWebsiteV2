@@ -386,15 +386,8 @@ const schemaOrg = {
 
 	<div class="fixed inset-0 bg-bg -z-10" aria-hidden="true"></div>
 	<article id="page-content" class="relative z-10 bg-bg">
-		{isUnpublishedPreview && (
-			<div class="bg-bg-light px-(--gutter) py-3 text-center text-sm font-medium text-black">
-				{lang === 'fr'
-					? `Aperçu staging · ${post.data.draft ? 'brouillon' : `publication prévue le ${formatDate(publishedDate, lang)}`}`
-					: `Staging preview · ${post.data.draft ? 'draft' : `scheduled for ${formatDate(publishedDate, lang)}`}`}
-			</div>
-		)}
 		<div class="full-width-white-bg">
-		<div class="relative left-1/2 w-screen -translate-x-1/2 bg-black">
+		<div data-blog-hero class="relative left-1/2 w-screen -translate-x-1/2 bg-black">
 		<HeroStructure
 			class="relative z-0"
 			background="dark"
@@ -411,6 +404,14 @@ const schemaOrg = {
 				<div class="flex w-full sm:h-1/2 sm:items-end">
 					<div class="w-full sm:flex sm:justify-between">
 						<div class="relative z-10 flex max-w-[450px] flex-col gap-4 sm:gap-8 lg:w-1/2 lg:max-w-[700px]">
+								{/* Keep the preview notice inside the hero so it cannot offset its full-width background. */}
+								{isUnpublishedPreview && (
+									<p data-blog-publication-status={post.data.draft ? 'draft' : 'scheduled'} class="w-fit border border-lines-dark bg-black px-3 py-2 text-sm leading-normal text-button-white">
+										{lang === 'fr'
+											? `Aperçu staging · ${post.data.draft ? 'brouillon' : `publication prévue le ${formatDate(publishedDate, lang)}`}`
+											: `Staging preview · ${post.data.draft ? 'draft' : `scheduled for ${formatDate(publishedDate, lang)}`}`}
+									</p>
+								)}
 								<h1
 									id="blog-post-intro"
 									class="text-[1.5rem] leading-tight sm:text-[2rem] lg:text-[2.5rem]"
