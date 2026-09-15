@@ -106,23 +106,23 @@
   {
     "slug": "analyse-web-interface-without-copying",
     "locale": "fr",
-    "proseParagraphs": 20,
+    "proseParagraphs": 21,
     "paragraphsOver150Words": 0,
     "h2Count": 5,
-    "sentenceWordMean": 15.25,
-    "sentenceWordStdDev": 6.67,
-    "proseTypeTokenRatio": 0.48,
+    "sentenceWordMean": 14.72,
+    "sentenceWordStdDev": 5.91,
+    "proseTypeTokenRatio": 0.47,
     "frequentParagraphOpeners": [
+      [
+        "pour",
+        3
+      ],
       [
         "la",
         3
       ],
       [
-        "pour",
-        2
-      ],
-      [
-        "ce",
+        "cette",
         2
       ]
     ],

@@ -5,13 +5,14 @@ Quatre créations bilingues et deux enrichissements bilingues, préparés le
 
 Après relecture, les ateliers standardisés sont retirés des six articles, dans
 les deux langues. Le nouveau pilote à valider est **« Comment s'inspirer d'un
-site web sans le copier »**, réécrit en français avec deux captures réelles.
+site web sans le copier »**, réécrit en français avec trois captures réelles de
+Vucko le 15 septembre, après validation du choix de cette référence.
 L'anglais conserve provisoirement son ancien angle, avec nettoyage des renvois
 aux ateliers. Sa réécriture attend la validation du français.
 
 Cette paire est repassée en `draft: true` pour empêcher toute sortie automatique
 avant cette validation. Elle reste accessible sur staging. Voir
-[revision-clarte.md](revision-clarte.md) pour le périmètre et les contrôles actuels.
+[revision-vucko.md](revision-vucko.md) pour le périmètre et les contrôles actuels.
 
 ## Les pages à relire
 
@@ -41,8 +42,10 @@ sur staging avant leur date avec une indication d'aperçu. Tout le staging est n
 6. Confirmer les dates. Si la validation arrive après une date proposée, la
    repousser avant fusion pour éviter un rattrapage public involontaire.
 
-Les captures du pilote proviennent du site public du Rijksmuseum, observé le
-14 septembre. Ce n'est pas un projet Horde. Les autres exemples décrits dans le
+Les captures du pilote proviennent du site public de Vucko, observé le
+15 septembre. Ce n'est pas un projet Horde ; le site crédite Locomotive.
+Le bureau d'architecture intérieure utilisé pour la transposition est fictif.
+Les autres exemples décrits dans le
 lot sont hypothétiques. Aucun résultat client ni test utilisateur n'a été inventé.
 Il n'y a plus de formulaire de démonstration ni de téléchargement de brief.
 
@@ -50,10 +53,12 @@ Il n'y a plus de formulaire de démonstration ni de téléchargement de brief.
 
 - `briefs.md` : intentions, différenciation, preuves et sources primaires.
 - `images.md` : prompts exacts et chemins des quatre couvertures GPT-Image-2.
-- `revision-clarte.md` : état actuel, changements, chiffres et validation restante.
+- `revision-vucko.md` : état actuel du pilote, provenance et validation restante.
+- `revision-clarte.md` : historique du retrait des ateliers et du premier pilote.
 - `audit.md` : historique de la première livraison, notes éditoriales retirées.
 - `distribution.md` : propositions initiales mises en attente, à réviser avant tout envoi.
-- `browser-check.cjs` : test reproductible des douze pages en deux tailles.
+- `browser-check.cjs` : test reproductible des douze pages en trois tailles ;
+  `BLOG_TEST_PILOT_ONLY=1` limite la passe à la paire du pilote.
 - `style-check.py` et `style-results.json` : diagnostics descriptifs de rédaction.
 
 Les contenus sont dans `src/content/posts/`, avec un YAML commun et deux corps

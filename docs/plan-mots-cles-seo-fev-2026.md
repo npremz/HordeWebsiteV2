@@ -127,9 +127,12 @@ anglais définitifs seront écrits comme des titres autonomes dans chaque brief.
 Lot pilote rédigé en FR/EN le 14 septembre : [dossier de relecture](editorial/2026-09/README.md),
 [briefs initiaux](editorial/2026-09/briefs.md) et [audit initial](editorial/2026-09/audit.md).
 Après la relecture, les ateliers standardisés ont été retirés des six articles.
-L'article sur les références est repris d'abord en français, avec deux captures
-réelles du Rijksmuseum. Il reste en brouillon, visible sur staging, jusqu'à la
-validation du français puis de l'anglais. Voir la [révision de clarté](editorial/2026-09/revision-clarte.md).
+L'article sur les références est repris d'abord en français. Le choix de Vucko,
+validé le 15 septembre, remplace le Rijksmuseum et recentre l'analyse sur une
+expérience de marque singulière : mise en scène du travail, continuité du
+parcours et précision des contributions. Il reste en brouillon, visible sur
+staging, jusqu'à la validation du français puis de l'anglais. Voir la
+[révision Vucko](editorial/2026-09/revision-vucko.md).
 Les dates ci-dessous restent soumises à validation.
 
 | Date | Action | Entrée SEO, H1 et slugs | Preuve principale et suite utile |
@@ -137,7 +140,7 @@ Les dates ci-dessous restent soumises à validation.
 | 15/09 | Nouveau · E | **SEO :** Direction artistique web : donner une identité à une interface<br>**H1 :** Une interface peut avoir du caractère sans se mettre en travers du chemin.<br>**Slugs :** `direction-artistique-interface-web` / `art-direction-for-web-interfaces` | Décomposer le passage d'un territoire de marque à la typographie, la couleur, la composition et le mouvement ; lien vers Refonte |
 | 17/09 | Mise à jour | `ia-interfaces-experiences-utilisateur` | Ajouter la revue humaine en six dimensions, trois annotations réelles et le futur lien vers le pilier d'octobre |
 | 18/09 | Nouveau · T | **SEO :** Pourquoi penser design et développement web ensemble ?<br>**H1 :** Une bonne interface ne devrait pas se dégrader entre Figma et le navigateur.<br>**Slugs :** `design-developpement-web-ensemble` / `design-and-web-development-together` | Suivre un composant de la maquette au code avec responsive, contenu, accessibilité et performance ; lien vers Refonte et Optimisation |
-| 22/09, à confirmer | Nouveau · E, pilote FR | **SEO :** S'inspirer d'un site web sans le copier<br>**H1 :** Comment s'inspirer d'un site web sans le copier<br>**Slugs conservés :** `analyser-interface-web-sans-copier` / `analyse-web-interface-without-copying` | Un seul site réel, deux captures commentées au fil du texte ; expliquer ce qu'on retient pour son projet. Validation FR avant réécriture EN. |
+| 22/09, à confirmer | Nouveau · E, pilote FR | **SEO :** S'inspirer d'un site web sans le copier<br>**H1 :** Comment s'inspirer d'un site web sans le copier<br>**Slugs conservés :** `analyser-interface-web-sans-copier` / `analyse-web-interface-without-copying` | Vucko, trois captures commentées : mise en scène, passage d'un projet à l'autre, rôle du studio. Transposer une exigence de qualité sans copier une identité. Validation FR avant réécriture EN. |
 | 24/09 | Mise à jour | `comment-creer-site-web-qui-se-demarque-2026` | Ajouter un diagnostic visuel, des exemples annotés et le maillage vers direction artistique et qualité d'interface |
 | 29/09 | Nouveau · M | **SEO :** Brief de design web : comment cadrer l'expérience avant les écrans ?<br>**H1 :** Le sur-mesure commence avant la première maquette.<br>**Slugs :** `brief-design-web-cadrer-experience` / `web-design-brief-before-screens` | Canevas Horde d'une page : public, tâche, contexte, sensation, contraintes et critères de réussite ; lien vers Audit et Refonte |
 

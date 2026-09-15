@@ -5,14 +5,14 @@ title_en: A reference is useful when you understand why it works.
 seoTitle_fr: S’inspirer d’un site web sans le copier
 seoTitle_en: Analyse a web interface without copying it
 excerpt_fr: >-
-  Vous avez repéré un site qui vous plaît. Avec deux captures du Rijksmuseum,
-  voyons quoi en retenir pour votre projet, sans reproduire son identité.
+  Le site de Vucko donne une place singulière aux réalisations et à leur découverte.
+  Voyons comment s’en inspirer pour votre projet sans reprendre son identité.
 excerpt_en: >-
   A screenshot suggests a look. Analysis helps you decide. Explore three documented
   references and extract useful principles without copying their appearance.
 seoDescription_fr: >-
-  Comment s’inspirer d’un site web sans le copier ? Deux captures du Rijksmuseum
-  pour expliquer ce qui vous plaît et choisir ce qui convient à votre projet.
+  Comment s’inspirer d’un site web sans le copier ? Avec Vucko, analysez la mise
+  en scène des projets et la navigation pour préciser vos attentes de qualité.
 seoDescription_en: >-
   Learn to analyse interfaces through tasks, hierarchy, errors and context.
   Three GOV.UK and Primer examples make the method concrete and reusable.
@@ -24,9 +24,9 @@ category: ux-design
 publishedDate: 2026-09-22
 readingTime: 7
 keyTakeaways_fr:
-  - "Précisez ce qui vous plaît dans un site : ses images, ses titres ou la façon de trouver une information."
-  - Gardez les idées qui servent votre projet, avec vos propres contenus et votre identité.
-  - Une référence aide à expliquer une intention ; elle ne remplace pas les choix à faire pour votre public.
+  - "Nommez ce qui produit l’impression de qualité : place des réalisations, détails et passage d’un projet à l’autre."
+  - Retenez une ambition et des intentions de conception, avec vos propres contenus et votre identité.
+  - Une référence visuelle ne prouve ni des résultats commerciaux ni l’adéquation à vos visiteurs ; les choix restent à tester.
 keyTakeaways_en:
   - Start with the task, context and behaviour before examining visual treatment.
   - Separate observations, proposed explanations and questions still to be tested.

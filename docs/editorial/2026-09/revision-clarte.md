@@ -1,5 +1,9 @@
 # Révision après relecture : clarté et exemples
 
+Historique du 14 septembre. Le pilote Vucko du 15 septembre remplace le cas
+Rijksmuseum ci-dessous : voir [revision-vucko.md](revision-vucko.md). Les
+contrôles de cette page concernent uniquement l'artefact du 14 septembre.
+
 14 septembre 2026. Remplace les décisions de qualité de la première livraison.
 
 ## À valider maintenant

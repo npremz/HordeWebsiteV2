@@ -13,13 +13,15 @@ const pages = [
   ['brief-design-web-cadrer-experience', 'web-design-brief-before-screens'],
   ['ia-interfaces-experiences-utilisateur', 'ai-can-create-interfaces-not-experiences'],
   ['comment-creer-site-web-qui-se-demarque-2026', 'how-to-make-your-website-stand-out-2026'],
-];
+].filter(([frSlug]) => process.env.BLOG_TEST_PILOT_ONLY !== '1' || frSlug === 'analyser-interface-web-sans-copier');
 (async () => {
   await fs.mkdir(artifacts, { recursive: true });
-  const browser = await chromium.launch({ headless: true });
+  let browser;
   const results = [];
   try {
-    for (const width of [375, 1440]) {
+    for (const width of [375, 768, 1440]) {
+      // Release Chromium resources between viewport batches on small review hosts.
+      browser = await chromium.launch({ headless: true });
       for (const lang of ['fr', 'en']) {
         for (const [frSlug, enSlug] of pages) {
           const slug = lang === 'fr' ? frSlug : enSlug;
@@ -40,10 +42,12 @@ const pages = [
           assert(!/Observer · essayer · décider|Observe · try · decide/.test(await page.locator('article').innerText()));
           const figures = page.locator('.article-figure');
           const isPilot = lang === 'fr' && slug === 'analyser-interface-web-sans-copier';
-          assert.equal(await figures.count(), isPilot ? 2 : 0);
+          assert.equal(await figures.count(), isPilot ? 3 : 0);
           if (isPilot) {
             assert.equal((await page.locator('h1').innerText()).replace(/\s+/g, ' ').trim(), 'Comment s’inspirer d’un site web sans le copier');
             assert((await page.locator('.prose > p').first().innerText()).startsWith('Vous préparez'));
+            assert((await page.locator('.prose').innerText()).includes('Vucko'));
+            assert(!(await page.locator('.prose').innerText()).includes('Rijksmuseum'));
             for (const figure of await figures.all()) {
               await figure.scrollIntoViewIfNeeded();
               const img = figure.locator('img');
@@ -52,13 +56,27 @@ const pages = [
               assert((await img.getAttribute('alt')).length > 30);
               assert((await img.getAttribute('srcset')).includes('480w'));
               assert.equal(await img.getAttribute('loading'), 'lazy');
-              assert((await figure.locator('figcaption').innerText()).includes('14 septembre 2026'));
+              assert((await figure.locator('figcaption').innerText()).includes('15 septembre 2026'));
               const fullSize = await context.request.get(new URL(await figure.locator('a').getAttribute('href'), base).href);
               assert.equal(fullSize.status(), 200);
               assert(fullSize.headers()['content-type'].startsWith('image/'));
             }
             await figures.first().scrollIntoViewIfNeeded();
             await page.screenshot({ path: path.join(artifacts, 'reference-' + width + '.png') });
+            for (let index = 0; index < await figures.count(); index++) {
+              await figures.nth(index).scrollIntoViewIfNeeded();
+              await page.screenshot({ path: path.join(artifacts, 'reference-' + width + '-figure-' + (index + 1) + '.png') });
+            }
+            if (width === 1440) {
+              await fs.writeFile(path.join(artifacts, 'pilot-rendered.txt'), await page.locator('article').innerText());
+              await fs.writeFile(path.join(artifacts, 'pilot-rendered.html'), await page.content());
+              await fs.writeFile(path.join(artifacts, 'pilot-metadata.json'), JSON.stringify(await page.evaluate(() => ({
+                title: document.title,
+                description: document.querySelector('meta[name="description"]').content,
+                schema: [...document.querySelectorAll('script[type="application/ld+json"]')].map(el => JSON.parse(el.textContent)),
+                figures: [...document.querySelectorAll('.article-figure img')].map(el => ({ src: el.currentSrc, alt: el.alt, width: el.naturalWidth, height: el.naturalHeight })),
+              })), null, 2));
+            }
           }
           assert(!(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth + 1)), 'Horizontal overflow: ' + href);
           const axe = await new AxeBuilder({ page }).include('.prose').withTags(['wcag2a', 'wcag2aa', 'wcag21aa']).analyze();
@@ -70,9 +88,11 @@ const pages = [
           console.log('PASS ' + width + ' ' + lang + ' ' + slug);
         }
       }
+      await browser.close();
+      browser = undefined;
     }
   } finally {
-    await browser.close();
+    if (browser) await browser.close();
     await fs.writeFile(path.join(artifacts, 'browser-results.json'), JSON.stringify(results, null, 2));
   }
   console.log(results.length + ' cases passed. Technical checks only; editorial comprehension still needs human review.');
