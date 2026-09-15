@@ -1,0 +1,96 @@
+Connecting web design and development means sharing decisions about behaviour, not just handing over screens. Design describes what an interface should help someone do and understand. Development contributes to choices that must survive real content, different devices and less comfortable situations.
+
+A polished mockup can become a disappointing interface without anyone being careless. An important decision may simply have stayed implicit: what happens when the button label grows? Where does an error appear? Which element keeps priority on mobile?
+
+[Art direction for an interface](/en/blog/art-direction-for-web-interfaces/) establishes an intention. The shared task is to preserve that intention in something that responds. Consider a simple example: a form requesting a place at an activity.
+
+## A screenshot describes a state, not a behaviour
+
+An image can show a two-line heading and a perfectly aligned button. It cannot tell you whether the height is fixed, whether the heading can use four lines or what happens when a French translation changes the proportions.
+
+It also leaves out keyboard navigation, the response after submission and recovery from an error. These are not finishing touches. They are part of the interface someone will actually use.
+
+Figma’s [developer handoff guide](https://www.figma.com/best-practices/guide-to-developer-handoff/) addresses collaboration, organisation and the context developers need. Our practical interpretation is that an organised file helps, but it cannot replace a conversation about states and tradeoffs.
+
+That conversation does not require every screen to be drawn. It requires the team to expose questions that would otherwise leave someone inventing a behaviour at odds with the design intent.
+
+## Write a small component contract
+
+For an important component, document its task, its states, what may vary and what must remain true. A few precise lines are more useful than a long specification that only repeats visible pixel values.
+
+For this form, the team needs to agree which fields are required, how to explain an error without erasing input and what the final message actually confirms.
+
+| Element | Decision | Acceptance check |
+| --- | --- | --- |
+| Label | The button describes the next step | A longer label wraps without being clipped |
+| Width | The component responds to its container | The field and action stay usable in narrow mode |
+| Error | The problem is written beside the field | Empty submission shows a message and focuses the field |
+| Confirmation | The result does not exaggerate what happened | The message distinguishes a received request from a confirmed place |
+| Input | An error does not reset the whole form | The name remains after the check |
+
+This table does not cover the entire service. Payment, limited availability and network failure require additional decisions when they apply.
+
+Notice that the contract describes outcomes rather than prescribing every implementation detail. It leaves room for technical judgment while making the intended experience reviewable.
+
+## Use content that puts the design under pressure
+
+On your prototype, try a longer label, then reduce the available width. The text needs more room, and the button should accommodate it. A fixed height chosen for the shorter label would be more fragile.
+
+The aim is not to preserve the initial silhouette at any cost. It is to preserve hierarchy and the action. A taller button may be fine. Hiding useful text to preserve an alignment may not be.
+
+Apply the same approach to team cards, prices, event names and testimonials. Ask for a short example, a long example and an incomplete one. Use plausible organisational content instead of placeholder Latin that conceals the real constraints.
+
+The WCAG [reflow criterion](https://www.w3.org/WAI/WCAG22/Understanding/reflow.html) addresses access to content as available space decreases, with defined exceptions. Checking a button in a narrow space can reveal a risk early, but is not a WCAG audit. Whole-page behaviour, zoom and other content still need checking.
+
+Treat the awkward example as design material, not as an edge case to hide from a presentation. If a service routinely has long event names, that is normal content for the service.
+
+## Design recovery as part of the journey
+
+If a required name is missing, how does the person find out? The message needs to explain what they can correct. After correction, the confirmation should describe what actually happened.
+
+Design and development also need to agree how someone reaches the field by keyboard and how a screen reader announces the message. Drawing an error on a mockup does not establish those behaviours.
+
+The [WAI form validation tutorial](https://www.w3.org/WAI/tutorials/forms/validation/) explains feedback and correction needs. It also makes clear that client-side validation alone cannot ensure valid server-side data. A real service needs server-side rules and security checks.
+
+Using an actual [button element](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/button) also avoids unnecessarily rebuilding basic button behaviour. You still need an appropriate type and a complete keyboard review. Good HTML cannot rescue a confusing sequence of actions on its own.
+
+A useful error tells someone what they can change. A useful confirmation tells them what happened and what comes next. Neither should require the visitor to interpret implementation details.
+
+## Discuss tradeoffs before approving the final screens
+
+Handoff becomes expensive when every question feels like a challenge to a design already sold as finished. A short joint review before approval can separate essential intent from a form that is still negotiable.
+
+For each uncertain point, ask three questions. What must the person understand? Which technical constraints affect the answer? Which variant preserves the intention with the least unnecessary complexity?
+
+A custom transition might be central to an event experience and secondary to an administrative form. That is not a contest between design wanting animation and development wanting to remove it. It is a decision about purpose, cost and alternatives.
+
+AI can produce variants or suggest overlooked states. It does not remove the need to choose which behaviours the team will support. Our article on [AI and responsibility for experience](/en/blog/ai-can-create-interfaces-not-experiences/) explores that boundary.
+
+Record meaningful compromises where the next person can find them. “We kept the label visible instead of enforcing equal card heights” explains a decision. An unexplained deviation from a mockup invites someone to reverse it later.
+
+## Review a journey, not just a picture
+
+Visual comparison still matters. Spacing, proportions, colour and typography contribute to quality. But pair it with a task performed in the browser.
+
+For an initial review of this form, start with these actions: reduce the width, extend the label, navigate by keyboard, submit an empty field, correct it and read the result. Then add loading, server failure, duplicate submission and recovery after interruption where the service’s risks require them.
+
+Document what was checked, in which environment and what remains unknown. “Tested on mobile” is not very useful without a viewport, browser or task. Do not claim conformance after inspecting only a small part of the experience.
+
+[Responsiveness and perceived speed](/en/blog/what-is-a-really-fast-website/) belong in this review too. A visually faithful button that provides no feedback during a wait leaves someone uncertain about whether anything happened.
+
+Technical checks can establish repeatable properties, such as an error message appearing. They do not establish that the wording makes sense to the intended audience. That remains a separate question to investigate with people.
+
+## What the handover should leave behind
+
+You should be able to find the intention, the implemented component, its important states and its known limits. Someone other than the project’s original designer and developer should be able to understand the decisions.
+
+This does not require heavy documentation. A short component note and executable examples may be enough for a small interface. Larger systems can carry the same principles into a component library and reusable tests.
+
+At Horde, we value continuity between design and code: the experience is judged in what gets delivered, not only in what gets presented. If your [website redesign](/en/services/website-redesign-brussels/) is struggling with that gap, [let’s discuss the journey worth preserving](/en/contact/) before producing more screens.
+
+## Sources
+
+- [Figma: guide to developer handoff](https://www.figma.com/best-practices/guide-to-developer-handoff/)
+- [W3C: reflow](https://www.w3.org/WAI/WCAG22/Understanding/reflow.html)
+- [WAI: validating input](https://www.w3.org/WAI/tutorials/forms/validation/)
+- [MDN: button element](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/button)

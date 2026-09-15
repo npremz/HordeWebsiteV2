@@ -11,6 +11,7 @@ import {
   getLocalizedCategories,
   getLocalizedPosts,
   getLocalizedPostsByCategory,
+  isBlogPreviewEnabled,
   localizeCategory,
 } from '../../../../lib/content/blog';
 
@@ -37,10 +38,11 @@ const localizedCategory = localizeCategory(category, lang);
 const switchLang: Locale = lang === 'fr' ? 'en' : 'fr';
 const alternateCategory = localizeCategory(category, switchLang);
 const alternateUrl = new URL(getBlogCategoryHref(alternateCategory.slug, switchLang), Astro.site).href;
+const previewEnabled = isBlogPreviewEnabled();
 const [categories, allPosts, posts] = await Promise.all([
   getLocalizedCategories(lang),
-  getLocalizedPosts(lang),
-  getLocalizedPostsByCategory(category.data.slug, lang),
+  getLocalizedPosts(lang, { includeUnpublished: previewEnabled }),
+  getLocalizedPostsByCategory(category.data.slug, lang, { includeUnpublished: previewEnabled }),
 ]);
 
 const usedCategorySlugs = new Set(allPosts.map((post) => post.categorySlug));

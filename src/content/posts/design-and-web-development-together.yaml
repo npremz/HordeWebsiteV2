@@ -1,0 +1,38 @@
+slug: design-and-web-development-together
+slug_fr: design-developpement-web-ensemble
+title_fr: Une bonne interface ne devrait pas se dégrader entre Figma et le navigateur.
+title_en: Good interfaces should survive the move from Figma to the browser.
+seoTitle_fr: 'Design et développement web : travailler ensemble'
+seoTitle_en: 'Web design and development: working together'
+excerpt_fr: >-
+  La qualité d’une interface se joue aussi entre la maquette et le code.
+  Voici comment partager les décisions et tester les états que l’image ne montre pas.
+excerpt_en: >-
+  Interface quality also depends on what happens between mockup and code.
+  Share the decisions and test the states a polished picture cannot show.
+seoDescription_fr: >-
+  Faites travailler design et développement autour de comportements vérifiables :
+  responsive, clavier, contenu long et erreurs, avec une démo interactive.
+seoDescription_en: >-
+  Connect web design and development with a shared component contract.
+  Try narrow layouts, long labels and error recovery in an interactive example.
+featuredImageAlt_fr: Deux cadres d’interface sont reliés par un ruban bleu autour d’un même point d’alignement.
+featuredImageAlt_en: Two interface frames are connected by a blue ribbon around a shared alignment point.
+featuredImage: /src/assets/images/blog/design-and-web-development-together/featuredImage.png
+author: nicolas-premont
+category: performance-web
+publishedDate: 2026-09-18
+readingTime: 7
+keyTakeaways_fr:
+  - Une maquette décrit un état ; une interface doit aussi répondre aux variations de contenu, de largeur et de saisie.
+  - Un contrat de composant relie intention, états, contraintes et critères de recette.
+  - Les arbitrages de design et de développement gagnent à être discutés avant la validation finale des écrans.
+  - Un contrôle local du formulaire ne remplace ni la validation serveur ni une observation des utilisateurs.
+keyTakeaways_en:
+  - A mockup shows a state; an interface must also handle changes in content, width and input.
+  - A component contract connects intent, states, constraints and acceptance checks.
+  - Design and development decisions should be discussed before screens receive final approval.
+  - Local form checks replace neither server validation nor observation of real users.
+featured: false
+draft: false
+seoRobots: index, follow

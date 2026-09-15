@@ -8,12 +8,18 @@ import node from '@astrojs/node';
 
 const PORT = parseInt(process.env.PORT || '4328', 10);
 
-// Production uses the Node server for runtime endpoints such as the contact form.
+// Deployed environments use the Node server for runtime endpoints such as the contact form.
 const isProd = process.env.SITE_ENV === 'production';
+const isDeployed = isProd || process.env.SITE_ENV === 'staging';
+const previewsUnpublishedPosts = process.env.BLOG_PREVIEW_UNPUBLISHED === '1';
 const siteUrl = (process.env.PUBLIC_SITE_URL || (isProd ? 'https://hordeagence.com' : 'https://waf.hordagency.com')).replace(/\/$/, '');
 
 if (isProd && siteUrl !== 'https://hordeagence.com') {
   throw new Error(`Production builds must use https://hordeagence.com as site URL. Received: ${siteUrl}`);
+}
+
+if (isProd && previewsUnpublishedPosts) {
+  throw new Error('Production builds cannot enable BLOG_PREVIEW_UNPUBLISHED.');
 }
 
 const redirectSourcePaths = new Set([
@@ -99,8 +105,9 @@ export default defineConfig({
       destination: '/en/services/mvp-development-brussels/',
     },
   },
-  // Astro 7: utiliser 'server' + prerender: true sur les pages statiques.
-  output: isProd ? 'server' : 'static',
+  // Astro 7: les environnements déployés utilisent le serveur Node ; les pages
+  // statiques conservent leur `prerender: true`.
+  output: isDeployed ? 'server' : 'static',
   adapter: node({ mode: 'standalone' }),
   build: {
     inlineStylesheets: 'always',

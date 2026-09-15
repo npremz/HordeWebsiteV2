@@ -1,0 +1,38 @@
+slug: web-design-brief-before-screens
+slug_fr: brief-design-web-cadrer-experience
+title_fr: Le sur-mesure commence avant la première maquette.
+title_en: Custom design starts before the first mockup.
+seoTitle_fr: 'Brief de design web : cadrer l’expérience'
+seoTitle_en: 'Web design brief: start with the experience'
+excerpt_fr: >-
+  Avant de demander des pages, précisez l’expérience à créer. Un brief en six
+  décisions pour aligner les usages, le design, les contraintes et l’autonomie.
+excerpt_en: >-
+  Before requesting screens, define the experience you need. A six-decision brief
+  connects user tasks, design intent, constraints and long-term independence.
+seoDescription_fr: >-
+  Préparez un brief de design web en six décisions : public, tâche, identité,
+  contraintes, réussite et inconnues. Des questions concrètes avant les maquettes.
+seoDescription_en: >-
+  Write a web design brief around six decisions: audience, task, identity,
+  constraints, success and unknowns. Practical questions to discuss before mockups.
+featuredImageAlt_fr: Un parcours bleu traverse un plan plié en six zones et mène vers une ouverture architecturale.
+featuredImageAlt_en: A blue path crosses a folded six-part plan and leads towards an architectural opening.
+featuredImage: /src/assets/images/blog/web-design-brief-before-screens/featuredImage.png
+author: alexandre-potakowski
+category: strategie
+publishedDate: 2026-09-29
+readingTime: 8
+keyTakeaways_fr:
+  - Un brief d’expérience décrit d’abord une personne, une situation et une tâche, pas une liste d’écrans.
+  - Les intentions visuelles deviennent utiles lorsqu’elles sont reliées à des preuves et à des comportements.
+  - L’accessibilité, la maintenance, les contenus et la maîtrise des actifs se cadrent avant la livraison.
+  - Les inconnues doivent rester visibles et conduire à une prochaine vérification, pas à de fausses certitudes.
+keyTakeaways_en:
+  - An experience brief starts with a person, a situation and a task, not a screen list.
+  - Visual intentions become useful when connected to evidence and behaviour.
+  - Accessibility, maintenance, content and control of digital assets belong in the initial scope.
+  - Unknowns should lead to the next check rather than being disguised as certainty.
+featured: false
+draft: false
+seoRobots: index, follow

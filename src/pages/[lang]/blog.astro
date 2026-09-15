@@ -8,6 +8,7 @@ import {
   getBlogIndexHref,
   getLocalizedCategories,
   getLocalizedPosts,
+  isBlogPreviewEnabled,
 } from '../../lib/content/blog';
 
 export const prerender = true;
@@ -20,10 +21,11 @@ export function getStaticPaths() {
 
 const { lang } = Astro.params as { lang: Locale };
 const t = useTranslations(lang);
+const previewEnabled = isBlogPreviewEnabled();
 
 const [categories, posts] = await Promise.all([
   getLocalizedCategories(lang),
-  getLocalizedPosts(lang),
+  getLocalizedPosts(lang, { includeUnpublished: previewEnabled }),
 ]);
 
 const allLabel = t.blogPage.allLabel;

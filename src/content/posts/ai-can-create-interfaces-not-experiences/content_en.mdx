@@ -2,13 +2,13 @@ Artificial intelligence can already produce a credible interface in minutes. Giv
 
 The result often looks polished. It can even be impressive. Yet an interface that works in a screenshot is not necessarily pleasant to use. It may contain too much information, demand too many decisions or complicate an action that should feel obvious.
 
-This is where AI still reaches a limit: it can compose screens, but it does not live through the journey. It does not hesitate in front of an ambiguous button, lose patience when a modal interrupts a task or spontaneously wonder whether a feature needs to exist at all.
+This is the limit of validation based on generation alone: composing screens does not establish that someone understands the journey. A model can help identify an ambiguous button or an unnecessary interruption. Its suggestions still need to be checked against real context and use.
 
 AI can accelerate the design of a digital product. It should not decide the experience on its own. This is different from simply [making a website stand out](/en/blog/how-to-make-your-website-stand-out-2026/): a distinctive identity earns attention, while a good experience helps someone reach a goal without unnecessary obstacles.
 
 ## An interface is not an experience
 
-An interface is what we see: text, buttons, menus, images and forms.
+An interface includes the information, controls and behaviours through which someone interacts with a system. It is not limited to what we see: focus, screen reader announcements and feedback after an action are part of it too.
 
 The experience is what happens when someone tries to accomplish something through that interface.
 
@@ -22,7 +22,7 @@ An experience can therefore never be reduced to one screen. It unfolds over time
 
 ## Why does AI produce so much distracting content?
 
-When asked to create an interface, AI will generally try to produce something recognisably complete. It draws on familiar conventions: a navigation bar, a large headline, supporting arguments, cards, testimonials, FAQs, buttons and perhaps a newsletter modal.
+A vague request for a “complete interface” can encourage an accumulation of familiar conventions: navigation, a large headline, arguments, cards, testimonials, FAQs, buttons and a newsletter invitation. Results depend on the model, context and constraints supplied; this is not a measured rule for every tool.
 
 Each element may appear relevant when considered alone. Their accumulation creates a problem: the user must scan, interpret and dismiss more information before understanding what they can do.
 
@@ -35,7 +35,7 @@ Distracting content is not always unnecessary copy. It can also be:
 - a dashboard showing data without supporting a decision;
 - an extra step that reassures the organisation rather than the user.
 
-The problem is not that AI cannot produce a minimalist interface. It can when instructed to do so. The problem is that it cannot independently know which element is essential in a particular situation.
+The problem is not that AI cannot produce a minimalist interface. It can. Without reliable information about the situation, however, it lacks a sufficient basis for deciding which elements are essential.
 
 It can estimate what looks conventional from the context it receives. It cannot determine what truly deserves to exist without a solid understanding of the need and observed behaviour.
 
@@ -73,13 +73,13 @@ Designing less requires more understanding. To remove an element, you need to kn
 
 Generating ten variations is easy. Choosing the one that creates the least friction requires judgment.
 
-## What AI cannot feel during use
+## What generation does not validate about use
 
-AI can analyse data and identify patterns. It can summarise interviews, suggest hypotheses or compare several journeys. But it does not feel the act of using a product.
+AI can analyse data and identify patterns. It can summarise interviews, suggest hypotheses or compare several journeys. These are useful capabilities, but a simulated reaction does not replace observation of relevant people.
 
-It does not experience the anxiety of someone making an important payment. It does not know the fatigue of an employee repeating the same operation a hundred times a week. It does not live through the frustration of a visitor searching for urgent information before an appointment.
+Concern about an important payment, fatigue from repetitive work and urgency before an appointment are contexts to document. Describing them plausibly does not establish that the product responds to them well.
 
-Nor does it spontaneously notice a participant going quiet during a usability test, a hesitant movement of the cursor or the words, “I suppose I should click here.”
+A pause, a hesitant cursor or the words “I suppose I should click here” may deserve attention during an observation. Interpreting them requires checking what is happening rather than automatically assigning an emotion or intention to the participant.
 
 These details are difficult to turn into universal rules because their meaning depends on context. A very short journey may be ideal for an everyday purchase but not reassuring enough for a consequential decision. A large amount of information may obstruct a first-time visitor and be essential to an experienced professional. Automation may save time for one person while making another feel that they have lost control.
 
@@ -124,6 +124,25 @@ If these answers are missing, producing more screens solves nothing. It merely g
 AI should shorten the distance between an idea and its test, not remove the test. This discipline can also prevent an expensive [website redesign becoming unavoidable](/en/blog/how-much-does-a-website-redesign-cost/) because the interface was allowed to grow through accumulation.
 
 This logic becomes particularly concrete in the events sector. An [event web app produced with AI assistance](/en/blog/ai-assisted-event-web-apps/) can be built quickly around a workshop or presentation when the need and critical journeys remain tightly scoped.
+
+## A six-part human review
+
+We suggest reviewing six dimensions before approving an interface, regardless of how it was produced.
+
+| Dimension | Question | Record to keep |
+| --- | --- | --- |
+| Task | Which decision is someone here to make? | A sentence describing the intended outcome |
+| Hierarchy | Which elements support or compete with that decision? | An annotated view identifying priorities |
+| Understanding | Are the words and information sufficient? | Observed ambiguities and remaining assumptions |
+| Behaviour | What happens after an action or an error? | A journey performed in the browser |
+| Access | Can the task be completed by keyboard and on a narrow screen? | Conditions checked and obstacles found |
+| Responsibility | Who owns the choices and arranges the next check? | A named owner and an explicit decision |
+
+On a registration page, for example, check whether the conditions are available before the button and whether its label describes the next step. These are inspectable properties. Whether people understand the offer and hesitate less needs a separate check with people using the journey.
+
+[Art direction](/en/blog/art-direction-for-web-interfaces/) can then build character without obscuring those priorities. [Design and development working together](/en/blog/design-and-web-development-together/) makes states beyond the screenshot inspectable. [Analysing documented references](/en/blog/analyse-web-interface-without-copying/) can inform choices without treating an established pattern as proof for your audience.
+
+This framework is neither a complete accessibility audit nor a user study. It organises an initial review and identifies what remains to be checked. That is already more useful than approving an interface because it looks finished.
 
 ## Design less, but design better
 

@@ -96,6 +96,10 @@ const {
   siteNameAsPrefix = false,
 } = Astro.props;
 
+const isProductionSite =
+  import.meta.env.SITE_ENV === 'production' && new URL(siteUrl).hostname === 'hordeagence.com';
+const effectiveRobots = isProductionSite ? robots : 'noindex, nofollow';
+
 // Build full title with template
 const fullTitle = siteNameAsPrefix
   ? `${siteName} | ${title}`
@@ -132,7 +136,7 @@ const structuredContactUrl = `${normalizedSiteUrl}/${lang}/contact/`;
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>{fullTitle}</title>
 <meta name="description" content={description} />
-<meta name="robots" content={robots} />
+<meta name="robots" content={effectiveRobots} />
 <link rel="canonical" href={canonicalURL} />
 {authorUrl && <link rel="author" href={authorUrl} />}
 <link rel="alternate" type="text/plain" title="LLMs.txt" href={llmsTxtURL} />
