@@ -68,21 +68,24 @@ async function assertHeroAtViewportTop(page, href) {
           assert.equal(await page.locator('article form').count(), 0);
           assert(!/Observer · essayer · décider|Observe · try · decide/.test(await page.locator('article').innerText()));
           const figures = page.locator('.article-figure');
-          const isPilot = lang === 'fr' && slug === 'analyser-interface-web-sans-copier';
-          assert.equal(await figures.count(), isPilot ? 3 : 0);
-          if (slug === 'analyser-interface-web-sans-copier' || slug === 'analyse-web-interface-without-copying') {
+          const isVuckoPair = slug === 'analyser-interface-web-sans-copier' || slug === 'analyse-web-interface-without-copying';
+          assert.equal(await figures.count(), isVuckoPair ? 3 : 0);
+          if (isVuckoPair) {
             const notice = page.locator('[data-blog-publication-status]');
             if (Date.now() < Date.parse('2026-09-22T00:00:00.000Z')) {
               assert.equal(await notice.getAttribute('data-blog-publication-status'), 'scheduled');
               assert(!/brouillon|draft/.test(await notice.innerText()));
             } else assert.equal(await notice.count(), 0);
-          }
-          if (isPilot) {
-            await page.screenshot({ path: path.join(artifacts, 'hero-' + width + '.png') });
-            assert.equal((await page.locator('h1').innerText()).replace(/\s+/g, ' ').trim(), 'Comment s’inspirer d’un site web sans le copier');
-            assert((await page.locator('.prose > p').first().innerText()).startsWith('Vous préparez'));
-            assert((await page.locator('.prose').innerText()).includes('Vucko'));
-            assert(!(await page.locator('.prose').innerText()).includes('Rijksmuseum'));
+            await page.screenshot({ path: path.join(artifacts, 'hero-' + lang + '-' + width + '.png') });
+            const expectedTitle = lang === 'fr'
+              ? 'Comment s’inspirer d’un site web sans le copier'
+              : 'How to draw inspiration from a website without copying it';
+            const expectedOpening = lang === 'fr' ? 'Vous préparez' : 'You are preparing';
+            assert.equal((await page.locator('h1').innerText()).replace(/\s+/g, ' ').trim(), expectedTitle);
+            assert((await page.locator('.prose > p').first().innerText()).startsWith(expectedOpening));
+            const proseText = await page.locator('.prose').innerText();
+            assert(proseText.includes('Vucko'));
+            assert(!/Rijksmuseum|GOV\.UK|Primer/.test(proseText));
             for (const figure of await figures.all()) {
               await figure.scrollIntoViewIfNeeded();
               const img = figure.locator('img');
@@ -91,21 +94,22 @@ async function assertHeroAtViewportTop(page, href) {
               assert((await img.getAttribute('alt')).length > 30);
               assert((await img.getAttribute('srcset')).includes('480w'));
               assert.equal(await img.getAttribute('loading'), 'lazy');
-              assert((await figure.locator('figcaption').innerText()).includes('15 septembre 2026'));
+              const expectedCaptureDate = lang === 'fr' ? '15 septembre 2026' : 'September 15, 2026';
+              assert((await figure.locator('figcaption').innerText()).includes(expectedCaptureDate));
               const fullSize = await context.request.get(new URL(await figure.locator('a').getAttribute('href'), base).href);
               assert.equal(fullSize.status(), 200);
               assert(fullSize.headers()['content-type'].startsWith('image/'));
             }
             await figures.first().scrollIntoViewIfNeeded();
-            await page.screenshot({ path: path.join(artifacts, 'reference-' + width + '.png') });
+            await page.screenshot({ path: path.join(artifacts, 'reference-' + lang + '-' + width + '.png') });
             for (let index = 0; index < await figures.count(); index++) {
               await figures.nth(index).scrollIntoViewIfNeeded();
-              await page.screenshot({ path: path.join(artifacts, 'reference-' + width + '-figure-' + (index + 1) + '.png') });
+              await page.screenshot({ path: path.join(artifacts, 'reference-' + lang + '-' + width + '-figure-' + (index + 1) + '.png') });
             }
             if (width === 1440) {
-              await fs.writeFile(path.join(artifacts, 'pilot-rendered.txt'), await page.locator('article').innerText());
-              await fs.writeFile(path.join(artifacts, 'pilot-rendered.html'), await page.content());
-              await fs.writeFile(path.join(artifacts, 'pilot-metadata.json'), JSON.stringify(await page.evaluate(() => ({
+              await fs.writeFile(path.join(artifacts, 'pilot-' + lang + '-rendered.txt'), await page.locator('article').innerText());
+              await fs.writeFile(path.join(artifacts, 'pilot-' + lang + '-rendered.html'), await page.content());
+              await fs.writeFile(path.join(artifacts, 'pilot-' + lang + '-metadata.json'), JSON.stringify(await page.evaluate(() => ({
                 title: document.title,
                 description: document.querySelector('meta[name="description"]').content,
                 schema: [...document.querySelectorAll('script[type="application/ld+json"]')].map(el => JSON.parse(el.textContent)),
@@ -119,8 +123,8 @@ async function assertHeroAtViewportTop(page, href) {
           assert.deepEqual(errors, []);
           assert.deepEqual(writes, []);
           const figureCount = await figures.count();
-          if (isPilot && [375, 1920].includes(width)) {
-            await page.goto(base + '/fr/blog/', { waitUntil: 'networkidle' });
+          if (isVuckoPair && [375, 1920].includes(width)) {
+            await page.goto(base + '/' + lang + '/blog/', { waitUntil: 'networkidle' });
             await page.locator('main a[href="' + href + '"]').first().click();
             await page.waitForURL(base + href);
             await page.waitForLoadState('networkidle');
@@ -128,7 +132,7 @@ async function assertHeroAtViewportTop(page, href) {
               !Number.isFinite(animation.effect?.getComputedTiming().endTime) || animation.playState !== 'running'
             ));
             await assertHeroAtViewportTop(page, href);
-            await page.screenshot({ path: path.join(artifacts, 'hero-from-listing-' + width + '.png') });
+            await page.screenshot({ path: path.join(artifacts, 'hero-from-listing-' + lang + '-' + width + '.png') });
             assert.deepEqual(errors, []);
             assert.deepEqual(writes, []);
           }

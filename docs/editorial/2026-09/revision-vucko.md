@@ -1,9 +1,10 @@
-# Pilote français : Vucko
+# Pilote bilingue : Vucko
 
 Cette page conserve la trace de la réécriture et de sa première validation
 technique. Mise à jour ultérieure du 15 septembre : Nicolas a demandé la sortie
-du brouillon ; `draft: false`, date du 22 septembre conservée, anglais encore
-à aligner. Voir le [README](README.md) pour l'état courant et le correctif du hero.
+du brouillon ; `draft: false`, date du 22 septembre conservée. L'anglais a ensuite
+été aligné sur Vucko. Voir le [README](README.md) pour l'état courant et le
+correctif du hero.
 
 15 septembre 2026. Choix de référence validé par Nicolas avant réécriture.
 Le texte final reste à relire : l'accord sur Vucko ne vaut pas validation de
@@ -17,9 +18,9 @@ l'article, de sa traduction ou de sa publication.
 - Cinq H2, dont Sources. Trois captures au fil du raisonnement, aucun atelier,
   formulaire, iframe ou nouveau JavaScript d'article.
 - Couverture existante conservée, 1536 × 1024.
-- Anglais inchangé, encore sur GOV.UK/Primer. `readingTime: 7` reste partagé et
-  fondé sur la version la plus longue, 1372 mots EN.
-- `draft: true` conservé pour la paire. Date proposée du 22 septembre à confirmer.
+- Anglais réécrit nativement sur Vucko : 1017 mots, cinq H2, trois captures et
+  trois liens internes anglais. `readingTime: 6` est partagé par la paire.
+- `draft: false` pour la paire. Date du 22 septembre conservée.
   Pas de `modifiedDate` antérieur à une première publication encore future ;
   la date réelle de cette révision est consignée ici et dans Git.
 - Aucun autre article réécrit, aucune production ni automatisation modifiée.
@@ -124,13 +125,38 @@ Déploiement staging vérifié le 15 septembre, après le push du commit `4065e2
   La route FR du pilote sur `https://hordeagence.com/` répond toujours HTTP 404.
 
 Le choix de référence est intégré et présenté pour relecture, pas approuvé pour
-publication. L'anglais et le statut brouillon restent inchangés.
+publication. L'anglais est maintenant aligné et la paire est sortie du brouillon.
+
+## Alignement anglais, 15 septembre
+
+L'anglais a été adapté comme un article autonome à partir du pilote français
+validé pour réécriture. Il conserve la même progression, les trois captures,
+les précautions sur les résultats, l'accessibilité et la performance, ainsi que
+la transposition au bureau d'architecture fictif. Les liens internes pointent
+vers la direction artistique, le brief et le contact en anglais. Aucun cas
+GOV.UK, Primer ou Rijksmuseum ne subsiste dans l'article ou ses métadonnées.
+
+Une passe de traduction indépendante a vérifié la fluidité, les dates, les
+légendes, les liens et l'absence de fragments français. Le validateur du skill
+compte 1017 mots hors légendes, cinq H2, trois images et trois liens internes ;
+zéro erreur et un avertissement attendu pour la date future. Le diagnostic de
+prose relève 21 paragraphes, 15,36 mots par phrase en moyenne, aucun paragraphe
+de plus de 150 mots, aucune expression interdite et aucun tiret cadratin.
+
+Le build final conserve la séparation attendue au 15 septembre : 76 pages HTML
+et 18 routes de blog visibles en production simulée, avec les six routes futures
+absentes ; 82 pages HTML et 24 routes visibles en staging. Les vérifications SEO
+et de programmation réussissent dans les deux modes. Les 48 cas navigateur
+réussissent sur les douze pages FR/EN, aux largeurs 375, 768, 1440 et 1920 px.
+L'inspection visuelle confirme les trois captures et leurs légendes sur téléphone
+et grand écran, ainsi que le fond du hero jusqu'en haut. Artefacts :
+`/tmp/horde-vucko-en-build.ONBYg5/artifacts/`.
 
 ## Suite après relecture
 
-1. Faire valider ce texte français et les captures.
-2. Réécrire l'anglais sur le même cas, avec une rédaction native, puis le vérifier.
-3. Confirmer la date et l'accord de publication avant de sortir du brouillon.
+1. Relire l'anglais seul, comme un article autonome, puis confirmer la paire.
+2. Confirmer l'accord de publication avant tout transfert futur vers `master`.
+3. Vérifier le premier rebuild de production à partir du 22 septembre.
 
 Les RSS et sitemaps sont générés par Astro. Pas de soumission IndexNow, de
 publication sociale ou de modification de master dans cette passe.

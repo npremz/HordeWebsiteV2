@@ -132,24 +132,24 @@
   {
     "slug": "analyse-web-interface-without-copying",
     "locale": "en",
-    "proseParagraphs": 34,
+    "proseParagraphs": 21,
     "paragraphsOver150Words": 0,
-    "h2Count": 7,
-    "sentenceWordMean": 13.66,
-    "sentenceWordStdDev": 5.88,
-    "proseTypeTokenRatio": 0.431,
+    "h2Count": 5,
+    "sentenceWordMean": 15.36,
+    "sentenceWordStdDev": 7.06,
+    "proseTypeTokenRatio": 0.422,
     "frequentParagraphOpeners": [
       [
         "the",
-        5
-      ],
-      [
-        "a",
         4
       ],
       [
+        "to",
+        2
+      ],
+      [
         "this",
-        3
+        2
       ]
     ],
     "stylePhraseOccurrences": {},

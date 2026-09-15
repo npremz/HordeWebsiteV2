@@ -4,6 +4,10 @@ Textes prêts à relire, pas envoyés. Utiliser les liens de production seulemen
 après confirmation que la page est effectivement publiée. Ne pas partager le
 staging comme URL publique. Aucun résultat client ni gain chiffré n’est revendiqué.
 
+Attention : les textes de distribution du 22 septembre ci-dessous décrivent
+encore l'ancienne version GOV.UK/Primer. Ils doivent être réécrits sur Vucko et
+revalidés avant tout envoi ; l'alignement de l'article FR/EN ne les publie pas.
+
 ## 15 septembre : direction artistique
 
 ### LinkedIn FR

@@ -7,13 +7,14 @@ Après relecture, les ateliers standardisés sont retirés des six articles, dan
 les deux langues. Le nouveau pilote à valider est **« Comment s'inspirer d'un
 site web sans le copier »**, réécrit en français avec trois captures réelles de
 Vucko le 15 septembre, après validation du choix de cette référence.
-L'anglais conserve provisoirement son ancien angle, avec nettoyage des renvois
-aux ateliers. Son alignement sur Vucko reste à faire.
+L'anglais a ensuite été réécrit comme une version autonome sur Vucko, avec les
+mêmes trois captures et des liens internes anglais. Il ne s'agit pas d'une
+traduction littérale du français.
 
 Le 15 septembre, Nicolas a demandé de retirer le pilote du brouillon : la paire
 est maintenant en `draft: false`, avec la date du 22 septembre conservée. Ce
 statut est partagé par les deux langues ; il ne signifie pas que l'anglais a été
-réécrit ou validé comme traduction du français. Aucune fusion en production.
+validé indépendamment par Nicolas. Aucune fusion en production.
 Le pilote reste planifié et visible sur staging, absent d'un build de production
 avant sa date. Voir [revision-vucko.md](revision-vucko.md) pour la réécriture et
 la section ci-dessous pour la correction du hero.
@@ -25,7 +26,7 @@ la section ci-dessous pour la correction du hero.
 | 15/09 | Direction artistique | [Lire](https://waf.hordagency.com/fr/blog/direction-artistique-interface-web/) | [Read](https://waf.hordagency.com/en/blog/art-direction-for-web-interfaces/) |
 | 17/09 | Mise à jour IA et expérience | [Lire](https://waf.hordagency.com/fr/blog/ia-interfaces-experiences-utilisateur/) | [Read](https://waf.hordagency.com/en/blog/ai-can-create-interfaces-not-experiences/) |
 | 18/09 | Design et développement | [Lire](https://waf.hordagency.com/fr/blog/design-developpement-web-ensemble/) | [Read](https://waf.hordagency.com/en/blog/design-and-web-development-together/) |
-| 22/09, date conservée | S'inspirer sans copier, sorti du brouillon | [Lire la nouvelle version](https://waf.hordagency.com/fr/blog/analyser-interface-web-sans-copier/) | [Ancienne version, à aligner sur Vucko](https://waf.hordagency.com/en/blog/analyse-web-interface-without-copying/) |
+| 22/09, date conservée | S'inspirer sans copier, FR/EN alignés et sortis du brouillon | [Lire](https://waf.hordagency.com/fr/blog/analyser-interface-web-sans-copier/) | [Read](https://waf.hordagency.com/en/blog/analyse-web-interface-without-copying/) |
 | 24/09 | Mise à jour différenciation | [Lire](https://waf.hordagency.com/fr/blog/comment-creer-site-web-qui-se-demarque-2026/) | [Read](https://waf.hordagency.com/en/blog/how-to-make-your-website-stand-out-2026/) |
 | 29/09 | Brief d’expérience | [Lire](https://waf.hordagency.com/fr/blog/brief-design-web-cadrer-experience/) | [Read](https://waf.hordagency.com/en/blog/web-design-brief-before-screens/) |
 
@@ -40,8 +41,8 @@ sur staging avant leur date avec une indication d'aperçu. Tout le staging est n
    l'accompagne ? Peut-on dire ce que l'article aide à faire sans vocabulaire de designer ?
 3. Vérifier le point de vue : correspond-il réellement à ce que Horde veut
    défendre et à ce que l’auteur accepte de signer ?
-4. Après validation du pilote FR, réécrire son anglais puis le relire comme une
-   version autonome. Ne pas valider les deux langues comme déjà alignées.
+4. Lire l'anglais comme une version autonome : son titre et son ouverture sont-ils
+   naturels, et le raisonnement reste-t-il clair devant les mêmes captures ?
 5. Noter une décision par ligne : approuvé, retouches précises ou report.
 6. Confirmer les dates. Si la validation arrive après une date proposée, la
    repousser avant fusion pour éviter un rattrapage public involontaire.
@@ -68,8 +69,8 @@ Il n'y a plus de formulaire de démonstration ni de téléchargement de brief.
 Les contenus sont dans `src/content/posts/`, avec un YAML commun et deux corps
 MDX par article. Les quatre nouvelles couvertures sont conservées dans
 `src/assets/images/blog/<slug>/featuredImage.png`. Les deux mises à jour gardent
-leurs images existantes. Les captures sont des images locales insérées dans le
-corps français ; `src/lib/content/blog-inline-images.ts` valide leur syntaxe.
+leurs images existantes. Les captures sont des images locales insérées dans les
+deux corps ; `src/lib/content/blog-inline-images.ts` valide leur syntaxe.
 Astro produit les versions WebP adaptées aux écrans. Le composant d'atelier et
 son champ YAML ont été supprimés ; leurs versions précédentes restent dans Git.
 
@@ -88,7 +89,7 @@ Captures et résultats : `/tmp/horde-blog-hero.OkKKBf/`.
 Contrôles de cette correction :
 
 - Validateur Horde : zéro erreur ; avertissement attendu pour la date future.
-  Les corps FR/EN, images, URLs, liens et temps de lecture sont inchangés.
+  Les images, URLs et liens étaient inchangés lors de cette correction.
 - Tests d'images : 4/4. Astro : zéro erreur, zéro avertissement et 17 indications
   préexistantes.
 - Builds et vérifications SEO/programmation réussis : 76 pages HTML et 18 routes
@@ -103,6 +104,24 @@ Contrôles de cette correction :
 Le contrôle `--built` du skill n'est pas utilisé pour annoncer une publication
 immédiate : l'absence du pilote en production avant le 22 septembre est voulue.
 La séparation aperçu/publication est vérifiée par les contrôles du dépôt.
+
+## Alignement anglais, 15 septembre
+
+La version anglaise reprend Vucko, les trois captures et les limites du français,
+avec une rédaction autonome et des liens internes `/en/`. Son titre SEO cible
+« use a website as inspiration without copying it ». Les anciens cas GOV.UK et
+Primer ont disparu du corps et des métadonnées. Les textes de distribution du
+22 septembre restent volontairement signalés comme obsolètes, sans être envoyés.
+
+Contrôles de l'alignement : validateur Horde sans erreur, avec le seul
+avertissement attendu pour la date future ; 1017 mots hors légendes, cinq H2 et
+trois liens internes. Diagnostic de prose sans expression interdite, tiret
+cadratin ou paragraphe de plus de 150 mots. Builds production et staging,
+contrôles SEO et programmation réussis. Navigateur : 48/48 cas sur les douze
+pages FR/EN, en 375, 768, 1440 et 1920 px ; les deux corps Vucko rendent leurs
+trois images, le hero reste en haut du viewport et aucun débordement horizontal,
+erreur JavaScript ou échec axe n'est détecté dans les règles testées. Artefacts :
+`/tmp/horde-vucko-en-build.ONBYg5/artifacts/`.
 
 ## Ce que la suite en production doit encore faire
 
