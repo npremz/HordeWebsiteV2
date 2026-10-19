@@ -1,0 +1,11 @@
+---
+import HomeIcon from "../svg/HomeIcon.astro";
+
+interface Props {
+  class?: string;
+}
+
+const { class: className = "" } = Astro.props;
+---
+
+<HomeIcon name="slash" class:list={["block w-[15px] md:w-[18px]", className]} />

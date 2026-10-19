@@ -1,0 +1,65 @@
+---
+interface Props {
+  class?: string;
+  /** Inverse le tracé verticalement (variante du footer). */
+  vertical?: boolean;
+}
+
+const { class: className = "", vertical = false } = Astro.props;
+
+// Tracé pixel "—\_/‾" dessiné sur une grille de 18 × 9 cases.
+const cells: [number, number][] = [
+  [16, 0], [17, 0],
+  [15, 1],
+  [14, 2], [14, 3],
+  [0, 4], [0, 5], [1, 4], [2, 4], [3, 4], [4, 4],
+  [5, 5], [6, 5],
+  [7, 6], [8, 6],
+  [9, 7], [10, 7],
+  [11, 6], [12, 6],
+  [13, 5], [13, 4],
+];
+const size = 10;
+const width = 18 * size;
+const height = 8 * size;
+---
+
+<svg
+  class={className}
+  viewBox={vertical ? `0 0 ${height} ${width}` : `0 0 ${width} ${height}`}
+  fill="currentColor"
+  xmlns="http://www.w3.org/2000/svg"
+  aria-hidden="true"
+  shape-rendering="crispEdges"
+>
+  <g transform={vertical ? `matrix(0 1 1 0 0 0)` : undefined}>
+    {cells.map(([x, y], i) => (
+      <rect
+        class="pixel-squiggle__cell"
+        style={`--cell-index: ${i}`}
+        x={x * size}
+        y={y * size}
+        width={size}
+        height={size}
+      />
+    ))}
+  </g>
+</svg>
+
+<style>
+  .pixel-squiggle__cell {
+    animation: pixel-squiggle-blink 2.4s steps(1, end) infinite;
+    animation-delay: calc(var(--cell-index) * 70ms);
+  }
+
+  @keyframes pixel-squiggle-blink {
+    0%, 80% { opacity: 1; }
+    90% { opacity: 0.25; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .pixel-squiggle__cell {
+      animation: none;
+    }
+  }
+</style>

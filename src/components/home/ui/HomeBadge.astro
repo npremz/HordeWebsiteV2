@@ -1,0 +1,100 @@
+---
+import type { Locale } from "../../../i18n";
+import { getHomeCopy } from "../copy";
+import HomeIcon from "../svg/HomeIcon.astro";
+
+interface Props {
+  lang: Locale;
+  kind: "from" | "since";
+  class?: string;
+}
+
+const { lang, kind, class: className = "" } = Astro.props;
+const copy = getHomeCopy(lang);
+---
+
+<div class:list={["home-badge", className]}>
+  <div class="home-badge__inner">
+    {kind === "from" ? (
+      <>
+        <span class="home-badge__label">{copy.badges.from}</span>
+        <HomeIcon name="origin" class="w-3" />
+        <span class="home-badge__value home-badge__value--serif">{copy.badges.location}</span>
+      </>
+    ) : (
+      <>
+        <span class="home-badge__label">{copy.badges.since}</span>
+        <span class="home-badge__rule" aria-hidden="true"></span>
+        <HomeIcon name="year2026" class="w-[2.6rem] sm:w-12" label={copy.badges.year} />
+      </>
+    )}
+  </div>
+</div>
+
+<style>
+  .home-badge {
+    display: inline-flex;
+    padding: 3px;
+    border-radius: 16px;
+    background: var(--color-button-white);
+    box-shadow: 0 0 0 1px rgb(22 25 27 / 0.12);
+    color: var(--color-black);
+  }
+
+  .home-badge__inner {
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+    height: 2.5rem;
+    padding-inline: 0.65rem 0.8rem;
+    border: 1px solid #c9c5d0;
+    border-radius: 13px;
+  }
+
+  .home-badge__label {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    line-height: 1;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+
+  .home-badge__rule {
+    width: 5.75rem;
+    height: 1px;
+    background: currentColor;
+  }
+
+  .home-badge__value {
+    line-height: 1;
+    white-space: nowrap;
+  }
+
+  .home-badge__value--serif {
+    font-family: "Times New Roman", Times, serif;
+    font-size: 1.05rem;
+    letter-spacing: -0.02em;
+    font-stretch: condensed;
+    transform: scaleX(0.86);
+    transform-origin: left center;
+    margin-right: -1.1rem;
+  }
+
+
+  @media (max-width: 639px) {
+    .home-badge__inner {
+      height: 2.1rem;
+      gap: 0.6rem;
+      padding-inline: 0.5rem 0.6rem;
+    }
+
+    .home-badge__rule {
+      width: 3.6rem;
+    }
+
+    .home-badge__value--serif {
+      font-size: 0.95rem;
+    }
+  }
+</style>

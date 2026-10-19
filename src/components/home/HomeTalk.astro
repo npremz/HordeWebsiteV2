@@ -1,0 +1,348 @@
+---
+import type { Locale } from "../../i18n";
+import { getFooterServiceLinks } from "../../lib/content/services";
+import { getFooter, getNavigation } from "../../lib/site-data";
+import PhysicsWordmark from "../ui/effects/PhysicsWordmark.astro";
+import { getHomeCopy } from "./copy";
+import HomeIcon from "./svg/HomeIcon.astro";
+
+interface Props {
+  lang: Locale;
+}
+
+const { lang } = Astro.props;
+const copy = getHomeCopy(lang);
+const [navigation, footer, services] = await Promise.all([
+  getNavigation(lang),
+  getFooter(lang),
+  getFooterServiceLinks(lang),
+]);
+const socialLinks = footer.columns.flatMap((column) => column.links);
+const contactHref = `/${lang}/contact/`;
+---
+
+<section id="contact" class="home-talk relative bg-bg pb-16 md:pb-24">
+  <PhysicsWordmark class="home-talk__physics" scaleMultiplier={0.78} mobileMultiplier={1.25} />
+
+  <div class="home-talk__pills" aria-hidden="false">
+    <span class="flex items-stretch gap-[3px]">
+      <span class="home-talk__pill">{copy.talk.liked}</span>
+      <button type="button" class="home-talk__pill home-talk__like" aria-pressed="false" aria-label={copy.talk.likeLabel} data-home-like>
+        <HomeIcon name="heart" class="home-talk__heart w-[0.9rem]" />
+      </button>
+    </span>
+    <a href={contactHref} class="home-talk__pill">{copy.talk.connect}</a>
+  </div>
+
+  <div class="relative px-[10px] sm:px-[18px] md:px-0">
+    <h2 class="home-talk__title">
+      <a href={contactHref} class="home-talk__title-link">
+        <span>{copy.talk.title}</span>
+        <span class="home-talk__key" aria-hidden="true">
+          <span class="home-talk__key-cap">
+            <svg viewBox="0 0 12 12" fill="none"><path d="M2 10L10 2M3.5 2H10V8.5" stroke="currentColor" stroke-width="1.2" /></svg>
+          </span>
+        </span>
+        <span class="sr-only">— {copy.talk.ctaLabel}</span>
+      </a>
+    </h2>
+  </div>
+
+  <div class="home-talk__columns">
+    <nav class="home-talk__col home-talk__col--menu" aria-label={copy.talk.menu}>
+      <h3 class="home-talk__heading">{copy.talk.menu}</h3>
+      <ul>
+        {navigation.items.map((item) => (
+          <li><a href={item.url} class="home-talk__link">{item.label}</a></li>
+        ))}
+      </ul>
+    </nav>
+    <div class="home-talk__col home-talk__col--social">
+      <h3 class="home-talk__heading">
+        <span class="md:hidden">{copy.talk.contact}</span>
+        <span class="hidden md:inline">{copy.talk.social}</span>
+      </h3>
+      <ul>
+        {socialLinks.map((link) => (
+          <li>
+            <a
+              href={link.url}
+              class="home-talk__link home-talk__link--underline"
+              target={link.isExternal && !link.url.startsWith("mailto:") ? "_blank" : undefined}
+              rel={link.isExternal && !link.url.startsWith("mailto:") ? "noopener noreferrer" : undefined}
+            >
+              {link.label}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+    <nav class="home-talk__col home-talk__col--services" aria-label={copy.talk.services}>
+      <h3 class="home-talk__heading">{copy.talk.services}</h3>
+      <ul>
+        {services.map((service) => (
+          <li><a href={service.url} class="home-talk__link">{service.label}</a></li>
+        ))}
+      </ul>
+    </nav>
+  </div>
+</section>
+
+<style>
+  .home-talk :global(.home-talk__physics) {
+    aspect-ratio: auto !important;
+    height: 10rem;
+  }
+
+  .home-talk__pills {
+    position: relative;
+    z-index: 6;
+    display: flex;
+    justify-content: space-between;
+    margin-top: -1.1rem;
+    padding-inline: 10px;
+  }
+
+  .home-talk__pill {
+    display: inline-flex;
+    align-items: center;
+    height: 2.2rem;
+    padding-inline: 0.85rem;
+    border-radius: 6px;
+    background: var(--color-black);
+    color: var(--color-white);
+    font-size: 0.875rem;
+    line-height: 1;
+    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .home-talk__like {
+    width: 2.2rem;
+    justify-content: center;
+    padding: 0;
+    cursor: pointer;
+  }
+
+  .home-talk__like[aria-pressed="true"] {
+    background: var(--color-err);
+  }
+
+  a.home-talk__pill:hover,
+  .home-talk__like:hover {
+    transform: translateY(-2px);
+  }
+
+  .home-talk__title {
+    margin-top: 1.5rem;
+    font-size: 28.6vw;
+    line-height: 0.85;
+    letter-spacing: -0.06em;
+    white-space: nowrap;
+    text-align: center;
+  }
+
+  .home-talk__title-link {
+    position: relative;
+    display: inline-block;
+  }
+
+  .home-talk__key {
+    position: absolute;
+    top: 52%;
+    left: 31.5%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 0.42em;
+    height: 0.42em;
+    border-radius: 0.06em;
+    background: rgb(158 154 164 / 0.55);
+    box-shadow: inset 0 0 0 0.012em rgb(22 25 27 / 0.15);
+    transform: translateY(-50%);
+  }
+
+  .home-talk__key-cap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 76%;
+    height: 76%;
+    margin: -6% 0 0 -4%;
+    border-radius: 0.045em;
+    background: var(--color-button-white);
+    color: var(--color-black);
+    box-shadow: 0.01em 0.012em 0 rgb(22 25 27 / 0.12);
+    transition:
+      transform 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+      box-shadow 0.25s ease;
+  }
+
+  .home-talk__key-cap svg {
+    width: 0.07em;
+    height: 0.07em;
+    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .home-talk__title-link:hover .home-talk__key-cap,
+  .home-talk__title-link:focus-visible .home-talk__key-cap {
+    transform: translate(0.02em, 0.025em);
+    box-shadow: none;
+  }
+
+  .home-talk__title-link:hover .home-talk__key-cap svg {
+    transform: rotate(45deg);
+  }
+
+  .home-talk__columns {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 2.5rem 1.5rem;
+    margin-top: 2.5rem;
+    padding-inline: 10px;
+  }
+
+  .home-talk__col--menu {
+    grid-column: 1 / -1;
+  }
+
+  .home-talk__col--services {
+    text-align: right;
+  }
+
+  .home-talk__heading {
+    padding-bottom: 0.45rem;
+    margin-bottom: 0.75rem;
+    border-bottom: 1px solid var(--color-lines);
+    font-size: 1.125rem;
+    line-height: 1;
+  }
+
+  .home-talk__col ul {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    font-size: 0.9375rem;
+  }
+
+  .home-talk__link {
+    transition: opacity 0.2s ease;
+  }
+
+  .home-talk__link:hover {
+    opacity: 0.6;
+  }
+
+  .home-talk__link--underline {
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+    text-decoration-thickness: 1px;
+  }
+
+  @media (min-width: 640px) {
+    .home-talk :global(.home-talk__physics) {
+      height: 17rem;
+    }
+
+    .home-talk__pills,
+    .home-talk__columns {
+      padding-inline: 2rem;
+    }
+
+    .home-talk__columns {
+      grid-template-columns: 1fr auto auto;
+      gap: 2rem 4.5rem;
+    }
+
+    .home-talk__col--menu {
+      grid-column: auto;
+      order: 2;
+    }
+
+    .home-talk__col--social {
+      order: 1;
+    }
+
+    .home-talk__col--services {
+      order: 3;
+    }
+
+  }
+
+  @media (min-width: 1024px) {
+    .home-talk :global(.home-talk__physics) {
+      height: 20rem;
+    }
+
+    .home-talk__pills {
+      padding-inline: 1.9rem;
+    }
+
+    .home-talk__columns {
+      grid-template-columns: 1fr auto auto;
+      gap: 2rem 10rem;
+      margin-top: 3.5rem;
+      padding-inline: 3.4rem;
+    }
+
+    .home-talk__col--menu {
+      order: 1;
+    }
+
+    .home-talk__col--social {
+      order: 2;
+    }
+
+    .home-talk__heading {
+      margin-bottom: 1.5rem;
+      padding-bottom: 0;
+      border-bottom: 0;
+      font-size: 1.375rem;
+    }
+
+    .home-talk__col ul {
+      gap: 0.75rem;
+    }
+
+    .home-talk__col--menu .home-talk__link {
+      text-decoration: underline;
+      text-underline-offset: 0.2em;
+      text-decoration-thickness: 1px;
+    }
+  }
+
+  @media (min-width: 1512px) {
+    .home-talk__pills {
+      padding-inline: 6.25rem;
+    }
+
+    .home-talk__columns {
+      gap: 2rem 15rem;
+      padding-inline: 6.5rem;
+    }
+  }
+</style>
+
+<script>
+  function initHomeLike() {
+    const button = document.querySelector<HTMLButtonElement>("[data-home-like]");
+    if (!button || button.dataset.ready === "true") return;
+    button.dataset.ready = "true";
+
+    try {
+      if (localStorage.getItem("horde-home-like") === "1") {
+        button.setAttribute("aria-pressed", "true");
+      }
+    } catch {}
+
+    button.addEventListener("click", () => {
+      const pressed = button.getAttribute("aria-pressed") !== "true";
+      button.setAttribute("aria-pressed", String(pressed));
+      try {
+        localStorage.setItem("horde-home-like", pressed ? "1" : "0");
+      } catch {}
+    });
+  }
+
+  initHomeLike();
+  document.addEventListener("astro:page-load", initHomeLike);
+</script>

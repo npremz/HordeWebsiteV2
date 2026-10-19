@@ -1,0 +1,30 @@
+---
+import { HOME_ICONS, type HomeIcon, type HomeIconName } from "./icons";
+import type { HTMLAttributes } from "astro/types";
+
+interface Props extends Omit<HTMLAttributes<"svg">, "class"> {
+  name: HomeIconName;
+  /** Fixer au moins la largeur (ex. w-3) : la hauteur suit le viewBox. */
+  class?: string;
+  /** Rend l'icône accessible (role="img") au lieu de la masquer. */
+  label?: string;
+}
+
+const { name, class: className = "", label, ...rest } = Astro.props;
+const icon: HomeIcon = HOME_ICONS[name];
+---
+
+<svg
+  class:list={["shrink-0", className]}
+  viewBox={`0 0 ${icon.width} ${icon.height}`}
+  fill="currentColor"
+  xmlns="http://www.w3.org/2000/svg"
+  role={label ? "img" : undefined}
+  aria-label={label}
+  aria-hidden={label ? undefined : "true"}
+  {...rest}
+>
+  {icon.paths.map((path) => (
+    <path d={path.d} fill-rule={path.evenOdd ? "evenodd" : undefined} clip-rule={path.evenOdd ? "evenodd" : undefined} />
+  ))}
+</svg>

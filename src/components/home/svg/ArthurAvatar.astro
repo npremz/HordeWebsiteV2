@@ -1,0 +1,38 @@
+---
+interface Props {
+  class?: string;
+}
+
+const { class: className = "" } = Astro.props;
+---
+
+<svg class={className} viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+  <circle cx="32" cy="32" r="32" fill="#c5c1cd" />
+  <rect x="12" y="15" width="40" height="36" rx="10" fill="#c96a2b" />
+  <rect x="12" y="15" width="40" height="8" rx="4" fill="#e08a45" />
+  <rect x="7" y="27" width="6" height="14" rx="3" fill="#a9541f" />
+  <rect x="51" y="27" width="6" height="14" rx="3" fill="#a9541f" />
+  <rect x="17" y="24" width="30" height="22" rx="7" fill="#1f2124" />
+  <circle class="arthur-eye" cx="26" cy="33" r="3" fill="#f4f1f8" />
+  <circle class="arthur-eye" cx="38" cy="33" r="3" fill="#f4f1f8" />
+  <path d="M27 39.5C29.5 42 34.5 42 37 39.5" stroke="#f4f1f8" stroke-width="2" stroke-linecap="round" />
+</svg>
+
+<style>
+  .arthur-eye {
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: arthur-blink 4.5s infinite;
+  }
+
+  @keyframes arthur-blink {
+    0%, 92%, 100% { transform: scaleY(1); }
+    95% { transform: scaleY(0.1); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .arthur-eye {
+      animation: none;
+    }
+  }
+</style>

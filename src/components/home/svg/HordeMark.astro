@@ -1,0 +1,13 @@
+---
+import HomeIcon from "./HomeIcon.astro";
+
+interface Props {
+  class?: string;
+  title?: string;
+}
+
+// Logo « HR » officiel (export Figma, viewBox 77 × 45).
+const { class: className = "", title } = Astro.props;
+---
+
+<HomeIcon name="mark" class={className} label={title} />

@@ -1,0 +1,45 @@
+---
+interface Props {
+  class?: string;
+  /** "hero" : arcs haut + bas ; "footer" : seulement l'arc haut, plus large. */
+  variant?: "hero" | "footer";
+}
+
+const { class: className = "", variant = "hero" } = Astro.props;
+
+// Arc supérieur : deux lignes parallèles qui plongent autour du cercle central.
+const topArc = "M-40 -6C330 -6 470 -6 560 46C640 92 650 122 756 122C862 122 872 92 952 46C1042 -6 1182 -6 1552 -6";
+const bottomArc = "M-40 616C330 616 470 616 560 564C640 518 650 488 756 488C862 488 872 518 952 564C1042 616 1182 616 1552 616";
+---
+
+<svg
+  class={className}
+  viewBox="0 0 1512 610"
+  preserveAspectRatio="xMidYMid slice"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+  aria-hidden="true"
+>
+  <g stroke="#2c2e31" stroke-width="3">
+    <path d={topArc} />
+    <path d={topArc} transform="translate(0 10)" />
+    {variant === "hero" && (
+      <>
+        <path d={bottomArc} />
+        <path d={bottomArc} transform="translate(0 -10)" />
+      </>
+    )}
+    <path d="M-20 140C40 180 60 260 60 305C60 350 40 430 -20 470" />
+    <path d="M1532 140C1472 180 1452 260 1452 305C1452 350 1472 430 1532 470" />
+  </g>
+  <g stroke="#26282b">
+    <circle cx="756" cy="305" r="104" stroke-width="3" />
+    <circle cx="756" cy="305" r="96" stroke-width="1.5" />
+    <circle cx="756" cy="305" r="52" stroke-width="3" />
+    <path d="M0 305H1512" stroke-width="1.5" />
+  </g>
+  <g stroke="#3a3c40" stroke-width="2.5" transform="translate(756 305)">
+    <circle r="9" />
+    <path d="M-14 -14L-6 -6M14 -14L6 -6M-14 14L-6 6M14 14L6 6" stroke-linecap="round" />
+  </g>
+</svg>

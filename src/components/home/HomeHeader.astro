@@ -1,0 +1,298 @@
+---
+import { getLocalizedPath, type Locale } from "../../i18n";
+import { getLocalizedProjects } from "../../lib/content/projects";
+import { getServiceSummaries } from "../../lib/content/services";
+import { getHomeCopy } from "./copy";
+import HordeMark from "./svg/HordeMark.astro";
+
+interface Props {
+  lang: Locale;
+}
+
+const { lang } = Astro.props;
+const copy = getHomeCopy(lang);
+const [services, projects] = await Promise.all([
+  getServiceSummaries(lang),
+  getLocalizedProjects(lang),
+]);
+const count = (value: number) => `(${value.toString().padStart(2, "0")})`;
+
+const items = [
+  { label: copy.nav.home, href: `/${lang}/`, current: true },
+  { label: copy.nav.culture, href: `/${lang}/about/` },
+  { label: copy.nav.services, href: `/${lang}/services/`, count: count(services.length) },
+  { label: copy.nav.projects, href: `/${lang}/projets/`, count: count(projects.length) },
+  { label: copy.nav.blog, href: `/${lang}/blog/` },
+  { label: copy.nav.contact, href: `/${lang}/contact/` },
+];
+
+const languages = [
+  { locale: "fr" as const, label: "Fr", href: getLocalizedPath("/", "fr") },
+  { locale: "en" as const, label: "Eng", href: getLocalizedPath("/", "en") },
+];
+---
+
+<header class="home-header absolute inset-x-0 top-0 z-50 text-white">
+  <div class="flex items-start justify-between gap-6 p-[5px]">
+    <a
+      href={`/${lang}/`}
+      class="home-header__brand"
+      aria-label={`${copy.brand.name} — ${copy.nav.home}`}
+    >
+      <span class="flex min-w-0 flex-col justify-center gap-1 px-3 md:px-[14px]">
+        <span class="text-[1rem] leading-none tracking-[-0.02em] md:text-[1.375rem]">{copy.brand.name}</span>
+        <span class="hidden items-center gap-1.5 font-mono text-[0.75rem] uppercase leading-none text-white/55 md:flex">
+          <span class="home-header__dots" aria-hidden="true"><i></i><i></i><i></i></span>
+          {copy.brand.tagline}
+        </span>
+      </span>
+      <span class="home-header__mark hidden md:flex" aria-hidden="true">
+        <HordeMark class="w-[62px]" />
+      </span>
+    </a>
+
+    <nav class="hidden md:block" aria-label={copy.nav.menu}>
+      <ul class="flex items-center gap-6 pt-3 pr-3 text-[0.9375rem] leading-none slg:gap-7">
+        {items.map((item) => (
+          <li>
+            <a
+              href={item.href}
+              class="home-header__link"
+              aria-current={item.current ? "page" : undefined}
+            >
+              {item.label}
+              {item.count && <span class="text-[0.6875rem]">{item.count}</span>}
+            </a>
+          </li>
+        ))}
+        <li class="flex items-center gap-1 border-l border-white/20 pl-6">
+          {languages.map((language, index) => (
+            <>
+              {index > 0 && <span class="text-white/30">/</span>}
+              <a
+                href={language.href}
+                hreflang={language.locale}
+                class:list={["home-header__lang", language.locale === lang && "is-active"]}
+                aria-current={language.locale === lang ? "true" : undefined}
+              >
+                {language.label}
+              </a>
+            </>
+          ))}
+        </li>
+      </ul>
+    </nav>
+
+    <button
+      type="button"
+      class="home-header__toggle flex md:hidden"
+      aria-expanded="false"
+      aria-controls="home-mobile-menu"
+      aria-label={copy.nav.openMenu}
+      data-open-label={copy.nav.openMenu}
+      data-close-label={copy.nav.closeMenu}
+      data-home-menu-toggle
+    >
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </button>
+  </div>
+
+  <div id="home-mobile-menu" class="home-header__panel md:hidden" data-home-menu hidden>
+    <nav aria-label={copy.nav.menu} class="flex h-full flex-col justify-between">
+      <ul class="flex flex-col gap-3">
+        {items.map((item) => (
+          <li>
+            <a href={item.href} class="flex items-baseline gap-2 text-[2rem] leading-[1.05] tracking-[-0.03em]">
+              {item.label}
+              {item.count && <span class="font-mono text-[0.75rem]">{item.count}</span>}
+            </a>
+          </li>
+        ))}
+      </ul>
+      <div class="flex items-end justify-between gap-4 font-mono text-[0.75rem] uppercase">
+        <a href="mailto:hello@hordeagence.com" class="underline underline-offset-4">hello@hordeagence.com</a>
+        <span class="flex gap-2">
+          {languages.map((language) => (
+            <a
+              href={language.href}
+              hreflang={language.locale}
+              class:list={[language.locale === lang ? "text-white" : "text-white/40"]}
+            >
+              {language.label}
+            </a>
+          ))}
+        </span>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<style>
+  .home-header__brand {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    align-items: stretch;
+    justify-content: space-between;
+    width: 100%;
+    height: 2.75rem;
+    border: 1px solid #2c2e31;
+    border-radius: 8px;
+    background: #1b1d20;
+  }
+
+  .home-header__dots {
+    display: inline-flex;
+    gap: 1px;
+  }
+
+  .home-header__dots i {
+    width: 0.6rem;
+    height: 0.6rem;
+    border: 1px solid currentColor;
+    border-radius: 999px;
+  }
+
+  .home-header__mark {
+    align-items: center;
+    justify-content: center;
+    width: 5.6rem;
+    margin: 2px;
+    border: 3px solid #3a3c40;
+    border-radius: 6px;
+    background: var(--color-black);
+    color: var(--color-white);
+  }
+
+  .home-header__link {
+    position: relative;
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.2rem;
+    color: rgb(244 241 248 / 0.9);
+    transition: color 0.2s ease;
+  }
+
+  .home-header__link::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -0.3rem;
+    height: 1px;
+    background: currentColor;
+    transform: scaleX(0);
+    transform-origin: right center;
+    transition: transform 0.4s cubic-bezier(0.77, 0, 0.18, 1);
+  }
+
+  .home-header__link:hover {
+    color: var(--color-white);
+  }
+
+  .home-header__link:hover::after {
+    transform: scaleX(1);
+    transform-origin: left center;
+  }
+
+  .home-header__lang {
+    color: rgb(244 241 248 / 0.35);
+    transition: color 0.2s ease;
+  }
+
+  .home-header__lang.is-active,
+  .home-header__lang:hover {
+    color: var(--color-white);
+  }
+
+  .home-header__toggle {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    z-index: 3;
+    flex-direction: column;
+    justify-content: center;
+    gap: 6px;
+    width: 3.25rem;
+    height: 2.75rem;
+    padding-inline: 0.85rem;
+    cursor: pointer;
+  }
+
+  .home-header__toggle span {
+    display: block;
+    height: 1px;
+    background: currentColor;
+    transition: transform 0.35s cubic-bezier(0.77, 0, 0.18, 1);
+  }
+
+  .home-header__toggle[aria-expanded="true"] span:first-child {
+    transform: translateY(3.5px) rotate(20deg);
+  }
+
+  .home-header__toggle[aria-expanded="true"] span:last-child {
+    transform: translateY(-3.5px) rotate(-20deg);
+  }
+
+  .home-header__panel {
+    position: fixed;
+    inset: 0;
+    z-index: 1;
+    padding: 6.5rem 1rem 1.5rem;
+    background: var(--color-black);
+    color: var(--color-white);
+  }
+
+  .home-header__panel:not([hidden]) {
+    animation: home-menu-in 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  @keyframes home-menu-in {
+    from {
+      clip-path: inset(0 0 100% 0);
+    }
+    to {
+      clip-path: inset(0 0 0 0);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .home-header__brand {
+      width: 24.5rem;
+      height: 4.75rem;
+      border-radius: 10px;
+    }
+  }
+</style>
+
+<script>
+  function initHomeMenu() {
+    const toggle = document.querySelector<HTMLButtonElement>("[data-home-menu-toggle]");
+    const panel = document.querySelector<HTMLElement>("[data-home-menu]");
+    if (!toggle || !panel || toggle.dataset.ready === "true") return;
+    toggle.dataset.ready = "true";
+
+    const setOpen = (open: boolean) => {
+      panel.hidden = !open;
+      toggle.setAttribute("aria-expanded", String(open));
+      toggle.setAttribute("aria-label", (open ? toggle.dataset.closeLabel : toggle.dataset.openLabel) || "");
+      document.documentElement.style.overflow = open ? "hidden" : "";
+    };
+
+    toggle.addEventListener("click", () => setOpen(panel.hidden));
+    panel.addEventListener("click", (event) => {
+      if ((event.target as HTMLElement).closest("a")) setOpen(false);
+    });
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape" && !panel.hidden) {
+        setOpen(false);
+        toggle.focus();
+      }
+    });
+    document.addEventListener("astro:before-swap", () => setOpen(false), { once: true });
+  }
+
+  initHomeMenu();
+  document.addEventListener("astro:page-load", initHomeMenu);
+</script>

@@ -1,0 +1,150 @@
+---
+import type { Locale } from "../../i18n";
+import { getHomeCopy } from "./copy";
+import HeroLines from "./svg/HeroLines.astro";
+import HomeIcon from "./svg/HomeIcon.astro";
+import PixelSquiggle from "./svg/PixelSquiggle.astro";
+import HomeBadge from "./ui/HomeBadge.astro";
+import HomeClock from "./ui/HomeClock.astro";
+import HomeMarquee from "./ui/HomeMarquee.astro";
+
+interface Props {
+  lang: Locale;
+}
+
+const { lang } = Astro.props;
+const copy = getHomeCopy(lang);
+---
+
+<section id="hero" class="home-hero relative overflow-hidden bg-black text-white">
+  <HeroLines class="pointer-events-none absolute inset-0 h-full w-full" />
+
+  <!-- Badges mobile / tablette : sous la barre du header -->
+  <div class="absolute inset-x-[5px] top-[54px] z-10 flex justify-between gap-2 md:hidden">
+    <HomeBadge lang={lang} kind="from" />
+    <HomeBadge lang={lang} kind="since" />
+  </div>
+
+  <!-- Badges desktop : accrochés à la ligne médiane -->
+  <div class="pointer-events-none absolute inset-x-[7px] top-1/2 z-10 hidden -translate-y-1/2 items-center justify-between md:flex">
+    <span class="home-hero__badge-wrap">
+      <HomeBadge lang={lang} kind="from" class="pointer-events-auto" />
+      <span class="home-hero__stub" aria-hidden="true"></span>
+    </span>
+    <span class="home-hero__badge-wrap home-hero__badge-wrap--right">
+      <span class="home-hero__stub" aria-hidden="true"></span>
+      <HomeBadge lang={lang} kind="since" class="pointer-events-auto" />
+    </span>
+  </div>
+
+  <div class="relative flex min-h-[29.5rem] flex-col justify-end px-[10px] pb-10 pt-40 sm:min-h-[32rem] sm:px-[18px] md:h-[33.5rem] md:min-h-0 md:justify-center md:px-0 md:pb-0 md:pt-[4.5rem] lg:h-[38rem] lg:pt-[5rem]">
+    <div class="home-hero__block relative w-full sm:mx-auto sm:w-fit md:ml-[29%] lg:ml-[26%]">
+      <PixelSquiggle class="home-hero__squiggle text-bg" />
+      <h1 class="home-hero__title max-sm:pl-[8%]">
+        <span class="home-hero__line"><span style="--line: 0">{copy.hero.titleLine1}</span></span>
+        <span class="home-hero__line"><span style="--line: 1">{copy.hero.titleLine2}</span></span>
+      </h1>
+      <div class="mt-10 flex flex-col gap-10 md:mt-14 md:gap-8 lg:flex-row lg:items-center lg:justify-between">
+        <p class="max-w-[15rem] font-mono text-[0.8125rem] uppercase leading-[1.05] tracking-[0.04em] [word-spacing:0.45em] sm:max-w-[22rem] md:max-w-[11.5rem] lg:max-w-[14rem]">
+          {copy.hero.tagline}
+        </p>
+        <HomeClock lang={lang} class="sm:self-end lg:self-auto" />
+      </div>
+    </div>
+  </div>
+
+  <span class="home-hero__tag absolute bottom-[10px] right-[10px] z-10 inline-flex sm:hidden">
+    {copy.intro.tag} <HomeIcon name="heart" class="w-[0.7rem]" />
+  </span>
+</section>
+
+<HomeMarquee items={copy.marquee} variant="dark" />
+
+<style>
+  .home-hero__badge-wrap {
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .home-hero__stub {
+    width: 1.75rem;
+    height: 0.4rem;
+    border-radius: 2px;
+    background: #2c2e31;
+  }
+
+  .home-hero__title {
+    font-size: clamp(2.6rem, 10.4vw, 3.5rem);
+    line-height: 0.98;
+    letter-spacing: -0.045em;
+    font-weight: 400;
+  }
+
+  .home-hero__line {
+    display: block;
+    overflow: hidden;
+    padding-bottom: 0.2em;
+    margin-bottom: -0.2em;
+  }
+
+  .home-hero__line > span {
+    display: block;
+    animation: home-hero-line 0.9s cubic-bezier(0.77, 0, 0.18, 1) both;
+    animation-delay: calc(0.15s + var(--line) * 0.1s);
+  }
+
+  :global(.home-hero__squiggle) {
+    position: absolute;
+    top: -4.25rem;
+    right: 0;
+    width: 7.5rem;
+  }
+
+  .home-hero__tag {
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.45rem 0.7rem;
+    border-radius: 4px;
+    background: var(--color-black);
+    box-shadow: 0 0 0 1px #2c2e31;
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  @keyframes home-hero-line {
+    from {
+      transform: translateY(105%);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .home-hero__title {
+      font-size: 3.6rem;
+    }
+
+    :global(.home-hero__squiggle) {
+      top: -4.5rem;
+      right: -2.75rem;
+      width: 10.5rem;
+    }
+  }
+
+  @media (min-width: 1256px) {
+    .home-hero__title {
+      font-size: 4.75rem;
+    }
+  }
+
+  @media (min-width: 1512px) {
+    .home-hero__title {
+      font-size: 5.75rem;
+    }
+
+    :global(.home-hero__squiggle) {
+      top: -4.5rem;
+      right: -6.75rem;
+    }
+  }
+</style>

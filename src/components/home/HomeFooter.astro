@@ -1,0 +1,252 @@
+---
+import type { Locale } from "../../i18n";
+import { getFooter } from "../../lib/site-data";
+import { getHomeCopy } from "./copy";
+import ArthurAvatar from "./svg/ArthurAvatar.astro";
+import HeroLines from "./svg/HeroLines.astro";
+import HordeMark from "./svg/HordeMark.astro";
+import HomeIcon from "./svg/HomeIcon.astro";
+import PixelSquiggle from "./svg/PixelSquiggle.astro";
+import HomeBadge from "./ui/HomeBadge.astro";
+import HomeClock from "./ui/HomeClock.astro";
+
+interface Props {
+  lang: Locale;
+}
+
+const { lang } = Astro.props;
+const copy = getHomeCopy(lang);
+const footer = await getFooter(lang);
+const legalOrder = ["/cookies/", "/confidentialite/", "/mentions-legales/"];
+const legalLinks = [...footer.legalLinks].sort(
+  (a, b) => legalOrder.findIndex((path) => a.url.includes(path)) - legalOrder.findIndex((path) => b.url.includes(path)),
+);
+---
+
+<footer class="home-footer">
+  <div class="home-footer__card">
+    <div class="home-footer__top">
+      <a href={`/${lang}/`} class="home-footer__logo" aria-label={copy.brand.name}>
+        <HordeMark class="w-[56px] md:w-[70px]" />
+      </a>
+      <span class="home-footer__rule hidden sm:block" aria-hidden="true"></span>
+      <p class="home-footer__copyright">
+        {copy.footer.copyright} <span class="text-white/45">{copy.footer.description}</span>
+      </p>
+      <a href={`/${lang}/contact/`} class="home-footer__assistant">
+        <span class="underline underline-offset-[0.2em]">{copy.footer.assistant}</span>
+        <span class="home-footer__avatar">
+          <ArthurAvatar class="h-full w-full" />
+        </span>
+      </a>
+    </div>
+
+    <div class="home-footer__body">
+      <HeroLines variant="footer" class="home-footer__lines" />
+      <PixelSquiggle vertical class="home-footer__squiggle text-bg lg:hidden" />
+
+      <div class="relative flex flex-col gap-6 md:gap-8">
+        <div class="flex flex-col gap-6 md:flex-row md:items-center md:gap-12">
+          <p class="max-w-[13rem] font-mono text-[0.8125rem] uppercase leading-[1.05] tracking-[0.04em] [word-spacing:0.45em] md:max-w-[14rem]">
+            {copy.hero.tagline}
+          </p>
+          <HomeClock lang={lang} class="justify-between md:justify-start" />
+        </div>
+        <div class="flex items-end justify-between gap-6">
+          <div class="flex flex-col gap-3 md:flex-row">
+            <HomeBadge lang={lang} kind="since" />
+            <HomeBadge lang={lang} kind="from" />
+          </div>
+          <nav class="flex flex-col items-end gap-2 text-[0.875rem] md:gap-3 md:text-[0.9375rem]" aria-label={copy.footer.legal}>
+            {legalLinks.map((link) => (
+              <a href={link.url} class="underline underline-offset-[0.2em] decoration-1 transition-opacity hover:opacity-60">{link.label}</a>
+            ))}
+          </nav>
+        </div>
+      </div>
+    </div>
+
+    <div class="home-footer__wordmark" aria-hidden="true">
+      <HomeIcon name="wordmark" class="block w-full" />
+    </div>
+  </div>
+</footer>
+
+<style>
+  .home-footer {
+    position: relative;
+    padding-inline: 10px;
+    background: linear-gradient(to bottom, var(--color-bg) 0 4.5rem, var(--color-black) 4.5rem);
+    color: var(--color-white);
+  }
+
+  .home-footer__card {
+    position: relative;
+    overflow: hidden;
+    max-width: 75.5rem;
+    margin-inline: auto;
+    border: 1px solid #2c2e31;
+    border-bottom: 0;
+    border-radius: 10px 10px 0 0;
+    background: #1a1c1f;
+  }
+
+  .home-footer__top {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+  }
+
+  .home-footer__logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 4.75rem;
+    height: 4rem;
+    border: 3px solid #3a3c40;
+    border-radius: 6px;
+    background: var(--color-black);
+  }
+
+  .home-footer__rule {
+    width: 4rem;
+    height: 1px;
+    background: rgb(244 241 248 / 0.6);
+  }
+
+  .home-footer__copyright {
+    font-size: 0.9375rem;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+    text-align: right;
+  }
+
+  .home-footer__assistant {
+    grid-column: 1 / -1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    min-height: 4rem;
+    padding: 0.4rem 0.4rem 0.4rem 1rem;
+    border: 1px solid #2c2e31;
+    border-radius: 8px;
+    font-size: 0.9375rem;
+    transition: border-color 0.3s ease;
+  }
+
+  .home-footer__assistant:hover {
+    border-color: rgb(244 241 248 / 0.4);
+  }
+
+  .home-footer__avatar {
+    position: relative;
+    width: 3.4rem;
+    height: 3.4rem;
+    flex: none;
+  }
+
+  .home-footer__avatar::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 999px;
+    background: #3ee06b;
+    box-shadow: 0 0 0 2px #1a1c1f;
+  }
+
+  .home-footer__body {
+    position: relative;
+    padding: 6rem 1rem 3rem;
+  }
+
+  .home-footer__body :global(.home-footer__lines) {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 22rem;
+    pointer-events: none;
+  }
+
+  .home-footer__body :global(.home-footer__squiggle) {
+    position: absolute;
+    top: 2rem;
+    left: 58%;
+    width: 2.75rem;
+    opacity: 0.9;
+  }
+
+  .home-footer__wordmark {
+    padding-inline: 1rem;
+    margin-bottom: -1.4%;
+    color: #313234;
+  }
+
+  @media (min-width: 640px) {
+    .home-footer {
+      padding-inline: 2rem;
+    }
+
+    .home-footer__top {
+      grid-template-columns: auto auto 1fr;
+    }
+
+    .home-footer__copyright {
+      text-align: left;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .home-footer {
+      padding-inline: 3.4rem;
+    }
+
+    .home-footer__top {
+      grid-template-columns: auto auto 1fr auto;
+      gap: 0.85rem;
+      padding: 1.1rem 1.6rem;
+    }
+
+    .home-footer__logo {
+      width: 5.75rem;
+      height: 4.75rem;
+    }
+
+    .home-footer__copyright {
+      max-width: 20rem;
+      font-size: 1.125rem;
+    }
+
+    .home-footer__assistant {
+      grid-column: auto;
+      min-width: 21rem;
+      padding-left: 1.4rem;
+    }
+
+    .home-footer__body {
+      padding: 7rem 1.6rem 3.5rem;
+    }
+
+    .home-footer__body :global(.home-footer__squiggle) {
+      top: 4rem;
+      left: 62%;
+      width: 4rem;
+    }
+
+    .home-footer__wordmark {
+      padding-inline: 0;
+    }
+  }
+
+  @media (min-width: 1512px) {
+    .home-footer {
+      padding-inline: 6.5rem;
+    }
+  }
+</style>

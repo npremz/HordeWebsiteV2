@@ -1,0 +1,179 @@
+---
+import { Image } from "astro:assets";
+import type { Locale } from "../../i18n";
+import teamPhoto from "../../assets/images/nous-opti.jpg";
+import deskPhoto from "../../assets/images/keyboard_a.jpg";
+import { getHomeCopy } from "./copy";
+import HordeMark from "./svg/HordeMark.astro";
+import HomeLink from "./ui/HomeLink.astro";
+import HomeMarquee from "./ui/HomeMarquee.astro";
+
+interface Props {
+  lang: Locale;
+}
+
+const { lang } = Astro.props;
+const copy = getHomeCopy(lang);
+const nodes: [number, number][] = [[14.6, 8], [85.4, 8], [14.6, 66], [85.4, 66]];
+---
+
+<!-- Grand logo : noir sur fond clair au-dessus de la marquee, blanc sur fond lavande en dessous. -->
+<div class="home-split" aria-hidden="true">
+  <div class="home-split__top">
+    <HordeMark class="home-split__mark text-black" />
+  </div>
+  <HomeMarquee items={copy.marquee} variant="light" reverse class="relative z-[2]" />
+  <div class="home-split__bottom">
+    <HordeMark class="home-split__mark home-split__mark--bottom text-white" />
+  </div>
+</div>
+
+<section id="us" class="home-team relative overflow-hidden bg-bg pb-24 pt-10 sm:pt-16 md:pb-32">
+  <div class="home-construction hidden sm:block" aria-hidden="true">
+    <svg viewBox="0 0 100 100" preserveAspectRatio="none">
+      <path d="M34.6 -14L14.6 8L-2 34L14.6 66L48 74L85.4 66L102 34L85.4 8L70 -14" />
+    </svg>
+    {nodes.map(([x, y]) => (
+      <span class="home-construction__node" style={`left: ${x}%; top: ${y}%`}></span>
+    ))}
+  </div>
+
+  <div class="home-column relative z-[1]">
+    <p class="home-lead" data-home-reveal>
+      <span class="home-lead__label">{copy.team.label}</span>
+      {copy.team.text}
+    </p>
+    <div class="mt-8 flex justify-end md:mt-10">
+      <HomeLink href={`/${lang}/about/`} label={copy.team.link} />
+    </div>
+
+    <figure class="home-team__gallery">
+      <div class="home-team__photo home-team__photo--main" data-home-reveal>
+        <Image
+          src={teamPhoto}
+          alt={copy.team.photo1Alt}
+          widths={[360, 560, 820, 1112]}
+          sizes="(max-width: 1024px) 52vw, 556px"
+          class="h-full w-full object-cover"
+          loading="lazy"
+          decoding="async"
+        />
+      </div>
+      <span class="home-team__link-line" aria-hidden="true"></span>
+      <div class="home-team__photo home-team__photo--side" data-home-reveal style="--reveal-delay: 0.15s">
+        <Image
+          src={deskPhoto}
+          alt={copy.team.photo2Alt}
+          widths={[300, 440, 595]}
+          sizes="(max-width: 1024px) 38vw, 432px"
+          class="h-full w-full object-cover"
+          loading="lazy"
+          decoding="async"
+        />
+      </div>
+    </figure>
+  </div>
+</section>
+
+<style>
+  .home-split {
+    --mark-width: min(90vw, 69.4rem);
+    --mark-height: calc(var(--mark-width) * 45 / 77);
+    --split-top: calc(var(--mark-height) * 0.5);
+    --marquee-height: 1.5rem;
+    position: relative;
+    padding-top: 3rem;
+    background: var(--color-white);
+  }
+
+  .home-split__top,
+  .home-split__bottom {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  .home-split__top {
+    height: var(--split-top);
+    background: var(--color-white);
+  }
+
+  .home-split__bottom {
+    height: calc(var(--mark-height) - var(--split-top) - var(--marquee-height));
+    background: var(--color-bg);
+  }
+
+  :global(.home-split__mark) {
+    flex: none;
+    width: var(--mark-width);
+    height: var(--mark-height);
+  }
+
+  :global(.home-split__mark--bottom) {
+    margin-top: calc(-1 * (var(--split-top) + var(--marquee-height)));
+  }
+
+  .home-team__gallery {
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 0.75rem;
+    margin-top: 4rem;
+  }
+
+  .home-team__photo {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .home-team__photo--main {
+    width: 52%;
+    aspect-ratio: 556 / 713;
+  }
+
+  .home-team__photo--side {
+    width: 40%;
+    margin-top: 0;
+    aspect-ratio: 432 / 500;
+  }
+
+  .home-team__link-line {
+    position: absolute;
+    top: 48%;
+    left: 52%;
+    width: 8%;
+    height: 1px;
+    background: #6d6a72;
+    transform: rotate(-12deg);
+    transform-origin: left center;
+  }
+
+  @media (min-width: 640px) {
+    .home-split {
+      padding-top: 4rem;
+    }
+
+    .home-team__gallery {
+      margin-top: 6rem;
+    }
+
+    .home-team__photo--side {
+      margin-top: 4rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .home-split {
+      --mark-width: min(82vw, 69.4rem);
+      padding-top: 5rem;
+    }
+  }
+
+  @media (min-width: 1512px) {
+    .home-split {
+      --mark-width: 69.4rem;
+    }
+  }
+</style>
