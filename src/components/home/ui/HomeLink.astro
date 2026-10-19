@@ -1,0 +1,111 @@
+---
+import { HOME_ICONS } from "../svg/icons";
+
+interface Props {
+  href: string;
+  label: string;
+  class?: string;
+  /** "dark" = texte noir + bouton noir (fonds clairs). */
+  tone?: "dark" | "light";
+}
+
+const { href, label, class: className = "", tone = "dark" } = Astro.props;
+---
+
+<a href={href} class:list={["home-link group", `home-link--${tone}`, className]}>
+  <span class="home-link__label">{label}</span>
+  <span class="home-link__button" aria-hidden="true">
+    <svg viewBox="0 0 8.86 9.1" fill="currentColor">
+      <path d={HOME_ICONS.plus.paths[0].d} />
+    </svg>
+  </span>
+</a>
+
+<style>
+  .home-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 1rem;
+    font-size: 1.125rem;
+    line-height: 1;
+    letter-spacing: -0.01em;
+  }
+
+  .home-link__label {
+    position: relative;
+    padding-bottom: 0.2rem;
+  }
+
+  .home-link__label::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 1px;
+    background: currentColor;
+    transform-origin: right center;
+    transition: transform 0.45s cubic-bezier(0.77, 0, 0.18, 1);
+  }
+
+  .home-link__button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.25rem;
+    height: 2.25rem;
+    border-radius: 999px;
+    transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .home-link__button svg {
+    width: 0.625rem;
+    height: 0.625rem;
+    transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .home-link--dark {
+    color: var(--color-black);
+  }
+
+  .home-link--dark .home-link__button {
+    background: var(--color-black);
+    color: var(--color-white);
+  }
+
+  .home-link--light {
+    color: var(--color-white);
+  }
+
+  .home-link--light .home-link__button {
+    background: var(--color-white);
+    color: var(--color-black);
+  }
+
+  @media (hover: hover) {
+    .home-link:hover .home-link__label::after {
+      animation: home-link-underline 0.7s cubic-bezier(0.77, 0, 0.18, 1);
+    }
+
+    .home-link:hover .home-link__button {
+      transform: scale(1.12);
+    }
+
+    .home-link:hover .home-link__button svg {
+      transform: rotate(90deg);
+    }
+  }
+
+  @keyframes home-link-underline {
+    0% { transform: scaleX(1); transform-origin: right center; }
+    50% { transform: scaleX(0); transform-origin: right center; }
+    51% { transform: scaleX(0); transform-origin: left center; }
+    100% { transform: scaleX(1); transform-origin: left center; }
+  }
+
+  @media (max-width: 639px) {
+    .home-link {
+      font-size: 1rem;
+    }
+  }
+</style>

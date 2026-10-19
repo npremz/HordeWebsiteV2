@@ -1,0 +1,292 @@
+---
+import { Image } from "astro:assets";
+import type { Locale } from "../../i18n";
+import usbIcon from "../../assets/images/home/method-usb.png";
+import { getHomeCopy } from "./copy";
+import HomeIcon from "./svg/HomeIcon.astro";
+import HomeLink from "./ui/HomeLink.astro";
+import SlashMark from "./ui/SlashMark.astro";
+
+interface Props {
+  lang: Locale;
+}
+
+const { lang } = Astro.props;
+const copy = getHomeCopy(lang);
+const steps = copy.method.steps;
+// Marqueurs du rail vertical mobile (les terminaux desktop sont dans l'arbre SVG).
+const markers = ["square", "triangle", "dot"] as const;
+const railGlyphs = ["railH", "railO", "railR", "railD", "railE"] as const;
+const fractions = ["fraction1", "fraction2", "fraction3"] as const;
+---
+
+<section id="demarche" class="home-method relative z-20 bg-white pb-16 pt-14 md:pb-24 md:pt-16">
+  <div class="home-column home-column--wide">
+    <ol class="home-method__rail" aria-hidden="true">
+      {railGlyphs.map((glyph) => (
+        <li class="home-method__rail-step">
+          <span class="home-method__rail-dot">
+            <HomeIcon name={glyph} viewBox="0 0 20.9 20.03" class="w-full" />
+          </span>
+        </li>
+      ))}
+    </ol>
+
+    <h2 class="home-method__title" data-home-reveal>
+      <svg class="home-method__paren" viewBox="0 0 16 90" fill="none" aria-hidden="true">
+        <path d="M14 1C4 22 2 38 2 45C2 52 4 68 14 89" stroke="currentColor" stroke-width="1.6" />
+      </svg>
+      <span>
+        <span class="block">{copy.method.titleLine1}</span>
+        <span class="block">{copy.method.titleLine2}</span>
+      </span>
+      <svg class="home-method__paren" viewBox="0 0 16 90" fill="none" aria-hidden="true">
+        <path d="M2 1C12 22 14 38 14 45C14 52 12 68 2 89" stroke="currentColor" stroke-width="1.6" />
+      </svg>
+    </h2>
+
+    <Image src={usbIcon} alt="" widths={[40, 80, 120]} sizes="40px" class="home-method__usb" loading="lazy" decoding="async" />
+
+    <div class="home-method__tree" aria-hidden="true">
+      <svg viewBox="0 0 1000 70" preserveAspectRatio="none" fill="none">
+        <path d="M500 0V62M166 62V54Q166 42 178 42H822Q834 42 834 54V62" stroke="currentColor" stroke-width="1" vector-effect="non-scaling-stroke" />
+      </svg>
+      <span class="home-method__terminal home-method__terminal--dot" style="left: 16.6%"></span>
+      <span class="home-method__terminal home-method__terminal--triangle" style="left: 50%"></span>
+      <span class="home-method__terminal home-method__terminal--square" style="left: 83.4%"></span>
+    </div>
+
+    <ol class="home-method__steps">
+      {steps.map((step, index) => (
+        <li class="home-method__step" data-home-reveal style={`--reveal-delay: ${index * 0.12}s`}>
+          <h3 class:list={["home-method__card", `home-method__card--${markers[index]}`]}>
+            <HomeIcon name={fractions[index]} class="w-[0.6rem] md:w-[0.65rem]" />
+            <span class="flex-1 text-center md:flex-none md:text-left">{step.title}</span>
+          </h3>
+          <p class="home-method__text">{step.text}</p>
+        </li>
+      ))}
+    </ol>
+
+    <div class="mt-12 flex items-center justify-between md:mt-20">
+      <SlashMark class="md:order-2" />
+      <HomeLink href={`/${lang}/services/`} label={copy.method.link} class="md:order-1" />
+    </div>
+  </div>
+</section>
+
+<style>
+  .home-method__rail {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .home-method__rail-step {
+    display: flex;
+    flex: 1;
+    align-items: center;
+  }
+
+  .home-method__rail-step:last-child {
+    flex: none;
+  }
+
+  .home-method__rail-step:not(:last-child)::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    margin-inline: 0.75rem;
+    background: #6d6a72;
+  }
+
+  .home-method__rail-dot {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: 999px;
+    background: var(--color-black);
+    color: var(--color-white);
+  }
+
+  .home-method__title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-top: 2.5rem;
+    font-size: clamp(1.7rem, 7.4vw, 3rem);
+    font-weight: 450;
+    line-height: 0.98;
+    letter-spacing: -0.04em;
+    text-align: center;
+  }
+
+  .home-method__paren {
+    width: 0.5em;
+    height: 1.3em;
+    flex: none;
+  }
+
+  :global(.home-method__usb) {
+    display: block;
+    width: 2rem;
+    height: auto;
+    margin: 1.5rem auto 0;
+  }
+
+  .home-method__tree {
+    position: relative;
+    display: none;
+    height: 5rem;
+    margin-top: -0.25rem;
+  }
+
+  .home-method__tree svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  .home-method__terminal {
+    position: absolute;
+    bottom: -2px;
+    transform: translateX(-50%);
+    background: currentColor;
+  }
+
+  .home-method__terminal--dot {
+    width: 9px;
+    height: 9px;
+    border-radius: 999px;
+  }
+
+  .home-method__terminal--square {
+    width: 9px;
+    height: 9px;
+  }
+
+  .home-method__terminal--triangle {
+    width: 11px;
+    height: 9px;
+    clip-path: polygon(0 0, 100% 0, 50% 100%);
+  }
+
+  .home-method__steps {
+    display: grid;
+    gap: 2.5rem;
+    margin-top: 2rem;
+  }
+
+  .home-method__card {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    min-height: 2.5rem;
+    margin-left: 2.75rem;
+    padding: 0.4rem 0.85rem;
+    border: 2px solid #d6d2da;
+    border-radius: 6px;
+    background: #e5e1e7;
+    font-size: 1.125rem;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+  }
+
+  /* Marqueurs du rail vertical (mobile). */
+  .home-method__card::before,
+  .home-method__card::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+  }
+
+  .home-method__card::before {
+    left: -2.75rem;
+    width: 2.75rem;
+    height: 1px;
+    background: #6d6a72;
+  }
+
+  .home-method__card::after {
+    left: -2.75rem;
+    width: 8px;
+    height: 8px;
+    background: var(--color-black);
+    transform: translateY(-50%);
+  }
+
+  .home-method__card--dot::after {
+    border-radius: 999px;
+  }
+
+  .home-method__card--triangle::after {
+    width: 8px;
+    clip-path: polygon(0 0, 100% 50%, 0 100%);
+  }
+
+
+  .home-method__text {
+    margin-top: 1.25rem;
+    margin-left: 2.75rem;
+    font-size: 0.9375rem;
+    line-height: 1.5;
+    text-indent: 4.5rem;
+  }
+
+  @media (min-width: 640px) {
+    .home-method__title {
+      font-size: 3.25rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .home-method__title {
+      gap: 2rem;
+      margin-top: 3rem;
+      font-size: 4.25rem;
+    }
+
+    .home-method__tree {
+      display: block;
+    }
+
+    :global(.home-method__usb) {
+      width: 2.5rem;
+      margin-top: 2rem;
+    }
+
+    .home-method__steps {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 3.5rem;
+      margin-top: 1.75rem;
+    }
+
+    .home-method__card,
+    .home-method__text {
+      margin-left: 0;
+    }
+
+    .home-method__card::before,
+    .home-method__card::after {
+      display: none;
+    }
+
+    .home-method__card {
+      min-height: 3.25rem;
+      font-size: 1.25rem;
+    }
+  }
+
+  @media (min-width: 1512px) {
+    .home-method__title {
+      font-size: 5.75rem;
+    }
+
+    .home-method__paren {
+      width: 0.4em;
+    }
+  }
+</style>

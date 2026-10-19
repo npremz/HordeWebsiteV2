@@ -38,6 +38,8 @@ interface Props {
   headerVariant?: 'light' | 'dark';
   showContainerLines?: boolean;
   isHomepage?: boolean;
+  /** Page pleine largeur qui fournit son propre header (nouvelle home). */
+  bare?: boolean;
 }
 
 const {
@@ -63,6 +65,7 @@ const {
   headerVariant,
   showContainerLines = true,
   isHomepage = false,
+  bare = false,
 } = Astro.props;
 
 const t = useTranslations(lang);
@@ -112,14 +115,25 @@ const bodyClasses = isDark ? 'bg-black text-button-white' : 'bg-bg text-black';
   <body class:list={[bodyClasses, className, { 'is-homepage': isHomepage }]}>
     <a href="#main-content" class="skip-link" title={t.a11y.skipToContent}>{t.a11y.skipToContent}</a>
 
-    <Header lang={lang} alternateUrl={alternateUrl} theme={headerVariant} />
-    <Container variant={variant} showLines={showContainerLines}>
-      <main id="main-content">
-        <slot />
-      </main>
+    {bare ? (
+      <>
+        <main id="main-content">
+          <slot />
+        </main>
+        <slot name="footer" />
+      </>
+    ) : (
+      <>
+        <Header lang={lang} alternateUrl={alternateUrl} theme={headerVariant} />
+        <Container variant={variant} showLines={showContainerLines}>
+          <main id="main-content">
+            <slot />
+          </main>
 
-      <slot name="footer" />
-    </Container>
+          <slot name="footer" />
+        </Container>
+      </>
+    )}
   </body>
 </html>
 

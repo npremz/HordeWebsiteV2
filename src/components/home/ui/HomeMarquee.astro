@@ -1,0 +1,96 @@
+---
+interface Props {
+  items: string[];
+  variant?: "dark" | "light";
+  class?: string;
+  reverse?: boolean;
+}
+
+const { items, variant = "dark", class: className = "", reverse = false } = Astro.props;
+const group = Array.from({ length: 3 }, () => items).flat();
+---
+
+<div
+  class:list={["home-marquee", `home-marquee--${variant}`, reverse && "home-marquee--reverse", className]}
+  aria-hidden="true"
+>
+  <div class="home-marquee__track">
+    {[0, 1].map(() => (
+      <div class="home-marquee__group">
+        {group.map((item) => (
+          <span class="home-marquee__item">{item}</span>
+        ))}
+      </div>
+    ))}
+  </div>
+</div>
+
+<style>
+  .home-marquee {
+    --marquee-height: 1.875rem;
+    position: relative;
+    height: var(--marquee-height);
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    line-height: 1;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    white-space: nowrap;
+  }
+
+  .home-marquee--dark {
+    background: var(--color-black);
+    color: var(--color-white);
+    border-block: 1px solid #2c2e31;
+  }
+
+  .home-marquee--light {
+    --marquee-height: 1.5rem;
+    background: var(--color-white);
+    color: var(--color-black);
+    border-block: 1px solid #b9b5c0;
+  }
+
+  .home-marquee__track {
+    display: flex;
+    width: max-content;
+    animation: home-marquee-scroll 60s linear infinite;
+  }
+
+  .home-marquee--reverse .home-marquee__track {
+    animation-direction: reverse;
+  }
+
+  .home-marquee__group {
+    display: flex;
+    flex: none;
+  }
+
+  .home-marquee__item {
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .home-marquee__item::after {
+    content: "";
+    width: 4px;
+    height: 4px;
+    margin-inline: 2.25rem;
+    background: currentColor;
+  }
+
+  @keyframes home-marquee-scroll {
+    to {
+      transform: translateX(-50%);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .home-marquee__track {
+      animation: none;
+    }
+  }
+</style>

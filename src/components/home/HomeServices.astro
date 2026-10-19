@@ -1,0 +1,288 @@
+---
+import type { Locale } from "../../i18n";
+import { getServiceSummaries } from "../../lib/content/services";
+import { SERVICE_SHAPE_BY_SLUG } from "../../lib/serviceShapeMorph";
+import ServiceShapeMorph from "../services/ServiceShapeMorph.astro";
+import { getHomeCopy } from "./copy";
+import ServiceDial from "./svg/ServiceDial.astro";
+
+interface Props {
+  lang: Locale;
+}
+
+const { lang } = Astro.props;
+const copy = getHomeCopy(lang);
+const services = await getServiceSummaries(lang);
+const total = services.length.toString().padStart(2, "0");
+---
+
+<section id="services" class="home-services relative z-20 overflow-hidden pb-20 pt-48 sm:pt-0 text-white sm:pb-28 md:pb-36" data-home-services>
+  <div class="relative">
+    <div class="home-services__coords home-column flex justify-between pt-14 font-mono text-[0.75rem] uppercase md:pt-20" aria-hidden="true">
+      <span class="home-services__coord"><span data-home-coord-x>54.021</span> X</span>
+      <span class="home-services__coord text-right"><span data-home-coord-y>21.495</span> Y</span>
+    </div>
+
+    <div class="home-services__dial-row" aria-hidden="true">
+      <span class="home-services__stub"></span>
+      <ServiceDial class="home-services__dial" />
+      <span class="home-services__stub"></span>
+    </div>
+
+    <div class="home-column relative -mt-10 flex items-end justify-between sm:-mt-14 md:-mt-20 lg:-mt-32">
+      <h2 class="flex flex-col">
+        <span class="text-[1rem] leading-none md:text-[1.25rem]">{copy.services.eyebrow}</span>
+        <span class="text-[2.75rem] leading-[0.95] tracking-[-0.05em] sm:text-[3.5rem] md:text-[4.25rem] lg:text-[5.5rem]">{copy.services.title}</span>
+      </h2>
+      <span class="pb-1 text-[1.125rem] md:text-[1.25rem]">({total})</span>
+    </div>
+  </div>
+
+  <div class="home-column relative mt-8 md:mt-10">
+    <div class="home-services__preview hidden md:block" data-home-service-preview aria-hidden="true">
+      <ServiceShapeMorph shape="neutral" initialShape="neutral" class="h-full w-full" />
+    </div>
+
+    <ol data-home-service-list>
+      {services.map((service) => (
+        <li
+          class="home-services__item"
+          data-service-shape={SERVICE_SHAPE_BY_SLUG[service.slug] || "neutral"}
+        >
+          <a href={service.url} class="home-services__link">
+            <span>{service.title}</span>
+            <span class="home-services__arrow" aria-hidden="true">→</span>
+          </a>
+        </li>
+      ))}
+    </ol>
+  </div>
+</section>
+
+<style>
+  /* Le fond noir vient du PixelTransitionCanvas ; sans JS, on le pose directement. */
+  :global(html:not(.home-js)) .home-services {
+    background: var(--color-black);
+  }
+
+  .home-services__coord {
+    display: block;
+    width: 6.5rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid rgb(244 241 248 / 0.5);
+  }
+
+  .home-services__dial-row {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: -0.5rem;
+  }
+
+  .home-services__dial-row::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 50%;
+    height: 1px;
+    background: #2c2e31;
+  }
+
+  .home-services__stub {
+    position: relative;
+    width: 1.75rem;
+    height: 0.45rem;
+    border-radius: 2px;
+    background: #2c2e31;
+  }
+
+  :global(.home-services__dial) {
+    position: relative;
+    width: min(20rem, 82vw);
+    height: auto;
+    background: var(--color-black);
+    border-radius: 34%;
+  }
+
+  .home-services__item {
+    position: relative;
+    border-bottom: 1px solid var(--color-lines-dark);
+  }
+
+  .home-services__item:last-child {
+    border-bottom: 0;
+  }
+
+  .home-services__link {
+    position: relative;
+    isolation: isolate;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    min-height: 3rem;
+    padding-block: 0.85rem;
+    font-size: 1.125rem;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    transition: color 0.25s ease;
+  }
+
+  .home-services__link::before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    top: 2px;
+    bottom: 2px;
+    left: calc(50% - 50vw + 0.5rem);
+    right: calc(50% - 50vw + 0.5rem);
+    border-radius: 8px;
+    background: var(--color-button-white);
+    transform: scaleY(0);
+    transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .home-services__arrow {
+    font-size: 1.25rem;
+    opacity: 0;
+    transform: translateX(-0.75rem);
+    transition:
+      opacity 0.3s ease,
+      transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .home-services__link:hover,
+  .home-services__link:focus-visible {
+    color: var(--color-black);
+  }
+
+  .home-services__link:hover::before,
+  .home-services__link:focus-visible::before {
+    transform: scaleY(1);
+  }
+
+  .home-services__link:hover .home-services__arrow,
+  .home-services__link:focus-visible .home-services__arrow {
+    opacity: 1;
+    transform: none;
+  }
+
+  .home-services__preview {
+    --preview-y: 0px;
+    position: absolute;
+    z-index: 2;
+    top: 0;
+    left: 68%;
+    width: 12.5rem;
+    aspect-ratio: 305 / 304;
+    pointer-events: none;
+    opacity: 0;
+    transform: translateY(calc(var(--preview-y) - 50%)) scale(0.94);
+    transition:
+      opacity 0.2s ease-out,
+      transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .home-services__preview.is-visible {
+    opacity: 1;
+    transform: translateY(calc(var(--preview-y) - 50%)) scale(1);
+  }
+
+  @media (min-width: 640px) {
+    :global(.home-services__dial) {
+      width: 23rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    :global(.home-services__dial) {
+      width: 20rem;
+    }
+
+    .home-services__link {
+      min-height: 4rem;
+      font-size: 1.375rem;
+    }
+  }
+
+  @media (min-width: 1512px) {
+    :global(.home-services__dial) {
+      width: 27rem;
+    }
+
+    .home-services__link {
+      min-height: 4.4rem;
+    }
+  }
+</style>
+
+<script>
+  import { createServiceShapeAnimator, getServiceShapeName } from "../../lib/serviceShapeMorph";
+
+  function initHomeServices() {
+    const section = document.querySelector<HTMLElement>("[data-home-services]");
+    if (!section || section.dataset.ready === "true") return;
+    section.dataset.ready = "true";
+
+    // Coordonnées du pointeur, façon viseur.
+    const coordX = section.querySelector<HTMLElement>("[data-home-coord-x]");
+    const coordY = section.querySelector<HTMLElement>("[data-home-coord-y]");
+    section.addEventListener("pointermove", (event) => {
+      const rect = section.getBoundingClientRect();
+      if (coordX) coordX.textContent = (((event.clientX - rect.left) / rect.width) * 100).toFixed(3).padStart(6, "0");
+      if (coordY) coordY.textContent = (((event.clientY - rect.top) / rect.height) * 100).toFixed(3).padStart(6, "0");
+    });
+
+    // Rotation de la plaque du cadran au scroll.
+    const plate = section.querySelector<SVGGElement>("[data-service-dial-plate]");
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+    let frame = 0;
+    const updateDial = () => {
+      frame = 0;
+      if (!plate) return;
+      const rect = section.getBoundingClientRect();
+      const progress = (window.innerHeight - rect.top) / (window.innerHeight + rect.height);
+      plate.style.setProperty("--dial-rotation", `${Math.max(0, Math.min(1, progress)) * 90}deg`);
+    };
+    if (plate && !reduceMotion.matches) {
+      window.addEventListener("scroll", () => {
+        if (!frame) frame = requestAnimationFrame(updateDial);
+      }, { passive: true });
+      updateDial();
+    }
+
+    // Aperçu de forme au survol des services.
+    const preview = section.querySelector<HTMLElement>("[data-home-service-preview]");
+    const list = section.querySelector<HTMLElement>("[data-home-service-list]");
+    const cells = preview?.querySelectorAll<SVGPathElement>("[data-service-shape-cell]");
+    if (!preview || !list || !cells?.length) return;
+
+    const animator = createServiceShapeAnimator(cells, "neutral");
+    const showShape = (name: ReturnType<typeof getServiceShapeName>) => {
+      if (reduceMotion.matches) animator.draw(name);
+      else animator.animateTo(name);
+    };
+
+    list.querySelectorAll<HTMLElement>("[data-service-shape]").forEach((item) => {
+      item.addEventListener("mouseenter", () => {
+        const listRect = list.getBoundingClientRect();
+        const itemRect = item.getBoundingClientRect();
+        preview.style.setProperty("--preview-y", `${itemRect.top - listRect.top + itemRect.height / 2}px`);
+        preview.classList.add("is-visible");
+        showShape(getServiceShapeName(item.dataset.serviceShape));
+      });
+    });
+
+    list.addEventListener("mouseleave", () => {
+      preview.classList.remove("is-visible");
+      showShape("neutral");
+    });
+
+    document.addEventListener("astro:before-swap", () => animator.cancel(), { once: true });
+  }
+
+  initHomeServices();
+  document.addEventListener("astro:page-load", initHomeServices);
+</script>
