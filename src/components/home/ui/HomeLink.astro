@@ -64,6 +64,15 @@ const { href, label, class: className = "", tone = "dark" } = Astro.props;
     transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
+  /* Petits mobiles : bouton carré arrondi (maquette < 400px). */
+  @media (max-width: 399px) {
+    .home-link__button {
+      width: 2.4rem;
+      height: 2.4rem;
+      border-radius: 6px;
+    }
+  }
+
   .home-link--dark {
     color: var(--color-black);
   }

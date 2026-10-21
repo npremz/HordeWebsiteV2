@@ -27,7 +27,7 @@ const nodes: [number, number][] = [
 ];
 ---
 
-<section id="projects" class="home-works relative overflow-hidden bg-bg pb-28 pt-24 sm:pb-36 md:pb-44 md:pt-32 lg:pt-36">
+<section id="projects" class="home-works relative overflow-hidden bg-bg pb-28 pt-24 max-[399px]:pb-20 max-[399px]:pt-10 sm:pb-36 md:pb-44 md:pt-32 lg:pt-36">
   <div class="home-construction" aria-hidden="true">
     <svg viewBox="0 0 100 100" preserveAspectRatio="none">
       <path d="M0 0H100" />
@@ -45,13 +45,13 @@ const nodes: [number, number][] = [
   <div class="relative z-[1] flex flex-col items-center px-[10px]">
     <h2 class="flex items-baseline gap-1.5 sm:gap-2">
       <span class="text-[1rem] sm:text-[1.125rem]">({total})</span>
-      <span class="text-[3rem] leading-none tracking-[-0.05em] sm:text-[3.5rem] md:text-[4.25rem] lg:text-[5rem]">{copy.works.title}</span>
+      <span class="text-[3rem] leading-none tracking-[-0.05em] max-[399px]:text-[2.3rem] sm:text-[3.5rem] md:text-[4.25rem] lg:text-[5rem]">{copy.works.title}</span>
       <a href={`/${lang}/projets/`} class="home-works__all">
-        {copy.works.seeAll}<span class="sm:hidden" aria-hidden="true"> →</span>
+        <span class="max-[399px]:hidden">{copy.works.seeAll}</span><span class="min-[400px]:hidden">{copy.works.seeAllShort}</span><span class="sm:hidden" aria-hidden="true"> →</span>
       </a>
     </h2>
 
-    <ul class="mt-16 flex w-full flex-col items-center gap-20 sm:mt-20 md:mt-24 md:gap-28">
+    <ul class="mt-16 flex w-full flex-col items-center gap-20 max-[399px]:mt-8 max-[399px]:gap-8 sm:mt-20 md:mt-24 md:gap-28">
       {projects.map((project) => {
         const Visual = SVG_VISUALS[project.slug];
         const year = project.entry.data.publishedDate.getFullYear();
@@ -76,15 +76,15 @@ const nodes: [number, number][] = [
                 )}
                 {project.inProgress && <span class="home-works__status">{copy.works.inProgress}</span>}
               </div>
-              <div class="mt-3 flex items-start justify-between gap-4 md:mt-4">
+              <div class="mt-3 flex items-start justify-between gap-4 max-[399px]:flex-col max-[399px]:gap-1 md:mt-4">
                 <div class="flex flex-wrap items-baseline gap-x-5 gap-y-1">
-                  <h3 class="whitespace-nowrap text-[1.25rem] leading-none tracking-[-0.03em] md:text-[1.5rem] lg:text-[1.875rem]">
+                  <h3 class="whitespace-nowrap text-[1.25rem] max-[399px]:text-[1.0625rem] leading-none tracking-[-0.03em] md:text-[1.5rem] lg:text-[1.875rem]">
                     {project.shortTitle}
                   </h3>
                   {tags && <span class="home-works__tags hidden lg:inline">({tags})</span>}
                 </div>
-                <div class="flex flex-col items-end gap-1 text-right">
-                  {tags && <span class="home-works__tags lg:hidden">({tags})</span>}
+                <div class="flex flex-col items-end gap-1 text-right max-[399px]:self-end">
+                  {tags && <span class="home-works__tags max-[399px]:hidden lg:hidden">({tags})</span>}
                   <span class="home-works__tags">{year}</span>
                 </div>
               </div>

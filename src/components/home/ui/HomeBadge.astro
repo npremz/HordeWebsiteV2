@@ -7,13 +7,15 @@ interface Props {
   lang: Locale;
   kind: "from" | "since";
   class?: string;
+  /** Sous 400px, le badge prend toute la largeur (footer). */
+  stretch?: boolean;
 }
 
-const { lang, kind, class: className = "" } = Astro.props;
+const { lang, kind, class: className = "", stretch = false } = Astro.props;
 const copy = getHomeCopy(lang);
 ---
 
-<div class:list={["home-badge", className]}>
+<div class:list={["home-badge", stretch && "home-badge--stretch", className]}>
   <div class="home-badge__inner">
     {kind === "from" ? (
       <>
@@ -81,6 +83,28 @@ const copy = getHomeCopy(lang);
     margin-right: -1.1rem;
   }
 
+
+  @media (max-width: 399px) {
+    .home-badge--stretch {
+      display: flex;
+      width: 100%;
+    }
+
+    .home-badge--stretch .home-badge__inner {
+      flex: 1;
+      justify-content: space-between;
+    }
+
+    .home-badge--stretch .home-badge__rule {
+      flex: 1;
+    }
+
+    .home-badge--stretch .home-badge__value--serif {
+      transform-origin: right center;
+      margin-right: 0;
+      margin-left: -1.1rem;
+    }
+  }
 
   @media (max-width: 639px) {
     .home-badge__inner {
