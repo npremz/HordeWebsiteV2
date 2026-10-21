@@ -43,6 +43,7 @@ const fr = {
   works: {
     title: 'Works',
     seeAll: 'See All',
+    seeAllShort: 'Voir',
     inProgress: 'En cours',
   },
   services: {
@@ -139,6 +140,7 @@ const en: HomeCopy = {
   works: {
     title: 'Works',
     seeAll: 'See All',
+    seeAllShort: 'See',
     inProgress: 'In progress',
   },
   services: {

@@ -29,7 +29,7 @@ const legalLinks = [...footer.legalLinks].sort(
       <a href={`/${lang}/`} class="home-footer__logo" aria-label={copy.brand.name}>
         <HordeMark class="w-[56px] md:w-[70px]" />
       </a>
-      <span class="home-footer__rule hidden sm:block" aria-hidden="true"></span>
+      <span class="home-footer__rule hidden max-[399px]:block sm:block" aria-hidden="true"></span>
       <p class="home-footer__copyright">
         {copy.footer.copyright} <span class="text-white/45">{copy.footer.description}</span>
       </p>
@@ -43,21 +43,21 @@ const legalLinks = [...footer.legalLinks].sort(
 
     <div class="home-footer__body">
       <HeroLines variant="footer" class="home-footer__lines" />
-      <PixelSquiggle vertical class="home-footer__squiggle text-bg lg:hidden" />
+      <PixelSquiggle vertical class="home-footer__squiggle text-bg max-[399px]:hidden lg:hidden" />
 
       <div class="relative flex flex-col gap-6 md:gap-8">
         <div class="flex flex-col gap-6 md:flex-row md:items-center md:gap-12">
-          <p class="max-w-[13rem] font-mono text-[0.8125rem] uppercase leading-[1.05] tracking-[0.04em] [word-spacing:0.45em] md:max-w-[14rem]">
+          <p class="max-w-[13rem] font-mono text-[0.8125rem] uppercase leading-[1.05] tracking-[0.04em] [word-spacing:0.45em] max-[399px]:[word-spacing:normal] md:max-w-[14rem]">
             {copy.hero.tagline}
           </p>
           <HomeClock lang={lang} class="justify-between md:justify-start" />
         </div>
-        <div class="flex items-end justify-between gap-6">
-          <div class="flex flex-col gap-3 md:flex-row">
-            <HomeBadge lang={lang} kind="since" />
-            <HomeBadge lang={lang} kind="from" />
+        <div class="home-footer__meta flex items-end justify-between gap-6">
+          <div class="home-footer__badges flex flex-col gap-3 md:flex-row">
+            <HomeBadge lang={lang} kind="since" stretch />
+            <HomeBadge lang={lang} kind="from" stretch />
           </div>
-          <nav class="flex flex-col items-end gap-2 text-[0.875rem] md:gap-3 md:text-[0.9375rem]" aria-label={copy.footer.legal}>
+          <nav class="home-footer__legal flex flex-col items-end gap-2 text-[0.875rem] md:gap-3 md:text-[0.9375rem]" aria-label={copy.footer.legal}>
             {legalLinks.map((link) => (
               <a href={link.url} class="underline underline-offset-[0.2em] decoration-1 transition-opacity hover:opacity-60">{link.label}</a>
             ))}
@@ -186,6 +186,46 @@ const legalLinks = [...footer.legalLinks].sort(
     padding-inline: 1rem;
     margin-bottom: -1.4%;
     color: #313234;
+  }
+
+  /* Petits mobiles (< 400px) : carte pleine largeur, badges empilés, liens légaux centrés. */
+  @media (max-width: 399px) {
+    .home-footer {
+      padding-inline: 0;
+    }
+
+    .home-footer__card {
+      border-radius: 0;
+    }
+
+    .home-footer__top {
+      grid-template-columns: auto auto 1fr;
+      padding: 1.5rem 0.5rem 1rem;
+    }
+
+    .home-footer__rule {
+      width: 2.25rem;
+    }
+
+    .home-footer__copyright {
+      font-size: 1rem;
+    }
+
+    .home-footer__body {
+      padding: 2.5rem 0.5rem 1.5rem;
+    }
+
+    .home-footer__meta {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 2.25rem;
+    }
+
+    .home-footer__legal {
+      align-items: center;
+      gap: 0.45rem;
+      font-size: 1rem;
+    }
   }
 
   @media (min-width: 640px) {

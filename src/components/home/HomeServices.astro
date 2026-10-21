@@ -153,20 +153,41 @@ const total = services.length.toString().padStart(2, "0");
       transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
-  .home-services__link:hover,
   .home-services__link:focus-visible {
     color: var(--color-black);
   }
 
-  .home-services__link:hover::before,
   .home-services__link:focus-visible::before {
     transform: scaleY(1);
   }
 
-  .home-services__link:hover .home-services__arrow,
   .home-services__link:focus-visible .home-services__arrow {
     opacity: 1;
     transform: none;
+  }
+
+  /* Survol réservé aux souris : sur tactile, :hover reste collé après le tap. */
+  @media (hover: hover) and (pointer: fine) {
+    .home-services__link:hover {
+      color: var(--color-black);
+    }
+
+    .home-services__link:hover::before {
+      transform: scaleY(1);
+    }
+
+    .home-services__link:hover .home-services__arrow {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  /* Tactile : pas de barre blanche, flèche blanche toujours visible. */
+  @media not ((hover: hover) and (pointer: fine)) {
+    .home-services__arrow {
+      opacity: 1;
+      transform: none;
+    }
   }
 
   .home-services__preview {
@@ -257,7 +278,8 @@ const total = services.length.toString().padStart(2, "0");
     const preview = section.querySelector<HTMLElement>("[data-home-service-preview]");
     const list = section.querySelector<HTMLElement>("[data-home-service-list]");
     const cells = preview?.querySelectorAll<SVGPathElement>("[data-service-shape-cell]");
-    if (!preview || !list || !cells?.length) return;
+    const finePointer = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+    if (!finePointer || !preview || !list || !cells?.length) return;
 
     const animator = createServiceShapeAnimator(cells, "neutral");
     const showShape = (name: ReturnType<typeof getServiceShapeName>) => {

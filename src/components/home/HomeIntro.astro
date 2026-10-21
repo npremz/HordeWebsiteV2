@@ -14,7 +14,7 @@ const { lang } = Astro.props;
 const copy = getHomeCopy(lang);
 ---
 
-<section id="about" class="home-intro relative bg-bg pb-20 sm:pb-24 md:pb-28">
+<section id="about" class="home-intro relative bg-bg pb-20 max-[399px]:pb-12 sm:pb-24 md:pb-28">
   <div class="home-column relative">
     <div class="flex items-start justify-between gap-4">
       <a href={`/${lang}/contact/`} class="home-intro__cta group">
@@ -103,6 +103,17 @@ const copy = getHomeCopy(lang);
     font-size: 0.6875rem;
     text-transform: uppercase;
     letter-spacing: 0.04em;
+  }
+
+  @media (max-width: 399px) {
+    .home-intro__cta {
+      gap: 0.75rem;
+      font-size: 0.9rem;
+    }
+
+    .home-intro__cta-button {
+      width: 4.5rem;
+    }
   }
 
   @media (min-width: 640px) {

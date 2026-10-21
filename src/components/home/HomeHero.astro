@@ -19,8 +19,8 @@ const copy = getHomeCopy(lang);
 <section id="hero" class="home-hero relative overflow-hidden bg-black text-white">
   <HeroLines class="pointer-events-none absolute inset-0 h-full w-full" />
 
-  <!-- Badges mobile / tablette : sous la barre du header -->
-  <div class="absolute inset-x-[5px] top-[54px] z-10 flex justify-between gap-2 md:hidden">
+  <!-- Badges mobile / tablette : sous la barre du header (sous 400px, ils passent dans le footer) -->
+  <div class="absolute inset-x-[5px] top-[54px] z-10 flex justify-between gap-2 max-[399px]:hidden md:hidden">
     <HomeBadge lang={lang} kind="from" />
     <HomeBadge lang={lang} kind="since" />
   </div>
@@ -37,15 +37,15 @@ const copy = getHomeCopy(lang);
     </span>
   </div>
 
-  <div class="relative flex min-h-[29.5rem] flex-col justify-end px-[10px] pb-10 pt-40 sm:min-h-[32rem] sm:px-[18px] md:h-[33.5rem] md:min-h-0 md:justify-center md:px-0 md:pb-0 md:pt-[4.5rem] lg:h-[38rem] lg:pt-[5rem]">
+  <div class="home-hero__inner relative flex min-h-[29.5rem] flex-col justify-end px-[10px] pb-10 pt-40 sm:min-h-[32rem] sm:px-[18px] md:h-[33.5rem] md:min-h-0 md:justify-center md:px-0 md:pb-0 md:pt-[4.5rem] lg:h-[38rem] lg:pt-[5rem]">
     <div class="home-hero__block relative w-full sm:mx-auto sm:w-fit md:ml-[29%] lg:ml-[26%]">
       <PixelSquiggle class="home-hero__squiggle text-bg" />
       <h1 class="home-hero__title max-sm:pl-[8%]">
         <span class="home-hero__line"><span style="--line: 0">{copy.hero.titleLine1}</span></span>
         <span class="home-hero__line"><span style="--line: 1">{copy.hero.titleLine2}</span></span>
       </h1>
-      <div class="mt-10 flex flex-col gap-10 md:mt-14 md:gap-8 lg:flex-row lg:items-center lg:justify-between">
-        <p class="max-w-[15rem] font-mono text-[0.8125rem] uppercase leading-[1.05] tracking-[0.04em] [word-spacing:0.45em] sm:max-w-[22rem] md:max-w-[11.5rem] lg:max-w-[14rem]">
+      <div class="home-hero__meta mt-10 flex flex-col gap-10 md:mt-14 md:gap-8 lg:flex-row lg:items-center lg:justify-between">
+        <p class="max-w-[15rem] font-mono text-[0.8125rem] uppercase leading-[1.05] tracking-[0.04em] [word-spacing:0.45em] max-[399px]:[word-spacing:normal] sm:max-w-[22rem] md:max-w-[11.5rem] lg:max-w-[14rem]">
           {copy.hero.tagline}
         </p>
         <HomeClock lang={lang} class="sm:self-end lg:self-auto" />
@@ -106,11 +106,29 @@ const copy = getHomeCopy(lang);
     padding: 0.45rem 0.7rem;
     border-radius: 4px;
     background: var(--color-black);
-    box-shadow: 0 0 0 1px #2c2e31;
     font-family: var(--font-mono);
     font-size: 0.6875rem;
     text-transform: uppercase;
     letter-spacing: 0.04em;
+  }
+
+  /* Petits mobiles (< 400px) : maquette dédiée, sans badges dans le hero. */
+  @media (max-width: 399px) {
+    .home-hero__inner {
+      min-height: 26.5rem;
+      padding-top: 9rem;
+      padding-bottom: 3.75rem;
+    }
+
+    .home-hero__title {
+      padding-left: 0.25rem;
+      font-size: 2.3rem;
+    }
+
+    .home-hero__meta {
+      margin-top: 2.5rem;
+      gap: 1.25rem;
+    }
   }
 
   @keyframes home-hero-line {

@@ -66,6 +66,18 @@
   text-transform: uppercase;
 }
 
+@media (max-width: 399px) {
+  .home-lead {
+    font-size: 1.5rem;
+    text-indent: 46%;
+  }
+
+  .home-lead__label {
+    width: 7.25rem;
+    font-size: 0.625rem;
+  }
+}
+
 @media (min-width: 640px) {
   .home-lead {
     font-size: 1.95rem;
