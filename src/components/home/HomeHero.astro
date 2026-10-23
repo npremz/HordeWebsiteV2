@@ -38,13 +38,14 @@ const copy = getHomeCopy(lang);
     </span>
   </div>
 
-  <div class="home-hero__inner relative flex min-h-[29.5rem] flex-col justify-end px-[10px] pb-10 pt-40 sm:min-h-[32rem] sm:px-[18px] md:h-[33.5rem] md:min-h-0 md:justify-center md:px-0 md:pb-0 md:pt-[4.5rem] lg:h-[38rem] lg:pt-[5rem]">
+  <!-- Le bloc ne mesure que le titre : centré, il tombe pile sur la ligne médiane (50 %) ; le reste pend en dessous. -->
+  <div class="home-hero__inner relative flex h-[29.5rem] flex-col justify-center px-[10px] sm:h-[32rem] sm:px-[18px] md:h-[33.5rem] md:px-0 lg:h-[38rem]">
     <div class="home-hero__block relative w-full sm:mx-auto sm:w-fit md:ml-[29%] lg:ml-[26%]">
       <h1 class="home-hero__title max-sm:pl-[8%]">
         <span class="home-hero__line"><span style="--line: 0">{copy.hero.titleLine1}</span></span>
         <span class="home-hero__line"><span style="--line: 1">{copy.hero.titleLine2}</span></span>
       </h1>
-      <div class="home-hero__meta mt-10 flex flex-col gap-10 md:mt-14 md:gap-8 lg:flex-row lg:items-center lg:justify-between">
+      <div class="home-hero__meta absolute inset-x-0 top-full mt-10 flex flex-col gap-10 md:mt-14 md:gap-8 lg:flex-row lg:items-center lg:justify-between">
         <p class="max-w-[15rem] font-mono text-[0.8125rem] uppercase leading-[1.05] tracking-[0.04em] [word-spacing:0.45em] max-[399px]:[word-spacing:normal] sm:max-w-[22rem] md:max-w-[11.5rem] lg:max-w-[14rem]">
           {copy.hero.tagline}
         </p>
@@ -74,6 +75,8 @@ const copy = getHomeCopy(lang);
   }
 
   .home-hero__title {
+    /* Garde la marge négative des lignes dans le h1, sinon le centrage sur la ligne médiane glisse. */
+    display: flow-root;
     font-size: clamp(2.6rem, 10.4vw, 3.5rem);
     line-height: 0.98;
     letter-spacing: -0.045em;
@@ -108,9 +111,7 @@ const copy = getHomeCopy(lang);
   /* Petits mobiles (< 400px) : maquette dédiée, sans badges dans le hero. */
   @media (max-width: 399px) {
     .home-hero__inner {
-      min-height: 26.5rem;
-      padding-top: 9rem;
-      padding-bottom: 3.75rem;
+      height: 26.5rem;
     }
 
     .home-hero__title {
