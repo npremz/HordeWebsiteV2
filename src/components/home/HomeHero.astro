@@ -57,9 +57,9 @@ const copy = getHomeCopy(lang);
 </section>
 
 <!-- Mobile : onglet posé sur la banderole (en desktop, il pend sous la banderole dans HomeIntro).
-     Hors du hero (overflow hidden) pour recouvrir d'1px la bordure haute de la banderole. -->
+     Il s'arrête sur la banderole : la bordure haute de celle-ci reste tracée sous l'onglet. -->
 <div class="relative z-10 h-0 sm:hidden">
-  <span class="home-hero__tag absolute bottom-[-1px] right-[10px] inline-flex text-white">
+  <span class="home-hero__tag absolute bottom-0 right-[10px] inline-flex text-white">
     {copy.intro.tag} <HomeIcon name="heart" class="w-[0.7rem]" />
   </span>
 </div>
