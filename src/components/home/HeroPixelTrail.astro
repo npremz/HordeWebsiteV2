@@ -1,7 +1,7 @@
 ---
 /**
  * Traînée de pixels sous le curseur (portage canvas 2D du PixelTrail de fysu).
- * Les cases reprennent la taille et la couleur du PixelSquiggle du hero.
+ * Les cases reprennent la taille et la couleur du PixelSquiggle (ancien tracé du hero).
  * Uniquement sur les appareils avec pointeur fin, et sans prefers-reduced-motion.
  */
 interface Props {
@@ -32,7 +32,10 @@ const { class: className = "" } = Astro.props;
   const BRUSH_SIZE = 64;
   const RADIUS_CELLS = 1.4; // 0.0095 × 150 cases chez fysu
   const THRESHOLD = 0.025 * 255;
-  const SQUIGGLE_COLUMNS = 18; // largeur de la grille du PixelSquiggle
+  // Taille des cases du PixelSquiggle (18 colonnes sur 7.5rem, 10.5rem dès 1024px).
+  const SQUIGGLE_COLUMNS = 18;
+  const SQUIGGLE_WIDTH_REM = 7.5;
+  const SQUIGGLE_WIDTH_REM_LG = 10.5;
 
   type TrailPoint = { x: number; y: number; force: number; age: number };
 
@@ -64,9 +67,9 @@ const { class: className = "" } = Astro.props;
     const trailCanvas = document.createElement("canvas");
     const trailContext = trailCanvas.getContext("2d", { willReadFrequently: true })!;
     const brush = createBrush();
-    const squiggle = hero.querySelector<SVGElement>(".home-hero__squiggle");
 
     let cell = 8;
+    let dpr = 1;
     let cols = 0;
     let rows = 0;
     let width = 0;
@@ -79,15 +82,16 @@ const { class: className = "" } = Astro.props;
 
     const resize = () => {
       const rect = hero.getBoundingClientRect();
-      const dpr = window.devicePixelRatio || 1;
+      const rem = parseFloat(getComputedStyle(document.documentElement).fontSize) || 16;
+      const squiggleWidth = (window.innerWidth >= 1024 ? SQUIGGLE_WIDTH_REM_LG : SQUIGGLE_WIDTH_REM) * rem;
+      dpr = window.devicePixelRatio || 1;
       width = rect.width;
       height = rect.height;
-      cell = (squiggle?.getBoundingClientRect().width || 144) / SQUIGGLE_COLUMNS;
+      cell = squiggleWidth / SQUIGGLE_COLUMNS;
       cols = Math.ceil(width / cell);
       rows = Math.ceil(height / cell);
       canvas.width = Math.round(width * dpr);
       canvas.height = Math.round(height * dpr);
-      context.setTransform(dpr, 0, 0, dpr, 0, 0);
       trailCanvas.width = cols;
       trailCanvas.height = rows;
     };
@@ -144,13 +148,19 @@ const { class: className = "" } = Astro.props;
         return true;
       });
 
-      context.clearRect(0, 0, width, height);
+      // Dessin en pixels physiques, bords arrondis à l'entier : les cases voisines
+      // se touchent exactement, sans joint anticrénelé entre elles.
+      context.clearRect(0, 0, canvas.width, canvas.height);
       context.fillStyle = getComputedStyle(canvas).color;
       const data = trailContext.getImageData(0, 0, cols, rows).data;
+      const step = cell * dpr;
       for (let row = 0; row < rows; row += 1) {
+        const y0 = Math.round(row * step);
+        const y1 = Math.round((row + 1) * step);
         for (let col = 0; col < cols; col += 1) {
           if (data[(row * cols + col) * 4] > THRESHOLD) {
-            context.fillRect(col * cell, row * cell, cell, cell);
+            const x0 = Math.round(col * step);
+            context.fillRect(x0, y0, Math.round((col + 1) * step) - x0, y1 - y0);
           }
         }
       }
@@ -180,7 +190,6 @@ const { class: className = "" } = Astro.props;
     hero.addEventListener("pointerleave", () => { last = null; }, { signal });
     const resizeObserver = new ResizeObserver(resize);
     resizeObserver.observe(hero);
-    if (squiggle) resizeObserver.observe(squiggle);
 
     document.addEventListener("astro:before-swap", () => {
       controller.abort();
