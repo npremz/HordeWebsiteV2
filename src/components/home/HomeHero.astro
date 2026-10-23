@@ -54,10 +54,15 @@ const copy = getHomeCopy(lang);
     </div>
   </div>
 
-  <span class="home-hero__tag absolute bottom-[10px] right-[10px] z-10 inline-flex sm:hidden">
+</section>
+
+<!-- Mobile : onglet posé sur la banderole (en desktop, il pend sous la banderole dans HomeIntro).
+     Hors du hero (overflow hidden) pour recouvrir d'1px la bordure haute de la banderole. -->
+<div class="relative z-10 h-0 sm:hidden">
+  <span class="home-hero__tag absolute bottom-[-1px] right-[10px] inline-flex text-white">
     {copy.intro.tag} <HomeIcon name="heart" class="w-[0.7rem]" />
   </span>
-</section>
+</div>
 
 <HomeMarquee items={copy.marquee} variant="dark" />
 
@@ -98,9 +103,13 @@ const copy = getHomeCopy(lang);
 
   .home-hero__tag {
     align-items: center;
-    gap: 0.4rem;
-    padding: 0.45rem 0.7rem;
-    border-radius: 4px;
+    gap: 0.45rem;
+    height: 2rem;
+    padding-inline: 1rem;
+    /* Même trait que la bordure de la banderole, ouvert en bas pour s'y raccorder. */
+    border: 1px solid #2c2e31;
+    border-bottom: 0;
+    border-radius: 4px 4px 0 0;
     background: var(--color-black);
     font-family: var(--font-mono);
     font-size: 0.6875rem;
