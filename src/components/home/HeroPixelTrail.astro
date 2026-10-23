@@ -1,0 +1,194 @@
+---
+/**
+ * Traînée de pixels sous le curseur (portage canvas 2D du PixelTrail de fysu).
+ * Les cases reprennent la taille et la couleur du PixelSquiggle du hero.
+ * Uniquement sur les appareils avec pointeur fin, et sans prefers-reduced-motion.
+ */
+interface Props {
+  class?: string;
+}
+
+const { class: className = "" } = Astro.props;
+---
+
+<canvas class:list={["home-pixel-trail", className]} data-home-pixel-trail aria-hidden="true"></canvas>
+
+<style>
+  .home-pixel-trail {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    color: var(--color-bg);
+  }
+</style>
+
+<script>
+  // Mêmes réglages que fysu (PixelTrailBackground), exprimés en cases de grille.
+  const MAX_AGE = 400;
+  const MAX_TRAIL_POINTS = 320;
+  const MAX_POINTS_PER_MOVE = 12;
+  const BRUSH_SIZE = 64;
+  const RADIUS_CELLS = 1.4; // 0.0095 × 150 cases chez fysu
+  const THRESHOLD = 0.025 * 255;
+  const SQUIGGLE_COLUMNS = 18; // largeur de la grille du PixelSquiggle
+
+  type TrailPoint = { x: number; y: number; force: number; age: number };
+
+  function createBrush() {
+    const brush = document.createElement("canvas");
+    brush.width = brush.height = BRUSH_SIZE;
+    const context = brush.getContext("2d")!;
+    const center = BRUSH_SIZE / 2;
+    const gradient = context.createRadialGradient(center, center, 0, center, center, center);
+    gradient.addColorStop(0, "rgba(255, 255, 255, 1)");
+    gradient.addColorStop(0.25, "rgba(255, 255, 255, 1)");
+    gradient.addColorStop(1, "rgba(255, 255, 255, 0)");
+    context.fillStyle = gradient;
+    context.fillRect(0, 0, BRUSH_SIZE, BRUSH_SIZE);
+    return brush;
+  }
+
+  function initHeroPixelTrail() {
+    const canvas = document.querySelector<HTMLCanvasElement>("[data-home-pixel-trail]");
+    const hero = canvas?.closest<HTMLElement>("section");
+    if (!canvas || !hero || canvas.dataset.ready === "true") return;
+    if (!window.matchMedia("(hover: hover) and (pointer: fine)").matches) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const context = canvas.getContext("2d");
+    if (!context) return;
+    canvas.dataset.ready = "true";
+
+    // Une case de la grille = un texel : on échantillonne la traînée au centre de chaque case.
+    const trailCanvas = document.createElement("canvas");
+    const trailContext = trailCanvas.getContext("2d", { willReadFrequently: true })!;
+    const brush = createBrush();
+    const squiggle = hero.querySelector<SVGElement>(".home-hero__squiggle");
+
+    let cell = 8;
+    let cols = 0;
+    let rows = 0;
+    let width = 0;
+    let height = 0;
+    let trail: TrailPoint[] = [];
+    let last: { x: number; y: number } | null = null;
+    let force = 0.3;
+    let frame = 0;
+    let previousTime = 0;
+
+    const resize = () => {
+      const rect = hero.getBoundingClientRect();
+      const dpr = window.devicePixelRatio || 1;
+      width = rect.width;
+      height = rect.height;
+      cell = (squiggle?.getBoundingClientRect().width || 144) / SQUIGGLE_COLUMNS;
+      cols = Math.ceil(width / cell);
+      rows = Math.ceil(height / cell);
+      canvas.width = Math.round(width * dpr);
+      canvas.height = Math.round(height * dpr);
+      context.setTransform(dpr, 0, 0, dpr, 0, 0);
+      trailCanvas.width = cols;
+      trailCanvas.height = rows;
+    };
+
+    const pushPoint = (x: number, y: number) => {
+      trail.push({ x, y, force, age: 0 });
+    };
+
+    const addTouch = (x: number, y: number) => {
+      if (!last) {
+        last = { x, y };
+        pushPoint(x, y);
+        return;
+      }
+
+      const dx = x - last.x;
+      const dy = y - last.y;
+      const distance = Math.hypot(dx, dy);
+      if (distance < 0.5) return;
+
+      // Force calculée comme chez fysu : distance rapportée à la plus grande dimension.
+      const uvDistance = (distance * cell) / Math.max(width, height);
+      const rawForce = Math.min(uvDistance * uvDistance * 10000, 1);
+      force = force * 0.9 + Math.max(0.3, rawForce) * 0.1;
+
+      const pointCount = Math.min(Math.ceil(distance / 0.75), MAX_POINTS_PER_MOVE);
+      for (let index = 1; index <= pointCount; index += 1) {
+        const progress = index / pointCount;
+        pushPoint(last.x + dx * progress, last.y + dy * progress);
+      }
+      last = { x, y };
+
+      if (trail.length > MAX_TRAIL_POINTS) trail.splice(0, trail.length - MAX_TRAIL_POINTS);
+    };
+
+    const render = (time: number) => {
+      const elapsed = previousTime ? time - previousTime : 0;
+      previousTime = time;
+
+      trailContext.globalCompositeOperation = "source-over";
+      trailContext.fillStyle = "#000";
+      trailContext.fillRect(0, 0, cols, rows);
+      trailContext.globalCompositeOperation = "screen";
+
+      const growDuration = MAX_AGE * 0.3;
+      trail = trail.filter((point) => {
+        point.age += elapsed;
+        if (point.age > MAX_AGE) return false;
+        const life = point.age < growDuration
+          ? point.age / growDuration
+          : 1 - (point.age - growDuration) / (MAX_AGE - growDuration);
+        const radius = RADIUS_CELLS * Math.max(0, life) * point.force;
+        if (radius >= 0.05) trailContext.drawImage(brush, point.x - radius, point.y - radius, radius * 2, radius * 2);
+        return true;
+      });
+
+      context.clearRect(0, 0, width, height);
+      context.fillStyle = getComputedStyle(canvas).color;
+      const data = trailContext.getImageData(0, 0, cols, rows).data;
+      for (let row = 0; row < rows; row += 1) {
+        for (let col = 0; col < cols; col += 1) {
+          if (data[(row * cols + col) * 4] > THRESHOLD) {
+            context.fillRect(col * cell, row * cell, cell, cell);
+          }
+        }
+      }
+
+      if (trail.length) {
+        frame = requestAnimationFrame(render);
+      } else {
+        frame = 0;
+        previousTime = 0;
+        last = null;
+        force = 0.3;
+      }
+    };
+
+    const controller = new AbortController();
+    const { signal } = controller;
+
+    hero.addEventListener("pointermove", (event) => {
+      if (event.pointerType === "touch") return;
+      const rect = hero.getBoundingClientRect();
+      // Cases centrées sur le texel : le centre de la case (c, r) vaut (c + 0.5, r + 0.5).
+      addTouch((event.clientX - rect.left) / cell, (event.clientY - rect.top) / cell);
+      if (!frame) frame = requestAnimationFrame(render);
+    }, { signal });
+
+    // Pas de trait qui traverse le hero quand le curseur revient par un autre bord.
+    hero.addEventListener("pointerleave", () => { last = null; }, { signal });
+    const resizeObserver = new ResizeObserver(resize);
+    resizeObserver.observe(hero);
+    if (squiggle) resizeObserver.observe(squiggle);
+
+    document.addEventListener("astro:before-swap", () => {
+      controller.abort();
+      resizeObserver.disconnect();
+      cancelAnimationFrame(frame);
+    }, { once: true });
+  }
+
+  initHeroPixelTrail();
+  document.addEventListener("astro:page-load", initHeroPixelTrail);
+</script>
