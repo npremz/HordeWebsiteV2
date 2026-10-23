@@ -133,7 +133,8 @@ const copy = getHomeCopy(lang);
 
   @keyframes home-hero-line {
     from {
-      transform: translateY(105%);
+      /* 100% + le padding-bottom (0.2em) du masque, sinon le haut des lettres dépasse. */
+      transform: translateY(calc(100% + 0.25em));
     }
   }
 
