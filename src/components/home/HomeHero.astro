@@ -4,7 +4,6 @@ import { getHomeCopy } from "./copy";
 import HeroPixelTrail from "./HeroPixelTrail.astro";
 import HeroLines from "./svg/HeroLines.astro";
 import HomeIcon from "./svg/HomeIcon.astro";
-import PixelSquiggle from "./svg/PixelSquiggle.astro";
 import HomeBadge from "./ui/HomeBadge.astro";
 import HomeClock from "./ui/HomeClock.astro";
 import HomeMarquee from "./ui/HomeMarquee.astro";
@@ -41,7 +40,6 @@ const copy = getHomeCopy(lang);
 
   <div class="home-hero__inner relative flex min-h-[29.5rem] flex-col justify-end px-[10px] pb-10 pt-40 sm:min-h-[32rem] sm:px-[18px] md:h-[33.5rem] md:min-h-0 md:justify-center md:px-0 md:pb-0 md:pt-[4.5rem] lg:h-[38rem] lg:pt-[5rem]">
     <div class="home-hero__block relative w-full sm:mx-auto sm:w-fit md:ml-[29%] lg:ml-[26%]">
-      <PixelSquiggle class="home-hero__squiggle text-bg" />
       <h1 class="home-hero__title max-sm:pl-[8%]">
         <span class="home-hero__line"><span style="--line: 0">{copy.hero.titleLine1}</span></span>
         <span class="home-hero__line"><span style="--line: 1">{copy.hero.titleLine2}</span></span>
@@ -95,13 +93,6 @@ const copy = getHomeCopy(lang);
     animation-delay: calc(0.15s + var(--line) * 0.1s);
   }
 
-  :global(.home-hero__squiggle) {
-    position: absolute;
-    top: -4.25rem;
-    right: 0;
-    width: 7.5rem;
-  }
-
   .home-hero__tag {
     align-items: center;
     gap: 0.4rem;
@@ -144,12 +135,6 @@ const copy = getHomeCopy(lang);
     .home-hero__title {
       font-size: 3.6rem;
     }
-
-    :global(.home-hero__squiggle) {
-      top: -4.5rem;
-      right: -2.75rem;
-      width: 10.5rem;
-    }
   }
 
   @media (min-width: 1256px) {
@@ -161,11 +146,6 @@ const copy = getHomeCopy(lang);
   @media (min-width: 1512px) {
     .home-hero__title {
       font-size: 5.75rem;
-    }
-
-    :global(.home-hero__squiggle) {
-      top: -4.5rem;
-      right: -6.75rem;
     }
   }
 </style>
