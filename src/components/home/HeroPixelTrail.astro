@@ -68,8 +68,11 @@ const { class: className = "" } = Astro.props;
     const trailContext = trailCanvas.getContext("2d", { willReadFrequently: true })!;
     const brush = createBrush();
 
+    const header = document.querySelector<HTMLElement>(".home-header");
+
     let cell = 8;
     let dpr = 1;
+    let clipTop = 0; // bas du header, en pixels physiques : la traînée reste en dessous
     let cols = 0;
     let rows = 0;
     let width = 0;
@@ -94,6 +97,7 @@ const { class: className = "" } = Astro.props;
       canvas.height = Math.round(height * dpr);
       trailCanvas.width = cols;
       trailCanvas.height = rows;
+      clipTop = header ? Math.max(0, Math.round((header.getBoundingClientRect().bottom - rect.top) * dpr)) : 0;
     };
 
     const pushPoint = (x: number, y: number) => {
@@ -155,8 +159,9 @@ const { class: className = "" } = Astro.props;
       const data = trailContext.getImageData(0, 0, cols, rows).data;
       const step = cell * dpr;
       for (let row = 0; row < rows; row += 1) {
-        const y0 = Math.round(row * step);
+        const y0 = Math.max(clipTop, Math.round(row * step));
         const y1 = Math.round((row + 1) * step);
+        if (y1 <= y0) continue;
         for (let col = 0; col < cols; col += 1) {
           if (data[(row * cols + col) * 4] > THRESHOLD) {
             const x0 = Math.round(col * step);
@@ -190,6 +195,7 @@ const { class: className = "" } = Astro.props;
     hero.addEventListener("pointerleave", () => { last = null; }, { signal });
     const resizeObserver = new ResizeObserver(resize);
     resizeObserver.observe(hero);
+    if (header) resizeObserver.observe(header);
 
     document.addEventListener("astro:before-swap", () => {
       controller.abort();
