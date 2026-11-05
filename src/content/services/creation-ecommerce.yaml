@@ -22,7 +22,7 @@ footerTitle: E-Commerce
 footerOrder: 2
 translations:
   en:
-    seoUrl: /en/services/creation-ecommerce/
+    seoUrl: /en/services/ecommerce-website-brussels/
     seoPrimaryKeyword: ecommerce website development brussels
     seoSecondaryKeywords:
       - ecommerce agency belgium
@@ -35,7 +35,7 @@ translations:
       journeys, performance, technical SEO, payments and catalogue management.
     seoInternalLinks:
       - /en/services/technical-seo-audit-brussels/
-      - /en/services/creation-landing-page/
+      - /en/services/landing-page-design-brussels/
       - /en/projets/
       - /en/contact/
     h1: E-commerce website development
@@ -155,7 +155,7 @@ translations:
       - anchor: audit your current store
         url: /en/services/technical-seo-audit-brussels/
       - anchor: product landing pages
-        url: /en/services/creation-landing-page/
+        url: /en/services/landing-page-design-brussels/
       - anchor: our work
         url: /en/projets/
       - anchor: contact us

@@ -5,7 +5,7 @@ import HeroStructure from '../../../components/blog/HeroStructure.astro';
 import { Image } from 'astro:assets';
 import type { ImageMetadata } from 'astro';
 import { splitArticleImages } from '../../../lib/content/blog-inline-images';
-import { SUPPORTED_LOCALES, type Locale, useTranslations } from '../../../i18n';
+import { HTML_LOCALE_CODES, SUPPORTED_LOCALES, type Locale, useTranslations } from '../../../i18n';
 import { getShortBreadcrumbLabel } from '../../../utils/breadcrumb-label';
 import { splitHeadingLines } from '../../../utils/split-heading-lines';
 import {
@@ -319,7 +319,7 @@ const schemaOrg = {
 				"wordCount": articleContent.split(/\s+/).length,
 				"timeRequired": `PT${readingTime}M`,
 				"abstract": excerpt,
-				"inLanguage": lang === 'fr' ? 'fr-BE' : 'en-US'
+				"inLanguage": HTML_LOCALE_CODES[lang]
 			},
 			...(keyTakeaways.length > 0
 				? [{

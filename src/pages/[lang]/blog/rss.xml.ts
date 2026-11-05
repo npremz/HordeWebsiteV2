@@ -28,6 +28,6 @@ export async function GET(context: APIContext) {
       pubDate: new Date(post.publishedDate),
       link: getBlogPostHref(post.slug, lang),
     })),
-    customData: `<language>${lang === 'fr' ? 'fr-BE' : 'en-US'}</language>`,
+    customData: `<language>${lang === 'fr' ? 'fr-BE' : 'en'}</language>`,
   });
 }

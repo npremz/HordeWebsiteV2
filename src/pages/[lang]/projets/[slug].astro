@@ -1,10 +1,10 @@
 ---
-import { Image } from 'astro:assets';
+import { Image, getImage } from 'astro:assets';
 import Layout from '../../../layouts/Layout.astro';
 import Footer from '../../../components/Footer.astro';
 import HeroStructure from '../../../components/blog/HeroStructure.astro';
 import ProjectsListingPage from '../../../components/projects/ProjectsListingPage.astro';
-import { SUPPORTED_LOCALES, type Locale, useTranslations } from '../../../i18n';
+import { HTML_LOCALE_CODES, SUPPORTED_LOCALES, type Locale, useTranslations } from '../../../i18n';
 import { splitHeadingLines } from '../../../utils/split-heading-lines';
 import {
   type LocalizedProjectGalleryRow,
@@ -177,7 +177,51 @@ if (props.kind === 'project') {
     ],
   };
 }
+
+const siteUrl = (Astro.site?.href || 'https://hordeagence.com/').replace(/\/$/, '');
+const pageUrl = new URL(Astro.url.pathname.endsWith('/') ? Astro.url.pathname : `${Astro.url.pathname}/`, `${siteUrl}/`).href;
+const breadcrumbSchema = {
+  '@type': 'BreadcrumbList',
+  '@id': `${pageUrl}#breadcrumb`,
+  itemListElement: pageContent.breadcrumbItems.map((item, index) => ({
+    '@type': 'ListItem',
+    position: index + 1,
+    name: item.label,
+    item: new URL(item.href || pageUrl, `${siteUrl}/`).href,
+  })),
+};
+const projectImage =
+  pageContent.kind === 'project'
+    ? new URL((await getImage({ src: pageContent.featuredImage, width: 1200, format: 'jpg' })).src, `${siteUrl}/`).href
+    : undefined;
+const projectSchema = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    ...(pageContent.kind === 'project'
+      ? [
+          {
+            '@type': 'CreativeWork',
+            '@id': `${pageUrl}#project`,
+            name: pageContent.shortTitle,
+            headline: pageTitle,
+            description: pageDescription,
+            url: pageUrl,
+            image: projectImage,
+            inLanguage: HTML_LOCALE_CODES[lang],
+            keywords: pageContent.projectTypes.join(', '),
+            creator: { '@id': `${siteUrl}#organization` },
+            ...(pageContent.project.data.publishedDate
+              ? { dateCreated: new Date(pageContent.project.data.publishedDate).toISOString().slice(0, 10) }
+              : {}),
+          },
+        ]
+      : []),
+    breadcrumbSchema,
+  ],
+};
 ---
+
+<script is:inline type="application/ld+json" set:html={JSON.stringify(projectSchema)} />
 
 <Layout
   lang={lang}

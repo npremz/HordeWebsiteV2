@@ -7,7 +7,7 @@ seoSecondaryKeywords:
   - audit ux ui bruxelles
   - analyse site web bruxelles
   - diagnostic site web
-seoTitle: Audit de site web offert à Bruxelles
+seoTitle: Audit SEO technique offert à Bruxelles
 seoDescription: >-
   Recevez un diagnostic gratuit de votre site : vitesse, SEO technique, UX et
   parcours de conversion, avec une liste claire des problèmes à traiter.
@@ -30,12 +30,12 @@ translations:
       - ux ui audit brussels
       - website analysis brussels
       - website diagnostic
-    seoTitle: Free website audit in Brussels
+    seoTitle: Free technical SEO audit in Brussels
     seoDescription: >-
       Get a free review of your website’s speed, technical SEO, UX and conversion
       journey, with clear priorities delivered within 48 hours.
     seoInternalLinks:
-      - /en/services/optimisation-site-web/
+      - /en/services/website-optimization-brussels/
       - /en/services/website-redesign-brussels/
       - /en/contact/
     h1: Technical SEO and performance audit in Brussels
@@ -139,7 +139,7 @@ translations:
     reassurance: We reply within 24h.
     recommendedLinks:
       - anchor: performance optimization
-        url: /en/services/optimisation-site-web/
+        url: /en/services/website-optimization-brussels/
       - anchor: conversion-focused redesign
         url: /en/services/website-redesign-brussels/
       - anchor: contact us

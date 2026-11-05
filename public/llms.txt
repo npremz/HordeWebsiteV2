@@ -2,7 +2,7 @@
 
 > Horde Agence est une agence web basee a Bruxelles. Nous concevons des sites web sur mesure, rapides, bien references et simples a maintenir.
 
-Derniere mise a jour: 2026-09-14
+Derniere mise a jour: 2026-11-05
 
 ## Identite
 
@@ -22,37 +22,42 @@ Horde Agence accompagne les entreprises qui veulent un site plus rapide, plus cl
 ## Equipe
 
 - Nicolas Premont, cofondateur et developpeur. Specialites: performance web, SEO technique, architecture front-end et developpement sur mesure.
-- Julien Designer, cofondateur et designer UX. Specialites: recherche utilisateur, interfaces, identite visuelle et parcours de conversion.
+- Alexandre Potakowski, cofondateur et designer UX. Specialites: recherche utilisateur, interfaces, identite visuelle et parcours de conversion.
 
 ## Services
 
 ### Audit site web offert
 
-- URL FR: https://hordeagence.com/fr/services/audit-offert
+- URL FR: https://hordeagence.com/fr/services/audit-seo-technique-bruxelles/
+- URL EN: https://hordeagence.com/en/services/technical-seo-audit-brussels/
 - Objectif: identifier les vrais blocages SEO, vitesse, UX, UI, accessibilite et compatibilite.
 - Livrables: analyse initiale, session de 30 minutes et plan d'action clair.
 
 ### Refonte site web
 
-- URL FR: https://hordeagence.com/fr/services/refonte-site-web
+- URL FR: https://hordeagence.com/fr/services/refonte-site-web-bruxelles/
+- URL EN: https://hordeagence.com/en/services/website-redesign-brussels/
 - Objectif: moderniser un site existant sans repartir inutilement de zero.
 - Axes: audit de l'existant, architecture UX, design UI, developpement axe performance, migration et lancement.
 
 ### Creation site e-commerce
 
-- URL FR: https://hordeagence.com/fr/services/creation-ecommerce
+- URL FR: https://hordeagence.com/fr/services/creation-ecommerce/
+- URL EN: https://hordeagence.com/en/services/ecommerce-website-brussels/
 - Objectif: creer ou migrer une boutique rapide, claire et pensee pour l'achat.
 - Axes: Shopify, e-commerce sur mesure, headless commerce, UX d'achat, performance, SEO e-commerce, paiement et logistique.
 
 ### Creation landing page
 
-- URL FR: https://hordeagence.com/fr/services/creation-landing-page
+- URL FR: https://hordeagence.com/fr/services/creation-landing-page/
+- URL EN: https://hordeagence.com/en/services/landing-page-design-brussels/
 - Objectif: creer une page dediee a une campagne, une offre ou un lancement.
 - Axes: copywriting oriente conversion, design sans distraction, performance mobile-first, integrations et mise en ligne.
 
 ### Creation MVP SaaS
 
-- URL FR: https://hordeagence.com/fr/services/creation-mvp-saas
+- URL FR: https://hordeagence.com/fr/services/developpement-mvp-bruxelles/
+- URL EN: https://hordeagence.com/en/services/mvp-development-brussels/
 - Objectif: transformer une idee produit en premiere version utilisable.
 - Axes: cadrage produit, UX, prototypage, developpement, mise en production et suivi post-lancement.
 
@@ -66,7 +71,8 @@ Horde Agence accompagne les entreprises qui veulent un site plus rapide, plus cl
 
 ### Optimisation site web
 
-- URL FR: https://hordeagence.com/fr/services/optimisation-site-web
+- URL FR: https://hordeagence.com/fr/services/optimisation-site-web/
+- URL EN: https://hordeagence.com/en/services/website-optimization-brussels/
 - Objectif: ameliorer les Core Web Vitals, la vitesse percue, le SEO technique et la stabilite d'un site existant.
 - Axes: LCP, INP, CLS, infrastructure, cache, diagnostic, plan priorise, implementation et validation.
 
@@ -78,15 +84,15 @@ Horde Agence accompagne les entreprises qui veulent un site plus rapide, plus cl
 
 ## Pages publiques principales
 
-- Accueil FR: https://hordeagence.com/fr
-- A propos FR: https://hordeagence.com/fr/about
-- Services FR: https://hordeagence.com/fr/services
-- Projets FR: https://hordeagence.com/fr/projets
-- Blog FR: https://hordeagence.com/fr/blog
-- Contact FR: https://hordeagence.com/fr/contact
-- Mentions legales FR: https://hordeagence.com/fr/mentions-legales
-- Confidentialite FR: https://hordeagence.com/fr/confidentialite
-- Cookies FR: https://hordeagence.com/fr/cookies
+- Accueil FR: https://hordeagence.com/fr/
+- A propos FR: https://hordeagence.com/fr/about/
+- Services FR: https://hordeagence.com/fr/services/
+- Projets FR: https://hordeagence.com/fr/projets/
+- Blog FR: https://hordeagence.com/fr/blog/
+- Contact FR: https://hordeagence.com/fr/contact/
+- Mentions legales FR: https://hordeagence.com/fr/mentions-legales/
+- Confidentialite FR: https://hordeagence.com/fr/confidentialite/
+- Cookies FR: https://hordeagence.com/fr/cookies/
 
 Les equivalents anglais sont accessibles sous `/en/...`.
 
@@ -94,7 +100,7 @@ Les equivalents anglais sont accessibles sous `/en/...`.
 
 ### Cafe Belga
 
-- Page projet: https://hordeagence.com/fr/projets/cafe-belga
+- Page projet: https://hordeagence.com/fr/projets/cafe-belga/
 - Site: https://belga.hordagency.com
 - Type: site vitrine, UX design, web design
 - Publication: 2026-01-26
@@ -102,7 +108,7 @@ Les equivalents anglais sont accessibles sous `/en/...`.
 
 ### Merly
 
-- Page projet: https://hordeagence.com/fr/projets/merly
+- Page projet: https://hordeagence.com/fr/projets/merly/
 - Site: https://merly.hordagency.com
 - Type: site vitrine, UX design, web design
 - Publication: 2024-02-01
@@ -119,25 +125,25 @@ Les equivalents anglais sont accessibles sous `/en/...`.
 
 ### En 2026, c'est quoi un site (vraiment) rapide?
 
-- URL: https://hordeagence.com/fr/blog/c-est-quoi-un-site-vraiment-rapide
+- URL: https://hordeagence.com/fr/blog/c-est-quoi-un-site-vraiment-rapide/
 - Date: 2026-01-30
 - Categorie: performance web
 
 ### Pourquoi avoir un site web quand les reseaux sociaux marchent deja ?
 
-- URL: https://hordeagence.com/fr/blog/pourquoi-avoir-un-site-web-reseaux-sociaux
+- URL: https://hordeagence.com/fr/blog/pourquoi-avoir-un-site-web-reseaux-sociaux/
 - Date: 2026-02-11
 - Categorie: strategie
 
 ### Ce que votre site vous coute vraiment (sans que vous le sachiez)
 
-- URL: https://hordeagence.com/fr/blog/ce-que-votre-site-vous-coute-vraiment
+- URL: https://hordeagence.com/fr/blog/ce-que-votre-site-vous-coute-vraiment/
 - Date: 2026-02-26
 - Categorie: strategie
 
 ### Combien coute une refonte de site web en 2026
 
-- URL: https://hordeagence.com/fr/blog/combien-coute-refonte-site-web
+- URL: https://hordeagence.com/fr/blog/combien-coute-refonte-site-web/
 - Date: 2026-03-03
 - Categorie: strategie
 

@@ -3,6 +3,7 @@ import {
   SUPPORTED_LOCALES,
   DEFAULT_LOCALE,
   HREFLANG_LOCALE_CODES,
+  HTML_LOCALE_CODES,
   OG_LOCALE_CODES,
   type Locale,
   getAlternateUrls,
@@ -124,7 +125,30 @@ const llmsFullTxtURL = new URL('/llms-full.txt', Astro.site).href;
 const sameAs = [
   'https://www.linkedin.com/company/horde-agence/',
   'https://www.instagram.com/hordeagencebxl/',
+  'https://sortlist.com/agency/horde-agence',
   'https://github.com/npremz',
+];
+// « Horde » seul est partagé avec une agence suisse (horde.ch) : les variantes
+// localisées et les fondateurs aident Google à distinguer l'entité bruxelloise.
+const alternateNames = ['Horde Bruxelles', 'Horde Agence Bruxelles', 'Horde Brussels'];
+const founders = [
+  {
+    "@type": "Person",
+    "@id": `${normalizedSiteUrl}#nicolas-premont`,
+    "name": "Nicolas Prémont",
+    "jobTitle": lang === 'fr' ? 'Co-fondateur & Développeur' : 'Co-founder & Developer',
+    "sameAs": [
+      'https://www.linkedin.com/in/nicolas-pr%C3%A9mont-90326b1aa/',
+      'https://github.com/npremz',
+      'https://malt.com/profile/nicolaspremont',
+    ],
+  },
+  {
+    "@type": "Person",
+    "@id": `${normalizedSiteUrl}#alexandre-potakowski`,
+    "name": "Alexandre Potakowski",
+    "jobTitle": lang === 'fr' ? 'Co-fondateur & Designer UX' : 'Co-founder & UX Designer',
+  },
 ];
 const structuredServiceDescription = t.seo.serviceDescription;
 const structuredServiceSlogan = t.seo.serviceSlogan;
@@ -206,11 +230,16 @@ const structuredContactUrl = `${normalizedSiteUrl}/${lang}/contact/`;
       "@type": "Organization",
       "@id": organizationId,
       "name": siteName,
-      "alternateName": "Horde Bruxelles",
+      "alternateName": alternateNames,
       "url": Astro.site?.href,
       "logo": new URL("/images/logo.svg", Astro.site).href,
       "image": new URL(siteSettings.defaultOgImage, Astro.site).href,
       "email": "hello@hordeagence.com",
+      "foundingLocation": {
+        "@type": "Place",
+        "name": "Bruxelles, Belgique"
+      },
+      "founder": founders,
       "sameAs": sameAs
     },
     {
@@ -248,7 +277,7 @@ const structuredContactUrl = `${normalizedSiteUrl}/${lang}/contact/`;
         "contactType": "customer service",
         "url": structuredContactUrl,
         "email": "hello@hordeagence.com",
-        "availableLanguage": ["fr-BE", "en-US"]
+        "availableLanguage": SUPPORTED_LOCALES.map((locale) => HTML_LOCALE_CODES[locale])
       },
       "sameAs": sameAs,
       "provider": {
@@ -278,7 +307,7 @@ const structuredContactUrl = `${normalizedSiteUrl}/${lang}/contact/`;
   "publisher": {
     "@id": organizationId
   },
-  "inLanguage": ["fr-BE", "en-US"]
+  "inLanguage": SUPPORTED_LOCALES.map((locale) => HTML_LOCALE_CODES[locale])
 })} />
 
 <!-- Structured Data - WebPage -->
@@ -295,7 +324,7 @@ const structuredContactUrl = `${normalizedSiteUrl}/${lang}/contact/`;
   "about": {
     "@id": organizationId
   },
-  "inLanguage": siteSettings.locale.replace('_', '-'),
+  "inLanguage": HTML_LOCALE_CODES[lang],
   ...(ogType === "article" && publishedTime ? {
     "datePublished": publishedTime,
     "dateModified": modifiedTime || publishedTime,
