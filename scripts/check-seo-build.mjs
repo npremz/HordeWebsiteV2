@@ -84,7 +84,8 @@ for (const file of htmlFiles) {
   }
 
   if (!relativePath.endsWith("404/index.html")) {
-    for (const hreflang of ["fr-BE", "en-US", "x-default"]) {
+    // Keep in sync with HREFLANG_LOCALE_CODES in src/i18n/config.ts.
+    for (const hreflang of ["fr", "en", "x-default"]) {
       const pattern = new RegExp(`<link rel="alternate" hreflang="${hreflang}" href="[^"]+">`, "g");
       assertSingleTag(html, pattern, `hreflang ${hreflang}`, relativePath);
     }

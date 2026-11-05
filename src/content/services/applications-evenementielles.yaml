@@ -38,7 +38,7 @@ translations:
     seoInternalLinks:
       - /en/blog/ai-assisted-event-web-apps/
       - /en/services/mvp-development-brussels/
-      - /en/services/creation-landing-page/
+      - /en/services/landing-page-design-brussels/
       - /en/contact/
     h1: Event web app<br>development
     shortName: Event web apps
@@ -174,7 +174,7 @@ translations:
       - anchor: develop a broader web product
         url: /en/services/mvp-development-brussels/
       - anchor: a landing page for your launch
-        url: /en/services/creation-landing-page/
+        url: /en/services/landing-page-design-brussels/
       - anchor: discuss your event
         url: /en/contact/
 intro: >-

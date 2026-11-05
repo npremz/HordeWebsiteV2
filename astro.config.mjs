@@ -104,6 +104,19 @@ export default defineConfig({
       status: 301,
       destination: '/en/services/mvp-development-brussels/',
     },
+    // Slugs anglais alignés sur les requêtes anglophones (nov. 2026).
+    '/en/services/creation-ecommerce/': {
+      status: 301,
+      destination: '/en/services/ecommerce-website-brussels/',
+    },
+    '/en/services/creation-landing-page/': {
+      status: 301,
+      destination: '/en/services/landing-page-design-brussels/',
+    },
+    '/en/services/optimisation-site-web/': {
+      status: 301,
+      destination: '/en/services/website-optimization-brussels/',
+    },
   },
   // Astro 7: les environnements déployés utilisent le serveur Node ; les pages
   // statiques conservent leur `prerender: true`.

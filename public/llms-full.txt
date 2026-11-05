@@ -2,7 +2,7 @@
 
 > Horde Agence est une agence web basee a Bruxelles, specialisee dans la creation de sites web sur mesure, l'UX design, la performance web, le SEO technique et les interfaces rapides. Le site public est bilingue francais/anglais, avec le francais comme langue principale.
 
-Derniere mise a jour: 2026-09-14
+Derniere mise a jour: 2026-11-05
 
 ## Informations generales
 
@@ -37,7 +37,7 @@ Horde Agence cree des sites web rapides, legers, bien references et simples a ma
 - LinkedIn: https://www.linkedin.com/in/nicolas-pr%C3%A9mont-90326b1aa/
 - GitHub: https://github.com/npremz
 
-### Julien Designer
+### Alexandre Potakowski
 
 - Role: cofondateur et designer UX
 - Bio courte: designer UX qui transforme des idees floues en interfaces claires, utiles et coherentes avec l'identite du client.
@@ -48,8 +48,9 @@ Horde Agence cree des sites web rapides, legers, bien references et simples a ma
 ### Audit site web offert
 
 - Slug: audit-offert
-- URL FR: https://hordeagence.com/fr/services/audit-offert
-- SEO title FR: Audit de site web offert a Bruxelles | Horde
+- URL FR: https://hordeagence.com/fr/services/audit-seo-technique-bruxelles/
+- URL EN: https://hordeagence.com/en/services/technical-seo-audit-brussels/
+- SEO title FR: Audit SEO technique offert a Bruxelles | Horde Agence
 - Objectif: comprendre avant d'agir et identifier les blocages prioritaires.
 - Cibles: entreprises qui veulent verifier la vitesse, l'UX, l'UI, le SEO technique et la clarte commerciale de leur site.
 
@@ -67,7 +68,8 @@ Prestations:
 ### Refonte site web
 
 - Slug: refonte-site-web
-- URL FR: https://hordeagence.com/fr/services/refonte-site-web
+- URL FR: https://hordeagence.com/fr/services/refonte-site-web-bruxelles/
+- URL EN: https://hordeagence.com/en/services/website-redesign-brussels/
 - SEO title FR: Refonte site web a Bruxelles | UX, perf et SEO
 - Objectif: ameliorer un site existant quand ses fondations, son design ou ses performances limitent la croissance.
 - Cibles: entreprises avec un site lent, confus, obsolete, difficile a maintenir ou mal convertissant.
@@ -93,7 +95,8 @@ Process:
 ### Creation site e-commerce
 
 - Slug: creation-ecommerce
-- URL FR: https://hordeagence.com/fr/services/creation-ecommerce
+- URL FR: https://hordeagence.com/fr/services/creation-ecommerce/
+- URL EN: https://hordeagence.com/en/services/ecommerce-website-brussels/
 - SEO title FR: Creation site e-commerce a Bruxelles | Horde
 - Objectif: creer une boutique rapide, fiable et pensee pour l'achat.
 - Cibles: marques qui lancent une boutique, migrent un e-commerce ou veulent une experience d'achat plus efficace.
@@ -112,7 +115,8 @@ Prestations:
 ### Creation landing page
 
 - Slug: creation-landing-page
-- URL FR: https://hordeagence.com/fr/services/creation-landing-page
+- URL FR: https://hordeagence.com/fr/services/creation-landing-page/
+- URL EN: https://hordeagence.com/en/services/landing-page-design-brussels/
 - SEO title FR: Creation de landing page a Bruxelles | Horde
 - Objectif: creer une page focalisee sur une action precise: lead, achat, inscription, rendez-vous ou test d'offre.
 - Cibles: campagnes Google Ads, campagnes Meta Ads, lancements d'offre, capture de leads B2B et tests A/B.
@@ -130,7 +134,8 @@ Prestations:
 ### Creation MVP SaaS
 
 - Slug: creation-mvp-saas
-- URL FR: https://hordeagence.com/fr/services/creation-mvp-saas
+- URL FR: https://hordeagence.com/fr/services/developpement-mvp-bruxelles/
+- URL EN: https://hordeagence.com/en/services/mvp-development-brussels/
 - SEO title FR: Developpement MVP SaaS a Bruxelles
 - Objectif: passer d'une idee produit a une premiere version utilisable, testable et maintenable.
 - Cibles: fondateurs, equipes produit et entreprises qui veulent valider une solution SaaS sans construire trop tot une plateforme trop lourde.
@@ -179,7 +184,8 @@ L'hebergement, l'assistance le jour J et la reutilisation sont definis selon le 
 ### Optimisation site web
 
 - Slug: optimisation-site-web
-- URL FR: https://hordeagence.com/fr/services/optimisation-site-web
+- URL FR: https://hordeagence.com/fr/services/optimisation-site-web/
+- URL EN: https://hordeagence.com/en/services/website-optimization-brussels/
 - SEO title FR: Optimisation site web a Bruxelles
 - Objectif: ameliorer la vitesse, les Core Web Vitals et la stabilite d'un site existant.
 - Cibles: sites lents, pages qui perdent des visiteurs, interfaces instables ou plateformes qui accumulent une dette technique visible.
@@ -212,17 +218,17 @@ Les echanges se font sans intermediaire. Le client a une visibilite directe sur 
 
 ## Pages publiques du site
 
-- Accueil FR: https://hordeagence.com/fr
-- A propos FR: https://hordeagence.com/fr/about
-- Services FR: https://hordeagence.com/fr/services
-- Projets FR: https://hordeagence.com/fr/projets
-- Blog FR: https://hordeagence.com/fr/blog
-- Contact FR: https://hordeagence.com/fr/contact
-- Mentions legales FR: https://hordeagence.com/fr/mentions-legales
-- Confidentialite FR: https://hordeagence.com/fr/confidentialite
-- Cookies FR: https://hordeagence.com/fr/cookies
+- Accueil FR: https://hordeagence.com/fr/
+- A propos FR: https://hordeagence.com/fr/about/
+- Services FR: https://hordeagence.com/fr/services/
+- Projets FR: https://hordeagence.com/fr/projets/
+- Blog FR: https://hordeagence.com/fr/blog/
+- Contact FR: https://hordeagence.com/fr/contact/
+- Mentions legales FR: https://hordeagence.com/fr/mentions-legales/
+- Confidentialite FR: https://hordeagence.com/fr/confidentialite/
+- Cookies FR: https://hordeagence.com/fr/cookies/
 
-Les equivalents anglais existent sous `/en`, par exemple `https://hordeagence.com/en`, `https://hordeagence.com/en/services`, `https://hordeagence.com/en/projects`, `https://hordeagence.com/en/blog` et `https://hordeagence.com/en/contact`.
+Les equivalents anglais existent sous `/en`, par exemple `https://hordeagence.com/en/`, `https://hordeagence.com/en/services/`, `https://hordeagence.com/en/projets/`, `https://hordeagence.com/en/blog/` et `https://hordeagence.com/en/contact/`.
 
 ## Contenu institutionnel
 
@@ -290,7 +296,7 @@ Dependances principales relevees dans le projet:
 ### Cafe Belga
 
 - Slug: cafe-belga
-- Page projet: https://hordeagence.com/fr/projets/cafe-belga
+- Page projet: https://hordeagence.com/fr/projets/cafe-belga/
 - Site public: https://belga.hordagency.com
 - Types: site vitrine, UX design, web design, Bruxelles
 - Date de reference: 2026-01-26
@@ -305,7 +311,7 @@ Construite sur Next.js, la plateforme comprend des fonctionnalites permettant de
 ### Merly
 
 - Slug: merly
-- Page projet: https://hordeagence.com/fr/projets/merly
+- Page projet: https://hordeagence.com/fr/projets/merly/
 - Site public: https://merly.hordagency.com
 - Types: site vitrine, UX design, web design, Bruxelles
 - Date de reference: 2024-02-01
@@ -334,7 +340,7 @@ Projet d'application web en cours de realisation. Le projet est liste dans le po
 ### En 2026, c'est quoi un site (vraiment) rapide?
 
 - Slug FR: c-est-quoi-un-site-vraiment-rapide
-- URL: https://hordeagence.com/fr/blog/c-est-quoi-un-site-vraiment-rapide
+- URL: https://hordeagence.com/fr/blog/c-est-quoi-un-site-vraiment-rapide/
 - Date de publication: 2026-01-30
 - Derniere modification: 2026-03-09
 - Categorie: performance web
@@ -352,7 +358,7 @@ Points abordes:
 ### Pourquoi avoir un site web quand les reseaux sociaux marchent deja ?
 
 - Slug FR: pourquoi-avoir-un-site-web-reseaux-sociaux
-- URL: https://hordeagence.com/fr/blog/pourquoi-avoir-un-site-web-reseaux-sociaux
+- URL: https://hordeagence.com/fr/blog/pourquoi-avoir-un-site-web-reseaux-sociaux/
 - Date de publication: 2026-02-11
 - Derniere modification: 2026-03-09
 - Categorie: strategie
@@ -370,7 +376,7 @@ Points abordes:
 ### Ce que votre site vous coute vraiment (sans que vous le sachiez)
 
 - Slug FR: ce-que-votre-site-vous-coute-vraiment
-- URL: https://hordeagence.com/fr/blog/ce-que-votre-site-vous-coute-vraiment
+- URL: https://hordeagence.com/fr/blog/ce-que-votre-site-vous-coute-vraiment/
 - Date de publication: 2026-02-26
 - Derniere modification: 2026-03-09
 - Categorie: strategie
@@ -388,7 +394,7 @@ Points abordes:
 ### Combien coute une refonte de site web en 2026
 
 - Slug FR: combien-coute-refonte-site-web
-- URL: https://hordeagence.com/fr/blog/combien-coute-refonte-site-web
+- URL: https://hordeagence.com/fr/blog/combien-coute-refonte-site-web/
 - Date de publication: 2026-03-03
 - Derniere modification: 2026-03-09
 - Categorie: strategie

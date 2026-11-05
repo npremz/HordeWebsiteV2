@@ -23,7 +23,7 @@ footerTitle: Landing page
 footerOrder: 3
 translations:
   en:
-    seoUrl: /en/services/creation-landing-page/
+    seoUrl: /en/services/landing-page-design-brussels/
     seoPrimaryKeyword: landing page development brussels
     seoSecondaryKeywords:
       - conversion landing page
@@ -37,7 +37,7 @@ translations:
       design, development, mobile performance, forms and conversion tracking.
     seoInternalLinks:
       - /en/services/technical-seo-audit-brussels/
-      - /en/services/creation-ecommerce/
+      - /en/services/ecommerce-website-brussels/
       - /en/services/mvp-development-brussels/
       - /en/contact/
     h1: Landing page development
@@ -164,7 +164,7 @@ translations:
       - anchor: audit your current page
         url: /en/services/technical-seo-audit-brussels/
       - anchor: complete online store
-        url: /en/services/creation-ecommerce/
+        url: /en/services/ecommerce-website-brussels/
       - anchor: SaaS product or app
         url: /en/services/mvp-development-brussels/
       - anchor: contact us

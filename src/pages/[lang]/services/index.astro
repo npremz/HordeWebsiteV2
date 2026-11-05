@@ -4,6 +4,7 @@ import Footer from '../../../components/Footer.astro';
 import HeroStructure from '../../../components/blog/HeroStructure.astro';
 import Services from '../../../components/homepage/Services.astro';
 import { SUPPORTED_LOCALES, type Locale, useTranslations } from '../../../i18n';
+import { getServiceSummaries } from '../../../lib/content/services';
 import { splitHeadingLines } from '../../../utils/split-heading-lines';
 
 export const prerender = true;
@@ -23,7 +24,39 @@ const breadcrumbItems = [
   { label: pageCopy.breadcrumbHome, href: `/${lang}/` },
   { label: pageCopy.breadcrumbServices },
 ];
+
+const siteUrl = (Astro.site?.href || 'https://hordeagence.com/').replace(/\/$/, '');
+const pageUrl = `${siteUrl}/${lang}/services/`;
+const serviceSummaries = (await getServiceSummaries(lang)).filter((service) =>
+  service.seoRobots.startsWith('index'),
+);
+const servicesSchema = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'ItemList',
+      '@id': `${pageUrl}#services`,
+      name: pageCopy.title,
+      itemListElement: serviceSummaries.map((service, index) => ({
+        '@type': 'ListItem',
+        position: index + 1,
+        name: service.title,
+        url: new URL(service.url, `${siteUrl}/`).href,
+      })),
+    },
+    {
+      '@type': 'BreadcrumbList',
+      '@id': `${pageUrl}#breadcrumb`,
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: pageCopy.breadcrumbHome, item: `${siteUrl}/${lang}/` },
+        { '@type': 'ListItem', position: 2, name: pageCopy.breadcrumbServices, item: pageUrl },
+      ],
+    },
+  ],
+};
 ---
+
+<script is:inline type="application/ld+json" set:html={JSON.stringify(servicesSchema)} />
 
 <Layout
   lang={lang}

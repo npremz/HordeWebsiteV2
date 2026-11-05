@@ -5,7 +5,7 @@ export type Locale = (typeof SUPPORTED_LOCALES)[number];
 
 export const HTML_LOCALE_CODES: Record<Locale, string> = {
   fr: 'fr-BE',
-  en: 'en-US',
+  en: 'en',
 };
 
 export const OG_LOCALE_CODES: Record<Locale, string> = {
@@ -13,9 +13,12 @@ export const OG_LOCALE_CODES: Record<Locale, string> = {
   en: 'en_US',
 };
 
+// Une seule version par langue : on cible la langue, pas un pays.
+// `fr-BE` / `en-US` excluaient implicitement la France et les anglophones
+// d'Europe, qui représentent une part réelle des impressions Search Console.
 export const HREFLANG_LOCALE_CODES: Record<Locale, string> = {
-  fr: 'fr-BE',
-  en: 'en-US',
+  fr: 'fr',
+  en: 'en',
 };
 
 export const LOCALE_LABELS: Record<Locale, string> = {
