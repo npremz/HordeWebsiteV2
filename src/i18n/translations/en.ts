@@ -425,7 +425,7 @@ export const en: Translations = {
       sections: [
         {
           heading: 'Site Publisher',
-          html: '<p>This site is published by:<br><strong>Horde Agency</strong><br>Activity carried out under an affiliation with Smart Belgium (SMartCoop).<br>Operating office: Brussels, Belgium<br>Email: <a href="mailto:hello@hordeagence.com" title="hello@hordeagence.com">hello@hordeagence.com</a></p>',
+          html: '<p>This site is published by:<br><strong>Horde Agency</strong><br>Activity carried out under an affiliation with Smart Belgium (SMartCoop).<br>Operating office: Cantersteen 12, 1000 Brussels, Belgium<br>Phone: <a href="tel:+32487479798" title="+32 487 47 97 98">+32 487 47 97 98</a><br>Email: <a href="mailto:hello@hordeagence.com" title="hello@hordeagence.com">hello@hordeagence.com</a></p>',
         },
         {
           heading: 'Hosting',

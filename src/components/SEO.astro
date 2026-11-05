@@ -10,6 +10,7 @@ import {
   useTranslations,
 } from '../i18n';
 import { getSiteSettings } from '../lib/site-data';
+import { BUSINESS } from '../lib/business-info';
 
 interface Props {
   // i18n
@@ -123,11 +124,14 @@ const websiteId = `${normalizedSiteUrl}#website`;
 const llmsTxtURL = new URL('/llms.txt', Astro.site).href;
 const llmsFullTxtURL = new URL('/llms-full.txt', Astro.site).href;
 const sameAs = [
+  BUSINESS.googleBusinessProfileUrl,
   'https://www.linkedin.com/company/horde-agence/',
   'https://www.instagram.com/hordeagencebxl/',
-  'https://sortlist.com/agency/horde-agence',
+  'https://www.sortlist.be/fr/agency/horde-agence',
+  'https://theorg.com/org/horde-agence',
   'https://github.com/npremz',
 ];
+const postalAddress = { "@type": "PostalAddress", ...BUSINESS.address };
 // « Horde » seul est partagé avec une agence suisse (horde.ch) : les variantes
 // localisées et les fondateurs aident Google à distinguer l'entité bruxelloise.
 const alternateNames = ['Horde Bruxelles', 'Horde Agence Bruxelles', 'Horde Brussels'];
@@ -140,7 +144,7 @@ const founders = [
     "sameAs": [
       'https://www.linkedin.com/in/nicolas-pr%C3%A9mont-90326b1aa/',
       'https://github.com/npremz',
-      'https://malt.com/profile/nicolaspremont',
+      'https://www.malt.com/profile/nicolaspremont',
     ],
   },
   {
@@ -148,6 +152,7 @@ const founders = [
     "@id": `${normalizedSiteUrl}#alexandre-potakowski`,
     "name": "Alexandre Potakowski",
     "jobTitle": lang === 'fr' ? 'Co-fondateur & Designer UX' : 'Co-founder & UX Designer',
+    "sameAs": ['https://www.malt.com/profile/alexandrepotakowski'],
   },
 ];
 const structuredServiceDescription = t.seo.serviceDescription;
@@ -234,7 +239,9 @@ const structuredContactUrl = `${normalizedSiteUrl}/${lang}/contact/`;
       "url": Astro.site?.href,
       "logo": new URL("/images/logo.svg", Astro.site).href,
       "image": new URL(siteSettings.defaultOgImage, Astro.site).href,
-      "email": "hello@hordeagence.com",
+      "email": BUSINESS.email,
+      "telephone": BUSINESS.telephone,
+      "address": postalAddress,
       "foundingLocation": {
         "@type": "Place",
         "name": "Bruxelles, Belgique"
@@ -249,34 +256,41 @@ const structuredContactUrl = `${normalizedSiteUrl}/${lang}/contact/`;
       "description": structuredServiceDescription,
       "url": Astro.site?.href,
       "image": new URL(siteSettings.defaultOgImage, Astro.site).href,
-      "address": {
-        "@type": "PostalAddress",
-        "addressLocality": "Bruxelles",
-        "addressRegion": "Bruxelles-Capitale",
-        "addressCountry": "BE"
-      },
+      "address": postalAddress,
       "geo": {
         "@type": "GeoCoordinates",
-        "latitude": 50.8503,
-        "longitude": 4.3517
+        "latitude": BUSINESS.geo.latitude,
+        "longitude": BUSINESS.geo.longitude
       },
+      "hasMap": BUSINESS.googleBusinessProfileUrl,
       "areaServed": [
         {
           "@type": "City",
-          "name": "Bruxelles"
+          "name": lang === 'fr' ? "Bruxelles" : "Brussels"
         },
         {
           "@type": "Country",
-          "name": "Belgique"
+          "name": lang === 'fr' ? "Belgique" : "Belgium"
+        }
+      ],
+      "openingHoursSpecification": [
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": BUSINESS.openingHours.days,
+          "opens": BUSINESS.openingHours.opens,
+          "closes": BUSINESS.openingHours.closes
         }
       ],
       "priceRange": "$$",
-      "email": "hello@hordeagence.com",
+      "email": BUSINESS.email,
+      "telephone": BUSINESS.telephone,
       "contactPoint": {
         "@type": "ContactPoint",
         "contactType": "customer service",
         "url": structuredContactUrl,
-        "email": "hello@hordeagence.com",
+        "email": BUSINESS.email,
+        "telephone": BUSINESS.telephone,
+        "areaServed": "BE",
         "availableLanguage": SUPPORTED_LOCALES.map((locale) => HTML_LOCALE_CODES[locale])
       },
       "sameAs": sameAs,

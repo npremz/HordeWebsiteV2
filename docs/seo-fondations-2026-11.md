@@ -46,6 +46,26 @@ recherche Web) et crawl de la production du 5 novembre 2026.
 FAQPage est conservé : il n'apporte plus de résultat enrichi Google depuis mai 2026,
 mais sa suppression n'apporterait rien.
 
+### Local (NAP)
+
+Coordonnées centralisées dans `src/lib/business-info.ts` (source unique) :
+
+- téléphone `+32 487 47 97 98` : schéma Organization, ProfessionalService et
+  ContactPoint, footer FR/EN, page contact, mentions légales ;
+- adresse `Cantersteen 12, 1000 Bruxelles` : schéma, mentions légales, llms ;
+- géocodage OpenStreetMap de l'adresse (50.84557, 4.35749) au lieu du centre
+  de Bruxelles ;
+- horaires du lundi au vendredi, 09:00-18:00 (`openingHoursSpecification`) ;
+- zone desservie : Bruxelles et Belgique ;
+- `hasMap` et `sameAs` vers la fiche Google
+  (`https://www.google.com/maps?cid=12899482697467726429`), Sortlist, The Org ;
+  profils Malt sur les fondateurs.
+
+Constat sur la fiche Google (5 novembre 2026) : catégorie « Web design »,
+adresse masquée (zone desservie), aucun avis. Le site affiche l'adresse ; la
+fiche ne le fait pas. Si des clients peuvent être reçus à Cantersteen 12,
+afficher l'adresse sur la fiche renforce le classement local à Bruxelles.
+
 ## 3. Vérifications effectuées
 
 - `astro check` : 0 erreur, 0 avertissement.
@@ -69,7 +89,7 @@ internes restants.
 
 ## 5. Hors de cette branche (prochaines étapes)
 
-- Google Business Profile « Horde Agence » + premiers avis clients.
+- Fiche Google : vérifier jours d'ouverture, afficher l'adresse si possible, obtenir les premiers avis clients.
 - Étude de cas Merly (272 mots, aucun H2) et Café Belga à développer.
 - Contenu éditorial du hub `/services/` (aujourd'hui une simple liste de liens).
 - Reprise du calendrier éditorial : aucun article depuis le 29 septembre.

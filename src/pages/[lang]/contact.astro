@@ -4,6 +4,7 @@ import ContactForm from '../../components/ui/forms/ContactForm';
 import Footer from '../../components/Footer.astro';
 import HeroStructure from '../../components/blog/HeroStructure.astro';
 import { SUPPORTED_LOCALES, type Locale, useTranslations } from '../../i18n';
+import { BUSINESS } from '../../lib/business-info';
 
 export const prerender = true;
 
@@ -21,8 +22,9 @@ const breadcrumbItems = [
 	{ label: t.contact.breadcrumbContact },
 ];
 const contactLinks = [
-	{ href: 'mailto:hello@hordeagence.com', label: 'hello@hordeagence.com' },
-	{ href: 'https://calendly.com/ni-premont/30min', label: t.contact.bookCall },
+	{ href: `mailto:${BUSINESS.email}`, label: BUSINESS.email },
+	{ href: BUSINESS.bookingUrl, label: t.contact.bookCall },
+	{ href: BUSINESS.telephoneHref, label: BUSINESS.telephone },
 ];
 const contactHeadingLines = [t.contact.knockKnock, t.contact.startWhen];
 ---
