@@ -11,8 +11,17 @@ Derniere mise a jour: 2026-11-05
 - Locale principale: fr_BE
 - Langues: francais, anglais
 - Email: hello@hordeagence.com
+- Telephone: +32 487 47 97 98
+- Adresse: Cantersteen 12, 1000 Bruxelles, Belgique
+- Horaires: du lundi au vendredi, 09:00-18:00
+- Zone desservie: Bruxelles et toute la Belgique
+- Fiche Google: https://www.google.com/maps?cid=12899482697467726429
 - Calendly: https://calendly.com/ni-premont/30min
 - LinkedIn: https://www.linkedin.com/company/horde-agence/
+- Sortlist: https://www.sortlist.be/fr/agency/horde-agence
+- The Org: https://theorg.com/org/horde-agence
+- Malt (Nicolas Premont): https://www.malt.com/profile/nicolaspremont
+- Malt (Alexandre Potakowski): https://www.malt.com/profile/alexandrepotakowski
 - Instagram: https://www.instagram.com/hordeagencebxl/
 - Copyright: 2026 Horde Agence
 

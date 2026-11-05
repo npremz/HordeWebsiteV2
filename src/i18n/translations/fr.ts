@@ -424,7 +424,7 @@ export const fr = {
       sections: [
         {
           heading: 'Éditeur du site',
-          html: '<p>Le présent site est édité par :<br><strong>Horde Agence</strong><br>Activité exercée dans le cadre d’une affiliation à Smart Belgique (SMartCoop).<br>Siège d’activité : Bruxelles, Belgique<br>Email : <a href="mailto:hello@hordeagence.com" title="hello@hordeagence.com">hello@hordeagence.com</a></p>',
+          html: '<p>Le présent site est édité par :<br><strong>Horde Agence</strong><br>Activité exercée dans le cadre d’une affiliation à Smart Belgique (SMartCoop).<br>Siège d’activité : Cantersteen 12, 1000 Bruxelles, Belgique<br>Téléphone : <a href="tel:+32487479798" title="+32 487 47 97 98">+32 487 47 97 98</a><br>Email : <a href="mailto:hello@hordeagence.com" title="hello@hordeagence.com">hello@hordeagence.com</a></p>',
         },
         {
           heading: 'Hébergement',

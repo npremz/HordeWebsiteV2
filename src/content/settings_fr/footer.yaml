@@ -5,6 +5,9 @@ columns:
       - label: hello@hordeagence.com
         url: mailto:hello@hordeagence.com
         isExternal: true
+      - label: +32 487 47 97 98
+        url: tel:+32487479798
+        isExternal: false
       - label: Réserver un appel
         url: https://calendly.com/ni-premont/30min
         isExternal: true
