@@ -79,14 +79,18 @@ const t = useTranslations(lang);
   .home-hero [data-projects-shape-square] > svg circle:nth-of-type(9) { --shape-index: 8; }
   .home-hero [data-projects-shape-square] > svg circle:nth-of-type(10) { --shape-index: 9; }
 
+  /* Room above the line for uppercase accents (É): without it the accent
+     peeks out of the clip before the reveal and is cut once revealed. */
   .home-hero__text-clip {
     display: block;
     overflow: hidden;
+    padding-top: 0.25em;
+    margin-top: -0.25em;
   }
 
   .home-hero__text {
     display: block;
-    transform: translateY(110%);
+    transform: translateY(140%);
   }
 
   html.is-site-intro-content-revealing .home-hero__text {

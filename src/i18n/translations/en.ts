@@ -66,7 +66,7 @@ export const en: Translations = {
         title: 'the horde engine',
         quote: 'We handle the technical complexity so you can focus on your vision.',
         description:
-          "We use our own technical architecture to build ultra-fast interfaces. No workarounds, just a robust product that lets us deliver faster and better.",
+          "We build on our own technical foundation to ship solid, polished interfaces. No workarounds, just a robust product that leaves more time for the experience.",
       },
       {
         number: '003',
@@ -107,7 +107,7 @@ export const en: Translations = {
           'Responsive and mobile-first',
         ],
         content:
-          "No need to throw everything away. We work on your existing site to boost its performance (Core Web Vitals), modernize its interface and make it ultra-fast on mobile.",
+          "No need to throw everything away. We work on your existing site to boost its performance (Core Web Vitals), modernize its interface and improve the mobile experience.",
       },
       {
         title: 'From scratch<br>and MVP',
@@ -149,7 +149,7 @@ export const en: Translations = {
       titleLine1: 'What is',
       titleLine2: 'Horde?',
       description:
-        'Horde is a web agency in Brussels that designs ultra-fast websites and turns visitors into clients. ↓ Free audit, redesign, or from-scratch creation → we deliver lightweight, well-referenced websites built to last.',
+        'Horde is a Brussels web agency for startups, events and businesses that live online. A designer and a developer crafting websites and apps where every interaction makes sense for your audience and your goals. ↓ Free audit, redesign, new build or event app: let’s talk about your project.',
       cta: 'Get in touch',
     },
     projects: {
@@ -159,7 +159,7 @@ export const en: Translations = {
       title: 'Our website and web app services',
     },
     demarche: {
-      title: 'A clear method to build a fast, useful website',
+      title: 'A clear method to build a useful, polished website',
       expectationLine1: 'What you can',
       expectationLine2: 'expect',
       expectationLine3: 'when working',
@@ -178,7 +178,7 @@ export const en: Translations = {
           title: 'Action plan and custom creation',
           quote: 'A website should serve a business goal, not just look good.',
           description:
-            'We choose the right approach for your context: redesign, optimization, landing page, showcase website, e-commerce or MVP. Design, content, tech and CMS are planned together to create a fast, clear and durable website.',
+            'We choose the right approach for your context: redesign, optimization, landing page, showcase website, e-commerce or MVP. Design, content, tech and CMS are planned together to create a clear, polished and durable website.',
         },
         {
           number: '3',
@@ -452,8 +452,8 @@ export const en: Translations = {
   },
 
   seo: {
-    serviceDescription: 'Web agency specialized in ultra-fast websites, redesign, e-commerce and SEO optimization in Brussels',
-    serviceSlogan: 'Fast, useful websites built to last',
+    serviceDescription: 'Brussels web agency crafting custom websites and apps designed for UX and conversion, for startups, events and online businesses',
+    serviceSlogan: 'Web experiences designed for humans',
   },
 
   // Accessibility
@@ -465,7 +465,7 @@ export const en: Translations = {
   // About Page
   aboutPage: {
     title: 'Meet Horde, a web agency in Brussels',
-    description: 'Meet the designer and developer behind Horde, building fast custom websites in Brussels with clear UX, reliable code and direct collaboration.',
+    description: 'Meet the designer and developer behind Horde, building custom websites in Brussels with clear UX, reliable code and direct collaboration.',
     heroTitle1: 'Two\nminds,',
     heroTitle2: 'One\nvision',
     scrollDown: '↓',
