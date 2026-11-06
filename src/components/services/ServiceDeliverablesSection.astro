@@ -49,7 +49,8 @@ const listOffsetClass = "mt-16 sm:mt-24 md:mt-32 lg:mt-16";
           <span class="service-deliverable-pill" data-deliverable-pill>
             <span class="service-deliverable-pill__inner" data-deliverable-inner>
               <span class="pr-4 block">{String(index + 1).padStart(1, "0")}/</span>
-              <span class="service-deliverable-pill__text" data-deliverable-visible-text></span>
+              <span class="sr-only">{item}</span>
+              <span class="service-deliverable-pill__text" data-deliverable-visible-text aria-hidden="true"></span>
             </span>
           </span>
         </li>
