@@ -65,7 +65,7 @@ export const fr = {
         quote:
           "On s'occupe de la complexité technique pour que vous restiez concentré sur votre vision.",
         description:
-          'On utilise notre propre architecture technique pour construire des interfaces ultra-rapides. Pas de bricolage, mais un produit robuste qui nous permet de livrer plus vite et mieux.',
+          'On s’appuie sur notre propre socle technique pour livrer des interfaces solides et soignées. Pas de bricolage, mais un produit robuste qui nous laisse plus de temps pour l’expérience.',
       },
       {
         number: '003',
@@ -106,7 +106,7 @@ export const fr = {
           'Responsive et mobile-first',
         ],
         content:
-          'Pas besoin de tout jeter. Nous intervenons sur votre site existant pour booster ses performances (Core Web Vitals), moderniser son interface et le rendre ultra-rapide sur mobile.',
+          'Pas besoin de tout jeter. Nous intervenons sur votre site existant pour booster ses performances (Core Web Vitals), moderniser son interface et améliorer l’expérience sur mobile.',
       },
       {
         title: 'Création "from<br>scratch" et MVP',
@@ -142,13 +142,13 @@ export const fr = {
       agencyLine1: 'Agence de site web',
       agencyLine2: 'basée à Bruxelles',
       bottomLine1: 'Des sites web',
-      bottomLine2: 'Optimises',
+      bottomLine2: 'Optimisés',
     },
     about: {
       titleLine1: "Qu'est-ce que",
       titleLine2: 'la Horde ?',
       description:
-        'Horde est une agence web bruxelloise qui conçoit des sites web ultra-rapides et qui transforme vos visiteurs en client. ↓ Audit offert, refonte ou création from scratch → on livre des sites légers, bien référencés et pensés pour durer.',
+        'Horde est une agence web bruxelloise pour les startups, les événements et les entreprises qui vivent en ligne. Un designer et un développeur qui conçoivent des sites et des applications où chaque interaction a du sens pour votre cible et votre usage. ↓ Audit offert, refonte, création ou application événementielle : parlons de votre projet.',
       cta: 'Prendre contact',
     },
     projects: {
@@ -158,7 +158,7 @@ export const fr = {
       title: 'Nos services web et applications',
     },
     demarche: {
-      title: 'Une méthode claire pour créer un site web rapide et utile',
+      title: 'Une méthode claire pour créer un site web utile et soigné',
       expectationLine1: 'Ce à quoi vous pouvez',
       expectationLine2: 'vous attendre',
       expectationLine3: 'en travaillant',
@@ -177,7 +177,7 @@ export const fr = {
           title: 'Plan d’action et création sur mesure',
           quote: 'Le site doit répondre à un objectif business, pas seulement être joli.',
           description:
-            'On choisit la bonne approche pour votre contexte : refonte, optimisation, landing page, site vitrine, e-commerce ou MVP. Design, contenu, technique et CMS sont pensés ensemble pour créer un site rapide, clair et durable.',
+            'On choisit la bonne approche pour votre contexte : refonte, optimisation, landing page, site vitrine, e-commerce ou MVP. Design, contenu, technique et CMS sont pensés ensemble pour créer un site clair, soigné et durable.',
         },
         {
           number: '3',
@@ -451,8 +451,8 @@ export const fr = {
   },
 
   seo: {
-    serviceDescription: 'Agence web experte en création de sites ultra-rapides, refonte, e-commerce et optimisation SEO à Bruxelles',
-    serviceSlogan: 'Des sites rapides, utiles et pensés pour durer',
+    serviceDescription: 'Agence web à Bruxelles : sites et applications sur mesure pensés pour l’UX et la conversion, pour les startups, les événements et les entreprises en ligne',
+    serviceSlogan: 'Des expériences web pensées pour l’humain',
   },
 
   // Accessibility
@@ -464,7 +464,7 @@ export const fr = {
   // About Page
   aboutPage: {
     title: 'L’équipe derrière Horde, agence web à Bruxelles',
-    description: 'Découvrez les deux experts derrière Horde : un designer et un développeur qui créent à Bruxelles des sites sur mesure, rapides et simples à faire évoluer.',
+    description: 'Découvrez les deux experts derrière Horde : un designer et un développeur qui créent à Bruxelles des sites sur mesure, soignés et simples à faire évoluer.',
     heroTitle1: 'Deux\ncerveaux,',
     heroTitle2: 'Une\nvision',
     scrollDown: '↓',
