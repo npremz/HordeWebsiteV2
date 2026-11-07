@@ -1,0 +1,40 @@
+slug: what-makes-a-good-web-interface
+slug_fr: bonne-interface-web
+title_fr: Une belle interface ne devrait jamais demander un mode d’emploi
+title_en: A beautiful interface should never need an instruction manual
+seoTitle_fr: Comment reconnaître une bonne interface web ?
+seoTitle_en: 'What makes a good web interface? Six questions to ask'
+excerpt_fr: >-
+  Une bonne interface se juge à ce qu’elle permet de faire, pas à sa capture
+  d’écran. Six questions pour l’évaluer, appliquées à une landing en cours.
+excerpt_en: >-
+  A good interface is judged by what it lets people do, not by its screenshot.
+  Six questions to assess one, applied to a landing page in progress.
+seoDescription_fr: >-
+  Comment reconnaître une bonne interface web ? Six critères observables, de la
+  tâche à l’accès mobile, appliqués aux écrans annotés d’une landing en cours.
+seoDescription_en: >-
+  What makes a good web interface? Six observable criteria, from the task to
+  mobile access, applied to annotated screens of a landing page in progress.
+featuredImageAlt_fr: >-
+  Un panneau d’interface ivoire traversé par un unique chemin vert acide vers
+  son bouton principal, un livret noir refermé posé à côté.
+featuredImageAlt_en: >-
+  An ivory interface panel crossed by a single acid-green path leading to its
+  main button, with a closed black booklet set aside.
+featuredImage: /src/assets/images/blog/what-makes-a-good-web-interface/featuredImage.png
+author: nicolas-premont
+category: ux-design
+publishedDate: 2026-11-07
+readingTime: 9
+keyTakeaways_fr:
+  - Une bonne interface se juge à six questions observables, de la tâche à la responsabilité, pas à l’effet d’une capture d’écran.
+  - Les écarts entre « beau » et « bon » apparaissent souvent en comparant ordinateur et mobile, ou en lisant les contenus réels.
+  - Une relecture transforme une impression en décisions ; elle ne remplace ni un test avec de vraies personnes, ni un audit d’accessibilité, ni une mesure en production.
+keyTakeaways_en:
+  - A good interface is judged against six observable questions, from task to ownership, not by the effect of a screenshot.
+  - Gaps between “beautiful” and “good” often surface when you compare desktop and mobile, or read the real content.
+  - A review turns an impression into decisions; it does not replace testing with real people, an accessibility audit or measurement in production.
+featured: false
+draft: false
+seoRobots: index, follow
