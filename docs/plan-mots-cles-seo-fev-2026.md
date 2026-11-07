@@ -5,9 +5,8 @@
 
 Dernière révision : 14 septembre 2026.
 
-> **Novembre 2026 :** les dates de ce calendrier sont caduques (aucune création
-> publiée depuis le 29 septembre). Les sujets restent la réserve éditoriale,
-> traitée comme une liste ordonnée selon `docs/editorial/donnees-2026-11.md`.
+> **Novembre 2026 :** le calendrier daté est remplacé par une liste ordonnée
+> sans dates (section 5), établie à partir de `docs/editorial/donnees-2026-11.md`.
 > Rythme : une proposition par semaine, publication dès validation. Le
 > fonctionnement est décrit dans `docs/strategie-editoriale-blog.md`, section
 > « Production semi-automatique ». Les sections 1, 7 et 11 ci-dessous décrivent
@@ -124,101 +123,75 @@ Une mise à jour ne consiste jamais à changer une date. Elle doit apporter un
 nouveau module, une preuve, une correction factuelle ou une méthode qui modifie
 réellement l'utilité de la page.
 
-## 5. Calendrier de publication
+## 5. Liste des sujets (ordre de production)
 
-Légende : E = expérience/interface, T = technologie/expérience, M =
-durable/maîtrisé. Les slugs anglais préparent la version bilingue ; les titres
-anglais définitifs seront écrits comme des titres autonomes dans chaque brief.
+Remplace le calendrier daté de septembre 2026, conservé dans l'historique Git
+(`git show d25f001:docs/plan-mots-cles-seo-fev-2026.md`). Révisé le 7 novembre
+2026 à partir de `docs/editorial/donnees-2026-11.md`.
 
-### Septembre 2026 — installer le point de vue
+**Règles d'usage.** Le cron prend le premier sujet non publié de la liste. Il
+peut en sauter un pour respecter l'alternance des territoires, si la preuve
+attend une contribution de l'équipe, ou si Search Console justifie mieux un
+autre sujet. L'ordre suit la demande mesurée, la proximité d'offre et la
+faisabilité de la preuve ; les sujets de conviction sont en fin de liste, sans
+attente de trafic. Légende : E = expérience/interface, T = technologie/expérience,
+M = durable/maîtrisé. Demande = volume mensuel France / Belgique de la meilleure
+requête (« — » = non mesurable). Preuve : **seul** = l'agent peut la produire ;
+**équipe** = il faut des notes, captures ou résultats de Horde.
 
-Lot pilote rédigé en FR/EN le 14 septembre : [dossier de relecture](editorial/2026-09/README.md),
-[briefs initiaux](editorial/2026-09/briefs.md) et [audit initial](editorial/2026-09/audit.md).
-Après la relecture, les ateliers standardisés ont été retirés des six articles.
-L'article sur les références est repris d'abord en français. Le choix de Vucko,
-validé le 15 septembre, remplace le Rijksmuseum et recentre l'analyse sur une
-expérience de marque singulière : mise en scène du travail, continuité du
-parcours et précision des contributions. À la demande de Nicolas, il est sorti
-du brouillon le 15 septembre, avec la date du 22 septembre conservée. L'anglais
-a été réécrit sur le même cas le 15 septembre, comme une version autonome. La
-paire FR/EN est alignée sur staging ; aucune fusion en production. Voir la
-[révision Vucko](editorial/2026-09/revision-vucko.md).
-Les dates ci-dessous restent soumises à validation.
+### Déjà publiés depuis le lancement du plan
 
-| Date | Action | Entrée SEO, H1 et slugs | Preuve principale et suite utile |
+`direction-artistique-interface-web` (E, 15/09), `design-developpement-web-ensemble`
+(T, 18/09), `analyser-interface-web-sans-copier` (E, 22/09),
+`brief-design-web-cadrer-experience` (M, 29/09), `bonne-interface-web` (E, pilier,
+07/11, preuve : landing Café Loma).
+
+### Nouveaux articles
+
+| # | Terr. | Entrée SEO, H1 et slugs | Demande FR / BE | Preuve principale et suite utile |
+| --- | --- | --- | --- | --- |
+| 1 | E | **SEO :** Audit UX/UI d'un site web : méthode et grille de priorité<br>**H1 :** Auditer une interface, c'est regarder ce qu'elle fait faire, pas seulement ce qu'elle montre.<br>**Slugs :** `audit-ux-ui-site-web` / `website-ui-ux-audit` | audit ux 320 / 20 · audit site web 260 / 20 · KD 0 | Grille pondérée par tâche et sévérité, appliquée de bout en bout à un site public ou à hordeagence.com ; s'appuie sur la grille de `bonne-interface-web` sans la répéter. **Seul.** Lien vers Audit offert. |
+| 2 | T | **SEO :** Animation web : bonnes pratiques UX et performance<br>**H1 :** Le mouvement doit expliquer, pas décorer.<br>**Slugs :** `animation-web-ux-performance` / `web-animation-ux-performance` | animation site web 1 600 / — · animation web 320 / 70 | Trois versions manipulables du même composant, mesure, et démonstration `prefers-reduced-motion`. **Absorbe** les anciens sujets micro-interactions et animation accessible (sections dédiées). **Seul.** Lien vers Optimisation. |
+| 3 | E | **SEO :** Accessibilité et design web : concevoir au-delà de la checklist<br>**H1 :** L'accessibilité n'est pas une couche ajoutée avant la mise en ligne.<br>**Slugs :** `accessibilite-design-web` / `accessibility-in-web-design` | wcag 1 900 / 590 · accessibilité web 260 / 10 · design accessible 210 / — | Composants avant/après parcourus au clavier et avec différents réglages ; contexte European Accessibility Act et EN 301 549 avec sources primaires. **Seul.** Lien vers Refonte. |
+| 4 | M | **SEO :** Maintenance évolutive d'un site web : préserver la qualité de l'interface<br>**H1 :** Une interface de qualité continue après la livraison.<br>**Slugs :** `maintenance-evolutive-qualite-interface` / `evolving-website-interface-maintenance` | maintenance site web 390 / 20 · maintenance site wordpress 260 / 10 | Exemple de dérive de composants, journal de changement et rythme de revue. **Seul** pour la méthode ; **équipe** pour un cas réel. Lien vers Optimisation. |
+| 5 | E | **SEO :** Design system pour un site web : à quoi sert-il ?<br>**H1 :** La cohérence ne devrait pas rendre une interface prévisible.<br>**Slugs :** `design-system-site-web` / `website-design-system` | design system 2 400 / 210 | Mini-système Horde avec composants, variations et exemple de dérive évitée. **Seul.** Lien vers Refonte et MVP. |
+| 6 | T | **SEO :** Comment mesurer l'expérience utilisateur en respectant la vie privée ?<br>**H1 :** Mesurer une expérience ne donne pas le droit de tout collecter.<br>**Slugs :** `mesurer-ux-respect-vie-privee` / `privacy-friendly-ux-measurement` | plausible analytics 480 / 110 · alternative google analytics 170 / — | Notre propre Plausible auto-hébergé : plan de marquage minimal, objectifs, données exclues. **Seul** (créer d'abord l'objectif Contact). Lien vers Audit. |
+| 7 | E | **SEO :** UI et UX : quelle différence pour un site web ?<br>**H1 :** Une interface se regarde. Une expérience se traverse.<br>**Slugs :** `difference-ui-ux-site-web` / `ui-vs-ux-for-websites` | ui vs ux 390 / 70 · ui et ux 110 / 10 · différence ui ux 70 / — | Un même parcours cartographié côté écran, interaction et contexte. **Seul.** Lien vers Refonte. |
+| 8 | M | **SEO :** Comment choisir un CMS pour rester autonome ?<br>**H1 :** Le bon CMS est celui que l'équipe peut réellement utiliser.<br>**Slugs :** `choisir-cms-autonomie` / `choose-cms-for-editorial-autonomy` | cms headless 880 / 170 · meilleur cms 90 / 10 | Scénarios d'édition concrets, matrice droits/export/maintenance, réversibilité. **Seul.** Lien vers Refonte. |
+| 9 | E | **SEO :** Comment tester un site avec des utilisateurs avant une refonte ?<br>**H1 :** Une interface se juge là où quelqu'un hésite.<br>**Slugs :** `test-utilisateur-site-avant-refonte` / `user-test-before-website-redesign` | user testing 1 300 / 210 (en partie la marque UserTesting) · test utilisateur 260 / — | Protocole léger, scénario, grille d'observation. **Équipe** : un test réellement mené, même petit. Lien vers Audit. |
+| 10 | T | **SEO :** Site WebGL ou 3D : impact sur l'UX et la performance<br>**H1 :** Une expérience spectaculaire doit encore mériter son poids.<br>**Slugs :** `site-webgl-3d-ux-performance` / `webgl-3d-website-ux-performance` | 3d website 320 / 140 · site web 3d 90 / 10 | Comparaison interactive de trois niveaux d'ambition, budgets de ressources, alternative accessible. **Seul.** Lien vers Optimisation. |
+| 11 | M | **SEO :** Template ou design sur mesure : comment choisir ?<br>**H1 :** Le problème n'est pas le template. C'est ce qu'il décide à votre place.<br>**Slugs :** `template-ou-design-sur-mesure` / `template-vs-custom-web-design` | site web sur mesure 110 / 10 · site internet sur mesure 90 / 10 | Pilier M prévu : matrice de décision et deux réponses au même brief. À avancer si le maillage M l'exige. **Seul.** Lien vers Refonte. |
+| 12 | E | **SEO :** UX d'un formulaire : bonnes pratiques et erreurs à éviter<br>**H1 :** Un formulaire ne devrait pas demander plus de confiance qu'il n'en mérite.<br>**Slugs :** `ux-formulaire-bonnes-pratiques` / `form-ux-best-practices` | design formulaire 90 / — · formulaire de contact site web 40 / — | Prototype complet avec aide, validation, erreur et confirmation sur mobile. **Seul.** Lien vers Landing page. |
+| 13 | M | **SEO :** Site web pour une association : comment prioriser un petit budget ?<br>**H1 :** Un petit budget ne devrait pas condamner une association à une mauvaise expérience.<br>**Slugs :** `site-web-association-prioriser-budget` / `nonprofit-website-budget-priorities` | site internet association 170 / 10 · site web association 70 / 10 | Trois périmètres réalistes sans prix inventé, matrice utile/reportable. **Seul.** Lien vers Landing page ou Refonte. |
+| 14 | T | **SEO :** Code généré par IA : qualité, accessibilité et maintenance<br>**H1 :** Le code arrive plus vite. La responsabilité, non.<br>**Slugs :** `code-genere-ia-qualite-maintenance` / `ai-generated-code-quality-maintenance` | ia développement web 50 / — · conviction | Même composant avant et après revue humaine, audité. **Seul.** Lien vers MVP. |
+| 15 | E | **SEO :** Navigation mobile : les bonnes pratiques UX<br>**H1 :** Si l'utilisateur doit explorer le menu, la navigation a déjà perdu.<br>**Slugs :** `navigation-mobile-bonnes-pratiques-ux` / `mobile-navigation-ux-best-practices` | — · conviction | Trois prototypes pour une même architecture, testés au clavier et au tactile. **Seul.** Lien vers Audit. |
+| 16 | T | **SEO :** Prototypage UX avec l'IA : méthode et limites<br>**H1 :** L'IA raccourcit le chemin vers le test. Elle ne remplace pas le test.<br>**Slugs :** `prototypage-ux-avec-ia` / `ai-assisted-ux-prototyping` | prototypage ux 50 / — · conviction | Journal réel de l'hypothèse aux variantes, puis à la sélection humaine. **Équipe.** Lien vers MVP. |
+| 17 | E | **SEO :** Typographie web : lisibilité, identité et performance<br>**H1 :** Une typographie n'est pas une décoration. C'est une interface.<br>**Slugs :** `typographie-web-lisibilite-performance` / `web-typography-readability-performance` | typographie web 30 / 10 · conviction | Une même page composée de trois façons. **Seul.** Lien vers Refonte. |
+| 18 | M | **SEO :** À qui appartiennent le nom de domaine, le code et les données d'un site ?<br>**H1 :** Un site livré sans ses clés reste un site loué.<br>**Slugs :** `propriete-site-domaine-code-donnees` / `website-ownership-domain-code-data` | — · conviction (« propriétaire nom de domaine » = recherches WHOIS) | Checklist de passation et matrice propriétaire/accès/export ; sources juridiques belges. **Seul.** Lien vers Refonte et MVP. |
+| 19 | E | **SEO :** Page produit e-commerce : checklist UX<br>**H1 :** Avant d'acheter du trafic, retirons les raisons de partir.<br>**Slugs :** `page-produit-ecommerce-checklist-ux` / `ecommerce-product-page-ux-checklist` | fiche produit e-commerce 30 / — | Avant/après d'une fiche produit prototype. **Seul.** Lien vers E-commerce. |
+| 20 | E | **SEO :** Comment mesurer l'expérience utilisateur après une refonte ?<br>**H1 :** Une refonte réussie ne se mesure pas au jour du lancement.<br>**Slugs :** `mesurer-experience-apres-refonte` / `measure-ux-after-redesign` | kpi site web 90 / — | Plan avant/après sans causalité inventée. **Équipe** : données d'une refonte réelle. Lien vers Audit. |
+
+Sujets retirés comme créations autonomes : micro-interactions et animation
+accessible (intégrés au n° 2), performance perçue (devient une mise à jour de
+`c-est-quoi-un-site-vraiment-rapide`).
+
+### Mises à jour en réserve
+
+Une mise à jour est proposée environ un lundi sur trois, quand Search Console
+montre une page proche du top 5 ou une demande non couverte. Ordre indicatif :
+
+| # | Article | Changement prévu | Signal / preuve |
 | --- | --- | --- | --- |
-| 15/09 | Nouveau · E | **SEO :** Direction artistique web : donner une identité à une interface<br>**H1 :** Une interface peut avoir du caractère sans se mettre en travers du chemin.<br>**Slugs :** `direction-artistique-interface-web` / `art-direction-for-web-interfaces` | Décomposer le passage d'un territoire de marque à la typographie, la couleur, la composition et le mouvement ; lien vers Refonte |
-| 17/09 | Mise à jour | `ia-interfaces-experiences-utilisateur` | Ajouter la revue humaine en six dimensions, trois annotations réelles et le futur lien vers le pilier d'octobre |
-| 18/09 | Nouveau · T | **SEO :** Pourquoi penser design et développement web ensemble ?<br>**H1 :** Une bonne interface ne devrait pas se dégrader entre Figma et le navigateur.<br>**Slugs :** `design-developpement-web-ensemble` / `design-and-web-development-together` | Suivre un composant de la maquette au code avec responsive, contenu, accessibilité et performance ; lien vers Refonte et Optimisation |
-| 22/09, à confirmer | Nouveau · E, pilote FR/EN | **SEO FR :** S'inspirer d'un site web sans le copier<br>**H1 FR :** Comment s'inspirer d'un site web sans le copier<br>**SEO EN :** How to use a website as inspiration without copying it<br>**H1 EN :** How to draw inspiration from a website without copying it<br>**Slugs conservés :** `analyser-interface-web-sans-copier` / `analyse-web-interface-without-copying` | Vucko, trois captures commentées : mise en scène, passage d'un projet à l'autre, rôle du studio. Transposer une exigence de qualité sans copier une identité. Paire FR/EN alignée pour relecture. |
-| 24/09 | Mise à jour | `comment-creer-site-web-qui-se-demarque-2026` | Ajouter un diagnostic visuel, des exemples annotés et le maillage vers direction artistique et qualité d'interface |
-| 29/09 | Nouveau · M | **SEO :** Brief de design web : comment cadrer l'expérience avant les écrans ?<br>**H1 :** Le sur-mesure commence avant la première maquette.<br>**Slugs :** `brief-design-web-cadrer-experience` / `web-design-brief-before-screens` | Canevas Horde d'une page : public, tâche, contexte, sensation, contraintes et critères de réussite ; lien vers Audit et Refonte |
-
-### Octobre 2026 — définir la qualité
-
-| Date | Action | Entrée SEO, H1 et slugs | Preuve principale et suite utile |
-| --- | --- | --- | --- |
-| 06/10 | Nouveau · E · pilier | **SEO :** Comment reconnaître une bonne interface web ?<br>**H1 :** Une belle interface ne devrait jamais demander un mode d'emploi.<br>**Slugs :** `bonne-interface-web` / `what-makes-a-good-web-interface` | Grille Horde en six dimensions appliquée à une interface autorisée ; lien vers Audit et Refonte |
-| 08/10 | Mise à jour | `c-est-quoi-un-site-vraiment-rapide` | Ajouter une séquence de chargement annotée, les états d'attente et la distinction terrain/laboratoire |
-| 13/10 | Nouveau · E | **SEO :** UI et UX : quelle différence pour un site web ?<br>**H1 :** Une interface se regarde. Une expérience se traverse.<br>**Slugs :** `difference-ui-ux-site-web` / `ui-vs-ux-for-websites` | Un même parcours cartographié côté écran, interaction et contexte ; lien vers Refonte |
-| 20/10 | Nouveau · T | **SEO :** Animation web : bonnes pratiques UX et performance<br>**H1 :** Le mouvement doit expliquer, pas décorer.<br>**Slugs :** `animation-web-ux-performance` / `web-animation-ux-performance` | Trois versions manipulables du même composant, avec mesure et préférence de mouvement ; lien vers Optimisation |
-| 22/10 | Mise à jour | `webapp-evenementielle-ia` | Ajouter les écrans, décisions, limites et résultats vérifiables du projet ; supprimer toute généralisation non démontrée |
-| 27/10 | Nouveau · M · pilier | **SEO :** Template ou design sur mesure : comment choisir ?<br>**H1 :** Le problème n'est pas le template. C'est ce qu'il décide à votre place.<br>**Slugs :** `template-ou-design-sur-mesure` / `template-vs-custom-web-design` | Matrice de décision et comparaison de deux réponses au même brief ; lien vers Refonte |
-
-### Novembre 2026 — guider et répondre
-
-| Date | Action | Entrée SEO, H1 et slugs | Preuve principale et suite utile |
-| --- | --- | --- | --- |
-| 03/11 | Nouveau · E | **SEO :** Navigation mobile : les bonnes pratiques UX<br>**H1 :** Si l'utilisateur doit explorer le menu, la navigation a déjà perdu.<br>**Slugs :** `navigation-mobile-bonnes-pratiques-ux` / `mobile-navigation-ux-best-practices` | Trois prototypes pour une même architecture d'information, testés au clavier et au tactile ; lien vers Audit |
-| 05/11 | Mise à jour | `pourquoi-avoir-un-site-web-reseaux-sociaux` | Ajouter un exercice de portabilité : contenus, audience, formulaires, données et accès en cas de rupture de plateforme |
-| 10/11 | Nouveau · E | **SEO :** Micro-interactions UX : exemples et bonnes pratiques<br>**H1 :** Le meilleur feedback tient parfois dans un détail.<br>**Slugs :** `micro-interactions-ux-exemples` / `ux-microinteractions-examples` | Bibliothèque de cinq états interactifs : attente, succès, erreur, sélection et transition ; lien vers Refonte |
-| 17/11 | Nouveau · T | **SEO :** Performance perçue d'un site web : comment l'améliorer ?<br>**H1 :** La vitesse est la première interaction de votre interface.<br>**Slugs :** `performance-percue-site-web` / `perceived-web-performance` | Avant/après instrumenté sur un prototype ; distinguer métrique technique et sensation d'usage ; lien vers Optimisation |
-| 19/11 | Mise à jour | `ia-associations-projets-interet-general` | Ajouter un canevas « utilité, risque, données, supervision, réversibilité » et un exemple non fictif si disponible |
-| 24/11 | Nouveau · M | **SEO :** À qui appartiennent le nom de domaine, le code et les données d'un site ?<br>**H1 :** Un site livré sans ses clés reste un site loué.<br>**Slugs :** `propriete-site-domaine-code-donnees` / `website-ownership-domain-code-data` | Checklist de passation et matrice « propriétaire / accès / export » ; lien vers Refonte et MVP |
-
-### Décembre 2026 — construire une cohérence vivante
-
-| Date | Action | Entrée SEO, H1 et slugs | Preuve principale et suite utile |
-| --- | --- | --- | --- |
-| 01/12 | Nouveau · E | **SEO :** Design system pour un site web : à quoi sert-il ?<br>**H1 :** La cohérence ne devrait pas rendre une interface prévisible.<br>**Slugs :** `design-system-site-web` / `website-design-system` | Mini-système Horde avec composants, variations et exemple de dérive évitée ; lien vers Refonte et MVP |
-| 03/12 | Mise à jour | `ce-que-votre-site-vous-coute-vraiment` | Ajouter la dette d'interface : incohérences, contournements, support, composants dupliqués et temps interne |
-| 08/12 | Nouveau · E | **SEO :** Typographie web : lisibilité, identité et performance<br>**H1 :** Une typographie n'est pas une décoration. C'est une interface.<br>**Slugs :** `typographie-web-lisibilite-performance` / `web-typography-readability-performance` | Une même page composée de trois façons, avec critères de lecture, identité et chargement ; lien vers Refonte |
-| 15/12 | Nouveau · T | **SEO :** Prototypage UX avec l'IA : méthode et limites<br>**H1 :** L'IA raccourcit le chemin vers le test. Elle ne remplace pas le test.<br>**Slugs :** `prototypage-ux-avec-ia` / `ai-assisted-ux-prototyping` | Journal réel allant de l'hypothèse aux variantes, puis à la sélection humaine ; lien vers MVP |
-| 17/12 | Mise à jour | `combien-coute-refonte-site-web` | Ajouter trois niveaux d'ambition d'interface, ce qu'ils changent dans le travail et les limites des fourchettes |
-| 22/12 | Nouveau · T | **SEO :** Animation accessible et `prefers-reduced-motion`<br>**H1 :** Une animation que l'on ne peut pas calmer n'est pas une attention au détail.<br>**Slugs :** `animation-accessible-reduced-motion` / `accessible-animation-reduced-motion` | Démonstration interactive normale/réduite/sans mouvement, test clavier et explication du fallback ; lien vers Optimisation |
-
-### Janvier 2027 — faire agir sans manipuler
-
-| Date | Action | Entrée SEO, H1 et slugs | Preuve principale et suite utile |
-| --- | --- | --- | --- |
-| 05/01 | Nouveau · E | **SEO :** UX d'un formulaire : bonnes pratiques et erreurs à éviter<br>**H1 :** Un formulaire ne devrait pas demander plus de confiance qu'il n'en mérite.<br>**Slugs :** `ux-formulaire-bonnes-pratiques` / `form-ux-best-practices` | Prototype complet avec aide, validation, erreur et confirmation sur mobile ; lien vers Landing page |
-| 07/01 | Mise à jour | `direction-artistique-interface-web` | Ajouter une application complète à un projet Horde et les questions observées depuis la publication ; ne publier le cas que s'il est documenté |
-| 12/01 | Nouveau · E | **SEO :** Page produit e-commerce : checklist UX<br>**H1 :** Avant d'acheter du trafic, retirons les raisons de partir.<br>**Slugs :** `page-produit-ecommerce-checklist-ux` / `ecommerce-product-page-ux-checklist` | Avant/après d'une fiche produit prototype, avec information, confiance, variante et ajout panier ; lien vers E-commerce |
-| 19/01 | Nouveau · T | **SEO :** Comment mesurer l'expérience utilisateur en respectant la vie privée ?<br>**H1 :** Mesurer une expérience ne donne pas le droit de tout collecter.<br>**Slugs :** `mesurer-ux-respect-vie-privee` / `privacy-friendly-ux-measurement` | Plan de marquage minimal relié à des questions précises, avec données exclues ; lien vers Audit |
-| 21/01 | Mise à jour | `design-developpement-web-ensemble` | Ajouter le composant final en production, les écarts avec la maquette et le journal des arbitrages réellement rencontrés |
-| 26/01 | Nouveau · M | **SEO :** Comment choisir un CMS pour rester autonome ?<br>**H1 :** Le bon CMS est celui que l'équipe peut réellement utiliser.<br>**Slugs :** `choisir-cms-autonomie` / `choose-cms-for-editorial-autonomy` | Scénarios d'édition concrets, matrice droits/export/maintenance et critères de réversibilité ; lien vers Refonte |
-
-### Février 2027 — inclure et vérifier
-
-| Date | Action | Entrée SEO, H1 et slugs | Preuve principale et suite utile |
-| --- | --- | --- | --- |
-| 02/02 | Nouveau · E | **SEO :** Accessibilité et design web : concevoir au-delà de la checklist<br>**H1 :** L'accessibilité n'est pas une couche ajoutée avant la mise en ligne.<br>**Slugs :** `accessibilite-design-web` / `accessibility-in-web-design` | Série de composants avant/après parcourus au clavier et avec différents réglages utilisateur ; lien vers Refonte |
-| 04/02 | Mise à jour | `bonne-interface-web` | Ajouter un auto-audit interactif et les questions réellement observées depuis la publication ; à défaut de données, publier la grille préparée plutôt qu'une fausse analyse |
-| 09/02 | Nouveau · E | **SEO :** Comment tester un site avec des utilisateurs avant une refonte ?<br>**H1 :** Une interface se juge là où quelqu'un hésite.<br>**Slugs :** `test-utilisateur-site-avant-refonte` / `user-test-before-website-redesign` | Protocole léger, scénario, grille d'observation et exemple anonymisé uniquement s'il existe ; lien vers Audit |
-| 16/02 | Nouveau · T | **SEO :** Code généré par IA : qualité, accessibilité et maintenance<br>**H1 :** Le code arrive plus vite. La responsabilité, non.<br>**Slugs :** `code-genere-ia-qualite-maintenance` / `ai-generated-code-quality-maintenance` | Même composant avant et après revue humaine, audité sur structure, clavier, poids et lisibilité ; lien vers MVP |
-| 18/02 | Mise à jour | `difference-ui-ux-site-web` | Ajouter l'anatomie complète d'un parcours Horde, de l'intention à l'état de confirmation, avec limites du cas |
-| 23/02 | Nouveau · M | **SEO :** Site web pour une association : comment prioriser un petit budget ?<br>**H1 :** Un petit budget ne devrait pas condamner une association à une mauvaise expérience.<br>**Slugs :** `site-web-association-prioriser-budget` / `nonprofit-website-budget-priorities` | Trois périmètres réalistes sans prix inventé, critères d'accessibilité et matrice utile/reportable ; lien vers Landing page ou Refonte |
-
-### Mars 2027 — mesurer et faire durer
-
-| Date | Action | Entrée SEO, H1 et slugs | Preuve principale et suite utile |
-| --- | --- | --- | --- |
-| 02/03 | Nouveau · E | **SEO :** Comment mesurer l'expérience utilisateur après une refonte ?<br>**H1 :** Une refonte réussie ne se mesure pas au jour du lancement.<br>**Slugs :** `mesurer-experience-apres-refonte` / `measure-ux-after-redesign` | Plan avant/après : tâches, comportement, performance et retours qualitatifs sans causalité inventée ; lien vers Audit |
-| 04/03 | Mise à jour | `animation-web-ux-performance` | Ajouter la démonstration accessible finalisée, vérifier les compatibilités actuelles et documenter les choix de production |
-| 09/03 | Nouveau · E | **SEO :** Audit UX/UI d'un site web : méthode et grille de priorité<br>**H1 :** Auditer une interface, c'est regarder ce qu'elle fait faire, pas seulement ce qu'elle montre.<br>**Slugs :** `audit-ux-ui-site-web` / `website-ui-ux-audit` | Grille pondérée par tâche et sévérité, avec un exemple entièrement traité ; lien vers Audit offert |
-| 16/03 | Nouveau · T | **SEO :** Site WebGL ou 3D : impact sur l'UX et la performance<br>**H1 :** Une expérience spectaculaire doit encore mériter son poids.<br>**Slugs :** `site-webgl-3d-ux-performance` / `webgl-3d-website-ux-performance` | Comparaison interactive de trois niveaux d'ambition, budgets de ressources et alternative accessible ; lien vers Optimisation |
-| 18/03 | Mise à jour | `template-ou-design-sur-mesure` | Ajouter un canevas de décision téléchargeable et un cas documenté montrant quand le template reste le meilleur choix |
-| 23/03 | Nouveau · M | **SEO :** Maintenance évolutive d'un site web : préserver la qualité de l'interface<br>**H1 :** Une interface de qualité continue après la livraison.<br>**Slugs :** `maintenance-evolutive-qualite-interface` / `evolving-website-interface-maintenance` | Exemple de dérive de composants, journal de changement et rythme de revue ; lien vers Optimisation |
+| A | `brief-design-web-cadrer-experience` | Répondre à la question sur la génération d'une première version d'interface à partir d'un brief | Requête en position 5,7 (+4 → 18 impressions, oct.–nov.). **Seul.** |
+| B | `c-est-quoi-un-site-vraiment-rapide` | Ajouter la performance perçue : séquence de chargement annotée, états d'attente, terrain/laboratoire | vitesse site web 170 / — ; absorbe l'ancien sujet T. **Seul.** |
+| C | `pourquoi-avoir-un-site-web-reseaux-sociaux` | Exercice de portabilité : contenus, audience, formulaires, données, accès | La version EN cumule 343 impressions en position 27 : retravailler aussi le titre EN. **Seul.** |
+| D | `combien-coute-refonte-site-web` | Niveaux d'ambition d'interface et limites des fourchettes ; vérifier que les montants restent justes | Première source citée par ChatGPT : garder la page exacte et à jour. **Équipe** pour valider les montants. |
+| E | `ce-que-votre-site-vous-coute-vraiment` | Dette d'interface, contournements, support, temps interne | **Seul.** |
+| F | `ia-associations-projets-interet-general` | Canevas utilité, risque, données, supervision, réversibilité | **Seul** ; exemple réel seulement s'il existe. |
+| G | `webapp-evenementielle-ia` | Écrans, décisions, limites et résultats vérifiables du projet | **Équipe.** |
+| H | `direction-artistique-interface-web` | Application complète à un projet Horde documenté | **Équipe.** |
+| I | `design-developpement-web-ensemble` | Composant final en production, écarts avec la maquette, journal des arbitrages | **Équipe.** |
+| J | `bonne-interface-web` | Auto-audit interactif et questions observées depuis la publication | Pas avant février 2027. |
 
 ## 6. Règles anti-cannibalisation
 
@@ -234,12 +207,11 @@ Les dates ci-dessous restent soumises à validation.
   `design-system-site-web` traite le système qui la maintient à l'échelle.
 - `difference-ui-ux-site-web` explique les disciplines ;
   `ia-interfaces-experiences-utilisateur` traite de la limite de la génération.
-- `c-est-quoi-un-site-vraiment-rapide` reste le pilier Core Web Vitals ;
-  `performance-percue-site-web` traite des états, de la séquence et de la
-  sensation d'attente.
-- `animation-web-ux-performance` décide quand et comment animer ;
-  `animation-accessible-reduced-motion` traite le contrôle utilisateur et les
-  alternatives.
+- `c-est-quoi-un-site-vraiment-rapide` reste le pilier Core Web Vitals et
+  accueille la performance perçue (états, séquence, sensation d'attente) en
+  mise à jour plutôt qu'en article séparé.
+- `animation-web-ux-performance` décide quand et comment animer, y compris les
+  micro-interactions et le contrôle utilisateur (`prefers-reduced-motion`).
 - `comment-creer-site-web-qui-se-demarque-2026` traite de différenciation ;
   `template-ou-design-sur-mesure` traite d'un choix de production.
 - `combien-coute-refonte-site-web` reste la page de référence sur les budgets ;

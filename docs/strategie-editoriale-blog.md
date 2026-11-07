@@ -144,10 +144,10 @@ bloc et le rebuild quotidien Dokploy, qui ne sont pas utilisés) :
    `docs/editorial/donnees-2026-11.md` et `docs/editorial/retours-blog.md`, puis
    propose **un** sujet sur Telegram : titres, territoire, signal de demande,
    angle, preuve, liens, et ce dont elle a besoin de l'équipe pour la preuve.
-2. Les sujets viennent du calendrier de `docs/plan-mots-cles-seo-fev-2026.md`,
-   traité comme une liste ordonnée **sans dates**, dans l'ordre de priorité de
-   `docs/editorial/donnees-2026-11.md`. Un sujet hors calendrier est possible si
-   Search Console le justifie.
+2. Les sujets viennent de la liste ordonnée, sans dates, de la section 5 de
+   `docs/plan-mots-cles-seo-fev-2026.md` (premier sujet non publié, avec les
+   exceptions qui y sont décrites). Les chiffres qui justifient l'ordre sont
+   dans `docs/editorial/donnees-2026-11.md`.
 3. Un lundi sur trois environ, la proposition peut être une **mise à jour**
    d'article existant lorsque Search Console montre une page proche du top 5.
 4. Réponse sur Telegram : « ok » → rédaction FR puis EN autonome, couverture,

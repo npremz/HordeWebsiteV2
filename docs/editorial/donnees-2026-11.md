@@ -42,7 +42,7 @@ payante récurrente n'est active. Le réactiver coûte ~0,44 $/mois en mensuel.
 Volume mensuel France / Belgique pour la meilleure requête du sujet
 (« — » = non mesurable). KD = difficulté (0–100) côté France.
 
-| Priorité | Sujet (plan) | Requêtes porteuses FR / BE | Lecture |
+| Rang (demande) | Sujet (plan) | Requêtes porteuses FR / BE | Lecture |
 | --- | --- | --- | --- |
 | 1 | Audit UX/UI d'un site (E) | audit ux 320/20 · ux audit 320/20 · audit site web 260/20 · KD 0 | Demande + proche de l'Audit offert. Les IA citent NN/g, Clarity, GA : pas de méthode francophone appliquée. À avancer. |
 | 2 | Accessibilité et design (E) | wcag 1 900/590 · accessibilité web 260/10 · design accessible 210/— | Plus forte demande BE après « ux ui design ». Contexte EAA (en vigueur depuis juin 2025) et EN 301 549 mis à jour en septembre 2026, cité par Perplexity. |
@@ -56,13 +56,13 @@ Volume mensuel France / Belgique pour la meilleure requête du sujet
 | 10 | Template ou sur mesure (M) | site web sur mesure 110/10 · site internet sur mesure 90/10 | Faible volume mais commercial ; les IA citent des offres template à 69 €/mois. |
 | 11 | Site web d'association (M) | site internet association 170/10 · site web association 70/10 | Moyen. |
 | 12 | Site WebGL / 3D (T) | 3d website 320/140 · site web 3d 90/10 | 140 en BE, intention surtout inspiration. |
-| — | Bonne interface web (pilier E) | ergonomie site web 70/10 ; le reste non mesurable | Sujet de conviction sans demande mesurée. Fusionner sa grille dans l'article Audit UX, ou le publier plus tard comme pilier sans attente de trafic. |
+| — | Bonne interface web (pilier E) | ergonomie site web 70/10 ; le reste non mesurable | **Publié le 7 novembre 2026.** Sujet de conviction : ne pas en attendre de trafic. |
 | — | Navigation mobile, typographie, fiche produit, prototypage IA, code généré par IA, propriété du site, mesurer après refonte | ≤ 50/— | Conviction seulement. « propriétaire nom de domaine » (260) = recherches WHOIS, hors sujet. « Performance perçue » chevauche l'article existant sur la vitesse : en faire une mise à jour. |
 
 ## Conséquences pour le cron
 
-1. Prendre les sujets dans l'ordre de priorité ci-dessus, en respectant
-   l'alternance des territoires et le test de marque de `BRAND.md`.
+1. L'ordre de production qui découle de ce relevé est la section 5 de
+   `docs/plan-mots-cles-seo-fev-2026.md` ; ce fichier n'en garde que les chiffres.
 2. Écrire des réponses concrètes, chiffrées quand c'est vrai, ancrées en
    Belgique : c'est le format que ChatGPT reprend.
 3. Signaler dans chaque proposition si la preuve peut être produite seul ou ce
