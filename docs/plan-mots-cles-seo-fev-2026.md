@@ -5,6 +5,14 @@
 
 Dernière révision : 14 septembre 2026.
 
+> **Novembre 2026 :** les dates de ce calendrier sont caduques (aucune création
+> publiée depuis le 29 septembre). Les sujets restent la réserve éditoriale,
+> traitée comme une liste ordonnée selon `docs/editorial/donnees-2026-11.md`.
+> Rythme : une proposition par semaine, publication dès validation. Le
+> fonctionnement est décrit dans `docs/strategie-editoriale-blog.md`, section
+> « Production semi-automatique ». Les sections 1, 7 et 11 ci-dessous décrivent
+> l'ancien mode en lots et ne s'appliquent plus.
+
 ## 1. Résultat attendu
 
 Produire et valider en batch sept mois de contenu, puis laisser le système publier
@@ -318,7 +326,7 @@ même format à chaque article.
 ### Chaque mois
 
 - Search Console : requêtes, pages, impressions, clics, position et CTR ;
-- GA4 : entrées organiques et actions utiles ;
+- Plausible : entrées organiques et actions utiles ;
 - liens internes et éventuelles pages orphelines ;
 - partages, enregistrements et discussions sur les preuves visuelles ;
 - questions et demandes commerciales qui reprennent une idée du blog.

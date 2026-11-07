@@ -136,17 +136,31 @@ comme « agence UX/UI Bruxelles » ou « refonte site web Bruxelles ».
 
 ## Production semi-automatique
 
-1. Confirmer le sujet avec le test de marque de `BRAND.md` et les requêtes réelles.
-2. Produire un brief bilingue avec intention, preuve, sources, liens et CTA.
-3. Rédiger FR puis adapter EN comme une version autonome.
-4. Générer la couverture et préparer l'actif de preuve dans l'article.
-5. Contrôler faits, voix, SEO, liens, schémas et rendu mobile/desktop.
-6. Valider toutes les dates futures sur staging.
-7. Fusionner les créations approuvées sur `master` ; le rebuild quotidien les
-   rend publiques à la date prévue.
-8. Conserver les mises à jour de pages déjà publiques dans des PR séparées à
-   fusion programmée, car une date future ne peut masquer une modification d'un
-   contenu déjà en production.
+Fonctionnement en vigueur depuis novembre 2026 (remplace les lots validés en
+bloc et le rebuild quotidien Dokploy, qui ne sont pas utilisés) :
+
+1. **Lundi 10 h 30 (Europe/Brussels)**, une tâche Hermes sur la machine de
+   l'agence repull `master`, lit ce document, `BRAND.md`, `VOICE.md`,
+   `docs/editorial/donnees-2026-11.md` et `docs/editorial/retours-blog.md`, puis
+   propose **un** sujet sur Telegram : titres, territoire, signal de demande,
+   angle, preuve, liens, et ce dont elle a besoin de l'équipe pour la preuve.
+2. Les sujets viennent du calendrier de `docs/plan-mots-cles-seo-fev-2026.md`,
+   traité comme une liste ordonnée **sans dates**, dans l'ordre de priorité de
+   `docs/editorial/donnees-2026-11.md`. Un sujet hors calendrier est possible si
+   Search Console le justifie.
+3. Un lundi sur trois environ, la proposition peut être une **mise à jour**
+   d'article existant lorsque Search Console montre une page proche du top 5.
+4. Réponse sur Telegram : « ok » → rédaction FR puis EN autonome, couverture,
+   contrôles, lien de prévisualisation sur le tailnet ; autre sujet → celui de
+   l'équipe ; « non » → nouvelle proposition.
+5. Après validation finale : `publishedDate` = jour de publication, commit et
+   push sur `master`, mise en ligne au déploiement déclenché par le push. Une
+   mise à jour d'article publié suit le même chemin, une fois validée.
+6. Après déploiement : IndexNow et liens d'inspection Search Console envoyés
+   pour la demande d'indexation manuelle.
+7. Chaque retour de l'équipe est consigné dans `docs/editorial/retours-blog.md`.
+
+Aucun appel DataForSEO n'est fait sans accord explicite et estimation du coût.
 
 ## Mesure
 
@@ -154,7 +168,7 @@ comme « agence UX/UI Bruxelles » ou « refonte site web Bruxelles ».
 
 - requêtes et pages émergentes dans Google Search Console ;
 - impressions, clics, position et CTR, sans lire un indicateur isolément ;
-- entrées organiques et actions utiles dans GA4 ;
+- entrées organiques et actions utiles dans Plausible (`stats.hordeagence.com`) ;
 - liens internes reçus et pages orphelines ;
 - articles dont les exemples visuels génèrent des enregistrements, partages ou
   discussions qualifiées ;

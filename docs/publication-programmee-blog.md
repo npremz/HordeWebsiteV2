@@ -1,5 +1,11 @@
 # Publication programmée du blog
 
+> **Novembre 2026 :** ce mécanisme (dates futures, rebuild quotidien Dokploy,
+> PR programmées) n'est pas activé. Les articles sont publiés dès validation par
+> push sur `master` ; voir `docs/strategie-editoriale-blog.md`, section
+> « Production semi-automatique ». Les états staging décrits ci-dessous restent
+> valables pour la prévisualisation.
+
 Ce document décrit le fonctionnement attendu pour préparer plusieurs articles,
 les relire ensemble sur staging, puis les publier automatiquement en production.
 
