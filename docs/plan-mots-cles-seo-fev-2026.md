@@ -144,13 +144,14 @@ requête (« — » = non mesurable). Preuve : **seul** = l'agent peut la produi
 `direction-artistique-interface-web` (E, 15/09), `design-developpement-web-ensemble`
 (T, 18/09), `analyser-interface-web-sans-copier` (E, 22/09),
 `brief-design-web-cadrer-experience` (M, 29/09), `bonne-interface-web` (E, pilier,
-07/11, preuve : landing Café Loma).
+07/11, preuve : landing Café Loma), `audit-ux-ui-site-web` (E, 09/11,
+preuve : auto-audit de hordeagence.com, 7 frictions ordonnées).
 
 ### Nouveaux articles
 
 | # | Terr. | Entrée SEO, H1 et slugs | Demande FR / BE | Preuve principale et suite utile |
 | --- | --- | --- | --- | --- |
-| 1 | E | **SEO :** Audit UX/UI d'un site web : méthode et grille de priorité<br>**H1 :** Auditer une interface, c'est regarder ce qu'elle fait faire, pas seulement ce qu'elle montre.<br>**Slugs :** `audit-ux-ui-site-web` / `website-ui-ux-audit` | audit ux 320 / 20 · audit site web 260 / 20 · KD 0 | Grille pondérée par tâche et sévérité, appliquée de bout en bout à un site public ou à hordeagence.com ; s'appuie sur la grille de `bonne-interface-web` sans la répéter. **Seul.** Lien vers Audit offert. |
+| ~~1~~ | E | **Publié le 09/11.** **SEO :** Audit UX/UI d'un site web : méthode et grille de priorité<br>**H1 :** Auditer une interface, c'est regarder ce qu'elle fait faire, pas seulement ce qu'elle montre.<br>**Slugs :** `audit-ux-ui-site-web` / `website-ui-ux-audit` | audit ux 320 / 20 · audit site web 260 / 20 · KD 0 | Grille pondérée par tâche et sévérité, appliquée de bout en bout à un site public ou à hordeagence.com ; s'appuie sur la grille de `bonne-interface-web` sans la répéter. **Seul.** Lien vers Audit offert. |
 | 2 | T | **SEO :** Animation web : bonnes pratiques UX et performance<br>**H1 :** Le mouvement doit expliquer, pas décorer.<br>**Slugs :** `animation-web-ux-performance` / `web-animation-ux-performance` | animation site web 1 600 / — · animation web 320 / 70 | Trois versions manipulables du même composant, mesure, et démonstration `prefers-reduced-motion`. **Absorbe** les anciens sujets micro-interactions et animation accessible (sections dédiées). **Seul.** Lien vers Optimisation. |
 | 3 | E | **SEO :** Accessibilité et design web : concevoir au-delà de la checklist<br>**H1 :** L'accessibilité n'est pas une couche ajoutée avant la mise en ligne.<br>**Slugs :** `accessibilite-design-web` / `accessibility-in-web-design` | wcag 1 900 / 590 · accessibilité web 260 / 10 · design accessible 210 / — | Composants avant/après parcourus au clavier et avec différents réglages ; contexte European Accessibility Act et EN 301 549 avec sources primaires. **Seul.** Lien vers Refonte. |
 | 4 | M | **SEO :** Maintenance évolutive d'un site web : préserver la qualité de l'interface<br>**H1 :** Une interface de qualité continue après la livraison.<br>**Slugs :** `maintenance-evolutive-qualite-interface` / `evolving-website-interface-maintenance` | maintenance site web 390 / 20 · maintenance site wordpress 260 / 10 | Exemple de dérive de composants, journal de changement et rythme de revue. **Seul** pour la méthode ; **équipe** pour un cas réel. Lien vers Optimisation. |

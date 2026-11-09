@@ -1,0 +1,40 @@
+slug: website-ui-ux-audit
+slug_fr: audit-ux-ui-site-web
+title_fr: Auditer une interface, c’est regarder ce qu’elle fait faire, pas seulement ce qu’elle montre
+title_en: Auditing an interface means looking at what it gets people to do, not just what it shows
+seoTitle_fr: 'Audit UX/UI d’un site web : méthode et grille de priorité'
+seoTitle_en: 'Website UI/UX audit: a method and a priority grid'
+excerpt_fr: >-
+  Un audit UX/UI utile ne livre pas quatre-vingts remarques, mais une liste
+  courte et ordonnée. La méthode, appliquée à notre propre site, défauts compris.
+excerpt_en: >-
+  A useful UI/UX audit does not deliver eighty findings but a short, ordered
+  list. The method, applied to our own website, flaws included.
+seoDescription_fr: >-
+  Audit UX/UI d’un site web en quatre étapes : tâches clés, parcours réels,
+  frictions prouvées, puis grille gravité × fréquence. Appliqué à hordeagence.com.
+seoDescription_en: >-
+  A four-step website UI/UX audit: key tasks, real journeys, evidenced friction
+  points and a severity × frequency grid. Applied to hordeagence.com.
+featuredImageAlt_fr: >-
+  Une nuée de points dispersés passe par une loupe cobalt et en ressort sous la
+  forme de trois pastilles alignées, de la plus longue à la plus courte.
+featuredImageAlt_en: >-
+  A cloud of scattered dots passes through a cobalt lens and comes out as three
+  aligned pills, from the longest to the shortest.
+featuredImage: /src/assets/images/blog/website-ui-ux-audit/featuredImage.png
+author: nicolas-premont
+category: ux-design
+publishedDate: 2026-11-09
+readingTime: 11
+keyTakeaways_fr:
+  - Un audit UX/UI part des tâches que les gens viennent accomplir, pas des pages, et se fait sur les vrais supports, y compris au clavier.
+  - Chaque friction est notée avec sa preuve, puis classée par gravité × fréquence ; ce qui exclut une partie du public passe devant.
+  - Sur notre propre site, la méthode a réduit l’audit à sept points ordonnés, dont un défaut de focus qu’aucun outil automatique n’avait relevé.
+keyTakeaways_en:
+  - A UI/UX audit starts from the tasks people come to complete, not from pages, and is carried out on real devices, keyboard included.
+  - Each friction point is recorded with evidence, then ranked by severity × frequency; anything that locks people out goes first.
+  - On our own site, the method narrowed the audit down to seven ordered points, including a focus issue no automated tool had flagged.
+featured: false
+draft: false
+seoRobots: index, follow
