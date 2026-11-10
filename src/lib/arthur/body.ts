@@ -19,6 +19,7 @@ import {
   Mesh,
   MeshBasicMaterial,
   MeshPhysicalMaterial,
+  HalfFloatType,
   HemisphereLight,
   NeutralToneMapping,
   PerspectiveCamera,
@@ -28,12 +29,19 @@ import {
   Scene,
   VSMShadowMap,
   Vector3,
+  WebGLRenderTarget,
   WebGLRenderer,
+  type BufferGeometry,
   type Material,
   type MeshStandardMaterial,
 } from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
+import { toCreasedNormals } from 'three/addons/utils/BufferGeometryUtils.js';
+import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
+import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
+import { GTAOPass } from 'three/addons/postprocessing/GTAOPass.js';
+import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
 import gltfUrl from '../../assets/arthur_model/scene.gltf?url';
 import binUrl from '../../assets/arthur_model/scene.bin?url';
 import { FACE_H, FACE_W } from './face';
@@ -66,6 +74,16 @@ const EXPOSURE = 1;
 const SHELL_HUE = 0.012;
 const SHELL_SATURATION = -0.1;
 const SHELL_LIGHTNESS = -0.025;
+
+/** Occlusion ambiante : force (0 = aucune) et portée en unités du modèle (≈ cm). */
+const AO_INTENSITY = 1;
+const AO_RADIUS = 60;
+const AO_SCALE = 2.4;
+/** L'occlusion assombrit aussi la visière, en retrait : on rallume l'écran d'autant. */
+const FACE_BRIGHTNESS = 1.15;
+
+/** Lissage des facettes : angle (degrés) en dessous duquel deux faces voisines sont fondues. 0 = désactivé. */
+const SMOOTH_ANGLE = 50;
 
 const CAMERA_FOV = 26;
 const CAMERA_POS = new Vector3(0, 394, 585);
@@ -193,6 +211,20 @@ export async function createBody(container: HTMLElement, faceCanvas: HTMLCanvasE
     throw error;
   }
 
+  // Lissage : le modèle est livré avec des normales par facette. On les recalcule pour que
+  // les surfaces courbes soient lisses, en gardant vives les arêtes au-delà de SMOOTH_ANGLE.
+  if (SMOOTH_ANGLE > 0) {
+    const smoothed = new Set<BufferGeometry>();
+    gltf.scene.traverse((object) => {
+      const mesh = object as Mesh;
+      if (!mesh.isMesh || smoothed.has(mesh.geometry)) return;
+      const source = mesh.geometry;
+      mesh.geometry = toCreasedNormals(source, (SMOOTH_ANGLE * Math.PI) / 180);
+      if (mesh.geometry !== source) source.dispose();
+      smoothed.add(mesh.geometry);
+    });
+  }
+
   const rig = new Group();
   rig.add(gltf.scene);
   gltf.scene.traverse((object) => {
@@ -303,6 +335,8 @@ export async function createBody(container: HTMLElement, faceCanvas: HTMLCanvasE
     polygonOffsetUnits: -4,
   });
 
+  faceMaterial.color.setScalar(FACE_BRIGHTNESS);
+
   if (visor) {
     const source = visor as Mesh;
     // Visière : anthracite brillant, qui ne reflète que ses propres sources de lumière.
@@ -353,10 +387,21 @@ export async function createBody(container: HTMLElement, faceCanvas: HTMLCanvasE
   canvas.setAttribute('aria-hidden', 'true');
   container.appendChild(canvas);
 
+  // --- Occlusion ambiante : assombrit les creux (sous la casquette, jointures, cou) ---
+  const composer = new EffectComposer(renderer, new WebGLRenderTarget(1, 1, { type: HalfFloatType, samples: 4 }));
+  composer.setPixelRatio(renderer.getPixelRatio());
+  composer.addPass(new RenderPass(scene, camera));
+  const occlusion = new GTAOPass(scene, camera, 1, 1);
+  occlusion.blendIntensity = AO_INTENSITY;
+  occlusion.updateGtaoMaterial({ radius: AO_RADIUS, distanceExponent: 1, thickness: AO_RADIUS, scale: AO_SCALE, samples: 16 });
+  composer.addPass(occlusion);
+  composer.addPass(new OutputPass());
+
   const resize = () => {
     const width = Math.max(container.clientWidth, 1);
     const height = Math.max(container.clientHeight, 1);
     renderer.setSize(width, height, false);
+    composer.setSize(width, height);
     camera.aspect = width / height;
     camera.updateProjectionMatrix();
   };
@@ -374,7 +419,7 @@ export async function createBody(container: HTMLElement, faceCanvas: HTMLCanvasE
       texture.needsUpdate = true;
     },
     render() {
-      renderer.render(scene, camera);
+      composer.render();
     },
     resize,
     dispose() {
@@ -387,6 +432,8 @@ export async function createBody(container: HTMLElement, faceCanvas: HTMLCanvasE
         materials.forEach((material: Material) => material.dispose());
       });
       texture.dispose();
+      occlusion.dispose();
+      composer.dispose();
       envTarget.dispose();
       glassEnv.dispose();
       pmrem.dispose();

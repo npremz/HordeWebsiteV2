@@ -1,0 +1,100 @@
+---
+/**
+ * Bulle ronde contenant Arthur, le robot du formulaire de contact.
+ * Le contrôleur JS se récupère avec whenArthurReady() (src/lib/arthur/mount.ts).
+ */
+interface Props {
+  id?: string;
+  class?: string;
+  label?: string;
+  /** La tête suit le curseur. */
+  follow?: boolean;
+  /** Réagit au survol et au clic. */
+  interactive?: boolean;
+  /** S'endort après ce délai d'inactivité, en ms (0 = jamais). */
+  idleSleep?: number;
+}
+
+const {
+  id,
+  class: className,
+  label = 'Arthur, le robot de Horde',
+  follow = true,
+  interactive = true,
+  idleSleep = 0,
+} = Astro.props;
+---
+
+<div
+  id={id}
+  class:list={['arthur-bubble', className]}
+  role="img"
+  aria-label={label}
+  data-arthur
+  data-arthur-follow={String(follow)}
+  data-arthur-interactive={String(interactive)}
+  data-arthur-idle-sleep={String(idleSleep)}
+>
+</div>
+
+<style is:global>
+  .arthur-bubble {
+    --arthur-size: 240px;
+    --arthur-bg: #a9d6b6;
+    position: relative;
+    width: var(--arthur-size);
+    aspect-ratio: 1;
+    flex: none;
+    overflow: hidden;
+    border-radius: 50%;
+    background: var(--arthur-bg);
+    box-shadow:
+      inset 0 0 0 1px rgb(255 255 255 / 0.18),
+      0 18px 40px -18px rgb(0 0 0 / 0.6);
+    cursor: pointer;
+    isolation: isolate;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+  }
+
+  .arthur-bubble canvas {
+    position: absolute;
+    inset: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    /* Flou léger optionnel pour adoucir le rendu : --arthur-blur: 0.5px par exemple. */
+    filter: blur(var(--arthur-blur, 0px));
+    transition: opacity 0.5s ease;
+  }
+
+  .arthur-bubble[data-arthur-state] canvas {
+    opacity: 1;
+  }
+
+  /* Repli sans WebGL : seul l'écran du visage est affiché. */
+  .arthur-bubble[data-arthur-state='fallback'] {
+    background: #0b0b0e;
+  }
+
+  .arthur-bubble[data-arthur-state='fallback'] canvas {
+    inset: 50% auto auto 50%;
+    width: 82%;
+    height: auto;
+    transform: translate(-50%, -50%);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .arthur-bubble canvas {
+      transition: none;
+    }
+  }
+</style>
+
+<script>
+  import { mountAllArthurs, unmountAllArthurs } from '../../lib/arthur/mount';
+
+  document.addEventListener('astro:page-load', () => mountAllArthurs());
+  document.addEventListener('astro:before-swap', () => unmountAllArthurs());
+</script>

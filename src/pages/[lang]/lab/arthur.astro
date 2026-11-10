@@ -147,6 +147,11 @@ const sectionTitle = 'font-mono text-xs uppercase tracking-widest text-lines';
               <input type="range" min="96" max="420" step="4" value="240" class="w-full max-w-[280px] accent-white" data-lab-setting="size" />
               <output class="w-14 font-mono text-xs text-lines" data-lab-size>240px</output>
             </label>
+            <label class="flex items-center gap-3 text-sm sm:col-span-2">
+              <span class="w-28 flex-none">Flou du rendu</span>
+              <input type="range" min="0" max="2" step="0.1" value="0.5" class="w-full max-w-[280px] accent-white" data-lab-setting="blur" />
+              <output class="w-14 font-mono text-xs text-lines" data-lab-blur>0.5px</output>
+            </label>
             <div class="flex items-center gap-3 text-sm sm:col-span-2">
               <span class="w-28 flex-none">Fond</span>
               <div class="flex gap-2">
@@ -416,6 +421,13 @@ const sectionTitle = 'font-mono text-xs uppercase tracking-widest text-lines';
           break;
         case 'reduced':
           arthur.setReducedMotion(input.checked);
+          break;
+        case 'blur':
+          lab.style.setProperty('--arthur-blur', `${input.value}px`);
+          {
+            const output = lab.querySelector<HTMLElement>('[data-lab-blur]');
+            if (output) output.textContent = `${input.value}px`;
+          }
           break;
         case 'size':
           lab.style.setProperty('--arthur-lab-size', `${input.value}px`);
