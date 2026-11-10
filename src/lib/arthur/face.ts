@@ -25,7 +25,7 @@ const OUT_H = FACE_H * RES;
 /** Rayon du halo autour des diodes allumées, en px du repère de dessin. */
 const GLOW_RADIUS = 14;
 /** Nombre de passes de halo : chaque passe le renforce. */
-const GLOW_PASSES = 2;
+const GLOW_PASSES = 3;
 const LED_COLS = 64;
 const LED_ROWS = 48;
 
