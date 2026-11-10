@@ -17,6 +17,9 @@ import {
 
 export const FACE_W = 512;
 export const FACE_H = 384;
+/** Résolution de la matrice de diodes. */
+const LED_COLS = 64;
+const LED_ROWS = 48;
 
 const EYE_DX = 104;
 const EYE_Y = 176;
@@ -43,7 +46,9 @@ export class FaceRenderer {
   private ctx: CanvasRenderingContext2D;
   private ink: HTMLCanvasElement;
   private ictx: CanvasRenderingContext2D;
-  private grid: CanvasPattern | null = null;
+  private led: HTMLCanvasElement;
+  private lctx: CanvasRenderingContext2D;
+  private mask: HTMLCanvasElement;
   private color: string;
   private glow: string;
 
@@ -65,29 +70,42 @@ export class FaceRenderer {
   private dirty = true;
 
   constructor(options: FaceOptions = {}) {
-    this.color = options.color ?? '#e6e7ec';
-    this.glow = options.glow ?? 'rgba(205, 220, 255, 0.6)';
+    this.color = options.color ?? '#ffffff';
+    this.glow = options.glow ?? 'rgba(185, 212, 255, 0.55)';
 
     this.canvas = document.createElement('canvas');
     this.canvas.width = FACE_W;
     this.canvas.height = FACE_H;
     this.ctx = this.canvas.getContext('2d')!;
 
+    // L'encre est dessinée directement à la résolution de la matrice : un pixel = une diode.
     this.ink = document.createElement('canvas');
-    this.ink.width = FACE_W;
-    this.ink.height = FACE_H;
+    this.ink.width = LED_COLS;
+    this.ink.height = LED_ROWS;
     this.ictx = this.ink.getContext('2d')!;
 
-    const tile = document.createElement('canvas');
-    tile.width = tile.height = 4;
-    const t = tile.getContext('2d')!;
-    t.fillStyle = '#fff';
-    t.fillRect(0, 0, 4, 4);
-    t.fillStyle = 'rgb(175,175,175)';
-    t.fillRect(0, 3, 4, 1);
-    t.fillStyle = 'rgb(210,210,210)';
-    t.fillRect(3, 0, 1, 3);
-    this.grid = this.ctx.createPattern(tile, 'repeat');
+    this.led = document.createElement('canvas');
+    this.led.width = FACE_W;
+    this.led.height = FACE_H;
+    this.lctx = this.led.getContext('2d')!;
+
+    // Masque : une pastille par diode, et un fond faible pour que les formes restent lisibles en petit.
+    this.mask = document.createElement('canvas');
+    this.mask.width = FACE_W;
+    this.mask.height = FACE_H;
+    const m = this.mask.getContext('2d')!;
+    const cw = FACE_W / LED_COLS;
+    const ch = FACE_H / LED_ROWS;
+    m.fillStyle = 'rgba(255,255,255,0.42)';
+    m.fillRect(0, 0, FACE_W, FACE_H);
+    m.fillStyle = '#fff';
+    for (let y = 0; y < LED_ROWS; y++) {
+      for (let x = 0; x < LED_COLS; x++) {
+        m.beginPath();
+        m.roundRect(x * cw + cw * 0.1, y * ch + ch * 0.1, cw * 0.8, ch * 0.8, cw * 0.24);
+        m.fill();
+      }
+    }
 
     this.setExpression('neutral', true);
   }
@@ -184,8 +202,10 @@ export class FaceRenderer {
   private draw(): void {
     const c = this.ictx;
     const s = this.shape;
-    c.clearRect(0, 0, FACE_W, FACE_H);
+    c.setTransform(1, 0, 0, 1, 0, 0);
+    c.clearRect(0, 0, LED_COLS, LED_ROWS);
     c.save();
+    c.scale(LED_COLS / FACE_W, LED_ROWS / FACE_H);
     c.translate(FACE_W / 2, FACE_H / 2);
     c.scale(ZOOM, ZOOM);
     c.translate(-FACE_W / 2, -FACE_H / 2);
@@ -208,21 +228,27 @@ export class FaceRenderer {
     this.drawExtras(gx, gy);
     c.restore();
 
+    // Matrice LED : chaque cellule de l'encre basse résolution devient une diode.
+    const l = this.lctx;
+    l.globalCompositeOperation = 'source-over';
+    l.clearRect(0, 0, FACE_W, FACE_H);
+    l.imageSmoothingEnabled = false;
+    l.drawImage(this.ink, 0, 0, FACE_W, FACE_H);
+    // Second passage : renforce les diodes partiellement couvertes (traits fins).
+    l.drawImage(this.ink, 0, 0, FACE_W, FACE_H);
+    l.globalCompositeOperation = 'destination-in';
+    l.drawImage(this.mask, 0, 0);
+
     const o = this.ctx;
     o.globalCompositeOperation = 'source-over';
     o.fillStyle = '#000';
     o.fillRect(0, 0, FACE_W, FACE_H);
     o.shadowColor = this.glow;
-    o.shadowBlur = 10;
-    o.drawImage(this.ink, 0, 0);
+    o.shadowBlur = 11;
+    o.drawImage(this.led, 0, 0);
     o.shadowBlur = 0;
     o.shadowColor = 'transparent';
-    if (this.grid) {
-      o.globalCompositeOperation = 'multiply';
-      o.fillStyle = this.grid;
-      o.fillRect(0, 0, FACE_W, FACE_H);
-      o.globalCompositeOperation = 'source-over';
-    }
+    o.drawImage(this.led, 0, 0);
   }
 
   private drawEye(e: EyeShape, side: number, gx: number, gy: number, alpha: number): void {

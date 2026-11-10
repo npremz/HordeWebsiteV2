@@ -61,7 +61,7 @@ export interface FaceShape {
 }
 
 const EYE: EyeShape = { w: 56, h: 58, lid: 0, lidA: 0, bot: 0, curve: 0, x: 0, y: 0, brow: 0, browA: 0, browY: 0 };
-const MOUTH: MouthShape = { w: 48, open: 0, curve: 1.25, thick: 10, point: 1, tilt: 0, x: 0, y: 0 };
+const MOUTH: MouthShape = { w: 56, open: 0, curve: 1.5, thick: 11, point: 1, tilt: 0, x: 0, y: 0 };
 const FX: FaceFx = { sweat: 0, zzz: 0, heart: 0, qmark: 0, gazeX: 0, gazeY: 0 };
 
 interface FaceSpec {
