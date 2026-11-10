@@ -65,6 +65,7 @@ function shouldIncludeInSitemap(page) {
     const normalizedPath = new URL(page).pathname.replace(/\/$/, '') || '/';
     if (redirectSourcePaths.has(normalizedPath)) return false;
     if (/^\/[a-z]{2}\/404$/.test(normalizedPath)) return false;
+    if (/^\/[a-z]{2}\/lab(\/|$)/.test(normalizedPath)) return false;
     if (/^\/(fr|en)\/(cookies|mentions-legales|confidentialite)$/.test(normalizedPath)) return false;
     if (noindexSitemapPaths.has(normalizedPath)) return false;
     return true;

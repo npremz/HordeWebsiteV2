@@ -1,0 +1,467 @@
+---
+/**
+ * Preview interne d'Arthur, le robot de la future page contact.
+ * Page de test : non indexée, absente du sitemap, textes non traduits.
+ */
+import Layout from '../../../layouts/Layout.astro';
+import ArthurBubble from '../../../components/arthur/ArthurBubble.astro';
+import { SUPPORTED_LOCALES, type Locale } from '../../../i18n';
+import {
+  EXPRESSION_NAMES,
+  GESTURE_NAMES,
+  REACTIONS,
+  REACTION_NAMES,
+  type ReactionName,
+} from '../../../lib/arthur/expressions';
+
+export const prerender = true;
+
+export function getStaticPaths() {
+  return SUPPORTED_LOCALES.map((lang) => ({ params: { lang } }));
+}
+
+const { lang } = Astro.params as { lang: Locale };
+
+const reactionLabels: Record<ReactionName, string> = {
+  hello: 'Bonjour',
+  focus: 'Focus sur un champ',
+  typing: 'Saisie',
+  yes: 'Oui / champ valide',
+  no: 'Non / champ invalide',
+  oops: 'Oups, champ requis',
+  like: 'Choix coché',
+  wink: 'Clin d’œil (survol)',
+  poke: 'Sursaut (clic)',
+  annoyed: 'Agacé (3 clics)',
+  secret: 'Secret (mot de passe)',
+  thinking: 'Réfléchit (envoi…)',
+  success: 'Envoi réussi',
+  error: 'Erreur d’envoi',
+  sad: 'Triste',
+  sleep: 'Dodo (inactivité)',
+  wake: 'Réveil',
+  calm: 'Retour au calme',
+};
+
+const gestureLabels: Record<(typeof GESTURE_NAMES)[number], string> = {
+  nod: 'Oui de la tête',
+  shake: 'Non de la tête',
+  jump: 'Sursaut',
+  tilt: 'Penche la tête',
+  dance: 'Danse',
+  spin: 'Tour complet',
+  wobble: 'Dodeline',
+};
+
+const chip =
+  'cursor-pointer rounded-full border border-lines-dark px-3.5 py-1.5 text-left text-sm transition-colors hover:border-white hover:bg-white hover:text-black focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white';
+const field =
+  'w-full rounded-lg border border-lines-dark bg-transparent px-3 py-2.5 text-base text-white placeholder:text-lines focus:border-white focus:outline-none';
+const sectionTitle = 'font-mono text-xs uppercase tracking-widest text-lines';
+---
+
+<Layout
+  lang={lang}
+  title="Arthur — preview"
+  description="Preview interne du robot Arthur pour la page contact."
+  variant="dark"
+  robots="noindex, nofollow"
+>
+  <div id="arthur-lab" class="arthur-lab pt-28 pb-24 sm:pt-36">
+    <header class="max-w-[640px]">
+      <p class={sectionTitle}>Lab · page contact</p>
+      <h1 class="mt-3 font-display text-[2rem] leading-tight tracking-(--tracking-display) sm:text-[2.75rem]">
+        Arthur, preview
+      </h1>
+      <p class="mt-4 text-lines">
+        Bouge la souris, survole ou clique la bulle, puis lance les expressions, les gestes et les scénarios.
+        Le formulaire en bas est câblé comme le sera la page contact.
+      </p>
+    </header>
+
+    <div class="mt-10 grid grid-cols-[minmax(0,1fr)] gap-10 md:grid-cols-[minmax(0,340px)_minmax(0,1fr)] md:gap-16">
+      <aside class="arthur-lab__stage">
+        <div class="flex flex-col items-center gap-5 md:items-start">
+          <ArthurBubble id="arthur-preview" />
+          <dl class="w-full min-w-0 space-y-3 font-mono text-xs">
+            <div>
+              <dt class="text-lines">Expression affichée</dt>
+              <dd class="mt-1 text-sm" data-lab-expression>neutral</dd>
+            </div>
+            <div>
+              <dt class="text-lines">Derniers appels JS</dt>
+              <dd class="mt-1">
+                <ol class="space-y-1 text-[0.8125rem] leading-snug [&>li]:truncate" data-lab-log>
+                  <li class="text-lines">—</li>
+                </ol>
+              </dd>
+            </div>
+          </dl>
+        </div>
+      </aside>
+
+      <div class="min-w-0 space-y-12">
+        <section aria-labelledby="lab-reactions">
+          <h2 id="lab-reactions" class={sectionTitle}>Scénarios — arthur.react(…)</h2>
+          <p class="mt-2 text-sm text-lines">Une expression + un geste, pensés pour les événements du formulaire.</p>
+          <div class="mt-4 flex flex-wrap gap-2">
+            {REACTION_NAMES.map((name) => (
+              <button type="button" class={chip} data-lab-react={name} title={JSON.stringify(REACTIONS[name])}>
+                {reactionLabels[name]}
+              </button>
+            ))}
+          </div>
+        </section>
+
+        <section aria-labelledby="lab-expressions">
+          <h2 id="lab-expressions" class={sectionTitle}>Expressions — arthur.setMood(…)</h2>
+          <p class="mt-2 text-sm text-lines">L’expression reste affichée jusqu’à la suivante.</p>
+          <div class="mt-4 grid grid-cols-[repeat(auto-fill,minmax(104px,1fr))] gap-3">
+            {EXPRESSION_NAMES.map((name) => (
+              <button type="button" class="arthur-lab__face" data-lab-face={name} aria-pressed="false">
+                <canvas width="256" height="192" aria-hidden="true"></canvas>
+                <span>{name}</span>
+              </button>
+            ))}
+          </div>
+        </section>
+
+        <section aria-labelledby="lab-gestures">
+          <h2 id="lab-gestures" class={sectionTitle}>Gestes — arthur.gesture(…)</h2>
+          <div class="mt-4 flex flex-wrap gap-2">
+            {GESTURE_NAMES.map((name) => (
+              <button type="button" class={chip} data-lab-gesture={name}>{gestureLabels[name]}</button>
+            ))}
+          </div>
+        </section>
+
+        <section aria-labelledby="lab-settings">
+          <h2 id="lab-settings" class={sectionTitle}>Réglages</h2>
+          <div class="mt-4 grid gap-x-10 gap-y-3 sm:grid-cols-2">
+            <label class="arthur-lab__toggle"><input type="checkbox" data-lab-setting="follow" checked /> Suit la souris</label>
+            <label class="arthur-lab__toggle"><input type="checkbox" data-lab-setting="blink" checked /> Cligne des yeux</label>
+            <label class="arthur-lab__toggle"><input type="checkbox" data-lab-setting="sleep" /> S’endort après 6 s d’inactivité</label>
+            <label class="arthur-lab__toggle"><input type="checkbox" data-lab-setting="reduced" /> Mouvements réduits</label>
+            <label class="flex items-center gap-3 text-sm sm:col-span-2">
+              <span class="w-28 flex-none">Taille de la bulle</span>
+              <input type="range" min="96" max="420" step="4" value="240" class="w-full max-w-[280px] accent-white" data-lab-setting="size" />
+              <output class="w-14 font-mono text-xs text-lines" data-lab-size>240px</output>
+            </label>
+            <div class="flex items-center gap-3 text-sm sm:col-span-2">
+              <span class="w-28 flex-none">Fond</span>
+              <div class="flex gap-2">
+                <button type="button" class="arthur-lab__swatch" data-lab-bg="" style="background:#a9d6b6" aria-label="Fond vert menthe"></button>
+                <button type="button" class="arthur-lab__swatch" data-lab-bg="radial-gradient(circle at 50% 38%, #e3dee3, #a9a4b3)" style="background: radial-gradient(circle at 50% 38%, #e3dee3, #a9a4b3)" aria-label="Fond lilas"></button>
+                <button type="button" class="arthur-lab__swatch" data-lab-bg="#16191B" style="background:#16191B" aria-label="Fond noir"></button>
+                <button type="button" class="arthur-lab__swatch" data-lab-bg="#F4F1F8" style="background:#F4F1F8" aria-label="Fond blanc"></button>
+                <button type="button" class="arthur-lab__swatch" data-lab-bg="radial-gradient(circle at 50% 35%, #3a2a5c, #16191B)" style="background:radial-gradient(circle at 50% 35%, #3a2a5c, #16191B)" aria-label="Fond nuit"></button>
+                <button type="button" class="arthur-lab__swatch" data-lab-bg="radial-gradient(circle at 50% 35%, #ffd9a8, #f08a3c)" style="background:radial-gradient(circle at 50% 35%, #ffd9a8, #f08a3c)" aria-label="Fond orange"></button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section aria-labelledby="lab-form">
+          <h2 id="lab-form" class={sectionTitle}>Formulaire test — bindArthurToForm(…)</h2>
+          <p class="mt-2 text-sm text-lines">
+            Focus, saisie, validation et envoi déclenchent les réactions. Rien n’est envoyé.
+          </p>
+          <form class="mt-5 grid max-w-[560px] gap-4" data-lab-form>
+            <label class="grid gap-1.5 text-sm">
+              Nom
+              <input class={field} type="text" name="nom" placeholder="Ton nom" required autocomplete="off" />
+            </label>
+            <label class="grid gap-1.5 text-sm">
+              Email
+              <input class={field} type="email" name="email" placeholder="toi@exemple.be" required autocomplete="off" />
+            </label>
+            <label class="grid gap-1.5 text-sm">
+              Besoin
+              <select class={field} name="besoin">
+                <option class="text-black">Refonte de site</option>
+                <option class="text-black">Landing page</option>
+                <option class="text-black">MVP SaaS</option>
+                <option class="text-black">Autre</option>
+              </select>
+            </label>
+            <fieldset class="grid gap-2 text-sm">
+              <legend class="mb-1.5">Budget</legend>
+              <div class="flex flex-wrap gap-x-5 gap-y-2">
+                <label class="arthur-lab__toggle"><input type="radio" name="budget" value="s" /> &lt; 5k</label>
+                <label class="arthur-lab__toggle"><input type="radio" name="budget" value="m" /> 5–15k</label>
+                <label class="arthur-lab__toggle"><input type="radio" name="budget" value="l" data-arthur-change="success" /> 15k+ (il adore)</label>
+              </div>
+            </fieldset>
+            <label class="grid gap-1.5 text-sm">
+              Message
+              <textarea class={field} name="message" rows="3" placeholder="Raconte-nous ton projet"></textarea>
+            </label>
+            <label class="grid gap-1.5 text-sm">
+              Champ secret (il détourne le regard)
+              <input class={field} type="password" name="secret" placeholder="••••••" autocomplete="off" />
+            </label>
+            <div class="mt-2 flex flex-wrap gap-3">
+              <button type="submit" class={chip} value="success">Envoyer → succès</button>
+              <button type="submit" class={chip} value="error">Envoyer → échec</button>
+              <button type="reset" class={`${chip} text-lines`}>Vider</button>
+            </div>
+          </form>
+        </section>
+      </div>
+    </div>
+  </div>
+</Layout>
+
+<style is:global>
+  @media (min-width: 1024px) {
+    .arthur-lab__stage > div {
+      position: sticky;
+      top: 7rem;
+    }
+  }
+
+  @media (max-width: 1023px) {
+    .arthur-lab__stage {
+      position: sticky;
+      top: 4.5rem;
+      z-index: 5;
+      margin-inline: calc(var(--gutter) * -1);
+      padding: 0.75rem var(--gutter);
+      background: var(--color-black);
+      border-bottom: 1px solid var(--color-lines-dark);
+    }
+
+    .arthur-lab__stage > div {
+      flex-direction: row;
+      align-items: center;
+    }
+
+    .arthur-lab .arthur-lab__stage .arthur-bubble {
+      --arthur-size: min(var(--arthur-lab-size, 240px), 132px);
+    }
+  }
+
+  .arthur-lab .arthur-bubble {
+    --arthur-size: var(--arthur-lab-size, 240px);
+  }
+
+  .arthur-lab__face {
+    display: grid;
+    gap: 0.4rem;
+    justify-items: center;
+    cursor: pointer;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--color-lines);
+  }
+
+  .arthur-lab__face canvas {
+    width: 100%;
+    height: auto;
+    border: 3px solid #c2501c;
+    border-radius: 22%/29%;
+    background: #000;
+    transition:
+      border-color 0.2s,
+      transform 0.2s;
+  }
+
+  .arthur-lab__face:hover canvas,
+  .arthur-lab__face:focus-visible canvas {
+    border-color: #ff8a3d;
+    transform: translateY(-2px);
+  }
+
+  .arthur-lab__face:focus-visible {
+    outline: none;
+  }
+
+  .arthur-lab__face[aria-pressed='true'] {
+    color: var(--color-button-white);
+  }
+
+  .arthur-lab__face[aria-pressed='true'] canvas {
+    border-color: #ffb37a;
+  }
+
+  .arthur-lab__toggle {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-size: 0.875rem;
+    cursor: pointer;
+  }
+
+  .arthur-lab__toggle input {
+    width: 1rem;
+    height: 1rem;
+    accent-color: #ff8a3d;
+  }
+
+  .arthur-lab__swatch {
+    width: 1.75rem;
+    height: 1.75rem;
+    border-radius: 50%;
+    border: 1px solid var(--color-lines-dark);
+    cursor: pointer;
+  }
+
+  .arthur-lab__swatch:hover,
+  .arthur-lab__swatch:focus-visible {
+    border-color: var(--color-button-white);
+    outline: none;
+  }
+</style>
+
+<script>
+  import { whenArthurReady } from '../../../lib/arthur/mount';
+  import { bindArthurToForm } from '../../../lib/arthur/bind-form';
+  import { FaceRenderer } from '../../../lib/arthur/face';
+  import {
+    EXPRESSIONS,
+    REACTIONS,
+    type ExpressionName,
+    type GestureName,
+    type ReactionName,
+  } from '../../../lib/arthur/expressions';
+
+  let teardown: (() => void) | null = null;
+
+  async function initLab() {
+    teardown?.();
+    teardown = null;
+    const lab = document.getElementById('arthur-lab');
+    const bubble = document.getElementById('arthur-preview');
+    if (!lab || !bubble) return;
+
+    const controller = new AbortController();
+    const { signal } = controller;
+    const timers = new Set<number>();
+    let unbindForm: (() => void) | null = null;
+    teardown = () => {
+      controller.abort();
+      timers.forEach((id) => window.clearTimeout(id));
+      unbindForm?.();
+    };
+
+    lab.querySelectorAll<HTMLButtonElement>('[data-lab-face]').forEach((button) => {
+      const canvas = button.querySelector('canvas');
+      if (canvas) FaceRenderer.thumbnail(button.dataset.labFace as ExpressionName, canvas);
+    });
+
+    const log = lab.querySelector<HTMLElement>('[data-lab-log]');
+    const note = (code: string) => {
+      if (!log) return;
+      if (log.firstElementChild?.textContent === '—') log.replaceChildren();
+      const item = document.createElement('li');
+      item.textContent = code;
+      log.prepend(item);
+      while (log.children.length > 5) log.lastElementChild?.remove();
+      Array.from(log.children).forEach((li, index) => li.classList.toggle('text-lines', index > 0));
+    };
+
+    const arthur = await whenArthurReady(bubble);
+    if (signal.aborted) return;
+
+    const expressionLabel = lab.querySelector<HTMLElement>('[data-lab-expression]');
+    const showExpression = (name: ExpressionName) => {
+      if (expressionLabel) expressionLabel.textContent = name;
+      lab.querySelectorAll<HTMLButtonElement>('[data-lab-face]').forEach((button) => {
+        button.setAttribute('aria-pressed', String(button.dataset.labFace === name));
+      });
+    };
+    showExpression(arthur.expression);
+    const off = arthur.on((event) => {
+      if (event.type === 'expression') showExpression(event.name);
+      if (event.type === 'reaction') note(`arthur.react('${event.name}')`);
+    });
+    signal.addEventListener('abort', off);
+
+    lab.addEventListener(
+      'click',
+      (event) => {
+        const target = (event.target as Element).closest<HTMLElement>(
+          '[data-lab-react],[data-lab-face],[data-lab-gesture],[data-lab-bg]',
+        );
+        if (!target) return;
+        const { labReact, labFace, labGesture, labBg } = target.dataset;
+        if (labReact) arthur.react(labReact as ReactionName);
+        if (labFace) {
+          arthur.setMood(labFace as ExpressionName, true);
+          note(`arthur.setMood('${labFace}')`);
+        }
+        if (labGesture) {
+          arthur.gesture(labGesture as GestureName);
+          note(`arthur.gesture('${labGesture}')`);
+        }
+        if (labBg !== undefined) {
+          if (labBg) bubble.style.setProperty('--arthur-bg', labBg);
+          else bubble.style.removeProperty('--arthur-bg');
+        }
+      },
+      { signal },
+    );
+
+    const sizeOutput = lab.querySelector<HTMLElement>('[data-lab-size]');
+    const applySetting = (input: HTMLInputElement) => {
+      switch (input.dataset.labSetting) {
+        case 'follow':
+          arthur.setFollowPointer(input.checked);
+          break;
+        case 'blink':
+          arthur.setAutoBlink(input.checked);
+          break;
+        case 'sleep':
+          arthur.setIdleSleep(input.checked ? 6000 : 0);
+          break;
+        case 'reduced':
+          arthur.setReducedMotion(input.checked);
+          break;
+        case 'size':
+          lab.style.setProperty('--arthur-lab-size', `${input.value}px`);
+          if (sizeOutput) sizeOutput.textContent = `${input.value}px`;
+          break;
+      }
+    };
+    lab.querySelectorAll<HTMLInputElement>('[data-lab-setting]').forEach((input) => {
+      input.addEventListener('input', () => applySetting(input), { signal });
+    });
+
+    const form = lab.querySelector<HTMLFormElement>('[data-lab-form]');
+    if (form) {
+      unbindForm = bindArthurToForm(arthur, form);
+      form.addEventListener(
+        'submit',
+        (event) => {
+          event.preventDefault();
+          const outcome = (event as SubmitEvent).submitter?.getAttribute('value') === 'error' ? 'error' : 'success';
+          arthur.releaseLook();
+          arthur.react('thinking');
+          const id = window.setTimeout(() => {
+            timers.delete(id);
+            arthur.react('calm');
+            arthur.react(outcome);
+            if (outcome === 'success') form.reset();
+          }, 1500);
+          timers.add(id);
+        },
+        { signal },
+      );
+    }
+
+    // Raccourcis d'URL : ?face=angry, ?react=success, ?size=320
+    const params = new URLSearchParams(location.search);
+    const face = params.get('face');
+    const react = params.get('react');
+    const size = params.get('size');
+    if (size) lab.style.setProperty('--arthur-lab-size', `${Number(size) || 240}px`);
+    if (face && face in EXPRESSIONS) arthur.setMood(face as ExpressionName, true);
+    if (react && react in REACTIONS) arthur.react(react as ReactionName);
+  }
+
+  document.addEventListener('astro:page-load', () => void initLab());
+  document.addEventListener('astro:before-swap', () => {
+    teardown?.();
+    teardown = null;
+  });
+</script>
