@@ -19,6 +19,7 @@ import {
   Mesh,
   MeshBasicMaterial,
   MeshPhysicalMaterial,
+  HemisphereLight,
   NeutralToneMapping,
   PerspectiveCamera,
   PlaneGeometry,
@@ -46,13 +47,25 @@ const HEAD_FIX_YAW = 0.076;
 const FACE_SPAN = 1.0;
 const FACE_OFFSET_Y = 0;
 
-const SHELL_METALNESS = 0.8;
-const SHELL_ROUGHNESS = 0.26;
+/** Carapace : plastique satiné, comme le rendu par défaut de Sketchfab. */
+const SHELL_METALNESS = 0;
+const SHELL_ROUGHNESS = 0.42;
+/** Vernis : c'est lui qui renvoie les reflets doux et larges des lumières du studio. */
+const SHELL_COAT = 1;
+const SHELL_COAT_ROUGHNESS = 0.1;
 
 /** Lumière du dessus : position, intensité, douceur du bord de l'ombre. */
-const TOP_LIGHT_POS = new Vector3(-50, 960, 420);
-const TOP_LIGHT_INTENSITY = 2.2;
-const SHADOW_SOFTNESS = 5;
+const TOP_LIGHT_POS = new Vector3(-260, 940, 420);
+const TOP_LIGHT_INTENSITY = 1.15;
+const SHADOW_SOFTNESS = 9;
+/** Lumière d'ambiance : ciel clair, sol sombre et chaud, pour un dégradé doux de haut en bas. */
+const AMBIENT_INTENSITY = 0.36;
+const ENV_INTENSITY = 0.42;
+const EXPOSURE = 1;
+/** Teinte de la carapace : décalages HSL appliqués à la couleur du modèle (vers un orange plus brun). */
+const SHELL_HUE = 0.012;
+const SHELL_SATURATION = -0.1;
+const SHELL_LIGHTNESS = -0.025;
 
 const CAMERA_FOV = 26;
 const CAMERA_POS = new Vector3(0, 394, 585);
@@ -119,17 +132,18 @@ export async function createBody(container: HTMLElement, faceCanvas: HTMLCanvasE
   const renderer = new WebGLRenderer({ antialias: true, alpha: true, powerPreference: 'high-performance' });
   renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
   renderer.outputColorSpace = SRGBColorSpace;
-  // Neutre (Khronos PBR) : garde l'orange du modèle sans le délaver ni le saturer.
+  // Neutre (Khronos PBR) : restitue la couleur du modèle sans la délaver.
   renderer.toneMapping = NeutralToneMapping;
-  renderer.toneMappingExposure = 1;
+  renderer.toneMappingExposure = EXPOSURE;
   renderer.shadowMap.enabled = true;
   renderer.shadowMap.type = VSMShadowMap;
 
   const scene = new Scene();
   const pmrem = new PMREMGenerator(renderer);
-  const envTarget = pmrem.fromScene(new RoomEnvironment(), 0.04);
+  const envTarget = pmrem.fromScene(new RoomEnvironment(), 0.045);
   scene.environment = envTarget.texture;
-  scene.environmentIntensity = 0.9;
+  scene.environmentIntensity = ENV_INTENSITY;
+  scene.add(new HemisphereLight(0xffffff, 0x4a3a30, AMBIENT_INTENSITY));
 
   // Lumière principale : vient du dessus, légèrement devant, pour que la casquette
   // projette une ombre douce sur le haut du visage.
@@ -150,11 +164,11 @@ export async function createBody(container: HTMLElement, faceCanvas: HTMLCanvasE
   key.shadow.normalBias = 2.5;
   scene.add(key, key.target);
   // Appoint de face, sans ombre, pour que le dessous de la casquette ne soit pas bouché.
-  const fill = new DirectionalLight(0xffffff, 0.45);
+  const fill = new DirectionalLight(0xffffff, 0.25);
   fill.position.set(-460, 430, 520);
   fill.target.position.copy(CAMERA_TARGET);
   scene.add(fill, fill.target);
-  const rim = new DirectionalLight(0xffffff, 0.5);
+  const rim = new DirectionalLight(0xffffff, 0.3);
   rim.position.set(-420, 300, -260);
   scene.add(rim);
 
@@ -240,7 +254,7 @@ export async function createBody(container: HTMLElement, faceCanvas: HTMLCanvasE
   shoulderPivot.rotation.z = SHOULDER_DOWN;
   armPivot.rotation.z = ARM_DOWN;
 
-  // --- Carapace : peinture métallisée sous vernis ---
+  // --- Carapace ---
   const shellMaterials = new Map<Material, MeshPhysicalMaterial>();
   gltf.scene.traverse((object) => {
     const mesh = object as Mesh;
@@ -250,11 +264,11 @@ export async function createBody(container: HTMLElement, faceCanvas: HTMLCanvasE
     let shell = shellMaterials.get(source);
     if (!shell) {
       shell = new MeshPhysicalMaterial({
-        color: source.color,
+        color: source.color.clone().offsetHSL(SHELL_HUE, SHELL_SATURATION, SHELL_LIGHTNESS),
         metalness: SHELL_METALNESS,
         roughness: SHELL_ROUGHNESS,
-        clearcoat: 0.7,
-        clearcoatRoughness: 0.12,
+        clearcoat: SHELL_COAT,
+        clearcoatRoughness: SHELL_COAT_ROUGHNESS,
         side: DoubleSide,
       });
       shellMaterials.set(source, shell);
@@ -291,12 +305,12 @@ export async function createBody(container: HTMLElement, faceCanvas: HTMLCanvasE
 
   if (visor) {
     const source = visor as Mesh;
-    // Visière en verre : noir profond, lisse, qui ne reflète que ses propres rampes de lumière.
+    // Visière : anthracite brillant, qui ne reflète que ses propres sources de lumière.
     source.material = new MeshPhysicalMaterial({
       // Pas tout à fait noir : la lumière du dessus et l'ombre de la casquette s'y lisent.
-      color: 0x20232c,
+      color: 0x5c5e66,
       metalness: 0,
-      roughness: 0.03,
+      roughness: 0.28,
       ior: 1.5,
       envMap: glassEnv.texture,
       envMapIntensity: 1,

@@ -17,7 +17,15 @@ import {
 
 export const FACE_W = 512;
 export const FACE_H = 384;
+/** Résolution du canvas de sortie, en multiple du repère de dessin : 2 = diodes bien nettes. */
+const RES = 2;
+const OUT_W = FACE_W * RES;
+const OUT_H = FACE_H * RES;
 /** Résolution de la matrice de diodes. */
+/** Rayon du halo autour des diodes allumées, en px du repère de dessin. */
+const GLOW_RADIUS = 14;
+/** Nombre de passes de halo : chaque passe le renforce. */
+const GLOW_PASSES = 2;
 const LED_COLS = 64;
 const LED_ROWS = 48;
 
@@ -71,11 +79,11 @@ export class FaceRenderer {
 
   constructor(options: FaceOptions = {}) {
     this.color = options.color ?? '#ffffff';
-    this.glow = options.glow ?? 'rgba(185, 212, 255, 0.55)';
+    this.glow = options.glow ?? 'rgba(175, 208, 255, 0.8)';
 
     this.canvas = document.createElement('canvas');
-    this.canvas.width = FACE_W;
-    this.canvas.height = FACE_H;
+    this.canvas.width = OUT_W;
+    this.canvas.height = OUT_H;
     this.ctx = this.canvas.getContext('2d')!;
 
     // L'encre est dessinée directement à la résolution de la matrice : un pixel = une diode.
@@ -85,24 +93,24 @@ export class FaceRenderer {
     this.ictx = this.ink.getContext('2d')!;
 
     this.led = document.createElement('canvas');
-    this.led.width = FACE_W;
-    this.led.height = FACE_H;
+    this.led.width = OUT_W;
+    this.led.height = OUT_H;
     this.lctx = this.led.getContext('2d')!;
 
     // Masque : une pastille par diode, et un fond faible pour que les formes restent lisibles en petit.
     this.mask = document.createElement('canvas');
-    this.mask.width = FACE_W;
-    this.mask.height = FACE_H;
+    this.mask.width = OUT_W;
+    this.mask.height = OUT_H;
     const m = this.mask.getContext('2d')!;
-    const cw = FACE_W / LED_COLS;
-    const ch = FACE_H / LED_ROWS;
-    m.fillStyle = 'rgba(255,255,255,0.42)';
-    m.fillRect(0, 0, FACE_W, FACE_H);
+    const cw = OUT_W / LED_COLS;
+    const ch = OUT_H / LED_ROWS;
+    m.fillStyle = 'rgba(255,255,255,0.3)';
+    m.fillRect(0, 0, OUT_W, OUT_H);
     m.fillStyle = '#fff';
     for (let y = 0; y < LED_ROWS; y++) {
       for (let x = 0; x < LED_COLS; x++) {
         m.beginPath();
-        m.roundRect(x * cw + cw * 0.1, y * ch + ch * 0.1, cw * 0.8, ch * 0.8, cw * 0.24);
+        m.roundRect(x * cw + cw * 0.08, y * ch + ch * 0.08, cw * 0.84, ch * 0.84, cw * 0.22);
         m.fill();
       }
     }
@@ -231,21 +239,23 @@ export class FaceRenderer {
     // Matrice LED : chaque cellule de l'encre basse résolution devient une diode.
     const l = this.lctx;
     l.globalCompositeOperation = 'source-over';
-    l.clearRect(0, 0, FACE_W, FACE_H);
+    l.clearRect(0, 0, OUT_W, OUT_H);
     l.imageSmoothingEnabled = false;
-    l.drawImage(this.ink, 0, 0, FACE_W, FACE_H);
-    // Second passage : renforce les diodes partiellement couvertes (traits fins).
-    l.drawImage(this.ink, 0, 0, FACE_W, FACE_H);
+    l.drawImage(this.ink, 0, 0, OUT_W, OUT_H);
+    // Passages supplémentaires : les diodes partiellement couvertes s'allument franchement,
+    // ce qui donne des contours nets au lieu d'un dégradé.
+    l.drawImage(this.ink, 0, 0, OUT_W, OUT_H);
+    l.drawImage(this.ink, 0, 0, OUT_W, OUT_H);
     l.globalCompositeOperation = 'destination-in';
     l.drawImage(this.mask, 0, 0);
 
     const o = this.ctx;
     o.globalCompositeOperation = 'source-over';
     o.fillStyle = '#000';
-    o.fillRect(0, 0, FACE_W, FACE_H);
+    o.fillRect(0, 0, OUT_W, OUT_H);
     o.shadowColor = this.glow;
-    o.shadowBlur = 11;
-    o.drawImage(this.led, 0, 0);
+    o.shadowBlur = GLOW_RADIUS * RES;
+    for (let i = 0; i < GLOW_PASSES; i++) o.drawImage(this.led, 0, 0);
     o.shadowBlur = 0;
     o.shadowColor = 'transparent';
     o.drawImage(this.led, 0, 0);
