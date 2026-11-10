@@ -10,6 +10,7 @@ import {
   Box3,
   BufferAttribute,
   CanvasTexture,
+  Color,
   DirectionalLight,
   DoubleSide,
   Group,
@@ -17,11 +18,14 @@ import {
   Matrix4,
   Mesh,
   MeshBasicMaterial,
+  MeshPhysicalMaterial,
   NeutralToneMapping,
   PerspectiveCamera,
+  PlaneGeometry,
   PMREMGenerator,
   SRGBColorSpace,
   Scene,
+  VSMShadowMap,
   Vector3,
   WebGLRenderer,
   type Material,
@@ -41,6 +45,14 @@ const HEAD_FIX_YAW = 0.076;
 /** Largeur de l'écran du visage, relative à la largeur de la visière. */
 const FACE_SPAN = 1.0;
 const FACE_OFFSET_Y = 0;
+
+const SHELL_METALNESS = 0.8;
+const SHELL_ROUGHNESS = 0.26;
+
+/** Lumière du dessus : position, intensité, douceur du bord de l'ombre. */
+const TOP_LIGHT_POS = new Vector3(-50, 960, 420);
+const TOP_LIGHT_INTENSITY = 2.2;
+const SHADOW_SOFTNESS = 5;
 
 const CAMERA_FOV = 26;
 const CAMERA_POS = new Vector3(0, 394, 585);
@@ -69,6 +81,40 @@ export interface Body {
   dispose(): void;
 }
 
+/**
+ * Sources lumineuses reflétées par la visière, sur fond noir. Chaque source : azimut (degrés,
+ * 0 = derrière la caméra, positif = à droite de l'écran), largeur angulaire, intensité,
+ * hauteur du centre, hauteur, inclinaison (rad).
+ */
+const GLASS_LIGHTS: [azimuth: number, width: number, intensity: number, y: number, height: number, roll: number][] = [
+  // // Large pan de lumière incliné, côté gauche, doublé d'un filet.
+  // [-62, 20, 4, 0, 30, 0.42],
+  // [-41, 2, 5.5, 0, 30, 0.42],
+  // // Filet vif près du bord droit.
+  [60, 2.5, 1.8, 0, 30, 0.42],
+  // // Lueur large et faible côté droit, pour que le bord accroche la lumière.
+  [92, 30, 1.8, 0, 30, 0],
+];
+/** Flou des reflets (rad) : 0 = arêtes nettes. */
+const GLASS_BLUR = 0.04;
+
+function createGlassStudio(): Scene {
+  const studio = new Scene();
+  const radius = 10;
+  for (const [azimuth, width, intensity, y, height, roll] of GLASS_LIGHTS) {
+    const angle = (azimuth * Math.PI) / 180;
+    const light = new Mesh(
+      new PlaneGeometry(2 * radius * Math.tan((width * Math.PI) / 360), height),
+      new MeshBasicMaterial({ color: new Color(intensity, intensity, intensity), side: DoubleSide }),
+    );
+    light.position.set(Math.sin(angle) * radius, y, Math.cos(angle) * radius);
+    light.lookAt(0, y, 0);
+    light.rotateZ(roll);
+    studio.add(light);
+  }
+  return studio;
+}
+
 export async function createBody(container: HTMLElement, faceCanvas: HTMLCanvasElement): Promise<Body> {
   const renderer = new WebGLRenderer({ antialias: true, alpha: true, powerPreference: 'high-performance' });
   renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
@@ -76,19 +122,45 @@ export async function createBody(container: HTMLElement, faceCanvas: HTMLCanvasE
   // Neutre (Khronos PBR) : garde l'orange du modèle sans le délaver ni le saturer.
   renderer.toneMapping = NeutralToneMapping;
   renderer.toneMappingExposure = 1;
+  renderer.shadowMap.enabled = true;
+  renderer.shadowMap.type = VSMShadowMap;
 
   const scene = new Scene();
   const pmrem = new PMREMGenerator(renderer);
   const envTarget = pmrem.fromScene(new RoomEnvironment(), 0.04);
   scene.environment = envTarget.texture;
-  scene.environmentIntensity = 0.5;
+  scene.environmentIntensity = 0.9;
 
-  const key = new DirectionalLight(0xffffff, 1.5);
-  key.position.set(-180, 760, 520);
-  scene.add(key);
+  // Lumière principale : vient du dessus, légèrement devant, pour que la casquette
+  // projette une ombre douce sur le haut du visage.
+  const key = new DirectionalLight(0xffffff, TOP_LIGHT_INTENSITY);
+  key.position.copy(TOP_LIGHT_POS);
+  key.target.position.copy(CAMERA_TARGET);
+  key.castShadow = true;
+  key.shadow.mapSize.set(1024, 1024);
+  key.shadow.camera.left = -280;
+  key.shadow.camera.right = 280;
+  key.shadow.camera.top = 280;
+  key.shadow.camera.bottom = -280;
+  key.shadow.camera.near = 100;
+  key.shadow.camera.far = 1300;
+  key.shadow.radius = SHADOW_SOFTNESS;
+  key.shadow.blurSamples = 16;
+  key.shadow.bias = -0.0004;
+  key.shadow.normalBias = 2.5;
+  scene.add(key, key.target);
+  // Appoint de face, sans ombre, pour que le dessous de la casquette ne soit pas bouché.
+  const fill = new DirectionalLight(0xffffff, 0.45);
+  fill.position.set(-460, 430, 520);
+  fill.target.position.copy(CAMERA_TARGET);
+  scene.add(fill, fill.target);
   const rim = new DirectionalLight(0xffffff, 0.5);
   rim.position.set(-420, 300, -260);
   scene.add(rim);
+
+  // Le verre a son propre décor de reflets, sur fond noir : ils glissent sur la visière
+  // quand la tête tourne. Le métal, lui, reflète la pièce.
+  const glassEnv = pmrem.fromScene(createGlassStudio(), GLASS_BLUR);
 
   const camera = new PerspectiveCamera(CAMERA_FOV, 1, 50, 4000);
   camera.position.copy(CAMERA_POS);
@@ -102,12 +174,19 @@ export async function createBody(container: HTMLElement, faceCanvas: HTMLCanvasE
   } catch (error) {
     pmrem.dispose();
     envTarget.dispose();
+    glassEnv.dispose();
     renderer.dispose();
     throw error;
   }
 
   const rig = new Group();
   rig.add(gltf.scene);
+  gltf.scene.traverse((object) => {
+    const mesh = object as Mesh;
+    if (!mesh.isMesh) return;
+    mesh.castShadow = true;
+    mesh.receiveShadow = true;
+  });
   scene.add(rig);
   rig.updateMatrixWorld(true);
 
@@ -161,6 +240,28 @@ export async function createBody(container: HTMLElement, faceCanvas: HTMLCanvasE
   shoulderPivot.rotation.z = SHOULDER_DOWN;
   armPivot.rotation.z = ARM_DOWN;
 
+  // --- Carapace : peinture métallisée sous vernis ---
+  const shellMaterials = new Map<Material, MeshPhysicalMaterial>();
+  gltf.scene.traverse((object) => {
+    const mesh = object as Mesh;
+    if (!mesh.isMesh) return;
+    const source = mesh.material as MeshStandardMaterial;
+    if (!(source.color.r > 0.4 && source.color.g < 0.25)) return;
+    let shell = shellMaterials.get(source);
+    if (!shell) {
+      shell = new MeshPhysicalMaterial({
+        color: source.color,
+        metalness: SHELL_METALNESS,
+        roughness: SHELL_ROUGHNESS,
+        clearcoat: 0.7,
+        clearcoatRoughness: 0.12,
+        side: DoubleSide,
+      });
+      shellMaterials.set(source, shell);
+    }
+    mesh.material = shell;
+  });
+
   const headPivot = new Group();
   headPivot.position.copy(NECK);
   headPivot.rotation.order = 'YXZ';
@@ -190,11 +291,17 @@ export async function createBody(container: HTMLElement, faceCanvas: HTMLCanvasE
 
   if (visor) {
     const source = visor as Mesh;
-    // Visière moins miroir : le reflet de l'environnement ne doit pas noyer le visage.
-    const glass = (source.material as MeshStandardMaterial).clone();
-    glass.envMapIntensity = 0.15;
-    glass.roughness = 0.62;
-    source.material = glass;
+    // Visière en verre : noir profond, lisse, qui ne reflète que ses propres rampes de lumière.
+    source.material = new MeshPhysicalMaterial({
+      // Pas tout à fait noir : la lumière du dessus et l'ombre de la casquette s'y lisent.
+      color: 0x20232c,
+      metalness: 0,
+      roughness: 0.03,
+      ior: 1.5,
+      envMap: glassEnv.texture,
+      envMapIntensity: 1,
+      side: DoubleSide,
+    });
     const geometry = source.geometry.clone();
     const position = geometry.getAttribute('position');
     const toHead = new Matrix4().copy(headPivot.matrixWorld).invert().multiply(source.matrixWorld);
@@ -267,6 +374,7 @@ export async function createBody(container: HTMLElement, faceCanvas: HTMLCanvasE
       });
       texture.dispose();
       envTarget.dispose();
+      glassEnv.dispose();
       pmrem.dispose();
       renderer.dispose();
     },
