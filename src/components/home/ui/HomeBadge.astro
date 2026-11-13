@@ -9,13 +9,15 @@ interface Props {
   class?: string;
   /** Sous 400px, le badge prend toute la largeur (footer). */
   stretch?: boolean;
+  /** "dark" : badge noir sur fond clair (footer global). */
+  tone?: "light" | "dark";
 }
 
-const { lang, kind, class: className = "", stretch = false } = Astro.props;
+const { lang, kind, class: className = "", stretch = false, tone = "light" } = Astro.props;
 const copy = getHomeCopy(lang);
 ---
 
-<div class:list={["home-badge", stretch && "home-badge--stretch", className]}>
+<div class:list={["home-badge", stretch && "home-badge--stretch", tone === "dark" && "home-badge--dark", className]}>
   <div class="home-badge__inner">
     {kind === "from" ? (
       <>
@@ -51,6 +53,16 @@ const copy = getHomeCopy(lang);
     padding-inline: 0.65rem 0.8rem;
     border: 1px solid #c9c5d0;
     border-radius: 13px;
+  }
+
+  .home-badge--dark {
+    background: var(--color-black);
+    box-shadow: none;
+    color: var(--color-white);
+  }
+
+  .home-badge--dark .home-badge__inner {
+    border-color: transparent;
   }
 
   .home-badge__label {
