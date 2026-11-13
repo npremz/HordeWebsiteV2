@@ -65,7 +65,14 @@ const SHELL_COAT_ROUGHNESS = 0.1;
 /** Lumière du dessus : position, intensité, douceur du bord de l'ombre. */
 const TOP_LIGHT_POS = new Vector3(-260, 940, 420);
 const TOP_LIGHT_INTENSITY = 1.15;
-const SHADOW_SOFTNESS = 9;
+/**
+ * Ombre VSM : son flou est le poste le plus cher du rendu (deux passes plein cadre sur la
+ * carte d'ombre, quelle que soit la taille de la bulle). Le rayon est en texels : carte et
+ * rayon se règlent ensemble pour garder la même douceur à l'écran.
+ */
+const SHADOW_MAP_SIZE = 512;
+const SHADOW_SOFTNESS = 4.5;
+const SHADOW_BLUR_SAMPLES = 8;
 /** Lumière d'ambiance : ciel clair, sol sombre et chaud, pour un dégradé doux de haut en bas. */
 const AMBIENT_INTENSITY = 0.36;
 const ENV_INTENSITY = 0.42;
@@ -88,6 +95,15 @@ const SMOOTH_ANGLE = 50;
 const CAMERA_FOV = 26;
 const CAMERA_POS = new Vector3(0, 394, 585);
 const CAMERA_TARGET = new Vector3(0, 392, 0);
+
+/**
+ * Rendu à la demande : on ne redessine que si le robot a bougé d'au moins cette fraction de
+ * pixel écran depuis la dernière image. Au repos (respiration lente), cela divise le nombre
+ * d'images par trois ou plus sans différence visible ; en mouvement, on reste à 60 i/s.
+ */
+const REDRAW_THRESHOLD_PX = 0.1;
+/** Bras de levier (unités du modèle) pour convertir une rotation de la tête en déplacement. */
+const HEAD_RADIUS = 170;
 
 /** Le modèle lève le bras droit : on rabat l'épaule puis le bras, en miroir de l'autre côté. */
 const SHOULDER_PIVOT = new Vector3(-30, 268, 0);
@@ -147,7 +163,7 @@ function createGlassStudio(): Scene {
 }
 
 export async function createBody(container: HTMLElement, faceCanvas: HTMLCanvasElement): Promise<Body> {
-  const renderer = new WebGLRenderer({ antialias: true, alpha: true, powerPreference: 'high-performance' });
+  const renderer = new WebGLRenderer({ antialias: false, alpha: true });
   renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
   renderer.outputColorSpace = SRGBColorSpace;
   // Neutre (Khronos PBR) : restitue la couleur du modèle sans la délaver.
@@ -169,7 +185,7 @@ export async function createBody(container: HTMLElement, faceCanvas: HTMLCanvasE
   key.position.copy(TOP_LIGHT_POS);
   key.target.position.copy(CAMERA_TARGET);
   key.castShadow = true;
-  key.shadow.mapSize.set(1024, 1024);
+  key.shadow.mapSize.set(SHADOW_MAP_SIZE, SHADOW_MAP_SIZE);
   key.shadow.camera.left = -280;
   key.shadow.camera.right = 280;
   key.shadow.camera.top = 280;
@@ -177,7 +193,7 @@ export async function createBody(container: HTMLElement, faceCanvas: HTMLCanvasE
   key.shadow.camera.near = 100;
   key.shadow.camera.far = 1300;
   key.shadow.radius = SHADOW_SOFTNESS;
-  key.shadow.blurSamples = 16;
+  key.shadow.blurSamples = SHADOW_BLUR_SAMPLES;
   key.shadow.bias = -0.0004;
   key.shadow.normalBias = 2.5;
   scene.add(key, key.target);
@@ -397,6 +413,13 @@ export async function createBody(container: HTMLElement, faceCanvas: HTMLCanvasE
   composer.addPass(occlusion);
   composer.addPass(new OutputPass());
 
+  // Hauteur visible au niveau du robot, pour convertir les unités du modèle en pixels.
+  const visibleHeight = 2 * Math.tan((CAMERA_FOV * Math.PI) / 360) * CAMERA_POS.distanceTo(CAMERA_TARGET);
+  let pixelsPerUnit = 1;
+  let dirty = true;
+  const pose: BodyPose = { yaw: 0, pitch: 0, roll: 0, lift: 0 };
+  const drawn: BodyPose = { yaw: 0, pitch: 0, roll: 0, lift: 0 };
+
   const resize = () => {
     const width = Math.max(container.clientWidth, 1);
     const height = Math.max(container.clientHeight, 1);
@@ -404,25 +427,53 @@ export async function createBody(container: HTMLElement, faceCanvas: HTMLCanvasE
     composer.setSize(width, height);
     camera.aspect = width / height;
     camera.updateProjectionMatrix();
+    pixelsPerUnit = (height * renderer.getPixelRatio()) / visibleHeight;
+    dirty = true;
   };
   resize();
 
+  // Contexte perdu puis restauré (onglet en veille, pilote) : il faut redessiner.
+  const onRestored = () => {
+    dirty = true;
+  };
+  canvas.addEventListener('webglcontextrestored', onRestored);
+
   return {
     canvas,
-    apply(pose) {
+    apply(next) {
+      pose.yaw = next.yaw;
+      pose.pitch = next.pitch;
+      pose.roll = next.roll;
+      pose.lift = next.lift;
+    },
+    faceChanged() {
+      texture.needsUpdate = true;
+      dirty = true;
+    },
+    render() {
+      if (!dirty) {
+        const turn = Math.max(
+          Math.abs(pose.yaw - drawn.yaw),
+          Math.abs(pose.pitch - drawn.pitch),
+          Math.abs(pose.roll - drawn.roll),
+        );
+        const moved = (turn * HEAD_RADIUS + Math.abs(pose.lift - drawn.lift)) * pixelsPerUnit;
+        if (moved < REDRAW_THRESHOLD_PX) return;
+      }
+      dirty = false;
+      drawn.yaw = pose.yaw;
+      drawn.pitch = pose.pitch;
+      drawn.roll = pose.roll;
+      drawn.lift = pose.lift;
       headPivot.rotation.set(pose.pitch, pose.yaw, pose.roll);
       rig.rotation.y = pose.yaw * 0.2;
       rig.rotation.z = pose.roll * 0.12;
       rig.position.y = pose.lift;
-    },
-    faceChanged() {
-      texture.needsUpdate = true;
-    },
-    render() {
       composer.render();
     },
     resize,
     dispose() {
+      canvas.removeEventListener('webglcontextrestored', onRestored);
       canvas.remove();
       scene.traverse((object) => {
         const mesh = object as Mesh;

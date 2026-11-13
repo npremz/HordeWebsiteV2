@@ -6,7 +6,7 @@ import type { Locale } from '../../i18n';
  */
 const fr = {
   srTitle: 'Contacter Horde Agence',
-  arthurName: 'A.R.T.H.U.R:',
+  arthurName: 'A.R.T.H.U.R',
   arthurLabel: 'Arthur, le robot de Horde',
   sideTagline: ['Human-first,', 'IA secondly.'],
   sideSince: 'Since 2026',
@@ -29,18 +29,20 @@ const fr = {
     team: '[Rejoindre l’équipe]',
     word: '[Petit mot]',
   },
+  /** Intitulé du message additionnel saisi à la confirmation, dans l'e-mail envoyé. */
+  extraHeading: 'Message additionnel :',
   questions: {
     intent: 'Choisis une piste, je m’occupe du reste.',
     besoin: 'Beau programme. De quoi as-tu besoin, précisément ?',
     objectifProject: 'Raconte-moi l’objectif : qu’est-ce que tu as en tête ?',
-    objectifTeam: 'Bonne idée. Parle-moi de toi : ton métier, ce que tu aimerais faire ici, un lien vers ton travail.',
+    objectifTeam: 'Bonne idée. Parle-moi de toi, et d’un lien vers ton travail.',
     objectifWord: 'Je t’écoute. Quel est ton message ?',
     nom: 'C’est noté. Et toi, comment t’appelles-tu ?',
     societe: 'Enchanté, {name}. Tu représentes une société ?',
     email: 'À quelle adresse la Horde peut te répondre ?',
     confirm: 'Tout est là. Je transmets à la Horde ?',
     sending: 'Je transmets…',
-    done: 'C’est transmis, {name}. Un humain de la Horde prend le relais.',
+    done: 'C’est transmis, {name}. Un humain prend le relais.',
     failed: 'Aïe, l’envoi a échoué. Réessaie, ou écris-nous directement.',
   },
   fields: {
@@ -55,7 +57,10 @@ const fr = {
   prompt: {
     label: 'Ta réponse',
     choose: 'Choisis une option ci-dessus',
-    review: 'Un clic sur une ligne pour la corriger',
+    review: 'Un clic sur une ligne pour la corriger. Un dernier mot ? Ajoute-le ci-dessous (facultatif).',
+    freeLabel: 'Message libre',
+    freeChoose: 'Ou écris-moi directement ce que tu veux.',
+    freeExtra: 'Autre chose à ajouter ? Facultatif, ça partira avec ton message.',
     done: 'Conversation terminée',
     placeholders: {
       idle: 'Que veux-tu d’autre, homo sapiens ?',
@@ -75,7 +80,6 @@ const fr = {
     send: 'Envoyer',
     sending: 'Envoi…',
     back: 'Retour',
-    restart: 'Recommencer',
     again: 'Nouveau message',
     edit: 'Modifier',
     bookCall: 'Réserver un appel',
@@ -85,6 +89,7 @@ const fr = {
   asides: {
     copied: 'Adresse copiée. À toi de jouer.',
     skipped: 'Pas de société, pas de problème.',
+    extraKept: 'C’est noté, ça partira avec ton message.',
   },
   noscript: 'Ce formulaire a besoin de JavaScript. Écrivez-nous à',
 };
@@ -93,7 +98,7 @@ type ContactCopy = typeof fr;
 
 const en: ContactCopy = {
   srTitle: 'Contact Horde Agence',
-  arthurName: 'A.R.T.H.U.R:',
+  arthurName: 'A.R.T.H.U.R',
   arthurLabel: 'Arthur, Horde’s robot',
   sideTagline: ['Human-first,', 'AI secondly.'],
   sideSince: 'Since 2026',
@@ -115,18 +120,19 @@ const en: ContactCopy = {
     team: '[Join the team]',
     word: '[Quick word]',
   },
+  extraHeading: 'Additional message:',
   questions: {
     intent: 'Pick a path, I’ll handle the rest.',
     besoin: 'Sounds good. What do you need, exactly?',
     objectifProject: 'Tell me about the goal: what do you have in mind?',
-    objectifTeam: 'Good idea. Tell me about you: your craft, what you’d like to do here, a link to your work.',
+    objectifTeam: 'Good idea. Tell me about you, with a link to your work.',
     objectifWord: 'I’m listening. What’s your message?',
     nom: 'Noted. And you, what’s your name?',
     societe: 'Nice to meet you, {name}. Do you represent a company?',
     email: 'Where can the Horde write back to you?',
     confirm: 'It’s all there. Shall I pass it on to the Horde?',
     sending: 'Passing it on…',
-    done: 'Delivered, {name}. A human from the Horde takes it from here.',
+    done: 'Delivered, {name}. A human takes it from here.',
     failed: 'Ouch, sending failed. Try again, or write to us directly.',
   },
   fields: {
@@ -141,7 +147,10 @@ const en: ContactCopy = {
   prompt: {
     label: 'Your answer',
     choose: 'Pick an option above',
-    review: 'Click a line to fix it',
+    review: 'Click a line to fix it. One last word? Add it below (optional).',
+    freeLabel: 'Free message',
+    freeChoose: 'Or just write me whatever you want.',
+    freeExtra: 'Anything else to add? Optional, it’ll go with your message.',
     done: 'Conversation over',
     placeholders: {
       idle: 'What else do you want, homo sapiens?',
@@ -161,7 +170,6 @@ const en: ContactCopy = {
     send: 'Send',
     sending: 'Sending…',
     back: 'Back',
-    restart: 'Start over',
     again: 'New message',
     edit: 'Edit',
     bookCall: 'Book a call',
@@ -171,6 +179,7 @@ const en: ContactCopy = {
   asides: {
     copied: 'Address copied. Your move.',
     skipped: 'No company, no problem.',
+    extraKept: 'Noted, it’ll go with your message.',
   },
   noscript: 'This form needs JavaScript. Write to us at',
 };
