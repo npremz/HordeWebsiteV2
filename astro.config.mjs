@@ -138,11 +138,15 @@ export default defineConfig({
     },
     server: {
       strictPort: true,
-      hmr: {
-        protocol: 'ws',
-        host: 'localhost',
-        clientPort: PORT,
-      },
+      // DEV_PUBLIC_HOST : serveur de dev exposé derrière un reverse proxy HTTPS (ex. preview VPS).
+      allowedHosts: process.env.DEV_PUBLIC_HOST ? [process.env.DEV_PUBLIC_HOST] : undefined,
+      hmr: process.env.DEV_PUBLIC_HOST
+        ? { protocol: 'wss', host: process.env.DEV_PUBLIC_HOST, clientPort: 443 }
+        : {
+            protocol: 'ws',
+            host: 'localhost',
+            clientPort: PORT,
+          },
     },
     build: {
       reportCompressedSize: false,

@@ -12,6 +12,7 @@ import ArthurAvatar from "./home/svg/ArthurAvatar.astro";
 import HomeIcon from "./home/svg/HomeIcon.astro";
 import HomeBadge from "./home/ui/HomeBadge.astro";
 import footerMark from "../assets/svg/contact/footer-mark.svg?raw";
+import footerTalk from "../assets/svg/footer-talk.svg?raw";
 
 interface Props {
 	lang?: Locale;
@@ -36,16 +37,30 @@ const contactHref = `/${lang}/contact/`;
 const isMail = (url: string) => url.startsWith("mailto:");
 const copyLabel = lang === "fr" ? "Copier l’adresse e-mail" : "Copy the email address";
 const copiedLabel = lang === "fr" ? "Copié" : "Copied";
+
+/**
+ * Ligne du footer : prolongation exacte de la barre horizontale du logo (x 0→191, y 65→67),
+ * dessinée dans le même SVG, même épaisseur et même hauteur, jusqu'aux bords de l'écran.
+ * Les segments chevauchent la barre d'une unité pour éviter toute couture à la jonction.
+ */
+const LINE_LENGTH = 6000; // en unités du viewBox, assez pour atteindre les bords de l'écran
+const markSvg = footerMark
+	.replace(/<svg([^>]*)>/, (_, attrs) =>
+		`<svg${attrs} overflow="visible">` +
+		`<path class="site-footer__line" d="M1 65H${-LINE_LENGTH}V67H1Z" fill="currentColor" />` +
+		`<path class="site-footer__line" d="M190 65H${191 + LINE_LENGTH}V67H190Z" fill="currentColor" />`,
+	);
 ---
 
 <footer class="site-footer">
+	<p class="site-footer__title">
+		<a href={contactHref} class="site-footer__title-link" title={copy.talk.ctaLabel}>
+			<Fragment set:html={footerTalk} />
+			<span class="sr-only">{copy.talk.title} — {copy.talk.ctaLabel}</span>
+		</a>
+	</p>
+
 	<div class="site-footer__inner">
-		<p class="site-footer__title">
-			<a href={contactHref} class="site-footer__title-link" title={copy.talk.ctaLabel}>
-				<span aria-hidden="true">{copy.talk.title}</span>
-				<span class="sr-only">{copy.talk.title} — {copy.talk.ctaLabel}</span>
-			</a>
-		</p>
 
 		<div class="site-footer__columns">
 			{
@@ -102,7 +117,7 @@ const copiedLabel = lang === "fr" ? "Copié" : "Copied";
 		<div class="site-footer__band">
 			<HomeBadge lang={lang} kind="from" tone="dark" class="site-footer__badge" />
 			<a href={`/${lang}/`} class="site-footer__mark" aria-label={copy.brand.name} title={copy.brand.name}>
-				<Fragment set:html={footerMark} />
+				<Fragment set:html={markSvg} />
 			</a>
 			<HomeBadge lang={lang} kind="since" tone="dark" class="site-footer__badge" />
 		</div>
@@ -127,10 +142,14 @@ const copiedLabel = lang === "fr" ? "Copié" : "Copied";
 </footer>
 
 <style>
+	/* Le footer sort toujours de son conteneur : pleine largeur d'écran, quelle que soit la page.
+	   Le contenu (.site-footer__inner) respecte la largeur max du site ; seuls le « Let's Talk »
+	   et la ligne du logo vont d'un bord à l'autre. */
 	.site-footer {
 		position: relative;
 		z-index: 0;
-		container-type: inline-size;
+		width: 100vw;
+		margin-inline: calc(50% - 50vw);
 		color: var(--color-black);
 	}
 
@@ -146,27 +165,66 @@ const copiedLabel = lang === "fr" ? "Copié" : "Copied";
 		transform: translateX(-50%);
 	}
 
+	/* Même largeur que le Container du site : gouttière en dessous de lg, 1320px max au-delà. */
 	.site-footer__inner {
-		padding: 4rem 0 2.5rem;
+		margin-inline: auto;
+		padding: 0 var(--gutter) 2.5rem;
+		container-type: inline-size;
 	}
 
+	/* « Let's Talk » bord à bord, avec l'animation de master : bandeau noir qui monte, texte en blanc. */
 	.site-footer__title {
-		font-family: var(--font-sans);
-		font-size: 25.5cqw;
-		line-height: 0.9;
-		letter-spacing: -0.055em;
-		white-space: nowrap;
-		text-align: center;
+		padding: 4rem 1rem 0;
 	}
 
 	.site-footer__title-link {
-		display: inline-block;
-		transition: letter-spacing 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+		position: relative;
+		display: block;
+		cursor: pointer;
 	}
 
-	@media (hover: hover) {
-		.site-footer__title-link:hover {
-			letter-spacing: -0.07em;
+	.site-footer__title-link::before {
+		content: "";
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		z-index: -1;
+		width: calc(100vw - 32px);
+		height: calc(100% + 60px);
+		background: var(--color-black);
+		transform: translate(-50%, -50%) scaleY(0);
+		transform-origin: center bottom;
+		transition: transform 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+	}
+
+	.site-footer__title-link :global(svg) {
+		display: block;
+		width: 100%;
+		height: auto;
+		transition: color 0.15s ease-out 0.1s;
+	}
+
+	.site-footer__title-link:hover::before {
+		transform: translate(-50%, -50%) scaleY(1);
+	}
+
+	.site-footer__title-link:hover :global(svg) {
+		color: var(--color-button-white);
+	}
+
+	@media (min-width: 640px) {
+		.site-footer__title {
+			padding-inline: 2rem;
+		}
+
+		.site-footer__title-link::before {
+			width: calc(100vw - 60px);
+		}
+	}
+
+	@media (min-width: 768px) {
+		.site-footer__title {
+			padding-inline: 4rem;
 		}
 	}
 
@@ -263,20 +321,10 @@ const copiedLabel = lang === "fr" ? "Copié" : "Copied";
 		margin-top: 3.5rem;
 	}
 
-	.site-footer__band::before {
-		content: "";
-		position: absolute;
-		left: 50%;
-		top: 50%;
-		width: 100vw;
-		height: 1px;
-		background: var(--color-black);
-		transform: translateX(-50%);
-	}
-
 	.site-footer__band :global(.site-footer__badge) {
 		display: none;
 		position: relative;
+		z-index: 1;
 		border-radius: 10px;
 	}
 
@@ -290,13 +338,11 @@ const copiedLabel = lang === "fr" ? "Copié" : "Copied";
 		display: block;
 		width: 100%;
 		height: auto;
-		transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
 	}
 
-	@media (hover: hover) {
-		.site-footer__mark:hover :global(svg) {
-			transform: rotate(180deg);
-		}
+	/* La ligne déborde du SVG : elle ne doit pas déclencher le survol du logo. */
+	.site-footer__mark :global(.site-footer__line) {
+		pointer-events: none;
 	}
 
 	.site-footer__bottom {
@@ -365,7 +411,7 @@ const copiedLabel = lang === "fr" ? "Copié" : "Copied";
 	}
 
 	@media (min-width: 640px) {
-		.site-footer__inner {
+		.site-footer__title {
 			padding-top: 5rem;
 		}
 
@@ -392,8 +438,13 @@ const copiedLabel = lang === "fr" ? "Copié" : "Copied";
 	}
 
 	@media (min-width: 1024px) {
+		.site-footer__title {
+			padding-top: 7rem;
+		}
+
 		.site-footer__inner {
-			padding: 7rem 0 3.25rem;
+			max-width: 1320px;
+			padding: 0 0 3.25rem;
 		}
 
 		.site-footer__columns {

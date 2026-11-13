@@ -1,0 +1,21 @@
+# Serveur de dev (astro dev, rechargement à chaud) derrière horde.dev.nicolas-premont.be.
+# Usage : docker compose -f docker-compose.dev.yml up -d
+# Remplace le conteneur de preview buildé (même port) : arrêter l'un avant de lancer l'autre.
+services:
+  hordev2-dev:
+    image: node:22-alpine
+    container_name: horde-dev
+    working_dir: /app
+    command: sh -c "npm ci --no-audit --no-fund && npx astro dev --host 0.0.0.0 --port 4328"
+    ports:
+      - "127.0.0.1:4328:4328"
+    environment:
+      - PORT=4328
+      - SITE_ENV=staging
+      - DEV_PUBLIC_HOST=horde.dev.nicolas-premont.be
+      - RESEND_API_KEY=${RESEND_API_KEY:-}
+    volumes:
+      - .:/app
+      - node_modules:/app/node_modules
+volumes:
+  node_modules:
