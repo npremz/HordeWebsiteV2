@@ -43,7 +43,8 @@ const config = {
 };
 
 // Graduations décoratives : longueur de chaque trait, en %.
-const ticks = [100, 62, 62, 100, 38, 62, 100, 100, 62, 38, 100, 62, 62, 100, 38, 62, 100, 62, 100, 38, 62, 100];
+// Égaliseur de la voix d'Arthur : nombre de barres.
+const ticks = Array.from({ length: 22 });
 ---
 
 <section class="cc" data-contact-console data-config={JSON.stringify(config)}>
@@ -85,13 +86,15 @@ const ticks = [100, 62, 62, 100, 38, 62, 100, 100, 62, 38, 100, 62, 62, 100, 38,
       <div class="cc__stage">
         <div class="cc__main">
           <div class="cc__chips" data-cc-chips role="group" aria-label={copy.prompt.choose}></div>
+          <!-- Tablette et desktop : aux étapes de saisie, le champ vient ici, sous la question. -->
+          <div class="cc__slot cc__slot--top" data-cc-slot-top></div>
           <div class="cc__recap" data-cc-recap></div>
           <noscript>
             <p class="cc__noscript">{copy.noscript} <a href={`mailto:${email}`}>{email}</a>.</p>
           </noscript>
         </div>
         <div class="cc__ruler" data-cc-ruler aria-hidden="true">
-          {ticks.map((length) => <i style={`--l:${length}%`}></i>)}
+          {ticks.map(() => <i></i>)}
           <b></b>
         </div>
       </div>
@@ -114,20 +117,41 @@ const ticks = [100, 62, 62, 100, 38, 62, 100, 100, 62, 38, 100, 62, 62, 100, 38,
           </div>
         </div>
 
-        <p class="cc__label" data-cc-label>{copy.prompt.choose}</p>
-        <p class="cc__aside" data-cc-aside role="status"></p>
+        <div class="cc__slot cc__slot--bottom" data-cc-slot-bottom>
+          <div class="cc__prompt" data-cc-prompt>
+            <p class="cc__label" data-cc-label>{copy.prompt.choose}</p>
+            <p class="cc__aside" data-cc-aside role="status"></p>
 
-        <label class="sr-only" for="cc-input" data-cc-input-label>{copy.prompt.label}</label>
-        <textarea
-          id="cc-input"
-          class="cc__input"
-          rows="1"
-          placeholder={copy.prompt.placeholders.idle}
-          autocomplete="off"
-          autocapitalize="sentences"
-          spellcheck="false"
-          data-cc-input
-          data-arthur-focus="none"></textarea>
+            <label class="sr-only" for="cc-input" data-cc-input-label>{copy.prompt.label}</label>
+            <textarea
+              id="cc-input"
+              class="cc__input"
+              rows="1"
+              placeholder={copy.prompt.placeholders.idle}
+              autocomplete="off"
+              autocapitalize="sentences"
+              spellcheck="false"
+              data-cc-input
+              data-arthur-focus="none"></textarea>
+          </div>
+          <!-- Tablette et desktop : champ libre, toujours visible ; son contenu part avec le message. -->
+          <div class="cc__free">
+            <p class="cc__label" data-cc-free-label>{copy.prompt.freeChoose}</p>
+            <p class="cc__aside" data-cc-free-aside role="status"></p>
+            <label class="sr-only" for="cc-free">{copy.prompt.freeLabel}</label>
+            <textarea
+              id="cc-free"
+              class="cc__input"
+              rows="1"
+              name="extra"
+              placeholder={copy.prompt.placeholders.idle}
+              autocomplete="off"
+              autocapitalize="sentences"
+              spellcheck="false"
+              data-cc-free
+              data-arthur-focus="none"></textarea>
+          </div>
+        </div>
 
         <div class="cc__dock">
           <div class="cc__card">
@@ -135,12 +159,6 @@ const ticks = [100, 62, 62, 100, 38, 62, 100, 100, 62, 38, 100, 62, 62, 100, 38,
               {copy.actions.bookCall}
               <svg viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2.5 9.5 9.5 2.5M4 2.5h5.5V8" stroke="currentColor" stroke-width="1.1" /></svg>
             </a>
-          </div>
-          <div class="cc__card">
-            <button type="button" class="cc__pill" data-cc-restart>
-              {copy.actions.restart}
-              <svg viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2.2 6a3.8 3.8 0 1 0 1.2-2.8" stroke="currentColor" stroke-width="1.1" /><path d="M2 1.6v2h2" stroke="currentColor" stroke-width="1.1" /></svg>
-            </button>
           </div>
           <div class="cc__sight" aria-hidden="true"><Fragment set:html={crosshair} /></div>
           <button type="button" class="cc__tile cc__tile--back" data-cc-back disabled>
@@ -282,6 +300,7 @@ const ticks = [100, 62, 62, 100, 38, 62, 100, 100, 62, 38, 100, 62, 62, 100, 38,
   /* ---------- Panneau principal ---------- */
 
   .cc__panel {
+    position: relative;
     display: flex;
     flex-direction: column;
     min-width: 0;
@@ -452,7 +471,8 @@ const ticks = [100, 62, 62, 100, 38, 62, 100, 100, 62, 38, 100, 62, 62, 100, 38,
     border-top: 1px solid var(--cc-line);
     text-align: left;
     cursor: pointer;
-    animation: cc-pop 0.5s cubic-bezier(0.16, 1, 0.3, 1) backwards;
+    animation: cc-pop 0.55s cubic-bezier(0.16, 1, 0.3, 1) backwards;
+    animation-delay: calc(120ms + var(--i, 0) * 60ms);
   }
 
   .cc__row:last-child {
@@ -499,7 +519,7 @@ const ticks = [100, 62, 62, 100, 38, 62, 100, 100, 62, 38, 100, 62, 62, 100, 38,
     text-decoration: underline;
   }
 
-  /* Graduations : progression de la conversation. */
+  /* Égaliseur : barres au repos réduites au minimum, animées quand Arthur parle. */
   .cc__ruler {
     order: 9;
     display: flex;
@@ -510,21 +530,87 @@ const ticks = [100, 62, 62, 100, 38, 62, 100, 100, 62, 38, 100, 62, 62, 100, 38,
   }
 
   .cc__ruler i {
+    --v: 0.14;
     width: 1px;
-    height: var(--l);
+    height: 100%;
     background: #4a4c50;
-    transition: background-color 0.4s ease;
-    transition-delay: calc(var(--n, 0) * 18ms);
+    transform: scaleY(var(--v));
+    transform-origin: bottom;
+    transition:
+      transform 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+      background-color 0.4s ease;
   }
 
-  .cc__ruler i.is-on {
+  .cc[data-speaking] .cc__ruler i {
     background: var(--color-white);
+    transition: background-color 0.2s ease;
   }
 
   .cc__ruler b {
     width: 3px;
     height: 100%;
     background: #5c5e5f;
+  }
+
+  /* Champ de réponse sous la question (tablette et desktop), au même endroit que les puces. */
+  /* Contient les marges de ses enfants : sa hauteur mesurée est la vraie place occupée. */
+  .cc__prompt {
+    display: flow-root;
+  }
+
+  .cc__slot--top:empty {
+    display: none;
+  }
+
+  /* Champ libre : réservé à la tablette et au desktop (en mobile, le prompt unique joue ce rôle). */
+  .cc__free {
+    display: none;
+  }
+
+  @media (min-width: 640px) {
+    .cc__free {
+      display: block;
+    }
+
+    /* Le champ du haut n'apparaît qu'aux étapes de saisie. */
+    .cc:not([data-mode="type"]) .cc__slot--top {
+      display: none;
+    }
+  }
+
+  .cc__slot--top {
+    max-width: 44rem;
+  }
+
+  .cc__slot--top .cc__prompt {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .cc__slot--top .cc__label {
+    margin-bottom: 0.7rem;
+  }
+
+  .cc__slot--top .cc__aside {
+    order: 2;
+    min-height: 0;
+    margin: 0.6rem 0 0;
+  }
+
+  .cc__slot--top .cc__aside:empty {
+    display: none;
+  }
+
+  /* Puces qui s'effacent pendant le passage à la saisie (copie posée par-dessus). */
+  .cc__ghost {
+    position: absolute;
+    z-index: 2;
+    margin: 0;
+    pointer-events: none;
+  }
+
+  .cc__ghost .cc__chip {
+    animation: none;
   }
 
   /* ---------- Prompt ---------- */
@@ -537,13 +623,9 @@ const ticks = [100, 62, 62, 100, 38, 62, 100, 100, 62, 38, 100, 62, 62, 100, 38,
     border-top: 1px solid var(--cc-line);
   }
 
+  /* Sur mobile, agent et compteur cèdent la place : question et réponse restent visibles ensemble. */
   .cc__meter {
-    display: flex;
-    flex-direction: row-reverse;
-    align-items: flex-start;
-    justify-content: space-between;
-    gap: 1rem;
-    margin-bottom: 0.5rem;
+    display: none;
   }
 
   .cc__agent {
@@ -816,6 +898,128 @@ const ticks = [100, 62, 62, 100, 38, 62, 100, 100, 62, 38, 100, 62, 62, 100, 38,
     outline-offset: 2px;
   }
 
+  /* ---------- Mobile : en-tête sur la bande, Arthur à gauche de la question ---------- */
+
+  @media (max-width: 639px) {
+    .cc {
+      /* La bande se lit comme une grille de 3 colonnes ; Arthur occupe la première. */
+      --cc-gutter: 0.65rem;
+      --cc-col: calc((100cqw - 1.5rem - 2 * var(--cc-gutter)) / 3);
+      /* Question : 2 lignes grises en haut, jusqu'à 3 lignes blanches en bas. */
+      --cc-q-line: 1.275rem;
+      --cc-q-gap: 0.6rem;
+      --cc-dialog-h: calc(5 * var(--cc-q-line) + var(--cc-q-gap));
+      --cc-head-top: 1.1rem;
+      --cc-band: calc(var(--cc-top) + var(--cc-head-top) + var(--cc-dialog-h) + 0.6rem);
+      container-type: inline-size;
+    }
+
+    /* Filets aux bords des colonnes ; liseré en pied de bande seulement hors du panneau (le texte d'Arthur reste sur fond noir). */
+    .cc__band {
+      --cc-rule: linear-gradient(#26282b, #26282b);
+      --cc-foot: linear-gradient(#2b2c2e, #2b2c2e);
+      background-image:
+        var(--cc-rule), var(--cc-rule), var(--cc-rule), var(--cc-rule), var(--cc-rule), var(--cc-rule),
+        var(--cc-foot), var(--cc-foot);
+      background-repeat: no-repeat;
+      background-size:
+        1px 100%, 1px 100%, 1px 100%, 1px 100%, 1px 100%, 1px 100%,
+        0.75rem 0.55rem, 0.75rem 0.55rem;
+      background-position:
+        0.75rem 0,
+        calc(0.75rem + var(--cc-col) - 1px) 0,
+        calc(0.75rem + var(--cc-col) + var(--cc-gutter)) 0,
+        calc(0.75rem + 2 * var(--cc-col) + var(--cc-gutter) - 1px) 0,
+        calc(0.75rem + 2 * var(--cc-col) + 2 * var(--cc-gutter)) 0,
+        calc(100% - 0.75rem - 1px) 0,
+        0 100%,
+        100% 100%;
+    }
+
+    /* Arthur et le panneau partagent la première ligne de la grille. */
+    .cc__grid {
+      grid-template-columns: var(--cc-col) minmax(0, 1fr);
+    }
+
+    .cc__side {
+      grid-area: 1 / 1;
+      align-self: start;
+      z-index: 1;
+    }
+
+    /* Le panneau laisse voir la bande (et ses filets) derrière l'en-tête. */
+    .cc__panel {
+      grid-area: 1 / 1 / 2 / 3;
+      background: linear-gradient(transparent calc(var(--cc-band) - var(--cc-top)), var(--color-black) 0);
+    }
+
+    .cc__arthur {
+      box-sizing: content-box;
+      height: var(--cc-dialog-h);
+      justify-content: flex-end;
+      align-items: center;
+      gap: 0.85rem;
+      padding: var(--cc-head-top) 0 0;
+    }
+
+    .cc__bubble .arthur-bubble {
+      --arthur-size: 3.9rem;
+    }
+
+    .cc__name {
+      letter-spacing: 0.16em;
+      white-space: nowrap;
+      line-height: 1;
+    }
+
+    .cc__head {
+      align-items: flex-start;
+      gap: 0.5rem;
+      padding: var(--cc-head-top) 0 1.35rem calc(var(--cc-col) + var(--cc-gutter) - 0.75rem + 1px);
+    }
+
+    /* Hauteur fixe : la question blanche est ancrée en bas et s'agrandit vers le haut en s'écrivant. */
+    .cc__dialog {
+      display: flex;
+      flex: 1;
+      flex-direction: column;
+      height: var(--cc-dialog-h);
+      font-size: 1.0625rem;
+      line-height: var(--cc-q-line);
+    }
+
+    .cc__prev {
+      display: -webkit-box;
+      flex: 0 1 auto;
+      min-height: 0;
+      margin: 0;
+      overflow: hidden;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 2;
+    }
+
+    .cc__question {
+      flex: none;
+      min-height: 0;
+      margin-top: auto;
+      padding-top: var(--cc-q-gap);
+    }
+
+    .cc__back-round {
+      width: 2.5rem;
+      height: 2.5rem;
+      margin-right: -0.75rem;
+    }
+  }
+
+  /* Petits téléphones : le nom tient dans la colonne d'Arthur. */
+  @media (max-width: 359px) {
+    .cc__name {
+      font-size: 0.6875rem;
+      letter-spacing: 0.1em;
+    }
+  }
+
   /* ---------- Tablette ---------- */
 
   @media (min-width: 640px) {
@@ -846,6 +1050,10 @@ const ticks = [100, 62, 62, 100, 38, 62, 100, 100, 62, 38, 100, 62, 62, 100, 38,
 
     .cc__rail {
       display: flex;
+    }
+
+    .cc__name::after {
+      content: ":";
     }
 
     .cc__panel {
@@ -887,8 +1095,10 @@ const ticks = [100, 62, 62, 100, 38, 62, 100, 100, 62, 38, 100, 62, 62, 100, 38,
     }
 
     .cc__ruler i {
-      width: var(--l);
+      width: 100%;
       height: 1px;
+      transform: scaleX(var(--v));
+      transform-origin: right;
     }
 
     .cc__ruler b {
@@ -897,6 +1107,11 @@ const ticks = [100, 62, 62, 100, 38, 62, 100, 100, 62, 38, 100, 62, 62, 100, 38,
     }
 
     .cc__meter {
+      display: flex;
+      flex-direction: row-reverse;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 1rem;
       margin-bottom: 0.75rem;
     }
 
@@ -909,7 +1124,7 @@ const ticks = [100, 62, 62, 100, 38, 62, 100, 100, 62, 38, 100, 62, 62, 100, 38,
     }
 
     .cc__dock {
-      grid-template-columns: auto auto 1fr auto auto;
+      grid-template-columns: auto 1fr auto auto;
       align-items: stretch;
     }
 
@@ -929,7 +1144,7 @@ const ticks = [100, 62, 62, 100, 38, 62, 100, 100, 62, 38, 100, 62, 62, 100, 38,
     }
 
     .cc__tile--back {
-      grid-column: 4;
+      grid-column: 3;
     }
   }
 
@@ -987,17 +1202,17 @@ const ticks = [100, 62, 62, 100, 38, 62, 100, 100, 62, 38, 100, 62, 62, 100, 38,
       font-size: 0.9375rem;
     }
 
-    .cc__label {
+    .cc__slot--bottom .cc__label {
       margin-top: 7.4rem;
       max-width: calc(100% - 26rem);
     }
 
-    .cc__aside {
+    .cc__slot--bottom .cc__aside {
       margin: 0.9rem 0 1.1rem;
       max-width: calc(100% - 13rem);
     }
 
-    .cc__input {
+    .cc__slot--bottom .cc__input {
       position: relative;
       background: var(--color-black);
     }
@@ -1124,6 +1339,9 @@ const ticks = [100, 62, 62, 100, 38, 62, 100, 100, 62, 38, 100, 62, 62, 100, 38,
     const recapEl = $("[data-cc-recap]");
     const labelEl = $("[data-cc-label]");
     const asideEl = $("[data-cc-aside]");
+    const freeInput = $<HTMLTextAreaElement>("[data-cc-free]");
+    const freeLabel = $("[data-cc-free-label]");
+    const freeAside = $("[data-cc-free-aside]");
     const modeEl = $("[data-cc-mode]");
     const input = $<HTMLTextAreaElement>("[data-cc-input]");
     const inputLabel = $("[data-cc-input-label]");
@@ -1135,7 +1353,8 @@ const ticks = [100, 62, 62, 100, 38, 62, 100, 100, 62, 38, 100, 62, 62, 100, 38,
     const dialProgress = root.querySelector<SVGCircleElement>("[data-cc-dial-progress]")!;
     const backButtons = Array.from(root.querySelectorAll<HTMLButtonElement>("[data-cc-back]"));
     const ticks = Array.from(root.querySelectorAll<HTMLElement>("[data-cc-ruler] i"));
-    ticks.forEach((tick, index) => tick.style.setProperty("--n", String(index)));
+    const IDLE_LEVEL = 0.14;
+    const levels = ticks.map(() => IDLE_LEVEL);
 
     const controller = new AbortController();
     const { signal } = controller;
@@ -1150,6 +1369,8 @@ const ticks = [100, 62, 62, 100, 38, 62, 100, 100, 62, 38, 100, 62, 62, 100, 38,
       besoin: "",
       answers: { objectif: "", nom: "", societe: "", email: "" } as Record<TextStep, string>,
       societeSeen: false,
+      /** Message additionnel, facultatif, saisi à la confirmation. */
+      extra: "",
       status: "idle" as "idle" | "sending" | "error" | "done",
       lastQuestion: copy.greeting,
     };
@@ -1219,27 +1440,95 @@ const ticks = [100, 62, 62, 100, 38, 62, 100, 100, 62, 38, 100, 62, 62, 100, 38,
 
     const react = (name: Parameters<Arthur["react"]>[0]) => arthur?.react(name);
 
-    /** Effet machine à écrire, calé sur le temps écoulé (pas sur le nombre de frames). */
-    const type = (target: HTMLElement, text: string, speed = 16) => {
+    /** Rythme de la parole d'Arthur (ms). */
+    const CHAR_MS = 28;
+    const SENTENCE_PAUSE_MS = 450;
+    const COMMA_PAUSE_MS = 160;
+    /** Temps de réaction avant chaque nouvelle phrase d'Arthur. */
+    const REPLY_DELAY_MS = 320;
+    /** Au chargement : le temps de parcourir la page avant la première question. */
+    const FIRST_DELAY_MS = 1500;
+
+    /** Égaliseur : les barres s'agitent au rythme des lettres ; energy 0 = retour au repos (pause). */
+    const speak = (now: number, char: string, energy: number) => {
+      const code = char.charCodeAt(0) || 0;
+      ticks.forEach((tick, index) => {
+        const wave = 0.5 + 0.5 * Math.sin(now * 0.017 + index * 1.7);
+        const wobble = 0.55 + 0.45 * Math.sin(now * 0.029 + index * 0.83 + code);
+        const target = IDLE_LEVEL + (1 - IDLE_LEVEL) * energy * Math.pow(wave, 0.6) * (0.4 + 0.6 * wobble);
+        levels[index] += (target - levels[index]) * 0.45;
+        tick.style.setProperty("--v", levels[index].toFixed(3));
+      });
+    };
+
+    const silence = () => {
+      delete root.dataset.speaking;
+      ticks.forEach((tick, index) => {
+        levels[index] = IDLE_LEVEL;
+        tick.style.removeProperty("--v");
+      });
+    };
+
+    /**
+     * Arthur « parle » : machine à écrire calée sur le temps écoulé, avec un temps de réaction
+     * au départ, une pause après chaque phrase et une plus courte après les virgules.
+     */
+    const type = (target: HTMLElement, text: string, delay = REPLY_DELAY_MS) => {
       window.cancelAnimationFrame(typingFrame);
+      silence();
       if (reducedMotion) {
         target.textContent = text;
         return;
       }
+      // Instant d'apparition de chaque lettre.
+      const times: number[] = [];
+      let clock = delay;
+      for (let i = 0; i < text.length; i++) {
+        clock += CHAR_MS;
+        times.push(clock);
+        const next = text.charAt(i + 1);
+        if (next === " " || next === "\u00a0") {
+          if (/[.!?…]/.test(text.charAt(i))) clock += SENTENCE_PAUSE_MS;
+          else if (/[,;:]/.test(text.charAt(i))) clock += COMMA_PAUSE_MS;
+        }
+      }
+
       const start = performance.now();
+      let count = 0;
       target.textContent = "";
       const tick = (now: number) => {
-        const count = Math.min(Math.ceil((now - start) / speed), text.length);
+        const elapsed = now - start;
+        while (count < text.length && times[count] <= elapsed) count++;
         target.textContent = text.slice(0, count);
-        if (count < text.length) typingFrame = window.requestAnimationFrame(tick);
+        if (count >= text.length) {
+          silence();
+          return;
+        }
+        if (elapsed >= delay) {
+          root.dataset.speaking = "";
+          const char = text.charAt(Math.max(count - 1, 0));
+          const pausing = count > 0 && elapsed - times[count - 1] > CHAR_MS * 2;
+          speak(now, char, pausing ? 0 : /[\s.,;:!?…’'-]/.test(char) ? 0.3 : 1);
+        }
+        typingFrame = window.requestAnimationFrame(tick);
       };
       typingFrame = window.requestAnimationFrame(tick);
     };
 
+    /** Tablette et desktop : deux champs. Le message s'affiche près de celui qui est concerné. */
+    const isWide = () => window.matchMedia("(min-width: 640px)").matches;
     const setAside = (text: string, tone: "info" | "error" = "info", html = false) => {
-      asideEl.dataset.tone = tone;
-      if (html) asideEl.innerHTML = text;
-      else asideEl.textContent = text;
+      asideEl.textContent = "";
+      freeAside.textContent = "";
+      const target = isWide() && !isTextStep(state.step) ? freeAside : asideEl;
+      target.dataset.tone = tone;
+      if (html) target.innerHTML = text;
+      else target.textContent = text;
+    };
+
+    const resizeField = (field: HTMLTextAreaElement) => {
+      field.style.height = "auto";
+      field.style.height = `${field.scrollHeight + 2}px`;
     };
 
     const resizeInput = () => {
@@ -1291,7 +1580,8 @@ const ticks = [100, 62, 62, 100, 38, 62, 100, 100, 62, 38, 100, 62, 62, 100, 38,
 
     const renderRecap = () => {
       recapEl.replaceChildren();
-      if (state.step === "done") return;
+      // Récapitulatif modifiable seulement à la confirmation : avant, le bouton Retour suffit.
+      if (state.step !== "confirm") return;
       const rows: [StepId, string, string][] = [];
       flow().forEach((step) => {
         if (step === state.step || step === "confirm" || !isAnswered(step)) return;
@@ -1302,10 +1592,11 @@ const ticks = [100, 62, 62, 100, 38, 62, 100, 100, 62, 38, 100, 62, 62, 100, 38,
         if (!value) return;
         rows.push([step, fieldLabel(step), value]);
       });
-      rows.forEach(([step, label, value]) => {
+      rows.forEach(([step, label, value], index) => {
         const row = document.createElement("button");
         row.type = "button";
         row.className = "cc__row";
+        row.style.setProperty("--i", String(index));
         row.dataset.ccEdit = step;
         row.setAttribute("aria-label", `${copy.actions.edit} — ${label} : ${value}`);
         const dt = document.createElement("span");
@@ -1331,10 +1622,15 @@ const ticks = [100, 62, 62, 100, 38, 62, 100, 100, 62, 38, 100, 62, 62, 100, 38,
       dialText.textContent = `(${current}/${total})`;
       dial.setAttribute("aria-label", `${copy.prompt.stepLabel} ${current} / ${total}`);
       dialProgress.setAttribute("stroke-dasharray", `${ratio * 100} 100`);
-      const lit = Math.round(ratio * ticks.length);
-      // La règle verticale se lit de bas en haut : on allume depuis la fin.
-      ticks.forEach((tick, tickIndex) => tick.classList.toggle("is-on", ticks.length - tickIndex <= lit));
     };
+
+    /** Le message additionnel est joint à l'objectif : il partage sa limite de longueur. */
+    const objectifBody = () => {
+      const tag = state.intent && state.intent !== "project" ? `${copy.intentTags[state.intent]} ` : "";
+      return `${tag}${state.answers.objectif}`;
+    };
+    const extraBlock = (extra: string) => (extra ? `\n\n${copy.extraHeading}\n${extra}` : "");
+    const extraMax = () => Math.max(MAX_LENGTHS.objectif - objectifBody().length - extraBlock(" ").length + 1, 0);
 
     const renderPrompt = (focus: boolean) => {
       const { step } = state;
@@ -1343,10 +1639,11 @@ const ticks = [100, 62, 62, 100, 38, 62, 100, 100, 62, 38, 100, 62, 62, 100, 38,
       const placeholders = copy.prompt.placeholders;
 
       input.removeAttribute("aria-invalid");
-      input.disabled = sending || step === "confirm" || step === "done";
-      input.name = text ? step : "message";
-      input.value = text ? state.answers[step] : "";
-      input.maxLength = text ? MAX_LENGTHS[step] : MAX_LENGTHS.objectif;
+      const confirming = step === "confirm";
+      input.disabled = sending || step === "done";
+      input.name = text ? step : confirming ? "extra" : "message";
+      input.value = text ? state.answers[step] : confirming ? state.extra : "";
+      input.maxLength = text ? MAX_LENGTHS[step] : confirming ? extraMax() : MAX_LENGTHS.objectif;
       input.placeholder = text ? placeholders[step] : placeholders.idle;
       input.setAttribute("inputmode", step === "email" ? "email" : "text");
       input.setAttribute("autocomplete", step === "email" ? "email" : step === "nom" ? "name" : step === "societe" ? "organization" : "off");
@@ -1364,6 +1661,20 @@ const ticks = [100, 62, 62, 100, 38, 62, 100, 100, 62, 38, 100, 62, 62, 100, 38,
       labelEl.textContent = label;
       inputLabel.textContent = text ? fieldLabel(step) : copy.prompt.label;
 
+      // Champ libre (tablette et desktop) : toujours là, son contenu part avec le message.
+      freeInput.disabled = sending || step === "done";
+      freeInput.value = state.extra;
+      freeInput.maxLength = text || confirming ? extraMax() : MAX_LENGTHS.objectif;
+      freeLabel.textContent =
+        step === "done"
+          ? copy.prompt.done
+          : confirming
+            ? copy.prompt.review
+            : text
+              ? copy.prompt.freeExtra
+              : copy.prompt.freeChoose;
+      resizeField(freeInput);
+
       modeEl.textContent = state.intent ? `/ ${copy.intentLabels[state.intent]}` : "";
 
       let action = copy.actions.next;
@@ -1380,25 +1691,176 @@ const ticks = [100, 62, 62, 100, 38, 62, 100, 100, 62, 38, 100, 62, 62, 100, 38,
       if (focus && text && !input.disabled) input.focus({ preventScroll: true });
     };
 
-    const render = (options: { focus?: boolean; keepAside?: boolean } = {}) => {
+    const render = (options: { focus?: boolean; keepAside?: boolean; delay?: number } = {}) => {
       const question = questionFor(state.step);
       root.dataset.step = state.step;
+      root.dataset.mode = modeOf(state.step);
       root.dataset.status = state.status;
       prevEl.textContent = state.lastQuestion;
-      type(questionEl, question);
+      type(questionEl, question, options.delay);
       liveEl.textContent = question;
       if (!options.keepAside) setAside("");
       renderChips();
       renderRecap();
       renderProgress();
+      placePrompt();
       renderPrompt(options.focus ?? true);
     };
 
+    /* ---------- Transitions et cadrage ---------- */
+
+    type Mode = "choose" | "type" | "review";
+    const modeOf = (step: StepId): Mode =>
+      isTextStep(step) ? "type" : step === "intent" || step === "besoin" ? "choose" : "review";
+    const composer = $(".cc__composer");
+    const promptEl = $("[data-cc-prompt]");
+    const slotTop = $("[data-cc-slot-top]");
+    const slotBottom = $("[data-cc-slot-bottom]");
+    const wide = window.matchMedia("(min-width: 640px)");
+    /**
+     * Tablette et desktop : le champ de l'étape vit sous la question (visible aux étapes de saisie),
+     * le champ libre reste en bas. Mobile : un seul prompt, en bas.
+     */
+    const placePrompt = () => {
+      if (wide.matches) {
+        if (promptEl.parentElement !== slotTop) slotTop.append(promptEl);
+      } else if (promptEl.parentElement !== slotBottom) {
+        slotBottom.prepend(promptEl);
+      }
+    };
+    const arthurEl = $(".cc__arthur");
+    const dialogEl = $(".cc__dialog");
+    const EASE = "cubic-bezier(0.16, 1, 0.3, 1)";
+    const MARGIN = 12;
+    let revealUntil = 0;
+
+    /**
+     * Cadre la question et la zone utile dans la partie visible de l'écran (clavier compris,
+     * via visualViewport). Arthur est gardé au-dessus de la question quand la place le permet.
+     */
+    const reveal = (smooth = true) => {
+      const mode = modeOf(state.step);
+      const bottomEl =
+        mode === "type" ? input : mode === "review" ? submitButton : (chipsEl.lastElementChild as HTMLElement | null) ?? input;
+      const viewport = window.visualViewport;
+      const viewTop = viewport?.offsetTop ?? 0;
+      const viewHeight = viewport?.height ?? window.innerHeight;
+      const bottom = bottomEl.getBoundingClientRect().bottom - viewTop;
+      const fits = (el: Element) => bottom - (el.getBoundingClientRect().top - viewTop) + 2 * MARGIN <= viewHeight;
+      const topEl = [arthurEl, dialogEl].find(fits) ?? dialogEl;
+      const top = topEl.getBoundingClientRect().top - viewTop;
+
+      let delta = 0;
+      if (top < MARGIN) delta = top - MARGIN;
+      else if (bottom > viewHeight - MARGIN) delta = Math.min(bottom - (viewHeight - MARGIN), top - MARGIN);
+      if (!fits(topEl) && mode === "type") delta = bottom - (viewHeight - MARGIN);
+      if (Math.abs(delta) < 4) return;
+
+      const behavior: ScrollBehavior = smooth && !reducedMotion ? "smooth" : "auto";
+      const lenis = (window as unknown as { lenis?: { scrollTo(target: number, options?: object): void } }).lenis;
+      if (lenis) lenis.scrollTo(window.scrollY + delta, { immediate: behavior === "auto" });
+      else window.scrollBy({ top: delta, behavior });
+    };
+
+    /**
+     * Applique un changement d'étape avec transition : les puces s'effacent, le prompt glisse
+     * à sa nouvelle place (FLIP), le champ s'allume quand on passe à la saisie.
+     */
+    /** Copie figée d'un bloc qui disparaît, posée par-dessus le panneau le temps de s'effacer. */
+    const capture = (el: HTMLElement, panelRect: DOMRect) =>
+      !reducedMotion && el.childElementCount
+        ? { el, clone: el.cloneNode(true) as HTMLElement, rect: el.getBoundingClientRect(), panelRect }
+        : null;
+
+    const fadeOut = (ghost: NonNullable<ReturnType<typeof capture>>) => {
+      const { clone, rect, panelRect } = ghost;
+      clone.className = `${clone.className} cc__ghost`;
+      clone.removeAttribute("data-cc-chips");
+      clone.removeAttribute("data-cc-recap");
+      clone.setAttribute("aria-hidden", "true");
+      clone.inert = true;
+      Object.assign(clone.style, {
+        left: `${rect.left - panelRect.left}px`,
+        top: `${rect.top - panelRect.top}px`,
+        width: `${rect.width}px`,
+      });
+      form.append(clone);
+      clone
+        .animate(
+          [
+            { opacity: 1, transform: "none", filter: "blur(0)" },
+            { opacity: 0, transform: "translateY(-0.9rem) scale(0.98)", filter: "blur(3px)" },
+          ],
+          { duration: 340, easing: EASE, fill: "forwards" },
+        )
+        .finished.then(() => clone.remove(), () => clone.remove());
+    };
+
+    const transition = (update: () => void) => {
+      const fromMode = modeOf(state.step);
+      const fromTop = composer.getBoundingClientRect().top;
+      const panelRect = form.getBoundingClientRect();
+      const ghosts = [capture(chipsEl, panelRect), capture(recapEl, panelRect)];
+
+      update();
+
+      const toMode = modeOf(state.step);
+      const showTop = wide.matches && toMode === "type" && fromMode !== "type";
+      const delta = fromTop - composer.getBoundingClientRect().top;
+      revealUntil = performance.now() + 2500;
+      reveal();
+      if (reducedMotion) return;
+
+      // Un bloc qui se vide s'efface en douceur ; un bloc remplacé (puces → autres puces) apparaît simplement.
+      ghosts.forEach((ghost) => {
+        if (ghost && ghost.el.childElementCount === 0) fadeOut(ghost);
+      });
+
+      if (showTop) {
+        promptEl.animate(
+          [
+            { opacity: 0, transform: "translateY(0.6rem)" },
+            { opacity: 1, transform: "none" },
+          ],
+          { duration: 460, delay: 120, easing: EASE, fill: "backwards" },
+        );
+      }
+
+      if (Math.abs(delta) > 2) {
+        composer.animate([{ transform: `translateY(${delta}px)` }, { transform: "none" }], {
+          duration: 560,
+          easing: EASE,
+        });
+      }
+
+      if (toMode === "type") {
+        const arriving = fromMode !== "type";
+        labelEl.animate(
+          [
+            { opacity: 0, transform: "translateY(0.4rem)" },
+            { opacity: 1, transform: "none" },
+          ],
+          { duration: 420, delay: arriving ? 160 : 0, easing: EASE, fill: "backwards" },
+        );
+        if (arriving) {
+          input.animate(
+            [
+              { boxShadow: "0 0 0 0 rgb(236 95 58 / 0.55)", borderColor: "#ec5f3a" },
+              { boxShadow: "0 0 0 0.6rem rgb(236 95 58 / 0)", borderColor: "#f4f1f8" },
+            ],
+            { duration: 750, delay: 220, easing: "ease-out" },
+          );
+        }
+      }
+    };
+
     const goTo = (step: StepId, options: { focus?: boolean; keepAside?: boolean } = {}) => {
-      if (step !== state.step) state.lastQuestion = questionFor(state.step);
-      state.step = step;
-      if (step === "societe") state.societeSeen = true;
-      render(options);
+      transition(() => {
+        if (step !== state.step) state.lastQuestion = questionFor(state.step);
+        state.step = step;
+        if (step === "societe") state.societeSeen = true;
+        render(options);
+      });
     };
 
     const advance = (options: { keepAside?: boolean } = {}) => goTo(nextOpenStep(), options);
@@ -1443,10 +1905,9 @@ const ticks = [100, 62, 62, 100, 38, 62, 100, 100, 62, 38, 100, 62, 62, 100, 38,
       react("thinking");
       render({ focus: false });
 
-      const tag = state.intent === "project" ? "" : `${copy.intentTags[state.intent]} `;
       const payload = {
         besoin: state.intent === "project" ? state.besoin : "autre",
-        objectif: `${tag}${state.answers.objectif}`.slice(0, MAX_LENGTHS.objectif),
+        objectif: `${objectifBody()}${extraBlock(state.extra.trim())}`.slice(0, MAX_LENGTHS.objectif),
         nom: state.answers.nom,
         email: state.answers.email,
         societe: state.answers.societe,
@@ -1486,15 +1947,18 @@ const ticks = [100, 62, 62, 100, 38, 62, 100, 100, 62, 38, 100, 62, 62, 100, 38,
     };
 
     const restart = () => {
-      state.intent = null;
-      state.besoin = "";
-      state.answers = { objectif: "", nom: "", societe: "", email: "" };
-      state.societeSeen = false;
-      state.status = "idle";
-      state.lastQuestion = copy.greeting;
-      state.step = "intent";
       react("hello");
-      render({ focus: false });
+      transition(() => {
+        state.intent = null;
+        state.besoin = "";
+        state.answers = { objectif: "", nom: "", societe: "", email: "" };
+        state.extra = "";
+        state.societeSeen = false;
+        state.status = "idle";
+        state.lastQuestion = copy.greeting;
+        state.step = "intent";
+        render({ focus: false });
+      });
     };
 
     const submit = () => {
@@ -1504,8 +1968,9 @@ const ticks = [100, 62, 62, 100, 38, 62, 100, 100, 62, 38, 100, 62, 62, 100, 38,
       if (step === "confirm") return void send();
       if (isTextStep(step)) return submitText(step);
 
-      // Étapes à puces : un texte libre dans le prompt vaut réponse.
-      const value = input.value.trim();
+      // Étapes à puces : un texte libre (champ libre en desktop, prompt en mobile) vaut réponse.
+      const fromFree = isWide();
+      const value = (fromFree ? freeInput : input).value.trim();
       if (!value) {
         setAside(copy.prompt.choose, "error");
         react("oops");
@@ -1515,6 +1980,7 @@ const ticks = [100, 62, 62, 100, 38, 62, 100, 100, 62, 38, 100, 62, 62, 100, 38,
       if (step === "intent") state.intent = "word";
       else state.besoin = "autre";
       state.answers.objectif = value.slice(0, MAX_LENGTHS.objectif);
+      if (fromFree) state.extra = "";
       react("like");
       advance();
     };
@@ -1534,7 +2000,7 @@ const ticks = [100, 62, 62, 100, 38, 62, 100, 100, 62, 38, 100, 62, 62, 100, 38,
       "keydown",
       (event) => {
         if (event.key !== "Enter" || event.isComposing) return;
-        const multiline = state.step === "objectif" || state.step === "intent" || state.step === "besoin";
+        const multiline = ["objectif", "intent", "besoin", "confirm"].includes(state.step);
         if (event.shiftKey && multiline) return;
         event.preventDefault();
         submit();
@@ -1546,6 +2012,7 @@ const ticks = [100, 62, 62, 100, 38, 62, 100, 100, 62, 38, 100, 62, 62, 100, 38,
       "input",
       () => {
         resizeInput();
+        if (state.step === "confirm") state.extra = input.value;
         if (input.getAttribute("aria-invalid")) {
           input.removeAttribute("aria-invalid");
           setAside("");
@@ -1584,7 +2051,7 @@ const ticks = [100, 62, 62, 100, 38, 62, 100, 100, 62, 38, 100, 62, 62, 100, 38,
       "click",
       (event) => {
         const target = (event.target as Element).closest<HTMLElement>(
-          "[data-cc-intent],[data-cc-need],[data-cc-edit],[data-cc-back],[data-cc-restart]",
+          "[data-cc-intent],[data-cc-need],[data-cc-edit],[data-cc-back]",
         );
         if (!target || state.status === "sending") return;
         const { ccIntent, ccNeed, ccEdit } = target.dataset;
@@ -1593,8 +2060,10 @@ const ticks = [100, 62, 62, 100, 38, 62, 100, 100, 62, 38, 100, 62, 62, 100, 38,
           react("wink");
           window.location.assign(config.cultureHref);
         } else if (ccIntent) {
+          target.setAttribute("aria-pressed", "true");
           chooseIntent(ccIntent as Intent);
         } else if (ccNeed) {
+          target.setAttribute("aria-pressed", "true");
           state.besoin = ccNeed;
           react("like");
           advance();
@@ -1606,8 +2075,6 @@ const ticks = [100, 62, 62, 100, 38, 62, 100, 100, 62, 38, 100, 62, 62, 100, 38,
           const index = steps.indexOf(state.step);
           if (state.status === "error") state.status = "idle";
           if (index > 0) goTo(steps[index - 1]);
-        } else if (target.hasAttribute("data-cc-restart")) {
-          restart();
         }
       },
       { signal },
@@ -1622,7 +2089,81 @@ const ticks = [100, 62, 62, 100, 38, 62, 100, 100, 62, 38, 100, 62, 62, 100, 38,
       { signal },
     );
 
-    render({ focus: false });
+    // Le clavier mobile s'ouvre après le focus : on recadre quand la zone visible rétrécit.
+    let reframe = 0;
+    window.visualViewport?.addEventListener(
+      "resize",
+      () => {
+        if (performance.now() > revealUntil) return;
+        window.cancelAnimationFrame(reframe);
+        reframe = window.requestAnimationFrame(() => reveal());
+      },
+      { signal },
+    );
+    input.addEventListener("focus", () => (revealUntil = performance.now() + 2500), { signal });
+
+    freeInput.addEventListener(
+      "keydown",
+      (event) => {
+        if (event.key !== "Enter" || event.isComposing || event.shiftKey) return;
+        event.preventDefault();
+        if (isTextStep(state.step)) {
+          // En pleine saisie d'une étape : la note est gardée, on revient au champ de l'étape.
+          if (freeInput.value.trim()) {
+            freeAside.dataset.tone = "info";
+            freeAside.textContent = copy.asides.extraKept;
+            react("yes");
+          }
+          input.focus({ preventScroll: true });
+          return;
+        }
+        submit();
+      },
+      { signal },
+    );
+
+    freeInput.addEventListener(
+      "input",
+      () => {
+        resizeField(freeInput);
+        state.extra = freeInput.value;
+        if (freeAside.dataset.tone === "error") freeAside.textContent = "";
+        const charWidth = parseFloat(getComputedStyle(freeInput).fontSize) * 0.62;
+        const lastLine = freeInput.value.split("\n").pop() ?? "";
+        const progress = Math.min((lastLine.length * charWidth) / (freeInput.clientWidth || 1), 1);
+        arthur?.lookAtElement(freeInput, 0.05 + progress * 0.9);
+      },
+      { signal },
+    );
+
+    freeInput.addEventListener(
+      "focus",
+      () => {
+        arthur?.lookAtElement(freeInput, 0.1);
+        react("focus");
+      },
+      { signal },
+    );
+
+    freeInput.addEventListener(
+      "blur",
+      () => {
+        arthur?.releaseLook();
+        if (state.status !== "sending") react("calm");
+      },
+      { signal },
+    );
+
+    wide.addEventListener(
+      "change",
+      () => {
+        placePrompt();
+        renderPrompt(false);
+      },
+      { signal },
+    );
+
+    render({ focus: false, delay: FIRST_DELAY_MS });
 
     void whenArthurReady(document.getElementById("contact-arthur"))
       .then((instance) => {
