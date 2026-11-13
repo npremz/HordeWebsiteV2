@@ -1,0 +1,1643 @@
+---
+/**
+ * Page contact : formulaire conversationnel animé par Arthur.
+ * Arthur pose les questions une à une ; on répond avec les puces ou dans le prompt.
+ * Les champs et la validation reprennent ceux de ContactForm (POST /api/contact).
+ */
+import { type Locale, useTranslations } from "../../i18n";
+import ArthurBubble from "../arthur/ArthurBubble.astro";
+import { getContactCopy } from "./copy";
+import compass from "../../assets/svg/contact/compass.svg?raw";
+import crosshair from "../../assets/svg/contact/crosshair.svg?raw";
+
+interface Props {
+  lang: Locale;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const copy = getContactCopy(lang);
+const email = "hello@hordeagence.com";
+const bookCallHref = "https://calendly.com/ni-premont/30min";
+
+const config = {
+  copy,
+  email,
+  cultureHref: `/${lang}/about/`,
+  pagePath: `/${lang}/contact/`,
+  needs: [
+    { value: "audit-offert", label: t.form.options.auditOffert },
+    { value: "creation-ecommerce", label: t.form.options.creationEcommerce },
+    { value: "creation-landing-page", label: t.form.options.creationLandingPage },
+    { value: "creation-mvp-saas", label: t.form.options.creationMvpSaas },
+    { value: "applications-evenementielles", label: t.form.options.applicationsEvenementielles },
+    { value: "optimisation-site-web", label: t.form.options.optimisationSiteWeb },
+    { value: "refonte-site-web", label: t.form.options.refonteSiteWeb },
+    { value: "autre", label: t.form.options.autre },
+  ],
+  errors: {
+    required: t.form.requiredField,
+    invalidEmail: t.form.invalidEmail,
+    maxLength: `${t.form.maxLengthPrefix} {max} ${t.form.maxLengthSuffix}`,
+  },
+};
+
+// Graduations décoratives : longueur de chaque trait, en %.
+const ticks = [100, 62, 62, 100, 38, 62, 100, 100, 62, 38, 100, 62, 62, 100, 38, 62, 100, 62, 100, 38, 62, 100];
+---
+
+<section class="cc" data-contact-console data-config={JSON.stringify(config)}>
+  <div class="cc__band" aria-hidden="true"></div>
+  <h1 class="sr-only">{copy.srTitle}</h1>
+
+  <div class="cc__grid">
+    <aside class="cc__side">
+      <div class="cc__arthur">
+        <div class="cc__bubble">
+          <ArthurBubble id="contact-arthur" label={copy.arthurLabel} />
+        </div>
+        <p class="cc__name" aria-hidden="true">{copy.arthurName}</p>
+      </div>
+      <div class="cc__rail" aria-hidden="true">
+        <span class="cc__rail-tick"></span>
+        <p>{copy.sideTagline.map((line) => <span class="block">{line}</span>)}</p>
+        <span class="cc__rail-tick"></span>
+        <p>{copy.sideSince}</p>
+        <span class="cc__rail-tick"></span>
+        <span class="cc__compass"><Fragment set:html={compass} /></span>
+      </div>
+    </aside>
+
+    <form class="cc__panel" data-cc-form novalidate>
+      <div class="cc__head">
+        <div class="cc__dialog">
+          <p class="cc__prev" data-cc-prev>{copy.greeting}</p>
+          <p class="cc__question">
+            <span data-cc-question aria-hidden="true">{copy.questions.intent}</span><span class="cc__caret" aria-hidden="true"></span>
+          </p>
+          <p class="sr-only" aria-live="polite" data-cc-live></p>
+        </div>
+        <button type="button" class="cc__back-round" data-cc-back aria-label={copy.actions.back} title={copy.actions.back} disabled>
+          <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 10.5h7a3 3 0 0 0 0-6H5.5" stroke="currentColor" stroke-width="1.2" /><path d="M5.5 8 3 10.5 5.5 13" stroke="currentColor" stroke-width="1.2" /></svg>
+        </button>
+      </div>
+
+      <div class="cc__stage">
+        <div class="cc__main">
+          <div class="cc__chips" data-cc-chips role="group" aria-label={copy.prompt.choose}></div>
+          <div class="cc__recap" data-cc-recap></div>
+          <noscript>
+            <p class="cc__noscript">{copy.noscript} <a href={`mailto:${email}`}>{email}</a>.</p>
+          </noscript>
+        </div>
+        <div class="cc__ruler" data-cc-ruler aria-hidden="true">
+          {ticks.map((length) => <i style={`--l:${length}%`}></i>)}
+          <b></b>
+        </div>
+      </div>
+
+      <div class="cc__composer">
+        <div class="cc__meter">
+          <p class="cc__agent">
+            <span>{copy.agent}</span>
+            <span class="cc__agent-mode" data-cc-mode></span>
+          </p>
+          <div class="cc__dial" role="img" data-cc-dial aria-label={`${copy.prompt.stepLabel} 1`}>
+            <svg viewBox="0 0 186 186" fill="none" aria-hidden="true">
+              <path d="M0 93h186M93 0v186" stroke="#3f4245" />
+              <circle cx="93" cy="93" r="80" stroke="#3f4245" />
+              <circle cx="93" cy="93" r="73" stroke="#5c5e5f" stroke-width="4" />
+              <circle class="cc__dial-progress" cx="93" cy="93" r="73" stroke="currentColor" stroke-width="4" pathLength="100" stroke-dasharray="0 100" transform="rotate(-90 93 93)" data-cc-dial-progress />
+              <circle cx="93" cy="93" r="34" fill="#16191b" stroke="#3f4245" />
+            </svg>
+            <span data-cc-dial-text>(1/7)</span>
+          </div>
+        </div>
+
+        <p class="cc__label" data-cc-label>{copy.prompt.choose}</p>
+        <p class="cc__aside" data-cc-aside role="status"></p>
+
+        <label class="sr-only" for="cc-input" data-cc-input-label>{copy.prompt.label}</label>
+        <textarea
+          id="cc-input"
+          class="cc__input"
+          rows="1"
+          placeholder={copy.prompt.placeholders.idle}
+          autocomplete="off"
+          autocapitalize="sentences"
+          spellcheck="false"
+          data-cc-input
+          data-arthur-focus="none"></textarea>
+
+        <div class="cc__dock">
+          <div class="cc__card">
+            <a href={bookCallHref} class="cc__pill" target="_blank" rel="noopener noreferrer">
+              {copy.actions.bookCall}
+              <svg viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2.5 9.5 9.5 2.5M4 2.5h5.5V8" stroke="currentColor" stroke-width="1.1" /></svg>
+            </a>
+          </div>
+          <div class="cc__card">
+            <button type="button" class="cc__pill" data-cc-restart>
+              {copy.actions.restart}
+              <svg viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2.2 6a3.8 3.8 0 1 0 1.2-2.8" stroke="currentColor" stroke-width="1.1" /><path d="M2 1.6v2h2" stroke="currentColor" stroke-width="1.1" /></svg>
+            </button>
+          </div>
+          <div class="cc__sight" aria-hidden="true"><Fragment set:html={crosshair} /></div>
+          <button type="button" class="cc__tile cc__tile--back" data-cc-back disabled>
+            <span class="cc__tile-dot"></span>
+            {copy.actions.back}
+          </button>
+          <button type="submit" class="cc__tile cc__tile--submit" data-cc-submit>
+            <span class="cc__tile-top">
+              <span data-cc-submit-hint>{copy.prompt.enter}</span>
+              <svg viewBox="0 0 10 6" fill="none"><path d="m1 1 4 4 4-4" stroke="currentColor" stroke-width="1.1" /></svg>
+            </span>
+            <span data-cc-submit-label>{copy.actions.next}</span>
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</section>
+
+<style is:global>
+  .cc {
+    --cc-band: 15.25rem;
+    --cc-top: 3.75rem;
+    --cc-line: #3a3c40;
+    --cc-mute: #6c6e73;
+    --cc-orange: #ec5f3a;
+    position: relative;
+    padding: var(--cc-top) 0.75rem 3rem;
+    background: var(--color-bg);
+    color: var(--color-white);
+  }
+
+  /* Bande sombre du haut, avec ses filets verticaux. */
+  .cc__band {
+    position: absolute;
+    inset: 0 0 auto;
+    height: var(--cc-band);
+    background-color: var(--color-black);
+    background-image:
+      repeating-linear-gradient(to right, transparent 0 calc(100% / 8 - 1px), #2a2c2f calc(100% / 8 - 1px) calc(100% / 8)),
+      repeating-linear-gradient(to right, transparent 0 calc(100% / 8 + 0.8rem), #232528 calc(100% / 8 + 0.8rem) calc(100% / 8 + 0.8rem + 3px), transparent calc(100% / 8 + 0.8rem + 3px) 200%);
+    background-position: -1.5rem 0;
+  }
+
+  .cc__grid {
+    position: relative;
+    display: grid;
+    gap: 0;
+    max-width: 82.5rem;
+    margin-inline: auto;
+  }
+
+  /* ---------- Colonne Arthur ---------- */
+
+  .cc__side {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+  }
+
+  .cc__arthur {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.7rem;
+    padding: 1rem 0.25rem 1.25rem;
+  }
+
+  .cc__bubble {
+    position: relative;
+  }
+
+  .cc__bubble .arthur-bubble {
+    --arthur-size: 5rem;
+    box-shadow: none;
+  }
+
+  .cc__bubble::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 999px;
+    background: #3ee06b;
+    box-shadow: 0 0 0 2px var(--color-black);
+  }
+
+  .cc__name,
+  .cc__rail {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    line-height: 1.35;
+    letter-spacing: 0.06em;
+  }
+
+  .cc__name {
+    letter-spacing: 0.22em;
+  }
+
+  .cc__rail {
+    display: none;
+    flex: 1;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+    margin-top: 1.1rem;
+    overflow: hidden;
+    border-radius: 8px;
+    background: var(--color-black);
+    text-align: center;
+  }
+
+  .cc__rail-tick {
+    width: 1px;
+    height: 2.4rem;
+    background: var(--color-white);
+  }
+
+  .cc__compass {
+    display: block;
+    width: 100%;
+    color: var(--color-white);
+  }
+
+  .cc__compass svg {
+    display: block;
+    width: 100%;
+    height: auto;
+    margin-bottom: -1px;
+  }
+
+  .cc__compass svg [fill="white"] {
+    fill: none;
+  }
+
+  /* ---------- Panneau principal ---------- */
+
+  .cc__panel {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    padding: 0 0.75rem 0.75rem;
+    border-radius: 0 0 10px 10px;
+    background: var(--color-black);
+  }
+
+  .cc__head {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 1rem;
+    padding-bottom: 1rem;
+  }
+
+  .cc__dialog {
+    min-width: 0;
+    max-width: 29rem;
+    font-size: 1.125rem;
+    line-height: 1.3;
+    letter-spacing: 0;
+  }
+
+  .cc__prev {
+    display: none;
+    margin-bottom: 0.9rem;
+    color: var(--cc-mute);
+  }
+
+  .cc__question {
+    min-height: 2.6em;
+  }
+
+  .cc__caret {
+    display: inline-block;
+    width: 0.5em;
+    height: 0.95em;
+    margin-left: 0.4em;
+    background: currentColor;
+    vertical-align: -0.12em;
+    animation: cc-caret 1.1s steps(2, start) infinite;
+  }
+
+  @keyframes cc-caret {
+    to {
+      visibility: hidden;
+    }
+  }
+
+  .cc__back-round {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 3rem;
+    height: 3rem;
+    flex: none;
+    border-radius: 999px;
+    background: var(--color-button-white);
+    color: var(--color-black);
+    cursor: pointer;
+    transition:
+      opacity 0.25s ease,
+      transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .cc__back-round svg {
+    width: 1.1rem;
+    height: 1.1rem;
+  }
+
+  .cc__back-round:disabled {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .cc__stage {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    padding-bottom: 1.25rem;
+  }
+
+  .cc__main {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .cc__chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+
+  .cc__chips:empty {
+    display: none;
+  }
+
+  .cc__chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    min-height: 2.75rem;
+    padding: 0.5rem 0.85rem;
+    border-radius: 8px;
+    background: var(--color-button-white);
+    color: var(--color-black);
+    font-family: var(--font-mono);
+    font-size: 0.875rem;
+    line-height: 1.1;
+    letter-spacing: 0.02em;
+    text-align: left;
+    cursor: pointer;
+    transition:
+      background-color 0.2s ease,
+      color 0.2s ease,
+      transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    animation: cc-pop 0.5s cubic-bezier(0.16, 1, 0.3, 1) backwards;
+    animation-delay: calc(var(--i, 0) * 45ms);
+  }
+
+  .cc__chip svg {
+    width: 0.9rem;
+    height: 0.9rem;
+    flex: none;
+  }
+
+  .cc__chip[aria-pressed="true"] {
+    background: var(--cc-orange);
+  }
+
+  .cc__chip[data-copied]::after {
+    content: attr(data-copied-label);
+    font-size: 0.6875rem;
+    opacity: 0.6;
+  }
+
+  @media (hover: hover) {
+    .cc__chip:hover {
+      transform: translateY(-2px);
+    }
+  }
+
+  @keyframes cc-pop {
+    from {
+      opacity: 0;
+      transform: translateY(0.6rem);
+    }
+  }
+
+  .cc__recap {
+    display: grid;
+    margin-top: 1.25rem;
+  }
+
+  .cc__recap:empty {
+    display: none;
+  }
+
+  .cc__row {
+    display: grid;
+    grid-template-columns: 5.5rem minmax(0, 1fr) auto;
+    align-items: baseline;
+    gap: 0.75rem;
+    width: 100%;
+    max-width: 44rem;
+    padding: 0.6rem 0;
+    border-top: 1px solid var(--cc-line);
+    text-align: left;
+    cursor: pointer;
+    animation: cc-pop 0.5s cubic-bezier(0.16, 1, 0.3, 1) backwards;
+  }
+
+  .cc__row:last-child {
+    border-bottom: 1px solid var(--cc-line);
+  }
+
+  .cc__row-key {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--cc-mute);
+  }
+
+  .cc__row-value {
+    display: -webkit-box;
+    overflow: hidden;
+    font-size: 1rem;
+    line-height: 1.3;
+    overflow-wrap: anywhere;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+  }
+
+  .cc__row-edit {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    letter-spacing: 0.04em;
+    color: var(--cc-mute);
+    transition: color 0.2s ease;
+  }
+
+  .cc__row:hover .cc__row-edit,
+  .cc__row:focus-visible .cc__row-edit {
+    color: var(--color-white);
+  }
+
+  .cc__noscript {
+    margin-top: 1rem;
+    color: var(--color-white);
+  }
+
+  .cc__noscript a {
+    text-decoration: underline;
+  }
+
+  /* Graduations : progression de la conversation. */
+  .cc__ruler {
+    order: 9;
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: flex-end;
+    justify-content: space-between;
+    height: 1.5rem;
+  }
+
+  .cc__ruler i {
+    width: 1px;
+    height: var(--l);
+    background: #4a4c50;
+    transition: background-color 0.4s ease;
+    transition-delay: calc(var(--n, 0) * 18ms);
+  }
+
+  .cc__ruler i.is-on {
+    background: var(--color-white);
+  }
+
+  .cc__ruler b {
+    width: 3px;
+    height: 100%;
+    background: #5c5e5f;
+  }
+
+  /* ---------- Prompt ---------- */
+
+  .cc__composer {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    padding-top: 1rem;
+    border-top: 1px solid var(--cc-line);
+  }
+
+  .cc__meter {
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .cc__agent {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 0.2rem 0.75rem;
+    padding-top: 0.2rem;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+  }
+
+  .cc__agent-mode {
+    color: var(--cc-mute);
+    font-weight: 400;
+  }
+
+  .cc__agent-mode:empty {
+    display: none;
+  }
+
+  .cc__dial {
+    position: relative;
+    width: 4.75rem;
+    aspect-ratio: 1;
+    flex: none;
+    color: var(--color-white);
+  }
+
+  .cc__dial svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+  }
+
+  .cc__dial-progress {
+    transition: stroke-dasharray 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .cc__dial span {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+  }
+
+  .cc__label {
+    font-size: 1.0625rem;
+    line-height: 1.3;
+    letter-spacing: 0;
+    color: var(--cc-mute);
+  }
+
+  .cc__aside {
+    min-height: 1.4em;
+    margin: 0.35rem 0 0.7rem;
+    font-size: 1.0625rem;
+    line-height: 1.3;
+    letter-spacing: 0;
+  }
+
+  .cc__aside[data-tone="error"] {
+    color: var(--color-err);
+  }
+
+  .cc__aside a {
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+  }
+
+  .cc__input {
+    display: block;
+    width: 100%;
+    max-height: 11rem;
+    padding: 0.7rem 0.85rem;
+    border: 1px solid #5c5e5f;
+    border-radius: 8px;
+    background: transparent;
+    color: var(--color-white);
+    font-family: var(--font-mono);
+    font-size: 1rem;
+    line-height: 1.4;
+    letter-spacing: 0;
+    resize: none;
+    transition:
+      border-color 0.2s ease,
+      box-shadow 0.2s ease;
+  }
+
+  .cc__input::placeholder {
+    color: var(--cc-mute);
+    opacity: 1;
+  }
+
+  .cc__input:focus,
+  .cc__input:focus-visible {
+    outline: none;
+    border-color: var(--color-white);
+    box-shadow: 0 0 0 3px rgb(244 241 248 / 0.12);
+  }
+
+  .cc__input[aria-invalid="true"] {
+    border-color: var(--color-err);
+  }
+
+  .cc__input[aria-invalid="true"]::placeholder {
+    color: var(--color-err);
+  }
+
+  .cc__input:disabled {
+    border-style: dashed;
+    cursor: not-allowed;
+  }
+
+  .cc__dock {
+    position: relative;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0.4rem;
+    margin-top: 0.6rem;
+  }
+
+  .cc__card {
+    order: 3;
+    grid-column: 1 / -1;
+    display: flex;
+    border-radius: 8px;
+    background: var(--color-button-white);
+    color: var(--color-black);
+  }
+
+  .cc__pill {
+    display: flex;
+    flex: 1;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    min-height: 2.6rem;
+    margin: 0.35rem;
+    padding: 0.4rem 1.1rem;
+    border-radius: 999px;
+    background: #fff;
+    box-shadow:
+      inset 0 2px 5px rgb(22 25 27 / 0.16),
+      inset 0 -1px 0 rgb(22 25 27 / 0.04);
+    font-family: var(--font-mono);
+    font-size: 0.875rem;
+    letter-spacing: 0.02em;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: box-shadow 0.25s ease;
+  }
+
+  .cc__pill svg {
+    width: 0.7rem;
+    height: 0.7rem;
+    flex: none;
+  }
+
+  .cc__pill:hover {
+    box-shadow:
+      inset 0 3px 9px rgb(22 25 27 / 0.3),
+      inset 0 -1px 0 rgb(22 25 27 / 0.04);
+  }
+
+  .cc__sight {
+    display: none;
+  }
+
+  .cc__tile {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 3.5rem;
+    padding: 0.5rem 1.25rem;
+    border-radius: 8px;
+    background: var(--color-button-white);
+    color: var(--color-black);
+    font-family: var(--font-mono);
+    font-size: 0.9375rem;
+    letter-spacing: 0.02em;
+    cursor: pointer;
+    transition:
+      opacity 0.25s ease,
+      transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+      background-color 0.2s ease;
+  }
+
+  .cc__tile:disabled {
+    cursor: not-allowed;
+  }
+
+  .cc__tile--back:disabled {
+    opacity: 0.35;
+  }
+
+  .cc__tile-dot {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    width: 0.4rem;
+    height: 0.4rem;
+    border-radius: 999px;
+    background: #3ee06b;
+  }
+
+  .cc[data-status="sending"] .cc__tile-dot {
+    background: var(--cc-orange);
+    animation: cc-caret 0.6s steps(2, start) infinite;
+  }
+
+  .cc[data-status="error"] .cc__tile-dot {
+    background: var(--color-err);
+  }
+
+  .cc__tile--submit {
+    background: var(--cc-orange);
+  }
+
+  .cc__tile--submit:disabled {
+    opacity: 0.6;
+  }
+
+  .cc__tile-top {
+    position: absolute;
+    inset: 0.4rem 0.55rem auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 0.6875rem;
+    opacity: 0.75;
+  }
+
+  .cc__tile-top svg {
+    width: 0.6rem;
+  }
+
+  @media (max-width: 639px) {
+    .cc__tile-top {
+      display: none;
+    }
+
+    .cc__input::placeholder {
+      font-size: 0.8125rem;
+    }
+  }
+
+  @media (hover: hover) {
+    .cc__tile:not(:disabled):hover,
+    .cc__back-round:hover {
+      transform: translateY(-2px);
+    }
+  }
+
+  .cc__chip:focus-visible,
+  .cc__tile:focus-visible,
+  .cc__pill:focus-visible,
+  .cc__row:focus-visible,
+  .cc__back-round:focus-visible {
+    outline: 2px solid var(--color-white);
+    outline-offset: 2px;
+  }
+
+  /* ---------- Tablette ---------- */
+
+  @media (min-width: 640px) {
+    .cc {
+      --cc-band: 17rem;
+      padding-inline: 1rem;
+      padding-bottom: 4.5rem;
+    }
+
+    .cc__grid {
+      grid-template-columns: 9rem minmax(0, 1fr);
+      gap: 0 1.2rem;
+    }
+
+    .cc__arthur {
+      align-items: center;
+      gap: 1.3rem;
+      min-height: calc(var(--cc-band) - var(--cc-top) + 2.25rem);
+      padding: 1.5rem 0.5rem 1.4rem;
+      justify-content: flex-end;
+      border-radius: 0 0 8px 8px;
+      background: var(--color-black);
+    }
+
+    .cc__bubble .arthur-bubble {
+      --arthur-size: 6rem;
+    }
+
+    .cc__rail {
+      display: flex;
+    }
+
+    .cc__panel {
+      padding: 0 0.6rem 0.6rem;
+    }
+
+    .cc__head {
+      min-height: calc(var(--cc-band) - var(--cc-top));
+      padding-bottom: 1.1rem;
+    }
+
+    .cc__prev {
+      display: block;
+    }
+
+    .cc__back-round {
+      display: none;
+    }
+
+    .cc__stage {
+      flex-direction: row;
+      min-height: 15rem;
+    }
+
+    .cc__chip {
+      min-height: 3rem;
+      padding-inline: 1.1rem;
+      font-size: 0.9375rem;
+    }
+
+    .cc__ruler {
+      order: 0;
+      flex-direction: column;
+      align-items: flex-end;
+      width: 2.6rem;
+      height: auto;
+      min-height: 12rem;
+      flex: none;
+    }
+
+    .cc__ruler i {
+      width: var(--l);
+      height: 1px;
+    }
+
+    .cc__ruler b {
+      width: 220%;
+      height: 3px;
+    }
+
+    .cc__meter {
+      margin-bottom: 0.75rem;
+    }
+
+    .cc__dial {
+      width: 6.5rem;
+    }
+
+    .cc__dial span {
+      font-size: 0.8125rem;
+    }
+
+    .cc__dock {
+      grid-template-columns: auto auto 1fr auto auto;
+      align-items: stretch;
+    }
+
+    .cc__card {
+      order: 0;
+      grid-column: auto;
+    }
+
+    .cc__tile {
+      min-height: 4.5rem;
+      min-width: 6rem;
+    }
+
+    .cc__tile--submit {
+      align-items: flex-end;
+      padding-bottom: 1.15rem;
+    }
+
+    .cc__tile--back {
+      grid-column: 4;
+    }
+  }
+
+  /* ---------- Desktop ---------- */
+
+  @media (min-width: 1024px) {
+    .cc {
+      --cc-top: 5.6rem;
+      --cc-band: 15.25rem;
+      padding-inline: 2rem;
+      padding-bottom: 6rem;
+    }
+
+    .cc__grid {
+      grid-template-columns: 8.8rem minmax(0, 1fr);
+    }
+
+    .cc__arthur {
+      gap: 1.25rem;
+    }
+
+    .cc__bubble .arthur-bubble {
+      --arthur-size: 6.1rem;
+    }
+
+    .cc__stage {
+      min-height: 15.5rem;
+    }
+
+    .cc__chip {
+      min-height: 3.4rem;
+      padding-inline: 1.9rem;
+    }
+
+    .cc__meter {
+      position: absolute;
+      top: 1.1rem;
+      right: 0.6rem;
+      flex-direction: row;
+      align-items: center;
+      gap: 1.75rem;
+      margin: 0;
+    }
+
+    .cc__agent {
+      padding: 0;
+    }
+
+    .cc__dial {
+      width: 11rem;
+      margin-right: -0.6rem;
+    }
+
+    .cc__dial span {
+      font-size: 0.9375rem;
+    }
+
+    .cc__label {
+      margin-top: 7.4rem;
+      max-width: calc(100% - 26rem);
+    }
+
+    .cc__aside {
+      margin: 0.9rem 0 1.1rem;
+      max-width: calc(100% - 13rem);
+    }
+
+    .cc__input {
+      position: relative;
+      background: var(--color-black);
+    }
+
+    .cc__dock {
+      gap: 0.6rem;
+      margin-top: 0.85rem;
+    }
+
+    .cc__pill {
+      min-height: 4.6rem;
+      min-width: 12rem;
+      margin: 1.2rem;
+      padding-inline: 1.9rem;
+      justify-content: center;
+    }
+
+    .cc__sight {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      min-width: 9rem;
+      padding-right: 1.25rem;
+      color: var(--color-white);
+    }
+
+    .cc__sight::before {
+      content: "";
+      position: absolute;
+      inset: 50% 0 auto;
+      height: 1px;
+      background: var(--cc-line);
+    }
+
+    .cc__sight svg {
+      position: relative;
+      width: 6.8rem;
+      height: auto;
+      transition: transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .cc__sight svg [fill="white"] {
+      fill: none;
+    }
+
+    .cc__dock:has(.cc__tile--submit:hover) .cc__sight svg,
+    .cc__dock:has(.cc__tile--submit:focus-visible) .cc__sight svg {
+      transform: rotate(90deg);
+    }
+
+    .cc__tile {
+      min-width: 6.25rem;
+      min-height: 7rem;
+      font-size: 1rem;
+    }
+
+    .cc__tile--submit {
+      align-items: center;
+      padding-bottom: 0.5rem;
+    }
+  }
+
+  @media (min-width: 1512px) {
+    .cc {
+      padding-inline: 6rem;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .cc__chip,
+    .cc__row,
+    .cc__caret {
+      animation: none;
+    }
+  }
+</style>
+
+<script>
+  import { whenArthurReady } from "../../lib/arthur/mount";
+  import type { Arthur } from "../../lib/arthur/arthur";
+  import type { ContactCopy } from "./copy";
+
+  type Intent = "project" | "team" | "word";
+  type StepId = "intent" | "besoin" | "objectif" | "nom" | "societe" | "email" | "confirm" | "done";
+  type TextStep = "objectif" | "nom" | "societe" | "email";
+
+  interface Config {
+    copy: ContactCopy;
+    email: string;
+    cultureHref: string;
+    pagePath: string;
+    needs: { value: string; label: string }[];
+    errors: { required: string; invalidEmail: string; maxLength: string };
+  }
+
+  const FLOWS: Record<Intent, StepId[]> = {
+    project: ["intent", "besoin", "objectif", "nom", "societe", "email", "confirm"],
+    team: ["intent", "objectif", "nom", "email", "confirm"],
+    word: ["intent", "objectif", "nom", "societe", "email", "confirm"],
+  };
+  const MAX_LENGTHS: Record<TextStep, number> = { objectif: 2000, nom: 100, societe: 200, email: 254 };
+  const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const COPY_ICON =
+    '<svg viewBox="0 0 14 14" fill="none" aria-hidden="true"><rect x="4.5" y="4.5" width="8" height="8" rx="2" stroke="currentColor"/><path d="M9.5 2.5a1 1 0 0 0-1-1h-5a2 2 0 0 0-2 2v5a1 1 0 0 0 1 1" stroke="currentColor" stroke-linecap="round"/></svg>';
+
+  let teardown: (() => void) | null = null;
+
+  function initContactConsole() {
+    teardown?.();
+    teardown = null;
+
+    const root = document.querySelector<HTMLElement>("[data-contact-console]");
+    if (!root) return;
+
+    const config = JSON.parse(root.dataset.config ?? "{}") as Config;
+    const { copy } = config;
+    const $ = <T extends HTMLElement>(selector: string) => root.querySelector<T>(selector)!;
+    const form = $<HTMLFormElement>("[data-cc-form]");
+    const prevEl = $("[data-cc-prev]");
+    const questionEl = $("[data-cc-question]");
+    const liveEl = $("[data-cc-live]");
+    const chipsEl = $("[data-cc-chips]");
+    const recapEl = $("[data-cc-recap]");
+    const labelEl = $("[data-cc-label]");
+    const asideEl = $("[data-cc-aside]");
+    const modeEl = $("[data-cc-mode]");
+    const input = $<HTMLTextAreaElement>("[data-cc-input]");
+    const inputLabel = $("[data-cc-input-label]");
+    const submitButton = $<HTMLButtonElement>("[data-cc-submit]");
+    const submitLabel = $("[data-cc-submit-label]");
+    const submitHint = $("[data-cc-submit-hint]");
+    const dial = $("[data-cc-dial]");
+    const dialText = $("[data-cc-dial-text]");
+    const dialProgress = root.querySelector<SVGCircleElement>("[data-cc-dial-progress]")!;
+    const backButtons = Array.from(root.querySelectorAll<HTMLButtonElement>("[data-cc-back]"));
+    const ticks = Array.from(root.querySelectorAll<HTMLElement>("[data-cc-ruler] i"));
+    ticks.forEach((tick, index) => tick.style.setProperty("--n", String(index)));
+
+    const controller = new AbortController();
+    const { signal } = controller;
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const finePointer = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+    let arthur: Arthur | null = null;
+    let typingFrame = 0;
+
+    const state = {
+      intent: null as Intent | null,
+      step: "intent" as StepId,
+      besoin: "",
+      answers: { objectif: "", nom: "", societe: "", email: "" } as Record<TextStep, string>,
+      societeSeen: false,
+      status: "idle" as "idle" | "sending" | "error" | "done",
+      lastQuestion: copy.greeting,
+    };
+
+    teardown = () => {
+      controller.abort();
+      window.cancelAnimationFrame(typingFrame);
+    };
+
+    /* ---------- Helpers ---------- */
+
+    const flow = () => FLOWS[state.intent ?? "project"];
+    const isTextStep = (step: StepId): step is TextStep => step in MAX_LENGTHS;
+    const firstName = () => state.answers.nom.trim().split(/\s+/)[0] ?? "";
+    const fill = (text: string) =>
+      text
+        .replace("{name}", firstName())
+        .replace(/\s+,/g, ",")
+        .replace(/,\s*\./g, ".");
+
+    const questionFor = (step: StepId): string => {
+      const q = copy.questions;
+      switch (step) {
+        case "intent":
+          return q.intent;
+        case "besoin":
+          return q.besoin;
+        case "objectif":
+          return state.intent === "team" ? q.objectifTeam : state.intent === "word" ? q.objectifWord : q.objectifProject;
+        case "nom":
+          return q.nom;
+        case "societe":
+          return fill(q.societe);
+        case "email":
+          return q.email;
+        case "confirm":
+          return state.status === "sending" ? q.sending : q.confirm;
+        case "done":
+          return fill(q.done);
+      }
+    };
+
+    const fieldLabel = (step: StepId): string => {
+      if (step === "objectif") return state.intent === "project" ? copy.fields.objectif : copy.fields.message;
+      return copy.fields[step as keyof typeof copy.fields] ?? "";
+    };
+
+    const isAnswered = (step: StepId): boolean => {
+      switch (step) {
+        case "intent":
+          return state.intent !== null;
+        case "besoin":
+          return state.besoin !== "";
+        case "societe":
+          return state.societeSeen;
+        case "objectif":
+        case "nom":
+        case "email":
+          return state.answers[step].trim() !== "";
+        default:
+          return false;
+      }
+    };
+
+    /** Première question encore sans réponse, sinon la confirmation. */
+    const nextOpenStep = (): StepId => flow().find((step) => step !== "confirm" && !isAnswered(step)) ?? "confirm";
+
+    const react = (name: Parameters<Arthur["react"]>[0]) => arthur?.react(name);
+
+    /** Effet machine à écrire, calé sur le temps écoulé (pas sur le nombre de frames). */
+    const type = (target: HTMLElement, text: string, speed = 16) => {
+      window.cancelAnimationFrame(typingFrame);
+      if (reducedMotion) {
+        target.textContent = text;
+        return;
+      }
+      const start = performance.now();
+      target.textContent = "";
+      const tick = (now: number) => {
+        const count = Math.min(Math.ceil((now - start) / speed), text.length);
+        target.textContent = text.slice(0, count);
+        if (count < text.length) typingFrame = window.requestAnimationFrame(tick);
+      };
+      typingFrame = window.requestAnimationFrame(tick);
+    };
+
+    const setAside = (text: string, tone: "info" | "error" = "info", html = false) => {
+      asideEl.dataset.tone = tone;
+      if (html) asideEl.innerHTML = text;
+      else asideEl.textContent = text;
+    };
+
+    const resizeInput = () => {
+      input.style.height = "auto";
+      input.style.height = `${input.scrollHeight + 2}px`;
+    };
+
+    /* ---------- Rendu ---------- */
+
+    const chip = (label: string, index: number, attrs: Record<string, string> = {}) => {
+      const button = document.createElement("button");
+      button.type = "button";
+      button.className = "cc__chip";
+      button.style.setProperty("--i", String(index));
+      button.textContent = label;
+      Object.entries(attrs).forEach(([key, value]) => button.setAttribute(key, value));
+      return button;
+    };
+
+    const renderChips = () => {
+      chipsEl.replaceChildren();
+      if (state.step === "intent") {
+        const intents: [string, string][] = [
+          ["project", copy.intents.project],
+          ["team", copy.intents.team],
+          ["culture", copy.intents.culture],
+          ["word", copy.intents.word],
+        ];
+        intents.forEach(([value, label], index) => {
+          const button = chip(label, index, { "data-cc-intent": value });
+          if (state.intent === value) button.setAttribute("aria-pressed", "true");
+          chipsEl.append(button);
+        });
+        const write = chip(`${copy.intents.write}${config.email}`, intents.length, {
+          "data-copy-text": config.email,
+          "data-copied-label": copy.actions.copied,
+          "aria-label": `${copy.actions.copyEmail} ${config.email}`,
+        });
+        write.insertAdjacentHTML("beforeend", COPY_ICON);
+        chipsEl.append(write);
+      } else if (state.step === "besoin") {
+        config.needs.forEach((need, index) => {
+          const button = chip(need.label, index, { "data-cc-need": need.value });
+          if (state.besoin === need.value) button.setAttribute("aria-pressed", "true");
+          chipsEl.append(button);
+        });
+      }
+    };
+
+    const renderRecap = () => {
+      recapEl.replaceChildren();
+      if (state.step === "done") return;
+      const rows: [StepId, string, string][] = [];
+      flow().forEach((step) => {
+        if (step === state.step || step === "confirm" || !isAnswered(step)) return;
+        let value = "";
+        if (step === "intent") value = state.intent ? copy.intentLabels[state.intent] : "";
+        else if (step === "besoin") value = config.needs.find((need) => need.value === state.besoin)?.label ?? "";
+        else if (isTextStep(step)) value = state.answers[step].trim();
+        if (!value) return;
+        rows.push([step, fieldLabel(step), value]);
+      });
+      rows.forEach(([step, label, value]) => {
+        const row = document.createElement("button");
+        row.type = "button";
+        row.className = "cc__row";
+        row.dataset.ccEdit = step;
+        row.setAttribute("aria-label", `${copy.actions.edit} — ${label} : ${value}`);
+        const dt = document.createElement("span");
+        dt.className = "cc__row-key";
+        dt.textContent = label;
+        const dd = document.createElement("span");
+        dd.className = "cc__row-value";
+        dd.textContent = value;
+        const edit = document.createElement("span");
+        edit.className = "cc__row-edit";
+        edit.textContent = copy.actions.edit;
+        row.append(dt, dd, edit);
+        recapEl.append(row);
+      });
+    };
+
+    const renderProgress = () => {
+      const steps = flow();
+      const total = steps.length;
+      const index = state.step === "done" ? total : Math.max(steps.indexOf(state.step), 0);
+      const ratio = state.step === "done" ? 1 : index / (total - 1);
+      const current = Math.min(index + 1, total);
+      dialText.textContent = `(${current}/${total})`;
+      dial.setAttribute("aria-label", `${copy.prompt.stepLabel} ${current} / ${total}`);
+      dialProgress.setAttribute("stroke-dasharray", `${ratio * 100} 100`);
+      const lit = Math.round(ratio * ticks.length);
+      // La règle verticale se lit de bas en haut : on allume depuis la fin.
+      ticks.forEach((tick, tickIndex) => tick.classList.toggle("is-on", ticks.length - tickIndex <= lit));
+    };
+
+    const renderPrompt = (focus: boolean) => {
+      const { step } = state;
+      const text = isTextStep(step);
+      const sending = state.status === "sending";
+      const placeholders = copy.prompt.placeholders;
+
+      input.removeAttribute("aria-invalid");
+      input.disabled = sending || step === "confirm" || step === "done";
+      input.name = text ? step : "message";
+      input.value = text ? state.answers[step] : "";
+      input.maxLength = text ? MAX_LENGTHS[step] : MAX_LENGTHS.objectif;
+      input.placeholder = text ? placeholders[step] : placeholders.idle;
+      input.setAttribute("inputmode", step === "email" ? "email" : "text");
+      input.setAttribute("autocomplete", step === "email" ? "email" : step === "nom" ? "name" : step === "societe" ? "organization" : "off");
+      input.setAttribute("autocapitalize", step === "email" ? "none" : "sentences");
+      input.setAttribute("aria-required", String(text && step !== "societe"));
+      resizeInput();
+
+      let label = copy.prompt.choose;
+      if (text) {
+        const required = step !== "societe";
+        label = `${fieldLabel(step)}${required ? "*" : ` — ${copy.prompt.optional.toLowerCase()}`}`;
+        if (step === "objectif" && finePointer) label += ` · ${copy.prompt.hintMultiline}`;
+      } else if (step === "confirm") label = copy.prompt.review;
+      else if (step === "done") label = copy.prompt.done;
+      labelEl.textContent = label;
+      inputLabel.textContent = text ? fieldLabel(step) : copy.prompt.label;
+
+      modeEl.textContent = state.intent ? `/ ${copy.intentLabels[state.intent]}` : "";
+
+      let action = copy.actions.next;
+      if (step === "societe" && !input.value.trim()) action = copy.actions.skip;
+      if (step === "confirm") action = sending ? copy.actions.sending : copy.actions.send;
+      if (step === "done") action = copy.actions.again;
+      submitLabel.textContent = action;
+      submitHint.textContent = step === "done" ? "" : copy.prompt.enter;
+      submitButton.disabled = sending;
+
+      const canGoBack = !sending && step !== "done" && flow().indexOf(step) > 0;
+      backButtons.forEach((button) => (button.disabled = !canGoBack));
+
+      if (focus && text && !input.disabled) input.focus({ preventScroll: true });
+    };
+
+    const render = (options: { focus?: boolean; keepAside?: boolean } = {}) => {
+      const question = questionFor(state.step);
+      root.dataset.step = state.step;
+      root.dataset.status = state.status;
+      prevEl.textContent = state.lastQuestion;
+      type(questionEl, question);
+      liveEl.textContent = question;
+      if (!options.keepAside) setAside("");
+      renderChips();
+      renderRecap();
+      renderProgress();
+      renderPrompt(options.focus ?? true);
+    };
+
+    const goTo = (step: StepId, options: { focus?: boolean; keepAside?: boolean } = {}) => {
+      if (step !== state.step) state.lastQuestion = questionFor(state.step);
+      state.step = step;
+      if (step === "societe") state.societeSeen = true;
+      render(options);
+    };
+
+    const advance = (options: { keepAside?: boolean } = {}) => goTo(nextOpenStep(), options);
+
+    /* ---------- Actions ---------- */
+
+    const chooseIntent = (intent: Intent) => {
+      state.intent = intent;
+      if (intent !== "project") state.besoin = "";
+      react("like");
+      advance();
+    };
+
+    const fail = (message: string, reaction: "oops" | "no") => {
+      input.setAttribute("aria-invalid", "true");
+      setAside(message, "error");
+      react(reaction);
+      input.focus({ preventScroll: true });
+    };
+
+    const submitText = (step: TextStep) => {
+      const value = input.value.trim();
+      const max = MAX_LENGTHS[step];
+      if (!value && step !== "societe") return fail(config.errors.required, "oops");
+      if (value.length > max) return fail(config.errors.maxLength.replace("{max}", String(max)), "no");
+      if (step === "email" && !EMAIL_PATTERN.test(value)) return fail(config.errors.invalidEmail, "no");
+
+      state.answers[step] = value;
+      if (step === "societe" && !value) {
+        react("wink");
+        setAside(copy.asides.skipped);
+        return advance({ keepAside: true });
+      }
+      react(step === "email" ? "yes" : step === "nom" ? "hello" : "like");
+      advance();
+    };
+
+    const send = async () => {
+      if (state.status === "sending" || !state.intent) return;
+      state.status = "sending";
+      arthur?.releaseLook();
+      react("thinking");
+      render({ focus: false });
+
+      const tag = state.intent === "project" ? "" : `${copy.intentTags[state.intent]} `;
+      const payload = {
+        besoin: state.intent === "project" ? state.besoin : "autre",
+        objectif: `${tag}${state.answers.objectif}`.slice(0, MAX_LENGTHS.objectif),
+        nom: state.answers.nom,
+        email: state.answers.email,
+        societe: state.answers.societe,
+        source: { type: "contact-page", pagePath: config.pagePath },
+      };
+
+      let ok = false;
+      try {
+        const response = await fetch("/api/contact/", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+          signal,
+        });
+        ok = response.ok;
+      } catch {
+        ok = false;
+      }
+      if (signal.aborted) return;
+
+      react("calm");
+      if (ok) {
+        state.status = "done";
+        react("success");
+        goTo("done", { focus: false });
+        submitButton.focus({ preventScroll: true });
+        return;
+      }
+      state.status = "error";
+      react("error");
+      render({ focus: false });
+      setAside(
+        `${copy.questions.failed} <a href="mailto:${config.email}">${config.email}</a>`,
+        "error",
+        true,
+      );
+    };
+
+    const restart = () => {
+      state.intent = null;
+      state.besoin = "";
+      state.answers = { objectif: "", nom: "", societe: "", email: "" };
+      state.societeSeen = false;
+      state.status = "idle";
+      state.lastQuestion = copy.greeting;
+      state.step = "intent";
+      react("hello");
+      render({ focus: false });
+    };
+
+    const submit = () => {
+      const { step } = state;
+      if (state.status === "sending") return;
+      if (step === "done") return restart();
+      if (step === "confirm") return void send();
+      if (isTextStep(step)) return submitText(step);
+
+      // Étapes à puces : un texte libre dans le prompt vaut réponse.
+      const value = input.value.trim();
+      if (!value) {
+        setAside(copy.prompt.choose, "error");
+        react("oops");
+        chipsEl.querySelector<HTMLElement>("button")?.focus({ preventScroll: true });
+        return;
+      }
+      if (step === "intent") state.intent = "word";
+      else state.besoin = "autre";
+      state.answers.objectif = value.slice(0, MAX_LENGTHS.objectif);
+      react("like");
+      advance();
+    };
+
+    /* ---------- Événements ---------- */
+
+    form.addEventListener(
+      "submit",
+      (event) => {
+        event.preventDefault();
+        submit();
+      },
+      { signal },
+    );
+
+    input.addEventListener(
+      "keydown",
+      (event) => {
+        if (event.key !== "Enter" || event.isComposing) return;
+        const multiline = state.step === "objectif" || state.step === "intent" || state.step === "besoin";
+        if (event.shiftKey && multiline) return;
+        event.preventDefault();
+        submit();
+      },
+      { signal },
+    );
+
+    input.addEventListener(
+      "input",
+      () => {
+        resizeInput();
+        if (input.getAttribute("aria-invalid")) {
+          input.removeAttribute("aria-invalid");
+          setAside("");
+        }
+        if (state.step === "societe") {
+          submitLabel.textContent = input.value.trim() ? copy.actions.next : copy.actions.skip;
+        }
+        // Les yeux d'Arthur suivent la saisie.
+        const charWidth = parseFloat(getComputedStyle(input).fontSize) * 0.62;
+        const lastLine = input.value.split("\n").pop() ?? "";
+        const progress = Math.min((lastLine.length * charWidth) / (input.clientWidth || 1), 1);
+        arthur?.lookAtElement(input, 0.05 + progress * 0.9);
+      },
+      { signal },
+    );
+
+    input.addEventListener(
+      "focus",
+      () => {
+        arthur?.lookAtElement(input, 0.1);
+        react("focus");
+      },
+      { signal },
+    );
+
+    input.addEventListener(
+      "blur",
+      () => {
+        arthur?.releaseLook();
+        if (state.status !== "sending") react("calm");
+      },
+      { signal },
+    );
+
+    root.addEventListener(
+      "click",
+      (event) => {
+        const target = (event.target as Element).closest<HTMLElement>(
+          "[data-cc-intent],[data-cc-need],[data-cc-edit],[data-cc-back],[data-cc-restart]",
+        );
+        if (!target || state.status === "sending") return;
+        const { ccIntent, ccNeed, ccEdit } = target.dataset;
+
+        if (ccIntent === "culture") {
+          react("wink");
+          window.location.assign(config.cultureHref);
+        } else if (ccIntent) {
+          chooseIntent(ccIntent as Intent);
+        } else if (ccNeed) {
+          state.besoin = ccNeed;
+          react("like");
+          advance();
+        } else if (ccEdit) {
+          if (state.status === "error") state.status = "idle";
+          goTo(ccEdit as StepId);
+        } else if (target.hasAttribute("data-cc-back")) {
+          const steps = flow();
+          const index = steps.indexOf(state.step);
+          if (state.status === "error") state.status = "idle";
+          if (index > 0) goTo(steps[index - 1]);
+        } else if (target.hasAttribute("data-cc-restart")) {
+          restart();
+        }
+      },
+      { signal },
+    );
+
+    root.addEventListener(
+      "horde:copied",
+      () => {
+        setAside(copy.asides.copied);
+        react("yes");
+      },
+      { signal },
+    );
+
+    render({ focus: false });
+
+    void whenArthurReady(document.getElementById("contact-arthur"))
+      .then((instance) => {
+        if (signal.aborted) return;
+        arthur = instance;
+        arthur.react("hello");
+      })
+      .catch(() => {
+        // Sans Arthur, le formulaire fonctionne quand même.
+      });
+  }
+
+  document.addEventListener("astro:page-load", initContactConsole);
+  document.addEventListener("astro:before-swap", () => {
+    teardown?.();
+    teardown = null;
+  });
+</script>

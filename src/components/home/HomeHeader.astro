@@ -7,9 +7,11 @@ import HordeMark from "./svg/HordeMark.astro";
 
 interface Props {
   lang: Locale;
+  /** Chemin sans locale de la page courante (ex. "/contact/"). Défaut : la home. */
+  path?: string;
 }
 
-const { lang } = Astro.props;
+const { lang, path = "/" } = Astro.props;
 const copy = getHomeCopy(lang);
 const [services, projects] = await Promise.all([
   getServiceSummaries(lang),
@@ -18,17 +20,17 @@ const [services, projects] = await Promise.all([
 const count = (value: number) => `(${value.toString().padStart(2, "0")})`;
 
 const items = [
-  { label: copy.nav.home, href: `/${lang}/`, current: true },
+  { label: copy.nav.home, href: `/${lang}/`, current: path === "/" },
   { label: copy.nav.culture, href: `/${lang}/about/` },
   { label: copy.nav.services, href: `/${lang}/services/`, count: count(services.length) },
   { label: copy.nav.projects, href: `/${lang}/projets/`, count: count(projects.length) },
   { label: copy.nav.blog, href: `/${lang}/blog/` },
-  { label: copy.nav.contact, href: `/${lang}/contact/` },
+  { label: copy.nav.contact, href: `/${lang}/contact/`, current: path === "/contact/" },
 ];
 
 const languages = [
-  { locale: "fr" as const, label: "Fr", href: getLocalizedPath("/", "fr") },
-  { locale: "en" as const, label: "Eng", href: getLocalizedPath("/", "en") },
+  { locale: "fr" as const, label: "Fr", href: getLocalizedPath(path, "fr") },
+  { locale: "en" as const, label: "Eng", href: getLocalizedPath(path, "en") },
 ];
 ---
 
