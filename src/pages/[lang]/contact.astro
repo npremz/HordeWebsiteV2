@@ -1,6 +1,5 @@
 ---
 import Layout from '../../layouts/Layout.astro';
-import HomeHeader from '../../components/home/HomeHeader.astro';
 import ContactConsole from '../../components/contact/ContactConsole.astro';
 import Footer from '../../components/Footer.astro';
 import '../../components/home/home.css';
@@ -18,9 +17,8 @@ const { lang } = Astro.params as { lang: Locale };
 const t = useTranslations(lang);
 ---
 
-<Layout lang={lang} title={t.contact.title} description={t.contact.description} bare>
+<Layout lang={lang} title={t.contact.title} description={t.contact.description} headerVariant="dark" bare>
 	<div class="contact-page relative">
-		<HomeHeader lang={lang} path="/contact/" />
 		<ContactConsole lang={lang} />
 	</div>
 	<div slot="footer" class="contact-page__footer">

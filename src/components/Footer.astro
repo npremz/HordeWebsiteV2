@@ -8,7 +8,7 @@ import { DEFAULT_LOCALE, type Locale } from "../i18n";
 import { getSiteChrome } from "../lib/site-data";
 import { getFooterServiceLinks } from "../lib/content/services";
 import { getHomeCopy } from "./home/copy";
-import ArthurAvatar from "./home/svg/ArthurAvatar.astro";
+import ArthurBubble from "./arthur/ArthurBubble.astro";
 import HomeIcon from "./home/svg/HomeIcon.astro";
 import HomeBadge from "./home/ui/HomeBadge.astro";
 import footerMark from "../assets/svg/contact/footer-mark.svg?raw";
@@ -52,7 +52,7 @@ const markSvg = footerMark
 	);
 ---
 
-<footer class="site-footer">
+<footer class="site-footer" data-header-theme="light">
 	<p class="site-footer__title">
 		<a href={contactHref} class="site-footer__title-link" title={copy.talk.ctaLabel}>
 			<Fragment set:html={footerTalk} />
@@ -134,7 +134,7 @@ const markSvg = footerMark
 			<a href={contactHref} class="site-footer__assistant">
 				<span class="site-footer__link">{copy.footer.assistant}</span>
 				<span class="site-footer__avatar">
-					<ArthurAvatar class="h-full w-full" />
+					<ArthurBubble class="site-footer__arthur" interactive={false} />
 				</span>
 			</a>
 		</div>
@@ -390,7 +390,14 @@ const markSvg = footerMark
 		flex: none;
 		border: 3px solid var(--color-black);
 		border-radius: 999px;
-		transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+	}
+
+
+	/* Arthur en 3D (même rendu que la page contact), à la taille de la pastille. */
+	.site-footer__avatar :global(.site-footer__arthur) {
+		--arthur-size: 100%;
+		box-shadow: none;
+		cursor: inherit;
 	}
 
 	.site-footer__avatar::after {
@@ -404,11 +411,6 @@ const markSvg = footerMark
 		background: #3ee06b;
 	}
 
-	@media (hover: hover) {
-		.site-footer__assistant:hover .site-footer__avatar {
-			transform: rotate(-12deg) scale(1.06);
-		}
-	}
 
 	@media (min-width: 640px) {
 		.site-footer__title {
@@ -473,23 +475,42 @@ const markSvg = footerMark
 			text-decoration: none;
 		}
 
+		/* Bande et ligne du bas : grilles à trois colonnes dont les côtés font exactement
+		   la même largeur, pour que le logo et les liens légaux tombent pile au centre,
+		   quelle que soit la largeur des badges, du copyright ou du lien Arthur. */
 		.site-footer__band {
-			justify-content: space-between;
+			display: grid;
+			grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
 			margin-top: 6rem;
 		}
 
 		.site-footer__band :global(.site-footer__badge) {
 			display: inline-flex;
+			justify-self: start;
+		}
+
+		.site-footer__band :global(.site-footer__badge:last-child) {
+			justify-self: end;
 		}
 
 		.site-footer__bottom {
-			grid-template-columns: 1fr auto 1fr;
+			grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
 			margin-top: 4.5rem;
 		}
 
 		.site-footer__legal {
-			grid-column: auto;
+			display: grid;
+			grid-column: 2;
+			justify-items: center;
 			gap: 0.75rem;
+		}
+
+		.site-footer__copyright {
+			grid-column: 1;
+		}
+
+		.site-footer__assistant {
+			grid-column: 3;
 		}
 
 		.site-footer__assistant {
@@ -502,6 +523,29 @@ const markSvg = footerMark
 </style>
 
 <script>
+	import { whenArthurReady } from "../lib/arthur/mount";
+	import type { Reaction } from "../lib/arthur/expressions";
+
+	// Survol du lien Arthur : il sursaute, choqué.
+	const FOOTER_SHOCK: Reaction = { face: "surprised", gesture: "jump", hold: 1000 };
+
+	const initFooterArthur = () => {
+		const link = document.querySelector<HTMLElement>(".site-footer__assistant");
+		const bubble = link?.querySelector<HTMLElement>("[data-arthur]");
+		if (!link || !bubble || link.dataset.anticsBound) return;
+		link.dataset.anticsBound = "true";
+
+		let busyUntil = 0;
+		link.addEventListener("pointerenter", (event) => {
+			if (event.pointerType !== "mouse" || performance.now() < busyUntil) return;
+			busyUntil = performance.now() + (FOOTER_SHOCK.hold ?? 1000);
+			whenArthurReady(bubble).then((arthur) => arthur.react(FOOTER_SHOCK), () => {});
+		});
+	};
+
+	initFooterArthur();
+	document.addEventListener("astro:page-load", initFooterArthur);
+
 	// Boutons « copier » ([data-copy-text]) : footer et page contact.
 	const win = window as Window & { __hordeCopyBound?: boolean };
 	if (!win.__hordeCopyBound) {

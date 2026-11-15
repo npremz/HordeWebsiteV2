@@ -1,6 +1,5 @@
 ---
 import Layout from "../../layouts/Layout.astro";
-import HomeHeader from "../../components/home/HomeHeader.astro";
 import HomeHero from "../../components/home/HomeHero.astro";
 import HomeIntro from "../../components/home/HomeIntro.astro";
 import HomeWorks from "../../components/home/HomeWorks.astro";
@@ -36,6 +35,7 @@ const description = siteSettings.defaultDescription || t.homepage.fallbackDescri
   description={description}
   siteNameAsPrefix={true}
   isHomepage
+  headerVariant="dark"
   bare
 >
   <script is:inline>document.documentElement.classList.add("home-js");</script>
@@ -50,7 +50,6 @@ const description = siteSettings.defaultDescription || t.homepage.fallbackDescri
       stopWhenTargetCoversViewport
       class="z-10"
     />
-    <HomeHeader lang={lang} />
     <HomeHero lang={lang} />
     <HomeIntro lang={lang} />
     <HomeWorks lang={lang} />

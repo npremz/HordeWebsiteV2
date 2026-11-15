@@ -1,17 +1,32 @@
 ---
-import { getLocalizedPath, type Locale } from "../../i18n";
-import { getLocalizedProjects } from "../../lib/content/projects";
-import { getServiceSummaries } from "../../lib/content/services";
-import { getHomeCopy } from "./copy";
-import HordeMark from "./svg/HordeMark.astro";
+/**
+ * Header global, fixe sur tout le site.
+ *
+ * La carte « Horde Agence » garde toujours son fond plein. La nav (desktop) n'a pas de fond :
+ * sa couleur suit la section qui passe dessous, via l'attribut `data-header-theme`
+ * ("dark" = fond sombre → nav blanche, "light" = fond clair → nav noire).
+ * Voir AGENT.md, section « Header global ».
+ */
+import { getLocalizedPath, getPathWithoutLocale, type Locale } from "../i18n";
+import { getLocalizedProjects } from "../lib/content/projects";
+import { getServiceSummaries } from "../lib/content/services";
+import { getHomeCopy } from "./home/copy";
+import HomeIcon from "./home/svg/HomeIcon.astro";
+import headerMark from "../assets/svg/header-mark.svg?raw";
+
+export type HeaderTheme = "dark" | "light";
 
 interface Props {
   lang: Locale;
-  /** Chemin sans locale de la page courante (ex. "/contact/"). Défaut : la home. */
-  path?: string;
+  /** URL de la page dans l'autre langue, quand les slugs diffèrent (blog, projets…). */
+  alternateUrl?: string;
+  /** Thème de départ (avant le premier calcul en JS) : celui du haut de la page. */
+  theme?: HeaderTheme;
 }
 
-const { lang, path = "/" } = Astro.props;
+const { lang, alternateUrl, theme = "light" } = Astro.props;
+const path = getPathWithoutLocale(Astro.url.pathname);
+const isSection = (base: string) => (base === "/" ? path === "/" : path === base || path.startsWith(base));
 const copy = getHomeCopy(lang);
 const [services, projects] = await Promise.all([
   getServiceSummaries(lang),
@@ -20,41 +35,42 @@ const [services, projects] = await Promise.all([
 const count = (value: number) => `(${value.toString().padStart(2, "0")})`;
 
 const items = [
-  { label: copy.nav.home, href: `/${lang}/`, current: path === "/" },
-  { label: copy.nav.culture, href: `/${lang}/about/` },
-  { label: copy.nav.services, href: `/${lang}/services/`, count: count(services.length) },
-  { label: copy.nav.projects, href: `/${lang}/projets/`, count: count(projects.length) },
-  { label: copy.nav.blog, href: `/${lang}/blog/` },
-  { label: copy.nav.contact, href: `/${lang}/contact/`, current: path === "/contact/" },
+  { label: copy.nav.home, href: `/${lang}/`, current: isSection("/") },
+  { label: copy.nav.culture, href: `/${lang}/about/`, current: isSection("/about/") },
+  { label: copy.nav.services, href: `/${lang}/services/`, count: count(services.length), current: isSection("/services/") },
+  { label: copy.nav.projects, href: `/${lang}/projets/`, count: count(projects.length), current: isSection("/projets/") },
+  { label: copy.nav.blog, href: `/${lang}/blog/`, current: isSection("/blog/") },
+  { label: copy.nav.contact, href: `/${lang}/contact/`, current: isSection("/contact/") },
 ];
 
+const languageHref = (locale: Locale) =>
+  locale === lang ? getLocalizedPath(path, locale) : alternateUrl || getLocalizedPath(path, locale);
 const languages = [
-  { locale: "fr" as const, label: "Fr", href: getLocalizedPath(path, "fr") },
-  { locale: "en" as const, label: "Eng", href: getLocalizedPath(path, "en") },
+  { locale: "fr" as const, label: "Fr", href: languageHref("fr") },
+  { locale: "en" as const, label: "Eng", href: languageHref("en") },
 ];
 ---
 
-<header class="home-header absolute inset-x-0 top-0 z-50 text-white">
-  <div class="flex items-start justify-between gap-6 p-[5px]">
+<header class="home-header" data-site-header data-theme={theme}>
+  <div class="home-header__row">
     <a
       href={`/${lang}/`}
       class="home-header__brand"
       aria-label={`${copy.brand.name} — ${copy.nav.home}`}
     >
-      <span class="flex min-w-0 flex-col justify-center gap-1 px-3 md:px-[14px]">
-        <span class="text-[1rem] leading-none tracking-[-0.02em] md:text-[1.375rem]">{copy.brand.name}</span>
-        <span class="hidden items-center gap-1.5 font-mono text-[0.75rem] uppercase leading-none text-white/55 md:flex">
+      <span class="home-header__id">
+        <span class="home-header__name">{copy.brand.name}</span>
+        <span class="home-header__tagline">
           <span class="home-header__dots" aria-hidden="true"><i></i><i></i><i></i></span>
           {copy.brand.tagline}
         </span>
       </span>
-      <span class="home-header__mark hidden md:flex" aria-hidden="true">
-        <HordeMark class="w-[62px]" />
-      </span>
+      <HomeIcon name="origin" class="home-header__origin" />
+      <span class="home-header__mark" aria-hidden="true"><Fragment set:html={headerMark} /></span>
     </a>
 
-    <nav class="hidden md:block" aria-label={copy.nav.menu}>
-      <ul class="flex items-center gap-6 pt-3 pr-3 text-[0.9375rem] leading-none slg:gap-7">
+    <nav class="home-header__nav hidden md:block" aria-label={copy.nav.menu} data-header-probe>
+      <ul class="home-header__list">
         {items.map((item) => (
           <li>
             <a
@@ -63,14 +79,14 @@ const languages = [
               aria-current={item.current ? "page" : undefined}
             >
               {item.label}
-              {item.count && <span class="text-[0.6875rem]">{item.count}</span>}
+              {item.count && <span class="home-header__count">{item.count}</span>}
             </a>
           </li>
         ))}
-        <li class="flex items-center gap-1 border-l border-white/20 pl-6">
+        <li class="home-header__langs">
           {languages.map((language, index) => (
             <>
-              {index > 0 && <span class="text-white/30">/</span>}
+              {index > 0 && <span class="home-header__slash">/</span>}
               <a
                 href={language.href}
                 hreflang={language.locale}
@@ -131,17 +147,94 @@ const languages = [
 </header>
 
 <style>
+  /* Fixe, au-dessus de tout ; seuls ses éléments captent les clics. */
+  .home-header {
+    --nav-fg: 244 241 248;
+    position: fixed;
+    inset: 0 0 auto;
+    z-index: 10001;
+    color: var(--color-white);
+    pointer-events: none;
+  }
+
+  .home-header[data-theme="light"] {
+    --nav-fg: 22 25 27;
+  }
+
+  .home-header__brand,
+  .home-header__nav,
+  .home-header__toggle,
+  .home-header__panel {
+    pointer-events: auto;
+  }
+
+  .home-header__nav {
+    color: rgb(var(--nav-fg));
+    transition: color 0.3s ease;
+  }
+
+  .home-header__slash {
+    color: rgb(var(--nav-fg) / 0.3);
+  }
+
+  /* Mesures de la maquette (écran 1512 px) : carte 451 × 84, bordure #686868, logo 142 × 83 collé à droite. */
+  .home-header__row {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1.5rem;
+    padding: 5px;
+  }
+
   .home-header__brand {
     position: relative;
     z-index: 2;
     display: flex;
-    align-items: stretch;
-    justify-content: space-between;
+    align-items: center;
+    gap: 0.6rem;
     width: 100%;
     height: 2.75rem;
+    padding-inline: 0.75rem;
+    overflow: hidden;
     border: 1px solid #2c2e31;
     border-radius: 8px;
-    background: #1b1d20;
+    background: var(--color-black);
+  }
+
+  .home-header__id {
+    display: flex;
+    min-width: 0;
+    flex-direction: column;
+    justify-content: center;
+    gap: 0.3rem;
+  }
+
+  .home-header__name {
+    font-size: 1rem;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    white-space: nowrap;
+  }
+
+  .home-header__tagline {
+    display: none;
+    align-items: center;
+    gap: 0.4rem;
+    color: rgb(244 241 248 / 0.55);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    line-height: 1;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  .home-header__brand :global(.home-header__origin) {
+    width: 0.8rem;
+    flex: none;
+  }
+
+  .home-header__mark {
+    display: none;
   }
 
   .home-header__dots {
@@ -156,15 +249,25 @@ const languages = [
     border-radius: 999px;
   }
 
-  .home-header__mark {
+  .home-header__list {
+    display: flex;
     align-items: center;
-    justify-content: center;
-    width: 5.6rem;
-    margin: 2px;
-    border: 3px solid #3a3c40;
-    border-radius: 6px;
-    background: var(--color-black);
-    color: var(--color-white);
+    gap: clamp(1rem, 1.75vw, 1.65rem);
+    padding: 0.5rem 1rem 0 0;
+    font-size: clamp(0.9375rem, 1.4vw, 1.3125rem);
+    line-height: 1;
+  }
+
+  .home-header__count {
+    font-size: 0.55em;
+  }
+
+  .home-header__langs {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    padding-left: clamp(1rem, 1.75vw, 1.65rem);
+    border-left: 1px solid rgb(var(--nav-fg) / 0.2);
   }
 
   .home-header__link {
@@ -172,8 +275,8 @@ const languages = [
     display: inline-flex;
     align-items: baseline;
     gap: 0.2rem;
-    color: rgb(244 241 248 / 0.9);
-    transition: color 0.2s ease;
+    color: rgb(var(--nav-fg) / 0.9);
+    transition: color 0.3s ease;
   }
 
   .home-header__link::after {
@@ -189,8 +292,9 @@ const languages = [
     transition: transform 0.4s cubic-bezier(0.77, 0, 0.18, 1);
   }
 
-  .home-header__link:hover {
-    color: var(--color-white);
+  .home-header__link:hover,
+  .home-header__link[aria-current="page"] {
+    color: rgb(var(--nav-fg));
   }
 
   .home-header__link:hover::after {
@@ -199,13 +303,13 @@ const languages = [
   }
 
   .home-header__lang {
-    color: rgb(244 241 248 / 0.35);
-    transition: color 0.2s ease;
+    color: rgb(var(--nav-fg) / 0.35);
+    transition: color 0.3s ease;
   }
 
   .home-header__lang.is-active,
   .home-header__lang:hover {
-    color: var(--color-white);
+    color: rgb(var(--nav-fg));
   }
 
   .home-header__toggle {
@@ -259,11 +363,61 @@ const languages = [
     }
   }
 
-  @media (min-width: 1024px) {
+  @media (min-width: 768px) {
     .home-header__brand {
-      width: 24.5rem;
-      height: 4.75rem;
+      width: auto;
+      flex: none;
+    }
+  }
+
+  /* Carte complète dès 1280 px : en dessous, elle ne tient pas à côté de la nav. */
+  @media (min-width: 1280px) {
+    .home-header__row {
+      padding: 2px;
+    }
+
+    .home-header__brand {
+      gap: 0;
+      width: 28.25rem;
+      height: 5.25rem;
+      padding: 0 0 0 0.875rem;
+      border-color: #686868;
       border-radius: 10px;
+    }
+
+    .home-header__name {
+      font-size: 1.375rem;
+    }
+
+    .home-header__tagline {
+      display: flex;
+    }
+
+    /* ⊖ centré entre l'identité et le logo, comme sur la maquette. */
+    .home-header__brand :global(.home-header__origin) {
+      position: absolute;
+      left: 14.6rem;
+      top: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    .home-header__mark {
+      position: absolute;
+      top: -1px;
+      right: -1px;
+      bottom: -1px;
+      display: block;
+      color: #d9d9d9;
+    }
+
+    .home-header__mark :global(svg) {
+      display: block;
+      width: auto;
+      height: 100%;
+    }
+
+    .home-header__list {
+      padding: 0.6rem 1.25rem 0 0;
     }
   }
 </style>
@@ -297,4 +451,32 @@ const languages = [
 
   initHomeMenu();
   document.addEventListener("astro:page-load", initHomeMenu);
+
+  /*
+   * Couleur de la nav : on regarde quelle section annotée `data-header-theme` passe sous la nav.
+   * La plus profonde (dernière dans l'ordre du document) gagne ; à défaut, celle du <body>.
+   */
+  let themeFrame = 0;
+  const updateHeaderTheme = () => {
+    themeFrame = 0;
+    const header = document.querySelector<HTMLElement>("[data-site-header]");
+    if (!header) return;
+    const probe = header.querySelector<HTMLElement>("[data-header-probe]")?.getBoundingClientRect();
+    const y = probe && probe.height > 0 ? probe.top + probe.height / 2 : 32;
+    let theme = document.body.dataset.headerTheme || "light";
+    document.querySelectorAll<HTMLElement>("[data-header-theme]").forEach((el) => {
+      if (el === document.body || el.closest("[data-site-header]")) return;
+      const rect = el.getBoundingClientRect();
+      if (rect.height > 0 && rect.top <= y && rect.bottom > y) theme = el.dataset.headerTheme || theme;
+    });
+    if (header.dataset.theme !== theme) header.dataset.theme = theme;
+  };
+  const scheduleHeaderTheme = () => {
+    if (!themeFrame) themeFrame = requestAnimationFrame(updateHeaderTheme);
+  };
+
+  window.addEventListener("scroll", scheduleHeaderTheme, { passive: true });
+  window.addEventListener("resize", scheduleHeaderTheme);
+  document.addEventListener("astro:page-load", scheduleHeaderTheme);
+  scheduleHeaderTheme();
 </script>

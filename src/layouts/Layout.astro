@@ -2,7 +2,7 @@
 import { ClientRouter } from 'astro:transitions';
 import SEO from '../components/SEO.astro';
 import '../styles/global.css';
-import Header from '../components/Header.astro';
+import SiteHeader from '../components/SiteHeader.astro';
 import Container from '../components/ui/layout/Container.astro';
 import { DEFAULT_LOCALE, HTML_LOCALE_CODES, type Locale, useTranslations } from '../i18n';
 
@@ -35,10 +35,11 @@ interface Props {
   // Layout props
   class?: string;
   variant?: 'light' | 'dark';
+  /** Fond du haut de la page : sert de thème de départ au header (nav blanche si 'dark'). */
   headerVariant?: 'light' | 'dark';
   showContainerLines?: boolean;
   isHomepage?: boolean;
-  /** Page pleine largeur qui fournit son propre header (nouvelle home). */
+  /** Page pleine largeur, sans Container (home, contact). */
   bare?: boolean;
 }
 
@@ -71,6 +72,9 @@ const {
 const t = useTranslations(lang);
 const isDark = variant === 'dark';
 const bodyClasses = isDark ? 'bg-black text-button-white' : 'bg-bg text-black';
+// Thème du header par défaut (zones non annotées) : celui du fond de page. Voir AGENT.md « Header global ».
+const pageHeaderTheme = isDark ? 'dark' : 'light';
+const initialHeaderTheme = headerVariant ?? pageHeaderTheme;
 ---
 
 <!doctype html>
@@ -112,8 +116,9 @@ const bodyClasses = isDark ? 'bg-black text-button-white' : 'bg-bg text-black';
       });
     </script>
   </head>
-  <body class:list={[bodyClasses, className, { 'is-homepage': isHomepage }]}>
+  <body class:list={[bodyClasses, className, { 'is-homepage': isHomepage }]} data-header-theme={pageHeaderTheme}>
     <a href="#main-content" class="skip-link" title={t.a11y.skipToContent}>{t.a11y.skipToContent}</a>
+    <SiteHeader lang={lang} alternateUrl={alternateUrl} theme={initialHeaderTheme} />
 
     {bare ? (
       <>
@@ -124,7 +129,6 @@ const bodyClasses = isDark ? 'bg-black text-button-white' : 'bg-bg text-black';
       </>
     ) : (
       <>
-        <Header lang={lang} alternateUrl={alternateUrl} theme={headerVariant} />
         <Container variant={variant} showLines={showContainerLines}>
           <main id="main-content">
             <slot />

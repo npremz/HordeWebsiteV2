@@ -44,3 +44,16 @@ npm run indexnow:posts
 - Garder les assets importés dans `src/assets/` quand ils doivent passer par le pipeline Astro, et `public/` pour les fichiers servis tels quels.
 - Les contenus éditoriaux vivent dans `src/content/`; les docs de travail SEO / services vivent dans `docs/`.
 - `README.md` est un starter Astro obsolète, ne pas l'utiliser comme source de vérité.
+
+## Header global
+
+- Un seul header pour tout le site : `src/components/SiteHeader.astro`, rendu par `src/layouts/Layout.astro` (y compris les pages `bare` comme la home et le contact). Ne pas remettre de header dans les pages.
+- Il est **fixe**. La carte « Horde Agence » garde toujours son fond plein sombre ; la **nav desktop n'a pas de fond** et change de couleur selon ce qui passe dessous.
+- Le thème se pilote par annotation : `data-header-theme="dark"` (fond sombre → nav blanche) ou `data-header-theme="light"` (fond clair → nav noire).
+  - Le `<body>` porte le thème par défaut de la page, déduit de `variant` du Layout (`dark` → `dark`, sinon `light`).
+  - Chaque section dont le fond diffère du fond de page **doit** être annotée sur son élément racine pleine largeur (hero noir sur page claire, bandeau clair sur page sombre, footers…).
+  - Au scroll, le script du header prend la section annotée qui coupe la ligne de la nav ; la plus profonde / la dernière dans le document gagne.
+  - `headerVariant` du Layout = fond du **haut** de la page ; il sert de thème initial (rendu serveur, avant le JS) pour éviter un flash.
+- Déjà annotés : sections de la home (`src/components/home/*`), `HeroStructure` (selon `background`), `ServiceHero`, hero des articles de blog, bandeau du contact (`.cc__band`), `Footer` (clair) et `HomeFooter` (sombre).
+- Nouvelle section ou nouvelle page : vérifier la couleur de la nav en scrollant dessus, et annoter si besoin.
+- Changement de langue : passer `alternateUrl` au Layout quand le slug diffère entre `fr` et `en`, sinon le lien Fr/Eng pointe vers une page inexistante.
