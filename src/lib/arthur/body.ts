@@ -46,6 +46,15 @@ import gltfUrl from '../../assets/arthur_model/scene.gltf?url';
 import binUrl from '../../assets/arthur_model/scene.bin?url';
 import { FACE_H, FACE_W } from './face';
 
+/**
+ * Suréchantillonnage : Arthur s'affiche petit (≈ 100 px), on le rend plus grand que
+ * l'écran puis le navigateur le réduit, ce qui lisse les contours et les reflets.
+ * Plafonné en nombre de pixels pour rester léger si le canvas est grand.
+ */
+const SUPERSAMPLE = 2;
+const MAX_PIXEL_RATIO = 4;
+const MAX_RENDER_PIXELS = 1_500_000;
+
 /** Base du cou, en unités du modèle (≈ cm). */
 const NECK = new Vector3(1, 290, -1);
 /** Le modèle est livré la tête penchée : on la redresse pour un portrait de face. */
@@ -164,7 +173,6 @@ function createGlassStudio(): Scene {
 
 export async function createBody(container: HTMLElement, faceCanvas: HTMLCanvasElement): Promise<Body> {
   const renderer = new WebGLRenderer({ antialias: false, alpha: true });
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
   renderer.outputColorSpace = SRGBColorSpace;
   // Neutre (Khronos PBR) : restitue la couleur du modèle sans la délaver.
   renderer.toneMapping = NeutralToneMapping;
@@ -405,7 +413,6 @@ export async function createBody(container: HTMLElement, faceCanvas: HTMLCanvasE
 
   // --- Occlusion ambiante : assombrit les creux (sous la casquette, jointures, cou) ---
   const composer = new EffectComposer(renderer, new WebGLRenderTarget(1, 1, { type: HalfFloatType, samples: 4 }));
-  composer.setPixelRatio(renderer.getPixelRatio());
   composer.addPass(new RenderPass(scene, camera));
   const occlusion = new GTAOPass(scene, camera, 1, 1);
   occlusion.blendIntensity = AO_INTENSITY;
@@ -423,6 +430,13 @@ export async function createBody(container: HTMLElement, faceCanvas: HTMLCanvasE
   const resize = () => {
     const width = Math.max(container.clientWidth, 1);
     const height = Math.max(container.clientHeight, 1);
+    const ratio = Math.min(
+      (window.devicePixelRatio || 1) * SUPERSAMPLE,
+      MAX_PIXEL_RATIO,
+      Math.sqrt(MAX_RENDER_PIXELS / (width * height)),
+    );
+    renderer.setPixelRatio(ratio);
+    composer.setPixelRatio(ratio);
     renderer.setSize(width, height, false);
     composer.setSize(width, height);
     camera.aspect = width / height;
