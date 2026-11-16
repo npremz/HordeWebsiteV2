@@ -47,8 +47,8 @@ translations:
     shortName: Custom landing page
     footerTitle: Landing page
     intro: >-
-      You have a brand or a product to present or sell, and you need a page
-      built to convince, through its design as much as its message.
+      You have a brand or a product to present or sell, and you need a landing
+      page built to convince, through its design as much as its message.
     problemTitle: What it is for
     problemBlocks:
       - kind: item
@@ -176,7 +176,7 @@ translations:
         url: /en/contact/
 intro: >-
   Vous avez une marque ou un produit à présenter ou à vendre, et il vous faut
-  une page pensée pour convaincre, par son design comme par son message.
+  une landing page pensée pour convaincre, par son design comme par son message.
 problemTitle: Pour quoi faire
 problemBlocks:
   - kind: item

@@ -46,7 +46,8 @@ translations:
     footerTitle: E-Commerce
     intro: >-
       You have an online brand and you want your shop to reach the next level: a
-      polished website with smooth sales funnels, from catalogue to checkout.
+      polished website, on Shopify or custom-built, with smooth sales funnels
+      from catalogue to checkout.
     problemTitle: Where an online purchase journey usually breaks down
     problemBlocks:
       - kind: paragraph
@@ -165,8 +166,8 @@ translations:
         url: /en/contact/
 intro: >-
   Vous avez une marque en ligne et vous voulez que votre boutique passe au
-  niveau supérieur : un site soigné, avec des tunnels de vente fluides, du
-  catalogue au paiement.
+  niveau supérieur : un site soigné, sur Shopify ou sur mesure, avec des tunnels
+  de vente fluides, du catalogue au paiement.
 problemTitle: Là où un parcours d'achat se complique
 problemBlocks:
   - kind: paragraph

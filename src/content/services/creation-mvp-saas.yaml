@@ -47,9 +47,9 @@ translations:
     shortName: MVP development
     footerTitle: MVP / Web app
     intro: >-
-      You have an idea or a concept to test, and you need a prototype quickly to
-      test the market, without the technical background. We define the minimal
-      scope with you, then we build it.
+      You have an idea or a concept to test, and you need an MVP quickly to test
+      the market or convince investors, without the technical background. We
+      define the minimal scope with you, then we build it.
     problemTitle: What "minimal" really means
     problemBlocks:
       - kind: paragraph
@@ -165,9 +165,9 @@ translations:
       - anchor: contact us
         url: /en/contact/
 intro: >-
-  Vous avez une idée ou un concept à tester, et il vous faut rapidement un
-  prototype pour tester le marché, sans avoir le bagage technique. On définit le
-  périmètre minimal avec vous, puis on le construit.
+  Vous avez une idée ou un concept à tester, et il vous faut rapidement un MVP
+  pour tester le marché ou convaincre des investisseurs, sans avoir le bagage
+  technique. On définit le périmètre minimal avec vous, puis on le construit.
 problemTitle: Ce que "minimal" veut dire vraiment
 problemBlocks:
   - kind: paragraph
