@@ -94,8 +94,9 @@ const {
 </style>
 
 <script>
-  import { mountAllArthurs, unmountAllArthurs } from '../../lib/arthur/mount';
+  import { mountArthursWhenNear, unmountAllArthurs } from '../../lib/arthur/mount';
 
-  document.addEventListener('astro:page-load', () => mountAllArthurs());
+  // Montage paresseux : la 3D (three.js + modèle) ne se charge qu'à l'approche de la bulle.
+  document.addEventListener('astro:page-load', () => mountArthursWhenNear());
   document.addEventListener('astro:before-swap', () => unmountAllArthurs());
 </script>

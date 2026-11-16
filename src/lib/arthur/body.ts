@@ -31,13 +31,12 @@ import {
   Vector3,
   WebGLRenderTarget,
   WebGLRenderer,
-  type BufferGeometry,
   type Material,
   type MeshStandardMaterial,
 } from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js';
 import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
-import { toCreasedNormals } from 'three/addons/utils/BufferGeometryUtils.js';
 import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
 import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
 import { GTAOPass } from 'three/addons/postprocessing/GTAOPass.js';
@@ -97,9 +96,6 @@ const AO_RADIUS = 60;
 const AO_SCALE = 2.4;
 /** L'occlusion assombrit aussi la visière, en retrait : on rallume l'écran d'autant. */
 const FACE_BRIGHTNESS = 1.15;
-
-/** Lissage des facettes : angle (degrés) en dessous duquel deux faces voisines sont fondues. 0 = désactivé. */
-const SMOOTH_ANGLE = 50;
 
 const CAMERA_FOV = 26;
 const CAMERA_POS = new Vector3(0, 394, 585);
@@ -226,7 +222,8 @@ export async function createBody(container: HTMLElement, faceCanvas: HTMLCanvasE
   manager.setURLModifier((url) => (/scene\.bin(\?.*)?$/.test(url) ? binUrl : url));
   let gltf;
   try {
-    gltf = await new GLTFLoader(manager).loadAsync(gltfUrl);
+    // Modèle compressé en meshopt (scripts/build-arthur-model.mjs) : décodeur WASM de three.js, ≈ 7 Ko gzip.
+    gltf = await new GLTFLoader(manager).setMeshoptDecoder(MeshoptDecoder).loadAsync(gltfUrl);
   } catch (error) {
     pmrem.dispose();
     envTarget.dispose();
@@ -235,19 +232,8 @@ export async function createBody(container: HTMLElement, faceCanvas: HTMLCanvasE
     throw error;
   }
 
-  // Lissage : le modèle est livré avec des normales par facette. On les recalcule pour que
-  // les surfaces courbes soient lisses, en gardant vives les arêtes au-delà de SMOOTH_ANGLE.
-  if (SMOOTH_ANGLE > 0) {
-    const smoothed = new Set<BufferGeometry>();
-    gltf.scene.traverse((object) => {
-      const mesh = object as Mesh;
-      if (!mesh.isMesh || smoothed.has(mesh.geometry)) return;
-      const source = mesh.geometry;
-      mesh.geometry = toCreasedNormals(source, (SMOOTH_ANGLE * Math.PI) / 180);
-      if (mesh.geometry !== source) source.dispose();
-      smoothed.add(mesh.geometry);
-    });
-  }
+  // Normales lissées (arêtes vives au-delà de 50°) : déjà intégrées au modèle par
+  // scripts/build-arthur-model.mjs, plus aucun calcul au chargement.
 
   const rig = new Group();
   rig.add(gltf.scene);

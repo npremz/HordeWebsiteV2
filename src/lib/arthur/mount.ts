@@ -35,7 +35,43 @@ export function mountArthur(el: HTMLElement): Promise<Arthur> {
 /** Monte toutes les bulles de la page. Sans effet sur celles déjà montées. */
 export function mountAllArthurs(root: ParentNode = document): void {
   root.querySelectorAll<HTMLElement>('[data-arthur]').forEach((el) => void mountArthur(el));
+  bindGlobalReact();
+}
 
+/**
+ * Distance d'avance avant qu'une bulle n'entre à l'écran : le temps de charger three.js et le
+ * modèle (≈ 600 Ko compressés) pour qu'Arthur soit prêt quand on arrive dessus.
+ */
+const NEAR_MARGIN = '600px 0px';
+let nearObserver: IntersectionObserver | null = null;
+
+/**
+ * Monte chaque bulle seulement quand elle approche de l'écran. Une bulle déjà visible (page contact)
+ * se monte tout de suite ; celle du footer ne charge plus la 3D à l'ouverture de la home.
+ * `whenArthurReady()` monte toujours une bulle à la demande, visible ou non.
+ */
+export function mountArthursWhenNear(root: ParentNode = document): void {
+  bindGlobalReact();
+  if (!('IntersectionObserver' in window)) {
+    mountAllArthurs(root);
+    return;
+  }
+  nearObserver ??= new IntersectionObserver(
+    (entries) => {
+      for (const entry of entries) {
+        if (!entry.isIntersecting) continue;
+        nearObserver?.unobserve(entry.target);
+        void mountArthur(entry.target as HTMLElement);
+      }
+    },
+    { rootMargin: NEAR_MARGIN },
+  );
+  root.querySelectorAll<HTMLElement>('[data-arthur]').forEach((el) => {
+    if (!mounted.has(el)) nearObserver!.observe(el);
+  });
+}
+
+function bindGlobalReact(): void {
   if (globalBound) return;
   globalBound = true;
   window.addEventListener('arthur:react', (event) => {
@@ -47,6 +83,8 @@ export function mountAllArthurs(root: ParentNode = document): void {
 
 /** À appeler avant un changement de page (transitions Astro). */
 export function unmountAllArthurs(): void {
+  nearObserver?.disconnect();
+  nearObserver = null;
   mounted.forEach((pending) => void pending.then((arthur) => arthur.destroy()));
   mounted.clear();
 }
