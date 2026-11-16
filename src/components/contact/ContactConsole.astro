@@ -7,6 +7,7 @@
 import { type Locale, useTranslations } from "../../i18n";
 import ArthurBubble from "../arthur/ArthurBubble.astro";
 import { getContactCopy } from "./copy";
+import { BUSINESS } from "../../lib/business-info";
 import compass from "../../assets/svg/contact/compass.svg?raw";
 import crosshair from "../../assets/svg/contact/crosshair.svg?raw";
 
@@ -17,8 +18,8 @@ interface Props {
 const { lang } = Astro.props;
 const t = useTranslations(lang);
 const copy = getContactCopy(lang);
-const email = "hello@hordeagence.com";
-const bookCallHref = "https://calendly.com/ni-premont/30min";
+const email = BUSINESS.email;
+const bookCallHref = BUSINESS.bookingUrl;
 
 const config = {
   copy,
@@ -111,7 +112,7 @@ const ticks = Array.from({ length: 22 });
               <circle cx="93" cy="93" r="80" stroke="#3f4245" />
               <circle cx="93" cy="93" r="73" stroke="#5c5e5f" stroke-width="4" />
               <circle class="cc__dial-progress" cx="93" cy="93" r="73" stroke="currentColor" stroke-width="4" pathLength="100" stroke-dasharray="0 100" transform="rotate(-90 93 93)" data-cc-dial-progress />
-              <circle cx="93" cy="93" r="34" fill="#16191b" stroke="#3f4245" />
+              <circle cx="93" cy="93" r="34" fill="#0F1011" stroke="#3f4245" />
             </svg>
             <span data-cc-dial-text>(1/7)</span>
           </div>
@@ -777,8 +778,8 @@ const ticks = Array.from({ length: 22 });
     border-radius: 999px;
     background: #fff;
     box-shadow:
-      inset 0 2px 5px rgb(22 25 27 / 0.16),
-      inset 0 -1px 0 rgb(22 25 27 / 0.04);
+      inset 0 2px 5px rgb(15 16 17 / 0.16),
+      inset 0 -1px 0 rgb(15 16 17 / 0.04);
     font-family: var(--font-mono);
     font-size: 0.875rem;
     letter-spacing: 0.02em;
@@ -795,12 +796,31 @@ const ticks = Array.from({ length: 22 });
 
   .cc__pill:hover {
     box-shadow:
-      inset 0 3px 9px rgb(22 25 27 / 0.3),
-      inset 0 -1px 0 rgb(22 25 27 / 0.04);
+      inset 0 3px 9px rgb(15 16 17 / 0.3),
+      inset 0 -1px 0 rgb(15 16 17 / 0.04);
   }
 
   .cc__sight {
     display: none;
+  }
+
+  /* Viseur : au survol du bouton d'envoi, le bras gauche se rétracte et le droit s'allonge d'autant (voir ≥ 1024px). */
+  .cc__sight-arm {
+    transform-box: fill-box;
+    transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .cc__sight-arm--left {
+    transform-origin: right center;
+  }
+
+  .cc__sight-arm--right {
+    transform-origin: left center;
+  }
+
+  /* Cache le trait de fond entre les deux bras : il ne traverse pas le centre du viseur. */
+  .cc__sight-mask {
+    fill: var(--color-black);
   }
 
   .cc__tile {
@@ -1252,16 +1272,18 @@ const ticks = Array.from({ length: 22 });
       position: relative;
       width: 6.8rem;
       height: auto;
-      transition: transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+      /* Le bras droit allongé dépasse du SVG, dans la marge avant les boutons. */
+      overflow: visible;
     }
 
-    .cc__sight svg [fill="white"] {
-      fill: none;
+    .cc__dock:has(.cc__tile--submit:hover) .cc__sight-arm--left,
+    .cc__dock:has(.cc__tile--submit:focus-visible) .cc__sight-arm--left {
+      transform: scaleX(0.5);
     }
 
-    .cc__dock:has(.cc__tile--submit:hover) .cc__sight svg,
-    .cc__dock:has(.cc__tile--submit:focus-visible) .cc__sight svg {
-      transform: rotate(90deg);
+    .cc__dock:has(.cc__tile--submit:hover) .cc__sight-arm--right,
+    .cc__dock:has(.cc__tile--submit:focus-visible) .cc__sight-arm--right {
+      transform: scaleX(1.5);
     }
 
     .cc__tile {
