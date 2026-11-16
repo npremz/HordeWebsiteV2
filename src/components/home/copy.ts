@@ -97,7 +97,7 @@ const fr = {
       { name: 'Armetix', color: '#FBFF3D', score: 5, text: 'Très professionnel, j’ai pu travailler à deux reprises avec Horde, et à chaque fois c’était fait avec attention et sérieux. Je recommande !' },
       { name: 'Anne', color: '#42BFFF', score: 5, text: 'Merci pour la création de mon site. Il est complet, clair, intuitif et dégage une idée d’apaisement et d’harmonie qui correspond parfaitement à mes activités et l’image que je souhaite en donner : professionnalisme et sérénité.' },
       // Texte tronqué dans la capture (« … Plus ») : à compléter avec l’avis entier.
-      { name: 'Frédéric', color: '#B47BFF', score: 5, text: 'J’ai eu l’occasion de collaborer avec Nicolas et Alexandre, et ce fut un réel plaisir ! Ils ont vraiment été à l’écoute de mes demandes et ont pris le temps de m’expliquer leurs choix et le pourquoi des choses…' },
+      { name: 'Frédéric', color: '#B47BFF', score: 5, text: 'J’ai eu l’occasion de collaborer avec Nicolas et Alexandre, et ce fut un réel plaisir ! Ils ont vraiment été à l’écoute de mes demandes et ont pris le temps de m’expliquer leurs choix et le pourquoi des choses. On voit qu’Alexandre est très à l’aise dans tout ce qui touche aux visuels et au graphisme, tandis que Nicolas est un super développeur, toujours capable de trouver le petit détail technique qui fait toute la différence. Ce fut un vrai plaisir d’avoir travaillé avec eux !' },
       { name: 'Bartosz', color: '#3DDC84', score: 5, text: 'Équipe très pro, conseils au top et communication impeccable. Je ne peux que recommander !' },
     ],
   },
@@ -220,7 +220,7 @@ const en: HomeCopy = {
       { name: 'Sarah', color: '#FF4242', score: 5, text: 'Horde Agence built the website for my photography business and I’m really happy with it! We’re now working on a new version, and they’re both available and full of good advice for this new step in my career.' },
       { name: 'Armetix', color: '#FBFF3D', score: 5, text: 'Very professional. I’ve worked with Horde twice, and each time the work was careful and serious. I recommend them!' },
       { name: 'Anne', color: '#42BFFF', score: 5, text: 'Thank you for creating my website. It’s complete, clear and intuitive, and conveys a sense of calm and harmony that perfectly matches my work and the image I want to project: professionalism and serenity.' },
-      { name: 'Frédéric', color: '#B47BFF', score: 5, text: 'I had the chance to work with Nicolas and Alexandre, and it was a real pleasure! They truly listened to my requests and took the time to explain their choices and the reasons behind them…' },
+      { name: 'Frédéric', color: '#B47BFF', score: 5, text: 'I had the chance to work with Nicolas and Alexandre, and it was a real pleasure! They truly listened to my requests and took the time to explain their choices and the reasons behind them. Alexandre is clearly very comfortable with everything visual and graphic, while Nicolas is a great developer, always able to find the small technical detail that makes all the difference. It was a real pleasure working with them!' },
       { name: 'Bartosz', color: '#3DDC84', score: 5, text: 'Very professional team, great advice and flawless communication. I can only recommend them!' },
     ],
   },
