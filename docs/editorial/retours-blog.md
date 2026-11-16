@@ -40,3 +40,13 @@ Journal des retours de Nicolas sur les propositions et les articles. À relire a
 - Accroches gardées, avec les mots qui ont des impressions dans Search Console : « MVP » et « investisseurs », « landing page », « Shopify ».
 - Refonte e-commerce dès 999 € (jusqu'à 3 999 €) et refonte SaaS au prix d'un MVP (3 999 € à 8 000 €) : validés.
 - Mise à jour de l'article refonte poussée directement sur master à la demande de Nicolas (pas de PR programmée).
+
+## 2026-11-16 — « Meilleure IA pour coder en 2027 » (A1, territoire IA)
+
+- Sujet accepté, rédigé ici plutôt que via le cron (le run du 16/11 avait proposé l'ancien sujet « animation »).
+- Pas de banc d'essai chronométré : la preuve est le test terrain de Nicolas (Gemini, Claude Code, DeepSeek, Codex). Ne pas inventer de chiffres de vitesse.
+- Angle corrigé par Nicolas : la vitesse est un argument majeur (pas l'inverse). Ce qui compte : l'écosystème, le harnais et le rapport qualité/vitesse.
+- Positions de Nicolas : Claude Code = écosystème le plus complet, clé en main, « +/- safe » en entreprise ; Codex (OpenAI) pas pratique car lent dans l'état actuel ; DeepSeek excellent pour tests et itérations rapides, mais attention RGPD (données en Chine) ; le choix d'un modèle rapide est situationnel.
+- À dire clairement : le code est « good enough » avec les modèles frontier, mais l'IA n'est pas au niveau d'un pro en UX : beaucoup de bruit sans but sur les pages, ça fait illusion pour un novice.
+- Miniature : utiliser les logos des IA comparées.
+- Article à mettre à jour à chaque grosse sortie (veille automatique hebdomadaire, voir cron « Veille IA — article meilleure IA pour coder »).

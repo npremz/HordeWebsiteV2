@@ -1,0 +1,95 @@
+For professional coding with AI, our pick today is **Claude Code**. The model is only part of the reason. What makes the difference is everything around it: the tool that reads the project, runs commands, checks and fixes its own work, and how fast all of that loops.
+
+We tested Claude Code, Codex (OpenAI), Gemini (Google) and DeepSeek on our own projects. Two things stood out. Speed matters far more than leaderboards suggest. And none of these AIs is yet at the level of a professional when it comes to user experience.
+
+*Comparison last updated on 16 November 2026. We revisit it after every major release of these tools.*
+
+## The model is only part of the tool
+
+Comparisons usually rank models on lab benchmarks. In practice, nobody codes with a bare model. You work through a **harness**: the program that gives the model access to the repository, the terminal, the tests and the docs, handles permissions and keeps track of a long task.
+
+Two tools built on similar models can produce very different results depending on that harness. An agent that runs the tests, reads the error and fixes it without you pasting everything back saves more time than a model that is slightly better on paper.
+
+So we judge three things together:
+
+* **the ecosystem**: integrations, extensions, access management, documentation;
+* **the harness**: what the agent can do on its own, and under what control;
+* **the quality-to-speed ratio**: the time between a request and a usable result.
+
+## Speed is not a detail
+
+You might expect a slower AI to make up for it with better output. That is not how real project work happens. You iterate: ask, look, correct the direction, ask again. Every wait breaks that rhythm.
+
+A tool that keeps you waiting where another answers almost immediately costs more than compute time. It costs focus, and it cuts the number of attempts you make in a day. More often than not, the number of attempts is what improves the result.
+
+That said, the fastest model is not always the right one. The choice depends on the task, which is why this comparison is situational.
+
+## What we take away from each tool
+
+| Tool | Our takeaway | Where we use it |
+| --- | --- | --- |
+| Claude Code (Anthropic) | The most complete ecosystem for turnkey use, with a good balance of quality and speed | Client projects, team work |
+| Codex (OpenAI) | Solid code, but too slow today for the way we iterate | Rarely, for now |
+| Gemini (Google) | **[TO BE COMPLETED BY NICOLAS]** | **[TO BE COMPLETED]** |
+| DeepSeek | An excellent quality-to-speed ratio, with a real data question | Quick tests and iterations on non-sensitive data |
+
+These findings come from our day-to-day use in November 2026. They are not lab measurements, and the next release can change them.
+
+### Claude Code: the turnkey choice
+
+This is the tool we recommend to a team that wants to get started without assembling several pieces itself. The agent, its tools, its extensions and its documentation work as one, and the speed keeps up.
+
+For businesses, the real question is contractual. Anthropic states that it does not train its models on code or prompts sent to Claude Code under commercial terms, meaning Team and Enterprise plans or the API ([Claude Code documentation](https://code.claude.com/docs/en/data-usage)). That is not automatic on individual Free, Pro and Max accounts, where training depends on a setting. For client code, use a commercial plan and check that setting. A [zero data retention](https://code.claude.com/docs/en/zero-data-retention) option is also available to some organisations.
+
+Reasonably safe, then, as long as you pick the right setup.
+
+### Codex: quality does not make up for the wait
+
+The code itself is not the issue. Response time is what makes Codex impractical in our workflow, as things stand. That can change quickly, and it is exactly the kind of finding we will recheck with every new version.
+
+### DeepSeek: fast and capable, but not for every kind of data
+
+For testing an idea, exploring variants or iterating quickly on a prototype, DeepSeek offers a remarkable quality-to-speed ratio. Choosing a fast model is situational, and these are the situations where it shines.
+
+The limit lies elsewhere. [DeepSeek’s privacy policy](https://cdn.deepseek.com/policies/en-US/deepseek-privacy-policy.html) states that user data is collected, processed and stored in the People’s Republic of China. In January 2025, the Italian data protection authority restricted the service’s processing of Italian users’ data ([Bird & Bird analysis](https://cm.twobirds.com/en/insights/2025/the-garante-imposes-a-definitive-limitation-on-the-processing-of-italian-users%E2%80%99-personal-data)).
+
+For a company subject to the GDPR, that rules out sending client code or personal data to the API without a prior assessment. The weights of several DeepSeek models, however, are published under open licences, for example [DeepSeek-V3.2-Exp under the MIT licence](https://github.com/deepseek-ai/DeepSeek-V3.2-Exp/blob/main/LICENSE). Hosted on infrastructure in Europe, they do not raise the same transfer question. That still takes suitable servers and a check of the chosen model’s licence.
+
+## The code is good enough. The experience is not yet.
+
+With the latest models, the code generally works. For a page, a component or a prototype, that is often enough to move forward.
+
+The problem is elsewhere. AIs tend to fill pages with noise: sections that repeat the same promise, decorative badges and figures, several buttons competing for attention, animations with no purpose. Taken one by one, these elements look polished. Together, they slow reading down and blur the main action.
+
+> “On the code side, everything generally works: it’s good enough with the latest models. But AIs create a huge amount of noise on pages, with no real purpose, and it weighs on usability. It looks good to a novice. A UX expert can take the experience much further.”
+> — Nicolas Prémont, developer at Horde
+
+To a novice, the page looks finished. A UX expert looks at what it gets people to do: where the eye goes, what you understand in the first few seconds, what is missing at the moment of decision. They remove, prioritise and test. We covered this limit in [AI can create interfaces, not experiences](/en/blog/ai-can-create-interfaces-not-experiences/), and the method to fix it in our [four-step UI/UX audit](/en/blog/website-ui-ux-audit/).
+
+## Choosing by situation
+
+| Situation | Our pick | Why |
+| --- | --- | --- |
+| Client project, team, company | Claude Code on a commercial plan | Complete ecosystem and contractual terms on data |
+| Throwaway prototype, fast iterations, dummy data | DeepSeek or another fast model | Quality-to-speed ratio |
+| Confidential code with an open-weight model | Model hosted in Europe | No transfer outside the European Union |
+| Interface meant for real users | Any tool, followed by a human UX review | AI produces the first draft, not the experience |
+
+The last case is the most common, and the most often forgotten. AI gets you to a working prototype fast. Turning it into a product people understand and use is still design work, and it is priced like the rest: our article on [the cost of a website redesign](/en/blog/how-much-does-a-website-redesign-cost/) gives realistic figures.
+
+## A comparison that changes with every release
+
+This ranking ages fast. A new model or a new version of a harness can reverse a finding within weeks. We revisit this article after every major release of Claude Code, Codex, Gemini and DeepSeek, and the update date sits at the top of the page.
+
+What does not change: pick the tool for its ecosystem and for how fast it lets you iterate, protect the data before comparing scores, and keep experience decisions in human hands.
+
+Got a prototype built with AI that works but does not convince yet? That is the stage where we come in: **→ [MVP development](/en/services/mvp-development-brussels/)**
+
+## Sources
+
+* [Claude Code — Data usage](https://code.claude.com/docs/en/data-usage)
+* [Claude Code — Zero data retention](https://code.claude.com/docs/en/zero-data-retention)
+* [DeepSeek — Privacy Policy](https://cdn.deepseek.com/policies/en-US/deepseek-privacy-policy.html)
+* [Bird & Bird — The Garante imposes a definitive limitation on the processing of Italian users’ personal data (2025)](https://cm.twobirds.com/en/insights/2025/the-garante-imposes-a-definitive-limitation-on-the-processing-of-italian-users%E2%80%99-personal-data)
+* [DeepSeek-V3.2-Exp — LICENSE (MIT)](https://github.com/deepseek-ai/DeepSeek-V3.2-Exp/blob/main/LICENSE)
+* The findings on speed and use of each tool come from Horde’s own testing in November 2026; they are not a benchmark.

@@ -1,0 +1,95 @@
+Pour coder avec l’IA dans un cadre professionnel, notre choix aujourd’hui est **Claude Code**. Ce n’est pas seulement une affaire de modèle. Ce qui fait la différence, c’est tout ce qu’il y a autour : l’outil qui lit le projet, lance les commandes, vérifie et corrige, et la vitesse à laquelle tout ça tourne.
+
+Nous avons testé Claude Code, Codex (OpenAI), Gemini (Google) et DeepSeek sur nos propres projets. Deux constats en sortent. La vitesse compte bien plus que les classements ne le laissent croire. Et aucune de ces IA n’atteint encore le niveau d’un professionnel quand il s’agit d’expérience utilisateur.
+
+*Comparatif à jour au 16 novembre 2026. Nous le revoyons à chaque sortie majeure de ces outils.*
+
+## Le modèle n’est qu’une partie de l’outil
+
+Les comparatifs classent souvent des modèles sur des scores de laboratoire. En pratique, personne ne code avec un modèle seul. On travaille avec un **harnais** : le programme qui donne au modèle l’accès au dépôt, au terminal, aux tests et à la documentation, qui gère les permissions et qui garde le fil d’une tâche longue.
+
+Deux outils construits sur des modèles proches peuvent donner des résultats très différents selon ce harnais. Un agent qui lance les tests, lit l’erreur et corrige sans qu’on lui recopie tout fait gagner plus de temps qu’un modèle un peu meilleur sur le papier.
+
+C’est pourquoi nous jugeons trois choses ensemble :
+
+* **l’écosystème** : intégrations, extensions, gestion des accès, documentation ;
+* **le harnais** : ce que l’agent peut faire seul, et sous quel contrôle ;
+* **le rapport qualité/vitesse** : le temps entre une demande et un résultat utilisable.
+
+## La vitesse n’est pas un détail
+
+On pourrait penser qu’une IA plus lente se rattrape par une meilleure qualité. Ce n’est pas comme ça qu’on travaille sur un vrai projet. On itère : on demande, on regarde, on corrige la direction, on redemande. Chaque attente casse ce rythme.
+
+Un outil qui fait patienter là où un autre répond presque tout de suite ne coûte pas seulement du temps machine. Il coûte de la concentration, et il réduit le nombre d’essais dans une journée. Or c’est souvent le nombre d’essais qui améliore le résultat.
+
+Il faut toutefois éviter une conclusion trop simple. Le modèle le plus rapide n’est pas toujours le bon. Le choix dépend de la tâche, et c’est ce qui rend le comparatif situationnel.
+
+## Ce que nous retenons de chaque outil
+
+| Outil | Ce que nous en retenons | Où nous l’utilisons |
+| --- | --- | --- |
+| Claude Code (Anthropic) | L’écosystème le plus complet pour un usage clé en main, avec un bon équilibre entre qualité et vitesse | Projets clients, travail en équipe |
+| Codex (OpenAI) | Un code correct, mais trop lent aujourd’hui pour notre façon d’itérer | Peu, pour l’instant |
+| Gemini (Google) | **[À COMPLÉTER PAR NICOLAS]** | **[À COMPLÉTER]** |
+| DeepSeek | Un excellent rapport qualité/vitesse, avec une vraie question sur les données | Tests et itérations rapides, sur des données non sensibles |
+
+Ces constats viennent de notre usage quotidien en novembre 2026. Ce ne sont pas des mesures de laboratoire, et ils peuvent changer dès la prochaine version.
+
+### Claude Code : le choix clé en main
+
+C’est l’outil que nous recommandons à une équipe qui veut s’y mettre sans assembler elle-même plusieurs briques. L’agent, ses outils, ses extensions et sa documentation forment un ensemble cohérent, et la vitesse suit.
+
+En entreprise, la question est surtout contractuelle. Anthropic indique ne pas entraîner ses modèles sur le code et les prompts envoyés à Claude Code sous conditions commerciales, c’est-à-dire avec les offres Team et Enterprise ou via l’API ([documentation Claude Code](https://code.claude.com/docs/en/data-usage)). Ce n’est pas automatique pour les comptes individuels Free, Pro et Max : l’entraînement y dépend d’un réglage. Pour du code client, passez par une offre commerciale et vérifiez ce réglage. Une option de [conservation zéro des données](https://code.claude.com/docs/en/zero-data-retention) existe aussi pour certaines organisations.
+
+Raisonnablement sûr, donc, à condition de choisir le bon cadre.
+
+### Codex : la qualité ne compense pas l’attente
+
+Le code produit n’est pas en cause. C’est le temps de réponse qui rend Codex peu pratique dans notre flux, dans l’état actuel. Ce point peut changer vite. C’est exactement le genre de constat que nous revérifierons à chaque nouvelle version.
+
+### DeepSeek : rapide et efficace, pas pour toutes les données
+
+Pour tester une idée, explorer plusieurs variantes ou itérer vite sur un prototype, DeepSeek offre un rapport qualité/vitesse remarquable. Le choix d’un modèle rapide est situationnel, et c’est dans ces situations qu’il brille.
+
+La limite est ailleurs. La [politique de confidentialité de DeepSeek](https://cdn.deepseek.com/policies/en-US/deepseek-privacy-policy.html) indique que les données des utilisateurs sont collectées, traitées et stockées en République populaire de Chine. En janvier 2025, l’autorité italienne de protection des données a d’ailleurs limité le traitement des données des utilisateurs italiens par le service ([analyse Bird & Bird](https://cm.twobirds.com/en/insights/2025/the-garante-imposes-a-definitive-limitation-on-the-processing-of-italian-users%E2%80%99-personal-data)).
+
+Pour une entreprise soumise au RGPD, ça exclut d’envoyer à l’API du code client ou des données personnelles sans analyse préalable. Les poids de plusieurs modèles DeepSeek sont en revanche publiés sous licence ouverte, par exemple [DeepSeek-V3.2-Exp sous licence MIT](https://github.com/deepseek-ai/DeepSeek-V3.2-Exp/blob/main/LICENSE). Hébergés sur une infrastructure en Europe, ils ne posent pas la même question de transfert. Cela demande toutefois des serveurs adaptés et une vérification de la licence du modèle choisi.
+
+## Le code est suffisant. L’expérience ne l’est pas encore.
+
+Avec les derniers modèles, le code fonctionne en général. Pour une page, un composant ou un prototype, c’est souvent assez pour avancer.
+
+Le problème se situe ailleurs. Les IA ont tendance à remplir les pages de bruit : des sections qui répètent la même promesse, des badges et des chiffres décoratifs, plusieurs boutons qui se disputent l’attention, des animations sans rôle. Pris un par un, ces éléments ont l’air soignés. Ensemble, ils ralentissent la lecture et brouillent l’action principale.
+
+> « Le code, tout fonctionne en général : c’est suffisant avec les derniers modèles. Mais les IA créent énormément de bruit sur les pages, sans réel but, et ça pèse sur l’utilisation. Ça a l’air bien pour un novice. Un expert UX peut pousser l’expérience beaucoup plus loin. »
+> — Nicolas Prémont, développeur chez Horde
+
+Pour un œil novice, la page a l’air terminée. Un expert UX regarde ce qu’elle fait faire : où part le regard, ce qu’on comprend dans les premières secondes, ce qui manque au moment de décider. Il retire, hiérarchise et teste. Nous avons détaillé cette limite dans [L’IA crée des interfaces, pas des expériences](/fr/blog/ia-interfaces-experiences-utilisateur/), et la méthode pour la corriger dans notre [audit UX/UI en quatre étapes](/fr/blog/audit-ux-ui-site-web/).
+
+## Choisir selon la situation
+
+| Situation | Notre choix | Pourquoi |
+| --- | --- | --- |
+| Projet client, équipe, entreprise | Claude Code, sous offre commerciale | Écosystème complet et cadre contractuel sur les données |
+| Prototype jetable, itérations rapides, données fictives | DeepSeek ou un autre modèle rapide | Rapport qualité/vitesse |
+| Code confidentiel avec un modèle à poids ouverts | Modèle hébergé en Europe | Pas de transfert hors de l’Union européenne |
+| Interface destinée à de vrais utilisateurs | L’outil de votre choix, puis une revue UX humaine | L’IA produit le premier jet, pas l’expérience |
+
+Le dernier cas est le plus fréquent, et le plus souvent oublié. Une IA vous amène vite à un prototype qui marche. Le transformer en produit que les gens comprennent et utilisent reste un travail de conception, qui se chiffre comme le reste : notre article sur [le prix d’une refonte](/fr/blog/combien-coute-refonte-site-web/) donne des ordres de grandeur.
+
+## Un comparatif qui change à chaque sortie
+
+Ce classement vieillit vite. Un nouveau modèle ou une nouvelle version d’un harnais peut inverser un constat en quelques semaines. Nous revoyons cet article à chaque sortie majeure de Claude Code, Codex, Gemini et DeepSeek, et la date de mise à jour figure en tête de page.
+
+Ce qui ne change pas : choisissez l’outil sur son écosystème et sur la vitesse à laquelle il vous laisse itérer, protégez les données avant de comparer les scores, et gardez la décision d’expérience entre des mains humaines.
+
+Vous avez un prototype construit avec l’IA qui fonctionne, mais qui ne convainc pas encore ? C’est l’étape où nous intervenons : **→ [Développement MVP](/fr/services/developpement-mvp-bruxelles/)**
+
+## Sources
+
+* [Claude Code — Data usage](https://code.claude.com/docs/en/data-usage)
+* [Claude Code — Zero data retention](https://code.claude.com/docs/en/zero-data-retention)
+* [DeepSeek — Privacy Policy](https://cdn.deepseek.com/policies/en-US/deepseek-privacy-policy.html)
+* [Bird & Bird — The Garante imposes a definitive limitation on the processing of Italian users’ personal data (2025)](https://cm.twobirds.com/en/insights/2025/the-garante-imposes-a-definitive-limitation-on-the-processing-of-italian-users%E2%80%99-personal-data)
+* [DeepSeek-V3.2-Exp — LICENSE (MIT)](https://github.com/deepseek-ai/DeepSeek-V3.2-Exp/blob/main/LICENSE)
+* Les constats sur la vitesse et l’usage de chaque outil viennent des tests de Horde en novembre 2026 ; ils ne constituent pas un benchmark.
