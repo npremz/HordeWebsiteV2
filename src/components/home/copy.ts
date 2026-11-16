@@ -88,6 +88,8 @@ const fr = {
     title: 'Avis',
     heading: 'Avis clients',
     scoreLabel: 'Note',
+    googleLink: 'Voir tous nos avis sur Google',
+    googleLinkSr: '(s’ouvre dans un nouvel onglet)',
     // Avis Google, recopiés tels quels (captures _assets/avis*.png).
     items: [
       { name: 'Constantinos', color: '#FF9F43', score: 5, text: 'Je ne peux que recommander les services de Horde Agence, je suis kinésithérapeute et le service proposé est exceptionnel, ils vous aident a construire votre site en vous aidant sur la partie technique et en incorporant votre vision. Il y a également un très bon suivi que ce soit sur le référencement ou les ajouts futurs que vous voulez apporter.' },
@@ -210,6 +212,8 @@ const en: HomeCopy = {
     title: 'Avis',
     heading: 'Client reviews',
     scoreLabel: 'Rating',
+    googleLink: 'See all our reviews on Google',
+    googleLinkSr: '(opens in a new tab)',
     // Our translations of the Google reviews (originals in French).
     items: [
       { name: 'Constantinos', color: '#FF9F43', score: 5, text: 'I can only recommend Horde Agence. I’m a physiotherapist and the service is exceptional: they help you build your site by handling the technical side while bringing your vision to life. The follow-up is excellent too, whether for SEO or any future additions you want to make.' },
