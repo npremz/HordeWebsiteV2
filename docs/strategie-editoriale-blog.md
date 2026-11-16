@@ -1,7 +1,30 @@
 # Stratégie éditoriale du blog Horde
 
 Période de référence : septembre 2026 à mars 2027.  
-Dernière révision : 14 septembre 2026.
+Dernière révision : 16 novembre 2026.
+
+## Révision du 16 novembre 2026 : construire avec l'IA
+
+Les trois territoires ci-dessous restent valables, mais ne suffisent plus. Ils
+attirent surtout des curieux, des étudiants et des designers. Or Horde vend du
+temps à des gens qui construisent : fondateurs, product managers, développeurs,
+équipes qui ont un prototype fait avec l'IA et doivent en faire un produit.
+
+Territoire prioritaire jusqu'en mars 2027 : **construire avec l'IA**. Les
+articles visent les requêtes que ces gens tapent vraiment (outils, avis, prix,
+alternatives, comparatifs, vibe coding) et les ramènent vers une seule idée :
+**Horde finit ce que l'IA a commencé**, du prototype au produit en production
+(UX, design system, sécurité, performance, SEO).
+
+- Les requêtes de douleur (« mettre en production une app Lovable », « agence
+  vibe coding », « audit UX d'une app ») n'ont pas encore de volume mesurable en
+  France. On ne les vise pas en SEO : elles deviennent l'offre vers laquelle les
+  articles renvoient.
+- Les requêtes « 2027 » sont préparées dès novembre 2026 (année dans le titre,
+  jamais dans le slug, mise à jour réelle chaque décembre).
+- Rythme : trois propositions par semaine (lundi, mercredi, vendredi).
+- Ordre et chiffres : section 5 de `docs/plan-mots-cles-seo-fev-2026.md` et
+  `docs/editorial/donnees-2026-11.md`.
 
 ## Décision stratégique
 
@@ -139,16 +162,17 @@ comme « agence UX/UI Bruxelles » ou « refonte site web Bruxelles ».
 Fonctionnement en vigueur depuis novembre 2026 (remplace les lots validés en
 bloc et le rebuild quotidien Dokploy, qui ne sont pas utilisés) :
 
-1. **Lundi 10 h 30 (Europe/Brussels)**, une tâche Hermes sur la machine de
-   l'agence repull `master`, lit ce document, `BRAND.md`, `VOICE.md`,
+1. **Lundi, mercredi et vendredi à 10 h 30 (Europe/Brussels)**, une tâche
+   Hermes sur la machine de l'agence repull `master`, lit ce document, `BRAND.md`, `VOICE.md`,
    `docs/editorial/donnees-2026-11.md` et `docs/editorial/retours-blog.md`, puis
    propose **un** sujet sur Telegram : titres, territoire, signal de demande,
    angle, preuve, liens, et ce dont elle a besoin de l'équipe pour la preuve.
 2. Les sujets viennent de la liste ordonnée, sans dates, de la section 5 de
    `docs/plan-mots-cles-seo-fev-2026.md` (premier sujet non publié, avec les
-   exceptions qui y sont décrites). Les chiffres qui justifient l'ordre sont
+   exceptions qui y sont décrites : bloc A avant le 5 décembre 2026, puis
+   blocs B et C en alternance). Les chiffres qui justifient l'ordre sont
    dans `docs/editorial/donnees-2026-11.md`.
-3. Un lundi sur trois environ, la proposition peut être une **mise à jour**
+3. Environ un run sur six, la proposition peut être une **mise à jour**
    d'article existant lorsque Search Console montre une page proche du top 5.
 4. Réponse sur Telegram : « ok » → rédaction FR puis EN autonome, couverture,
    contrôles, lien de prévisualisation sur le tailnet ; autre sujet → celui de

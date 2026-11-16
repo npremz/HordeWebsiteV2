@@ -7,7 +7,9 @@ Dernière révision : 14 septembre 2026.
 
 > **Novembre 2026 :** le calendrier daté est remplacé par une liste ordonnée
 > sans dates (section 5), établie à partir de `docs/editorial/donnees-2026-11.md`.
-> Rythme : une proposition par semaine, publication dès validation. Le
+> **Révision du 16 novembre 2026 :** rythme passé à trois propositions par
+> semaine (lundi, mercredi, vendredi) et nouveau territoire prioritaire
+> « Construire avec l'IA » (section 5). Publication dès validation. Le
 > fonctionnement est décrit dans `docs/strategie-editoriale-blog.md`, section
 > « Production semi-automatique ». Les sections 1, 7 et 11 ci-dessous décrivent
 > l'ancien mode en lots et ne s'appliquent plus.
@@ -125,19 +127,43 @@ réellement l'utilité de la page.
 
 ## 5. Liste des sujets (ordre de production)
 
-Remplace le calendrier daté de septembre 2026, conservé dans l'historique Git
-(`git show d25f001:docs/plan-mots-cles-seo-fev-2026.md`). Révisé le 7 novembre
-2026 à partir de `docs/editorial/donnees-2026-11.md`.
+Révisée le 16 novembre 2026. Remplace la liste du 7 novembre (conservée dans
+l'historique Git : `git show 9be6d7e:docs/plan-mots-cles-seo-fev-2026.md`).
+Données : `docs/editorial/donnees-2026-11.md`, sections « Novembre 2026 » et
+« Construire avec l'IA (16/11) ».
 
-**Règles d'usage.** Le cron prend le premier sujet non publié de la liste. Il
-peut en sauter un pour respecter l'alternance des territoires, si la preuve
-attend une contribution de l'équipe, ou si Search Console justifie mieux un
-autre sujet. L'ordre suit la demande mesurée, la proximité d'offre et la
-faisabilité de la preuve ; les sujets de conviction sont en fin de liste, sans
-attente de trafic. Légende : E = expérience/interface, T = technologie/expérience,
-M = durable/maîtrisé. Demande = volume mensuel France / Belgique de la meilleure
-requête (« — » = non mesurable). Preuve : **seul** = l'agent peut la produire ;
-**équipe** = il faut des notes, captures ou résultats de Horde.
+**Pourquoi ce changement.** Les sujets d'interface pure (design system,
+animation, WCAG) attirent surtout des étudiants, des designers et des curieux.
+Horde vend du temps à des gens qui construisent : fondateurs, product managers,
+développeurs, équipes qui ont lancé un prototype avec l'IA et doivent en faire
+un produit. Ces gens cherchent les outils (Lovable, Cursor, Claude Code, vibe
+coding) et leurs avis, prix et alternatives, pas « agence UX ». Le
+positionnement devient : **Horde finit ce que l'IA a commencé**, du prototype
+au produit en production (UX, design system, sécurité, performance, SEO).
+
+**Rythme.** Trois runs par semaine, lundi, mercredi et vendredi à 10 h 30
+(Europe/Brussels). Chaque run propose un sujet ; la publication suit la
+validation. Si un article précédent attend encore la validation, le run le
+rappelle en une ligne puis propose le suivant. Au maximum deux articles en
+prévisualisation en même temps : au-delà, le run ne propose rien de nouveau et
+rappelle seulement ce qui attend.
+
+**Règles d'usage.** Le cron prend le premier sujet non publié du bloc en cours
+(A, puis B et C en alternance). Il peut en sauter un si la preuve attend une
+contribution de l'équipe ou si Search Console justifie mieux un autre sujet.
+Légende : E = expérience/interface, T = technologie/expérience, M =
+durable/maîtrisé, IA = construire avec l'IA. Demande = volume mensuel France /
+Belgique (« — » = non mesurable). Preuve : **seul** = l'agent peut la produire ;
+**équipe** = il faut des notes, captures, montants ou résultats de Horde.
+
+**Règle « année ».** Les requêtes datées (« … 2027 ») apparaissent en décembre
+de l'année précédente, culminent de janvier à avril, puis retombent de moitié
+dès l'été (historique « meilleure ia 2026 » : 0 en novembre 2025, 480 en
+janvier, 720 en mars-avril, 260 en septembre). Donc : l'année va dans le titre
+SEO et le H1, **jamais dans le slug** ; chaque mois de décembre, l'article est
+réellement mis à jour (pas seulement le chiffre) et passe à l'année suivante.
+Le bloc A doit être en ligne avant le **5 décembre 2026** pour être indexé avant
+le pic.
 
 ### Déjà publiés depuis le lancement du plan
 
@@ -147,38 +173,62 @@ requête (« — » = non mesurable). Preuve : **seul** = l'agent peut la produi
 07/11, preuve : landing Café Loma), `audit-ux-ui-site-web` (E, 09/11,
 preuve : auto-audit de hordeagence.com, 7 frictions ordonnées).
 
-### Nouveaux articles
+### Bloc A — Fenêtre 2027 (à publier avant le 5 décembre 2026)
+
+Huit créneaux d'ici là (mer. 18/11, ven. 20, lun. 23, mer. 25, ven. 27,
+lun. 30, mer. 2/12, ven. 4/12) : sept créations et une mise à jour.
 
 | # | Terr. | Entrée SEO, H1 et slugs | Demande FR / BE | Preuve principale et suite utile |
 | --- | --- | --- | --- | --- |
-| ~~1~~ | E | **Publié le 09/11.** **SEO :** Audit UX/UI d'un site web : méthode et grille de priorité<br>**H1 :** Auditer une interface, c'est regarder ce qu'elle fait faire, pas seulement ce qu'elle montre.<br>**Slugs :** `audit-ux-ui-site-web` / `website-ui-ux-audit` | audit ux 320 / 20 · audit site web 260 / 20 · KD 0 | Grille pondérée par tâche et sévérité, appliquée de bout en bout à un site public ou à hordeagence.com ; s'appuie sur la grille de `bonne-interface-web` sans la répéter. **Seul.** Lien vers Audit offert. |
-| 2 | T | **SEO :** Animation web : bonnes pratiques UX et performance<br>**H1 :** Le mouvement doit expliquer, pas décorer.<br>**Slugs :** `animation-web-ux-performance` / `web-animation-ux-performance` | animation site web 1 600 / — · animation web 320 / 70 | Trois versions manipulables du même composant, mesure, et démonstration `prefers-reduced-motion`. **Absorbe** les anciens sujets micro-interactions et animation accessible (sections dédiées). **Seul.** Lien vers Optimisation. |
-| 3 | E | **SEO :** Accessibilité et design web : concevoir au-delà de la checklist<br>**H1 :** L'accessibilité n'est pas une couche ajoutée avant la mise en ligne.<br>**Slugs :** `accessibilite-design-web` / `accessibility-in-web-design` | wcag 1 900 / 590 · accessibilité web 260 / 10 · design accessible 210 / — | Composants avant/après parcourus au clavier et avec différents réglages ; contexte European Accessibility Act et EN 301 549 avec sources primaires. **Seul.** Lien vers Refonte. |
-| 4 | M | **SEO :** Maintenance évolutive d'un site web : préserver la qualité de l'interface<br>**H1 :** Une interface de qualité continue après la livraison.<br>**Slugs :** `maintenance-evolutive-qualite-interface` / `evolving-website-interface-maintenance` | maintenance site web 390 / 20 · maintenance site wordpress 260 / 10 | Exemple de dérive de composants, journal de changement et rythme de revue. **Seul** pour la méthode ; **équipe** pour un cas réel. Lien vers Optimisation. |
-| 5 | E | **SEO :** Design system pour un site web : à quoi sert-il ?<br>**H1 :** La cohérence ne devrait pas rendre une interface prévisible.<br>**Slugs :** `design-system-site-web` / `website-design-system` | design system 2 400 / 210 | Mini-système Horde avec composants, variations et exemple de dérive évitée. **Seul.** Lien vers Refonte et MVP. |
-| 6 | T | **SEO :** Comment mesurer l'expérience utilisateur en respectant la vie privée ?<br>**H1 :** Mesurer une expérience ne donne pas le droit de tout collecter.<br>**Slugs :** `mesurer-ux-respect-vie-privee` / `privacy-friendly-ux-measurement` | plausible analytics 480 / 110 · alternative google analytics 170 / — | Notre propre Plausible auto-hébergé : plan de marquage minimal, objectifs, données exclues. **Seul** (créer d'abord l'objectif Contact). Lien vers Audit. |
-| 7 | E | **SEO :** UI et UX : quelle différence pour un site web ?<br>**H1 :** Une interface se regarde. Une expérience se traverse.<br>**Slugs :** `difference-ui-ux-site-web` / `ui-vs-ux-for-websites` | ui vs ux 390 / 70 · ui et ux 110 / 10 · différence ui ux 70 / — | Un même parcours cartographié côté écran, interaction et contexte. **Seul.** Lien vers Refonte. |
-| 8 | M | **SEO :** Comment choisir un CMS pour rester autonome ?<br>**H1 :** Le bon CMS est celui que l'équipe peut réellement utiliser.<br>**Slugs :** `choisir-cms-autonomie` / `choose-cms-for-editorial-autonomy` | cms headless 880 / 170 · meilleur cms 90 / 10 | Scénarios d'édition concrets, matrice droits/export/maintenance, réversibilité. **Seul.** Lien vers Refonte. |
-| 9 | E | **SEO :** Comment tester un site avec des utilisateurs avant une refonte ?<br>**H1 :** Une interface se juge là où quelqu'un hésite.<br>**Slugs :** `test-utilisateur-site-avant-refonte` / `user-test-before-website-redesign` | user testing 1 300 / 210 (en partie la marque UserTesting) · test utilisateur 260 / — | Protocole léger, scénario, grille d'observation. **Équipe** : un test réellement mené, même petit. Lien vers Audit. |
-| 10 | T | **SEO :** Site WebGL ou 3D : impact sur l'UX et la performance<br>**H1 :** Une expérience spectaculaire doit encore mériter son poids.<br>**Slugs :** `site-webgl-3d-ux-performance` / `webgl-3d-website-ux-performance` | 3d website 320 / 140 · site web 3d 90 / 10 | Comparaison interactive de trois niveaux d'ambition, budgets de ressources, alternative accessible. **Seul.** Lien vers Optimisation. |
-| 11 | M | **SEO :** Template ou design sur mesure : comment choisir ?<br>**H1 :** Le problème n'est pas le template. C'est ce qu'il décide à votre place.<br>**Slugs :** `template-ou-design-sur-mesure` / `template-vs-custom-web-design` | site web sur mesure 110 / 10 · site internet sur mesure 90 / 10 | Pilier M prévu : matrice de décision et deux réponses au même brief. À avancer si le maillage M l'exige. **Seul.** Lien vers Refonte. |
-| 12 | E | **SEO :** UX d'un formulaire : bonnes pratiques et erreurs à éviter<br>**H1 :** Un formulaire ne devrait pas demander plus de confiance qu'il n'en mérite.<br>**Slugs :** `ux-formulaire-bonnes-pratiques` / `form-ux-best-practices` | design formulaire 90 / — · formulaire de contact site web 40 / — | Prototype complet avec aide, validation, erreur et confirmation sur mobile. **Seul.** Lien vers Landing page. |
-| 13 | M | **SEO :** Site web pour une association : comment prioriser un petit budget ?<br>**H1 :** Un petit budget ne devrait pas condamner une association à une mauvaise expérience.<br>**Slugs :** `site-web-association-prioriser-budget` / `nonprofit-website-budget-priorities` | site internet association 170 / 10 · site web association 70 / 10 | Trois périmètres réalistes sans prix inventé, matrice utile/reportable. **Seul.** Lien vers Landing page ou Refonte. |
-| 14 | T | **SEO :** Code généré par IA : qualité, accessibilité et maintenance<br>**H1 :** Le code arrive plus vite. La responsabilité, non.<br>**Slugs :** `code-genere-ia-qualite-maintenance` / `ai-generated-code-quality-maintenance` | ia développement web 50 / — · conviction | Même composant avant et après revue humaine, audité. **Seul.** Lien vers MVP. |
-| 15 | E | **SEO :** Navigation mobile : les bonnes pratiques UX<br>**H1 :** Si l'utilisateur doit explorer le menu, la navigation a déjà perdu.<br>**Slugs :** `navigation-mobile-bonnes-pratiques-ux` / `mobile-navigation-ux-best-practices` | — · conviction | Trois prototypes pour une même architecture, testés au clavier et au tactile. **Seul.** Lien vers Audit. |
-| 16 | T | **SEO :** Prototypage UX avec l'IA : méthode et limites<br>**H1 :** L'IA raccourcit le chemin vers le test. Elle ne remplace pas le test.<br>**Slugs :** `prototypage-ux-avec-ia` / `ai-assisted-ux-prototyping` | prototypage ux 50 / — · conviction | Journal réel de l'hypothèse aux variantes, puis à la sélection humaine. **Équipe.** Lien vers MVP. |
-| 17 | E | **SEO :** Typographie web : lisibilité, identité et performance<br>**H1 :** Une typographie n'est pas une décoration. C'est une interface.<br>**Slugs :** `typographie-web-lisibilite-performance` / `web-typography-readability-performance` | typographie web 30 / 10 · conviction | Une même page composée de trois façons. **Seul.** Lien vers Refonte. |
-| 18 | M | **SEO :** À qui appartiennent le nom de domaine, le code et les données d'un site ?<br>**H1 :** Un site livré sans ses clés reste un site loué.<br>**Slugs :** `propriete-site-domaine-code-donnees` / `website-ownership-domain-code-data` | — · conviction (« propriétaire nom de domaine » = recherches WHOIS) | Checklist de passation et matrice propriétaire/accès/export ; sources juridiques belges. **Seul.** Lien vers Refonte et MVP. |
-| 19 | E | **SEO :** Page produit e-commerce : checklist UX<br>**H1 :** Avant d'acheter du trafic, retirons les raisons de partir.<br>**Slugs :** `page-produit-ecommerce-checklist-ux` / `ecommerce-product-page-ux-checklist` | fiche produit e-commerce 30 / — | Avant/après d'une fiche produit prototype. **Seul.** Lien vers E-commerce. |
-| 20 | E | **SEO :** Comment mesurer l'expérience utilisateur après une refonte ?<br>**H1 :** Une refonte réussie ne se mesure pas au jour du lancement.<br>**Slugs :** `mesurer-experience-apres-refonte` / `measure-ux-after-redesign` | kpi site web 90 / — | Plan avant/après sans causalité inventée. **Équipe** : données d'une refonte réelle. Lien vers Audit. |
+| A1 | IA | **SEO :** Meilleure IA pour coder en 2027 : notre comparatif en production<br>**H1 :** L'IA qui code le mieux n'est pas celle qui écrit le plus vite.<br>**Slugs :** `meilleure-ia-pour-coder` / `best-ai-for-coding` | meilleur ia pour coder 1 000 + meilleure ia pour coder 880 / ia pour coder 40 · KD 4 · claude code 90 500 / 14 800 · cursor 49 500 / 8 100 · cursor vs copilot 110 / 20 · US : claude code vs cursor 6 600 (en hausse) | Même brief (un composant + une page) réalisé avec Claude Code, Cursor, Copilot et un générateur ; grille : temps, UX, accessibilité (axe), sécurité, dette. **Seul** pour le test ; **équipe** pour notre usage réel au quotidien. Lien vers MVP. |
+| A2 | M | **SEO :** Combien coûte un site internet en 2027 ? Les prix en Belgique<br>**H1 :** Le prix d'un site dépend de ce qu'il doit faire à votre place.<br>**Slugs :** `prix-site-internet` / `website-cost` | prix site internet 880 / prix d'un site internet 70 · devis site internet 480 · site vitrine prix 390 · tarif site internet 210 · site internet pas cher 480 | Fourchettes réelles de Horde par niveau, comparées au coût réel d'une version IA ou builder (abonnements, temps, reprise). **Équipe** : montants à valider (prix publics). Si les montants ne sont pas prêts, passer à A3. Lien vers Landing page, Refonte, Audit. |
+| A3 | IA | **SEO :** Créer son site en 2027 : IA, builder ou agence ?<br>**H1 :** L'IA livre un site en dix minutes. Le reste prend toujours du temps.<br>**Slugs :** `creer-site-ia-builder-ou-agence` / `website-ai-builder-or-agency` | créer un site avec l'ia ~500 (5 variantes) / ~50 · site internet ia 390 / 10 · site web ia 390 / 20 · wix ai 480 / 140 · framer ai 1 900 / 390 · wix ou wordpress 110 / 10 | Le même brief produit avec Wix AI, Framer AI et Lovable, puis audité avec la grille de `audit-ux-ui-site-web`. Page 1 actuelle : Wix, Figma, OpenAI, Squarespace et des listes (Bitrix24, ClickUp) : on gagne par le test réel. **Seul.** **Absorbe** l'ancien n° 11 « Template ou design sur mesure ». Lien vers Audit offert. |
+| A4 | IA | **SEO :** Lovable avis 2027 : ce qu'il fait bien, ce qu'il faut reprendre avant la production<br>**H1 :** Lovable vous amène à 80 %. Les 20 % restants décident si l'app tient.<br>**Slugs :** `lovable-avis` / `lovable-review` | lovable 74 000 / — · lovable avis 170 · lovable prix 110 + tarif 110 + pricing 590 · lovable alternative 110 (CPC 20 $) · lovable seo 40 · US : lovable review 720, lovable seo 170 | Une app Lovable réelle, auditée : UX, sécurité Supabase (RLS), SEO, performance, export du code. Page 1 : Trustpilot, Reddit, petits blogs, lovableagency.fr. **Seul** (app créée pour l'article) ou **équipe** si un projet client peut servir. Lien vers MVP. |
+| A5 | IA | **SEO :** Vibe coding : c'est quoi, et où ça casse en production<br>**H1 :** Le vibe coding fait d'excellents brouillons.<br>**Slugs :** `vibe-coding` / `vibe-coding-explained` | vibe coding 18 100 / — (KD 31) · vibe coding c'est quoi ~2 300 cumulé (KD 0) · formation vibe coding 170 · vibe coding en français 140 | Journal d'un petit projet vibe-codé : ce qui a marché, les défauts relevés, ce qu'on a corrigé à la main. Page 1 : infos-it, Reddit, LinkedIn, Scribd. **Seul.** Lien vers A4 et MVP. |
+| A6 | IA | **SEO :** Lovable, Bolt, v0 ou Figma Make : quel outil pour prototyper une app en 2027 ?<br>**H1 :** Le bon générateur dépend de ce que vous devrez garder.<br>**Slugs :** `outils-ia-prototyper-application` / `ai-app-prototyping-tools` | figma make 4 400 / 720 · bolt ai 2 900 / 320 · v0 590 + 480 · ia pour créer une application 140 · créer une application avec l'ia 110 · bolt new avis 70 | La même app prototypée dans les quatre outils ; comparaison de l'export, de la réversibilité et de la reprise du code. **Seul.** Distinct de A1 (assistants pour développeurs) et de A4 (un seul outil en profondeur). Lien vers MVP. |
+| A7 | E | **SEO :** Tendances UX et web design 2027 : ce que l'IA change dans les interfaces<br>**H1 :** Quand tout le monde génère, la différence revient au détail.<br>**Slugs :** `tendances-ux-web-design` / `ux-web-design-trends` | tendance web design 2025 a culminé à 320 (janv. 2025) ; 2026 seulement 50 : demande en baisse, pari de conviction | Interfaces générées comparées à des interfaces dessinées, annotées. **Seul.** Lien vers Refonte. |
+| A-maj | M | **Mise à jour D** de `combien-coute-refonte-site-web` : titre SEO « … en 2027 », montants vérifiés, lien vers A2. PR séparée (`docs/publication-programmee-blog.md`). Même traitement pour `comment-creer-site-web-qui-se-demarque-2026` (titre 2027 ; slug inchangé). | Première source citée par ChatGPT (07/11) | **Équipe** pour les montants. |
 
-Sujets retirés comme créations autonomes : micro-interactions et animation
-accessible (intégrés au n° 2), performance perçue (devient une mise à jour de
-`c-est-quoi-un-site-vraiment-rapide`).
+### Bloc B — Le cœur de l'offre : finir ce que l'IA a commencé (dès décembre)
+
+Peu ou pas de volume mesuré en France : ces articles servent la conversion, la
+crédibilité et les citations par les assistants IA. Ils reçoivent les liens des
+articles du bloc A.
+
+| # | Terr. | Entrée SEO, H1 et slugs | Demande FR / BE | Preuve principale et suite utile |
+| --- | --- | --- | --- | --- |
+| B1 | IA | **SEO :** UX d'une app générée par IA : les défauts qu'on retrouve à chaque fois<br>**H1 :** Une app générée ressemble à une app. Elle ne se comporte pas encore comme une.<br>**Slugs :** `ux-application-generee-ia` / `ai-generated-app-ux` | ia ux design 40 / 10 · conviction (cœur d'expertise) | Audit de trois apps générées (Lovable, Bolt, v0), défauts classés par sévérité, avant/après. **Seul.** Lien vers l'offre « App IA → production » quand elle existe, sinon MVP. |
+| B2 | IA | **SEO :** Mettre en production une app Lovable ou Bolt : la checklist<br>**H1 :** Un prototype qui marche n'est pas un produit qu'on peut ouvrir au public.<br>**Slugs :** `mettre-en-production-app-ia` / `ship-ai-built-app-to-production` | FR — · US : lovable supabase 140, vibe coding security 90 (CPC 26 $), vibe coding agency 30 (CPC 93 $) : petits volumes, acheteurs chers | Checklist appliquée à l'app de A4 : authentification, RLS, secrets, erreurs, accessibilité, SEO, monitoring. **Seul.** |
+| B3 | IA | **SEO :** Claude Code avis : comment un studio web l'utilise en production<br>**H1 :** L'assistant écrit le code. L'équipe garde les décisions.<br>**Slugs :** `claude-code-avis` / `claude-code-review` | claude code 90 500 / 14 800 · claude code avis 90 | Notre workflow réel : tâches confiées, revues, erreurs typiques, temps gagné mesuré. **Équipe.** |
+| B4 | T | (ancien n° 14) **SEO :** Code généré par IA : sécurité, qualité et maintenance<br>**H1 :** Le code arrive plus vite. La responsabilité, non.<br>**Slugs :** `code-genere-ia-qualite-maintenance` / `ai-generated-code-quality-maintenance` | ia développement web 50 / — · vibe coding sécurité — | Même composant avant et après revue humaine, audité. **Seul.** Lien vers MVP. |
+| B5 | IA | (ancien n° 16) **SEO :** Prototypage UX avec l'IA : méthode et limites<br>**H1 :** L'IA raccourcit le chemin vers le test. Elle ne remplace pas le test.<br>**Slugs :** `prototypage-ux-avec-ia` / `ai-assisted-ux-prototyping` | prototype ia 10 · conviction | Journal réel de l'hypothèse aux variantes, puis à la sélection humaine. **Équipe.** Lien vers MVP. |
+
+### Bloc C — Positionnements déjà mesurés (en alternance avec B)
+
+Après le bloc A, les runs alternent B et C (B, C, B, C…). L'ordre de C suit la
+demande France du 7 novembre.
+
+| # | Terr. | Sujet (titres et slugs : voir `git show 9be6d7e:docs/plan-mots-cles-seo-fev-2026.md`, ancien numéro) | Demande FR / BE | Preuve |
+| --- | --- | --- | --- | --- |
+| C1 | E | Design system pour un site web (ancien n° 5) — angle : le design system qui rend un code généré cohérent | design system 2 400 / 210 | Mini-système Horde. **Seul.** |
+| C2 | E | Accessibilité et design web (ancien n° 3) | wcag 1 900 / 590 · rgaa 8 100 (FR, page 1 = gouvernement et spécialistes certifiés) | Composants avant/après au clavier. **Seul.** |
+| C3 | T | Animation web : UX et performance (ancien n° 2, proposé le 16/11) | animation site web 1 600 / — · animation web 320 / 70 | Trois versions manipulables. **Seul.** |
+| C4 | M | Choisir un CMS pour rester autonome (ancien n° 8) | cms headless 880 / 170 | Scénarios d'édition. **Seul.** |
+| C5 | T | Mesurer l'UX en respectant la vie privée (ancien n° 6) | plausible analytics 480 / 110 | Notre Plausible. **Seul** (objectif Contact d'abord). |
+| C6 | E | UI et UX : quelle différence (ancien n° 7) | ui vs ux 390 / 70 | **Seul.** |
+| C7 | M | Maintenance évolutive (ancien n° 4) | maintenance site web 390 / 20 | **Seul** / **équipe.** |
+| C8 | E | Tester un site avec des utilisateurs (ancien n° 9) | test utilisateur 260 / — | **Équipe.** |
+| C9 | T | Site WebGL ou 3D (ancien n° 10) | 3d website 320 / 140 | **Seul.** |
+| C10+ | E/M | Sujets de conviction, dans l'ordre : formulaire (12), association (13), navigation mobile (15), typographie (17), propriété du site (18), page produit e-commerce (19), mesure après refonte (20) | faibles | Voir l'ancienne liste. |
+
+**Hors cron (pages, pas articles) :** créer une page d'offre « Votre app IA →
+production » (audit UX et sécurité à prix fixe), cible des liens des blocs A et
+B ; les pages France « application web sur mesure » et « agence UX/UI »
+restent dans `docs/plan-seo-francophone-2026-11.md`.
 
 ### Mises à jour en réserve
 
-Une mise à jour est proposée environ un lundi sur trois, quand Search Console
+Une mise à jour est proposée environ un run sur six, quand Search Console
 montre une page proche du top 5 ou une demande non couverte. Ordre indicatif :
 
 | # | Article | Changement prévu | Signal / preuve |
@@ -219,6 +269,19 @@ montre une page proche du top 5 ou une demande non couverte. Ordre indicatif :
   les autres articles ne publient pas de fourchettes non sourcées.
 - Les intentions locales transactionnelles restent sur les pages services. Le
   blog ne multiplie pas les variantes « agence UX/UI Bruxelles ».
+
+- `meilleure-ia-pour-coder` (A1) compare des assistants de code pour équipes
+  qui développent ; `outils-ia-prototyper-application` (A6) compare des
+  générateurs d'app pour non-développeurs ; `lovable-avis` (A4) teste un seul
+  outil en profondeur ; `claude-code-avis` (B3) décrit notre usage réel.
+- `prix-site-internet` (A2) couvre la création ; `combien-coute-refonte-site-web`
+  reste la référence pour la refonte. Les deux se citent.
+- `creer-site-ia-builder-ou-agence` (A3) remplace le sujet « template ou design
+  sur mesure ». `comment-creer-site-web-qui-se-demarque-2026` garde la
+  différenciation.
+- `ux-application-generee-ia` (B1) traite des défauts UX d'une app générée ;
+  `ia-interfaces-experiences-utilisateur` reste la réflexion générale sur l'IA
+  et l'interface ; `mettre-en-production-app-ia` (B2) est la checklist technique.
 
 Avant chaque brief, comparer titre, requête principale, H2 et résultat attendu
 avec tous les contenus publiés ou programmés.

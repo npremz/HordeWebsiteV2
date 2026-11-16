@@ -75,3 +75,58 @@ Volume mensuel France / Belgique pour la meilleure requête du sujet
   mesurer ce que le blog apporte vraiment.
 - Profils Sortlist, Clutch et goodfit.be : ce sont eux que les IA citent pour
   « quelle agence UX/UI en Belgique ».
+
+
+## Construire avec l'IA (relevé du 16 novembre 2026)
+
+Source : OpenSEO / DataForSEO, `get_keyword_metrics` (137 termes FR 2250/fr et
+BE 2056/fr, 44 termes US 2840/en, 35 termes datés FR avec historique mensuel),
+`research_keywords` (4 seeds FR) et 4 pages de résultats FR. Coût total
+d'environ 0,6 $. Ne pas racheter avant février 2027.
+
+### Demande mesurée (volume mensuel FR / BE)
+
+| Requête | FR | BE | Note |
+| --- | --- | --- | --- |
+| claude code | 90 500 | 14 800 | KD 11 |
+| lovable | 74 000 | — | KD 15 ; « lovable story » est un autre sens |
+| cursor / cursor ai | 49 500 / 9 900 | 8 100 / 2 400 | |
+| vibe coding | 18 100 | — | KD 31 |
+| vibe coding c'est quoi (4 variantes) | ~2 300 | — | KD 0 ; page 1 = petits blogs, Reddit, Scribd |
+| figma make | 4 400 | 720 | |
+| bolt ai | 2 900 | 320 | |
+| framer ai | 1 900 | 390 | |
+| meilleur ia pour coder / meilleure ia pour coder | 1 000 / 880 | — | KD 4 |
+| wix ai | 480 | 140 | |
+| site internet ia / site web ia | 390 / 390 | 10 / 20 | |
+| lovable pricing / prix / tarif | 590 / 110 / 110 | — | |
+| lovable avis | 170 | — | page 1 = Trustpilot, Reddit, lovableagency.fr |
+| créer un site avec l'ia (5 variantes) | ~500 | ~50 | page 1 = Wix, Figma, OpenAI, Squarespace |
+| lovable alternative | 110 | — | CPC 20 $ |
+| cursor vs copilot | 110 | 20 | |
+| ia pour créer une application / créer une application avec l'ia | 140 / 110 | — | |
+| lovable seo | 40 | — | US 170 |
+
+### Requêtes de douleur : non mesurables en France
+
+« mettre en production application lovable », « déployer application lovable »,
+« vibe coding limites », « vibe coding sécurité », « agence vibe coding »,
+« audit ux application », « optimiser ux » : aucune donnée en FR ni en BE.
+Aux États-Unis : vibe coding security 90 (CPC 26 $), vibe coding agency 30
+(CPC 93 $), lovable agency 70, vibe coding cleanup 40 (CPC 54 $), lovable
+security 90. Des acheteurs chers, mais encore peu nombreux.
+
+### Requêtes datées : quand elles apparaissent
+
+| Requête | Nov. N-1 | Déc. N-1 | Janv. | Pic | Sept. |
+| --- | --- | --- | --- | --- | --- |
+| meilleure ia 2026 | 0 | 30 | 480 | 720 (mars-avril) | 260 |
+| ia 2026 | 50 | 210 | 480 | janvier | 110 |
+| meilleure ia 2025 | — | 0 | 210 | 390 (fév.-avril) | 210 |
+| tendance web design 2025 | 140 | 170 | 320 | janvier | 90 |
+| seo 2026 | 30 | 40 | 140 | 170 (fév.-mars) | 30 |
+
+« ia 2027 » existe déjà (320, pic à 720 en septembre 2026) : probablement le
+scénario « AI 2027 », hors cible. « tendances web design 2026 » ne fait que 50 :
+les tendances de design sont en baisse. « prix site internet 2026 » : non
+mesurable (on met quand même l'année dans le titre, pour la fraîcheur).

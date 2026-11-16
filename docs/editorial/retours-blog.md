@@ -17,3 +17,10 @@ Journal des retours de Nicolas sur les propositions et les articles. À relire a
 - Pas d’étude DataForSEO pour ce sujet.
 - Validé pour publication le 9 novembre 2026, sans modification : montrer nos propres défauts est assumé (« ça montre qu’on itère »).
 - Suite proposée : corriger sur le site les frictions 1, 2, 4 et 6 (focus du formulaire, nom unique de l’audit, contraste du lien de langue, « Close » en français), dans une PR séparée.
+
+## 2026-11-16 — Changement de stratégie et de rythme
+
+- Proposition du 16/11 (« Animation web : UX et performance ») mise de côté : elle passe en bloc C (C3).
+- Retour : la stratégie actuelle ne touche que des curieux. La cible, ce sont des gens au profil proche du nôtre, qui achètent du temps. Expertise à mettre en avant : utiliser et optimiser l'IA à son plein potentiel, l'UX des apps créées par IA.
+- Préparer dès maintenant les requêtes « 2027 » pour être en place quand elles arriveront (dont « combien coûte un site web en 2027 »), sans abandonner les positionnements déjà mesurés.
+- Rythme : trois articles par semaine, lundi, mercredi et vendredi, même horaire (10 h 30).
