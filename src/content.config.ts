@@ -189,7 +189,7 @@ const servicesCollection = defineCollection({
     shortName: z.string().optional(),
     footerTitle: z.string().optional(),
     footerOrder: z.number().optional(),
-    // Prix publics en EUR, toujours HTVA. `to` = plafond habituel, pas un maximum contractuel.
+    // Prix publics en EUR, toujours HTVA. `to` = plafond selon le périmètre (le bas de la fourchette est le cas le plus fréquent).
     pricing: z.object({
       from: z.number(),
       to: z.number().optional(),

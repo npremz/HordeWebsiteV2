@@ -103,7 +103,7 @@ On ne refait pas un site juste pour le refaire. Avant de toucher quoi que ce soi
 #### H2 : Questions fréquentes
 
 **Combien coûte une refonte ?**
-À partir de 999 € HTVA. Une refonte de site vitrine va généralement jusqu'à 2 999 € HTVA, une refonte de boutique e-commerce jusqu'à 3 999 € HTVA. Une refonte de SaaS se chiffre comme un développement complet. On fixe le périmètre après l'audit de votre site actuel : pages et parcours à reprendre, contenu, fonctionnalités et migration SEO.
+À partir de 999 € HTVA. Selon le périmètre, une refonte de site vitrine peut monter jusqu'à 2 999 € HTVA, une refonte de boutique e-commerce jusqu'à 3 999 € HTVA. Une refonte de SaaS se chiffre comme un développement complet. On fixe le périmètre après l'audit de votre site actuel : pages et parcours à reprendre, contenu, fonctionnalités et migration SEO.
 
 **Mon référencement sera-t-il impacté ?**
 Pas si on travaille sérieusement les redirections et la migration SEO. Une refonte bien exécutée améliore le référencement sur 3 à 6 mois.

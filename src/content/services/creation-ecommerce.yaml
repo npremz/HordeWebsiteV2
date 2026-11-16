@@ -123,10 +123,10 @@ translations:
           against the catalogue, integrations and maintenance constraints.
       - question: How much does an e-commerce website in Brussels cost?
         answer: >-
-          From €1,999 excl. VAT, and usually up to €6,000 excl. VAT. The price
-          mainly depends on catalogue size, integrations (payment, shipping,
-          stock) and the level of customisation. A store with very specific
-          logic is quoted separately, after the free audit.
+          From €1,999 excl. VAT. Depending on scope, the price can go up to
+          €6,000 excl. VAT. It mainly depends on catalogue size, integrations
+          (payment, shipping, stock) and the level of customisation. A store
+          with very specific logic is quoted separately, after the free audit.
       - question: Can I manage products and orders myself afterward?
         answer: >-
           Yes. That is non-negotiable. We train your team and document
@@ -245,10 +245,11 @@ faqItems:
       les deux selon le catalogue, les intégrations et la maintenance prévue.
   - question: Combien coûte un site e-commerce à Bruxelles ?
     answer: >-
-      À partir de 1 999 € HTVA, et généralement jusqu'à 6 000 € HTVA. Le prix
-      dépend surtout de la taille du catalogue, des intégrations (paiement,
-      livraison, stock) et du niveau de personnalisation. Une boutique avec une
-      logique très spécifique se chiffre sur devis, après l'audit offert.
+      À partir de 1 999 € HTVA. Selon le périmètre, le prix peut monter jusqu'à
+      6 000 € HTVA. Il dépend surtout de la taille du catalogue, des
+      intégrations (paiement, livraison, stock) et du niveau de
+      personnalisation. Une boutique avec une logique très spécifique se chiffre
+      sur devis, après l'audit offert.
   - question: Puis-je gérer les produits et commandes moi-même après ?
     answer: >-
       Oui, c'est une condition non négociable. On forme votre équipe et on

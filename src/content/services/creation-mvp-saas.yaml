@@ -118,10 +118,10 @@ translations:
     faqItems:
       - question: How much does SaaS MVP development in Brussels cost?
         answer: >-
-          From €3,999 excl. VAT, and usually up to €8,000 excl. VAT. The price
-          rises with business logic, the number of user roles, integrations
-          (payments, third-party APIs) and the level of polish. We quote after
-          scoping, not before.
+          From €3,999 excl. VAT. Depending on scope, the price can go up to
+          €8,000 excl. VAT. It depends on business logic, the number of user
+          roles, integrations (payments, third-party APIs) and the level of
+          polish. We quote after scoping, not before.
       - question: How long does it take to build a testable MVP?
         answer: >-
           First usable screens: 3 to 5 weeks. A complete deployable MVP: 6 to 10
@@ -248,10 +248,10 @@ faqTitle: Nos réponses aux questions fréquentes
 faqItems:
   - question: Combien coûte le développement d'un MVP SaaS à Bruxelles ?
     answer: >-
-      À partir de 3 999 € HTVA, et généralement jusqu'à 8 000 € HTVA. Le prix
-      monte avec la logique métier, le nombre de rôles, les intégrations
-      (paiement, API tierces) et le niveau de finition. On chiffre après le
-      cadrage, pas avant.
+      À partir de 3 999 € HTVA. Selon le périmètre, le prix peut monter jusqu'à
+      8 000 € HTVA. Il dépend de la logique métier, du nombre de rôles, des
+      intégrations (paiement, API tierces) et du niveau de finition. On chiffre
+      après le cadrage, pas avant.
   - question: Combien de temps faut-il pour développer un MVP testable ?
     answer: >-
       Les premiers écrans utilisables : 3 à 5 semaines. Un MVP complet

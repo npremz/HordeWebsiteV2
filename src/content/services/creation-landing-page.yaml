@@ -131,11 +131,11 @@ translations:
           we write, or you provide copy and we structure and optimize it.
       - question: How much does a landing page in Brussels cost?
         answer: >-
-          From €1,999 excl. VAT, and usually up to €4,000 excl. VAT. The price
-          depends on the number of sections, content production (copy, visuals,
-          video), animations and integrations (CRM, email tools, conversion
-          tracking). A/B variants of the same page are offered at a reduced
-          rate.
+          From €1,999 excl. VAT. Depending on scope, the price can go up to
+          €4,000 excl. VAT. It depends on the number of sections, content
+          production (copy, visuals, video), animations and integrations (CRM,
+          email tools, conversion tracking). A/B variants of the same page are
+          offered at a reduced rate.
       - question: Can a landing page be optimized for SEO?
         answer: >-
           For ad pages, not necessarily; that is not always their job. For
@@ -264,10 +264,11 @@ faqItems:
       propre texte qu'on structure et optimise.
   - question: Combien coûte une landing page à Bruxelles ?
     answer: >-
-      À partir de 1 999 € HTVA, et généralement jusqu'à 4 000 € HTVA. Le prix
-      varie avec le nombre de sections, la production de contenu (textes,
-      visuels, vidéo), les animations et les intégrations (CRM, emailing, suivi
-      des conversions). Les variantes A/B d'une même page sont à tarif réduit.
+      À partir de 1 999 € HTVA. Selon le périmètre, le prix peut monter jusqu'à
+      4 000 € HTVA. Il varie avec le nombre de sections, la production de
+      contenu (textes, visuels, vidéo), les animations et les intégrations (CRM,
+      emailing, suivi des conversions). Les variantes A/B d'une même page sont à
+      tarif réduit.
   - question: Une landing page peut-elle être optimisée pour le SEO ?
     answer: >-
       Pour les pages publicitaires, non nécessairement : ce n'est pas leur rôle.

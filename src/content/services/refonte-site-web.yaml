@@ -119,11 +119,11 @@ translations:
     faqItems:
       - question: How much does a website redesign in Brussels cost?
         answer: >-
-          From €999 excl. VAT. A service-website redesign usually goes up to
-          €2,999 excl. VAT, an e-commerce redesign up to €3,999 excl. VAT. A
-          SaaS redesign is priced as a full development. We set the scope after
-          auditing your current site: pages and journeys to rework, content,
-          features and SEO migration.
+          From €999 excl. VAT. Depending on scope, a service-website redesign
+          can go up to €2,999 excl. VAT, an e-commerce redesign up to €3,999
+          excl. VAT. A SaaS redesign is priced as a full development. We set the
+          scope after auditing your current site: pages and journeys to rework,
+          content, features and SEO migration.
       - question: Will a website redesign affect my SEO?
         answer: >-
           Any migration can affect organic visibility. We reduce the risk by
@@ -253,11 +253,12 @@ faqTitle: Nos réponses aux questions fréquentes
 faqItems:
   - question: Combien coûte une refonte de site web à Bruxelles ?
     answer: >-
-      À partir de 999 € HTVA. Une refonte de site vitrine va généralement
-      jusqu'à 2 999 € HTVA, une refonte de boutique e-commerce jusqu'à 3 999 €
-      HTVA. Une refonte de SaaS se chiffre comme un développement complet. On
-      fixe le périmètre après l'audit de votre site actuel : pages et parcours à
-      reprendre, contenu, fonctionnalités et migration SEO.
+      À partir de 999 € HTVA. Selon le périmètre, une refonte de site vitrine
+      peut monter jusqu'à 2 999 € HTVA, une refonte de boutique e-commerce
+      jusqu'à 3 999 € HTVA. Une refonte de SaaS se chiffre comme un
+      développement complet. On fixe le périmètre après l'audit de votre site
+      actuel : pages et parcours à reprendre, contenu, fonctionnalités et
+      migration SEO.
   - question: Comment éviter une perte de SEO pendant une refonte ?
     answer: >-
       Toute migration peut affecter la visibilité organique. On réduit ce risque

@@ -83,7 +83,7 @@ Prestations:
 - SEO title FR: Refonte site web a Bruxelles | UX, perf et SEO
 - Objectif: ameliorer un site existant quand ses fondations, son design ou ses performances limitent la croissance.
 - Cibles: entreprises avec un site lent, confus, obsolete, difficile a maintenir ou mal convertissant.
-- Prix: a partir de 999 EUR HTVA ; site vitrine generalement jusqu'a 2 999 EUR HTVA, e-commerce jusqu'a 3 999 EUR HTVA ; refonte de SaaS chiffree comme un developpement complet.
+- Prix: a partir de 999 EUR HTVA ; selon le perimetre, jusqu'a 2 999 EUR HTVA pour un site vitrine, 3 999 EUR HTVA pour un e-commerce ; refonte de SaaS chiffree comme un developpement complet.
 
 Prestations:
 
@@ -111,7 +111,7 @@ Process:
 - SEO title FR: Creation site e-commerce a Bruxelles | Horde
 - Objectif: creer une boutique rapide, fiable et pensee pour l'achat.
 - Cibles: marques qui lancent une boutique, migrent un e-commerce ou veulent une experience d'achat plus efficace.
-- Prix: a partir de 1 999 EUR HTVA, generalement jusqu'a 6 000 EUR HTVA.
+- Prix: a partir de 1 999 EUR HTVA, jusqu'a 6 000 EUR HTVA selon le perimetre.
 
 Prestations:
 
@@ -132,7 +132,7 @@ Prestations:
 - SEO title FR: Creation de landing page a Bruxelles | Horde
 - Objectif: creer une page focalisee sur une action precise: lead, achat, inscription, rendez-vous ou test d'offre.
 - Cibles: campagnes Google Ads, campagnes Meta Ads, lancements d'offre, capture de leads B2B et tests A/B.
-- Prix: a partir de 1 999 EUR HTVA, generalement jusqu'a 4 000 EUR HTVA.
+- Prix: a partir de 1 999 EUR HTVA, jusqu'a 4 000 EUR HTVA selon le perimetre.
 
 Prestations:
 
@@ -152,7 +152,7 @@ Prestations:
 - SEO title FR: Developpement MVP SaaS a Bruxelles
 - Objectif: passer d'une idee produit a une premiere version utilisable, testable et maintenable.
 - Cibles: fondateurs, equipes produit et entreprises qui veulent valider une solution SaaS sans construire trop tot une plateforme trop lourde.
-- Prix: a partir de 3 999 EUR HTVA, generalement jusqu'a 8 000 EUR HTVA.
+- Prix: a partir de 3 999 EUR HTVA, jusqu'a 8 000 EUR HTVA selon le perimetre.
 
 Prestations:
 
