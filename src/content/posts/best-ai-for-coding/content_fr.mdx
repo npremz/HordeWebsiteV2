@@ -30,7 +30,7 @@ Il faut toutefois éviter une conclusion trop simple. Le modèle le plus rapide 
 | --- | --- | --- |
 | Claude Code (Anthropic) | L’écosystème le plus complet pour un usage clé en main, avec un bon équilibre entre qualité et vitesse | Projets clients, travail en équipe |
 | Codex (OpenAI) | Un code correct, mais trop lent aujourd’hui pour notre façon d’itérer | Peu, pour l’instant |
-| Gemini (Google) | **[À COMPLÉTER PAR NICOLAS]** | **[À COMPLÉTER]** |
+| Gemini (Google) | Une offre trop complexe : en abonnement, le modèle le plus puissant demande 99,99 €/mois, et le harnais Antigravity déçoit | Pas en production chez nous |
 | DeepSeek | Un excellent rapport qualité/vitesse, avec une vraie question sur les données | Tests et itérations rapides, sur des données non sensibles |
 
 Ces constats viennent de notre usage quotidien en novembre 2026. Ce ne sont pas des mesures de laboratoire, et ils peuvent changer dès la prochaine version.
@@ -47,6 +47,14 @@ Raisonnablement sûr, donc, à condition de choisir le bon cadre.
 
 Le code produit n’est pas en cause. C’est le temps de réponse qui rend Codex peu pratique dans notre flux, dans l’état actuel. Ce point peut changer vite. C’est exactement le genre de constat que nous revérifierons à chaque nouvelle version.
 
+### Gemini : on se demande ce que Google fabrique
+
+Sur le papier, Google a tout : des modèles de pointe, une plateforme de développement, un agent de code. En pratique, l’offre est tout simplement trop complexe pour le moment.
+
+Les modèles frontière sont enchaînés à l’écosystème de Google, AI Studio en tête. Et l’accès dépend de l’abonnement. Côté abonnements, le modèle le plus puissant, Gemini 4 Carbon, est réservé à Google AI Ultra, facturé en Belgique 99,99 € par mois, ou 219,99 € pour les limites les plus hautes. Sinon, il faut passer par l’API facturée à l’usage. Gemini 4 Argon demande au minimum Google AI Pro, à 21,99 € par mois ([tarifs Google AI en Belgique](https://gemini.google/be/subscriptions/?hl=fr), [plans dans AI Studio](https://aistudio.google.com/docs/google-ai-plans)). En face, Claude Code et Codex sont accessibles dès une vingtaine d’euros par mois, avec Claude Pro ou ChatGPT Plus.
+
+La génération 4 ne change pas grand-chose à ce constat : les modèles accessibles ne nous ont pas impressionnés, autour du niveau d’un Claude Sonnet, et le plus puissant est trop cher pour de simples tests. Quant à Antigravity, l’environnement d’agents de Google, c’est le harnais le moins convaincant que nous ayons testé.
+
 ### DeepSeek : rapide et efficace, pas pour toutes les données
 
 Pour tester une idée, explorer plusieurs variantes ou itérer vite sur un prototype, DeepSeek offre un rapport qualité/vitesse remarquable. Le choix d’un modèle rapide est situationnel, et c’est dans ces situations qu’il brille.
@@ -62,7 +70,7 @@ Avec les derniers modèles, le code fonctionne en général. Pour une page, un c
 Le problème se situe ailleurs. Les IA ont tendance à remplir les pages de bruit : des sections qui répètent la même promesse, des badges et des chiffres décoratifs, plusieurs boutons qui se disputent l’attention, des animations sans rôle. Pris un par un, ces éléments ont l’air soignés. Ensemble, ils ralentissent la lecture et brouillent l’action principale.
 
 > « Le code, tout fonctionne en général : c’est suffisant avec les derniers modèles. Mais les IA créent énormément de bruit sur les pages, sans réel but, et ça pèse sur l’utilisation. Ça a l’air bien pour un novice. Un expert UX peut pousser l’expérience beaucoup plus loin. »
-> — Nicolas Prémont, développeur chez Horde
+> — Alexandre Potakowski, co-fondateur et designer UX chez Horde
 
 Pour un œil novice, la page a l’air terminée. Un expert UX regarde ce qu’elle fait faire : où part le regard, ce qu’on comprend dans les premières secondes, ce qui manque au moment de décider. Il retire, hiérarchise et teste. Nous avons détaillé cette limite dans [L’IA crée des interfaces, pas des expériences](/fr/blog/ia-interfaces-experiences-utilisateur/), et la méthode pour la corriger dans notre [audit UX/UI en quatre étapes](/fr/blog/audit-ux-ui-site-web/).
 
@@ -90,6 +98,10 @@ Vous avez un prototype construit avec l’IA qui fonctionne, mais qui ne convain
 * [Claude Code — Data usage](https://code.claude.com/docs/en/data-usage)
 * [Claude Code — Zero data retention](https://code.claude.com/docs/en/zero-data-retention)
 * [DeepSeek — Privacy Policy](https://cdn.deepseek.com/policies/en-US/deepseek-privacy-policy.html)
+* [Google — Abonnements Google AI en Belgique](https://gemini.google/be/subscriptions/?hl=fr)
+* [Google AI Studio — Google AI plans](https://aistudio.google.com/docs/google-ai-plans)
+* [Anthropic — Tarifs Claude](https://claude.com/pricing)
+* [OpenAI — Codex pricing](https://chatgpt.com/codex/pricing/)
 * [Bird & Bird — The Garante imposes a definitive limitation on the processing of Italian users’ personal data (2025)](https://cm.twobirds.com/en/insights/2025/the-garante-imposes-a-definitive-limitation-on-the-processing-of-italian-users%E2%80%99-personal-data)
 * [DeepSeek-V3.2-Exp — LICENSE (MIT)](https://github.com/deepseek-ai/DeepSeek-V3.2-Exp/blob/main/LICENSE)
-* Les constats sur la vitesse et l’usage de chaque outil viennent des tests de Horde en novembre 2026 ; ils ne constituent pas un benchmark.
+* Les constats sur la vitesse, la qualité et l’usage de chaque outil viennent des tests de Horde en novembre 2026 ; ils ne constituent pas un benchmark.

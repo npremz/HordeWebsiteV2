@@ -177,6 +177,17 @@ function parseMarkdown(content: string): string {
 			}
 		}
 
+		// Citations : lignes en « > », dernière ligne « > — Nom, rôle » = attribution
+		if (block.startsWith('> ')) {
+			const lines = block.split('\n').map((line) => line.replace(/^>\s?/, '').trim()).filter(Boolean);
+			const last = lines[lines.length - 1];
+			const hasCaption = lines.length > 1 && /^[—–-]\s+/.test(last);
+			const quoteLines = hasCaption ? lines.slice(0, -1) : lines;
+			const caption = hasCaption ? `<figcaption>${applyInlineFormatting(last.replace(/^[—–-]\s+/, ''))}</figcaption>` : '';
+			isSourcesSection = false;
+			return `<figure class="article-quote"><blockquote><p>${applyInlineFormatting(quoteLines.join(' '))}</p></blockquote>${caption}</figure>`;
+		}
+
 		// Listes à puces (bloc qui commence par - ou *)
 		if (block.match(/^[-*] /m)) {
 			const items = block.split('\n')
@@ -893,6 +904,29 @@ const schemaOrg = {
 			font-size: 1.25em;
 			line-height: 1.45;
 			letter-spacing: -0.015em;
+		}
+
+		.prose :global(.article-quote) {
+			margin: 3rem 0;
+		}
+
+		.prose :global(.article-quote blockquote) {
+			margin: 0;
+		}
+
+		.prose :global(.article-quote blockquote p) {
+			margin: 0;
+			text-wrap: pretty;
+		}
+
+		.prose :global(.article-quote figcaption) {
+			margin-top: 1rem;
+			padding-left: 1.5rem;
+			font-family: var(--font-mono);
+			font-size: 0.75rem;
+			font-weight: 700;
+			letter-spacing: 0.04em;
+			text-transform: uppercase;
 		}
 
 		.prose :global(code) {

@@ -30,7 +30,7 @@ That said, the fastest model is not always the right one. The choice depends on 
 | --- | --- | --- |
 | Claude Code (Anthropic) | The most complete ecosystem for turnkey use, with a good balance of quality and speed | Client projects, team work |
 | Codex (OpenAI) | Solid code, but too slow today for the way we iterate | Rarely, for now |
-| Gemini (Google) | **[TO BE COMPLETED BY NICOLAS]** | **[TO BE COMPLETED]** |
+| Gemini (Google) | An overly complex offer: on subscription, the strongest model takes €99.99/month, and the Antigravity harness disappoints | Not in production with us |
 | DeepSeek | An excellent quality-to-speed ratio, with a real data question | Quick tests and iterations on non-sensitive data |
 
 These findings come from our day-to-day use in November 2026. They are not lab measurements, and the next release can change them.
@@ -47,6 +47,14 @@ Reasonably safe, then, as long as you pick the right setup.
 
 The code itself is not the issue. Response time is what makes Codex impractical in our workflow, as things stand. That can change quickly, and it is exactly the kind of finding we will recheck with every new version.
 
+### Gemini: what is Google doing?
+
+On paper, Google has it all: frontier models, a development platform, a coding agent. In practice, the offer is simply too complex for now.
+
+The frontier models are tied to Google’s own ecosystem, starting with AI Studio. And access depends on the subscription. On the subscription side, the strongest model, Gemini 4 Carbon, is reserved for Google AI Ultra, billed in Belgium at €99.99 a month, or €219.99 for the highest limits. Otherwise, you go through the pay-as-you-go API. Gemini 4 Argon requires at least Google AI Pro, at €21.99 a month ([Google AI pricing in Belgium](https://gemini.google/be/subscriptions/?hl=fr), [plans in AI Studio](https://aistudio.google.com/docs/google-ai-plans)). By comparison, Claude Code and Codex are available from around €20 a month, with Claude Pro or ChatGPT Plus.
+
+Generation 4 does not change much: the accessible models did not impress us, landing around Claude Sonnet level, and the strongest one is too expensive for simple tests. As for Antigravity, Google’s agent environment, it is the least convincing harness we have tested.
+
 ### DeepSeek: fast and capable, but not for every kind of data
 
 For testing an idea, exploring variants or iterating quickly on a prototype, DeepSeek offers a remarkable quality-to-speed ratio. Choosing a fast model is situational, and these are the situations where it shines.
@@ -62,7 +70,7 @@ With the latest models, the code generally works. For a page, a component or a p
 The problem is elsewhere. AIs tend to fill pages with noise: sections that repeat the same promise, decorative badges and figures, several buttons competing for attention, animations with no purpose. Taken one by one, these elements look polished. Together, they slow reading down and blur the main action.
 
 > “On the code side, everything generally works: it’s good enough with the latest models. But AIs create a huge amount of noise on pages, with no real purpose, and it weighs on usability. It looks good to a novice. A UX expert can take the experience much further.”
-> — Nicolas Prémont, developer at Horde
+> — Alexandre Potakowski, co-founder and UX designer at Horde
 
 To a novice, the page looks finished. A UX expert looks at what it gets people to do: where the eye goes, what you understand in the first few seconds, what is missing at the moment of decision. They remove, prioritise and test. We covered this limit in [AI can create interfaces, not experiences](/en/blog/ai-can-create-interfaces-not-experiences/), and the method to fix it in our [four-step UI/UX audit](/en/blog/website-ui-ux-audit/).
 
@@ -90,6 +98,10 @@ Got a prototype built with AI that works but does not convince yet? That is the 
 * [Claude Code — Data usage](https://code.claude.com/docs/en/data-usage)
 * [Claude Code — Zero data retention](https://code.claude.com/docs/en/zero-data-retention)
 * [DeepSeek — Privacy Policy](https://cdn.deepseek.com/policies/en-US/deepseek-privacy-policy.html)
+* [Google — Google AI subscriptions in Belgium](https://gemini.google/be/subscriptions/?hl=fr)
+* [Google AI Studio — Google AI plans](https://aistudio.google.com/docs/google-ai-plans)
+* [Anthropic — Claude pricing](https://claude.com/pricing)
+* [OpenAI — Codex pricing](https://chatgpt.com/codex/pricing/)
 * [Bird & Bird — The Garante imposes a definitive limitation on the processing of Italian users’ personal data (2025)](https://cm.twobirds.com/en/insights/2025/the-garante-imposes-a-definitive-limitation-on-the-processing-of-italian-users%E2%80%99-personal-data)
 * [DeepSeek-V3.2-Exp — LICENSE (MIT)](https://github.com/deepseek-ai/DeepSeek-V3.2-Exp/blob/main/LICENSE)
-* The findings on speed and use of each tool come from Horde’s own testing in November 2026; they are not a benchmark.
+* The findings on speed, quality and use of each tool come from Horde’s own testing in November 2026; they are not a benchmark.
