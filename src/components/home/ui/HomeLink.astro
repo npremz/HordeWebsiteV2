@@ -7,17 +7,33 @@ interface Props {
   class?: string;
   /** "dark" = texte noir + bouton noir (fonds clairs). */
   tone?: "dark" | "light";
+  /** "plus" (défaut) ou "arrow" (flèche ↗, pour les liens qui quittent le site). */
+  icon?: "plus" | "arrow";
+  /** Ouvre dans un nouvel onglet ; `newTabLabel` est lu par les lecteurs d'écran. */
+  external?: boolean;
+  newTabLabel?: string;
 }
 
-const { href, label, class: className = "", tone = "dark" } = Astro.props;
+const { href, label, class: className = "", tone = "dark", icon = "plus", external = false, newTabLabel } = Astro.props;
 ---
 
-<a href={href} class:list={["home-link group", `home-link--${tone}`, className]}>
+<a
+  href={href}
+  class:list={["home-link group", `home-link--${tone}`, `home-link--${icon}`, className]}
+  {...(external ? { target: "_blank", rel: "noopener" } : {})}
+>
   <span class="home-link__label">{label}</span>
+  {external && newTabLabel && <span class="sr-only"> {newTabLabel}</span>}
   <span class="home-link__button" aria-hidden="true">
-    <svg viewBox="0 0 8.86 9.1" fill="currentColor">
-      <path d={HOME_ICONS.plus.paths[0].d} />
-    </svg>
+    {icon === "arrow" ? (
+      <svg class="home-link__arrow" viewBox="0 0 16 20" fill="currentColor">
+        <path d={HOME_ICONS.arrowDown.paths[0].d} />
+      </svg>
+    ) : (
+      <svg viewBox="0 0 8.86 9.1" fill="currentColor">
+        <path d={HOME_ICONS.plus.paths[0].d} />
+      </svg>
+    )}
   </span>
 </a>
 
@@ -62,6 +78,13 @@ const { href, label, class: className = "", tone = "dark" } = Astro.props;
     width: 0.625rem;
     height: 0.625rem;
     transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  /* Flèche : le tracé Figma pointe vers le bas, on le tourne vers le haut-droite (↗). */
+  .home-link__button .home-link__arrow {
+    width: 0.6rem;
+    height: 0.75rem;
+    transform: rotate(-135deg);
   }
 
   @media (min-width: 640px) {
@@ -113,8 +136,12 @@ const { href, label, class: className = "", tone = "dark" } = Astro.props;
       transform: scale(1.08);
     }
 
-    .home-link:hover .home-link__button svg {
+    .home-link--plus:hover .home-link__button svg {
       transform: rotate(90deg);
+    }
+
+    .home-link--arrow:hover .home-link__button .home-link__arrow {
+      transform: translate(0.12rem, -0.12rem) rotate(-135deg);
     }
   }
 

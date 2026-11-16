@@ -2,6 +2,7 @@
 import type { Locale } from "../../i18n";
 import { getHomeCopy } from "./copy";
 import { BUSINESS } from "../../lib/business-info";
+import HomeLink from "./ui/HomeLink.astro";
 
 interface Props {
   lang: Locale;
@@ -58,11 +59,15 @@ const MAX_SCORE = 5;
       ))}
     </ul>
 
-    <p class="home-reviews__more">
-      <a href={BUSINESS.googleBusinessProfileUrl} class="home-reviews__google" target="_blank" rel="noopener">
-        {copy.reviews.googleLink}<span aria-hidden="true"> ↗</span><span class="sr-only"> {copy.reviews.googleLinkSr}</span>
-      </a>
-    </p>
+    <div class="home-reviews__more">
+      <HomeLink
+        href={BUSINESS.googleBusinessProfileUrl}
+        label={copy.reviews.googleLink}
+        icon="arrow"
+        external
+        newTabLabel={copy.reviews.googleLinkSr}
+      />
+    </div>
   </div>
 </section>
 
@@ -99,21 +104,6 @@ const MAX_SCORE = 5;
     text-align: center;
   }
 
-  .home-reviews__google {
-    position: relative;
-    padding-bottom: 0.15rem;
-    font-size: 1.0625rem;
-  }
-
-  .home-reviews__google::after {
-    content: "";
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    height: 1px;
-    background: currentColor;
-  }
 
   .home-reviews__grid {
     position: relative;
