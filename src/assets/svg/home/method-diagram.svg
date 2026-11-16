@@ -1,0 +1,7 @@
+<svg width="381" height="237" viewBox="0 0 381 237" fill="none" xmlns="http://www.w3.org/2000/svg">
+<!-- Fond et traits du schéma. Les 3 anneaux animés sont dans method-diagram-rings.svg (calques séparés). -->
+<rect width="380.188" height="237" rx="5" fill="#E3DEE3"/>
+<line x1="4.37114e-08" y1="118.001" x2="380.188" y2="118.001" stroke="#7A797C"/>
+<line x1="234.617" y1="1.2002" x2="234.617" y2="236.966" stroke="#7A797C"/>
+<line x1="146.977" y1="1.2002" x2="146.977" y2="236.966" stroke="#7A797C"/>
+</svg>

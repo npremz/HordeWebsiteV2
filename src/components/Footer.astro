@@ -2,7 +2,8 @@
 /**
  * Footer global : « Let’s Talk », colonnes Services / Social / Menu,
  * bande From / Since, copyright, liens légaux et accès à Arthur.
- * Toujours sur fond lilas, quel que soit le thème de la page.
+ * Fond lilas par défaut ; fond noir avec `variant="dark"` (pages à fond sombre),
+ * fond blanc cassé avec `variant="white"` (blog).
  */
 import { DEFAULT_LOCALE, type Locale } from "../i18n";
 import { getSiteChrome } from "../lib/site-data";
@@ -16,13 +17,15 @@ import footerTalk from "../assets/svg/footer-talk.svg?raw";
 
 interface Props {
 	lang?: Locale;
+	/** "dark" : footer noir (pages à fond sombre) ; "white" : fond --color-white (blog). */
+	variant?: "light" | "dark" | "white";
 	/** Conservés pour compatibilité avec les pages existantes ; sans effet sur ce footer. */
-	variant?: "light" | "dark";
 	hideOverflow?: boolean;
 	innerBg?: boolean;
 }
 
-const { lang = DEFAULT_LOCALE } = Astro.props;
+const { lang = DEFAULT_LOCALE, variant = "light" } = Astro.props;
+const isDark = variant === "dark";
 const copy = getHomeCopy(lang);
 const { footer, navigation } = await getSiteChrome(lang);
 const serviceLinks = await getFooterServiceLinks(lang);
@@ -52,7 +55,10 @@ const markSvg = footerMark
 	);
 ---
 
-<footer class="site-footer" data-header-theme="light">
+<footer
+	class:list={["site-footer", isDark && "site-footer--dark", variant === "white" && "site-footer--white"]}
+	data-header-theme={isDark ? "dark" : "light"}
+>
 	<p class="site-footer__title">
 		<a href={contactHref} class="site-footer__title-link" title={copy.talk.ctaLabel}>
 			<Fragment set:html={footerTalk} />
@@ -86,7 +92,7 @@ const markSvg = footerMark
 								target={link.isExternal && !isMail(link.url) ? "_blank" : undefined}
 								rel={link.isExternal && !isMail(link.url) ? "noopener noreferrer" : undefined}
 							>
-								{isMail(link.url) ? "Email" : link.label}
+								{isMail(link.url) ? copy.talk.email : link.label}
 							</a>
 							{isMail(link.url) && (
 								<button
@@ -115,11 +121,11 @@ const markSvg = footerMark
 		</div>
 
 		<div class="site-footer__band">
-			<HomeBadge lang={lang} kind="from" tone="dark" class="site-footer__badge" />
+			<HomeBadge lang={lang} kind="from" tone={isDark ? "light" : "dark"} class="site-footer__badge" />
 			<a href={`/${lang}/`} class="site-footer__mark" aria-label={copy.brand.name} title={copy.brand.name}>
 				<Fragment set:html={markSvg} />
 			</a>
-			<HomeBadge lang={lang} kind="since" tone="dark" class="site-footer__badge" />
+			<HomeBadge lang={lang} kind="since" tone={isDark ? "light" : "dark"} class="site-footer__badge" />
 		</div>
 
 		<div class="site-footer__bottom">
@@ -163,6 +169,44 @@ const markSvg = footerMark
 		width: 100vw;
 		background: var(--color-bg);
 		transform: translateX(-50%);
+	}
+
+	/* Variante sombre : fond noir, texte clair ; le survol du « Let's Talk » s'inverse (bandeau blanc, texte noir). */
+	.site-footer--dark {
+		color: var(--color-white);
+	}
+
+	.site-footer--dark::before {
+		background: var(--color-black);
+	}
+
+	.site-footer--white::before {
+		background: var(--color-white);
+	}
+
+	.site-footer--dark .site-footer__title-link::before {
+		background: var(--color-white);
+	}
+
+	.site-footer--dark .site-footer__title-link:hover :global(svg) {
+		color: var(--color-black);
+	}
+
+	.site-footer--dark .site-footer__heading {
+		border-bottom-color: var(--color-white);
+	}
+
+	.site-footer--dark .site-footer__muted {
+		color: rgb(244 241 248 / 0.5);
+	}
+
+	.site-footer--dark .site-footer__avatar {
+		border-color: var(--color-white);
+	}
+
+	.site-footer--dark .site-footer__copy[data-copied]::after {
+		background: var(--color-white);
+		color: var(--color-black);
 	}
 
 	/* Même largeur que le Container du site : gouttière en dessous de lg, 1320px max au-delà. */
@@ -362,7 +406,7 @@ const markSvg = footerMark
 	}
 
 	.site-footer__muted {
-		color: rgb(22 25 27 / 0.45);
+		color: rgb(15 16 17 / 0.45);
 	}
 
 	.site-footer__legal {

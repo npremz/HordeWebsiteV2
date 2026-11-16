@@ -7,7 +7,8 @@ import HomeServices from "../../components/home/HomeServices.astro";
 import HomeMethod from "../../components/home/HomeMethod.astro";
 import HomeTeam from "../../components/home/HomeTeam.astro";
 import HomeTalk from "../../components/home/HomeTalk.astro";
-import HomeFooter from "../../components/home/HomeFooter.astro";
+import HomeReviews from "../../components/home/HomeReviews.astro";
+import Footer from "../../components/Footer.astro";
 import PixelTransitionCanvas from "../../components/ui/effects/PixelTransitionCanvas.astro";
 import "../../components/home/home.css";
 import { SUPPORTED_LOCALES, type Locale, useTranslations } from "../../i18n";
@@ -42,12 +43,13 @@ const description = siteSettings.defaultDescription || t.homepage.fallbackDescri
   <div class="home-page relative">
     <!-- Même transition que l’ancienne home : pixels noirs qui recouvrent l’écran avant les services. -->
     <PixelTransitionCanvas
-      color="rgb(22, 25, 27)"
+      color="rgb(15, 16, 17)"
       triggerDistance={500}
       topOffset={600}
       targetId="services"
       stopTargetId="demarche"
       stopWhenTargetCoversViewport
+      columns={16}
       class="z-10"
     />
     <HomeHero lang={lang} />
@@ -56,12 +58,38 @@ const description = siteSettings.defaultDescription || t.homepage.fallbackDescri
     <HomeServices lang={lang} />
     <HomeMethod lang={lang} />
     <HomeTeam lang={lang} />
+    <HomeReviews lang={lang} />
     <HomeTalk lang={lang} />
   </div>
-  <HomeFooter slot="footer" lang={lang} />
+  <div slot="footer" class="home-page__footer">
+    <Footer lang={lang} />
+  </div>
 </Layout>
 
+<style>
+  /* Mêmes marges que le footer global de la page contact. */
+  .home-page__footer {
+    padding-inline: 1rem;
+    background: var(--color-bg);
+    overflow-x: clip;
+  }
+
+  @media (min-width: 640px) {
+    .home-page__footer {
+      padding-inline: 2rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .home-page__footer {
+      padding-inline: 3.6rem;
+    }
+  }
+</style>
+
 <script>
+  import { pauseOffscreen } from "../../lib/pause-offscreen";
+
   function initHomeReveal() {
     const items = document.querySelectorAll<HTMLElement>("[data-home-reveal]:not(.is-revealed)");
     if (!("IntersectionObserver" in window)) {
@@ -84,5 +112,9 @@ const description = siteSettings.defaultDescription || t.homepage.fallbackDescri
   }
 
   initHomeReveal();
-  document.addEventListener("astro:page-load", initHomeReveal);
+  pauseOffscreen();
+  document.addEventListener("astro:page-load", () => {
+    initHomeReveal();
+    pauseOffscreen();
+  });
 </script>

@@ -25,8 +25,16 @@
 }
 
 @font-face {
-  font-family: 'PP Neue Machina';
-  src: url('../assets/fonts/PPNeueMachina-Light.woff2') format('woff2');
+  font-family: 'PP Fraktion Mono';
+  src: url('../assets/fonts/PPFraktionMono-Light.woff2') format('woff2');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'PP Neue Montreal';
+  src: url('../assets/fonts/PPNeueMontreal-Light.woff') format('woff');
   font-weight: 300;
   font-style: normal;
   font-display: swap;
@@ -34,8 +42,8 @@
 
 @font-face {
   font-family: 'PP Fraktion Mono';
-  src: url('../assets/fonts/PPFraktionMono-Light.woff2') format('woff2');
-  font-weight: 300;
+  src: url('../assets/fonts/PPFraktionMono-Bold.woff') format('woff');
+  font-weight: 700;
   font-style: normal;
   font-display: swap;
 }
@@ -82,7 +90,7 @@
   --color-bg: #C5C1CD;
   --color-bg-light: #E3DEE3;
   --color-button-white: #FFFFFF;
-  --color-black: #16191B;
+  --color-black: #0F1011;
   --color-lines: #9E9AA4;
   --color-lines-dark: #4C4B4B;
   --color-err: #FF5858;
@@ -91,7 +99,7 @@
 
   --font-sans: 'PP Neue Montreal', system-ui, sans-serif;
   --font-mono: 'PP Fraktion Mono', monospace;
-  --font-display: 'PP Neue Machina', system-ui, sans-serif;
+  --font-display: 'PP Neue Montreal', system-ui, sans-serif;
   --tracking-display: -0.03em;
 }
 
@@ -438,5 +446,18 @@ svg polygon {
   }
   .form-gap {
     gap: 60px !important;
+  }
+}
+
+/*
+ * Largeur de la colonne principale de la home (cf. .home-column dans home/home.css) :
+ * marge de 7,25rem de chaque côté dès 1024px, plafonnée à 63rem. Hors @layer pour primer
+ * sur les utilitaires max-w-[1320px] / lg:px-0 des conteneurs.
+ */
+@media (min-width: 1024px) {
+  .landing-column {
+    width: min(calc(100% - 14.5rem), 63rem);
+    max-width: none;
+    padding-inline: 0;
   }
 }

@@ -4,15 +4,19 @@ interface Props {
   variant?: "dark" | "light";
   class?: string;
   reverse?: boolean;
+  /** Suit le sens du scroll : vers le bas → de droite à gauche, vers le haut → de gauche à droite. */
+  followScroll?: boolean;
 }
 
-const { items, variant = "dark", class: className = "", reverse = false } = Astro.props;
+const { items, variant = "dark", class: className = "", reverse = false, followScroll = false } = Astro.props;
 const group = Array.from({ length: 3 }, () => items).flat();
 ---
 
 <div
   class:list={["home-marquee", `home-marquee--${variant}`, reverse && "home-marquee--reverse", className]}
   aria-hidden="true"
+  data-pause-offscreen
+  data-marquee-follow-scroll={followScroll ? "" : undefined}
 >
   <div class="home-marquee__track">
     {[0, 1].map(() => (
@@ -94,3 +98,43 @@ const group = Array.from({ length: 3 }, () => items).flat();
     }
   }
 </style>
+
+<script>
+  /*
+   * Bandeaux `followScroll` : on inverse la vitesse de l'animation CSS (playbackRate = ±1)
+   * au lieu de changer animation-direction, qui ferait sauter le texte à la position opposée.
+   */
+  let lastY = window.scrollY;
+  let direction = 1;
+
+  const tracks = () =>
+    Array.from(document.querySelectorAll<HTMLElement>("[data-marquee-follow-scroll] .home-marquee__track"));
+
+  window.addEventListener(
+    "scroll",
+    () => {
+      const y = window.scrollY;
+      if (y === lastY) return;
+      const next = y > lastY ? 1 : -1;
+      lastY = y;
+      if (next === direction) return;
+      direction = next;
+      for (const track of tracks()) {
+        for (const animation of track.getAnimations()) {
+          // À l'envers, une animation infinie s'arrête en atteignant 0 : on l'avance d'un grand
+          // nombre de cycles entiers (même position visuelle) pour avoir de la marge.
+          const time = Number(animation.currentTime ?? 0);
+          const cycle = Number(animation.effect?.getTiming().duration) || 60000;
+          if (direction < 0 && time < cycle * 10) animation.currentTime = time + cycle * 1000;
+          animation.updatePlaybackRate(direction);
+        }
+      }
+    },
+    { passive: true },
+  );
+
+  document.addEventListener("astro:page-load", () => {
+    lastY = window.scrollY;
+    direction = 1;
+  });
+</script>

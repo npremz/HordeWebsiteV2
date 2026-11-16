@@ -1,105 +1,223 @@
 ---
 import { Image } from "astro:assets";
+import type { ImageMetadata } from "astro";
 import type { Locale } from "../../i18n";
 import { getLocalizedProjects } from "../../lib/content/projects";
 import { getProjectHref } from "../../lib/projectServices";
+import archSvg from "../../assets/svg/home/works-arch.svg?raw";
+// Captures provisoires extraites des maquettes : à remplacer par les exports définitifs.
+import lomaShot from "../../assets/images/home/works-loma-placeholder.jpg";
+import eputchShot from "../../assets/images/home/works-eputch-placeholder.jpg";
 import { getHomeCopy } from "./copy";
+import { HOME_ICONS } from "./svg/icons";
 import MerlyConstruction from "./svg/MerlyConstruction.astro";
 
 interface Props {
   lang: Locale;
 }
 
+interface WorkItem {
+  name: string;
+  href: string;
+  alt: string;
+  image?: ImageMetadata;
+  Visual?: typeof MerlyConstruction;
+}
+
 const { lang } = Astro.props;
 const copy = getHomeCopy(lang);
 const allProjects = await getLocalizedProjects(lang);
-const projects = allProjects.slice(0, 3);
-const total = allProjects.length.toString().padStart(2, "0");
+const bySlug = (slug: string) => allProjects.find((project) => project.slug === slug);
+const projectsHref = `/${lang}/projets/`;
+// Projet en cours (pas de fiche publiée) : la carte renvoie vers la liste, pas vers une 404.
+const hrefFor = (project?: (typeof allProjects)[number]) =>
+  project && !project.inProgress ? getProjectHref(project.slug, lang) : projectsHref;
+const loma = bySlug("cafe-loma");
+const eputch = bySlug("e-putch");
+const merly = bySlug("merly");
 
-// Visuels vectoriels prioritaires sur la photo quand ils existent.
-const SVG_VISUALS: Record<string, typeof MerlyConstruction> = {
-  merly: MerlyConstruction,
-};
+// Sélection de la home.
+const works: WorkItem[] = [
+  {
+    name: "Loma",
+    href: hrefFor(loma),
+    alt: loma?.featuredImageAlt ?? `${copy.works.placeholderAlt} Loma`,
+    image: lomaShot,
+  },
+  {
+    name: "e-Putch",
+    href: hrefFor(eputch),
+    alt: eputch?.featuredImageAlt ?? `${copy.works.placeholderAlt} e-Putch`,
+    image: eputchShot,
+  },
+  {
+    name: "Merly",
+    href: hrefFor(merly),
+    alt: merly?.featuredImageAlt ?? `${copy.works.placeholderAlt} Merly`,
+    Visual: MerlyConstruction,
+  },
+];
+const total = works.length.toString().padStart(2, "0");
+const number = (index: number) => `(${(index + 1).toString().padStart(2, "0")})`;
 
-// Sommets du polygone de construction, en % de la section.
+// Repères carrés, en % de la section.
 const nodes: [number, number][] = [
-  [50, 0], [14.6, 11.5], [85.4, 11.5], [14.6, 66], [85.4, 66],
+  [50, 0.4], [24, 4.6], [76, 4.6], [24, 12], [76, 12],
+  [1.7, 16], [98.3, 16], [1.7, 23.5], [98.3, 23.5], [1.7, 40.5], [98.3, 40.5],
+  [24, 51], [76, 51], [1.7, 78], [98.3, 78], [24, 89], [76, 89],
 ];
 ---
 
-<section id="projects" data-header-theme="light" class="home-works relative overflow-hidden bg-bg pb-28 pt-24 max-[399px]:pb-20 max-[399px]:pt-10 sm:pb-36 md:pb-44 md:pt-32 lg:pt-36">
-  <div class="home-construction" aria-hidden="true">
-    <svg viewBox="0 0 100 100" preserveAspectRatio="none">
-      <path d="M0 0H100" />
-      <g class="hidden sm:inline">
-        <path d="M0 39.5H100" />
-        <path d="M50 0L14.6 11.5L-2 39.5L14.6 66L50 80L85.4 66L102 39.5L85.4 11.5Z" />
-        <path d="M50 0V80" />
-      </g>
-    </svg>
+<section id="projects" data-header-theme="light" class="home-works relative overflow-hidden bg-bg" data-works-parallax>
+  <div class="home-works__deco" aria-hidden="true">
+    <span class="home-works__arch home-works__arch--top"><Fragment set:html={archSvg} /></span>
+    <span class="home-works__arch home-works__arch--bottom"><Fragment set:html={archSvg} /></span>
     {nodes.map(([x, y]) => (
-      <span class="home-construction__node hidden sm:block" style={`left: ${x}%; top: ${y}%`}></span>
+      <span
+        class:list={["home-construction__node home-works__node hidden sm:block", y < 50 ? "home-works__node--top" : "home-works__node--bottom"]}
+        style={`left: ${x}%; top: ${y}%`}
+      ></span>
     ))}
   </div>
 
   <div class="relative z-[1] flex flex-col items-center px-[10px]">
-    <h2 class="flex items-baseline gap-1.5 sm:gap-2">
-      <span class="text-[1rem] sm:text-[1.125rem]">({total})</span>
-      <span class="text-[3rem] leading-none tracking-[-0.05em] max-[399px]:text-[2.3rem] sm:text-[3.5rem] md:text-[4.25rem] lg:text-[5rem]">{copy.works.title}</span>
-      <a href={`/${lang}/projets/`} class="home-works__all">
-        <span class="max-[399px]:hidden">{copy.works.seeAll}</span><span class="min-[400px]:hidden">{copy.works.seeAllShort}</span><span class="sm:hidden" aria-hidden="true"> →</span>
+    <h2 class="home-works__heading">
+      <span class="home-works__count">({total})</span>
+      <span class="home-works__title">{copy.works.title}</span>
+      <a href={projectsHref} class="home-works__all">
+        <span class="max-sm:hidden">{copy.works.seeAll}</span><span class="sm:hidden">{copy.works.seeAllShort}</span><span aria-hidden="true"> →</span>
       </a>
     </h2>
 
-    <ul class="mt-16 flex w-full flex-col items-center gap-20 max-[399px]:mt-8 max-[399px]:gap-8 sm:mt-20 md:mt-24 md:gap-28">
-      {projects.map((project) => {
-        const Visual = SVG_VISUALS[project.slug];
-        const year = project.entry.data.publishedDate.getFullYear();
-        const tags = project.projectTypes.slice(0, 2).join(", ");
+    <ul class="home-works__list">
+      {works.map((work, index) => (
+        <li class="home-works__item">
+          <a href={work.href} class="home-works__card group">
+            <span class="home-works__corner home-works__corner--tl" aria-hidden="true"></span>
+            <span class="home-works__corner home-works__corner--tr" aria-hidden="true"></span>
+            <span class="home-works__corner home-works__corner--bl" aria-hidden="true"></span>
 
-        return (
-          <li class="home-works__item" data-home-reveal>
-            <a href={getProjectHref(project.slug, lang)} class="group block">
-              <div class="home-works__visual">
-                {Visual ? (
-                  <Visual class="h-full w-full" title={project.featuredImageAlt} />
+            <span class="home-works__tablet">
+              <span class="home-works__screen">
+                {work.Visual ? (
+                  <work.Visual class="h-full w-full" title={work.alt} />
                 ) : (
                   <Image
-                    src={project.featuredImage}
-                    alt={project.featuredImageAlt}
-                    widths={[400, 640, 960, 1280]}
-                    sizes="(max-width: 640px) calc(100vw - 20px), (max-width: 1024px) 61vw, 627px"
-                    class="h-full w-full object-cover"
+                    src={work.image!}
+                    alt={work.alt}
+                    widths={[400, 640, 1004]}
+                    sizes="(max-width: 640px) calc(100vw - 40px), 504px"
+                    class="h-full w-full object-cover object-top"
                     loading="lazy"
                     decoding="async"
                   />
                 )}
-                {project.inProgress && <span class="home-works__status">{copy.works.inProgress}</span>}
-              </div>
-              <div class="mt-3 flex items-start justify-between gap-4 max-[399px]:flex-col max-[399px]:gap-1 md:mt-4">
-                <div class="flex flex-wrap items-baseline gap-x-5 gap-y-1">
-                  <h3 class="whitespace-nowrap text-[1.25rem] max-[399px]:text-[1.0625rem] leading-none tracking-[-0.03em] md:text-[1.5rem] lg:text-[1.875rem]">
-                    {project.shortTitle}
-                  </h3>
-                  {tags && <span class="home-works__tags hidden lg:inline">({tags})</span>}
-                </div>
-                <div class="flex flex-col items-end gap-1 text-right max-[399px]:self-end">
-                  {tags && <span class="home-works__tags max-[399px]:hidden lg:hidden">({tags})</span>}
-                  <span class="home-works__tags">{year}</span>
-                </div>
-              </div>
-            </a>
-          </li>
-        );
-      })}
+              </span>
+            </span>
+            <span class="home-works__number" aria-hidden="true">{number(index)}</span>
+
+            <span class="home-works__footer">
+              <h3 class="home-works__name"><span class="max-sm:hidden">(</span>{work.name}<span class="max-sm:hidden">)</span></h3>
+              <span class="home-works__button">
+                <span class="max-sm:hidden">{copy.works.viewProject}</span>
+                <span class="sm:hidden">{copy.works.viewMore}</span>
+                <svg viewBox="0 0 22 22" fill="currentColor" aria-hidden="true">
+                  <path d={HOME_ICONS.spark.paths[0].d} />
+                </svg>
+              </span>
+            </span>
+          </a>
+        </li>
+      ))}
     </ul>
   </div>
 </section>
 
 <style>
+  .home-works {
+    padding-block: 3.75rem 9rem;
+    border-top: 1px solid #5d5b61;
+  }
+
+  .home-works__deco {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+
+  /* Arche à double trait (export Figma), nettement plus large que l'écran : seul le sommet dépasse. */
+  .home-works__arch {
+    position: absolute;
+    left: 50%;
+    width: max(155vw, 46rem);
+    aspect-ratio: 1484 / 678;
+    transform: translateX(-50%);
+  }
+
+  .home-works__arch :global(svg) {
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+  }
+
+  .home-works__arch--top {
+    top: -2.1vw;
+  }
+
+  .home-works__arch--bottom {
+    bottom: -1vw;
+    transform: translateX(-50%) scaleY(-1);
+  }
+
+  /* Parallax au scroll : chaque arche a son propre décalage (--works-shift-top / -bottom), posé en JS.
+     Il vaut 0 quand le bord de section qui porte l'arche passe aux 70 % de l'écran : l'arche du haut
+     coupe alors la ligne du haut de la section, comme sur la maquette. Les arches montent pendant
+     que la page monte (plus vite que le contenu). `translate` se cumule avec leur `transform`. */
+  .home-works__arch--top {
+    translate: 0 calc(var(--works-shift-top, 0) * var(--works-amp) * -1);
+    will-change: translate;
+  }
+
+  .home-works__arch--bottom {
+    translate: 0 calc(var(--works-shift-bottom, 0) * var(--works-amp) * -1);
+    will-change: translate;
+  }
+
+  /* Les repères carrés suivent l'arche de leur moitié de section. */
+  .home-works__node--top {
+    translate: 0 calc(var(--works-shift-top, 0) * var(--works-amp) * -1);
+  }
+
+  .home-works__node--bottom {
+    translate: 0 calc(var(--works-shift-bottom, 0) * var(--works-amp) * -1);
+  }
+
+  .home-works {
+    --works-amp: clamp(6rem, 20vw, 18rem);
+  }
+
+  .home-works__heading {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  .home-works__count,
+  .home-works__all {
+    font-size: 1.0625rem;
+  }
+
+  .home-works__title {
+    font-family: var(--font-sans);
+    font-size: 2.3rem;
+    font-weight: 300; /* PP Neue Montreal Light */
+    line-height: 1;
+    letter-spacing: -0.05em;
+  }
+
   .home-works__all {
     position: relative;
-    font-size: 1rem;
     padding-bottom: 0.15rem;
   }
 
@@ -113,74 +231,247 @@ const nodes: [number, number][] = [
     background: currentColor;
   }
 
+  .home-works__list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3.25rem;
+    width: 100%;
+    margin-top: 1.75rem;
+  }
+
   .home-works__item {
     width: 100%;
   }
 
-  .home-works__visual {
+  .home-works__card {
     position: relative;
-    aspect-ratio: 627 / 378;
-    overflow: hidden;
-    border-radius: 8px;
-    background: var(--color-white);
-    transition: border-radius 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    display: block;
   }
 
-  .home-works__visual > :global(img),
-  .home-works__visual > :global(svg) {
+  .home-works__corner,
+  .home-works__number {
+    display: none;
+  }
+
+  /* Tablette : cadre noir épais, écran arrondi. */
+  .home-works__tablet {
+    display: block;
+    padding: 0.4rem;
+    border-radius: 0.9rem;
+    background: #000;
+  }
+
+  .home-works__screen {
+    display: block;
+    aspect-ratio: 504 / 290;
+    overflow: hidden;
+    border-radius: 0.5rem;
+    background: var(--color-bg-light);
+  }
+
+  .home-works__screen > :global(img),
+  .home-works__screen > :global(svg) {
     transition: transform 1s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
-  .home-works__status {
-    position: absolute;
-    top: 0.75rem;
-    left: 0.75rem;
-    padding: 0.35rem 0.6rem;
-    border-radius: 4px;
-    background: var(--color-black);
-    color: var(--color-white);
-    font-family: var(--font-mono);
-    font-size: 0.6875rem;
-    text-transform: uppercase;
+  .home-works__footer {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    margin-top: 0.75rem;
+    border-bottom: 1px solid var(--color-black);
   }
 
-  .home-works__tags {
-    font-family: var(--font-mono);
-    font-size: 0.75rem;
-    line-height: 1.2;
-    text-transform: uppercase;
-    letter-spacing: 0.03em;
+  .home-works__name {
+    padding-bottom: 0.3rem;
+    font-size: 1.25rem;
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+
+  .home-works__button {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 40%;
+    min-width: 8.5rem;
+    height: 2.5rem;
+    padding-inline: 0.9rem;
+    border-radius: 6px 6px 0 0;
+    background: var(--color-black);
+    color: var(--color-white);
+    font-size: 1.0625rem;
+    letter-spacing: -0.01em;
+  }
+
+  .home-works__button svg {
+    width: 1.1rem;
+    height: 1.1rem;
+    transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
   @media (hover: hover) {
-    .group:hover .home-works__visual {
-      border-radius: 20px;
+    .group:hover .home-works__screen > :global(img),
+    .group:hover .home-works__screen > :global(svg) {
+      transform: scale(1.04);
     }
 
-    .group:hover .home-works__visual > :global(img),
-    .group:hover .home-works__visual > :global(svg) {
-      transform: scale(1.04);
+    .group:hover .home-works__button svg {
+      transform: rotate(90deg);
     }
   }
 
   @media (min-width: 640px) {
-    .home-works__item {
-      width: 61%;
+    .home-works {
+      padding-block: 5.5rem 13rem;
     }
 
+    .home-works__heading {
+      justify-content: center;
+      gap: 2rem;
+    }
+
+    .home-works__count,
     .home-works__all {
       font-size: 1.25rem;
     }
-  }
 
-  @media (min-width: 1024px) {
-    .home-works__item {
-      width: 41.5%;
-      max-width: 39.25rem;
+    .home-works__title {
+      font-size: 4.5rem;
     }
 
-    .home-works__visual {
-      border-radius: 10px;
+    .home-works__list {
+      gap: 4rem;
+      margin-top: 4.5rem;
+    }
+
+    .home-works__item {
+      width: 78%;
+      max-width: 47.3rem;
+    }
+
+    /* Cadre fin à coins carrés, tablette à gauche, numéro à droite, bouton dans l'angle. */
+    .home-works__card {
+      display: grid;
+      grid-template-columns: 69% 1fr;
+      align-items: center;
+      padding: 0.75rem 0.75rem 0;
+      border: 1px solid var(--color-black);
+    }
+
+    .home-works__corner {
+      position: absolute;
+      display: block;
+      width: 8px;
+      height: 8px;
+      background: var(--color-black);
+    }
+
+    .home-works__corner--tl { top: -1px; left: -1px; }
+    .home-works__corner--tr { top: -1px; right: -1px; }
+    .home-works__corner--bl { bottom: -1px; left: -1px; }
+
+    .home-works__tablet {
+      padding: 0.56rem;
+      border-radius: 1.25rem;
+    }
+
+    .home-works__screen {
+      border-radius: 0.7rem;
+    }
+
+    .home-works__number {
+      display: block;
+      font-size: 1.25rem;
+      text-align: center;
+    }
+
+    .home-works__footer {
+      grid-column: 1 / -1;
+      display: grid;
+      grid-template-columns: 69% 1fr;
+      align-items: end;
+      margin: 0 -0.75rem 0 0;
+      border-bottom: 0;
+    }
+
+    .home-works__name {
+      padding-block: 2.6rem 3.6rem;
+      font-size: 1.25rem;
+      font-weight: 400;
+      text-align: center;
+    }
+
+    .home-works__button {
+      justify-self: end;
+      width: 12.7rem;
+      height: 3.375rem;
+      padding-inline: 1.4rem;
+      border-radius: 8px 0 0 0;
+      font-size: 1.125rem;
+    }
+  }
+
+  @media (min-width: 1256px) {
+    .home-works {
+      padding-block: 5.5rem 17rem;
+    }
+
+    .home-works__title {
+      font-size: 6.25rem;
+    }
+
+    .home-works__item {
+      width: 50%;
     }
   }
 </style>
+
+<script>
+  /* Parallax des arches de la section works. Coupé si l'utilisateur préfère moins d'animations. */
+  function initWorksParallax() {
+    const section = document.querySelector<HTMLElement>("[data-works-parallax]");
+    if (!section || section.dataset.parallaxReady === "true") return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    section.dataset.parallaxReady = "true";
+
+    // Perf : la variable est posée sur chaque élément qui bouge (arches + repères), pas sur la
+    // section : une variable CSS héritée forcerait le recalcul de style de toute la section.
+    const top = Array.from(section.querySelectorAll<HTMLElement>(".home-works__arch--top, .home-works__node--top"));
+    const bottom = Array.from(section.querySelectorAll<HTMLElement>(".home-works__arch--bottom, .home-works__node--bottom"));
+    let lastTop = "";
+    let lastBottom = "";
+
+    let frame = 0;
+    const update = () => {
+      frame = 0;
+      const rect = section.getBoundingClientRect();
+      const viewport = window.innerHeight;
+      if (rect.bottom < 0 || rect.top > viewport) return;
+      // 0 quand le bord (haut ou bas) passe aux 70 % de l'écran (un peu sous le centre) :
+      // au centre, l'arche est donc déjà un peu remontée.
+      const shift = (edge: number) => Math.max(-1, Math.min(1, (viewport * 0.7 - edge) / viewport)).toFixed(4);
+      const nextTop = shift(rect.top);
+      const nextBottom = shift(rect.bottom);
+      if (nextTop !== lastTop) {
+        lastTop = nextTop;
+        for (const el of top) el.style.setProperty("--works-shift-top", nextTop);
+      }
+      if (nextBottom !== lastBottom) {
+        lastBottom = nextBottom;
+        for (const el of bottom) el.style.setProperty("--works-shift-bottom", nextBottom);
+      }
+    };
+    const schedule = () => {
+      if (!frame) frame = requestAnimationFrame(update);
+    };
+
+    window.addEventListener("scroll", schedule, { passive: true });
+    window.addEventListener("resize", schedule);
+    update();
+  }
+
+  initWorksParallax();
+  document.addEventListener("astro:page-load", initWorksParallax);
+</script>

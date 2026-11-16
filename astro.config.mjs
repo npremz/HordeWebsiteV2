@@ -81,6 +81,15 @@ export default defineConfig({
   // In production, Astro permanently redirects /page to /page/.
   trailingSlash: 'always',
   redirects: {
+    // Café Belga renommé Café Loma (2026-11).
+    '/fr/projets/cafe-belga/': {
+      status: 301,
+      destination: '/fr/projets/cafe-loma/',
+    },
+    '/en/projets/cafe-belga/': {
+      status: 301,
+      destination: '/en/projets/cafe-loma/',
+    },
     '/fr/services/audit-offert/': {
       status: 301,
       destination: '/fr/services/audit-seo-technique-bruxelles/',

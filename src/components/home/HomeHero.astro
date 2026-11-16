@@ -1,10 +1,8 @@
 ---
 import type { Locale } from "../../i18n";
 import { getHomeCopy } from "./copy";
-import HeroPixelTrail from "./HeroPixelTrail.astro";
 import HeroLines from "./svg/HeroLines.astro";
-import HomeIcon from "./svg/HomeIcon.astro";
-import HomeBadge from "./ui/HomeBadge.astro";
+import heroMark from "../../assets/svg/header-mark-mobile.svg?raw";
 import HomeClock from "./ui/HomeClock.astro";
 import HomeMarquee from "./ui/HomeMarquee.astro";
 
@@ -16,76 +14,91 @@ const { lang } = Astro.props;
 const copy = getHomeCopy(lang);
 ---
 
-<section id="hero" class="home-hero relative overflow-hidden bg-black text-white" data-header-theme="dark">
+<section id="hero" class="home-hero relative overflow-clip bg-black text-white" data-header-theme="dark">
   <HeroLines class="pointer-events-none absolute inset-0 h-full w-full" />
-  <HeroPixelTrail />
-
-  <!-- Badges mobile / tablette : sous la barre du header (sous 400px, ils passent dans le footer) -->
-  <div class="absolute inset-x-[5px] top-[54px] z-10 flex justify-between gap-2 max-[399px]:hidden md:hidden">
-    <HomeBadge lang={lang} kind="from" />
-    <HomeBadge lang={lang} kind="since" />
+  <!-- Mobile : logo en haut à droite, sous le header. Il reste fixe au scroll (sticky) jusqu'au bas du hero.
+       La section est en overflow: clip et non hidden : hidden en ferait un conteneur de scroll et casserait le sticky. -->
+  <div class="home-hero__mark-track md:hidden" aria-hidden="true">
+    <span class="home-hero__mark"><Fragment set:html={heroMark} /></span>
   </div>
 
-  <!-- Badges desktop : accrochés à la ligne médiane -->
-  <div class="pointer-events-none absolute inset-x-[7px] top-1/2 z-10 hidden -translate-y-1/2 items-center justify-between md:flex">
-    <span class="home-hero__badge-wrap">
-      <HomeBadge lang={lang} kind="from" class="pointer-events-auto" />
-      <span class="home-hero__stub" aria-hidden="true"></span>
-    </span>
-    <span class="home-hero__badge-wrap home-hero__badge-wrap--right">
-      <span class="home-hero__stub" aria-hidden="true"></span>
-      <HomeBadge lang={lang} kind="since" class="pointer-events-auto" />
-    </span>
-  </div>
-
-  <!-- Le bloc ne mesure que le titre : centré, il tombe pile sur la ligne médiane (50 %) ; le reste pend en dessous. -->
-  <div class="home-hero__inner relative flex h-[29.5rem] flex-col justify-center px-[10px] sm:h-[32rem] sm:px-[18px] md:h-[33.5rem] md:px-0 lg:h-[38rem]">
-    <div class="home-hero__block relative w-full sm:mx-auto sm:w-fit md:ml-[29%] lg:ml-[26%]">
-      <h1 class="home-hero__title max-sm:pl-[8%]">
+  <!-- Le bloc ne mesure que le titre : centré, il tombe pile sur la ligne médiane ; le reste pend au-dessus / en dessous. -->
+  <div class="home-hero__inner relative flex flex-col justify-center">
+    <div class="home-hero__block home-column relative">
+      <h1 class="home-hero__title">
         <span class="home-hero__line"><span style="--line: 0">{copy.hero.titleLine1}</span></span>
         <span class="home-hero__line"><span style="--line: 1">{copy.hero.titleLine2}</span></span>
       </h1>
-      <div class="home-hero__meta absolute inset-x-0 top-full mt-10 flex flex-col gap-10 md:mt-14 md:gap-8 lg:flex-row lg:items-center lg:justify-between">
-        <p class="max-w-[15rem] font-mono text-[0.8125rem] uppercase leading-[1.05] tracking-[0.04em] [word-spacing:0.45em] max-[399px]:[word-spacing:normal] sm:max-w-[22rem] md:max-w-[11.5rem] lg:max-w-[14rem]">
-          {copy.hero.tagline}
-        </p>
-        <HomeClock lang={lang} class="sm:self-end lg:self-auto" />
+      <div class="home-hero__meta">
+        <p class="home-hero__tagline">{copy.hero.tagline}</p>
+        <HomeClock lang={lang} />
       </div>
     </div>
   </div>
-
 </section>
 
-<!-- Mobile : onglet posé sur la banderole (en desktop, il pend sous la banderole dans HomeIntro).
-     Il s'arrête sur la banderole : la bordure haute de celle-ci reste tracée sous l'onglet. -->
-<div class="relative z-10 h-0 sm:hidden">
-  <span class="home-hero__tag absolute bottom-0 right-[10px] inline-flex text-white">
-    {copy.intro.tag} <HomeIcon name="heart" class="w-[0.7rem]" />
-  </span>
-</div>
-
-<HomeMarquee items={copy.marquee} variant="dark" />
+<HomeMarquee items={copy.marquee} variant="dark" followScroll />
 
 <style>
-  .home-hero__badge-wrap {
-    display: inline-flex;
-    align-items: center;
+  .home-hero__mark-track {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-start;
+    pointer-events: none;
   }
 
-  .home-hero__stub {
-    width: 1.75rem;
-    height: 0.4rem;
-    border-radius: 2px;
-    background: #2c2e31;
+  .home-hero__mark {
+    position: sticky;
+    top: 2.625rem; /* hauteur du header mobile */
+    margin-top: 2.625rem;
+    height: 50px;
+  }
+
+  .home-hero__mark :global(svg) {
+    display: block;
+    width: auto;
+    height: 100%;
+  }
+
+  /* Mobile : hauteur et marge basse réduites d'autant (3rem) → le fond noir s'arrête plus haut,
+     mais la zone de centrage reste de 22,5rem : le titre ne bouge pas. */
+  .home-hero__inner {
+    height: 27rem;
+    padding-bottom: 4.5rem;
   }
 
   .home-hero__title {
     /* Garde la marge négative des lignes dans le h1, sinon le centrage sur la ligne médiane glisse. */
     display: flow-root;
-    font-size: clamp(2.6rem, 10.4vw, 3.5rem);
-    line-height: 0.98;
+    font-size: clamp(1.75rem, 9.5vw, 3.6rem);
+    line-height: 1;
     letter-spacing: -0.045em;
-    font-weight: 400;
+    font-family: var(--font-sans);
+    font-weight: 300; /* PP Neue Montreal Light */
+    white-space: nowrap;
+  }
+
+  .home-hero__meta {
+    position: absolute;
+    inset-inline: 0;
+    top: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 1.75rem;
+    margin-top: 2.5rem;
+  }
+
+  .home-hero__tagline {
+    max-width: 15rem;
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    line-height: 1.05;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    word-spacing: 0.45em;
   }
 
   .home-hero__line {
@@ -101,39 +114,6 @@ const copy = getHomeCopy(lang);
     animation-delay: calc(0.15s + var(--line) * 0.1s);
   }
 
-  .home-hero__tag {
-    align-items: center;
-    gap: 0.45rem;
-    height: 2rem;
-    padding-inline: 1rem;
-    /* Même trait que la bordure de la banderole, ouvert en bas pour s'y raccorder. */
-    border: 1px solid #2c2e31;
-    border-bottom: 0;
-    border-radius: 4px 4px 0 0;
-    background: var(--color-black);
-    font-family: var(--font-mono);
-    font-size: 0.6875rem;
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
-  }
-
-  /* Petits mobiles (< 400px) : maquette dédiée, sans badges dans le hero. */
-  @media (max-width: 399px) {
-    .home-hero__inner {
-      height: 26.5rem;
-    }
-
-    .home-hero__title {
-      padding-left: 0.25rem;
-      font-size: 2.3rem;
-    }
-
-    .home-hero__meta {
-      margin-top: 2.5rem;
-      gap: 1.25rem;
-    }
-  }
-
   @keyframes home-hero-line {
     from {
       /* 100% + le padding-bottom (0.2em) du masque, sinon le haut des lettres dépasse. */
@@ -141,15 +121,46 @@ const copy = getHomeCopy(lang);
     }
   }
 
-  @media (min-width: 1024px) {
+  @media (min-width: 768px) {
+    .home-hero__inner {
+      height: 34rem;
+      padding-block: 3.1rem 0;
+    }
+
     .home-hero__title {
-      font-size: 3.6rem;
+      padding-left: 0.6rem;
+    }
+
+    .home-hero__meta {
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 4.5rem;
+      padding-left: 1.25rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .home-hero__inner {
+      height: 38.125rem;
+    }
+
+    .home-hero__title {
+      font-size: 4.25rem;
+    }
+
+    .home-hero__meta {
+      margin-top: 6.75rem;
+    }
+
+    .home-hero__tagline {
+      max-width: 13rem;
     }
   }
 
   @media (min-width: 1256px) {
     .home-hero__title {
-      font-size: 4.75rem;
+      font-size: 5rem;
     }
   }
 

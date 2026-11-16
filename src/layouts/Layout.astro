@@ -7,7 +7,6 @@ import Container from '../components/ui/layout/Container.astro';
 import { DEFAULT_LOCALE, HTML_LOCALE_CODES, type Locale, useTranslations } from '../i18n';
 
 // Preload critical fonts
-import fontDisplay from '../assets/fonts/PPNeueMachina-Light.woff2';
 import fontBody from '../assets/fonts/PPNeueMontreal-Book.woff2';
 
 interface Props {
@@ -41,6 +40,8 @@ interface Props {
   isHomepage?: boolean;
   /** Page pleine largeur, sans Container (home, contact). */
   bare?: boolean;
+  /** Classes ajoutées au Container (ex. `landing-column` pour la largeur de la home). */
+  containerClass?: string;
 }
 
 const {
@@ -67,6 +68,7 @@ const {
   showContainerLines = true,
   isHomepage = false,
   bare = false,
+  containerClass,
 } = Astro.props;
 
 const t = useTranslations(lang);
@@ -81,7 +83,6 @@ const initialHeaderTheme = headerVariant ?? pageHeaderTheme;
 <html lang={HTML_LOCALE_CODES[lang]}>
   <head>
     <!-- Preload critical fonts for faster LCP -->
-    <link rel="preload" href={fontDisplay} as="font" type="font/woff2" crossorigin />
     <link rel="preload" href={fontBody} as="font" type="font/woff2" crossorigin />
 
     <SEO
@@ -129,7 +130,7 @@ const initialHeaderTheme = headerVariant ?? pageHeaderTheme;
       </>
     ) : (
       <>
-        <Container variant={variant} showLines={showContainerLines}>
+        <Container variant={variant} showLines={showContainerLines} class={containerClass}>
           <main id="main-content">
             <slot />
           </main>
@@ -223,6 +224,21 @@ const initialHeaderTheme = headerVariant ?? pageHeaderTheme;
     pointer-events: none;
   }
 </style>
+
+<script>
+  // Déclenche les animations d'entrée des heros (HeroStructure, etc.) :
+  // leur contenu est en opacity: 0 tant que <html> n'a pas cette classe.
+  // Avant, c'était posé par l'intro de l'ancien Header.astro (supprimé).
+  const HERO_REVEAL_CLASS = 'is-site-intro-content-revealing';
+
+  document.addEventListener('astro:page-load', () => {
+    document.documentElement.classList.add(HERO_REVEAL_CLASS);
+  });
+
+  document.addEventListener('astro:before-swap', () => {
+    document.documentElement.classList.remove(HERO_REVEAL_CLASS);
+  });
+</script>
 
 <script>
   // Lenis désactivé sur mobile pour alléger le chargement

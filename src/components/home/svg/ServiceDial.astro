@@ -1,68 +1,73 @@
 ---
+/**
+ * Cadran des services (export Figma « Group 3502 ») ; les rayons et la molette tournent en continu,
+ * plus vite au scroll. Le plateau tournant est un <svg> à part, superposé au fond : on anime
+ * l'élément entier (rotation sur le GPU), au lieu d'un <g> interne qui forçait layout + repaint
+ * du cadran à chaque image. Son centre de rotation est le centre du viewBox (232,5).
+ */
 interface Props {
   class?: string;
 }
 
 const { class: className = "" } = Astro.props;
-
-// Plaque en croix : anneau central (R) + 4 bras à 45°, contour calculé en un seul tracé.
-const C = 216;
-const R = 134;
-const halfArm = 36;
-const armLength = 184;
-const corner = 16;
-const along = Math.sqrt(R * R - halfArm * halfArm);
-const point = (angle: number, x: number, y: number) => {
-  const cos = Math.cos(angle);
-  const sin = Math.sin(angle);
-  return `${(C + x * cos - y * sin).toFixed(2)} ${(C + x * sin + y * cos).toFixed(2)}`;
-};
-
-const arms = [45, 135, 225, 315].map((deg) => (deg * Math.PI) / 180);
-let plate = "";
-arms.forEach((angle, index) => {
-  const start = point(angle, along, -halfArm);
-  const next = arms[(index + 1) % arms.length];
-  plate += `${index === 0 ? "M" : "L"}${start}`;
-  plate += `L${point(angle, armLength - corner, -halfArm)}`;
-  plate += `Q${point(angle, armLength, -halfArm)} ${point(angle, armLength, -halfArm + corner)}`;
-  plate += `L${point(angle, armLength, halfArm - corner)}`;
-  plate += `Q${point(angle, armLength, halfArm)} ${point(angle, armLength - corner, halfArm)}`;
-  plate += `L${point(angle, along, halfArm)}`;
-  plate += `A${R} ${R} 0 0 1 ${point(next, along, -halfArm)}`;
-});
-plate += "Z";
 ---
 
-<svg class:list={["service-dial", className]} viewBox="0 0 432 432" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-  <rect x="5" y="9" width="422" height="414" rx="150" stroke="#2f3134" stroke-width="5" />
-  <rect x="15" y="19" width="402" height="394" rx="140" stroke="#26282b" stroke-width="2" />
-  <rect x="196" y="3" width="40" height="8" rx="3" fill="#2f3134" />
-  <rect x="196" y="421" width="40" height="8" rx="3" fill="#2f3134" />
-  <rect x="0" y="196" width="8" height="40" rx="3" fill="#2f3134" />
-  <rect x="424" y="196" width="8" height="40" rx="3" fill="#2f3134" />
-  <g class="service-dial__plate" data-service-dial-plate>
-    <path d={plate} stroke="#2a2c2f" stroke-width="1.5" />
-    <circle cx={C} cy={C} r="98" stroke="#2a2c2f" stroke-width="1.5" />
-    <!-- Molette : export Figma (Group 3200, 50 × 50), anneau masqué remplacé par un trait centré équivalent. -->
-    <g transform="translate(212.94 242.94) scale(1.124)">
-      <circle cx="24.6" cy="24.6" r="24.6" fill="var(--color-button-white)" />
-      <ellipse cx="24.553" cy="24.776" rx="17.95" ry="17.52" stroke="#5b5960" stroke-width="6" />
-      <path d="M29.8948 21.4262L29.7222 21.6076C28.0213 23.49 28.051 26.3781 29.8085 28.2269L37.0105 35.4288L35.5435 36.8958L28.4294 29.7816C26.536 27.8886 23.4736 27.8794 21.5682 29.7528L14.4252 36.8958L12.9583 35.4288L20.1484 28.2387C21.9662 26.3401 21.9512 23.3348 20.1027 21.4549L12.8867 14.239L14.3537 12.7721L21.6168 20.0352C23.4953 21.834 26.4567 21.8377 28.3401 20.047L35.6151 12.7721L37.082 14.239L29.8948 21.4262Z" fill="#5b5960" />
-    </g>
-  </g>
-</svg>
+<span class:list={["service-dial", className]} aria-hidden="true" data-pause-offscreen>
+  <svg class="service-dial__base" viewBox="0 0 465 465" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M4.02344 280.355V184.65C4.02344 84.8987 84.8879 4.03418 184.639 4.03418V8.35169L183.499 8.3552C86.6568 8.96871 8.34095 87.6636 8.34095 184.65V280.355C8.34095 377.722 87.2724 456.653 184.639 456.653H280.344C377.331 456.653 456.026 378.337 456.639 281.495L456.642 280.355V184.65C456.642 87.6634 378.326 8.96834 281.484 8.3552L280.344 8.35169V4.03418C380.096 4.03419 460.96 84.8987 460.96 184.65V280.355C460.96 380.106 380.095 460.971 280.344 460.971H184.639C84.8879 460.971 4.02344 380.106 4.02344 280.355ZM280.344 4.03418V8.35169H184.639V4.03418H280.344Z" fill="#313234"/>
+  <path d="M12.0781 278.666V186.334C12.0781 90.0977 90.0928 12.083 186.329 12.083V16.2484L185.228 16.2517C91.7993 16.8436 16.2435 92.7652 16.2435 186.334V278.666C16.2435 372.601 92.3932 448.751 186.329 448.751H278.661C372.229 448.751 448.151 373.195 448.743 279.765L448.746 278.666V186.334C448.746 92.7649 373.19 16.8433 279.76 16.2517L278.661 16.2484V12.083C374.897 12.083 452.911 90.0977 452.911 186.334V278.666C452.911 374.902 374.897 452.916 278.661 452.916H186.329C90.0928 452.916 12.0781 374.902 12.0781 278.666ZM278.661 12.083V16.2484H186.329V12.083H278.661Z" fill="#313234"/>
+  <rect x="220.086" width="23.4843" height="8.05175" rx="4.02587" fill="#313234"/>
+  <rect x="220.086" y="456.938" width="23.4843" height="8.05175" rx="4.02587" fill="#313234"/>
+  <rect x="0.00294011" y="223.441" width="8.05175" height="23.4843" rx="4.02587" fill="#313234"/>
+  <path d="M460.971 222.539C463.194 222.539 464.997 224.342 464.997 226.565V241.997C464.997 244.22 463.194 246.023 460.971 246.023C458.747 246.023 456.945 244.22 456.945 241.997V226.565C456.945 224.342 458.747 222.539 460.971 222.539Z" fill="#313234"/>
+  <line x1="63.2207" y1="66.3642" x2="398.679" y2="401.822" stroke="#313234"/>
+  <line x1="400.275" y1="64.669" x2="64.8171" y2="400.127" stroke="#313234"/>
+  <line x1="43.0469" y1="233.88" x2="421.964" y2="233.88" stroke="#313234"/>
+  <line x1="232.383" y1="49.2959" x2="232.383" y2="419.459" stroke="#313234"/>
+  <circle cx="232.499" cy="232.496" r="188.959" fill="#0F1011" stroke="#313234"/>
+  <circle cx="232.499" cy="232.489" r="55.1495" stroke="#313234"/>
+  <circle cx="232.495" cy="232.491" r="42.6451" stroke-width="6" stroke="#313234"/>
+  <circle cx="232.529" cy="232.383" r="172.702" stroke-width="6" stroke="#313234"/>
+  </svg>
+  <svg class="service-dial__plate" viewBox="0 0 465 465" fill="none" xmlns="http://www.w3.org/2000/svg" data-service-dial-plate>
+    <line x1="49.1372" y1="184.797" x2="415.143" y2="282.868" stroke="#313234"/>
+    <line x1="281.506" y1="49.4888" x2="183.435" y2="415.495" stroke="#313234"/>
+    <path d="M244.086 236.875C244.807 234.184 244.647 231.508 243.776 229.143L249.116 226.061L247.216 222.856L241.892 225.88C240.311 223.827 238.031 222.275 235.282 221.539C232.591 220.818 229.958 221.053 227.562 222.041L224.522 216.775L221.333 218.616L224.416 223.956C222.405 225.611 220.928 227.848 220.223 230.48C219.517 233.112 219.752 235.746 220.74 238.142L215.252 241.31L217.078 244.558L222.64 241.346C224.194 243.267 226.372 244.729 228.887 245.403C231.519 246.108 234.195 245.947 236.56 245.076L239.772 250.639L243.035 248.755L239.823 243.192C241.861 241.67 243.397 239.448 244.086 236.875ZM223.674 231.405C224.974 226.55 229.795 223.767 234.357 224.99C239.095 226.259 241.936 231.095 240.636 235.95C239.429 240.454 234.55 243.221 229.812 241.952C225.308 240.745 222.467 235.909 223.674 231.405Z" fill="#313234"/>
+  </svg>
+</span>
 
 <style>
-  .service-dial path,
-  .service-dial circle,
-  .service-dial rect,
-  .service-dial ellipse {
-    vector-effect: none;
+  .service-dial {
+    position: relative;
+    display: block;
   }
 
+  .service-dial__base {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  /* 12°/s : un tour en 30 s. Le JS accélère l'animation au scroll (playbackRate).
+     `transform` et pas la propriété `rotate` : sur un <svg>, Chromium n'anime `rotate` que sur le
+     thread principal (re-découpage des calques à chaque image), alors que `transform` passe au GPU. */
   .service-dial__plate {
-    transform-origin: 216px 216px;
-    transform: rotate(var(--dial-rotation, 0deg));
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    animation: service-dial-spin 30s linear infinite;
+  }
+
+  @keyframes service-dial-spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .service-dial__plate {
+      animation: none;
+    }
   }
 </style>

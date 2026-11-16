@@ -53,6 +53,11 @@
   text-indent: 44%;
 }
 
+/* Paragraphe sous le hero : interligne 10 % plus grand (1.08 × 1.1). */
+.home-lead--intro {
+  line-height: 1.188;
+}
+
 .home-lead__label {
   position: absolute;
   top: 0.3em;
@@ -64,6 +69,13 @@
   letter-spacing: 0.04em;
   text-indent: 0;
   text-transform: uppercase;
+}
+
+/* Mobile : on masque les libellés (« Qu’est-ce que la Horde ? », « Une équipe à taille humaine »). */
+@media (max-width: 639px) {
+  .home-lead__label {
+    display: none;
+  }
 }
 
 @media (max-width: 399px) {
@@ -153,4 +165,10 @@
     transform: none;
     transition: none;
   }
+}
+
+/* Animations en boucle des blocs hors écran : en pause (cf. src/lib/pause-offscreen.ts). */
+[data-pause-offscreen].is-offscreen,
+[data-pause-offscreen].is-offscreen * {
+  animation-play-state: paused !important;
 }

@@ -309,10 +309,10 @@ Dependances principales relevees dans le projet:
 
 ## Projets
 
-### Cafe Belga
+### Cafe Loma
 
-- Slug: cafe-belga
-- Page projet: https://hordeagence.com/fr/projets/cafe-belga/
+- Slug: cafe-loma
+- Page projet: https://hordeagence.com/fr/projets/cafe-loma/
 - Site public: https://belga.hordagency.com
 - Types: site vitrine, UX design, web design, Bruxelles
 - Date de reference: 2026-01-26
@@ -320,9 +320,9 @@ Dependances principales relevees dans le projet:
 
 Description:
 
-Etude de cas autour d'un site web pour le Cafe Belga. La conception UX/UI met l'accent sur la simplicite, la reactivite et la coherence visuelle.
+Etude de cas autour d'un site web pour le Cafe Loma. La conception UX/UI met l'accent sur la simplicite, la reactivite et la coherence visuelle.
 
-Construite sur Next.js, la plateforme comprend des fonctionnalites permettant de gerer un systeme de reservation, les dates des prochains evenements et la carte des differents produits du Cafe Belga.
+Construite sur Next.js, la plateforme comprend des fonctionnalites permettant de gerer un systeme de reservation, les dates des prochains evenements et la carte des differents produits du Cafe Loma.
 
 ### Merly
 

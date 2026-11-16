@@ -10,6 +10,8 @@ interface Props {
 	stopWhenTargetCoversViewport?: boolean;
 	color?: string;
 	parallaxSpeed?: number;
+	/** Nombre de pixels sur la largeur de l'écran (taille d'un pixel = largeur / columns). */
+	columns?: number;
 	class?: string;
 }
 
@@ -24,6 +26,7 @@ const {
 	stopWhenTargetCoversViewport = false,
 	color = 'rgb(244, 243, 243)',
 	parallaxSpeed = 0.3,
+	columns = 8,
 	class: className = '-z-1000',
 } = Astro.props;
 
@@ -44,6 +47,7 @@ const instanceId = `bg-canvas-${Math.random().toString(36).slice(2, 10)}`;
 	data-stop-when-target-covers-viewport={stopWhenTargetCoversViewport ? 'true' : 'false'}
 	data-color={color}
 	data-parallax-speed={parallaxSpeed}
+	data-columns={columns}
 	aria-hidden="true"
 	role="presentation"
 ></canvas>
@@ -93,6 +97,7 @@ const instanceId = `bg-canvas-${Math.random().toString(36).slice(2, 10)}`;
     var triggerDistance = parseNumberAttribute('data-trigger-distance', 500);
     var triggerDistanceBottom = parseNumberAttribute('data-trigger-distance-bottom', 500);
     var parallaxSpeed = parseNumberAttribute('data-parallax-speed', 0.3);
+    var columns = Math.max(1, parseNumberAttribute('data-columns', 8));
 
     var state = {
       pixels: [],
@@ -110,7 +115,7 @@ const instanceId = `bg-canvas-${Math.random().toString(36).slice(2, 10)}`;
       destroyed: false
     };
 
-    var pixelSize = Math.max(1, Math.floor(window.innerWidth / 8));
+    var pixelSize = Math.max(1, Math.floor(window.innerWidth / columns));
     var cols = 0;
     var rows = 0;
 
@@ -167,7 +172,7 @@ const instanceId = `bg-canvas-${Math.random().toString(36).slice(2, 10)}`;
       state.viewportHeight = window.innerHeight;
       canvas.width = state.viewportWidth;
       canvas.height = state.viewportHeight;
-      pixelSize = Math.max(1, Math.floor(state.viewportWidth / 8));
+      pixelSize = Math.max(1, Math.floor(state.viewportWidth / columns));
       cols = Math.floor(canvas.width / pixelSize) + 1;
       rows = Math.floor(canvas.height / pixelSize) + 1;
     }

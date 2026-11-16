@@ -1,18 +1,18 @@
-slug: cafe-belga
-shortTitle_fr: Café Belga
-shortTitle_en: Café Belga
-fullTitle_fr: 'Site web du Café Belga : UX et web design'
-fullTitle_en: 'Café Belga website: UX and web design'
-titleDisplay_fr: Café belga<br>web branding
-titleDisplay_en: Café belga<br>web branding
+slug: cafe-loma
+shortTitle_fr: Café Loma
+shortTitle_en: Café Loma
+fullTitle_fr: 'Site web du Café Loma : UX et web design'
+fullTitle_en: 'Café Loma website: UX and web design'
+titleDisplay_fr: Café loma<br>web branding
+titleDisplay_en: Café loma<br>web branding
 seoDescription_fr: >-
-  Découvrez la refonte digitale du Café Belga par Horde : direction artistique,
+  Découvrez la refonte digitale du Café Loma par Horde : direction artistique,
   expérience mobile et site rapide au service de cette adresse bruxelloise.
 seoDescription_en: >-
-  Explore Café Belga’s digital redesign by Horde, combining art direction,
+  Explore Café Loma’s digital redesign by Horde, combining art direction,
   mobile UX and fast development for a landmark Brussels venue.
-featuredImageAlt_fr: Site web Café Belga créé par Horde, agence web UX Bruxelles
-featuredImageAlt_en: Café Belga website created by Horde, Brussels UX web agency
+featuredImageAlt_fr: Site web Café Loma créé par Horde, agence web UX Bruxelles
+featuredImageAlt_en: Café Loma website created by Horde, Brussels UX web agency
 featuredImage: /src/assets/images/projects/cafe-belga/featuredImage.jpg
 gallery:
   - layout: full

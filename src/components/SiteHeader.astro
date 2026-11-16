@@ -11,6 +11,7 @@ import { getLocalizedPath, getPathWithoutLocale, type Locale } from "../i18n";
 import { getLocalizedProjects } from "../lib/content/projects";
 import { getServiceSummaries } from "../lib/content/services";
 import { getHomeCopy } from "./home/copy";
+import { BUSINESS } from "../lib/business-info";
 import HomeIcon from "./home/svg/HomeIcon.astro";
 import headerMark from "../assets/svg/header-mark.svg?raw";
 
@@ -129,7 +130,7 @@ const languages = [
         ))}
       </ul>
       <div class="flex items-end justify-between gap-4 font-mono text-[0.75rem] uppercase">
-        <a href="mailto:hello@hordeagence.com" class="underline underline-offset-4">hello@hordeagence.com</a>
+        <a href={`mailto:${BUSINESS.email}`} class="underline underline-offset-4">{BUSINESS.email}</a>
         <span class="flex gap-2">
           {languages.map((language) => (
             <a
@@ -158,7 +159,7 @@ const languages = [
   }
 
   .home-header[data-theme="light"] {
-    --nav-fg: 22 25 27;
+    --nav-fg: 15 16 17;
   }
 
   .home-header__brand,
@@ -363,10 +364,46 @@ const languages = [
     }
   }
 
-  @media (min-width: 768px) {
+  @media (min-width: 1024px) {
     .home-header__brand {
       width: auto;
       flex: none;
+    }
+  }
+
+  /* Mobile et tablette (< 1024 px) : barre pleine largeur collée au viewport (pas de marge, de bordure ni d’arrondi). */
+  @media (max-width: 1023px) {
+    .home-header__row {
+      padding: 0;
+    }
+
+    /* Proportions de la maquette mobile, calées sur la typo existante (1rem) :
+       barre ≈ 2,6 × la taille du texte, traits du menu ≈ 4,25 × . */
+    .home-header__brand {
+      height: 2.625rem;
+      border: 0;
+      border-radius: 0;
+    }
+
+    .home-header__toggle {
+      top: 0;
+      right: 0.75rem;
+      gap: 8px;
+      width: 4.25rem;
+      height: 2.625rem;
+      padding-inline: 0;
+    }
+
+    .home-header__toggle[aria-expanded="true"] span:first-child {
+      transform: translateY(4.5px) rotate(8deg);
+    }
+
+    .home-header__toggle[aria-expanded="true"] span:last-child {
+      transform: translateY(-4.5px) rotate(-8deg);
+    }
+
+    .home-header__panel {
+      padding-top: 5rem;
     }
   }
 

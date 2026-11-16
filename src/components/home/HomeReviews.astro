@@ -1,0 +1,282 @@
+---
+import type { Locale } from "../../i18n";
+import { getHomeCopy } from "./copy";
+
+interface Props {
+  lang: Locale;
+}
+
+const { lang } = Astro.props;
+const copy = getHomeCopy(lang);
+const reviews = copy.reviews.items;
+const MAX_SCORE = 5;
+---
+
+<section id="avis" data-header-theme="light" class="home-reviews relative bg-bg" aria-labelledby="home-reviews-title" data-reviews-parallax>
+  <span class="home-construction__node hidden md:block" style="left: 50%; top: 4.5rem" aria-hidden="true"></span>
+  <div class="home-reviews__stage home-column home-column--wide">
+    <h2 id="home-reviews-title" class="home-reviews__title">
+      <span aria-hidden="true">-{copy.reviews.title}-</span>
+      <span class="sr-only">{copy.reviews.heading}</span>
+    </h2>
+
+    <ul class="home-reviews__grid">
+      {reviews.map((review, index) => (
+        <li class="home-reviews__card" data-home-reveal style={`--reveal-delay: ${(index % 2) * 0.12}s`}>
+          <figure class="home-reviews__inner">
+            <span class="home-reviews__avatar" style={`background: ${review.color}`} aria-hidden="true">
+              {review.name.charAt(0).toLowerCase()}
+            </span>
+            <span class="home-reviews__dot" aria-hidden="true"></span>
+            <figcaption class="home-reviews__name">{review.name}</figcaption>
+            <blockquote class="home-reviews__quote">“{review.text}”</blockquote>
+            <p class="home-reviews__score">
+              <span class="sr-only">{copy.reviews.scoreLabel} : </span>({review.score}/{MAX_SCORE})
+            </p>
+            <span class="home-reviews__rating" aria-hidden="true">
+              {Array.from({ length: MAX_SCORE }, (_, i) => (
+                <svg viewBox="0 0 32 32" fill="none">
+                  {i < review.score ? (
+                    <>
+                      <circle cx="16" cy="16" r="14" stroke="currentColor" stroke-width="3" fill="var(--color-bg-light)" />
+                      <circle cx="16" cy="16" r="8.5" stroke="currentColor" stroke-width="1" />
+                      <circle cx="16" cy="16" r="5.5" fill="currentColor" />
+                    </>
+                  ) : (
+                    <>
+                      <circle cx="16" cy="16" r="14" stroke="currentColor" stroke-width="3" fill="var(--color-bg-light)" />
+                      <circle cx="16" cy="16" r="8.5" stroke="currentColor" stroke-width="1" />
+                      <path d="M7.5 16H24.5" stroke="currentColor" stroke-width="1" />
+                    </>
+                  )}
+                </svg>
+              ))}
+            </span>
+          </figure>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<style>
+  .home-reviews {
+    padding-block: 3.5rem 4.5rem;
+    overflow-x: clip;
+  }
+
+  .home-reviews__stage {
+    position: relative;
+  }
+
+  /* Mot géant : devant sur mobile (au-dessus des cartes), derrière les cartes en desktop. */
+  .home-reviews__title {
+    margin-bottom: -0.36em;
+    font-family: var(--font-sans);
+    font-size: 31vw;
+    font-weight: 300; /* PP Neue Montreal Light */
+    /* Parallax : --reviews-shift (-1 → 1) posé en JS ; le titre descend pendant que la page monte,
+       il défile donc plus lentement que les avis, comme un fond. `translate` se cumule avec `transform`. */
+    translate: 0 calc(var(--reviews-shift, 0) * clamp(3rem, 10vw, 9rem));
+    will-change: translate;
+    line-height: 0.9;
+    letter-spacing: -0.05em;
+    text-align: center;
+    white-space: nowrap;
+  }
+
+  .home-reviews__grid {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    gap: 2.25rem;
+    justify-items: center;
+  }
+
+  /* Tout l'intérieur est en em, indexé sur la largeur de la carte (292px → 16px). */
+  .home-reviews__card {
+    width: 100%;
+    max-width: 300px;
+    container-type: inline-size;
+  }
+
+  .home-reviews__quote {
+    margin-bottom: 1.5em;
+  }
+
+  .home-reviews__inner {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: calc(100cqw * 334 / 292);
+    height: 100%;
+    padding: 6.2em 1.6em 0;
+    border-radius: 0.625em;
+    background: var(--color-bg-light);
+    font-size: calc(100cqw / 18.25);
+    text-align: center;
+  }
+
+  .home-reviews__avatar {
+    position: absolute;
+    top: 0.875em;
+    left: 0.875em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.25em;
+    height: 2.25em;
+    border-radius: 999px;
+    font-family: var(--font-mono);
+    font-size: 1em;
+    font-weight: 700;
+    line-height: 1;
+  }
+
+  .home-reviews__dot {
+    position: absolute;
+    top: 1.2em;
+    right: 1.05em;
+    width: 0.45em;
+    height: 0.45em;
+    border: 1px solid var(--color-black);
+    border-radius: 999px;
+  }
+
+  .home-reviews__name {
+    position: absolute;
+    top: 3.25em;
+    right: 1.3em;
+    font-family: var(--font-mono);
+    font-size: 0.8125em;
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: 0.02em;
+  }
+
+  .home-reviews__quote {
+    font-size: 1em;
+    line-height: 1.25;
+    letter-spacing: -0.01em;
+    text-wrap: balance;
+  }
+
+  .home-reviews__score {
+    margin-top: auto;
+    font-family: var(--font-mono);
+    font-size: 0.8125em;
+    font-weight: 700;
+    line-height: 1;
+  }
+
+  /* Ligne pleine largeur traversant les cinq cibles. */
+  .home-reviews__rating {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    gap: 1em;
+    align-self: stretch;
+    margin: 1.9em -1.6em 2.5em;
+  }
+
+  .home-reviews__rating::before {
+    content: "";
+    position: absolute;
+    inset-inline: 0;
+    top: 50%;
+    height: 1px;
+    background: var(--color-black);
+  }
+
+  .home-reviews__rating svg {
+    position: relative;
+    width: 1.9em;
+    height: 1.9em;
+  }
+
+  @media (min-width: 640px) {
+    .home-reviews {
+      padding-block: 6rem 6rem;
+    }
+
+    .home-reviews__title {
+      font-size: 27vw;
+    }
+
+    .home-reviews__grid {
+      grid-template-columns: repeat(2, minmax(0, 18.25rem));
+      justify-content: center;
+      gap: 3rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .home-reviews {
+      padding-block: 5.5rem 11rem;
+    }
+
+    .home-reviews__title {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      margin: 0;
+      font-size: min(38vw, 36.5rem);
+      top: 37%;
+      transform: translate(-50%, -58%);
+    }
+
+    /* 3 colonnes : 1 et 3 en haut, 2 et 3 en bas. */
+    .home-reviews__grid {
+      grid-template-columns: repeat(3, 18.25rem);
+      justify-content: space-between;
+      gap: 5.5rem 0;
+    }
+
+    /* Quinconce sur 3 rangées : 1 · 3 / 2 · 3 / 1 · 2. */
+    .home-reviews__card:nth-child(1) { grid-area: 1 / 1; }
+    .home-reviews__card:nth-child(2) { grid-area: 1 / 3; }
+    .home-reviews__card:nth-child(3) { grid-area: 2 / 2; }
+    .home-reviews__card:nth-child(4) { grid-area: 2 / 3; }
+    .home-reviews__card:nth-child(5) { grid-area: 3 / 1; }
+    .home-reviews__card:nth-child(6) { grid-area: 3 / 2; }
+  }
+</style>
+
+<script>
+  /* Parallax du grand titre « Avis ». Coupé si l'utilisateur préfère moins d'animations. */
+  function initReviewsParallax() {
+    const section = document.querySelector<HTMLElement>("[data-reviews-parallax]");
+    if (!section || section.dataset.parallaxReady === "true") return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    section.dataset.parallaxReady = "true";
+    // Perf : variable posée sur le titre seul, pas sur la section (sinon recalcul de style de tous les avis).
+    const title = section.querySelector<HTMLElement>(".home-reviews__title");
+    if (!title) return;
+    let last = "";
+
+    let frame = 0;
+    const update = () => {
+      frame = 0;
+      const rect = section.getBoundingClientRect();
+      const viewport = window.innerHeight;
+      if (rect.bottom < 0 || rect.top > viewport) return;
+      // 0 quand le centre de la section passe au centre de l'écran.
+      const progress = (viewport / 2 - (rect.top + rect.height / 2)) / ((viewport + rect.height) / 2);
+      const next = Math.max(-1, Math.min(1, progress)).toFixed(4);
+      if (next === last) return;
+      last = next;
+      title.style.setProperty("--reviews-shift", next);
+    };
+    const schedule = () => {
+      if (!frame) frame = requestAnimationFrame(update);
+    };
+
+    window.addEventListener("scroll", schedule, { passive: true });
+    window.addEventListener("resize", schedule);
+    update();
+  }
+
+  initReviewsParallax();
+  document.addEventListener("astro:page-load", initReviewsParallax);
+</script>

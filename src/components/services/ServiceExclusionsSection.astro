@@ -4,6 +4,7 @@ import type { ServiceData } from "./types";
 import ServiceSection from "./ServiceSection.astro";
 import AnimatedUnderlineLink from "../ui/links/AnimatedUnderlineLink.astro";
 import { type Locale, useTranslations } from "../../i18n";
+import { BUSINESS } from "../../lib/business-info";
 
 interface Props {
   service: ServiceData;
@@ -14,7 +15,7 @@ const { service, lang } = Astro.props;
 const t = useTranslations(lang);
 
 const sectionClass = "full-width-white-bg mt-16 py-12 sm:mt-25 sm:py-16 sm:pb-24 md:mt-32 md:pt-24 md:pb-32";
-const titleClass = "flex justify-between text-[1.5rem] leading-none sm:text-[2rem] md:text-[2.5rem]";
+const titleClass = "flex items-start justify-between gap-4 sm:gap-8 text-[1.5rem] leading-none sm:text-[2rem] md:text-[2.5rem]";
 ---
 
 <ServiceSection
@@ -24,8 +25,8 @@ const titleClass = "flex justify-between text-[1.5rem] leading-none sm:text-[2re
   class={sectionClass}
 >
   <h2 id="service-exclusions-title" class={titleClass}>
-    <span set:html={formatHeadingHtml(service.exclusionsTitle)} />
-    <span class="block">[ ! ]</span>
+    <span class="min-w-0" set:html={formatHeadingHtml(service.exclusionsTitle)} />
+    <span class="shrink-0 whitespace-nowrap" aria-hidden="true">[ ! ]</span>
   </h2>
   <div class="mt-10 sm:mt-16">
     {service.exclusionsParagraphs.map((paragraph) => (
@@ -34,6 +35,6 @@ const titleClass = "flex justify-between text-[1.5rem] leading-none sm:text-[2re
   </div>
   <p class="mt-8 text-[1.125rem] leading-normal sm:mt-10 md:mt-16 md:max-w-[630px]">
     {t.serviceSingle.exclusionsContactPrefix}{" "}
-    <AnimatedUnderlineLink href="mailto:hello@hordeagence.com" label="hello@hordeagence.com" />
+    <AnimatedUnderlineLink href={`mailto:${BUSINESS.email}`} label={BUSINESS.email} />
   </p>
 </ServiceSection>
