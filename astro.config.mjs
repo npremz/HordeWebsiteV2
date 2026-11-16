@@ -65,6 +65,7 @@ function shouldIncludeInSitemap(page) {
     const normalizedPath = new URL(page).pathname.replace(/\/$/, '') || '/';
     if (redirectSourcePaths.has(normalizedPath)) return false;
     if (/^\/[a-z]{2}\/404$/.test(normalizedPath)) return false;
+    if (/^\/[a-z]{2}\/lab(\/|$)/.test(normalizedPath)) return false;
     if (/^\/(fr|en)\/(cookies|mentions-legales|confidentialite)$/.test(normalizedPath)) return false;
     if (noindexSitemapPaths.has(normalizedPath)) return false;
     return true;
@@ -80,6 +81,15 @@ export default defineConfig({
   // In production, Astro permanently redirects /page to /page/.
   trailingSlash: 'always',
   redirects: {
+    // Café Belga renommé Café Loma (2026-11).
+    '/fr/projets/cafe-belga/': {
+      status: 301,
+      destination: '/fr/projets/cafe-loma/',
+    },
+    '/en/projets/cafe-belga/': {
+      status: 301,
+      destination: '/en/projets/cafe-loma/',
+    },
     '/fr/services/audit-offert/': {
       status: 301,
       destination: '/fr/services/audit-seo-technique-bruxelles/',
@@ -150,11 +160,15 @@ export default defineConfig({
     },
     server: {
       strictPort: true,
-      hmr: {
-        protocol: 'ws',
-        host: 'localhost',
-        clientPort: PORT,
-      },
+      // DEV_PUBLIC_HOST : serveur de dev exposé derrière un reverse proxy HTTPS (ex. preview VPS).
+      allowedHosts: process.env.DEV_PUBLIC_HOST ? [process.env.DEV_PUBLIC_HOST] : undefined,
+      hmr: process.env.DEV_PUBLIC_HOST
+        ? { protocol: 'wss', host: process.env.DEV_PUBLIC_HOST, clientPort: 443 }
+        : {
+            protocol: 'ws',
+            host: 'localhost',
+            clientPort: PORT,
+          },
     },
     build: {
       reportCompressedSize: false,

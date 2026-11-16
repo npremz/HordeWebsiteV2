@@ -2,7 +2,7 @@
 import Layout from '../../../layouts/Layout.astro';
 import Footer from '../../../components/Footer.astro';
 import HeroStructure from '../../../components/blog/HeroStructure.astro';
-import Services from '../../../components/homepage/Services.astro';
+import ServiceList from '../../../components/services/ServiceList.astro';
 import { SUPPORTED_LOCALES, type Locale, useTranslations } from '../../../i18n';
 import { getServiceSummaries } from '../../../lib/content/services';
 import { splitHeadingLines } from '../../../utils/split-heading-lines';
@@ -65,6 +65,7 @@ const servicesSchema = {
   variant="dark"
   headerVariant="dark"
   showContainerLines={false}
+  containerClass="landing-column"
 >
   <article id="page-content" class="text-button-white">
     <HeroStructure
@@ -76,6 +77,7 @@ const servicesSchema = {
       breadcrumbItems={breadcrumbItems}
       breadcrumbAriaLabel={pageCopy.breadcrumbAriaLabel}
       contentClass="sm:h-[426px] lg:h-[490px]"
+      containerClass="landing-column"
     >
       <div class="w-full sm:flex sm:flex-col sm:gap-8">
         <div class="flex w-full sm:h-1/2 sm:items-end">
@@ -126,7 +128,7 @@ const servicesSchema = {
       </div>
     </HeroStructure>
 
-    <Services lang={lang} showHeader={false} spacingClass="text-button-white" />
+    <ServiceList lang={lang} class="pb-16 sm:pb-24" />
   </article>
 
   <Footer slot="footer" lang={lang} variant="dark" hideOverflow={false} />

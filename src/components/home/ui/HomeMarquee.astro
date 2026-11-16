@@ -1,0 +1,140 @@
+---
+interface Props {
+  items: string[];
+  variant?: "dark" | "light";
+  class?: string;
+  reverse?: boolean;
+  /** Suit le sens du scroll : vers le bas → de droite à gauche, vers le haut → de gauche à droite. */
+  followScroll?: boolean;
+}
+
+const { items, variant = "dark", class: className = "", reverse = false, followScroll = false } = Astro.props;
+const group = Array.from({ length: 3 }, () => items).flat();
+---
+
+<div
+  class:list={["home-marquee", `home-marquee--${variant}`, reverse && "home-marquee--reverse", className]}
+  aria-hidden="true"
+  data-pause-offscreen
+  data-marquee-follow-scroll={followScroll ? "" : undefined}
+>
+  <div class="home-marquee__track">
+    {[0, 1].map(() => (
+      <div class="home-marquee__group">
+        {group.map((item) => (
+          <span class="home-marquee__item">{item}</span>
+        ))}
+      </div>
+    ))}
+  </div>
+</div>
+
+<style>
+  .home-marquee {
+    --marquee-height: 1.875rem;
+    position: relative;
+    height: var(--marquee-height);
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    line-height: 1;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    white-space: nowrap;
+  }
+
+  .home-marquee--dark {
+    background: var(--color-black);
+    color: var(--color-white);
+    border-block: 1px solid #2c2e31;
+  }
+
+  .home-marquee--light {
+    --marquee-height: 1.5rem;
+    background: var(--color-white);
+    color: var(--color-black);
+    border-block: 1px solid #b9b5c0;
+  }
+
+  .home-marquee__track {
+    display: flex;
+    width: max-content;
+    animation: home-marquee-scroll 60s linear infinite;
+  }
+
+  .home-marquee--reverse .home-marquee__track {
+    animation-direction: reverse;
+  }
+
+  .home-marquee__group {
+    display: flex;
+    flex: none;
+  }
+
+  .home-marquee__item {
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .home-marquee__item::after {
+    content: "";
+    width: 4px;
+    height: 4px;
+    margin-inline: 2.25rem;
+    background: currentColor;
+  }
+
+  @keyframes home-marquee-scroll {
+    to {
+      transform: translateX(-50%);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .home-marquee__track {
+      animation: none;
+    }
+  }
+</style>
+
+<script>
+  /*
+   * Bandeaux `followScroll` : on inverse la vitesse de l'animation CSS (playbackRate = ±1)
+   * au lieu de changer animation-direction, qui ferait sauter le texte à la position opposée.
+   */
+  let lastY = window.scrollY;
+  let direction = 1;
+
+  const tracks = () =>
+    Array.from(document.querySelectorAll<HTMLElement>("[data-marquee-follow-scroll] .home-marquee__track"));
+
+  window.addEventListener(
+    "scroll",
+    () => {
+      const y = window.scrollY;
+      if (y === lastY) return;
+      const next = y > lastY ? 1 : -1;
+      lastY = y;
+      if (next === direction) return;
+      direction = next;
+      for (const track of tracks()) {
+        for (const animation of track.getAnimations()) {
+          // À l'envers, une animation infinie s'arrête en atteignant 0 : on l'avance d'un grand
+          // nombre de cycles entiers (même position visuelle) pour avoir de la marge.
+          const time = Number(animation.currentTime ?? 0);
+          const cycle = Number(animation.effect?.getTiming().duration) || 60000;
+          if (direction < 0 && time < cycle * 10) animation.currentTime = time + cycle * 1000;
+          animation.updatePlaybackRate(direction);
+        }
+      }
+    },
+    { passive: true },
+  );
+
+  document.addEventListener("astro:page-load", () => {
+    lastY = window.scrollY;
+    direction = 1;
+  });
+</script>

@@ -2,12 +2,11 @@
 import { ClientRouter } from 'astro:transitions';
 import SEO from '../components/SEO.astro';
 import '../styles/global.css';
-import Header from '../components/Header.astro';
+import SiteHeader from '../components/SiteHeader.astro';
 import Container from '../components/ui/layout/Container.astro';
 import { DEFAULT_LOCALE, HTML_LOCALE_CODES, type Locale, useTranslations } from '../i18n';
 
 // Preload critical fonts
-import fontDisplay from '../assets/fonts/PPNeueMachina-Light.woff2';
 import fontBody from '../assets/fonts/PPNeueMontreal-Book.woff2';
 
 interface Props {
@@ -35,9 +34,14 @@ interface Props {
   // Layout props
   class?: string;
   variant?: 'light' | 'dark';
+  /** Fond du haut de la page : sert de thème de départ au header (nav blanche si 'dark'). */
   headerVariant?: 'light' | 'dark';
   showContainerLines?: boolean;
   isHomepage?: boolean;
+  /** Page pleine largeur, sans Container (home, contact). */
+  bare?: boolean;
+  /** Classes ajoutées au Container (ex. `landing-column` pour la largeur de la home). */
+  containerClass?: string;
 }
 
 const {
@@ -63,18 +67,22 @@ const {
   headerVariant,
   showContainerLines = true,
   isHomepage = false,
+  bare = false,
+  containerClass,
 } = Astro.props;
 
 const t = useTranslations(lang);
 const isDark = variant === 'dark';
 const bodyClasses = isDark ? 'bg-black text-button-white' : 'bg-bg text-black';
+// Thème du header par défaut (zones non annotées) : celui du fond de page. Voir AGENT.md « Header global ».
+const pageHeaderTheme = isDark ? 'dark' : 'light';
+const initialHeaderTheme = headerVariant ?? pageHeaderTheme;
 ---
 
 <!doctype html>
 <html lang={HTML_LOCALE_CODES[lang]}>
   <head>
     <!-- Preload critical fonts for faster LCP -->
-    <link rel="preload" href={fontDisplay} as="font" type="font/woff2" crossorigin />
     <link rel="preload" href={fontBody} as="font" type="font/woff2" crossorigin />
 
     <SEO
@@ -109,17 +117,28 @@ const bodyClasses = isDark ? 'bg-black text-button-white' : 'bg-bg text-black';
       });
     </script>
   </head>
-  <body class:list={[bodyClasses, className, { 'is-homepage': isHomepage }]}>
+  <body class:list={[bodyClasses, className, { 'is-homepage': isHomepage }]} data-header-theme={pageHeaderTheme}>
     <a href="#main-content" class="skip-link" title={t.a11y.skipToContent}>{t.a11y.skipToContent}</a>
+    <SiteHeader lang={lang} alternateUrl={alternateUrl} theme={initialHeaderTheme} />
 
-    <Header lang={lang} alternateUrl={alternateUrl} theme={headerVariant} />
-    <Container variant={variant} showLines={showContainerLines}>
-      <main id="main-content">
-        <slot />
-      </main>
+    {bare ? (
+      <>
+        <main id="main-content">
+          <slot />
+        </main>
+        <slot name="footer" />
+      </>
+    ) : (
+      <>
+        <Container variant={variant} showLines={showContainerLines} class={containerClass}>
+          <main id="main-content">
+            <slot />
+          </main>
 
-      <slot name="footer" />
-    </Container>
+          <slot name="footer" />
+        </Container>
+      </>
+    )}
   </body>
 </html>
 
@@ -205,6 +224,21 @@ const bodyClasses = isDark ? 'bg-black text-button-white' : 'bg-bg text-black';
     pointer-events: none;
   }
 </style>
+
+<script>
+  // Déclenche les animations d'entrée des heros (HeroStructure, etc.) :
+  // leur contenu est en opacity: 0 tant que <html> n'a pas cette classe.
+  // Avant, c'était posé par l'intro de l'ancien Header.astro (supprimé).
+  const HERO_REVEAL_CLASS = 'is-site-intro-content-revealing';
+
+  document.addEventListener('astro:page-load', () => {
+    document.documentElement.classList.add(HERO_REVEAL_CLASS);
+  });
+
+  document.addEventListener('astro:before-swap', () => {
+    document.documentElement.classList.remove(HERO_REVEAL_CLASS);
+  });
+</script>
 
 <script>
   // Lenis désactivé sur mobile pour alléger le chargement

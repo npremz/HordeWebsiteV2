@@ -1,0 +1,173 @@
+---
+import type { Locale } from "../../i18n";
+import { getHomeCopy } from "./copy";
+import HeroLines from "./svg/HeroLines.astro";
+import heroMark from "../../assets/svg/header-mark-mobile.svg?raw";
+import HomeClock from "./ui/HomeClock.astro";
+import HomeMarquee from "./ui/HomeMarquee.astro";
+
+interface Props {
+  lang: Locale;
+}
+
+const { lang } = Astro.props;
+const copy = getHomeCopy(lang);
+---
+
+<section id="hero" class="home-hero relative overflow-clip bg-black text-white" data-header-theme="dark">
+  <HeroLines class="pointer-events-none absolute inset-0 h-full w-full" />
+  <!-- Mobile : logo en haut à droite, sous le header. Il reste fixe au scroll (sticky) jusqu'au bas du hero.
+       La section est en overflow: clip et non hidden : hidden en ferait un conteneur de scroll et casserait le sticky. -->
+  <div class="home-hero__mark-track md:hidden" aria-hidden="true">
+    <span class="home-hero__mark"><Fragment set:html={heroMark} /></span>
+  </div>
+
+  <!-- Le bloc ne mesure que le titre : centré, il tombe pile sur la ligne médiane ; le reste pend au-dessus / en dessous. -->
+  <div class="home-hero__inner relative flex flex-col justify-center">
+    <div class="home-hero__block home-column relative">
+      <!-- SEO : le h1 est la tagline (« Agence de site web située à Bruxelles ») ; le grand titre n'est que visuel. -->
+      <p class="home-hero__title">
+        <span class="home-hero__line"><span style="--line: 0">{copy.hero.titleLine1}</span></span>
+        <span class="home-hero__line"><span style="--line: 1">{copy.hero.titleLine2}</span></span>
+      </p>
+      <div class="home-hero__meta">
+        <h1 class="home-hero__tagline">{copy.hero.tagline}</h1>
+        <HomeClock lang={lang} />
+      </div>
+    </div>
+  </div>
+</section>
+
+<HomeMarquee items={copy.marquee} variant="dark" followScroll />
+
+<style>
+  .home-hero__mark-track {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-start;
+    pointer-events: none;
+  }
+
+  .home-hero__mark {
+    position: sticky;
+    top: 2.625rem; /* hauteur du header mobile */
+    margin-top: 2.625rem;
+    height: 50px;
+  }
+
+  .home-hero__mark :global(svg) {
+    display: block;
+    width: auto;
+    height: 100%;
+  }
+
+  /* Mobile : hauteur et marge basse réduites d'autant (3rem) → le fond noir s'arrête plus haut,
+     mais la zone de centrage reste de 22,5rem : le titre ne bouge pas. */
+  .home-hero__inner {
+    height: 27rem;
+    padding-bottom: 4.5rem;
+  }
+
+  .home-hero__title {
+    /* Garde la marge négative des lignes dans le titre, sinon le centrage sur la ligne médiane glisse. */
+    display: flow-root;
+    font-size: clamp(1.75rem, 9.5vw, 3.6rem);
+    line-height: 1;
+    letter-spacing: -0.045em;
+    font-family: var(--font-sans);
+    font-weight: 300; /* PP Neue Montreal Light */
+    white-space: nowrap;
+  }
+
+  .home-hero__meta {
+    position: absolute;
+    inset-inline: 0;
+    top: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 1.75rem;
+    margin-top: 2.5rem;
+  }
+
+  .home-hero__tagline {
+    max-width: 15rem;
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    line-height: 1.05;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    word-spacing: 0.45em;
+  }
+
+  .home-hero__line {
+    display: block;
+    overflow: hidden;
+    padding-bottom: 0.2em;
+    margin-bottom: -0.2em;
+  }
+
+  .home-hero__line > span {
+    display: block;
+    animation: home-hero-line 0.9s cubic-bezier(0.77, 0, 0.18, 1) both;
+    animation-delay: calc(0.15s + var(--line) * 0.1s);
+  }
+
+  @keyframes home-hero-line {
+    from {
+      /* 100% + le padding-bottom (0.2em) du masque, sinon le haut des lettres dépasse. */
+      transform: translateY(calc(100% + 0.25em));
+    }
+  }
+
+  @media (min-width: 768px) {
+    .home-hero__inner {
+      height: 34rem;
+      padding-block: 3.1rem 0;
+    }
+
+    .home-hero__title {
+      padding-left: 0.6rem;
+    }
+
+    .home-hero__meta {
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 4.5rem;
+      padding-left: 1.25rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .home-hero__inner {
+      height: 38.125rem;
+    }
+
+    .home-hero__title {
+      font-size: 4.25rem;
+    }
+
+    .home-hero__meta {
+      margin-top: 6.75rem;
+    }
+
+    .home-hero__tagline {
+      max-width: 13rem;
+    }
+  }
+
+  @media (min-width: 1256px) {
+    .home-hero__title {
+      font-size: 5rem;
+    }
+  }
+
+  @media (min-width: 1512px) {
+    .home-hero__title {
+      font-size: 5.75rem;
+    }
+  }
+</style>

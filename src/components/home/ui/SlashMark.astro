@@ -1,0 +1,33 @@
+---
+import HomeIcon from "../svg/HomeIcon.astro";
+
+interface Props {
+  class?: string;
+  /** Fait tourner la barre en boucle, en 4 images saccadées. */
+  spin?: boolean;
+}
+
+const { class: className = "", spin = false } = Astro.props;
+---
+
+<HomeIcon name="slash" class:list={["block w-[15px] md:w-[18px]", spin && "slash-mark--spin", className]} />
+
+<style>
+  /* Un trait est identique après un demi-tour : 4 images de 45° sur 180° bouclent sans saut. */
+  :global(.slash-mark--spin) {
+    transform-origin: center;
+    animation: slash-mark-spin 1.2s steps(4) infinite;
+  }
+
+  @keyframes slash-mark-spin {
+    to {
+      transform: rotate(180deg);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    :global(.slash-mark--spin) {
+      animation: none;
+    }
+  }
+</style>

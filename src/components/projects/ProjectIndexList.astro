@@ -14,9 +14,9 @@ const { projects, lang, countLabel, variant = 'light' } = Astro.props;
 const isDark = variant === 'dark';
 
 const displayMetaBySlug: Record<string, { type: string }> = {
-  "cafe-belga": { type: "Landing page" },
+  "cafe-loma": { type: "Landing page" },
   "e-putch": { type: "Landing page" },
-  merly: { type: "Case study" },
+  merly: { type: lang === "fr" ? "Étude de cas" : "Case study" },
 };
 
 function getDisplayTitle(project: LocalizedProject): string {

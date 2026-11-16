@@ -1,14 +1,16 @@
 ---
 import Layout from "../../layouts/Layout.astro";
-import Hero from "../../components/homepage/Hero.astro";
-import About from "../../components/homepage/About.astro";
-import Projects from "../../components/homepage/Projects.astro";
-import Demarche from "../../components/homepage/Demarche.astro";
-import Services from "../../components/homepage/Services.astro";
-import Us from "../../components/homepage/Us.astro";
-import PixelTransitionCanvas from "../../components/ui/effects/PixelTransitionCanvas.astro";
-import WordsMarquee from "../../components/ui/effects/WordsMarquee.astro";
+import HomeHero from "../../components/home/HomeHero.astro";
+import HomeIntro from "../../components/home/HomeIntro.astro";
+import HomeWorks from "../../components/home/HomeWorks.astro";
+import HomeServices from "../../components/home/HomeServices.astro";
+import HomeMethod from "../../components/home/HomeMethod.astro";
+import HomeTeam from "../../components/home/HomeTeam.astro";
+import HomeTalk from "../../components/home/HomeTalk.astro";
+import HomeReviews from "../../components/home/HomeReviews.astro";
 import Footer from "../../components/Footer.astro";
+import PixelTransitionCanvas from "../../components/ui/effects/PixelTransitionCanvas.astro";
+import "../../components/home/home.css";
 import { SUPPORTED_LOCALES, type Locale, useTranslations } from "../../i18n";
 import { getSiteSettings } from "../../lib/site-data";
 
@@ -34,28 +36,85 @@ const description = siteSettings.defaultDescription || t.homepage.fallbackDescri
   description={description}
   siteNameAsPrefix={true}
   isHomepage
-  showContainerLines={false}
+  headerVariant="dark"
+  bare
 >
-  <PixelTransitionCanvas
-    color="rgb(22, 25, 27)"
-    triggerDistance={500}
-    topOffset={600}
-    targetId="services"
-    stopTargetId="demarche"
-    stopWhenTargetCoversViewport
-    class="z-10"
-  />
-  <Hero lang={lang} />
-  <About lang={lang} />
-  <div class="mx-6 border-t border-lines mt-10 sm:mx-13 sm:mt-16 md:mx-19 md:mt-24 lg:mx-37" aria-hidden="true"></div>
-  <Projects lang={lang} />
-  <div id="services-section" class="relative pt-25 z-20">
-    <Services lang={lang} />
+  <script is:inline>document.documentElement.classList.add("home-js");</script>
+  <div class="home-page relative">
+    <!-- Même transition que l’ancienne home : pixels noirs qui recouvrent l’écran avant les services. -->
+    <PixelTransitionCanvas
+      color="rgb(15, 16, 17)"
+      triggerDistance={500}
+      topOffset={600}
+      targetId="services"
+      stopTargetId="demarche"
+      stopWhenTargetCoversViewport
+      columns={16}
+      class="z-10"
+    />
+    <HomeHero lang={lang} />
+    <HomeIntro lang={lang} />
+    <HomeWorks lang={lang} />
+    <HomeServices lang={lang} />
+    <HomeMethod lang={lang} />
+    <HomeTeam lang={lang} />
+    <HomeReviews lang={lang} />
+    <HomeTalk lang={lang} />
   </div>
-  <div class="relative z-20 full-width-white-bg">
-    <WordsMarquee />
-    <Demarche lang={lang} />
+  <div slot="footer" class="home-page__footer">
+    <Footer lang={lang} />
   </div>
-  <Us lang={lang} />
-  <Footer slot="footer" lang={lang} variant="light" innerBg />
 </Layout>
+
+<style>
+  /* Mêmes marges que le footer global de la page contact. */
+  .home-page__footer {
+    padding-inline: 1rem;
+    background: var(--color-bg);
+    overflow-x: clip;
+  }
+
+  @media (min-width: 640px) {
+    .home-page__footer {
+      padding-inline: 2rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .home-page__footer {
+      padding-inline: 3.6rem;
+    }
+  }
+</style>
+
+<script>
+  import { pauseOffscreen } from "../../lib/pause-offscreen";
+
+  function initHomeReveal() {
+    const items = document.querySelectorAll<HTMLElement>("[data-home-reveal]:not(.is-revealed)");
+    if (!("IntersectionObserver" in window)) {
+      items.forEach((item) => item.classList.add("is-revealed"));
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          entry.target.classList.add("is-revealed");
+          observer.unobserve(entry.target);
+        });
+      },
+      { rootMargin: "0px 0px -12% 0px" },
+    );
+
+    items.forEach((item) => observer.observe(item));
+  }
+
+  initHomeReveal();
+  pauseOffscreen();
+  document.addEventListener("astro:page-load", () => {
+    initHomeReveal();
+    pauseOffscreen();
+  });
+</script>

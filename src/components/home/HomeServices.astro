@@ -1,0 +1,266 @@
+---
+import type { Locale } from "../../i18n";
+import { getServiceSummaries } from "../../lib/content/services";
+import ServiceList from "../services/ServiceList.astro";
+import { getHomeCopy } from "./copy";
+import ServiceDial from "./svg/ServiceDial.astro";
+
+interface Props {
+  lang: Locale;
+}
+
+const { lang } = Astro.props;
+const copy = getHomeCopy(lang);
+const services = await getServiceSummaries(lang);
+const total = services.length.toString().padStart(2, "0");
+---
+
+<section id="services" data-header-theme="dark" class="home-services relative z-20 overflow-hidden pb-20 pt-40 text-white sm:pb-28 sm:pt-0 md:pb-36" data-home-services>
+  <div class="home-services__head relative">
+    <div class="home-services__dial-row" aria-hidden="true">
+      <span class="home-services__stub"></span>
+      <ServiceDial class="home-services__dial" />
+      <span class="home-services__stub"></span>
+    </div>
+
+    <div class="home-services__coords home-column" aria-hidden="true">
+      <span class="home-services__coord">X <span data-home-coord-x>54.021</span></span>
+      <span class="home-services__coord text-right"><span data-home-coord-y>21.495</span> Y</span>
+    </div>
+
+    <div class="home-services__heading home-column">
+      <span class="home-services__eyebrow">{copy.services.eyebrow}</span>
+      <h2 class="home-services__title"><span class="sr-only">{copy.services.eyebrow} </span>{copy.services.title}</h2>
+      <span class="home-services__count">({total})</span>
+    </div>
+  </div>
+
+  <ServiceList lang={lang} class="home-column mt-10 md:mt-14" />
+</section>
+
+<style>
+  /* Le fond noir vient du PixelTransitionCanvas ; sans JS, on le pose directement. */
+  :global(html:not(.home-js)) .home-services {
+    background: var(--color-black);
+  }
+
+  .home-services__head {
+    --dial: min(16.8rem, 68.8vw); /* -20 % */
+  }
+
+  .home-services__dial-row {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .home-services__dial-row::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 50%;
+    height: 1px;
+    background: #2c2e31;
+  }
+
+  .home-services__stub {
+    position: relative;
+    width: 1.9rem;
+    height: 0.55rem;
+    border-radius: 3px;
+    background: #313234;
+  }
+
+  .home-services__stub:first-child {
+    border-radius: 0 3px 3px 0;
+  }
+
+  .home-services__stub:last-child {
+    border-radius: 3px 0 0 3px;
+  }
+
+  :global(.home-services__dial) {
+    position: relative;
+    width: var(--dial);
+    height: auto;
+    background: var(--color-black);
+    border-radius: 39%;
+  }
+
+  /* Coordonnées : au-dessus de la ligne médiane du cadran. */
+  .home-services__coords {
+    position: absolute;
+    inset-inline: 0;
+    top: -3.25rem;
+    display: flex;
+    justify-content: space-between;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+  }
+
+  .home-services__coord {
+    display: block;
+    width: 4.1rem;
+    padding-top: 1.1rem;
+    border-top: 1px solid rgb(244 241 248 / 0.5);
+    white-space: nowrap;
+  }
+
+  /* « Nos » à gauche, « Services » centré et souligné sur le bas du cadran, compteur à droite. */
+  .home-services__heading {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: start;
+    margin-top: calc(var(--dial) * -0.3);
+  }
+
+  .home-services__eyebrow,
+  .home-services__count {
+    font-size: 1.0625rem;
+    line-height: 1;
+  }
+
+  .home-services__count {
+    text-align: right;
+  }
+
+  .home-services__title {
+    margin-top: 0.3em;
+    font-size: 2.6rem;
+    line-height: 1;
+    letter-spacing: -0.045em;
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 0.12em;
+  }
+
+  @media (min-width: 640px) {
+    .home-services__head {
+      --dial: 19.2rem;
+      padding-top: 5rem;
+    }
+
+    .home-services__coords {
+      top: calc(5rem + var(--dial) * 0.5 - 3.6rem);
+    }
+
+    .home-services__title {
+      font-size: 3.5rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .home-services__head {
+      --dial: 21.6rem;
+    }
+
+    .home-services__eyebrow,
+    .home-services__count {
+      font-size: 1.25rem;
+    }
+
+    .home-services__title {
+      font-size: 4.4rem;
+    }
+  }
+
+  @media (min-width: 1512px) {
+    .home-services__head {
+      --dial: 26rem;
+    }
+  }
+</style>
+
+<script>
+  function initHomeServices() {
+    const section = document.querySelector<HTMLElement>("[data-home-services]");
+    if (!section || section.dataset.ready === "true") return;
+    section.dataset.ready = "true";
+
+    // Coordonnées du pointeur, façon viseur : au plus une mise à jour du texte par image.
+    const coordX = section.querySelector<HTMLElement>("[data-home-coord-x]");
+    const coordY = section.querySelector<HTMLElement>("[data-home-coord-y]");
+    let pointer: { x: number; y: number } | null = null;
+    let coordFrame = 0;
+    const drawCoords = () => {
+      coordFrame = 0;
+      if (!pointer) return;
+      const rect = section.getBoundingClientRect();
+      if (coordX) coordX.textContent = (((pointer.x - rect.left) / rect.width) * 100).toFixed(3).padStart(6, "0");
+      if (coordY) coordY.textContent = (((pointer.y - rect.top) / rect.height) * 100).toFixed(3).padStart(6, "0");
+    };
+    section.addEventListener("pointermove", (event) => {
+      pointer = { x: event.clientX, y: event.clientY };
+      if (!coordFrame) coordFrame = requestAnimationFrame(drawCoords);
+    });
+
+    /*
+     * Cadran : le plateau tourne en continu grâce à une animation CSS (12°/s, sur le GPU, cf. ServiceDial).
+     * Le scroll l'accélère : chaque pixel scrollé ajoute de l'élan (SCROLL_BOOST degrés au total, quel
+     * que soit le sens), qui s'amortit en douceur (ease-out exponentiel, BOOST_EASE). On traduit cet élan
+     * en vitesse de lecture de l'animation ; la boucle JS ne tourne que pendant l'amortissement.
+     */
+    const plate = section.querySelector<SVGSVGElement>("[data-service-dial-plate]");
+    const spin = plate?.getAnimations()[0];
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const BASE_SPEED = 12; // °/s, doit correspondre à la durée de l'animation CSS (360° / 30 s)
+    const SCROLL_BOOST = 0.15; // ° ajoutés au total par pixel scrollé
+    const BOOST_EASE = 0.5; // s : constante d'amortissement de l'élan
+    if (spin && !reduceMotion.matches) {
+      let visible = false;
+      let boost = 0; // °/s en plus de BASE_SPEED
+      let frame = 0;
+      let last = 0;
+      let lastY = window.scrollY;
+      let rate = 1;
+      const setRate = (next: number) => {
+        // Chaque changement de vitesse resynchronise l'animation : seulement s'il se voit (> 2 %).
+        if (Math.abs(next - rate) < 0.02 * rate && next !== 1) return;
+        rate = next;
+        spin.playbackRate = next;
+      };
+      const tick = (now: number) => {
+        const dt = last ? Math.min(0.1, (now - last) / 1000) : 0;
+        last = now;
+        const y = window.scrollY;
+        // Chaque pixel donne un élan dont l'intégrale vaut SCROLL_BOOST degrés.
+        boost += (Math.abs(y - lastY) * SCROLL_BOOST) / BOOST_EASE;
+        lastY = y;
+        boost *= Math.exp(-dt / BOOST_EASE);
+        // Élan retombé, ou cadran sorti de l'écran : retour à la vitesse de base, fin de la boucle.
+        if (visible && boost > 1) {
+          setRate(1 + boost / BASE_SPEED);
+          frame = requestAnimationFrame(tick);
+        } else {
+          boost = 0;
+          setRate(1);
+          frame = 0;
+          last = 0;
+        }
+      };
+      window.addEventListener(
+        "scroll",
+        () => {
+          if (!visible || frame) return;
+          last = 0;
+          frame = requestAnimationFrame(tick);
+        },
+        { passive: true },
+      );
+      new IntersectionObserver(([entry]) => {
+        visible = entry.isIntersecting;
+        lastY = window.scrollY;
+      }).observe(section);
+    }
+
+    // Aperçu de forme au survol : voir ServiceList.astro.
+  }
+
+  initHomeServices();
+  document.addEventListener("astro:page-load", initHomeServices);
+</script>

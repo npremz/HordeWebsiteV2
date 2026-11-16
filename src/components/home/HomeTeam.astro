@@ -1,0 +1,408 @@
+---
+import { Image } from "astro:assets";
+import type { Locale } from "../../i18n";
+import teamPhoto from "../../assets/images/nous-opti.jpg";
+import deskPhoto from "../../assets/images/keyboard_a.jpg";
+import { getHomeCopy } from "./copy";
+import HomeIcon from "./svg/HomeIcon.astro";
+import HomeLink from "./ui/HomeLink.astro";
+import HomeMarquee from "./ui/HomeMarquee.astro";
+
+interface Props {
+  lang: Locale;
+}
+
+const { lang } = Astro.props;
+const copy = getHomeCopy(lang);
+// « horde » : petits cercles numérotés au-dessus de la banderole, grands cercles en dessous.
+const letters = ["h", "o", "r", "d", "e"];
+const marks = ["n", "y", "a", "g", "c"];
+---
+
+<div class="home-split" aria-hidden="true" data-home-split data-pause-offscreen>
+  <div class="home-split__top">
+    <div class="home-split__track home-split__track--top">
+      {letters.map((letter, index) => (
+        <div class="home-split__cell" style={`--i: ${index}`}>
+          <span class="home-split__index">‘{index + 1}’</span>
+          <svg class="home-split__ring" viewBox="0 0 338 338" fill="none">
+            <circle cx="169" cy="169" r="166.5" stroke="currentColor" stroke-width="5" />
+            <circle cx="169" cy="169" r="151.5" stroke="currentColor" stroke-width="1" />
+          </svg>
+          <span class="home-split__letter">{letter}</span>
+        </div>
+      ))}
+    </div>
+  </div>
+  <HomeMarquee items={copy.marquee} variant="dark" reverse class="relative z-[2]" />
+  <div class="home-split__bottom">
+    <div class="home-split__track home-split__track--bottom">
+      {marks.map((mark, index) => (
+        <div class="home-split__cell" style={`--i: ${index}`}>
+          <svg class="home-split__ring" viewBox="0 0 545 545" fill="none">
+            <circle cx="272.5" cy="272.5" r="264.8" stroke="currentColor" stroke-width="15" />
+            <circle cx="272.5" cy="272.5" r="244.4" stroke="currentColor" stroke-width="1.2" />
+          </svg>
+          <span class="home-split__mark">‘{mark}’</span>
+        </div>
+      ))}
+    </div>
+  </div>
+</div>
+
+<section id="us" data-header-theme="light" class="home-team relative overflow-hidden bg-bg pb-14 pt-12 sm:pt-16 md:pb-20">
+  <div class="home-column home-column--wide relative z-[1]">
+    <p class="home-lead" data-home-reveal>
+      <span class="home-lead__label">{copy.team.label}</span>
+      {copy.team.text}
+    </p>
+    <div class="mt-8 flex justify-end md:mt-12">
+      <HomeLink href={`/${lang}/about/`} label={copy.team.link} />
+    </div>
+
+    <figure class="home-team__gallery">
+      <div class="home-team__photo home-team__photo--main" data-home-reveal>
+        <Image
+          src={teamPhoto}
+          alt={copy.team.photo1Alt}
+          widths={[360, 560, 820, 1112]}
+          sizes="(max-width: 1024px) 52vw, 556px"
+          class="h-full w-full object-cover"
+          loading="lazy"
+          decoding="async"
+        />
+      </div>
+      <div class="home-team__photo home-team__photo--side" data-home-reveal style="--reveal-delay: 0.15s">
+        <Image
+          src={deskPhoto}
+          alt={copy.team.photo2Alt}
+          widths={[300, 440, 595, 870]}
+          sizes="(max-width: 1024px) 40vw, 434px"
+          class="h-full w-full object-cover"
+          loading="lazy"
+          decoding="async"
+        />
+      </div>
+    </figure>
+  </div>
+
+  <!-- Ligne pleine largeur avec les deux étiquettes. -->
+  <div class="home-team__tags">
+    <span class="home-team__tag">{copy.team.human} <HomeIcon name="heart" class="w-[0.75rem]" /></span>
+    <span class="home-team__tag">
+      {copy.team.ai}
+      <svg class="w-[0.75rem]" viewBox="0 0 12 14" fill="none" stroke="currentColor" stroke-width="1" aria-hidden="true">
+        <path d="M6 0.5V3M3.5 3H8.5V6.5H3.5ZM2 8H10C10.8 8 11.5 8.7 11.5 9.5V13.5H0.5V9.5C0.5 8.7 1.2 8 2 8ZM5 4.6V5M7 4.6V5M4 10.5H8" stroke-linecap="square" />
+      </svg>
+    </span>
+  </div>
+</section>
+
+<style>
+  /* --w : pas des petits cercles ; --W : pas des grands. La banderole passe sous le centre des petits. */
+  .home-split {
+    --w: 44vw;
+    --W: 83vw;
+    --shift: 0px;
+    position: relative;
+    padding-top: 3rem;
+    background: var(--color-white);
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    font-weight: 700;
+    line-height: 1;
+  }
+
+  .home-split__top,
+  .home-split__bottom {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .home-split__top {
+    height: calc(var(--w) * 1.09);
+    color: #8a888e;
+  }
+
+  .home-split__bottom {
+    height: calc(var(--W) * 0.72 + 3rem);
+    background: var(--color-bg);
+    color: #4d4b51;
+  }
+
+  .home-split__track {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    display: flex;
+  }
+
+  .home-split__track--top {
+    width: calc(var(--w) * 5);
+    margin-left: calc(var(--w) * -2.5);
+  }
+
+  .home-split__track--bottom {
+    width: calc(var(--W) * 5);
+    margin-left: calc(var(--W) * -2.5 - var(--shift));
+  }
+
+  .home-split__cell {
+    position: relative;
+    flex: 1;
+    border-left: 1px solid var(--line, #626063);
+  }
+
+  .home-split__cell:first-child {
+    border-left: 0;
+  }
+
+  .home-split__ring {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: auto;
+  }
+
+  /* Petits cercles : centre juste au-dessus de la banderole. */
+  .home-split__track--top .home-split__ring {
+    bottom: calc(var(--w) * -0.47);
+  }
+
+  .home-split__index {
+    position: absolute;
+    top: 0.4rem;
+    left: 50%;
+    color: var(--color-black);
+    transform: translateX(-50%);
+  }
+
+  .home-split__letter {
+    position: absolute;
+    bottom: 0.45rem;
+    left: 50%;
+    color: var(--color-black);
+    transform: translateX(-50%);
+  }
+
+  /*
+   * Boucle « escalier » (même principe que la box stratégie) : chaque cercle tombe du haut de sa bande,
+   * se pose, puis repart vers le bas, avec 0,2 s de décalage d'une cellule à l'autre. La lettre suit
+   * son cercle. On anime `translate` (et non `transform`, déjà pris par le centrage des lettres),
+   * en multiples de la taille du cercle (--ring) : ±1,7 cercle suffit à sortir de la bande.
+   */
+  .home-split__track--top {
+    --ring: var(--w);
+  }
+
+  .home-split__track--bottom {
+    --ring: var(--W);
+  }
+
+  .home-split__ring,
+  .home-split__letter {
+    animation: home-split-drop 4.2s cubic-bezier(0.77, 0, 0.18, 1) infinite both;
+    animation-delay: calc(var(--i, 0) * 0.2s);
+  }
+
+  @keyframes home-split-drop {
+    0% {
+      translate: 0 calc(var(--ring) * -1.7);
+    }
+    18%,
+    68% {
+      translate: 0 0;
+    }
+    86%,
+    100% {
+      translate: 0 calc(var(--ring) * 1.7);
+    }
+  }
+
+  /* Scroll horizontal : `translate` posé en JS sur chaque rangée ; elles glissent en sens opposé. */
+
+  @media (prefers-reduced-motion: reduce) {
+    .home-split__ring,
+    .home-split__letter {
+      animation: none;
+    }
+  }
+
+  /* Grands cercles : centre sous la banderole, seule la moitié basse dépasse. */
+  .home-split__track--bottom .home-split__ring {
+    top: calc(var(--W) * -0.5);
+  }
+
+  .home-split__track--bottom .home-split__cell {
+    margin-bottom: 2.25rem;
+    border-color: var(--color-black);
+  }
+
+  .home-split__mark {
+    position: absolute;
+    top: calc(100% + 0.9rem);
+    left: 0;
+    color: var(--color-black);
+    transform: translateX(-50%);
+  }
+
+  .home-team__gallery {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 0.75rem;
+    margin-top: 2.5rem;
+  }
+
+  .home-team__photo {
+    position: relative;
+    overflow: hidden;
+    border-radius: 6px;
+  }
+
+  .home-team__photo--main {
+    width: 52.5%;
+    aspect-ratio: 558 / 772;
+  }
+
+  .home-team__photo--side {
+    width: 40.6%;
+    margin-top: 12%;
+    aspect-ratio: 434 / 542;
+  }
+
+  .home-team__tags {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 4rem;
+    padding-inline: 1rem;
+  }
+
+  .home-team__tags::before {
+    content: "";
+    position: absolute;
+    inset-inline: 0;
+    top: 50%;
+    height: 1px;
+    background: var(--color-black);
+  }
+
+  .home-team__tag {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    height: 2.2rem;
+    padding-inline: 1.1rem;
+    border-radius: 4px;
+    background: var(--color-black);
+    color: var(--color-white);
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  @media (min-width: 640px) {
+    .home-split {
+      --w: 30vw;
+      --W: 55vw;
+      padding-top: 5rem;
+    }
+
+    .home-team__gallery {
+      margin-top: 3.25rem;
+    }
+
+    .home-team__photo {
+      border-radius: 8px;
+    }
+
+    .home-team__tags {
+      margin-top: 7rem;
+      padding-inline: 2rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .home-split {
+      --w: 22.35vw;
+      --W: 36vw;
+      --shift: calc(var(--W) * 0.35);
+      padding-top: 10rem;
+    }
+
+    .home-split__bottom {
+      height: calc(var(--W) * 0.72 + 3.5rem);
+    }
+
+    .home-team__tags {
+      margin-top: 9rem;
+      padding-inline: 3.6rem;
+    }
+  }
+</style>
+
+<script>
+  /*
+   * Bloc « horde » : défilement horizontal des deux rangées de cercles pendant le scroll.
+   * Les rangées sont plus larges que l'écran ; entre l'entrée et la sortie du bloc, on les fait glisser
+   * d'un bout à l'autre (de +max à -max). La chute en boucle des cercles est en CSS.
+   *
+   * Perf : on écrit `translate` directement sur la rangée (pas une variable CSS, qui forcerait le
+   * recalcul de style de tous les cercles et lettres), et les débords sont mesurés au resize
+   * seulement, pas relus à chaque image.
+   */
+  function initHomeSplit() {
+    const block = document.querySelector<HTMLElement>("[data-home-split]");
+    if (!block || block.dataset.splitReady === "true") return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    block.dataset.splitReady = "true";
+
+    // Rangée du haut vers la droite, celle du bas en sens inverse.
+    const tracks = Array.from(block.querySelectorAll<HTMLElement>(".home-split__track")).map((el) => ({
+      el,
+      sign: el.classList.contains("home-split__track--bottom") ? -1 : 1,
+      overflow: 0,
+      value: "",
+    }));
+
+    // Débord de chaque rangée de part et d'autre de l'écran : c'est l'amplitude du glissement.
+    const measure = () => {
+      for (const track of tracks) track.overflow = Math.max(0, (track.el.offsetWidth - block.clientWidth) / 2);
+    };
+
+    let frame = 0;
+    const update = () => {
+      frame = 0;
+      const rect = block.getBoundingClientRect();
+      const viewport = window.innerHeight;
+      if (rect.bottom < 0 || rect.top > viewport) return;
+      const progress = Math.max(0, Math.min(1, (viewport - rect.top) / (viewport + rect.height)));
+      for (const track of tracks) {
+        const value = `${((0.5 - progress) * 2 * track.overflow * track.sign).toFixed(1)}px 0`;
+        if (value === track.value) continue;
+        track.value = value;
+        track.el.style.translate = value;
+      }
+    };
+    const schedule = () => {
+      if (!frame) frame = requestAnimationFrame(update);
+    };
+
+    new ResizeObserver(() => {
+      measure();
+      schedule();
+    }).observe(block);
+    window.addEventListener("scroll", schedule, { passive: true });
+    window.addEventListener("resize", schedule);
+    measure();
+    update();
+  }
+
+  initHomeSplit();
+  document.addEventListener("astro:page-load", initHomeSplit);
+</script>

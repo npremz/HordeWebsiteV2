@@ -5,6 +5,7 @@ import { formatHeadingHtml } from "../../utils/heading-html";
 import type { ServiceData } from "./types";
 import ServiceSection from "./ServiceSection.astro";
 import AnimatedUnderlineLink from "../ui/links/AnimatedUnderlineLink.astro";
+import { BUSINESS } from "../../lib/business-info";
 
 interface Props {
   service: ServiceData;
@@ -13,8 +14,10 @@ interface Props {
 
 const { service, formTranslations } = Astro.props;
 
-const sectionClass = "mt-16 md:mt-24";
+const sectionClass = "mt-16 pb-16 md:mt-24 sm:pb-24";
 const titleClass = "flex flex-col gap-5 text-[1.5rem] leading-tight sm:flex-row sm:justify-between sm:text-[2rem] md:text-[2.5rem]";
+// Toute occurrence de l'adresse dans les paragraphes devient un lien mailto.
+const emailRegex = new RegExp(`(${BUSINESS.email.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")})`);
 const bodyClass = "text-[1.125rem] max-w-[900px]";
 ---
 
@@ -30,13 +33,12 @@ const bodyClass = "text-[1.125rem] max-w-[900px]";
   <div class="mt-5 sm:mt-10">
     <div class="space-y-8 md:max-w-[650px]">
       {service.ctaParagraphs.map((paragraph) => {
-        const emailRegex = /(hello@hordeagence\.com)/;
         const parts = paragraph.split(emailRegex);
         return (
           <p class={bodyClass}>
             {parts.map((part) =>
-              part === 'hello@hordeagence.com'
-                ? <AnimatedUnderlineLink href="mailto:hello@hordeagence.com" label={part} />
+              part === BUSINESS.email
+                ? <AnimatedUnderlineLink href={`mailto:${BUSINESS.email}`} label={part} />
                 : part
             )}
           </p>

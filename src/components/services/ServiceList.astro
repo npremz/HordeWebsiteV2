@@ -1,0 +1,235 @@
+---
+/**
+ * Liste des services (home et page /services/) : lignes avec barre blanche au survol
+ * et loupe ronde qui montre la forme du service survolé (souris uniquement).
+ * À poser sur fond sombre ; le parent fixe la largeur.
+ */
+import type { Locale } from "../../i18n";
+import { getServiceSummaries } from "../../lib/content/services";
+import { SERVICE_SHAPE_BY_SLUG } from "../../lib/serviceShapeMorph";
+import ServiceShapeMorph from "./ServiceShapeMorph.astro";
+
+interface Props {
+  lang: Locale;
+  class?: string;
+}
+
+const { lang, class: className = "" } = Astro.props;
+const services = await getServiceSummaries(lang);
+---
+
+<div class:list={["service-list relative", className]} data-service-list>
+  <div class="service-list__preview hidden md:block" data-service-list-preview aria-hidden="true">
+    <span class="service-list__lens">
+      <ServiceShapeMorph shape="neutral" initialShape="neutral" class="h-full w-full" />
+    </span>
+    <i></i><i></i><i></i><i></i>
+  </div>
+
+  <ol data-service-list-items>
+    {services.map((service) => (
+      <li
+        class="service-list__item"
+        data-service-shape={SERVICE_SHAPE_BY_SLUG[service.slug] || "neutral"}
+      >
+        <a href={service.url} class="service-list__link">
+          <span>{service.title}</span>
+          <span class="service-list__arrow" aria-hidden="true">→</span>
+        </a>
+      </li>
+    ))}
+  </ol>
+</div>
+
+<style>
+  .service-list__item {
+    position: relative;
+    border-bottom: 1px solid var(--color-lines-dark);
+  }
+
+  .service-list__item:last-child {
+    border-bottom: 0;
+  }
+
+  .service-list__link {
+    position: relative;
+    isolation: isolate;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    min-height: 3rem;
+    padding-block: 0.85rem;
+    font-size: 1.125rem;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    transition: color 0.25s ease;
+  }
+
+  .service-list__link::before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    top: 2px;
+    bottom: 2px;
+    left: calc(50% - 50vw + 0.5rem);
+    right: calc(50% - 50vw + 0.5rem);
+    border-radius: 8px;
+    background: var(--color-button-white);
+    transform: scaleY(0);
+    transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .service-list__arrow {
+    font-size: 1.25rem;
+    opacity: 0;
+    transform: translateX(-0.75rem);
+    transition:
+      opacity 0.3s ease,
+      transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .service-list__link:focus-visible {
+    color: var(--color-black);
+  }
+
+  .service-list__link:focus-visible::before {
+    transform: scaleY(1);
+  }
+
+  .service-list__link:focus-visible .service-list__arrow {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* Survol réservé aux souris : sur tactile, :hover reste collé après le tap. */
+  @media (hover: hover) and (pointer: fine) {
+    .service-list__link:hover {
+      color: var(--color-black);
+    }
+
+    .service-list__link:hover::before {
+      transform: scaleY(1);
+    }
+
+    .service-list__link:hover .service-list__arrow {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  /* Tactile : pas de barre blanche, flèche blanche toujours visible. */
+  @media not ((hover: hover) and (pointer: fine)) {
+    .service-list__arrow {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  /* Loupe ronde : elle interrompt la barre blanche du survol. */
+  .service-list__preview {
+    --preview-y: 0px;
+    position: absolute;
+    z-index: 2;
+    top: 0;
+    right: -1.5rem;
+    width: 12rem;
+    aspect-ratio: 1;
+    pointer-events: none;
+    opacity: 0;
+    transform: translateY(calc(var(--preview-y) - 50%)) scale(0.9);
+    transition:
+      opacity 0.2s ease-out,
+      transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .service-list__preview.is-visible {
+    opacity: 1;
+    transform: translateY(calc(var(--preview-y) - 50%)) scale(1);
+  }
+
+  .service-list__lens {
+    display: block;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    border-radius: 999px;
+    background: var(--color-button-white);
+    box-shadow: 0 0 0 1.7rem var(--color-black);
+  }
+
+  .service-list__lens :global(svg) {
+    transform: scale(1.12);
+  }
+
+  .service-list__preview i {
+    position: absolute;
+    width: 5px;
+    height: 5px;
+    background: var(--color-button-white);
+  }
+
+  .service-list__preview i:nth-of-type(1) { top: 0; left: 0; }
+  .service-list__preview i:nth-of-type(2) { top: 0; right: 0; }
+  .service-list__preview i:nth-of-type(3) { bottom: 0; left: 0; }
+  .service-list__preview i:nth-of-type(4) { bottom: 0; right: 0; }
+
+  @media (min-width: 1024px) {
+    .service-list__link {
+      min-height: 3.8rem;
+      font-size: 1.25rem;
+    }
+  }
+
+  @media (min-width: 1512px) {
+    .service-list__preview {
+      right: -8.5rem;
+    }
+  }
+</style>
+
+<script>
+  import { createServiceShapeAnimator, getServiceShapeName } from "../../lib/serviceShapeMorph";
+
+  // Loupe : forme du service survolé, alignée sur sa ligne.
+  function initServiceLists() {
+    const finePointer = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+    document.querySelectorAll<HTMLElement>("[data-service-list]").forEach((root) => {
+      if (root.dataset.ready === "true") return;
+      root.dataset.ready = "true";
+
+      const preview = root.querySelector<HTMLElement>("[data-service-list-preview]");
+      const list = root.querySelector<HTMLElement>("[data-service-list-items]");
+      const cells = preview?.querySelectorAll<SVGPathElement>("[data-service-shape-cell]");
+      if (!finePointer || !preview || !list || !cells?.length) return;
+
+      const animator = createServiceShapeAnimator(cells, "neutral");
+      const showShape = (name: ReturnType<typeof getServiceShapeName>) => {
+        if (reduceMotion.matches) animator.draw(name);
+        else animator.animateTo(name);
+      };
+
+      list.querySelectorAll<HTMLElement>("[data-service-shape]").forEach((item) => {
+        item.addEventListener("mouseenter", () => {
+          const listRect = list.getBoundingClientRect();
+          const itemRect = item.getBoundingClientRect();
+          preview.style.setProperty("--preview-y", `${itemRect.top - listRect.top + itemRect.height / 2}px`);
+          preview.classList.add("is-visible");
+          showShape(getServiceShapeName(item.dataset.serviceShape));
+        });
+      });
+
+      list.addEventListener("mouseleave", () => {
+        preview.classList.remove("is-visible");
+        showShape("neutral");
+      });
+
+      document.addEventListener("astro:before-swap", () => animator.cancel(), { once: true });
+    });
+  }
+
+  initServiceLists();
+  document.addEventListener("astro:page-load", initServiceLists);
+</script>

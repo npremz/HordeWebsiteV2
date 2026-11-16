@@ -107,13 +107,13 @@ Les equivalents anglais sont accessibles sous `/en/...`.
 
 ## Projets
 
-### Cafe Belga
+### Cafe Loma
 
-- Page projet: https://hordeagence.com/fr/projets/cafe-belga/
+- Page projet: https://hordeagence.com/fr/projets/cafe-loma/
 - Site: https://belga.hordagency.com
 - Type: site vitrine, UX design, web design
 - Publication: 2026-01-26
-- Resume: etude de cas autour d'un site pour le Cafe Belga, avec travail UX/UI axe sur la simplicite, la reactivite et la coherence visuelle. La plateforme Next.js integre reservation, agenda d'evenements et carte.
+- Resume: etude de cas autour d'un site pour le Cafe Loma, avec travail UX/UI axe sur la simplicite, la reactivite et la coherence visuelle. La plateforme Next.js integre reservation, agenda d'evenements et carte.
 
 ### Merly
 

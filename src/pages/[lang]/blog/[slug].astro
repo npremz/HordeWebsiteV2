@@ -387,7 +387,7 @@ const schemaOrg = {
 	<div class="fixed inset-0 bg-bg -z-10" aria-hidden="true"></div>
 	<article id="page-content" class="relative z-10 bg-bg">
 		<div class="full-width-white-bg">
-		<div data-blog-hero class="relative left-1/2 w-screen -translate-x-1/2 bg-black">
+		<div data-blog-hero data-header-theme="dark" class="relative left-1/2 w-screen -translate-x-1/2 bg-black">
 		<HeroStructure
 			class="relative z-0"
 			background="dark"
@@ -683,7 +683,7 @@ const schemaOrg = {
 		)}
 
 		<!-- Bouton retour -->
-			<nav class="mt-16 mb-10 flex justify-start max-w-[1000px] mx-auto lg:max-w-none">
+			<nav class="mt-16 mb-16 sm:mb-24 flex justify-start max-w-[1000px] mx-auto lg:max-w-none">
 				<a
 					href={getBlogIndexHref(lang)}
 					class="underline-hover w-fit text-[1.125rem] lg:text-[1.375rem]"
@@ -721,7 +721,7 @@ const schemaOrg = {
 
 		.article-kicker {
 			margin-bottom: 2rem;
-			color: rgb(22 25 27 / 65%);
+			color: rgb(15 16 17 / 65%);
 		}
 
 		.article-lede {
@@ -763,7 +763,7 @@ const schemaOrg = {
 			padding-top: 0.12rem;
 			font-family: var(--font-mono);
 			font-size: 0.75rem;
-			color: rgb(22 25 27 / 58%);
+			color: rgb(15 16 17 / 58%);
 		}
 
 		.reading-rail {
@@ -798,7 +798,7 @@ const schemaOrg = {
 			border-bottom: 1px solid rgb(158 154 164 / 65%);
 			font-size: 0.95rem;
 			line-height: 1.3;
-			color: rgb(22 25 27 / 62%);
+			color: rgb(15 16 17 / 62%);
 			transition: color 180ms ease, padding-left 180ms ease;
 		}
 
@@ -1016,7 +1016,7 @@ const schemaOrg = {
 				overflow-y: auto;
 				overscroll-behavior: contain;
 				padding-right: 0.75rem;
-				scrollbar-color: rgb(22 25 27 / 35%) transparent;
+				scrollbar-color: rgb(15 16 17 / 35%) transparent;
 				scrollbar-width: thin;
 			}
 

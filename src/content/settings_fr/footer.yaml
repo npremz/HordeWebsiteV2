@@ -11,7 +11,7 @@ columns:
       - label: Réserver un appel
         url: https://calendly.com/ni-premont/30min
         isExternal: true
-      - label: Linkedin
+      - label: LinkedIn
         url: https://www.linkedin.com/company/horde-agence/
         isExternal: true
       - label: Instagram

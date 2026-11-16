@@ -1,0 +1,176 @@
+---
+import type { Locale } from "../../i18n";
+import { getHomeCopy } from "./copy";
+import HomeIcon from "./svg/HomeIcon.astro";
+import { HOME_ICONS } from "./svg/icons";
+import HomeLink from "./ui/HomeLink.astro";
+import SlashMark from "./ui/SlashMark.astro";
+
+interface Props {
+  lang: Locale;
+}
+
+const { lang } = Astro.props;
+const copy = getHomeCopy(lang);
+---
+
+<section id="about" data-header-theme="light" class="home-intro relative bg-bg pb-20 max-[399px]:pb-12 sm:pb-24 md:pb-28">
+  <div class="home-column relative">
+    <!-- « Human-first » pend sous la banderole, sur mobile comme en desktop. -->
+    <span class="home-intro__tag inline-flex">
+      {copy.intro.tag} <HomeIcon name="heart" class="w-[0.7rem]" />
+    </span>
+
+    <a href={`/${lang}/contact/`} class="home-intro__cta group">
+      <span class="home-intro__cta-rail">
+        <span class="home-intro__cta-text">{copy.intro.cta}</span>
+      </span>
+      <span class="home-intro__cta-button">
+        {copy.intro.start}
+        <svg viewBox="0 0 22 22" fill="currentColor" aria-hidden="true">
+          <path d={HOME_ICONS.spark.paths[0].d} />
+        </svg>
+      </span>
+    </a>
+
+    <SlashMark class="mt-8 md:mt-12" spin />
+
+    <p class="home-lead home-lead--intro mt-6 md:mt-12">
+      <span class="home-lead__label">{copy.intro.label}</span>
+      {copy.intro.text}
+    </p>
+
+    <div class="mt-8 flex items-center justify-between md:mt-14">
+      <HomeIcon name="arrowDown" class="w-[0.8rem] md:w-[1.4rem]" />
+      <HomeLink href={`/${lang}/services/`} label={copy.intro.link} />
+    </div>
+  </div>
+</section>
+
+<style>
+  /* Ligne à bouts carrés + bouton : le texte est posé sur la ligne. */
+  .home-intro__cta {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    /* Mobile : assez d'espace pour que « Toc-toc… » passe sous l'onglet « Human-first ». */
+    padding-top: 6.25rem;
+  }
+
+  .home-intro__cta-rail {
+    position: relative;
+    flex: 1;
+    height: 1px;
+    background: var(--color-black);
+  }
+
+  .home-intro__cta-rail::before,
+  .home-intro__cta-rail::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    width: 8px;
+    height: 8px;
+    background: var(--color-black);
+    transform: translateY(-50%);
+  }
+
+  .home-intro__cta-rail::before {
+    left: 0;
+  }
+
+  .home-intro__cta-rail::after {
+    right: 0;
+  }
+
+  .home-intro__cta-text {
+    position: absolute;
+    left: 0;
+    bottom: 1.6rem;
+    width: 11.5rem;
+    font-size: 1.0625rem;
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+  }
+
+  .home-intro__cta-button {
+    display: flex;
+    flex: none;
+    align-items: center;
+    justify-content: space-between;
+    width: 57%;
+    height: 2.5rem;
+    padding-inline: 1.1rem;
+    border-radius: 6px;
+    background: var(--color-black);
+    color: var(--color-white);
+    font-size: 1.0625rem;
+    letter-spacing: -0.01em;
+    transition: padding 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .home-intro__cta-button svg {
+    width: 1.1rem;
+    height: 1.1rem;
+    transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  @media (hover: hover) {
+    .home-intro__cta:hover .home-intro__cta-button {
+      padding-inline: 1.5rem 0.9rem;
+    }
+
+    .home-intro__cta:hover .home-intro__cta-button svg {
+      transform: rotate(90deg);
+    }
+  }
+
+  .home-intro__tag {
+    position: absolute;
+    top: 0;
+    right: 0;
+    align-items: center;
+    gap: 0.35rem;
+    height: 1.75rem;
+    padding-inline: 0.75rem;
+    border-radius: 0 0 4px 4px;
+    background: var(--color-black);
+    color: var(--color-white);
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    font-weight: 700; /* PP Fraktion Mono Bold */
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  @media (min-width: 640px) {
+    .home-intro__cta {
+      width: auto;
+      max-width: 34rem;
+      padding-top: 1.3rem;
+    }
+
+    .home-intro__cta-rail {
+      flex: none;
+      width: 20.5rem;
+    }
+
+    .home-intro__cta-text {
+      left: 0.6rem;
+      bottom: 0.55rem;
+      width: auto;
+      white-space: nowrap;
+      font-size: 1.125rem;
+    }
+
+    .home-intro__cta-button {
+      width: 12.7rem;
+      height: 3.375rem;
+      padding-inline: 1.4rem;
+      border-radius: 8px;
+      font-size: 1.125rem;
+    }
+  }
+</style>
