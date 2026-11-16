@@ -1,0 +1,87 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Footer from '../Footer.astro';
+import BlogListingPage from './BlogListingPage.astro';
+import { type Locale, useTranslations } from '../../i18n';
+import {
+  type CategoryEntry,
+  getBlogCategoryHref,
+  getBlogIndexHref,
+  getLocalizedCategories,
+  getLocalizedPosts,
+  getLocalizedPostsByCategory,
+  isBlogPreviewEnabled,
+  localizeCategory,
+  paginateBlogPosts,
+} from '../../lib/content/blog';
+
+interface Props {
+  category: CategoryEntry;
+  lang: Locale;
+  page: number;
+}
+
+const { category, lang, page } = Astro.props;
+const t = useTranslations(lang);
+const localizedCategory = localizeCategory(category, lang);
+const switchLang: Locale = lang === 'fr' ? 'en' : 'fr';
+const alternateCategory = localizeCategory(category, switchLang);
+const alternateUrl = new URL(getBlogCategoryHref(alternateCategory.slug, switchLang, page), Astro.site).href;
+const previewEnabled = isBlogPreviewEnabled();
+const [categories, allPosts, categoryPosts] = await Promise.all([
+  getLocalizedCategories(lang),
+  getLocalizedPosts(lang, { includeUnpublished: previewEnabled }),
+  getLocalizedPostsByCategory(category.data.slug, lang, { includeUnpublished: previewEnabled }),
+]);
+const { items: posts, totalPages } = paginateBlogPosts(categoryPosts, page);
+
+const usedCategorySlugs = new Set(allPosts.map((post) => post.categorySlug));
+const filters = [
+  { href: getBlogIndexHref(lang), label: t.blogPage.allLabel, current: false },
+  ...categories
+    .filter((item) => usedCategorySlugs.has(item.baseSlug))
+    .map((item) => ({
+      href: getBlogCategoryHref(item.slug, lang),
+      label: item.name,
+      current: item.baseSlug === category.data.slug,
+    })),
+];
+
+const pageSuffix = page > 1 ? ` – ${t.blogPage.pageLabel} ${page}` : '';
+const pageTitle = `${localizedCategory.name}${pageSuffix} | ${t.blogPage.listingTitleSuffix}`;
+const baseDescription =
+  localizedCategory.description ||
+  `${t.blogPage.categoryArticles} ${localizedCategory.name}.`;
+const pageDescription = page > 1
+  ? `${t.blogPage.pageLabel} ${page}/${totalPages} · ${baseDescription}`
+  : baseDescription;
+const heading = t.blogPage.categoryPageHeading.replace('{category}', localizedCategory.name);
+// Seuil d'indexation sur le total de la catégorie, pas sur la page affichée.
+const robots = categoryPosts.length >= 5 ? 'index, follow' : 'noindex, follow';
+---
+
+<Layout
+  lang={lang}
+  title={pageTitle}
+  description={pageDescription}
+  alternateUrl={alternateUrl}
+  robots={robots}
+  variant="light"
+  headerVariant="dark"
+  showContainerLines={false}
+>
+  <BlogListingPage
+    lang={lang}
+    posts={posts}
+    heading={heading}
+    description={baseDescription}
+    filters={filters}
+    currentPage={page}
+    totalPages={totalPages}
+    pageHrefs={Array.from({ length: totalPages }, (_, index) => getBlogCategoryHref(localizedCategory.slug, lang, index + 1))}
+  />
+
+  <div slot="footer" class="relative z-0 full-width-white-bg">
+    <Footer lang={lang} variant="light" hideOverflow={false} />
+  </div>
+</Layout>

@@ -269,6 +269,10 @@ export const fr = {
     rssTitle: 'Blog Horde - Agence Web UX Bruxelles',
     rssDescription: 'Articles sur la performance web, l’UX design et le développement de sites rapides par Horde Agence.',
     emptyContent: "Contenu de l’article à venir...",
+    pageLabel: 'Page',
+    paginationAriaLabel: 'Pagination des articles',
+    previousPage: 'Page précédente',
+    nextPage: 'Page suivante',
   },
 
   // Services Page

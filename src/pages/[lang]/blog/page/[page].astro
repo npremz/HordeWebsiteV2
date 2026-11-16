@@ -1,0 +1,27 @@
+---
+import BlogIndexView from '../../../../components/blog/BlogIndexView.astro';
+import { SUPPORTED_LOCALES, type Locale } from '../../../../i18n';
+import { getExtraPageNumbers, getLocalizedPosts, isBlogPreviewEnabled } from '../../../../lib/content/blog';
+
+export const prerender = true;
+
+// Pages 2..N uniquement : la page 1 est /[lang]/blog/ (et /page/1/ redirige en 301).
+export async function getStaticPaths() {
+  const includeUnpublished = isBlogPreviewEnabled();
+  const paths = await Promise.all(
+    SUPPORTED_LOCALES.map(async (lang) => {
+      const posts = await getLocalizedPosts(lang, { includeUnpublished });
+      return getExtraPageNumbers(posts.length).map((page) => ({
+        params: { lang, page: String(page) },
+        props: { page },
+      }));
+    }),
+  );
+  return paths.flat();
+}
+
+const { lang } = Astro.params as { lang: Locale };
+const { page } = Astro.props as { page: number };
+---
+
+<BlogIndexView lang={lang} page={page} />

@@ -70,16 +70,42 @@ export function isBlogPreviewEnabled(): boolean {
   return setting === '1' || (setting !== '0' && import.meta.env.SITE_ENV === 'staging');
 }
 
-export function getBlogIndexHref(lang: Locale): string {
-  return `/${lang}/blog/`;
+/** Nombre d'articles par page sur le blog et les pages catégorie. */
+export const BLOG_PAGE_SIZE = 10;
+
+export interface BlogPageSlice<T> {
+  items: T[];
+  page: number;
+  totalPages: number;
+}
+
+/** Découpe une liste triée en pages de BLOG_PAGE_SIZE (toujours au moins une page). */
+export function paginateBlogPosts<T>(posts: T[], page: number): BlogPageSlice<T> {
+  const totalPages = Math.max(1, Math.ceil(posts.length / BLOG_PAGE_SIZE));
+  const start = (page - 1) * BLOG_PAGE_SIZE;
+  return { items: posts.slice(start, start + BLOG_PAGE_SIZE), page, totalPages };
+}
+
+/** Numéros des pages 2..N (la page 1 reste l'URL de base, sans /page/1/). */
+export function getExtraPageNumbers(postCount: number): number[] {
+  const totalPages = Math.max(1, Math.ceil(postCount / BLOG_PAGE_SIZE));
+  return Array.from({ length: totalPages - 1 }, (_, index) => index + 2);
+}
+
+function withPage(baseHref: string, page: number): string {
+  return page > 1 ? `${baseHref}page/${page}/` : baseHref;
+}
+
+export function getBlogIndexHref(lang: Locale, page = 1): string {
+  return withPage(`/${lang}/blog/`, page);
 }
 
 export function getBlogPostHref(slug: string, lang: Locale): string {
   return `/${lang}/blog/${slug}/`;
 }
 
-export function getBlogCategoryHref(slug: string, lang: Locale): string {
-  return `/${lang}/blog/category/${slug}/`;
+export function getBlogCategoryHref(slug: string, lang: Locale, page = 1): string {
+  return withPage(`/${lang}/blog/category/${slug}/`, page);
 }
 
 export function isPostPublished(post: PostEntry, now = new Date()): boolean {

@@ -1,15 +1,6 @@
 ---
-import Layout from '../../layouts/Layout.astro';
-import Footer from '../../components/Footer.astro';
-import BlogListingPage from '../../components/blog/BlogListingPage.astro';
-import { SUPPORTED_LOCALES, type Locale, useTranslations } from '../../i18n';
-import {
-  getBlogCategoryHref,
-  getBlogIndexHref,
-  getLocalizedCategories,
-  getLocalizedPosts,
-  isBlogPreviewEnabled,
-} from '../../lib/content/blog';
+import BlogIndexView from '../../components/blog/BlogIndexView.astro';
+import { SUPPORTED_LOCALES, type Locale } from '../../i18n';
 
 export const prerender = true;
 
@@ -20,92 +11,6 @@ export function getStaticPaths() {
 }
 
 const { lang } = Astro.params as { lang: Locale };
-const t = useTranslations(lang);
-const previewEnabled = isBlogPreviewEnabled();
-
-const [categories, posts] = await Promise.all([
-  getLocalizedCategories(lang),
-  getLocalizedPosts(lang, { includeUnpublished: previewEnabled }),
-]);
-
-const allLabel = t.blogPage.allLabel;
-const usedCategorySlugs = new Set(posts.map((post) => post.categorySlug));
-const filterLinks = [
-  { href: getBlogIndexHref(lang), label: allLabel, current: true },
-  ...categories
-    .filter((category) => usedCategorySlugs.has(category.baseSlug))
-    .map((category) => ({
-      href: getBlogCategoryHref(category.slug, lang),
-      label: category.name,
-      current: false,
-    })),
-];
 ---
 
-<Layout
-  lang={lang}
-  title={t.blogPage.title}
-  description={t.blogPage.description}
-  variant="light"
-  headerVariant="dark"
-  showContainerLines={false}
->
-  <BlogListingPage
-    lang={lang}
-    posts={posts}
-    heading={t.blogPage.heading}
-    description={t.blogPage.description}
-    filters={filterLinks}
-  />
-
-  <div slot="footer" class="relative z-0 full-width-white-bg">
-    <Footer lang={lang} variant="white" hideOverflow={false} />
-  </div>
-</Layout>
-
-<style>
-  .blog-read-link {
-    position: relative;
-    padding-bottom: 2px;
-  }
-
-  .blog-read-link::after {
-    content: "";
-    position: absolute;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    height: 1px;
-    background: currentColor;
-    transform: scaleX(1);
-    transform-origin: right center;
-  }
-
-  @media (hover: hover) {
-    .blog-read-link:hover::after {
-      animation: blog-read-link-underline 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    }
-  }
-
-  @keyframes blog-read-link-underline {
-    0% {
-      transform: scaleX(1);
-      transform-origin: right center;
-    }
-
-    45% {
-      transform: scaleX(0);
-      transform-origin: right center;
-    }
-
-    46% {
-      transform: scaleX(0);
-      transform-origin: left center;
-    }
-
-    100% {
-      transform: scaleX(1);
-      transform-origin: left center;
-    }
-  }
-</style>
+<BlogIndexView lang={lang} page={1} />

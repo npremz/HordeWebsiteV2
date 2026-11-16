@@ -1,9 +1,10 @@
 ---
 import { Image } from 'astro:assets';
 import { type Locale, useTranslations } from '../../i18n';
-import { getBlogPostHref, type LocalizedPost } from '../../lib/content/blog';
+import { getBlogIndexHref, getBlogPostHref, type LocalizedPost } from '../../lib/content/blog';
 import { formatHeadingHtml } from '../../utils/heading-html';
 import HeroStructure from './HeroStructure.astro';
+import BlogPagination from './BlogPagination.astro';
 import HomeMarquee from '../home/ui/HomeMarquee.astro';
 
 interface FilterLink {
@@ -18,9 +19,22 @@ interface Props {
   heading: string;
   description?: string;
   filters: FilterLink[];
+  currentPage?: number;
+  totalPages?: number;
+  /** URL de chaque page de la liste (index 0 = page 1). */
+  pageHrefs?: string[];
 }
 
-const { lang, posts, heading, description, filters } = Astro.props;
+const {
+  lang,
+  posts,
+  heading,
+  description,
+  filters,
+  currentPage = 1,
+  totalPages = 1,
+  pageHrefs = [],
+} = Astro.props;
 const t = useTranslations(lang);
 const buildTime = Date.now();
 
@@ -30,10 +44,16 @@ const marqueeWords = lang === 'fr'
   : ['Technology', 'Web performance', 'Design', 'Strategy'];
 const marqueeItems = [...marqueeWords, ...marqueeWords];
 
-const breadcrumbItems = [
-  { label: t.blogPage.breadcrumbHome, href: `/${lang}/` },
-  { label: 'Blog' },
-];
+const breadcrumbItems = currentPage > 1
+  ? [
+      { label: t.blogPage.breadcrumbHome, href: `/${lang}/` },
+      { label: 'Blog', href: getBlogIndexHref(lang) },
+      { label: `${t.blogPage.pageLabel} ${currentPage}` },
+    ]
+  : [
+      { label: t.blogPage.breadcrumbHome, href: `/${lang}/` },
+      { label: 'Blog' },
+    ];
 
 function formatDate(date: Date, locale: Locale): string {
   return new Intl.DateTimeFormat(locale === 'fr' ? 'fr-BE' : 'en-US', {
@@ -204,6 +224,16 @@ const headingLines = heading.split(/\r?\n|<br\s*\/?>/i).map((line) => line.trim(
           </p>
         </div>
       )}
+
+      <BlogPagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        pageHrefs={pageHrefs}
+        ariaLabel={t.blogPage.paginationAriaLabel}
+        previousLabel={t.blogPage.previousPage}
+        nextLabel={t.blogPage.nextPage}
+        pageLabel={t.blogPage.pageLabel}
+      />
     </div>
   </div>
 </article>

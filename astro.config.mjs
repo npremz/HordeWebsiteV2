@@ -81,6 +81,15 @@ export default defineConfig({
   // In production, Astro permanently redirects /page to /page/.
   trailingSlash: 'always',
   redirects: {
+    // Pagination du blog : la page 1 n'existe qu'à l'URL de base.
+    '/fr/blog/page/1/': {
+      status: 301,
+      destination: '/fr/blog/',
+    },
+    '/en/blog/page/1/': {
+      status: 301,
+      destination: '/en/blog/',
+    },
     // Café Belga renommé Café Loma (2026-11).
     '/fr/projets/cafe-belga/': {
       status: 301,

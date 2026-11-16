@@ -1,0 +1,75 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Footer from '../Footer.astro';
+import BlogListingPage from './BlogListingPage.astro';
+import { type Locale, useTranslations } from '../../i18n';
+import {
+  getBlogCategoryHref,
+  getBlogIndexHref,
+  getLocalizedCategories,
+  getLocalizedPosts,
+  isBlogPreviewEnabled,
+  paginateBlogPosts,
+} from '../../lib/content/blog';
+
+interface Props {
+  lang: Locale;
+  page: number;
+}
+
+const { lang, page } = Astro.props;
+const t = useTranslations(lang);
+const previewEnabled = isBlogPreviewEnabled();
+
+const [categories, allPosts] = await Promise.all([
+  getLocalizedCategories(lang),
+  getLocalizedPosts(lang, { includeUnpublished: previewEnabled }),
+]);
+const { items: posts, totalPages } = paginateBlogPosts(allPosts, page);
+
+const usedCategorySlugs = new Set(allPosts.map((post) => post.categorySlug));
+const filterLinks = [
+  { href: getBlogIndexHref(lang), label: t.blogPage.allLabel, current: true },
+  ...categories
+    .filter((category) => usedCategorySlugs.has(category.baseSlug))
+    .map((category) => ({
+      href: getBlogCategoryHref(category.slug, lang),
+      label: category.name,
+      current: false,
+    })),
+];
+
+// Pages 2+ : titre et description distincts, canonical sur elles-mêmes (défaut du SEO).
+const pageSuffix = page > 1 ? ` – ${t.blogPage.pageLabel} ${page}` : '';
+const pageTitle = `${t.blogPage.title}${pageSuffix}`;
+const pageDescription = page > 1
+  ? `${t.blogPage.pageLabel} ${page}/${totalPages} · ${t.blogPage.description}`
+  : t.blogPage.description;
+const switchLang: Locale = lang === 'fr' ? 'en' : 'fr';
+const alternateUrl = new URL(getBlogIndexHref(switchLang, page), Astro.site).href;
+---
+
+<Layout
+  lang={lang}
+  title={pageTitle}
+  description={pageDescription}
+  alternateUrl={alternateUrl}
+  variant="light"
+  headerVariant="dark"
+  showContainerLines={false}
+>
+  <BlogListingPage
+    lang={lang}
+    posts={posts}
+    heading={t.blogPage.heading}
+    description={t.blogPage.description}
+    filters={filterLinks}
+    currentPage={page}
+    totalPages={totalPages}
+    pageHrefs={Array.from({ length: totalPages }, (_, index) => getBlogIndexHref(lang, index + 1))}
+  />
+
+  <div slot="footer" class="relative z-0 full-width-white-bg">
+    <Footer lang={lang} variant="light" hideOverflow={false} />
+  </div>
+</Layout>

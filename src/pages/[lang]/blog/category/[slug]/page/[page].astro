@@ -1,0 +1,38 @@
+---
+import BlogCategoryView from '../../../../../../components/blog/BlogCategoryView.astro';
+import { SUPPORTED_LOCALES, type Locale } from '../../../../../../i18n';
+import {
+  type CategoryEntry,
+  getCategories,
+  getExtraPageNumbers,
+  getLocalizedPostsByCategory,
+  isBlogPreviewEnabled,
+  localizeCategory,
+} from '../../../../../../lib/content/blog';
+
+export const prerender = true;
+
+// Pages 2..N d'une catégorie, générées seulement quand elle dépasse une page.
+export async function getStaticPaths() {
+  const includeUnpublished = isBlogPreviewEnabled();
+  const categories = await getCategories();
+  const paths = await Promise.all(
+    SUPPORTED_LOCALES.flatMap((lang) =>
+      categories.map(async (category) => {
+        const posts = await getLocalizedPostsByCategory(category.data.slug, lang, { includeUnpublished });
+        const slug = localizeCategory(category, lang).slug;
+        return getExtraPageNumbers(posts.length).map((page) => ({
+          params: { lang, slug, page: String(page) },
+          props: { category, page },
+        }));
+      }),
+    ),
+  );
+  return paths.flat();
+}
+
+const { lang } = Astro.params as { lang: Locale };
+const { category, page } = Astro.props as { category: CategoryEntry; page: number };
+---
+
+<BlogCategoryView category={category} lang={lang} page={page} />

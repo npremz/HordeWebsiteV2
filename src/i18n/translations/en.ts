@@ -270,6 +270,10 @@ export const en: Translations = {
     rssTitle: 'Horde Blog - Brussels UX Web Agency',
     rssDescription: 'Articles about web performance, UX design and fast website development by Horde Agence.',
     emptyContent: 'Article content coming soon...',
+    pageLabel: 'Page',
+    paginationAriaLabel: 'Articles pagination',
+    previousPage: 'Previous page',
+    nextPage: 'Next page',
   },
 
   // Services Page

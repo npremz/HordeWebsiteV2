@@ -1,0 +1,76 @@
+---
+interface Props {
+  currentPage: number;
+  totalPages: number;
+  /** URL de chaque page (index 0 = page 1). */
+  pageHrefs: string[];
+  ariaLabel: string;
+  previousLabel: string;
+  nextLabel: string;
+  pageLabel: string;
+}
+
+const { currentPage, totalPages, pageHrefs, ariaLabel, previousLabel, nextLabel, pageLabel } = Astro.props;
+
+// 1 … (n-1) n (n+1) … N : toutes les pages restent atteignables en quelques clics.
+type Slot = number | 'gap';
+const slots: Slot[] = [];
+for (let page = 1; page <= totalPages; page += 1) {
+  const nearCurrent = Math.abs(page - currentPage) <= 1;
+  if (page === 1 || page === totalPages || nearCurrent) {
+    slots.push(page);
+  } else if (slots[slots.length - 1] !== 'gap') {
+    slots.push('gap');
+  }
+}
+
+const previousHref = currentPage > 1 ? pageHrefs[currentPage - 2] : undefined;
+const nextHref = currentPage < totalPages ? pageHrefs[currentPage] : undefined;
+---
+
+{totalPages > 1 && (
+  <nav
+    class="mt-16 grid grid-cols-2 items-center gap-y-8 text-[1.125rem] leading-none sm:mt-20 sm:flex sm:justify-between md:mx-auto md:max-w-[1000px]"
+    aria-label={ariaLabel}
+  >
+    <div class="order-2 sm:order-1">
+      {previousHref ? (
+        <a href={previousHref} rel="prev" class="underline-hover">(←) {previousLabel}</a>
+      ) : (
+        <span class="text-black/30" aria-hidden="true">(←) {previousLabel}</span>
+      )}
+    </div>
+
+    <ol class="order-1 col-span-2 flex items-center justify-center gap-5 sm:order-2">
+      {slots.map((slot) => (
+        <li>
+          {slot === 'gap' ? (
+            <span class="text-black/40" aria-hidden="true">…</span>
+          ) : slot === currentPage ? (
+            <span
+              class="inline-flex h-9 min-w-9 items-center justify-center bg-black px-2 text-button-white"
+              aria-current="page"
+            >
+              <span class="sr-only">{pageLabel} </span>{slot}
+            </span>
+          ) : (
+            <a
+              href={pageHrefs[slot - 1]}
+              class="underline-hover inline-flex h-9 min-w-9 items-center justify-center px-2"
+            >
+              <span class="sr-only">{pageLabel} </span>{slot}
+            </a>
+          )}
+        </li>
+      ))}
+    </ol>
+
+    <div class="order-3 text-right">
+      {nextHref ? (
+        <a href={nextHref} rel="next" class="underline-hover">{nextLabel} (→)</a>
+      ) : (
+        <span class="text-black/30" aria-hidden="true">{nextLabel} (→)</span>
+      )}
+    </div>
+  </nav>
+)}
