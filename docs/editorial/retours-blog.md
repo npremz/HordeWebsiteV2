@@ -24,3 +24,12 @@ Journal des retours de Nicolas sur les propositions et les articles. À relire a
 - Retour : la stratégie actuelle ne touche que des curieux. La cible, ce sont des gens au profil proche du nôtre, qui achètent du temps. Expertise à mettre en avant : utiliser et optimiser l'IA à son plein potentiel, l'UX des apps créées par IA.
 - Préparer dès maintenant les requêtes « 2027 » pour être en place quand elles arriveront (dont « combien coûte un site web en 2027 »), sans abandonner les positionnements déjà mesurés.
 - Rythme : trois articles par semaine, lundi, mercredi et vendredi, même horaire (10 h 30).
+
+## 2026-11-16 — Tarifs publics
+
+- Prix validés et consignés dans `docs/tarifs-2026-11.md`. Toujours HTVA.
+- Ton : le site reste au « vous » ; le « tu » est réservé aux réseaux sociaux.
+- Les pages services affichent « à partir de » + un plafond habituel ; la refonte varie selon vitrine, e-commerce ou SaaS.
+- L'article sur le prix d'une refonte est actualisé avec une date de mise à jour.
+- Une page « Prix » est en discussion avec le designer : ne pas la construire avant son retour.
+- Ne jamais avancer sur des choix par défaut quand une question reste sans réponse : attendre la réponse.
