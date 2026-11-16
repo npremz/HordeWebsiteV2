@@ -4,7 +4,7 @@ import { type Locale, useTranslations } from '../../i18n';
 import { getBlogPostHref, type LocalizedPost } from '../../lib/content/blog';
 import { formatHeadingHtml } from '../../utils/heading-html';
 import HeroStructure from './HeroStructure.astro';
-import WordsMarquee from '../ui/effects/WordsMarquee.astro';
+import HomeMarquee from '../home/ui/HomeMarquee.astro';
 
 interface FilterLink {
   href: string;
@@ -23,6 +23,12 @@ interface Props {
 const { lang, posts, heading, description, filters } = Astro.props;
 const t = useTranslations(lang);
 const buildTime = Date.now();
+
+// Bandeau aligné sur celui du hero de l'accueil (noir, mono, carrés). Liste doublée pour couvrir les écrans larges.
+const marqueeWords = lang === 'fr'
+  ? ['Technologie', 'Performance web', 'Design', 'Stratégie']
+  : ['Technology', 'Web performance', 'Design', 'Strategy'];
+const marqueeItems = [...marqueeWords, ...marqueeWords];
 
 const breadcrumbItems = [
   { label: t.blogPage.breadcrumbHome, href: `/${lang}/` },
@@ -126,7 +132,9 @@ const headingLines = heading.split(/\r?\n|<br\s*\/?>/i).map((line) => line.trim(
     </div>
   </HeroStructure>
 
-  <WordsMarquee />
+  <div class="blog-marquee">
+    <HomeMarquee items={marqueeItems} variant="dark" followScroll />
+  </div>
 
   <div class="relative z-0 full-width-white-bg">
     <div class="mx-auto w-full max-w-[1300px] py-16 text-black sm:py-24">
@@ -199,3 +207,13 @@ const headingLines = heading.split(/\r?\n|<br\s*\/?>/i).map((line) => line.trim(
     </div>
   </div>
 </article>
+
+<style>
+  /* Pleine largeur, comme le bandeau du hero de l'accueil. */
+  .blog-marquee {
+    position: relative;
+    left: 50%;
+    width: 100vw;
+    transform: translateX(-50%);
+  }
+</style>
