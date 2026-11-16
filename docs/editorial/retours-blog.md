@@ -33,3 +33,10 @@ Journal des retours de Nicolas sur les propositions et les articles. À relire a
 - L'article sur le prix d'une refonte est actualisé avec une date de mise à jour.
 - Une page « Prix » est en discussion avec le designer : ne pas la construire avant son retour.
 - Ne jamais avancer sur des choix par défaut quand une question reste sans réponse : attendre la réponse.
+
+## 2026-11-16 — Publication des prix (pages services + article refonte)
+
+- Plafonds formulés « selon le périmètre, peut monter jusqu'à » : ne jamais écrire « généralement jusqu'à », le bas de la fourchette est le cas le plus fréquent.
+- Accroches gardées, avec les mots qui ont des impressions dans Search Console : « MVP » et « investisseurs », « landing page », « Shopify ».
+- Refonte e-commerce dès 999 € (jusqu'à 3 999 €) et refonte SaaS au prix d'un MVP (3 999 € à 8 000 €) : validés.
+- Mise à jour de l'article refonte poussée directement sur master à la demande de Nicolas (pas de PR programmée).
