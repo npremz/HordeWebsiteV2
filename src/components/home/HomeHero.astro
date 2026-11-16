@@ -25,12 +25,13 @@ const copy = getHomeCopy(lang);
   <!-- Le bloc ne mesure que le titre : centré, il tombe pile sur la ligne médiane ; le reste pend au-dessus / en dessous. -->
   <div class="home-hero__inner relative flex flex-col justify-center">
     <div class="home-hero__block home-column relative">
-      <h1 class="home-hero__title">
+      <!-- SEO : le h1 est la tagline (« Agence de site web située à Bruxelles ») ; le grand titre n'est que visuel. -->
+      <p class="home-hero__title">
         <span class="home-hero__line"><span style="--line: 0">{copy.hero.titleLine1}</span></span>
         <span class="home-hero__line"><span style="--line: 1">{copy.hero.titleLine2}</span></span>
-      </h1>
+      </p>
       <div class="home-hero__meta">
-        <p class="home-hero__tagline">{copy.hero.tagline}</p>
+        <h1 class="home-hero__tagline">{copy.hero.tagline}</h1>
         <HomeClock lang={lang} />
       </div>
     </div>
@@ -71,7 +72,7 @@ const copy = getHomeCopy(lang);
   }
 
   .home-hero__title {
-    /* Garde la marge négative des lignes dans le h1, sinon le centrage sur la ligne médiane glisse. */
+    /* Garde la marge négative des lignes dans le titre, sinon le centrage sur la ligne médiane glisse. */
     display: flow-root;
     font-size: clamp(1.75rem, 9.5vw, 3.6rem);
     line-height: 1;
