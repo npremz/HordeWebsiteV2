@@ -44,9 +44,9 @@ translations:
     shortName: Event web apps
     footerTitle: Event web apps
     intro: >-
-      Trade shows, workshops, product presentations: we build apps that let your
-      audience take part. Interactive interfaces, host controls and synchronised
-      displays, designed around your event and the people running it.
+      You are preparing a presentation, a conference or a workshop and you want
+      a high-quality interactive digital experience: a game to engage a group, a
+      live chat during an investor pitch, synchronised screens.
     problemTitle: One event, several interfaces to coordinate
     problemBlocks:
       - kind: paragraph
@@ -178,9 +178,10 @@ translations:
       - anchor: discuss your event
         url: /en/contact/
 intro: >-
-  Salons, workshops, présentations produit : on crée les applications qui font
-  participer votre public. Interfaces interactives, outils d’animation et
-  affichage synchronisé, pensés pour votre événement et les personnes qui le font vivre.
+  Vous préparez une présentation, une conférence ou un workshop et vous voulez
+  une expérience numérique interactive de qualité : un jeu pour animer un
+  groupe, un chat interactif pendant une présentation à des investisseurs, des
+  écrans synchronisés.
 problemTitle: Un événement, plusieurs interfaces à coordonner
 problemBlocks:
   - kind: paragraph

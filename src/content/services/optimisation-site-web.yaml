@@ -42,9 +42,9 @@ translations:
     shortName: Website optimization
     footerTitle: Optimization
     intro: >-
-      Website optimization starts with measurements, not a redesign. We examine
-      the pages and journeys that matter, fix identified bottlenecks and compare
-      the results with the original baseline.
+      Your website isn't working as it should, or isn't bringing any results? We
+      look at the technical details that get in the way and fix them: speed,
+      technical SEO, user journeys. We measure first, fix, then compare.
     problemTitle: Signs that call for a technical diagnosis
     problemBlocks:
       - kind: list
@@ -158,9 +158,9 @@ translations:
       - anchor: contact us
         url: /en/contact/
 intro: >-
-  Une optimisation commence par des mesures, pas par une refonte. On examine les
-  pages et les parcours importants, on corrige les blocages identifiés, puis on
-  compare les résultats avec l'état de départ.
+  Votre site ne fonctionne pas comme prévu ou ne donne aucun résultat ? On
+  regarde les détails techniques qui coincent et on les résout : vitesse, SEO
+  technique, parcours. On mesure avant, on corrige, puis on compare.
 problemTitle: Les signes qui justifient un diagnostic technique
 problemBlocks:
   - kind: list

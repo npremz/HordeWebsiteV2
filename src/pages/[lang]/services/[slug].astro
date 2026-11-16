@@ -65,6 +65,21 @@ const serviceSchema = {
         '@type': 'ServiceChannel',
         serviceUrl: new URL(`/${lang}/contact/`, `${siteUrl}/`).href,
       },
+      ...(service.data.pricing ? {
+        offers: {
+          '@type': 'Offer',
+          url: pageUrl,
+          priceCurrency: 'EUR',
+          price: service.data.pricing.from,
+          priceSpecification: {
+            '@type': 'PriceSpecification',
+            priceCurrency: 'EUR',
+            minPrice: service.data.pricing.from,
+            ...(service.data.pricing.to ? { maxPrice: service.data.pricing.to } : {}),
+            valueAddedTaxIncluded: false,
+          },
+        },
+      } : {}),
     },
     {
       '@type': 'BreadcrumbList',

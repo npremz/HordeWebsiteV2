@@ -20,6 +20,8 @@ h1: Audit SEO technique et performance à Bruxelles
 shortName: Audit SEO technique
 footerTitle: Audit (Offert)
 footerOrder: 0
+pricing:
+  from: 0
 translations:
   en:
     seoUrl: /en/services/technical-seo-audit-brussels/

@@ -21,6 +21,9 @@ h1: Création de landing page
 shortName: Landing page sur mesure
 footerTitle: Landing page
 footerOrder: 3
+pricing:
+  from: 1999
+  to: 4000
 translations:
   en:
     seoUrl: /en/services/landing-page-design-brussels/
@@ -44,9 +47,8 @@ translations:
     shortName: Custom landing page
     footerTitle: Landing page
     intro: >-
-      A landing page gives one audience a clear next step. Its message, visual
-      hierarchy, form and tracking are designed around the campaign rather than
-      inherited from a general-purpose homepage.
+      You have a brand or a product to present or sell, and you need a page
+      built to convince, through its design as much as its message.
     problemTitle: What it is for
     problemBlocks:
       - kind: item
@@ -129,8 +131,11 @@ translations:
           we write, or you provide copy and we structure and optimize it.
       - question: How much does a landing page in Brussels cost?
         answer: >-
-          Usually between 1,200 EUR and 4,000 EUR depending on complexity,
-          sections, video and CRM integrations.
+          From €1,999 excl. VAT, and usually up to €4,000 excl. VAT. The price
+          depends on the number of sections, content production (copy, visuals,
+          video), animations and integrations (CRM, email tools, conversion
+          tracking). A/B variants of the same page are offered at a reduced
+          rate.
       - question: Can a landing page be optimized for SEO?
         answer: >-
           For ad pages, not necessarily; that is not always their job. For
@@ -170,9 +175,8 @@ translations:
       - anchor: contact us
         url: /en/contact/
 intro: >-
-  Une landing page donne une prochaine étape claire à une audience précise. Son
-  message, sa hiérarchie visuelle, son formulaire et son suivi sont conçus pour
-  la campagne, plutôt qu'hérités d'une page d'accueil généraliste.
+  Vous avez une marque ou un produit à présenter ou à vendre, et il vous faut
+  une page pensée pour convaincre, par son design comme par son message.
 problemTitle: Pour quoi faire
 problemBlocks:
   - kind: item
@@ -260,9 +264,10 @@ faqItems:
       propre texte qu'on structure et optimise.
   - question: Combien coûte une landing page à Bruxelles ?
     answer: >-
-      Entre 1 200 € et 4 000 € selon la complexité. Une page épurée avec
-      formulaire d'un côté, une page avec plusieurs sections, vidéo et
-      intégrations CRM de l'autre.
+      À partir de 1 999 € HTVA, et généralement jusqu'à 4 000 € HTVA. Le prix
+      varie avec le nombre de sections, la production de contenu (textes,
+      visuels, vidéo), les animations et les intégrations (CRM, emailing, suivi
+      des conversions). Les variantes A/B d'une même page sont à tarif réduit.
   - question: Une landing page peut-elle être optimisée pour le SEO ?
     answer: >-
       Pour les pages publicitaires, non nécessairement : ce n'est pas leur rôle.

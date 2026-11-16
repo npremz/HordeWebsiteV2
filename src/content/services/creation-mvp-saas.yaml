@@ -21,6 +21,9 @@ h1: Développement MVP et application web à Bruxelles
 shortName: Développement MVP
 footerTitle: MVP / Web app
 footerOrder: 4
+pricing:
+  from: 3999
+  to: 8000
 translations:
   en:
     seoUrl: /en/services/mvp-development-brussels/
@@ -44,9 +47,9 @@ translations:
     shortName: MVP development
     footerTitle: MVP / Web app
     intro: >-
-      An MVP is not a half-built product. It is the smallest scope that lets you
-      test a business hypothesis with real users before committing to a broader
-      product. We help define that scope, then build it.
+      You have an idea or a concept to test, and you need a prototype quickly to
+      test the market, without the technical background. We define the minimal
+      scope with you, then we build it.
     problemTitle: What "minimal" really means
     problemBlocks:
       - kind: paragraph
@@ -115,9 +118,10 @@ translations:
     faqItems:
       - question: How much does SaaS MVP development in Brussels cost?
         answer: >-
-          Usually between 5,000 EUR and 20,000 EUR depending on complexity. A
-          B2C MVP with auth, basic CRUD and Stripe is closer to 5-10k. A SaaS
-          with complex logic, roles and integrations costs more.
+          From €3,999 excl. VAT, and usually up to €8,000 excl. VAT. The price
+          rises with business logic, the number of user roles, integrations
+          (payments, third-party APIs) and the level of polish. We quote after
+          scoping, not before.
       - question: How long does it take to build a testable MVP?
         answer: >-
           First usable screens: 3 to 5 weeks. A complete deployable MVP: 6 to 10
@@ -161,10 +165,9 @@ translations:
       - anchor: contact us
         url: /en/contact/
 intro: >-
-  Un MVP, ce n'est pas un produit à moitié fait. C'est le périmètre minimal qui
-  permet de tester une hypothèse avec de vrais utilisateurs avant d'engager un
-  développement plus large. On vous aide à définir ce périmètre, puis à le
-  construire.
+  Vous avez une idée ou un concept à tester, et il vous faut rapidement un
+  prototype pour tester le marché, sans avoir le bagage technique. On définit le
+  périmètre minimal avec vous, puis on le construit.
 problemTitle: Ce que "minimal" veut dire vraiment
 problemBlocks:
   - kind: paragraph
@@ -245,10 +248,10 @@ faqTitle: Nos réponses aux questions fréquentes
 faqItems:
   - question: Combien coûte le développement d'un MVP SaaS à Bruxelles ?
     answer: >-
-      Entre 5 000 € et 20 000 € selon la complexité. Un MVP B2C avec
-      authentification, CRUD de base et Stripe : plutôt 5–10k. Un SaaS avec
-      logique métier complexe, rôles multiples et intégrations tierces : plus.
-      On chiffre après le cadrage, pas avant.
+      À partir de 3 999 € HTVA, et généralement jusqu'à 8 000 € HTVA. Le prix
+      monte avec la logique métier, le nombre de rôles, les intégrations
+      (paiement, API tierces) et le niveau de finition. On chiffre après le
+      cadrage, pas avant.
   - question: Combien de temps faut-il pour développer un MVP testable ?
     answer: >-
       Les premiers écrans utilisables : 3 à 5 semaines. Un MVP complet

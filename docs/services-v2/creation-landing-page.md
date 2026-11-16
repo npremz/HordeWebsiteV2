@@ -105,7 +105,7 @@ On ne livre pas un template Unbounce ou Webflow personnalisé en surface. On ne 
 Oui, la rédaction est incluse si vous le souhaitez. Vous fournissez le brief (offre, cible, ton) et on rédige. Vous pouvez aussi fournir votre propre texte qu'on structure et optimise.
 
 **Combien ça coûte ?**
-Entre 1 200 € et 4 000 € selon la complexité. Une page épurée avec formulaire d'un côté, une page avec plusieurs sections, vidéo et intégrations CRM de l'autre.
+À partir de 1 999 € HTVA, et généralement jusqu'à 4 000 € HTVA. Le prix varie avec le nombre de sections, la production de contenu (textes, visuels, vidéo), les animations et les intégrations (CRM, emailing, suivi des conversions). Les variantes A/B d'une même page sont à tarif réduit.
 
 **La page sera-t-elle optimisée pour le SEO ?**
 Pour les pages publicitaires, non nécessairement — ce n'est pas leur rôle. Pour les pages destinées au trafic organique, oui : balises, structure, performance. On cadre ça ensemble selon l'objectif.

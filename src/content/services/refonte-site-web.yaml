@@ -43,9 +43,9 @@ translations:
     shortName: Website redesign
     footerTitle: Web Redesign
     intro: >-
-      A redesign is useful when the current site no longer supports your content,
-      user journeys or day-to-day work. We start by identifying what should be
-      kept, corrected or removed before designing the replacement.
+      Your website is already up and running, but you know something is off and
+      you want to improve it, or rebuild some of its user journeys. We rework
+      what exists instead of starting from scratch.
     problemTitle: Signals that it is time for a redesign
     problemBlocks:
       - kind: list
@@ -165,10 +165,9 @@ translations:
       - anchor: contact us
         url: /en/contact/
 intro: >-
-  Une refonte devient utile lorsque le site actuel ne suit plus vos contenus,
-  vos parcours utilisateurs ou votre façon de travailler. On commence par
-  déterminer ce qu'il faut conserver, corriger ou retirer avant de concevoir la
-  suite.
+  Votre site est déjà en place, mais vous savez qu'il y a des soucis et vous
+  voulez l'améliorer, voire refaire certains parcours. On retravaille l'existant
+  pour ne pas repartir de zéro.
 problemTitle: Les signaux qui indiquent qu'il est temps
 problemBlocks:
   - kind: list

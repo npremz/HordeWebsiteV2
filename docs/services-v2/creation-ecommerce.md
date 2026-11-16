@@ -101,7 +101,7 @@ On ne livre pas une installation Shopify par défaut avec un thème gratuit et q
 Pour la grande majorité des projets, Shopify. Plus rapide à lancer, plus stable, moins de maintenance. WooCommerce a du sens si vous êtes déjà sur WordPress et que votre catalogue est limité. On en discute selon votre situation.
 
 **Combien coûte un e-commerce ?**
-Un Shopify sur mesure : entre 5 000 € et 12 000 €. Un e-commerce custom avec logique spécifique : à partir de 15 000 €. Les variables principales : taille du catalogue, intégrations, niveau de personnalisation.
+À partir de 1 999 € HTVA, et généralement jusqu'à 6 000 € HTVA. Le prix dépend surtout de la taille du catalogue, des intégrations (paiement, livraison, stock) et du niveau de personnalisation. Une boutique avec une logique très spécifique se chiffre sur devis, après l'audit offert.
 
 **Je peux gérer mes produits moi-même après ?**
 Oui, c'est une condition non négociable. On forme votre équipe et on documente tout. Vous ne dépendez pas de nous pour ajouter un produit.

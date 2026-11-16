@@ -20,6 +20,9 @@ h1: Création de site e-commerce
 shortName: Création site e-commerce
 footerTitle: E-Commerce
 footerOrder: 2
+pricing:
+  from: 1999
+  to: 6000
 translations:
   en:
     seoUrl: /en/services/ecommerce-website-brussels/
@@ -42,9 +45,8 @@ translations:
     shortName: E-commerce website
     footerTitle: E-Commerce
     intro: >-
-      An online store has to make a large number of details work together:
-      catalogue structure, mobile navigation, payment, logistics and content
-      management. We design and build these parts as one purchase journey.
+      You have an online brand and you want your shop to reach the next level: a
+      polished website with smooth sales funnels, from catalogue to checkout.
     problemTitle: Where an online purchase journey usually breaks down
     problemBlocks:
       - kind: paragraph
@@ -121,9 +123,10 @@ translations:
           against the catalogue, integrations and maintenance constraints.
       - question: How much does an e-commerce website in Brussels cost?
         answer: >-
-          A custom Shopify store usually ranges from 5,000 EUR to 12,000 EUR. A
-          custom e-commerce build with specific logic starts around 15,000 EUR,
-          depending on catalogue size, payment, logistics and integrations.
+          From €1,999 excl. VAT, and usually up to €6,000 excl. VAT. The price
+          mainly depends on catalogue size, integrations (payment, shipping,
+          stock) and the level of customisation. A store with very specific
+          logic is quoted separately, after the free audit.
       - question: Can I manage products and orders myself afterward?
         answer: >-
           Yes. That is non-negotiable. We train your team and document
@@ -161,10 +164,9 @@ translations:
       - anchor: contact us
         url: /en/contact/
 intro: >-
-  Une boutique en ligne doit faire fonctionner beaucoup de détails ensemble :
-  catalogue, navigation mobile, paiement, logistique et gestion du contenu. On
-  conçoit ces éléments comme un seul parcours d'achat, côté client comme côté
-  équipe.
+  Vous avez une marque en ligne et vous voulez que votre boutique passe au
+  niveau supérieur : un site soigné, avec des tunnels de vente fluides, du
+  catalogue au paiement.
 problemTitle: Là où un parcours d'achat se complique
 problemBlocks:
   - kind: paragraph
@@ -243,9 +245,10 @@ faqItems:
       les deux selon le catalogue, les intégrations et la maintenance prévue.
   - question: Combien coûte un site e-commerce à Bruxelles ?
     answer: >-
-      Un Shopify sur mesure : entre 5 000 € et 12 000 €. Un e-commerce custom
-      avec logique spécifique : à partir de 15 000 €. Les variables principales
-      : taille du catalogue, intégrations, niveau de personnalisation.
+      À partir de 1 999 € HTVA, et généralement jusqu'à 6 000 € HTVA. Le prix
+      dépend surtout de la taille du catalogue, des intégrations (paiement,
+      livraison, stock) et du niveau de personnalisation. Une boutique avec une
+      logique très spécifique se chiffre sur devis, après l'audit offert.
   - question: Puis-je gérer les produits et commandes moi-même après ?
     answer: >-
       Oui, c'est une condition non négociable. On forme votre équipe et on

@@ -101,7 +101,7 @@ On ne s'engage pas non plus sur des fonctionnalités dont on ne comprend pas l'u
 #### H2 : Questions fréquentes
 
 **Combien coûte un MVP ?**
-Entre 5 000 € et 20 000 € selon la complexité. Un MVP B2C avec authentification, CRUD de base et Stripe : plutôt 5–10k. Un SaaS avec logique métier complexe, rôles multiples et intégrations tierces : plus. On chiffre après le cadrage, pas avant.
+À partir de 3 999 € HTVA, et généralement jusqu'à 8 000 € HTVA. Le prix monte avec la logique métier, le nombre de rôles, les intégrations (paiement, API tierces) et le niveau de finition. On chiffre après le cadrage, pas avant.
 
 **Combien de temps pour avoir quelque chose à tester ?**
 Les premiers écrans utilisables : 3 à 5 semaines. Un MVP complet déployable : 6 à 10 semaines. On évite les projets qui s'éternisent et ne testent jamais la réalité du marché.
