@@ -150,7 +150,7 @@ Les equivalents anglais sont accessibles sous `/en/...`.
 - Date: 2026-02-26
 - Categorie: strategie
 
-### Combien coute une refonte de site web en 2026
+### Combien coute une refonte de site web en 2027
 
 - URL: https://hordeagence.com/fr/blog/combien-coute-refonte-site-web/
 - Date: 2026-03-03

@@ -407,12 +407,12 @@ Points abordes:
 - cout d'opportunite SEO
 - importance d'un audit pour prioriser les corrections
 
-### Combien coute une refonte de site web en 2026
+### Combien coute une refonte de site web en 2027
 
 - Slug FR: combien-coute-refonte-site-web
 - URL: https://hordeagence.com/fr/blog/combien-coute-refonte-site-web/
 - Date de publication: 2026-03-03
-- Derniere modification: 2026-03-09
+- Derniere modification: 2026-11-16
 - Categorie: strategie
 - Temps de lecture: 6 minutes
 - Resume: donne des fourchettes de prix realistes, les facteurs qui font varier un budget et les erreurs qui font exploser le cout d'une refonte.
