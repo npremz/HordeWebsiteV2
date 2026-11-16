@@ -83,6 +83,7 @@ Prestations:
 - SEO title FR: Refonte site web a Bruxelles | UX, perf et SEO
 - Objectif: ameliorer un site existant quand ses fondations, son design ou ses performances limitent la croissance.
 - Cibles: entreprises avec un site lent, confus, obsolete, difficile a maintenir ou mal convertissant.
+- Prix: a partir de 999 EUR HTVA ; site vitrine generalement jusqu'a 2 999 EUR HTVA, e-commerce jusqu'a 3 999 EUR HTVA ; refonte de SaaS chiffree comme un developpement complet.
 
 Prestations:
 
@@ -172,6 +173,7 @@ Prestations:
 - SEO title FR: Creation d'applications evenementielles a Bruxelles
 - Objectif: faire participer un public et coordonner les interfaces participants, animateur et affichage autour du deroule d'un evenement.
 - Cibles: organisateurs d'evenements, agences de communication, equipes marketing, animateurs de workshops et equipes produit.
+- Prix: a partir de 1 999 EUR HTVA, puis sur devis (public, infrastructure, responsabilites).
 
 Prestations:
 
@@ -202,6 +204,7 @@ L'hebergement, l'assistance le jour J et la reutilisation sont definis selon le 
 - SEO title FR: Optimisation site web a Bruxelles
 - Objectif: ameliorer la vitesse, les Core Web Vitals et la stabilite d'un site existant.
 - Cibles: sites lents, pages qui perdent des visiteurs, interfaces instables ou plateformes qui accumulent une dette technique visible.
+- Prix: 199 EUR HTVA par jour d'intervention, nombre de jours estime apres le diagnostic gratuit.
 
 Prestations:
 

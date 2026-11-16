@@ -193,6 +193,7 @@ const servicesCollection = defineCollection({
     pricing: z.object({
       from: z.number(),
       to: z.number().optional(),
+      unit: z.enum(['day']).optional(),
     }).optional(),
     translations: z.object({
       en: serviceTranslationSchema.optional(),

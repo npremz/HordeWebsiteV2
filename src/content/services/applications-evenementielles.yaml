@@ -21,6 +21,8 @@ h1: Création d’applications<br>événementielles
 shortName: Applications événementielles
 footerTitle: Applications événementielles
 footerOrder: 5
+pricing:
+  from: 1999
 translations:
   en:
     seoUrl: /en/services/event-web-apps/
@@ -123,10 +125,11 @@ translations:
     faqItems:
       - question: How much does an event web app cost?
         answer: >-
-          The budget depends on the number of interfaces, the interactions, the
-          systems to connect and the support required. We quote an agreed scope
-          after reviewing your event. A tablet demo and a team workshop with
-          synchronised screens involve different amounts of work.
+          From €1,999 excl. VAT, then on quote. The budget depends on the
+          audience (number of participants, languages, setting), the
+          infrastructure (venue network, screens, hosting) and the
+          responsibilities we take on, up to on-site support on the day. We
+          quote an agreed scope after reviewing your event.
       - question: How far ahead should we start?
         answer: >-
           Some of our tightly scoped projects have reached a first usable
@@ -260,11 +263,11 @@ faqTitle: Avant votre événement
 faqItems:
   - question: Combien coûte une application événementielle ?
     answer: >-
-      Le budget dépend du nombre d’interfaces, des interactions, des systèmes à
-      connecter et de l’accompagnement prévu. On chiffre un périmètre convenu
-      après avoir étudié votre événement. Une démonstration sur tablette et un
-      workshop par équipes avec des écrans synchronisés demandent des volumes
-      de travail différents.
+      À partir de 1 999 € HTVA, puis sur devis. Le budget dépend du public
+      (nombre de participants, langues, contexte), de l'infrastructure (réseau
+      du lieu, écrans, hébergement) et des responsabilités prises en charge,
+      jusqu'à l'assistance le jour J. On chiffre un périmètre convenu après
+      avoir étudié votre événement.
   - question: Combien de temps faut-il prévoir ?
     answer: >-
       Certains de nos projets bien cadrés ont atteint une première version

@@ -72,9 +72,11 @@ const serviceSchema = {
           priceCurrency: 'EUR',
           price: service.data.pricing.from,
           priceSpecification: {
-            '@type': 'PriceSpecification',
+            '@type': service.data.pricing.unit ? 'UnitPriceSpecification' : 'PriceSpecification',
             priceCurrency: 'EUR',
-            minPrice: service.data.pricing.from,
+            ...(service.data.pricing.unit
+              ? { price: service.data.pricing.from, unitCode: 'DAY', unitText: lang === 'fr' ? 'jour' : 'day' }
+              : { minPrice: service.data.pricing.from }),
             ...(service.data.pricing.to ? { maxPrice: service.data.pricing.to } : {}),
             valueAddedTaxIncluded: false,
           },

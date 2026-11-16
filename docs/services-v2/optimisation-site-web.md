@@ -116,7 +116,7 @@ Les quick wins (images, cache, render-blocking) se règlent en une semaine. Les 
 Ça dépend de l'état de départ. Sur des sites avec des scores PageSpeed < 50, on obtient régulièrement des passages à 80–95. L'impact SEO se voit dans Google Search Console sur 6 à 12 semaines.
 
 **Combien ça coûte ?**
-Ça dépend de la profondeur de l'intervention. On chiffre après le diagnostic initial, qui est gratuit. Pas de devis sans avoir regardé votre site.
+199 € HTVA par jour d'intervention. Le nombre de jours dépend de ce qu'il faut corriger. On l'estime après le diagnostic initial, qui est gratuit : pas de devis sans avoir regardé votre site.
 
 ---
 
