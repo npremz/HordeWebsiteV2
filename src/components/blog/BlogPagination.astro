@@ -41,23 +41,17 @@ const nextHref = currentPage < totalPages ? pageHrefs[currentPage] : undefined;
       )}
     </div>
 
-    <ol class="order-1 col-span-2 flex items-center justify-center gap-5 sm:order-2">
+    <ol class="order-1 col-span-2 flex items-center justify-center gap-3 sm:order-2 sm:gap-4">
       {slots.map((slot) => (
         <li>
           {slot === 'gap' ? (
             <span class="text-black/40" aria-hidden="true">…</span>
           ) : slot === currentPage ? (
-            <span
-              class="inline-flex h-9 min-w-9 items-center justify-center bg-black px-2 text-button-white"
-              aria-current="page"
-            >
+            <span class="blog-page-button blog-page-button--current" aria-current="page">
               <span class="sr-only">{pageLabel} </span>{slot}
             </span>
           ) : (
-            <a
-              href={pageHrefs[slot - 1]}
-              class="underline-hover inline-flex h-9 min-w-9 items-center justify-center px-2"
-            >
+            <a href={pageHrefs[slot - 1]} class="blog-page-button">
               <span class="sr-only">{pageLabel} </span>{slot}
             </a>
           )}
@@ -74,3 +68,41 @@ const nextHref = currentPage < totalPages ? pageHrefs[currentPage] : undefined;
     </div>
   </nav>
 )}
+
+<style>
+  /* Même bouton carré que la landing (HomeLink : .home-link__button). */
+  .blog-page-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 2.4rem;
+    height: 2.4rem;
+    padding-inline: 0.5rem;
+    border-radius: 6px;
+    background: var(--color-black);
+    color: var(--color-white);
+    font-size: 1.0625rem;
+    letter-spacing: -0.01em;
+    transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  /* Page courante : même forme, en contour, non cliquable. */
+  .blog-page-button--current {
+    background: transparent;
+    color: var(--color-black);
+    box-shadow: inset 0 0 0 1px var(--color-black);
+  }
+
+  @media (min-width: 640px) {
+    .blog-page-button {
+      min-width: 3rem;
+      height: 3rem;
+    }
+  }
+
+  @media (hover: hover) {
+    a.blog-page-button:hover {
+      transform: scale(1.08);
+    }
+  }
+</style>
