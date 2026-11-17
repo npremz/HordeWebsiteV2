@@ -1,0 +1,782 @@
+---
+/**
+ * Page « Notre culture » : même langage visuel que la home (hero noir à lignes de construction,
+ * labels mono, rails à bouts carrés, cartes de la section méthode) et que la page contact
+ * (bloc final sombre, appel à réserver).
+ */
+import { Image } from "astro:assets";
+import type { Locale } from "../../i18n";
+import { BUSINESS } from "../../lib/business-info";
+import teamPhoto from "../../assets/images/nous-opti.jpg";
+import nicoPhoto from "../../assets/images/nico.jpg";
+import alexPhoto from "../../assets/images/alex.jpg";
+import HeroLines from "../home/svg/HeroLines.astro";
+import HomeIcon from "../home/svg/HomeIcon.astro";
+import { HOME_ICONS } from "../home/svg/icons";
+import HomeLink from "../home/ui/HomeLink.astro";
+import HomeMarquee from "../home/ui/HomeMarquee.astro";
+import HomeBadge from "../home/ui/HomeBadge.astro";
+import SlashMark from "../home/ui/SlashMark.astro";
+import { getAboutCopy } from "./copy";
+
+interface Props {
+  lang: Locale;
+}
+
+const { lang } = Astro.props;
+const copy = getAboutCopy(lang);
+const contactHref = `/${lang}/contact/`;
+const bookingHref = BUSINESS.bookingUrl;
+const portraits = { nicolas: nicoPhoto, alexandre: alexPhoto } as const;
+const fractions = ["fraction1", "fraction2"] as const;
+const [offerA, offerEmA, offerB, offerEmB, offerC] = copy.vision.offer;
+---
+
+<!-- 1. Hero : la phrase-manifeste, en grand, sur le fond noir de la home. -->
+<section class="about-hero relative overflow-clip bg-black text-white" data-header-theme="dark">
+  <HeroLines class="pointer-events-none absolute inset-0 h-full w-full" />
+  <div class="about-hero__inner home-column relative">
+    <p class="about-hero__eyebrow">{copy.hero.eyebrow}</p>
+    <h1 class="about-hero__title">
+      {copy.hero.titleLines.map((line, index) => (
+        <span class="about-hero__line"><span style={`--line: ${index}`}>{line}</span></span>
+      ))}
+    </h1>
+    <div class="about-hero__meta">
+      <span class="about-hero__location">
+        <HomeIcon name="origin" class="w-3" />
+        {copy.hero.location}
+      </span>
+      <HomeLink href={bookingHref} label={copy.hero.bookCall} tone="light" icon="arrow" external newTabLabel={copy.cta.newTab} />
+    </div>
+  </div>
+</section>
+
+<HomeMarquee items={copy.marquee} variant="dark" followScroll />
+
+<!-- 2. Le constat, puis la réponse : deux paragraphes d'accroche comme sur la home. -->
+<section class="about-vision relative bg-bg" data-header-theme="light">
+  <div class="home-column relative">
+    <span class="about-tag about-vision__tag">
+      {copy.vision.tag} <HomeIcon name="heart" class="w-[0.7rem]" />
+    </span>
+
+    <h2 class="sr-only">{copy.vision.statementLabel}</h2>
+    <p class="home-lead about-lead about-vision__statement" data-home-reveal>
+      <span class="home-lead__label" aria-hidden="true">{copy.vision.statementLabel}</span>
+      {copy.vision.statement}
+    </p>
+
+    <div class="about-rail" aria-hidden="true">
+      <SlashMark spin class="about-rail__slash" />
+    </div>
+
+    <p class="home-lead about-lead about-vision__offer" data-home-reveal>
+      <span class="home-lead__label" aria-hidden="true">{copy.vision.offerLabel}</span>
+      {offerA}<em>{offerEmA}</em>{offerB}<em>{offerEmB}</em>{offerC}
+    </p>
+  </div>
+</section>
+
+<!-- 3. Le pivot : la vitesse actuelle, mise au service de l'expérience. -->
+<section class="about-speed relative bg-white" data-header-theme="light">
+  <div class="home-column home-column--wide">
+    <p class="about-label">{copy.speed.label}</p>
+    <p class="about-speed__lead" data-home-reveal>{copy.speed.lead}</p>
+    <h2 class="about-speed__title" data-home-reveal style="--reveal-delay: 0.1s">{copy.speed.title}</h2>
+  </div>
+</section>
+
+<!-- 4. L'équipe : la photo à gauche, les deux profils et la citation de Nicolas à droite. -->
+<section class="about-team relative bg-bg" data-header-theme="light">
+  <div class="home-column home-column--wide about-team__grid">
+    <div class="about-team__photo" data-home-reveal>
+      <Image
+        src={teamPhoto}
+        alt={copy.team.photoAlt}
+        widths={[360, 560, 820, 1112]}
+        sizes="(max-width: 1024px) 92vw, 460px"
+        class="h-full w-full object-cover"
+        loading="lazy"
+        decoding="async"
+      />
+    </div>
+
+    <div class="about-team__body">
+      <h2 class="about-label">{copy.team.label}</h2>
+      <p class="about-team__text" data-home-reveal>{copy.team.text}</p>
+
+      <ul class="about-people">
+        {copy.team.people.map((person) => (
+          <li class="about-person" data-home-reveal>
+            <Image
+              src={portraits[person.id as keyof typeof portraits]}
+              alt={person.alt}
+              widths={[96, 192]}
+              sizes="96px"
+              class="about-person__photo"
+              loading="lazy"
+              decoding="async"
+            />
+            <div class="about-person__info">
+              <p class="about-person__name">{person.name}</p>
+              <p class="about-person__role">{person.role}</p>
+            </div>
+            <ul class="about-person__tags">
+              {person.tags.map((tag) => <li class="about-chip">{tag}</li>)}
+            </ul>
+          </li>
+        ))}
+      </ul>
+
+      <figure class="about-quote" data-home-reveal>
+        <blockquote>
+          <p>{copy.team.quote}</p>
+        </blockquote>
+        <figcaption class="about-quote__author">
+          <Image src={nicoPhoto} alt="" widths={[64]} sizes="32px" class="about-quote__photo" loading="lazy" decoding="async" />
+          <span>{copy.team.quoteAuthor}</span>
+          <span class="about-quote__role">{copy.team.quoteRole}</span>
+        </figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- 5. Comment on travaille : où, pour qui, et les deux façons de collaborer (chacune avec son bouton). -->
+<section class="about-work relative bg-white" data-header-theme="light">
+  <div class="home-column home-column--wide">
+    <h2 class="sr-only">{copy.work.label}</h2>
+    <p class="home-lead about-lead" data-home-reveal>
+      <span class="home-lead__label" aria-hidden="true">{copy.work.label}</span>
+      {copy.work.text}
+    </p>
+
+    <div class="about-work__where">
+      <HomeBadge lang={lang} kind="from" tone="dark" />
+      <span class="about-tag about-tag--inline">{copy.work.remote}</span>
+    </div>
+
+    <h3 class="sr-only">{copy.work.modesLabel}</h3>
+    <ol class="about-modes">
+      {copy.work.modes.map((mode, index) => (
+        <li class="about-mode" data-home-reveal style={`--reveal-delay: ${index * 0.12}s`}>
+          <p class="about-mode__card">
+            <HomeIcon name={fractions[index]} class="w-[0.6rem] md:w-[0.65rem]" />
+            <span class="flex-1 text-center">{mode.title}</span>
+          </p>
+          <p class="about-mode__text">{mode.text}</p>
+          <div class="about-mode__cta">
+            {index === 0 ? (
+              <HomeLink href={contactHref} label={mode.cta} />
+            ) : (
+              <HomeLink href={bookingHref} label={mode.cta} icon="arrow" external newTabLabel={copy.cta.newTab} />
+            )}
+          </div>
+        </li>
+      ))}
+    </ol>
+  </div>
+</section>
+
+<!-- 6. Appel final, sur le fond sombre de la console contact. -->
+<section class="about-cta relative bg-black text-white" data-header-theme="dark">
+  <div class="home-column home-column--wide relative">
+    <p class="about-label about-label--light">{copy.cta.label}</p>
+    <h2 class="about-cta__title">{copy.cta.title}</h2>
+    <p class="about-cta__text">{copy.cta.text}</p>
+
+    <div class="about-cta__actions">
+      <a href={bookingHref} class="about-cta__book group" target="_blank" rel="noopener">
+        <span class="about-cta__book-label">
+          {copy.cta.bookCall}
+          <span class="about-cta__book-meta">({copy.cta.bookCallMeta})</span>
+        </span>
+        <span class="sr-only"> {copy.cta.newTab}</span>
+        <svg viewBox="0 0 22 22" fill="currentColor" aria-hidden="true">
+          <path d={HOME_ICONS.spark.paths[0].d} />
+        </svg>
+      </a>
+      <HomeLink href={contactHref} label={copy.cta.contact} tone="light" />
+    </div>
+  </div>
+</section>
+
+<style>
+  /* ---------- Éléments partagés ---------- */
+
+  .about-label {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    font-weight: 400;
+    line-height: 1.15;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .about-label--light {
+    color: rgb(244 241 248 / 0.65);
+  }
+
+  .about-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    height: 1.75rem;
+    padding-inline: 0.75rem;
+    border-radius: 0 0 4px 4px;
+    background: var(--color-black);
+    color: var(--color-white);
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .about-tag--inline {
+    height: 2.2rem;
+    padding-inline: 1.1rem;
+    border-radius: 4px;
+  }
+
+  .about-chip {
+    display: inline-flex;
+    align-items: center;
+    height: 1.6rem;
+    padding-inline: 0.6rem;
+    border: 1px solid var(--color-black);
+    border-radius: 4px;
+    font-family: var(--font-mono);
+    font-size: 0.625rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  /* ---------- 1. Hero ---------- */
+
+  .about-hero__inner {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 34rem;
+    padding-block: 7rem 3rem;
+  }
+
+  .about-hero__eyebrow {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: rgb(244 241 248 / 0.65);
+  }
+
+  .about-hero__title {
+    margin-top: 1.5rem;
+    font-size: clamp(1.9rem, 8.4vw, 3.4rem);
+    font-weight: 300;
+    line-height: 1;
+    letter-spacing: -0.045em;
+  }
+
+  .about-hero__line {
+    display: block;
+    overflow: hidden;
+    padding-bottom: 0.2em;
+    margin-bottom: -0.2em;
+  }
+
+  .about-hero__line > span {
+    display: block;
+    animation: about-hero-line 0.9s cubic-bezier(0.77, 0, 0.18, 1) both;
+    animation-delay: calc(0.15s + var(--line) * 0.1s);
+  }
+
+  @keyframes about-hero-line {
+    from {
+      transform: translateY(calc(100% + 0.25em));
+    }
+  }
+
+  .about-hero__meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+    margin-top: 3rem;
+  }
+
+  .about-hero__location {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  /* ---------- 2. Constat / proposition ---------- */
+
+  .about-vision {
+    padding-block: 6.5rem 5rem;
+  }
+
+  .about-vision__tag {
+    position: absolute;
+    top: -6.5rem;
+    right: 0;
+  }
+
+  .about-vision__offer em {
+    font-style: normal;
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.14em;
+  }
+
+  /* Rail à bouts carrés (comme le CTA de la home), barre qui tourne au milieu. */
+  .about-rail {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 1px;
+    margin-block: 3.5rem;
+    background: var(--color-black);
+  }
+
+  .about-rail::before,
+  .about-rail::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    width: 8px;
+    height: 8px;
+    background: var(--color-black);
+    transform: translateY(-50%);
+  }
+
+  .about-rail::before {
+    left: 0;
+  }
+
+  .about-rail::after {
+    right: 0;
+  }
+
+  .about-rail :global(.about-rail__slash) {
+    padding-inline: 0.75rem;
+    box-sizing: content-box;
+    background: var(--color-bg);
+  }
+
+  /* ---------- 3. Vitesse ---------- */
+
+  .about-speed {
+    padding-block: 4.5rem 5rem;
+  }
+
+  .about-speed__lead {
+    margin-top: 1.25rem;
+    font-size: 1.25rem;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+  }
+
+  .about-speed__title {
+    margin-top: 0.75rem;
+    font-size: clamp(1.9rem, 7.6vw, 3.25rem);
+    font-weight: 300;
+    line-height: 1.02;
+    letter-spacing: -0.045em;
+    text-wrap: balance;
+  }
+
+  /* ---------- 4. Équipe ---------- */
+
+  .about-team {
+    padding-block: 5rem;
+  }
+
+  .about-team__grid {
+    display: grid;
+    gap: 2.5rem;
+  }
+
+  .about-team__photo {
+    overflow: hidden;
+    border-radius: 6px;
+    aspect-ratio: 558 / 640;
+  }
+
+  .about-team__text {
+    margin-top: 1.25rem;
+    font-weight: 450;
+    font-size: 1.625rem;
+    line-height: 1.08;
+    letter-spacing: -0.03em;
+  }
+
+  .about-people {
+    margin-top: 2rem;
+    border-top: 1px solid var(--color-black);
+  }
+
+  .about-person {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: center;
+    gap: 0.75rem 1rem;
+    padding-block: 1rem;
+    border-bottom: 1px solid var(--color-black);
+  }
+
+  .about-person :global(.about-person__photo) {
+    width: 3.5rem;
+    height: 3.5rem;
+    border-radius: 6px;
+    object-fit: cover;
+  }
+
+  .about-person__name {
+    font-size: 1.25rem;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+  }
+
+  .about-person__role {
+    margin-top: 0.35rem;
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: #4d4b51;
+  }
+
+  .about-person__tags {
+    grid-column: 1 / -1;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+
+  .about-quote {
+    margin-top: 2.5rem;
+  }
+
+  .about-quote blockquote p {
+    font-size: 1.25rem;
+    line-height: 1.25;
+    letter-spacing: -0.02em;
+  }
+
+  .about-quote__author {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin-top: 1rem;
+    font-size: 0.9375rem;
+  }
+
+  .about-quote :global(.about-quote__photo) {
+    width: 2rem;
+    height: 2rem;
+    border-radius: 999px;
+    object-fit: cover;
+  }
+
+  .about-quote__role {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: #4d4b51;
+  }
+
+  /* ---------- 5. Comment on travaille ---------- */
+
+  .about-work {
+    padding-block: 5rem;
+  }
+
+  /* Sur mobile, la home masque le label de l'alinéa ; ici il porte le sens : on le pose au-dessus. */
+  @media (max-width: 639px) {
+    .about-lead {
+      text-indent: 0;
+    }
+
+    .about-lead :global(.home-lead__label),
+    .about-lead .home-lead__label {
+      position: static;
+      display: block;
+      width: auto;
+      margin-bottom: 0.9rem;
+    }
+  }
+
+  .about-work__where {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.75rem;
+    margin-top: 2rem;
+  }
+
+  .about-modes {
+    display: grid;
+    gap: 2.75rem;
+    margin-top: 3.5rem;
+  }
+
+  /* Mêmes cartes que les 3 étapes de la section méthode de la home. */
+  .about-mode__card {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    min-height: 2.75rem;
+    padding: 0.4rem 0.85rem;
+    border: 2px solid #d6d2da;
+    border-radius: 6px;
+    background: var(--color-bg-light);
+    font-size: 1.125rem;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+  }
+
+  .about-mode__text {
+    margin-top: 1.5rem;
+    font-size: 1.0625rem;
+    line-height: 1.45;
+    text-indent: 5rem;
+  }
+
+  .about-mode__cta {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 1.75rem;
+  }
+
+  /* ---------- 6. Appel final ---------- */
+
+  .about-cta {
+    padding-block: 5rem 5.5rem;
+  }
+
+  .about-cta__title {
+    margin-top: 1.25rem;
+    font-size: clamp(2.25rem, 10vw, 4.25rem);
+    font-weight: 300;
+    line-height: 1;
+    letter-spacing: -0.045em;
+  }
+
+  .about-cta__text {
+    max-width: 32rem;
+    margin-top: 1.5rem;
+    font-size: 1.0625rem;
+    line-height: 1.45;
+    color: rgb(244 241 248 / 0.75);
+  }
+
+  .about-cta__actions {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2rem;
+    margin-top: 2.75rem;
+  }
+
+  /* Bouton principal : la barre noire du CTA de la home, inversée sur fond sombre. */
+  .about-cta__book {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+    width: 100%;
+    max-width: 22rem;
+    height: 3.25rem;
+    padding-inline: 1.25rem;
+    border-radius: 6px;
+    background: var(--color-white);
+    color: var(--color-black);
+    font-size: 1.125rem;
+    letter-spacing: -0.01em;
+    transition: padding 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .about-cta__book-meta {
+    margin-left: 0.4rem;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: #4d4b51;
+  }
+
+  .about-cta__book svg {
+    width: 1.1rem;
+    height: 1.1rem;
+    flex: none;
+    transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .about-cta__book:focus-visible {
+    outline: 2px solid var(--color-white);
+    outline-offset: 3px;
+  }
+
+  @media (hover: hover) {
+    .about-cta__book:hover {
+      padding-inline: 1.6rem 1rem;
+    }
+
+    .about-cta__book:hover svg {
+      transform: rotate(90deg);
+    }
+  }
+
+  /* ---------- Breakpoints (alignés sur la home) ---------- */
+
+  @media (min-width: 640px) {
+    .about-hero__inner {
+      min-height: 38rem;
+    }
+
+    .about-person {
+      grid-template-columns: auto 1fr auto;
+    }
+
+    .about-person__tags {
+      grid-column: auto;
+      justify-content: flex-end;
+    }
+
+    .about-team__text {
+      font-size: 1.95rem;
+    }
+  }
+
+  @media (min-width: 768px) {
+    .about-hero__meta {
+      margin-top: 4.5rem;
+      padding-left: 0.2rem;
+    }
+
+    .about-speed__lead {
+      font-size: 1.5rem;
+    }
+
+    .about-cta__actions {
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .about-hero__inner {
+      min-height: 42rem;
+    }
+
+    .about-hero__title {
+      font-size: 4.25rem;
+    }
+
+    .about-vision {
+      padding-block: 8rem 7rem;
+    }
+
+    .about-vision__tag {
+      top: -8rem;
+    }
+
+    .about-vision__offer {
+      margin-left: 12%;
+    }
+
+    .about-rail {
+      margin-block: 5rem;
+    }
+
+    .about-speed {
+      padding-block: 7rem;
+    }
+
+    .about-speed__title {
+      font-size: 4.5rem;
+    }
+
+    .about-team {
+      padding-block: 7.5rem;
+    }
+
+    .about-team__grid {
+      grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+      gap: 4.5rem;
+      align-items: start;
+    }
+
+    .about-team__photo {
+      position: sticky;
+      top: 6rem;
+    }
+
+    .about-team__text {
+      font-size: 2.25rem;
+    }
+
+    .about-work {
+      padding-block: 7.5rem;
+    }
+
+    .about-modes {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0 4rem;
+      margin-top: 5rem;
+    }
+
+    .about-mode__card {
+      min-height: 3.3rem;
+      font-size: 1.375rem;
+    }
+
+    .about-cta {
+      padding-block: 7.5rem 8rem;
+    }
+
+    .about-cta__title {
+      font-size: 5.5rem;
+    }
+  }
+
+  @media (min-width: 1256px) {
+    .about-hero__title {
+      font-size: 5rem;
+    }
+
+    .about-speed__title {
+      font-size: 5rem;
+    }
+  }
+
+  @media (min-width: 1512px) {
+    .about-hero__title {
+      font-size: 5.75rem;
+    }
+
+    .about-speed__title {
+      font-size: 5.5rem;
+    }
+
+    .about-cta__title {
+      font-size: 6.25rem;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .about-hero__line > span {
+      animation: none;
+    }
+  }
+</style>
