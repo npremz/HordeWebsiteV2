@@ -628,7 +628,10 @@ const faq = {
   /* ---------- Desktop : figure au centre, titre et fourchette en bas de part et d'autre ---------- */
 
   @media (min-width: 1024px) {
+    /* Contenu du hero limité à la largeur de la maquette (1512 − 2 × 2rem) : au-delà, titre,
+       fourchette et cible restent groupés au lieu de partir vers les bords de l'écran. */
     .pr-hero {
+      --pr-inset: max(2rem, calc((100% - 90.5rem) / 2));
       height: 36.25rem;
       padding: 0;
     }
@@ -654,7 +657,7 @@ const faq = {
     .pr-hero__target {
       position: absolute;
       top: calc(10rem + min(38rem, 56vw) * 365 / 608 / 2);
-      right: 2rem;
+      right: var(--pr-inset);
       display: block;
       width: 1.7rem;
       height: 1.7rem;
@@ -676,9 +679,9 @@ const faq = {
 
     .pr-hero__bottom {
       position: absolute;
-      right: 2rem;
+      right: var(--pr-inset);
       bottom: 3.45rem;
-      left: 2rem;
+      left: var(--pr-inset);
       display: flex;
       justify-content: space-between;
       margin: 0;
@@ -721,11 +724,13 @@ const faq = {
       transform: translateX(-50%);
     }
 
+    /* Points espacés comme sur la maquette (1136px à 1512), sans s'écarter au-delà. */
     .pr-offers__dots {
       position: absolute;
-      right: 12.6%;
       bottom: 3rem;
-      left: 12.2%;
+      left: 50%;
+      width: min(75.2%, 71rem);
+      transform: translateX(-50%);
       height: 2rem;
       margin: 0;
     }
