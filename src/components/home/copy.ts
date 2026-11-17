@@ -77,7 +77,7 @@ const fr = {
   },
   team: {
     label: 'Une équipe à taille humaine',
-    text: 'On est une agence de petite taille qui met en avant le côté humain : on prend le temps avec vous de trouver les solutions qui vous conviennent et on vous aide à ce que votre présence numérique soit à la hauteur de vos projets.',
+    text: 'On est deux, un designer et un développeur, obsédés par des expériences utilisateur soignées et pensées pour l’humain. Un site générique se fait aujourd’hui en quelques minutes. On vous propose mieux, un site où chaque interaction a du sens pour votre cible et votre usage.',
     link: 'Notre culture',
     photo1Alt: 'L’équipe Horde en atelier autour d’un écran',
     photo2Alt: 'Un membre de l’équipe Horde à son poste de travail',
@@ -201,7 +201,7 @@ const en: HomeCopy = {
   },
   team: {
     label: 'A human-sized team',
-    text: 'We are a small agency that puts people first: we take the time to find the solutions that suit you and help make sure your digital presence lives up to your projects.',
+    text: 'We’re two people, a designer and a developer, obsessed with polished, human-first user experiences. A generic website takes minutes to make these days. We offer you better: a site where every interaction makes sense for your audience and your goals.',
     link: 'Our culture',
     photo1Alt: 'The Horde team working together around a screen',
     photo2Alt: 'A Horde team member at their workstation',
