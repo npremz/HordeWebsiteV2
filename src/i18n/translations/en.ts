@@ -469,39 +469,6 @@ export const en: Translations = {
   // About Page
   aboutPage: {
     title: 'Meet Horde, a web agency in Brussels',
-    description: 'Meet the designer and developer behind Horde, building custom websites in Brussels with clear UX, reliable code and direct collaboration.',
-    heroTitle1: 'Two\nminds,',
-    heroTitle2: 'One\nvision',
-    scrollDown: '↓',
-    introText1: "We start from a simple observation: today, many websites are built by marketing teams looking to sell templates as fast as possible without caring about your story.",
-    introText2: "Moreover, you probably don't need a heavy CMS, nor a bloated system with twenty plugins, or a complex web app. What you need is a fast, well-referenced, easy-to-maintain website. That's exactly what we build.",
-    highlightText: "Our sites are designed for you. They're lightweight, secure, and performant. This means sub-second load times, SEO that performs with less ad budget, and peace of mind on the maintenance side.",
-    workingTitle1: 'Our\nway',
-    workingTitle2: 'of working\nwith you',
-    workingWithUs: [
-      {
-        quote: "There's two of us, open to your suggestions so the project reflects you",
-        text: "We're available on WhatsApp, and we provide you with a platform to access everything we produce in real time",
-      },
-      {
-        quote: "We handle the technical complexity so you can stay focused on your vision.",
-        text: "We don't impose a system on you, we implement the technology that best meets your business needs to ensure your new site is practical for the long term",
-      },
-      {
-        quote: "We sit down with you, we guide you, without unnecessary tech jargon.",
-        text: "No surprises: the quoted price is the final price paid, in full transparency, with no additional costs. We want you to be autonomous after delivery",
-      },
-    ],
-    teamTitle1: 'Two\nminds,',
-    teamTitle2: 'One\nvision',
-    alexTitle: 'Alexandre - Designer',
-    alexDescription: "9 years turning vague ideas into interfaces that meet real needs. Obsessed with details and allergic to generic.",
-    nicoTitle: 'Nicolas - Developer',
-    nicoDescription: "9 years building flawless sites. Performance, SEO, and security: non-negotiable.",
-    cta: 'Work with us',
-    foundersAlt: 'Horde co-founders',
-    keyboardAlt: 'Mechanical keyboard',
-    alexAlt: 'Alexandre, Horde co-founder',
-    nicoAlt: 'Nicolas, Horde co-founder',
+    description: 'Horde is the will to see beautiful things on the web: two UI/UX design graduates working from Brussels and remotely.',
   },
 };
