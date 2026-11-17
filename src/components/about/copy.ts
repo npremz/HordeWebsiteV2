@@ -14,7 +14,7 @@ const fr = {
   },
   marquee: ['Human-first', 'Design UI/UX', 'Développement', 'Bruxelles', 'Remote', 'Durable'],
   vision: {
-    statementLabel: 'Le constat',
+    statementLabel: 'L’état actuel des choses',
     statement: 'Aujourd’hui tout se numérise, ça va à une vitesse folle, mais la qualité des expériences en prend un coup.',
     offerLabel: 'Ce qu’on propose',
     // [avant, mis en avant, entre, mis en avant, après]
@@ -88,7 +88,7 @@ const en: typeof fr = {
   },
   marquee: ['Human-first', 'UI/UX design', 'Development', 'Brussels', 'Remote', 'Lasting'],
   vision: {
-    statementLabel: 'What we see',
+    statementLabel: 'The current state of things',
     statement: 'Today everything is going digital, at a crazy speed, but the quality of experiences is taking a hit.',
     offerLabel: 'What we offer',
     offer: ['Taking the time to build interfaces ', 'well thought out for humans', ' and above all ', 'lasting', ' for the way you use them.'],
