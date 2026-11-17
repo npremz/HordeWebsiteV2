@@ -1,0 +1,12 @@
+---
+import PricingView from '../../components/pricing/PricingView.astro';
+
+export const prerender = true;
+
+// URL française de la page prix ; la version anglaise est dans website-prices.astro.
+export function getStaticPaths() {
+  return [{ params: { lang: 'fr' } }];
+}
+---
+
+<PricingView lang="fr" />
