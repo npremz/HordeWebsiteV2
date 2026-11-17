@@ -17,8 +17,12 @@ import {
 
 export const FACE_W = 512;
 export const FACE_H = 384;
-/** Résolution du canvas de sortie, en multiple du repère de dessin : 2 = diodes bien nettes. */
-const RES = 2;
+/**
+ * Résolution du canvas de sortie, en multiple du repère de dessin. 1 = 512 × 384 : la visière ne
+ * dépasse pas ~200 px à l'écran, et chaque redessin est renvoyé au GPU. À 2 (1024 × 768), cet envoi
+ * coûtait ~7 ms par image quand les yeux suivent le curseur, pour un rendu identique.
+ */
+const RES = 1;
 const OUT_W = FACE_W * RES;
 const OUT_H = FACE_H * RES;
 /** Résolution de la matrice de diodes. */
@@ -27,6 +31,11 @@ const GLOW_RADIUS = 14;
 /** Nombre de passes de halo : chaque passe le renforce. */
 const GLOW_PASSES = 3;
 const LED_COLS = 64;
+/**
+ * Intervalle minimal entre deux dessins du visage (s) : 30 i/s suffisent pour des diodes, la 3D
+ * reste à la fréquence de l'écran. Marge de 2 ms pour qu'un écran 60 Hz dessine une image sur deux.
+ */
+const FACE_FRAME = 1 / 30 - 0.002;
 const LED_ROWS = 48;
 
 const EYE_DX = 104;
@@ -76,6 +85,7 @@ export class FaceRenderer {
   private blinkQueue = 0;
   private nextBlink = 2;
   private dirty = true;
+  private drawnAt = -Infinity;
 
   constructor(options: FaceOptions = {}) {
     this.color = options.color ?? '#ffffff';
@@ -189,6 +199,12 @@ export class FaceRenderer {
     if (fx.zzz > 0.01 || fx.sweat > 0.01 || fx.heart > 0.01 || fx.qmark > 0.01) moving = true;
 
     if (!moving) return false;
+    if (this.time - this.drawnAt < FACE_FRAME) {
+      // Dessin reporté à l'image suivante : on garde le visage à jour quand le mouvement s'arrête.
+      this.dirty = true;
+      return false;
+    }
+    this.drawnAt = this.time;
     this.dirty = false;
     this.draw();
     return true;
