@@ -208,6 +208,17 @@ const initialHeaderTheme = headerVariant ?? pageHeaderTheme;
     height: auto;
   }
 
+  /*
+   * Ancrage du scroll coupé sur tout le document. Sous Firefox, l'animation en boucle des anneaux
+   * (« Notre démarche ») déclenchait des corrections d'ancrage : la page sautait de ±850 px toutes
+   * les 1 à 2 s sans qu'on touche à rien. Exclure seulement le schéma ne suffisait pas.
+   * Les images ont leurs dimensions : rien d'autre ne dépend de l'ancrage ici.
+   */
+  html,
+  body {
+    overflow-anchor: none;
+  }
+
   .lenis.lenis-smooth {
     scroll-behavior: auto !important;
   }
