@@ -61,6 +61,8 @@ interface ContactFormProps {
   translations: FormTranslations;
   variant?: 'light' | 'dark';
   hideNeedField?: boolean;
+  /** false : l'objectif devient facultatif (formulaire classique de la page contact). */
+  objectifRequired?: boolean;
   source?: FormSource;
   submitClassName?: string;
 }
@@ -69,6 +71,7 @@ export default function ContactForm({
   translations: t,
   variant = 'dark',
   hideNeedField = false,
+  objectifRequired = true,
   source,
   submitClassName,
 }: ContactFormProps) {
@@ -136,7 +139,7 @@ export default function ContactForm({
       newErrors.besoin = t.requiredField;
     }
 
-    if (!formData.objectif.trim()) {
+    if (objectifRequired && !formData.objectif.trim()) {
       newErrors.objectif = t.requiredField;
     } else if (formData.objectif.length > MAX_LENGTHS.objectif) {
       newErrors.objectif = maxLengthMessage(MAX_LENGTHS.objectif);
@@ -293,7 +296,7 @@ export default function ContactForm({
         : variant === 'dark' ? 'border-[#A29FA9] focus-within:border-lines' : 'border-lines focus-within:border-black'
         }`}>
         <label htmlFor="objectif" className='text-[16px] block md:w-36 md:shrink-0 relative'>
-          {t.objectifLabel}<span aria-hidden="true">*</span>
+          {t.objectifLabel}{objectifRequired && <span aria-hidden="true">*</span>}
           {errors.objectif && (
             <span aria-hidden="true" className="md:hidden text-err absolute right-0 top-0">{errors.objectif}</span>
           )}
@@ -312,7 +315,7 @@ export default function ContactForm({
             placeholder={t.objectifPlaceholder}
             value={formData.objectif}
             onInput={handleObjectifInput}
-            aria-required="true"
+            aria-required={objectifRequired}
             aria-invalid={!!errors.objectif}
             aria-describedby={errors.objectif ? 'objectif-error' : undefined}
           />

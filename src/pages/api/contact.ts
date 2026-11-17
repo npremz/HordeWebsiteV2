@@ -17,7 +17,8 @@ const besoinValues = [
 
 const contactSchema = z.object({
   besoin: z.enum(besoinValues).optional(),
-  objectif: z.string().min(1).max(2000),
+  // Facultatif depuis le formulaire classique de la page contact.
+  objectif: z.string().max(2000).optional().default(''),
   nom: z.string().min(1).max(100),
   email: z.email().max(254),
   societe: z.string().max(200).optional().default(''),
@@ -100,7 +101,7 @@ export const POST: APIRoute = async ({ request }) => {
       besoinLabel ? `Besoin : ${besoinLabel}` : null,
       `Source : ${sourceLabel}`,
       source?.pagePath ? `Page : ${source.pagePath}` : null,
-      `Objectif : ${objectif}`,
+      objectif ? `Objectif : ${objectif}` : null,
       `Nom : ${nom}`,
       `Email : ${email}`,
       societe ? `Société : ${societe}` : null,
@@ -119,7 +120,7 @@ export const POST: APIRoute = async ({ request }) => {
         ${besoinLabel ? `<p><strong>Besoin :</strong> ${escapeHtml(besoinLabel)}</p>` : ''}
         <p><strong>Source :</strong> ${escapeHtml(sourceLabel)}</p>
         ${source?.pagePath ? `<p><strong>Page :</strong> ${escapeHtml(source.pagePath)}</p>` : ''}
-        <p><strong>Objectif :</strong> ${escapeHtml(objectif)}</p>
+        ${objectif ? `<p><strong>Objectif :</strong> ${escapeHtml(objectif)}</p>` : ''}
         <p><strong>Nom :</strong> ${escapeHtml(nom)}</p>
         <p><strong>Email :</strong> ${escapeHtml(email)}</p>
         ${societe ? `<p><strong>Société :</strong> ${escapeHtml(societe)}</p>` : ''}

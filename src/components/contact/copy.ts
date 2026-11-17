@@ -92,6 +92,11 @@ const fr = {
     extraKept: 'C’est noté, ça partira avec ton message.',
   },
   noscript: 'Ce formulaire a besoin de JavaScript. Écrivez-nous à',
+  /** Formulaire classique, sous la console. */
+  classic: {
+    tag: '(Plan B)',
+    title: 'Technophobe\u00a0? Voici un formulaire classique.',
+  },
 };
 
 type ContactCopy = typeof fr;
@@ -182,6 +187,10 @@ const en: ContactCopy = {
     extraKept: 'Noted, it’ll go with your message.',
   },
   noscript: 'This form needs JavaScript. Write to us at',
+  classic: {
+    tag: '(Plan B)',
+    title: 'Technophobe? Here’s a classic form.',
+  },
 };
 
 const copies: Record<Locale, ContactCopy> = { fr, en };

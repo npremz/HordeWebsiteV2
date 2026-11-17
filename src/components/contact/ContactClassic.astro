@@ -1,0 +1,120 @@
+---
+/**
+ * Page contact : formulaire classique sous la console, pour qui préfère des cases à Arthur.
+ * Même formulaire que les pages services (ContactForm → POST /api/contact), avec le choix du besoin
+ * et un objectif facultatif.
+ * Grille calée sur celle de la console : colonne d'Arthur à gauche, formulaire sous le panneau.
+ */
+import ContactForm from "../ui/forms/ContactForm";
+import { type Locale, useTranslations } from "../../i18n";
+import { getContactCopy } from "./copy";
+
+interface Props {
+  lang: Locale;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const copy = getContactCopy(lang).classic;
+---
+
+<section class="contact-classic" data-header-theme="light" aria-labelledby="contact-classic-title">
+  <div class="contact-classic__grid">
+    <p class="contact-classic__tag">{copy.tag}</p>
+    <div class="contact-classic__body">
+      <h2 id="contact-classic-title" class="contact-classic__title">{copy.title}</h2>
+      <div class="contact-classic__form">
+        <ContactForm
+          client:visible
+          translations={t.form}
+          variant="light"
+          objectifRequired={false}
+          source={{ type: "contact-page", pagePath: `/${lang}/contact/` }}
+        />
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .contact-classic {
+    padding: 1.5rem 0.75rem 4rem;
+    background: var(--color-bg);
+    color: var(--color-black);
+  }
+
+  .contact-classic__grid {
+    display: grid;
+    gap: 1rem;
+    max-width: 82.5rem;
+    margin-inline: auto;
+  }
+
+  .contact-classic__tag {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    line-height: 1.35;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .contact-classic__body {
+    min-width: 0;
+  }
+
+  .contact-classic__title {
+    max-width: 16ch;
+    font-size: clamp(1.75rem, 8vw, 2.5rem);
+    font-weight: 400;
+    line-height: 1.02;
+    letter-spacing: -0.035em;
+  }
+
+  .contact-classic__form {
+    margin-top: 3.5rem;
+  }
+
+  @media (min-width: 640px) {
+    .contact-classic {
+      padding: 2rem 1rem 5rem;
+    }
+
+    .contact-classic__grid {
+      grid-template-columns: 9rem minmax(0, 1fr);
+      gap: 0 1.2rem;
+    }
+
+    /* Calé sur la première ligne du titre. */
+    .contact-classic__tag {
+      padding-top: 0.9rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .contact-classic {
+      padding: 2.5rem 2rem 6rem;
+    }
+
+    .contact-classic__grid {
+      grid-template-columns: 8.8rem minmax(0, 1fr);
+    }
+
+    .contact-classic__title {
+      font-size: 3.5rem;
+    }
+
+    .contact-classic__tag {
+      padding-top: 1.35rem;
+    }
+
+    .contact-classic__form {
+      margin-top: 5rem;
+    }
+  }
+
+  @media (min-width: 1512px) {
+    .contact-classic {
+      padding-inline: 6rem;
+    }
+  }
+</style>

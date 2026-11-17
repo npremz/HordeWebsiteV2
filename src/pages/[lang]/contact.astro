@@ -1,6 +1,7 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import ContactConsole from '../../components/contact/ContactConsole.astro';
+import ContactClassic from '../../components/contact/ContactClassic.astro';
 import Footer from '../../components/Footer.astro';
 import '../../components/home/home.css';
 import { SUPPORTED_LOCALES, type Locale, useTranslations } from '../../i18n';
@@ -20,6 +21,7 @@ const t = useTranslations(lang);
 <Layout lang={lang} title={t.contact.title} description={t.contact.description} headerVariant="dark" bare>
 	<div class="contact-page relative">
 		<ContactConsole lang={lang} />
+		<ContactClassic lang={lang} />
 	</div>
 	<div slot="footer" class="contact-page__footer">
 		<Footer lang={lang} />

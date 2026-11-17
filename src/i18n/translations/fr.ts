@@ -337,7 +337,7 @@ export const fr = {
       auditOffert: 'Audit (offert)',
       creationEcommerce: 'E-Commerce',
       creationLandingPage: 'Landing Page',
-      creationMvpSaas: 'Saas Mvp',
+      creationMvpSaas: 'MVP SaaS',
       applicationsEvenementielles: 'Applications événementielles',
       optimisationSiteWeb: 'Optimisation',
       refonteSiteWeb: 'Refonte',
