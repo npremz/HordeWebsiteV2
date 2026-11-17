@@ -262,7 +262,7 @@ export default function ContactForm({
             {errors.besoin && (
               <span id="besoin-error" role="alert" className="sr-only">{errors.besoin}</span>
             )}
-            <div className="w-full flex flex-wrap gap-5 lg:gap-[2.5rem] mt-5 pb-5 md:pb-10">
+            <div className="w-full flex flex-wrap gap-5 md:gap-y-3 lg:gap-x-[2.5rem] mt-5 pb-5 md:pb-10">
               {besoinOptions.map((option) => (
                 <label
                   key={option.value}
