@@ -6,6 +6,7 @@ import {
   type FormEventHandler,
 } from 'react';
 import { getCtaButtonClasses, type CtaButtonVariant } from '../actions/cta-button-classes';
+import { HOME_ICONS } from '../../home/svg/icons';
 
 interface FormData {
   besoin: string;
@@ -63,6 +64,8 @@ interface ContactFormProps {
   hideNeedField?: boolean;
   /** false : l'objectif devient facultatif (formulaire classique de la page contact). */
   objectifRequired?: boolean;
+  /** "home" : bouton d'envoi au style des liens de la landing (styles dans home/ui/home-link.css, à importer par la page). */
+  submitVariant?: 'cta' | 'home';
   source?: FormSource;
   submitClassName?: string;
 }
@@ -72,6 +75,7 @@ export default function ContactForm({
   variant = 'dark',
   hideNeedField = false,
   objectifRequired = true,
+  submitVariant = 'cta',
   source,
   submitClassName,
 }: ContactFormProps) {
@@ -412,15 +416,30 @@ export default function ContactForm({
       </div>
 
       <div className='mt-5 sm:mt-10 xl:mt-16 flex flex-col md:flex-row md:gap-16 lg:gap-32 md:justify-end'>
-        <button type="submit" disabled={isSubmitting} className={submitCta.classes}>
-          <span className={submitCta.overlay} aria-hidden="true"></span>
-          <span className={submitCta.labelTrack}>
-            <span className={submitCta.labelBase}>{isSubmitting ? t.submitting : t.submit}</span>
-          </span>
-          <span className={submitCta.labelOverlay} aria-hidden="true">
-            <span className={submitCta.labelOverlayText}>{isSubmitting ? t.submitting : t.submit}</span>
-          </span>
-        </button>
+        {submitVariant === 'home' ? (
+          <button
+            type="submit"
+            disabled={isSubmitting}
+            className="home-link home-link--dark home-link--arrow self-end cursor-pointer disabled:cursor-not-allowed disabled:opacity-50"
+          >
+            <span className="home-link__label">{isSubmitting ? t.submitting : t.submit}</span>
+            <span className="home-link__button" aria-hidden="true">
+              <svg className="home-link__arrow" viewBox="0 0 16 20" fill="currentColor">
+                <path d={HOME_ICONS.arrowDown.paths[0].d} />
+              </svg>
+            </span>
+          </button>
+        ) : (
+          <button type="submit" disabled={isSubmitting} className={submitCta.classes}>
+            <span className={submitCta.overlay} aria-hidden="true"></span>
+            <span className={submitCta.labelTrack}>
+              <span className={submitCta.labelBase}>{isSubmitting ? t.submitting : t.submit}</span>
+            </span>
+            <span className={submitCta.labelOverlay} aria-hidden="true">
+              <span className={submitCta.labelOverlayText}>{isSubmitting ? t.submitting : t.submit}</span>
+            </span>
+          </button>
+        )}
       </div>
 
       {submitStatus === 'success' && (

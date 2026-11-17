@@ -8,6 +8,7 @@
 import ContactForm from "../ui/forms/ContactForm";
 import { type Locale, useTranslations } from "../../i18n";
 import { getContactCopy } from "./copy";
+import "../home/ui/home-link.css";
 
 interface Props {
   lang: Locale;
@@ -29,6 +30,7 @@ const copy = getContactCopy(lang).classic;
           translations={t.form}
           variant="light"
           objectifRequired={false}
+          submitVariant="home"
           source={{ type: "contact-page", pagePath: `/${lang}/contact/` }}
         />
       </div>

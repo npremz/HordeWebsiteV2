@@ -92,6 +92,8 @@ const fr = {
     extraKept: 'C’est noté, ça partira avec ton message.',
   },
   noscript: 'Ce formulaire a besoin de JavaScript. Écrivez-nous à',
+  /** Sous la console, aligné sur « Suivant ». */
+  replyNote: 'Réponse sous 24h',
   /** Formulaire classique, sous la console. */
   classic: {
     tag: '(Plan B)',
@@ -187,6 +189,7 @@ const en: ContactCopy = {
     extraKept: 'Noted, it’ll go with your message.',
   },
   noscript: 'This form needs JavaScript. Write to us at',
+  replyNote: 'Reply within 24h',
   classic: {
     tag: '(Plan B)',
     title: 'Technophobe? Here’s a classic form.',

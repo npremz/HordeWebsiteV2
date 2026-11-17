@@ -175,6 +175,7 @@ const ticks = Array.from({ length: 22 });
           </button>
         </div>
       </div>
+      <p class="cc__note">{copy.replyNote}</p>
     </form>
   </div>
 </section>
@@ -509,6 +510,19 @@ const ticks = Array.from({ length: 22 });
   .cc__row:hover .cc__row-edit,
   .cc__row:focus-visible .cc__row-edit {
     color: var(--color-white);
+  }
+
+  /* Sous le panneau, calé à droite sur le bouton « Suivant ». */
+  .cc__note {
+    position: absolute;
+    top: calc(100% + 0.9rem);
+    right: var(--cc-note-right, 0.75rem);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    line-height: 1.35;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--color-black);
   }
 
   .cc__noscript {
@@ -1077,6 +1091,7 @@ const ticks = Array.from({ length: 22 });
     }
 
     .cc__panel {
+      --cc-note-right: 0.6rem;
       padding: 0 0.6rem 0.6rem;
     }
 
