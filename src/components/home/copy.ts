@@ -38,7 +38,7 @@ const fr = {
     start: 'Commencer',
     tag: 'Human-first',
     label: 'Qu’est-ce que la Horde ?',
-    text: 'Horde est une agence web bruxelloise pour les startups, les événements et les entreprises qui vivent en ligne. Un designer et un développeur qui conçoivent des sites et des applications où chaque interaction a du sens pour votre cible et votre usage. Audit offert, refonte, création ou application événementielle : parlons de votre projet.',
+    text: 'Horde est une agence web bruxelloise pour les startups, les événements et les entreprises qui vivent en ligne. Création, refonte, landing page ou MVP. On met également au point des applications événementielles qui transforment vos événements en véritables expériences interactives.',
     link: 'Voir nos services',
   },
   works: {
@@ -162,7 +162,7 @@ const en: HomeCopy = {
     start: 'Get started',
     tag: 'Human-first',
     label: 'What is Horde?',
-    text: 'Horde is a Brussels web agency for startups, events and businesses that live online. A designer and a developer crafting websites and apps where every interaction makes sense for your audience and your goals. Free audit, redesign, new build or event app: let’s talk about your project.',
+    text: 'Horde is a Brussels web agency for startups, events and businesses that live online. New builds, redesigns, landing pages or MVPs. We also build event apps that turn your events into truly interactive experiences.',
     link: 'See our services',
   },
   works: {
