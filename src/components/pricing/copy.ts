@@ -2,8 +2,8 @@ import type { Locale } from '../../i18n';
 
 /**
  * Page « Prix d'un site web » : textes. Les montants viennent des fichiers services
- * (`pricing` dans src/content/services/*.yaml) ; ici seulement les accroches et les nuances
- * validées dans docs/tarifs-2026-11.md (tout HTVA, bas de fourchette = cas le plus fréquent).
+ * (`pricing` dans src/content/services/*.yaml) ; ici seulement les libellés et les plafonds
+ * propres à la page, validés dans docs/tarifs-2026-11.md (tout HTVA).
  */
 export type OfferSlug =
   | 'audit-offert'
@@ -14,12 +14,14 @@ export type OfferSlug =
   | 'applications-evenementielles'
   | 'creation-mvp-saas';
 
-interface OfferCopy {
-  slug: OfferSlug;
+export interface PricingRowCopy {
+  /** Service lié (page de l'offre, données structurées). */
+  service: OfferSlug;
   name: string;
-  pitch: string;
-  /** Précisions sous le prix (sous-plafonds, unité, devis). */
-  details?: string[];
+  /** Lit le prix d'un autre service (ex. refonte SaaS = prix d'un MVP). */
+  priceFrom?: OfferSlug;
+  /** Plafond propre à la ligne (ex. refonte vitrine jusqu'à 2 999 €). */
+  to?: number;
 }
 
 const fr = {
@@ -28,70 +30,42 @@ const fr = {
   seoDescription:
     'Prix d’un site web en 2027 chez Horde : audit offert, refonte dès 999 €, landing page, e-commerce et MVP. Fourchettes indicatives HTVA, sans surprise.',
   hero: {
-    eyebrow: 'Tarifs 2027',
-    titleLines: ['Prix d’un site web', 'en 2027'],
-    lead: 'Nos fourchettes indicatives, pour chaque type de projet.',
-    updated: 'Mis à jour en novembre 2026 · Prix HTVA',
-    audit: 'Demander l’audit offert',
-    bookCall: 'Réserver un appel',
+    titleLines: ['Prix d’un site', 'web en 2027'],
+    lead: 'Nos fourchettes indicatives, pour chaque type de projet',
+    vat: 'Prix hors TVA',
+    total: 'Fourchette totale',
+    infoLabel: 'Comment lire ces prix',
+    info: 'Cochez une ou plusieurs offres : la fourchette totale les additionne. Tous nos prix sont HTVA ; le bas de la fourchette est le cas le plus fréquent.',
   },
-  reading: {
-    label: 'Comment lire ces prix',
-    text: 'Tous nos prix sont HTVA. Le bas de la fourchette est le cas le plus fréquent : le plafond n’est atteint que lorsque le périmètre est large.',
-  },
-  list: {
-    title: 'Nos fourchettes par projet',
-    colProject: 'Projet',
-    colPrice: 'Prix indicatif HTVA',
+  offersTitle: 'Nos Offres',
+  /** Lien de chaque ligne vers la page du service (texte lu par Google et les lecteurs d'écran). */
+  seeOffer: 'Voir l’offre',
+  chooseLabel: 'Choisir les offres à additionner dans la fourchette totale',
+  price: {
     free: 'Gratuit',
-    from: 'À partir de',
-    upTo: 'Selon le périmètre, jusqu’à',
-    perDay: 'par jour',
-    onQuote: 'Puis sur devis',
-    see: 'Voir l’offre',
-    vat: 'HTVA',
+    perDay: 'jour',
+    range: 'à',
+    onQuote: 'puis sur devis',
+    /** Prix sans plafond : version courte (mobile) et total. */
+    fromShort: 'dès',
   },
-  offers: [
-    {
-      slug: 'audit-offert',
-      name: 'Audit offert',
-      pitch: 'La porte d’entrée de toutes nos offres : on regarde votre site et on vous dit ce qui coince.',
-    },
-    {
-      slug: 'optimisation-site-web',
-      name: 'Optimisation de site web',
-      pitch: 'Votre site ne fonctionne pas ou ne donne aucun résultat ? On regarde les détails techniques qui coincent et on résout ça.',
-      details: ['Nombre de jours estimé après le diagnostic gratuit.'],
-    },
-    {
-      slug: 'refonte-site-web',
-      name: 'Refonte de site web',
-      pitch: 'Votre site est déjà en place et vous savez qu’il y a des soucis. On retravaille l’existant pour ne pas repartir de zéro.',
-      details: ['Site vitrine : jusqu’à 2 999 €', 'E-commerce : jusqu’à 3 999 €', 'SaaS : prix d’un développement complet (voir MVP)'],
-    },
-    {
-      slug: 'creation-landing-page',
-      name: 'Landing page',
-      pitch: 'Une marque ou un produit à présenter ou à vendre : une page pensée pour convaincre, par son design ou son message.',
-    },
-    {
-      slug: 'creation-ecommerce',
-      name: 'Site e-commerce',
-      pitch: 'Votre shop passe au niveau supérieur, avec un site soigné et des tunnels de vente fluides.',
-    },
-    {
-      slug: 'applications-evenementielles',
-      name: 'Événements interactifs',
-      pitch: 'Présentation, conférence, workshop : une expérience interactive numérique de qualité.',
-      details: ['Le devis dépend du public, de l’infrastructure et des responsabilités.'],
-    },
-    {
-      slug: 'creation-mvp-saas',
-      name: 'Développement MVP',
-      pitch: 'Une idée à tester, sans le bagage technique : un prototype rapide pour tester le marché.',
-    },
-  ] as OfferCopy[],
+  rows: [
+    // L'audit (gratuit) en tête et coché par défaut : la fourchette totale démarre à « Gratuit ».
+    { service: 'audit-offert', name: 'Audit' },
+    { service: 'creation-landing-page', name: 'Landing page' },
+    { service: 'applications-evenementielles', name: 'Événementiel interactif' },
+    { service: 'creation-ecommerce', name: 'Site e-commerce' },
+    { service: 'creation-mvp-saas', name: 'Développement MVP' },
+    { service: 'refonte-site-web', name: 'Refonte SaaS', priceFrom: 'creation-mvp-saas' },
+    { service: 'refonte-site-web', name: 'Refonte e-commerce', to: 3999 },
+    { service: 'refonte-site-web', name: 'Refonte site vitrine', to: 2999 },
+    { service: 'optimisation-site-web', name: 'Optimisation de site web' },
+  ] as PricingRowCopy[],
   faqTitle: 'Questions fréquentes',
+  /**
+   * Réponses en HTML simple. `{slug|texte}` devient un lien vers la page du service
+   * (URL lue dans les fichiers services, voir PricingPage).
+   */
   faq: [
     {
       q: 'Vos prix sont-ils HTVA ?',
@@ -102,24 +76,30 @@ const fr = {
       a: 'Le prix dépend du périmètre de votre projet. Le bas de la fourchette est le cas le plus fréquent ; le plafond n’est atteint que pour un périmètre large.',
     },
     {
+      q: 'Qu’est-ce qui fait varier le prix d’un site web ?',
+      a: 'Surtout le périmètre : le nombre de pages ou de sections, la production des contenus, la taille du catalogue pour un {creation-ecommerce|site e-commerce}, les intégrations (paiement, livraison, outils tiers) et le niveau de personnalisation. Pour une {refonte-site-web|refonte}, tout dépend aussi de ce qu’il faut reprendre dans l’existant.',
+    },
+    {
+      q: 'Combien de temps faut-il pour réaliser un site ?',
+      a: 'Une {creation-landing-page|landing page} simple prend 1 à 2 semaines, une {refonte-site-web|refonte} 3 à 6 semaines et un {creation-mvp-saas|MVP} complet 6 à 10 semaines. En {optimisation-site-web|optimisation}, les premiers gains se règlent en une semaine. Le délai confirmé figure dans notre proposition.',
+    },
+    {
+      q: 'La rédaction des contenus est-elle comprise ?',
+      a: 'Pour une {creation-landing-page|landing page}, oui si vous le souhaitez : vous fournissez le brief, on rédige. Pour une {refonte-site-web|refonte}, elle n’est pas incluse par défaut : on travaille avec votre rédacteur ou on vous en recommande un.',
+    },
+    {
+      q: 'L’hébergement est-il compris dans le prix ?',
+      a: 'On livre sur votre domaine et votre hébergeur, ou on vous recommande une solution adaptée. On ne vous revend pas d’hébergement avec une marge.',
+    },
+    {
+      q: 'Est-ce que je dépendrai de vous après la mise en ligne ?',
+      a: 'Non. Le code est documenté et livré sur votre compte, et on forme votre équipe pour qu’elle gère le contenu au quotidien, comme les produits, les prix ou les commandes d’un {creation-ecommerce|e-commerce}.',
+    },
+    {
       q: 'Par où commencer ?',
-      a: 'Par l’audit offert ou un appel de 30 minutes : on regarde votre projet ensemble avant de chiffrer quoi que ce soit.',
+      a: 'Par {audit-offert|l’audit offert} ou un appel de 30 minutes : on regarde votre projet ensemble avant de chiffrer quoi que ce soit.',
     },
   ],
-  guide: {
-    text: 'Vous préparez une refonte ? Notre guide détaille les coûts poste par poste.',
-    link: 'Combien coûte une refonte de site web',
-    href: '/fr/blog/combien-coute-refonte-site-web/',
-  },
-  cta: {
-    label: 'Prochaine étape',
-    title: 'Un prix précis pour votre projet ?',
-    text: 'Un appel de 30 minutes pour en discuter, ou un message via la page contact : on vous répond.',
-    bookCall: 'Réserver un appel',
-    bookCallMeta: '30 min',
-    contact: 'Écrire via la page contact',
-    newTab: '(s’ouvre dans un nouvel onglet)',
-  },
 };
 
 const en: typeof fr = {
@@ -128,68 +108,34 @@ const en: typeof fr = {
   seoDescription:
     'Website prices in 2027 at Horde: free audit, redesign from €999, landing page, e-commerce and MVP. Indicative ranges excl. VAT, no surprises.',
   hero: {
-    eyebrow: '2027 pricing',
     titleLines: ['Website prices', 'in 2027'],
-    lead: 'Our indicative ranges, for every type of project.',
-    updated: 'Updated November 2026 · Prices excl. VAT',
-    audit: 'Get the free audit',
-    bookCall: 'Book a call',
+    lead: 'Our indicative ranges, for each type of project',
+    vat: 'Prices excl. VAT',
+    total: 'Price range',
+    infoLabel: 'How to read these prices',
+    info: 'Tick one or more offers: the total range adds them up. All our prices exclude VAT; the low end of each range is the most common case.',
   },
-  reading: {
-    label: 'How to read these prices',
-    text: 'All our prices exclude VAT. The low end of each range is the most common case: the ceiling is only reached when the scope is broad.',
-  },
-  list: {
-    title: 'Our ranges by project',
-    colProject: 'Project',
-    colPrice: 'Indicative price excl. VAT',
+  offersTitle: 'Our Offers',
+  seeOffer: 'See the offer',
+  chooseLabel: 'Choose the offers to add up in the total range',
+  price: {
     free: 'Free',
-    from: 'From',
-    upTo: 'Depending on scope, up to',
-    perDay: 'per day',
-    onQuote: 'Then on quote',
-    see: 'See the offer',
-    vat: 'excl. VAT',
+    perDay: 'day',
+    range: 'to',
+    onQuote: 'then on quote',
+    fromShort: 'from',
   },
-  offers: [
-    {
-      slug: 'audit-offert',
-      name: 'Free audit',
-      pitch: 'The way into all our offers: we look at your site and tell you what is getting in the way.',
-    },
-    {
-      slug: 'optimisation-site-web',
-      name: 'Website optimisation',
-      pitch: 'Your site doesn’t work or brings no results? We look at the technical details that block it and fix them.',
-      details: ['Number of days estimated after the free diagnostic.'],
-    },
-    {
-      slug: 'refonte-site-web',
-      name: 'Website redesign',
-      pitch: 'Your site is already live and you know it has issues. We rework what exists instead of starting from scratch.',
-      details: ['Showcase site: up to €2,999', 'E-commerce: up to €3,999', 'SaaS: priced as a full development (see MVP)'],
-    },
-    {
-      slug: 'creation-landing-page',
-      name: 'Landing page',
-      pitch: 'A brand or product to present or sell: a page designed to convince, through its design or its message.',
-    },
-    {
-      slug: 'creation-ecommerce',
-      name: 'E-commerce website',
-      pitch: 'Take your shop to the next level, with a polished site and smooth sales funnels.',
-    },
-    {
-      slug: 'applications-evenementielles',
-      name: 'Interactive events',
-      pitch: 'Presentation, conference, workshop: a quality interactive digital experience.',
-      details: ['The quote depends on the audience, the infrastructure and the responsibilities.'],
-    },
-    {
-      slug: 'creation-mvp-saas',
-      name: 'MVP development',
-      pitch: 'An idea to test, without the technical background: a fast prototype to test the market.',
-    },
+  rows: [
+    // L'audit (gratuit) en tête et coché par défaut : la fourchette totale démarre à « Gratuit ».
+    { service: 'audit-offert', name: 'Audit' },
+    { service: 'creation-landing-page', name: 'Landing page' },
+    { service: 'applications-evenementielles', name: 'Interactive events' },
+    { service: 'creation-ecommerce', name: 'E-commerce website' },
+    { service: 'creation-mvp-saas', name: 'MVP development' },
+    { service: 'refonte-site-web', name: 'SaaS redesign', priceFrom: 'creation-mvp-saas' },
+    { service: 'refonte-site-web', name: 'E-commerce redesign', to: 3999 },
+    { service: 'refonte-site-web', name: 'Showcase site redesign', to: 2999 },
+    { service: 'optimisation-site-web', name: 'Website optimization' },
   ],
   faqTitle: 'Frequently asked questions',
   faq: [
@@ -202,24 +148,30 @@ const en: typeof fr = {
       a: 'The price depends on the scope of your project. The low end of the range is the most common case; the ceiling is only reached for a broad scope.',
     },
     {
+      q: 'What makes the price of a website vary?',
+      a: 'Mostly the scope: the number of pages or sections, content production, the catalogue size for an {creation-ecommerce|e-commerce website}, integrations (payments, shipping, third-party tools) and the level of customisation. For a {refonte-site-web|redesign}, it also depends on what needs reworking in the existing site.',
+    },
+    {
+      q: 'How long does it take to build a website?',
+      a: 'A simple {creation-landing-page|landing page} takes 1 to 2 weeks, a {refonte-site-web|redesign} 3 to 6 weeks and a complete {creation-mvp-saas|MVP} 6 to 10 weeks. In {optimisation-site-web|optimization}, the first gains are fixed within a week. The confirmed timeline is in our proposal.',
+    },
+    {
+      q: 'Is copywriting included?',
+      a: 'For a {creation-landing-page|landing page}, yes if you want it: you provide the brief and we write. For a {refonte-site-web|redesign}, it isn’t included by default: we work with your copywriter or recommend one.',
+    },
+    {
+      q: 'Is hosting included in the price?',
+      a: 'We deliver on your domain and your hosting, or recommend a suitable solution. We don’t resell hosting with a markup.',
+    },
+    {
+      q: 'Will I depend on you after launch?',
+      a: 'No. The code is documented and delivered on your account, and we train your team to handle day-to-day content, such as the products, prices or orders of an {creation-ecommerce|online store}.',
+    },
+    {
       q: 'Where do we start?',
-      a: 'With the free audit or a 30-minute call: we look at your project together before pricing anything.',
+      a: 'With {audit-offert|the free audit} or a 30-minute call: we look at your project together before pricing anything.',
     },
   ],
-  guide: {
-    text: 'Planning a redesign? Our guide breaks the costs down item by item.',
-    link: 'How much does a website redesign cost',
-    href: '/en/blog/how-much-does-a-website-redesign-cost/',
-  },
-  cta: {
-    label: 'Next step',
-    title: 'Want a precise price for your project?',
-    text: 'A 30-minute call to discuss it, or a message through the contact page: we’ll get back to you.',
-    bookCall: 'Book a call',
-    bookCallMeta: '30 min',
-    contact: 'Write to us on the contact page',
-    newTab: '(opens in a new tab)',
-  },
 };
 
 export function getPricingCopy(lang: Locale) {
@@ -228,15 +180,4 @@ export function getPricingCopy(lang: Locale) {
 
 export function getPricingHref(lang: Locale): string {
   return `/${lang}/${getPricingCopy(lang).slug}/`;
-}
-
-/** 1999 → « 1 999 € » (fr) ou « €1,999 » (en). */
-export function formatEuro(value: number, lang: Locale): string {
-  return new Intl.NumberFormat(lang === 'fr' ? 'fr-BE' : 'en-IE', {
-    style: 'currency',
-    currency: 'EUR',
-    maximumFractionDigits: 0,
-    // Le français ne groupe pas les nombres à 4 chiffres par défaut : on veut « 1 999 € ».
-    useGrouping: 'always',
-  }).format(value);
 }

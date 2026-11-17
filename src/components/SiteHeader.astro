@@ -11,6 +11,7 @@ import { getLocalizedPath, getPathWithoutLocale, type Locale } from "../i18n";
 import { getLocalizedProjects } from "../lib/content/projects";
 import { getServiceSummaries } from "../lib/content/services";
 import { getHomeCopy } from "./home/copy";
+import { getPricingHref } from "./pricing/copy";
 import { BUSINESS } from "../lib/business-info";
 import HomeIcon from "./home/svg/HomeIcon.astro";
 import headerMark from "../assets/svg/header-mark.svg?raw";
@@ -34,6 +35,7 @@ const [services, projects] = await Promise.all([
   getLocalizedProjects(lang),
 ]);
 const count = (value: number) => `(${value.toString().padStart(2, "0")})`;
+const pricingHref = getPricingHref(lang);
 
 const items = [
   { label: copy.nav.home, href: `/${lang}/`, current: isSection("/") },
@@ -41,6 +43,7 @@ const items = [
   { label: copy.nav.services, href: `/${lang}/services/`, count: count(services.length), current: isSection("/services/") },
   { label: copy.nav.projects, href: `/${lang}/projets/`, count: count(projects.length), current: isSection("/projets/") },
   { label: copy.nav.blog, href: `/${lang}/blog/`, current: isSection("/blog/") },
+  { label: copy.nav.pricing, href: pricingHref, current: isSection(getPathWithoutLocale(pricingHref)) },
   { label: copy.nav.contact, href: `/${lang}/contact/`, current: isSection("/contact/") },
 ];
 

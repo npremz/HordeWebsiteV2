@@ -21,7 +21,7 @@ shortName: Création site e-commerce
 footerTitle: E-Commerce
 footerOrder: 2
 pricing:
-  from: 1999
+  from: 2999
   to: 6000
 translations:
   en:
@@ -124,10 +124,11 @@ translations:
           against the catalogue, integrations and maintenance constraints.
       - question: How much does an e-commerce website in Brussels cost?
         answer: >-
-          From €1,999 excl. VAT. Depending on scope, the price can go up to
+          From €2,999 excl. VAT. Depending on scope, the price can go up to
           €6,000 excl. VAT. It mainly depends on catalogue size, integrations
           (payment, shipping, stock) and the level of customisation. A store
           with very specific logic is quoted separately, after the free audit.
+          All our ranges are on our <a href="/en/website-prices/">website prices</a> page.
       - question: Can I manage products and orders myself afterward?
         answer: >-
           Yes. That is non-negotiable. We train your team and document
@@ -246,11 +247,12 @@ faqItems:
       les deux selon le catalogue, les intégrations et la maintenance prévue.
   - question: Combien coûte un site e-commerce à Bruxelles ?
     answer: >-
-      À partir de 1 999 € HTVA. Selon le périmètre, le prix peut monter jusqu'à
+      À partir de 2 999 € HTVA. Selon le périmètre, le prix peut monter jusqu'à
       6 000 € HTVA. Il dépend surtout de la taille du catalogue, des
       intégrations (paiement, livraison, stock) et du niveau de
       personnalisation. Une boutique avec une logique très spécifique se chiffre
       sur devis, après l'audit offert.
+      Toutes nos fourchettes sont réunies sur notre page <a href="/fr/prix-site-web/">prix d’un site web</a>.
   - question: Puis-je gérer les produits et commandes moi-même après ?
     answer: >-
       Oui, c'est une condition non négociable. On forme votre équipe et on

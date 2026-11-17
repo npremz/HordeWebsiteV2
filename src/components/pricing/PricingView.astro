@@ -1,15 +1,15 @@
 ---
 /**
  * Gabarit commun des deux URL de la page prix (FR /fr/prix-site-web/, EN /en/website-prices/) :
- * mise en page, données structurées (catalogue d'offres HTVA + FAQ) et apparition au scroll.
+ * mise en page, données structurées (catalogue d'offres HTVA) et pause du bandeau hors écran.
  */
 import Layout from "../../layouts/Layout.astro";
 import Footer from "../Footer.astro";
 import PricingPage from "./PricingPage.astro";
 import "../home/home.css";
 import type { Locale } from "../../i18n";
-import { getServiceSummaries } from "../../lib/content/services";
 import { getPricingCopy, getPricingHref } from "./copy";
+import { getPricingRows } from "./rows";
 
 interface Props {
   lang: Locale;
@@ -21,66 +21,52 @@ const otherLang: Locale = lang === "fr" ? "en" : "fr";
 const site = Astro.site ?? new URL("https://hordeagence.com");
 const pageUrl = new URL(getPricingHref(lang), site).href;
 const alternateUrl = new URL(getPricingHref(otherLang), site).href;
-const services = await getServiceSummaries(lang);
-const bySlug = new Map(services.map((service) => [service.slug, service]));
+const rows = await getPricingRows(lang);
 
+// La FAQ (ServiceFaqSection) publie elle-même son FAQPage.
 const catalog = {
   "@context": "https://schema.org",
   "@type": "OfferCatalog",
   name: copy.seoTitle,
   url: pageUrl,
-  itemListElement: copy.offers.flatMap((offer) => {
-    const service = bySlug.get(offer.slug);
-    const pricing = service?.entry.data.pricing;
-    if (!service || !pricing) return [];
-    const serviceUrl = new URL(service.url, site).href;
-    return [{
+  itemListElement: rows.map((row) => {
+    const serviceUrl = new URL(row.url, site).href;
+    const { from, to, unit } = row.pricing;
+    return {
       "@type": "Offer",
       url: serviceUrl,
       priceCurrency: "EUR",
-      price: pricing.from,
-      itemOffered: { "@type": "Service", name: offer.name, url: serviceUrl },
+      price: from,
+      itemOffered: { "@type": "Service", name: row.name, url: serviceUrl },
       priceSpecification: {
-        "@type": pricing.unit ? "UnitPriceSpecification" : "PriceSpecification",
+        "@type": unit ? "UnitPriceSpecification" : "PriceSpecification",
         priceCurrency: "EUR",
-        ...(pricing.unit
-          ? { price: pricing.from, unitCode: "DAY", unitText: lang === "fr" ? "jour" : "day" }
-          : { minPrice: pricing.from }),
-        ...(pricing.to ? { maxPrice: pricing.to } : {}),
+        ...(unit
+          ? { price: from, unitCode: "DAY", unitText: lang === "fr" ? "jour" : "day" }
+          : { minPrice: from }),
+        ...(to ? { maxPrice: to } : {}),
         valueAddedTaxIncluded: false,
       },
-    }];
+    };
   }),
-};
-
-const faqSchema = {
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  mainEntity: copy.faq.map((item) => ({
-    "@type": "Question",
-    name: item.q,
-    acceptedAnswer: { "@type": "Answer", text: item.a },
-  })),
 };
 ---
 
 <script is:inline type="application/ld+json" set:html={JSON.stringify(catalog)} />
-<script is:inline type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
 
-<Layout lang={lang} title={copy.seoTitle} description={copy.seoDescription} alternateUrl={alternateUrl} headerVariant="dark" bare>
-  <script is:inline>document.documentElement.classList.add("home-js");</script>
+<Layout lang={lang} title={copy.seoTitle} description={copy.seoDescription} alternateUrl={alternateUrl} headerVariant="light" bare>
   <article class="home-page pricing-page relative">
     <PricingPage lang={lang} />
   </article>
   <div slot="footer" class="pricing-page__footer">
-    <Footer lang={lang} />
+    <Footer lang={lang} variant="dark" />
   </div>
 </Layout>
 
 <style>
   .pricing-page__footer {
     padding-inline: 1rem;
-    background: var(--color-bg);
+    background: var(--color-black);
     overflow-x: clip;
   }
 
@@ -98,13 +84,9 @@ const faqSchema = {
 </style>
 
 <script>
-  import { initHomeReveal } from "../../lib/home-reveal";
+  // Bandeau défilant mis en pause hors de l'écran.
   import { pauseOffscreen } from "../../lib/pause-offscreen";
 
-  initHomeReveal();
   pauseOffscreen();
-  document.addEventListener("astro:page-load", () => {
-    initHomeReveal();
-    pauseOffscreen();
-  });
+  document.addEventListener("astro:page-load", () => pauseOffscreen());
 </script>

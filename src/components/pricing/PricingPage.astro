@@ -1,17 +1,18 @@
 ---
 /**
- * Page « Prix d'un site web » : même langage visuel que la home et la page « Notre culture »
- * (hero noir à lignes de construction, labels mono, rails, cartes de la section méthode,
- * bloc final sombre). Surface « Compare » : une liste alignée, un prix par ligne.
+ * Page « Prix d'un site web » (maquette Prix) : hero clair à lignes de construction avec la
+ * fourchette totale des offres cochées, bandeau défilant de la home, liste des offres sur fond
+ * noir (chaque ligne se coche), puis la FAQ des pages services.
  */
 import type { Locale } from "../../i18n";
-import { BUSINESS } from "../../lib/business-info";
 import { getServiceSummaries } from "../../lib/content/services";
-import HeroLines from "../home/svg/HeroLines.astro";
+import { getHomeCopy } from "../home/copy";
 import { HOME_ICONS } from "../home/svg/icons";
-import HomeLink from "../home/ui/HomeLink.astro";
-import SlashMark from "../home/ui/SlashMark.astro";
-import { formatEuro, getPricingCopy } from "./copy";
+import HomeMarquee from "../home/ui/HomeMarquee.astro";
+import ServiceFaqSection from "../services/ServiceFaqSection.astro";
+import { getPricingCopy } from "./copy";
+import { formatTotal, type TotalLabels } from "./format";
+import { getPricingRows } from "./rows";
 
 interface Props {
   lang: Locale;
@@ -19,653 +20,786 @@ interface Props {
 
 const { lang } = Astro.props;
 const copy = getPricingCopy(lang);
-const services = await getServiceSummaries(lang);
-const bySlug = new Map(services.map((service) => [service.slug, service]));
-const contactHref = `/${lang}/contact/`;
-const bookingHref = BUSINESS.bookingUrl;
-
-const offers = copy.offers.map((offer, index) => {
-  const service = bySlug.get(offer.slug);
-  const pricing = service?.entry.data.pricing;
-  if (!service || !pricing) throw new Error(`[pricing] prix manquant pour ${offer.slug}`);
-  return { ...offer, index: String(index + 1).padStart(2, "0"), url: service.url, pricing };
-});
-const auditHref = offers.find((offer) => offer.slug === "audit-offert")!.url;
+const rows = await getPricingRows(lang);
+// Par défaut, seule la première offre (l'audit, gratuit) est cochée.
+const labels: TotalLabels = copy.price;
+const initialTotal = formatTotal([rows[0].pricing], labels);
+// FAQ : `{slug|texte}` devient un lien vers la page du service (maillage interne).
+const serviceUrls = new Map((await getServiceSummaries(lang)).map((service) => [service.slug, service.url]));
+const withServiceLinks = (text: string) =>
+  text.replace(/\{([a-z-]+)\|([^}]+)\}/g, (_, slug: string, label: string) => {
+    const url = serviceUrls.get(slug);
+    if (!url) throw new Error(`[pricing] service inconnu dans la FAQ : ${slug}`);
+    return `<a href="${url}">${label}</a>`;
+  });
+// Nom de l'offre : le dernier mot reste collé à la flèche ↗ (jamais seule à la ligne).
+const splitName = (name: string) => {
+  const cut = name.lastIndexOf(" ") + 1;
+  return [name.slice(0, cut), name.slice(cut)];
+};
+const faq = {
+  faqTitle: copy.faqTitle,
+  faqItems: copy.faq.map((item) => ({ question: item.q, answer: withServiceLinks(item.a) })),
+};
 ---
 
 <!-- 1. Hero -->
-<section class="pr-hero relative overflow-clip bg-black text-white" data-header-theme="dark">
-  <HeroLines class="pointer-events-none absolute inset-0 h-full w-full" />
-  <div class="pr-hero__inner home-column relative">
-    <p class="pr-eyebrow">{copy.hero.eyebrow}</p>
-    <h1 class="pr-hero__title">
-      {copy.hero.titleLines.map((line, index) => (
-        <><span class="pr-hero__line"><span style={`--line: ${index}`}>{line}</span></span>{index < copy.hero.titleLines.length - 1 && " "}</>
-      ))}
-    </h1>
-    <p class="pr-hero__lead">{copy.hero.lead}</p>
-    <div class="pr-hero__meta">
-      <a href={auditHref} class="pr-button pr-button--light group">
-        {copy.hero.audit}
-        <svg viewBox="0 0 22 22" fill="currentColor" aria-hidden="true"><path d={HOME_ICONS.spark.paths[0].d} /></svg>
-      </a>
-      <HomeLink href={bookingHref} label={copy.hero.bookCall} tone="light" icon="arrow" external newTabLabel={copy.cta.newTab} />
-    </div>
-    <p class="pr-hero__updated">{copy.hero.updated}</p>
+<section class="pr-hero" data-header-theme="light" data-pricing data-labels={JSON.stringify(labels)}>
+  <div class="pr-figure">
+    <!-- Lignes de construction : losange et rayons, axes, carré arrondi et astérisque. -->
+    <svg class="pr-figure__lines" viewBox="0 0 608 365" fill="none" aria-hidden="true">
+      <!-- Traits fins : 1px à toutes les tailles. -->
+      <g stroke="currentColor" stroke-width="1" vector-effect="non-scaling-stroke">
+        <path d="M0 182.5H608M182 0V365M426 0V365" vector-effect="non-scaling-stroke" />
+        <path d="M54 54.5 304 304.5M54 310.5 304 60.5M554 54.5 304 304.5M554 310.5 304 60.5" vector-effect="non-scaling-stroke" />
+      </g>
+      <rect x="228.25" y="106.75" width="151.5" height="151.5" rx="38.5" stroke="currentColor" stroke-width="21" transform="rotate(45 304 182.5)" />
+      <g stroke="currentColor" stroke-width="3.2">
+        <path d="M304 113V136M294 118.75 314 130.25M314 118.75 294 130.25" />
+      </g>
+    </svg>
+    <span class="pr-figure__pct pr-figure__pct--tl" aria-hidden="true">%</span>
+    <span class="pr-figure__pct pr-figure__pct--tr" aria-hidden="true">%</span>
+    <span class="pr-figure__pct pr-figure__pct--bl" aria-hidden="true">%</span>
+    <span class="pr-figure__pct pr-figure__pct--br" aria-hidden="true">%</span>
+    <p class="pr-figure__vat">{copy.hero.vat}</p>
   </div>
-</section>
 
-<!-- 2. Mode d'emploi des fourchettes -->
-<section class="pr-reading relative bg-bg" data-header-theme="light">
-  <div class="home-column relative">
-    <p class="home-lead pr-lead" data-home-reveal>
-      <span class="home-lead__label">{copy.reading.label}</span>
-      {copy.reading.text}
-    </p>
-  </div>
-</section>
+  <span class="pr-hero__target" aria-hidden="true"></span>
 
-<!-- 3. Liste des prix -->
-<section class="pr-list relative bg-bg" data-header-theme="light" aria-labelledby="pr-list-title">
-  <div class="home-column home-column--wide">
-    <div class="pr-list__head">
-      <h2 id="pr-list-title" class="pr-list__title">{copy.list.title}</h2>
-      <SlashMark spin />
+  <div class="pr-hero__bottom">
+    <div class="pr-hero__intro">
+      <h1 class="pr-hero__title">
+        {copy.hero.titleLines.map((line, index) => (
+          <>{index > 0 && " "}<span class="block">{line}</span></>
+        ))}
+      </h1>
+      <p class="pr-hero__lead">{copy.hero.lead}</p>
     </div>
 
-    <div class="pr-table" role="list">
-      <div class="pr-table__cols" aria-hidden="true">
-        <span>{copy.list.colProject}</span>
-        <span>{copy.list.colPrice}</span>
-      </div>
-
-      {offers.map((offer) => (
-        <article class:list={["pr-row", offer.slug === "audit-offert" && "pr-row--free"]} role="listitem" data-home-reveal>
-          <span class="pr-row__index">{offer.index}</span>
-
-          <div class="pr-row__body">
-            <h3 class="pr-row__name">{offer.name}</h3>
-            <p class="pr-row__pitch">{offer.pitch}</p>
-          </div>
-
-          <div class="pr-row__price">
-            {offer.pricing.from === 0 ? (
-              <p class="pr-price__value">{copy.list.free}</p>
-            ) : offer.pricing.unit === "day" ? (
-              <>
-                <p class="pr-price__value">
-                  {formatEuro(offer.pricing.from, lang)}
-                  <span class="pr-price__unit"> / {copy.list.perDay}</span>
-                </p>
-                <p class="pr-price__note">{copy.list.vat}</p>
-              </>
-            ) : (
-              <>
-                <p class="pr-price__from">{copy.list.from}</p>
-                <p class="pr-price__value">{formatEuro(offer.pricing.from, lang)}</p>
-                <p class="pr-price__note">
-                  {offer.pricing.to
-                    ? `${copy.list.vat}. ${copy.list.upTo} ${formatEuro(offer.pricing.to, lang)} ${copy.list.vat}.`
-                    : offer.slug === "applications-evenementielles"
-                      ? `${copy.list.vat}. ${copy.list.onQuote}.`
-                      : `${copy.list.vat}.`}
-                </p>
-              </>
-            )}
-            {offer.details && (
-              <ul class="pr-price__details">
-                {offer.details.map((detail) => <li>{detail}</li>)}
-              </ul>
-            )}
-          </div>
-
-          <div class="pr-row__link">
-            <HomeLink href={offer.url} label={copy.list.see} />
-          </div>
-        </article>
-      ))}
-    </div>
-  </div>
-</section>
-
-<!-- 4. FAQ -->
-<section class="pr-faq relative bg-white" data-header-theme="light">
-  <div class="home-column home-column--wide pr-faq__grid">
-    <h2 class="pr-faq__title">{copy.faqTitle}</h2>
-    <div>
-      {copy.faq.map((item, index) => (
-        <details class="pr-faq__item" open={index === 0}>
-          <summary>
-            <span>{item.q}</span>
-            <span class="pr-faq__icon" aria-hidden="true"><svg viewBox="0 0 8.86 9.1" fill="currentColor"><path d={HOME_ICONS.plus.paths[0].d} /></svg></span>
-          </summary>
-          <p>{item.a}</p>
-        </details>
-      ))}
-      <p class="pr-faq__guide">
-        {copy.guide.text} <a href={copy.guide.href}>{copy.guide.link}</a>
+    <div class="pr-total">
+      <p class="pr-total__chip">
+        <span>{copy.hero.total}</span>
+        <span class="pr-total__index" data-pricing-count>(01)</span>
+        <span class="pr-total__radio" aria-hidden="true"></span>
       </p>
+      <div class="pr-total__row">
+        <span class="pr-info">
+          <button type="button" class="pr-info__button" aria-label={copy.hero.infoLabel} aria-describedby="pr-info-text">i</button>
+          <span id="pr-info-text" class="pr-info__text" role="tooltip">{copy.hero.info}</span>
+        </span>
+        <p class="pr-total__price" aria-live="polite" data-pricing-total>{initialTotal}</p>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- 5. Appel final -->
-<section class="pr-cta relative bg-black text-white" data-header-theme="dark">
-  <div class="home-column home-column--wide relative">
-    <p class="pr-eyebrow">{copy.cta.label}</p>
-    <h2 class="pr-cta__title">{copy.cta.title}</h2>
-    <p class="pr-cta__text">{copy.cta.text}</p>
-    <div class="pr-cta__actions">
-      <a href={bookingHref} class="pr-button pr-button--light pr-button--wide group" target="_blank" rel="noopener">
-        <span>
-          {copy.cta.bookCall}
-          <span class="pr-button__meta">({copy.cta.bookCallMeta})</span>
+<HomeMarquee items={getHomeCopy(lang).marquee} variant="dark" />
+
+<!-- 2. Offres : les lignes cochées s'additionnent dans la fourchette totale du hero. -->
+<section class="pr-offers" data-header-theme="dark" aria-labelledby="pr-offers-title">
+  <h2 id="pr-offers-title" class="pr-offers__title">{copy.offersTitle}</h2>
+  <fieldset class="pr-offers__list">
+    <legend class="sr-only">{copy.chooseLabel}</legend>
+    {rows.map((row, index) => (
+      <label class="pr-offer">
+        <input
+          type="checkbox"
+          name="pricing-offer"
+          class="pr-offer__input sr-only"
+          checked={index === 0}
+          data-from={row.pricing.from}
+          data-to={row.pricing.to}
+          data-unit={row.pricing.unit}
+        />
+        <span class="pr-offer__name">
+          {splitName(row.name)[0]}<span class="pr-offer__last">{splitName(row.name)[1]}<a href={row.url} class="pr-offer__link"><span class="sr-only">{copy.seeOffer} {row.name}</span><svg viewBox="0 0 16 20" fill="currentColor" aria-hidden="true"><path d={HOME_ICONS.arrowDown.paths[0].d} /></svg></a></span>
         </span>
-        <span class="sr-only"> {copy.cta.newTab}</span>
-        <svg viewBox="0 0 22 22" fill="currentColor" aria-hidden="true"><path d={HOME_ICONS.spark.paths[0].d} /></svg>
-      </a>
-      <HomeLink href={contactHref} label={copy.cta.contact} tone="light" />
-    </div>
-  </div>
+        <span class="pr-offer__price">
+          <span class="pr-price-long">{row.priceText}</span><span class="pr-price-short">{row.priceShort}</span>
+        </span>
+        <span class="pr-offer__dot" aria-hidden="true"></span>
+      </label>
+    ))}
+  </fieldset>
+  <div class="pr-offers__dots" aria-hidden="true"><i></i><i></i><i></i></div>
 </section>
+
+<!-- 3. FAQ (même accordéon que les pages services). -->
+<div class="pr-faq" data-header-theme="dark">
+  <div class="home-column home-column--wide">
+    <ServiceFaqSection service={faq} />
+  </div>
+</div>
 
 <style>
-  .pr-eyebrow {
-    font-family: var(--font-mono);
-    font-size: 0.75rem;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-    color: rgb(244 241 248 / 0.65);
-  }
+  /* ---------- Hero ---------- */
 
-  /* Bouton plein (barre du CTA de la home), clair sur fond sombre. */
-  .pr-button {
-    display: inline-flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 1.5rem;
-    height: 3.25rem;
-    padding-inline: 1.25rem;
-    border-radius: 6px;
-    font-size: 1.0625rem;
-    letter-spacing: -0.01em;
-    transition: padding 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-  }
-
-  .pr-button--light {
-    background: var(--color-white);
+  .pr-hero {
+    position: relative;
+    padding: 3.75rem 0.625rem 1.15rem;
+    background: var(--color-bg);
     color: var(--color-black);
   }
 
-  .pr-button--wide {
+  .pr-figure {
+    position: relative;
+    width: calc(100% - 0.875rem);
+    max-width: 38rem;
+    margin-inline: auto;
+    aspect-ratio: 608 / 365;
+  }
+
+  .pr-figure__lines {
+    display: block;
     width: 100%;
-    max-width: 22rem;
+    height: 100%;
   }
 
-  .pr-button svg {
-    width: 1.1rem;
-    height: 1.1rem;
-    flex: none;
-    transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-  }
-
-  .pr-button__meta {
-    margin-left: 0.4rem;
+  .pr-figure__pct,
+  .pr-figure__vat {
+    position: absolute;
     font-family: var(--font-mono);
-    font-size: 0.75rem;
-    color: #4d4b51;
-  }
-
-  .pr-button:focus-visible {
-    outline: 2px solid var(--color-white);
-    outline-offset: 3px;
-  }
-
-  @media (hover: hover) {
-    .pr-button:hover {
-      padding-inline: 1.6rem 1rem;
-    }
-
-    .pr-button:hover svg {
-      transform: rotate(90deg);
-    }
-  }
-
-  /* ---------- Hero ---------- */
-
-  .pr-hero__inner {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    min-height: 32rem;
-    padding-block: 7rem 3rem;
-  }
-
-  .pr-hero__title {
-    margin-top: 1.5rem;
-    font-size: clamp(2.2rem, 11vw, 3.6rem);
-    font-weight: 300;
+    font-size: 0.5625rem;
     line-height: 1;
-    letter-spacing: -0.045em;
-  }
-
-  .pr-hero__line {
-    display: block;
-    overflow: hidden;
-    padding-bottom: 0.2em;
-    margin-bottom: -0.2em;
-  }
-
-  .pr-hero__line > span {
-    display: block;
-    animation: pr-hero-line 0.9s cubic-bezier(0.77, 0, 0.18, 1) both;
-    animation-delay: calc(0.15s + var(--line) * 0.1s);
-  }
-
-  @keyframes pr-hero-line {
-    from {
-      transform: translateY(calc(100% + 0.25em));
-    }
-  }
-
-  .pr-hero__lead {
-    max-width: 30rem;
-    margin-top: 1.75rem;
-    font-size: 1.25rem;
-    line-height: 1.25;
-    letter-spacing: -0.02em;
-    color: rgb(244 241 248 / 0.85);
-  }
-
-  .pr-hero__meta {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 1.5rem 2.5rem;
-    margin-top: 2.5rem;
-  }
-
-  .pr-hero__updated {
-    margin-top: 2.5rem;
-    font-family: var(--font-mono);
-    font-size: 0.6875rem;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-    color: rgb(244 241 248 / 0.55);
-  }
-
-  /* ---------- Mode d'emploi ---------- */
-
-  .pr-reading {
-    padding-block: 5rem 1rem;
-  }
-
-  @media (max-width: 639px) {
-    .pr-lead {
-      text-indent: 0;
-    }
-
-    .pr-lead .home-lead__label {
-      position: static;
-      display: block;
-      width: auto;
-      margin-bottom: 0.9rem;
-    }
-  }
-
-  /* ---------- Liste ---------- */
-
-  .pr-list {
-    padding-block: 4rem 6rem;
-  }
-
-  .pr-list__head {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 1rem;
-  }
-
-  .pr-list__title {
-    font-size: clamp(1.75rem, 7vw, 3.25rem);
-    font-weight: 400;
-    line-height: 1;
-    letter-spacing: -0.045em;
-  }
-
-  .pr-table {
-    margin-top: 2.5rem;
-    border-bottom: 1px solid var(--color-black);
-  }
-
-  .pr-table__cols {
-    display: none;
-  }
-
-  .pr-row {
-    display: grid;
-    grid-template-columns: 2.25rem 1fr;
-    gap: 0.75rem 0.5rem;
-    padding-block: 1.75rem;
-    border-top: 1px solid var(--color-black);
-  }
-
-  .pr-row__index {
-    padding-top: 0.35rem;
-    font-family: var(--font-mono);
-    font-size: 0.6875rem;
-    letter-spacing: 0.04em;
-  }
-
-  .pr-row__name {
-    font-size: 1.5rem;
-    font-weight: 400;
-    line-height: 1.05;
-    letter-spacing: -0.03em;
-  }
-
-  .pr-row__pitch {
-    margin-top: 0.75rem;
-    max-width: 30rem;
-    font-size: 0.9375rem;
-    line-height: 1.45;
-    color: #3b3a3e;
-  }
-
-  .pr-row__price,
-  .pr-row__link {
-    grid-column: 2;
-  }
-
-  .pr-row__link {
-    display: flex;
-    justify-content: flex-end;
-  }
-
-  .pr-price__from,
-  .pr-price__note {
-    font-family: var(--font-mono);
-    font-size: 0.6875rem;
-    line-height: 1.35;
     letter-spacing: 0.04em;
     text-transform: uppercase;
   }
 
-  .pr-price__note {
-    max-width: 17rem;
-    margin-top: 0.4rem;
-    color: #4d4b51;
+  /* Mobile : « % » à l'extérieur des axes verticaux ; desktop : à l'intérieur. */
+  .pr-figure__pct--tl,
+  .pr-figure__pct--bl {
+    left: 24.5%;
   }
 
-  .pr-price__value {
-    margin-top: 0.15rem;
-    font-size: 2.5rem;
-    font-weight: 300;
-    line-height: 1;
-    letter-spacing: -0.05em;
+  .pr-figure__pct--tr,
+  .pr-figure__pct--br {
+    right: 24.5%;
+  }
+
+  .pr-figure__pct--tl,
+  .pr-figure__pct--tr {
+    top: 0.2rem;
+  }
+
+  .pr-figure__pct--bl,
+  .pr-figure__pct--br,
+  .pr-figure__vat {
+    bottom: 0;
+  }
+
+  .pr-figure__vat {
+    left: 50%;
+    transform: translateX(-50%);
     white-space: nowrap;
   }
 
-  .pr-price__unit {
-    font-size: 1rem;
-    letter-spacing: -0.01em;
+  .pr-hero__target {
+    display: none;
   }
 
-  .pr-price__details {
-    margin-top: 0.9rem;
-    padding-top: 0.75rem;
-    border-top: 1px dashed #9e9aa4;
-    font-size: 0.875rem;
-    line-height: 1.5;
+  .pr-hero__bottom {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
+    align-items: end;
+    gap: 0.75rem;
+    margin-top: 2.6rem;
   }
 
-  .pr-price__details li::before {
-    content: "— ";
+  .pr-hero__title {
+    font-size: 1.3125rem;
+    font-weight: 400;
+    line-height: 1.02;
+    letter-spacing: -0.03em;
   }
 
-  /* Audit offert : carte claire, comme les étapes de la section méthode. */
-  .pr-row--free {
+  .pr-hero__lead {
+    margin-top: 1rem;
+    font-size: 0.8125rem;
+    line-height: 1.12;
+  }
+
+  .pr-total {
+    --pr-price-size: 1.25rem;
+    --pr-info-size: 1.375rem;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 1rem;
+  }
+
+  .pr-total__chip {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    height: 1.875rem;
+    padding: 0 0.25rem 0 0.35rem;
+    border-radius: 4px;
+    background: var(--color-bg-light);
+    font-size: 0.75rem;
+    line-height: 1;
+  }
+
+  .pr-total__chip > span:first-child {
+    flex: 1;
+    white-space: nowrap;
+  }
+
+  .pr-total__index {
+    font-family: var(--font-mono);
+    font-size: 0.625rem;
+  }
+
+  .pr-total__radio {
     position: relative;
+    width: 1.375rem;
+    height: 1.375rem;
+    flex: none;
+    border-radius: 999px;
+    background: var(--color-white);
   }
 
-  .pr-row--free .pr-price__value {
+  .pr-total__radio::before,
+  .pr-total__radio::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    margin: auto;
+    border-radius: 999px;
+  }
+
+  .pr-total__radio::before {
+    width: 54%;
+    height: 54%;
+    border: 1px solid #3ee06b;
+  }
+
+  .pr-total__radio::after {
+    width: 30%;
+    height: 30%;
+    background: #3ee06b;
+  }
+
+  /* ⓘ calé sur la dernière ligne du prix (un total sur deux lignes ne le remonte pas). */
+  .pr-total__row {
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+    gap: 0.6rem;
+  }
+
+  .pr-total__price {
+    font-size: var(--pr-price-size);
+    line-height: 1.05;
+    letter-spacing: -0.035em;
+    text-align: right;
+    text-wrap: balance;
+    transition:
+      opacity 0.2s ease,
+      transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .pr-total__price.is-swapping {
+    opacity: 0;
+    transform: translateY(0.3em);
+    transition: none;
+  }
+
+  .pr-info {
+    position: relative;
+    flex: none;
+    /* Centré sur la hauteur d'une ligne de prix (line-height 1.05). */
+    margin-bottom: max(0px, calc((1.05 * var(--pr-price-size) - var(--pr-info-size)) / 2));
+  }
+
+  .pr-info__button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--pr-info-size);
+    height: var(--pr-info-size);
+    border: 1px solid currentColor;
+    border-radius: 999px;
+    font-family: var(--font-mono);
+    font-size: 0.625rem;
+    line-height: 1;
+    cursor: help;
+  }
+
+  .pr-info__text {
+    position: absolute;
+    right: -0.5rem;
+    bottom: calc(100% + 0.6rem);
+    z-index: 5;
+    width: min(16rem, 70vw);
+    padding: 0.7rem 0.8rem;
+    border-radius: 6px;
+    background: var(--color-black);
+    color: var(--color-white);
+    font-size: 0.8125rem;
+    line-height: 1.35;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(0.25rem);
+    transition:
+      opacity 0.2s ease,
+      transform 0.25s ease,
+      visibility 0s linear 0.2s;
+  }
+
+  .pr-info:hover .pr-info__text,
+  .pr-info:focus-within .pr-info__text {
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+    transition:
+      opacity 0.2s ease,
+      transform 0.25s ease;
+  }
+
+  /* ---------- Offres ---------- */
+
+  .pr-offers {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    padding: 0.6rem 0.625rem 5.5rem;
+    overflow: hidden;
+    background: var(--color-black);
+    color: var(--color-black);
+  }
+
+  /* Grand titre en filigrane : derrière la liste (desktop), sous la liste (mobile). */
+  .pr-offers__title {
+    order: 2;
+    margin-top: 2.2rem;
+    font-size: 23vw;
+    font-weight: 400;
+    line-height: 0.8;
+    letter-spacing: -0.05em;
+    text-align: center;
+    white-space: nowrap;
+    background: linear-gradient(to bottom, rgb(255 255 255 / 0.075), rgb(255 255 255 / 0) 85%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  .pr-offers__list {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    gap: 0.25rem;
+    width: 100%;
+    max-width: 41.25rem;
+    margin: 0 auto;
+    padding: 0;
+    border: 0;
+  }
+
+  .pr-offer {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    min-height: 2.125rem;
+    padding: 0.2rem 1.15rem 0.2rem 0.75rem;
+    border-radius: 0.5rem;
+    background: var(--color-bg-light);
+    font-size: 1.125rem;
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+
+  .pr-offer__name {
+    min-width: 0;
+  }
+
+  .pr-offer__last {
+    white-space: nowrap;
+  }
+
+  /* Le prix ne se coupe jamais : c'est le nom qui passe à la ligne si besoin. */
+  .pr-offer__price {
+    flex: none;
+    text-align: right;
+    white-space: nowrap;
+  }
+
+  /* Lien discret vers la page du service (flèche ↗ des liens de la landing). */
+  .pr-offer__link {
     display: inline-flex;
     align-items: center;
-    min-height: 3rem;
-    padding-inline: 1rem;
-    border: 2px solid #d6d2da;
-    border-radius: 6px;
-    background: var(--color-bg-light);
-    font-size: 1.75rem;
+    justify-content: center;
+    width: 1.1em;
+    height: 1.1em;
+    margin-left: 0.1em;
+    vertical-align: 0.05em;
+    border-radius: 3px;
+    color: #8f8c95;
+    transition:
+      color 0.2s ease,
+      transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  /* Flèche descendue sur la ligne de base du texte (mesuré au pixel) ; un transform ne
+     modifie pas la hauteur de ligne, contrairement à vertical-align. */
+  .pr-offer__link svg {
+    width: 0.32em;
+    height: 0.4em;
+    transform: translateY(var(--pr-arrow-drop, 0.083em)) rotate(-135deg);
+  }
+
+  .pr-offer__link:hover,
+  .pr-offer__link:focus-visible {
+    color: var(--color-black);
+    transform: translate(0.08em, -0.08em);
+  }
+
+  .pr-offer__link:focus-visible {
+    outline: 2px solid var(--color-black);
+    outline-offset: 1px;
+  }
+
+  /* Mobile : prix sans plafond en version courte (« dès €1,999 ») ; la version masquée
+     (display: none) n'est pas lue non plus par les lecteurs d'écran. */
+  .pr-price-long {
+    display: none;
+  }
+
+  @media (min-width: 640px) {
+    .pr-price-long {
+      display: inline;
+    }
+
+    .pr-price-short {
+      display: none;
+    }
+  }
+
+  .pr-offer__dot {
+    position: absolute;
+    top: 0.4rem;
+    right: 0.45rem;
+    width: 0.4375rem;
+    height: 0.4375rem;
+    border: 1px solid #9c99a1;
+    border-radius: 999px;
+    transition:
+      background-color 0.2s ease,
+      border-color 0.2s ease;
+  }
+
+  .pr-offer:has(.pr-offer__input:checked) .pr-offer__dot {
+    border-color: #3ee06b;
+    background: #3ee06b;
+  }
+
+  .pr-offer:has(.pr-offer__input:focus-visible) {
+    outline: 2px solid var(--color-white);
+    outline-offset: 2px;
+  }
+
+  @media (hover: hover) {
+    .pr-offer:hover {
+      background: var(--color-white);
+    }
+  }
+
+  .pr-offers__dots {
+    order: 3;
+    position: relative;
+    height: 2rem;
+    margin-top: -1rem;
+  }
+
+  .pr-offers__dots i {
+    position: absolute;
+    top: 0;
+    width: 4px;
+    height: 4px;
+    background: var(--color-white);
+  }
+
+  .pr-offers__dots i:nth-child(1) {
+    left: 0.15rem;
+  }
+
+  .pr-offers__dots i:nth-child(2) {
+    top: 1.55rem;
+    left: calc(50% - 2px);
+  }
+
+  .pr-offers__dots i:nth-child(3) {
+    right: 0.15rem;
   }
 
   /* ---------- FAQ ---------- */
 
   .pr-faq {
-    padding-block: 5rem;
-  }
-
-  .pr-faq__grid {
-    display: grid;
-    gap: 2rem;
-  }
-
-  .pr-faq__title {
-    font-size: clamp(1.75rem, 7vw, 3.25rem);
-    font-weight: 400;
-    line-height: 1;
-    letter-spacing: -0.045em;
-  }
-
-  .pr-faq__item {
-    border-top: 1px solid var(--color-black);
-  }
-
-  .pr-faq__item:last-of-type {
-    border-bottom: 1px solid var(--color-black);
-  }
-
-  .pr-faq__item summary {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 1rem;
-    min-height: 3.5rem;
-    padding-block: 1rem;
-    font-size: 1.25rem;
-    line-height: 1.2;
-    letter-spacing: -0.02em;
-    cursor: pointer;
-    list-style: none;
-  }
-
-  .pr-faq__item summary::-webkit-details-marker {
-    display: none;
-  }
-
-  .pr-faq__icon {
-    display: inline-flex;
-    flex: none;
-    align-items: center;
-    justify-content: center;
-    width: 2.4rem;
-    height: 2.4rem;
-    border-radius: 6px;
+    position: relative;
+    isolation: isolate;
+    overflow-x: clip;
     background: var(--color-black);
-    color: var(--color-white);
   }
 
-  .pr-faq__icon svg {
-    width: 0.625rem;
-    height: 0.625rem;
-    transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
-  }
+  /* ---------- Tablette ---------- */
 
-  .pr-faq__item[open] .pr-faq__icon svg {
-    transform: rotate(45deg);
-  }
-
-  .pr-faq__item summary:focus-visible {
-    outline: 2px solid var(--color-black);
-    outline-offset: 2px;
-  }
-
-  .pr-faq__item p {
-    max-width: 38rem;
-    padding-bottom: 1.5rem;
-    font-size: 1.0625rem;
-    line-height: 1.5;
-  }
-
-  .pr-faq__guide {
-    margin-top: 2rem;
-    font-size: 1.0625rem;
-    line-height: 1.5;
-  }
-
-  .pr-faq__guide a {
-    text-decoration: underline;
-    text-underline-offset: 0.18em;
-  }
-
-  /* ---------- Appel final ---------- */
-
-  .pr-cta {
-    padding-block: 5rem 5.5rem;
-  }
-
-  .pr-cta__title {
-    margin-top: 1.25rem;
-    font-size: clamp(2.1rem, 9vw, 4.25rem);
-    font-weight: 300;
-    line-height: 1;
-    letter-spacing: -0.045em;
-  }
-
-  .pr-cta__text {
-    max-width: 32rem;
-    margin-top: 1.5rem;
-    font-size: 1.0625rem;
-    line-height: 1.45;
-    color: rgb(244 241 248 / 0.75);
-  }
-
-  .pr-cta__actions {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 2rem;
-    margin-top: 2.75rem;
-  }
-
-  /* ---------- Breakpoints (alignés sur la home) ---------- */
-
-  @media (min-width: 768px) {
-    .pr-row {
-      grid-template-columns: 3rem minmax(0, 1fr) minmax(0, 15rem);
-      gap: 0 2rem;
-      align-items: start;
-    }
-
-    .pr-row__price {
-      grid-column: 3;
-      grid-row: 1 / span 2;
-    }
-
-    .pr-row__link {
-      grid-column: 2;
-      justify-content: flex-start;
-      margin-top: 1.5rem;
-    }
-
-    .pr-cta__actions {
-      flex-direction: row;
-      align-items: center;
-      justify-content: space-between;
-    }
-  }
-
-  @media (min-width: 1024px) {
-    .pr-hero__inner {
-      min-height: 40rem;
+  @media (min-width: 640px) {
+    .pr-hero {
+      padding: 5rem 2rem 1.75rem;
     }
 
     .pr-hero__title {
-      font-size: 5rem;
+      font-size: 1.75rem;
     }
 
-    .pr-reading {
-      padding-block: 7rem 2rem;
+    .pr-hero__lead {
+      font-size: 1rem;
     }
 
-    .pr-list {
-      padding-block: 5rem 8rem;
+    .pr-hero__bottom {
+      grid-template-columns: minmax(11rem, 1fr) auto;
+      margin-top: 3rem;
     }
 
-    .pr-table {
-      margin-top: 3.5rem;
+    .pr-total {
+      --pr-price-size: 1.75rem;
+      --pr-info-size: 1.65rem;
+      min-width: 14rem;
     }
 
-    .pr-table__cols {
-      display: grid;
-      grid-template-columns: 3rem minmax(0, 1fr) minmax(0, 17rem);
-      gap: 0 2.5rem;
-      padding-bottom: 0.9rem;
-      font-family: var(--font-mono);
+    .pr-total__chip {
+      height: 2.5rem;
+      padding-inline: 0.75rem 0.4rem;
+      font-size: 1rem;
+    }
+
+    .pr-total__index {
       font-size: 0.6875rem;
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
     }
 
-    .pr-table__cols span:first-child {
-      grid-column: 2;
+    .pr-total__radio {
+      width: 1.65rem;
+      height: 1.65rem;
     }
 
-    .pr-row {
-      grid-template-columns: 3rem minmax(0, 1fr) minmax(0, 17rem);
-      gap: 0 2.5rem;
-      padding-block: 2.25rem;
+    /* Une ligne pour une offre ; plusieurs offres (« … + 199 € / jour ») passent sur deux. */
+    .pr-total__price {
+      max-width: 19rem;
     }
 
-    .pr-row__name {
-      font-size: 2rem;
+    .pr-figure__pct,
+    .pr-figure__vat {
+      font-size: 0.6875rem;
     }
 
-    .pr-row__pitch {
-      font-size: 1.0625rem;
+    .pr-offers {
+      padding-inline: 2rem;
     }
 
-    .pr-price__value {
-      font-size: 3.25rem;
+    .pr-offer {
+      gap: 1rem;
+      min-height: 3.375rem;
+      padding: 0.35rem 1.3rem 0.35rem 0.875rem;
+      border-radius: 0.95rem;
+      font-size: 1.75rem;
     }
 
-    .pr-faq {
-      padding-block: 7.5rem;
+    .pr-offer__dot {
+      top: 0.75rem;
+      right: 0.875rem;
     }
 
-    .pr-faq__grid {
-      grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
-      gap: 4rem;
+    .pr-offer__link {
+      --pr-arrow-drop: 0.107em;
     }
 
-    .pr-cta {
-      padding-block: 7.5rem 8rem;
+    .pr-offers__list {
+      gap: 0.3rem;
+    }
+  }
+
+  /* ---------- Desktop : figure au centre, titre et fourchette en bas de part et d'autre ---------- */
+
+  @media (min-width: 1024px) {
+    .pr-hero {
+      height: 36.25rem;
+      padding: 0;
     }
 
-    .pr-cta__title {
-      font-size: 5.5rem;
+    .pr-figure {
+      position: absolute;
+      top: 10rem;
+      left: 50%;
+      width: min(38rem, 56vw);
+      transform: translateX(-50%);
+    }
+
+    .pr-figure__pct--tl,
+    .pr-figure__pct--bl {
+      left: 35.2%;
+    }
+
+    .pr-figure__pct--tr,
+    .pr-figure__pct--br {
+      right: 35.2%;
+    }
+
+    .pr-hero__target {
+      position: absolute;
+      top: calc(10rem + min(38rem, 56vw) * 365 / 608 / 2);
+      right: 2rem;
+      display: block;
+      width: 1.7rem;
+      height: 1.7rem;
+      border: 3px solid currentColor;
+      border-radius: 999px;
+      transform: translateY(-50%);
+    }
+
+    .pr-hero__target::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      width: 0.55rem;
+      height: 0.55rem;
+      margin: auto;
+      border-radius: 999px;
+      background: currentColor;
+    }
+
+    .pr-hero__bottom {
+      position: absolute;
+      right: 2rem;
+      bottom: 3.45rem;
+      left: 2rem;
+      display: flex;
+      justify-content: space-between;
+      margin: 0;
+    }
+
+    .pr-hero__intro {
+      max-width: 14rem;
+    }
+
+    .pr-hero__lead {
+      margin-top: 2rem;
+    }
+
+    .pr-total {
+      width: 14rem;
+      gap: 1.35rem;
+      margin-bottom: -0.3rem;
+    }
+
+    .pr-total__row {
+      width: max-content;
+      align-self: flex-end;
+    }
+
+    /* Assez étroit pour ne jamais croiser les lignes de la figure quand tout est coché. */
+    .pr-total__price {
+      max-width: 20rem;
+    }
+
+    .pr-offers {
+      padding-bottom: 14.5rem;
+    }
+
+    .pr-offers__title {
+      position: absolute;
+      top: 5.25rem;
+      left: 50%;
+      margin: 0;
+      font-size: 23.5vw;
+      transform: translateX(-50%);
+    }
+
+    .pr-offers__dots {
+      position: absolute;
+      right: 12.6%;
+      bottom: 3rem;
+      left: 12.2%;
+      height: 2rem;
+      margin: 0;
+    }
+
+    .pr-offers__dots i:nth-child(1) {
+      left: 0;
+    }
+
+    .pr-offers__dots i:nth-child(3) {
+      right: 0;
+    }
+  }
+
+  @media (min-width: 1280px) {
+    .pr-total {
+      --pr-price-size: 2.4rem;
+    }
+  }
+
+  @media (min-width: 1440px) {
+    .pr-total__price {
+      max-width: 24rem;
     }
   }
 
   @media (min-width: 1512px) {
-    .pr-hero__title {
-      font-size: 5.75rem;
+    .pr-offers__title {
+      font-size: 22.2rem;
     }
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .pr-hero__line > span {
-      animation: none;
+    .pr-total__price,
+    .pr-info__text {
+      transition: none;
     }
   }
 </style>
+
+<script>
+  import { formatTotal, type PriceSpec, type TotalLabels } from "./format";
+
+  // Fourchette totale : somme des offres cochées, et leur nombre entre parenthèses.
+  function initPricing() {
+    const root = document.querySelector<HTMLElement>("[data-pricing]");
+    const count = root?.querySelector<HTMLElement>("[data-pricing-count]");
+    const total = root?.querySelector<HTMLElement>("[data-pricing-total]");
+    if (!root || !count || !total || root.dataset.pricingReady !== undefined) return;
+    root.dataset.pricingReady = "";
+
+    const labels = JSON.parse(root.dataset.labels ?? "{}") as TotalLabels;
+    const inputs = [...document.querySelectorAll<HTMLInputElement>('input[name="pricing-offer"]')];
+
+    const update = (animate: boolean) => {
+      const checked = inputs.filter((input) => input.checked);
+      const items: PriceSpec[] = checked.map((input) => ({
+        from: Number(input.dataset.from),
+        to: input.dataset.to ? Number(input.dataset.to) : undefined,
+        unit: input.dataset.unit === "day" ? "day" : undefined,
+      }));
+      count.textContent = `(${String(checked.length).padStart(2, "0")})`;
+      const text = formatTotal(items, labels);
+      if (text === total.textContent) return;
+      total.textContent = text;
+      if (!animate) return;
+      total.classList.add("is-swapping");
+      requestAnimationFrame(() => requestAnimationFrame(() => total.classList.remove("is-swapping")));
+    };
+
+    inputs.forEach((input) => input.addEventListener("change", () => update(true)));
+    // Cases restaurées par le navigateur (retour arrière) : on recalcule.
+    update(false);
+  }
+
+  initPricing();
+  document.addEventListener("astro:page-load", initPricing);
+</script>

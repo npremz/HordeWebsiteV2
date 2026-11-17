@@ -122,6 +122,7 @@ translations:
           €8,000 excl. VAT. It depends on business logic, the number of user
           roles, integrations (payments, third-party APIs) and the level of
           polish. We quote after scoping, not before.
+          All our ranges are on our <a href="/en/website-prices/">website prices</a> page.
       - question: How long does it take to build a testable MVP?
         answer: >-
           First usable screens: 3 to 5 weeks. A complete deployable MVP: 6 to 10
@@ -252,6 +253,7 @@ faqItems:
       8 000 € HTVA. Il dépend de la logique métier, du nombre de rôles, des
       intégrations (paiement, API tierces) et du niveau de finition. On chiffre
       après le cadrage, pas avant.
+      Toutes nos fourchettes sont réunies sur notre page <a href="/fr/prix-site-web/">prix d’un site web</a>.
   - question: Combien de temps faut-il pour développer un MVP testable ?
     answer: >-
       Les premiers écrans utilisables : 3 à 5 semaines. Un MVP complet

@@ -3,7 +3,8 @@ import type { ServiceData } from "./types";
 import ServiceSection from "./ServiceSection.astro";
 
 interface Props {
-  service: ServiceData;
+  /** Seuls le titre et les questions servent : la page prix réutilise cette FAQ. */
+  service: Pick<ServiceData, "faqTitle" | "faqItems">;
 }
 
 const { service } = Astro.props;
@@ -72,9 +73,8 @@ const faqSchema = service.faqItems.length > 0
           >
             <div class="overflow-hidden">
               <div class="faq-content-inner pb-10 opacity-0 transition-all duration-500 ease-out delay-0">
-                <p class="text-[18px] leading-relaxed max-w-3xl">
-                  {item.answer}
-                </p>
+                <!-- Réponses en HTML (comme les questions) : liens internes ; balises retirées dans le JSON-LD. -->
+                <p class="faq-answer text-[18px] leading-relaxed max-w-3xl" set:html={item.answer} />
               </div>
             </div>
           </div>
@@ -85,6 +85,12 @@ const faqSchema = service.faqItems.length > 0
 </ServiceSection>
 
 <style>
+  .faq-answer :global(a) {
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+    text-decoration-thickness: 1px;
+  }
+
   .faq-trigger[aria-expanded="true"] .icon-plus {
     display: none;
   }

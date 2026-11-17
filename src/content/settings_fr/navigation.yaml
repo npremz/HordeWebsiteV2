@@ -16,6 +16,9 @@ items:
   - label: Blog
     url: /fr/blog/
     isExternal: false
+  - label: Prix
+    url: /fr/prix-site-web/
+    isExternal: false
   - label: Contact
     url: /fr/contact/
     isExternal: false
