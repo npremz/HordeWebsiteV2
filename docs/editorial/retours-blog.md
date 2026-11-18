@@ -51,3 +51,10 @@ Journal des retours de Nicolas sur les propositions et les articles. À relire a
 - Miniature : utiliser les logos des IA comparées.
 - Article à mettre à jour à chaque grosse sortie (veille automatique hebdomadaire, voir cron « Veille IA — article meilleure IA pour coder »).
 - 16/11, retours : citation attribuée à Alexandre Potakowski (co-fondateur, designer UX), rendue comme vraie citation (le parseur maison ne gérait pas `>` ; ajout de `figure.article-quote` + légende mono). Gemini : offre trop complexe, modèles frontière liés à AI Studio, Carbon réservé à AI Ultra (99,99 €/219,99 € en BE, vérifié le 16/11) ou à l'API, Argon dès AI Pro 21,99 € ; Antigravity = harnais le moins convaincant testé ; modèles 4 accessibles ≈ niveau Sonnet. Formulé comme avis Horde, chiffres sourcés.
+
+## 2026-11-18 — « Combien coûte un site internet en 2027 ? Les prix en Belgique » (A2, M)
+
+- Proposition du mercredi acceptée (« ok c’est bon, go répartir ») : l’article répond à « combien et pourquoi » et renvoie à la page Prix pour la grille ; il ne cite que les prix « à partir de », jamais les plafonds.
+- Pas de fourchette « marché » pour les freelances (aucune donnée sourcée) : dit explicitement dans l’article.
+- Abonnements comparés sur 24 mois en facturation annuelle, prix normaux (pas la remise Wix de première période), hors taxes.
+- En attente de relecture.

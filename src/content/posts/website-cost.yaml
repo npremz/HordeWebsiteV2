@@ -1,0 +1,40 @@
+slug: website-cost
+slug_fr: prix-site-internet
+title_fr: 'En 2027, le prix d’un site dépend de ce qu’il doit faire à votre place'
+title_en: 'In 2027, a website’s price depends on what it has to do for you'
+seoTitle_fr: 'Combien coûte un site internet en 2027 ? Les prix en Belgique'
+seoTitle_en: 'How much does a website cost in 2027? Prices in Belgium'
+excerpt_fr: >-
+  Combien coûte un site internet en 2027 ? Tout dépend de ce qu’il doit faire à
+  votre place. IA, builder ou agence : le vrai coût sur deux ans, chiffres sourcés.
+excerpt_en: >-
+  How much does a website cost in 2027? It depends on what it has to do for you.
+  AI, builder or agency: the real cost over two years, with sourced figures.
+seoDescription_fr: >-
+  Prix d’un site internet en 2027 en Belgique : Wix, Framer, Webflow et Lovable
+  comparés sur 24 mois, coûts cachés, freelance ou agence, et nos prix HTVA.
+seoDescription_en: >-
+  Website prices in 2027 in Belgium: Wix, Framer, Webflow and Lovable compared
+  over 24 months, hidden costs, freelancer or agency, and our prices excl. VAT.
+featuredImageAlt_fr: >-
+  Une étiquette de prix cobalt reliée par un fil noir à trois blocs d’interface
+  ivoire de plus en plus grands, le dernier marqué d’un anneau vert acide.
+featuredImageAlt_en: >-
+  A cobalt price tag tied by a black string to three ivory interface blocks of
+  increasing size, the last one marked with an acid-green ring.
+featuredImage: /src/assets/images/blog/website-cost/featuredImage.png
+author: nicolas-premont
+category: strategie
+publishedDate: 2026-11-18
+readingTime: 9
+keyTakeaways_fr:
+  - En 2027, le prix d’un site dépend de ce qu’il doit faire seul (présenter, vendre, tester un produit), pas de son nombre de pages.
+  - Un builder ou un générateur IA coûte entre 240 € et 504 € d’abonnement sur deux ans en formule d’entrée, hors taxes, plus votre temps et le coût de sortie.
+  - Le prix d’un site généré par IA monte surtout au moment de le reprendre ; chez Horde, la refonte démarre à 999 € HTVA et l’optimisation coûte 199 € HTVA par jour.
+keyTakeaways_en:
+  - In 2027, a website’s price depends on what it must do on its own (present, sell, test a product), not on its page count.
+  - A builder or AI generator costs €240 to €504 in subscriptions over two years on the entry plan, excl. tax, plus your time and the cost of leaving.
+  - The price of an AI-generated site rises mostly when it needs reworking; at Horde, a redesign starts at €999 excl. VAT and optimization costs €199 excl. VAT per day.
+featured: false
+draft: false
+seoRobots: index, follow

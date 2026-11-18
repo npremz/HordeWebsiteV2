@@ -25,3 +25,12 @@ Fichier : src/assets/images/blog/best-ai-for-coding/featuredImage.png
 Composition SVG faite à la main (source : docs/editorial/2026-11/best-ai-for-coding-cover.svg), sans génération d’image, rendue en PNG 1536 × 1024 avec Chromium. Palette du site : ivoire, cobalt, lavande, vert acide et noir, grain papier léger. Aucun texte, sujet dans le carré central.
 Quatre tuiles ivoire portent les logos de Claude, OpenAI, Gemini et DeepSeek, en noir (demande de Nicolas : utiliser les logos des IA). Seule la tuile Claude a une ombre vert acide et une piste pleine ; les trois autres pistes sont en pointillés gris. Toutes entrent dans un anneau cobalt (la revue humaine) qui ne laisse sortir qu’une pastille vert acide.
 Logos : Claude, Google Gemini et DeepSeek depuis Simple Icons 16.38 (npm `simple-icons`) ; OpenAI depuis Wikimedia Commons, « OpenAI logo 2025 (symbol).svg ». Ce sont des marques de leurs propriétaires, utilisées ici à titre éditorial pour identifier les outils comparés.
+
+## website-cost
+
+Fichier : src/assets/images/blog/website-cost/featuredImage.png
+
+Composition SVG faite à la main (source : docs/editorial/2026-11/website-cost-cover.svg), rendue en PNG 1536 × 1024 avec Chromium. Palette du site, grain papier léger, aucun texte, sujet centré.
+Une étiquette de prix cobalt est reliée par un fil en pointillés à trois blocs d’interface ivoire de plus en plus grands (présenter, vendre, tester un produit) ; le plus grand porte un anneau vert acide. Le prix suit ce que le site doit faire.
+
+Prix des outils relevés le 18 novembre 2026 depuis une connexion belge, locale fr-BE, avec les scripts de docs/editorial/2026-11/scripts/ (prices*.cjs, wix.cjs) : Wix fr.wix.com/pricing (Light 14 €, Essentiel 25 €, Business 34 € par mois en annuel, remise de 50 % sur la première période affichée ce jour-là), Framer (Basic 10 €/Pro 30 € en annuel, 15 €/45 € en mensuel), Lovable (Pro 21 €/Business 42 € en annuel, 25 €/50 € en mensuel), Webflow (Basic 15 $/Premium 25 $ en annuel, en USD).
