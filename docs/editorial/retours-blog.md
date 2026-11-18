@@ -57,4 +57,5 @@ Journal des retours de Nicolas sur les propositions et les articles. À relire a
 - Proposition du mercredi acceptée (« ok c’est bon, go répartir ») : l’article répond à « combien et pourquoi » et renvoie à la page Prix pour la grille ; il ne cite que les prix « à partir de », jamais les plafonds.
 - Pas de fourchette « marché » pour les freelances (aucune donnée sourcée) : dit explicitement dans l’article.
 - Abonnements comparés sur 24 mois en facturation annuelle, prix normaux (pas la remise Wix de première période), hors taxes.
-- En attente de relecture.
+- Validé pour publication le 18 novembre 2026 sans modification (« parfait »), y compris les deux textes européens de la section 2027 et le calcul au prix Wix normal.
+- À faire : ajouter le lien vers A2 dans `combien-coute-refonte-site-web` (article publié, modification séparée).
