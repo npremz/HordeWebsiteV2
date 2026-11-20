@@ -1,0 +1,533 @@
+---
+/**
+ * Carousel des services (maquette « Squad ») : cartes blanches sur bandeau noir, qui défilent
+ * sans fin. Défilement natif (doigt, trackpad, clavier) aimanté sur les cartes, glisser-déposer
+ * à la souris. Les prix sont lus dans les fichiers services, comme sur la page prix.
+ *
+ * Boucle infinie : la liste est rendue 3 fois ; on reste dans la copie du milieu (la seule
+ * lue par les lecteurs d'écran) en sautant d'une copie entière quand le défilement s'arrête.
+ * Sans JS, seule la copie du milieu s'affiche.
+ */
+import type { Locale } from "../../i18n";
+import { getServiceSummaries } from "../../lib/content/services";
+import { formatEuro } from "../pricing/format";
+import AboutServiceArt from "./AboutServiceArt.astro";
+import { getAboutCopy } from "./copy";
+import { SERVICE_ART } from "./serviceArt";
+
+interface Props {
+  lang: Locale;
+}
+
+const { lang } = Astro.props;
+const copy = getAboutCopy(lang).services;
+const services = new Map((await getServiceSummaries(lang)).map((service) => [service.slug, service]));
+
+const cards = copy.cards.map((card) => {
+  const service = services.get(card.slug);
+  const pricing = service?.entry.data.pricing;
+  if (!service || !pricing) throw new Error(`[about] service ou prix manquant : ${card.slug}`);
+  const free = pricing.from === 0;
+  const price = free
+    ? copy.free
+    : pricing.unit === "day"
+      ? `${formatEuro(pricing.from)} / ${copy.perDay}`
+      : `${copy.from} ${formatEuro(pricing.from)}`;
+  return { ...card, url: service.url, description: service.seoDescription, price, free, art: SERVICE_ART[card.slug] };
+});
+const copies = [0, 1, 2];
+---
+
+<section class="about-services" data-header-theme="light" aria-labelledby="about-services-title" data-about-carousel>
+  <h2 id="about-services-title" class="sr-only">{copy.title}</h2>
+  <p class="sr-only">{copy.hint}</p>
+  <span class="about-services__snap" data-about-carousel-snap aria-hidden="true"></span>
+  <div class="about-services__scroller" data-about-carousel-scroller data-lenis-prevent-horizontal>
+    <ul class="about-services__track">
+      {copies.map((index) => {
+        const real = index === 1;
+        // Les copies de la boucle ne répètent pas les titres h3.
+        const Title = real ? "h3" : "p";
+        return cards.map((card) => (
+          <li class="about-card" data-copy={index} aria-hidden={real ? undefined : "true"}>
+            <Title class="about-card__title">
+              <a href={card.url} class="about-card__link" tabindex={real ? undefined : -1}>
+                {card.name}
+              </a>
+            </Title>
+            <span class="about-card__info">
+              <button
+                type="button"
+                class="about-card__info-button"
+                tabindex={real ? undefined : -1}
+                aria-label={real ? `${copy.infoLabel} ${card.name}` : undefined}
+                aria-describedby={real ? `about-card-tip-${card.slug}` : undefined}
+              >
+                i
+              </button>
+              <span id={real ? `about-card-tip-${card.slug}` : undefined} class="about-card__tip" role="tooltip">
+                {card.description}
+              </span>
+            </span>
+            <AboutServiceArt art={card.art} />
+            <p class="about-card__price">
+              {!card.free && (
+                <span class="about-card__vat">
+                  {copy.priceLabel[0]}<br />{copy.priceLabel[1]}
+                </span>
+              )}
+              <span class="about-card__amount">{card.price}</span>
+            </p>
+          </li>
+        ));
+      })}
+    </ul>
+  </div>
+</section>
+
+<style>
+  .about-services {
+    --card-w: min(80vw, 19rem);
+    --card-gap: 0.25rem;
+    /* Bord gauche de la carte aimantée (desktop) ; repris par le script via le repère ci-dessous. */
+    --snap-start: 0px;
+    position: relative;
+    padding-block: 0.25rem;
+    background: #16191b;
+  }
+
+  .about-services__snap {
+    position: absolute;
+    top: 0;
+    left: var(--snap-start);
+    width: 0;
+    height: 0;
+  }
+
+  .about-services__scroller {
+    position: relative;
+    overflow-x: auto;
+    overflow-y: hidden;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    cursor: grab;
+  }
+
+  .about-services__scroller::-webkit-scrollbar {
+    display: none;
+  }
+
+  .about-services__track {
+    display: flex;
+    gap: var(--card-gap);
+    width: max-content;
+  }
+
+  /* Sans JS : seulement la vraie liste, calée à gauche. */
+  .about-services:not(.is-looping) .about-card[data-copy="0"],
+  .about-services:not(.is-looping) .about-card[data-copy="2"] {
+    display: none;
+  }
+
+  .about-services:not(.is-looping) .about-services__track {
+    padding-inline: var(--card-gap);
+  }
+
+  /* Glisser à la souris : pas d'aimantation pendant le geste. */
+  .about-services.is-dragging .about-services__scroller {
+    scroll-snap-type: none;
+    cursor: grabbing;
+    user-select: none;
+  }
+
+  .about-services.is-dragging .about-card {
+    pointer-events: none;
+  }
+
+  /* ---------- Carte ---------- */
+
+  .about-card {
+    position: relative;
+    flex: none;
+    width: var(--card-w);
+    aspect-ratio: 460 / 620;
+    border-radius: 0.75rem;
+    background: var(--color-button-white);
+    color: #000;
+    scroll-snap-align: center;
+  }
+
+  .about-card__title {
+    max-width: calc(100% - 3.5rem);
+    padding: 0.85rem 0 0 0.9rem;
+    font-size: 1.25rem;
+    font-weight: 400;
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+  }
+
+  /* Toute la carte mène au service. */
+  .about-card__link::after {
+    content: "";
+    position: absolute;
+    z-index: 1;
+    inset: 0;
+    border-radius: inherit;
+  }
+
+  .about-card__link:focus-visible {
+    outline: none;
+  }
+
+  .about-card:has(.about-card__link:focus-visible) {
+    outline: 2px solid var(--color-white);
+    outline-offset: 2px;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .about-card__link:hover {
+      text-decoration: underline;
+      text-decoration-thickness: 1px;
+      text-underline-offset: 0.12em;
+    }
+  }
+
+  /* ⓘ : la description du service en bulle (survol ou focus). */
+  .about-card__info {
+    position: absolute;
+    z-index: 2;
+    top: 0.65rem;
+    right: 0.75rem;
+  }
+
+  .about-card__info-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.625rem;
+    height: 1.625rem;
+    border: 1px solid #9996a1;
+    border-radius: 999px;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    line-height: 1;
+    cursor: help;
+    transition:
+      background-color 0.2s ease,
+      color 0.2s ease;
+  }
+
+  .about-card__info-button:focus-visible {
+    outline: 2px solid #000;
+    outline-offset: 2px;
+  }
+
+  .about-card__tip {
+    position: absolute;
+    top: calc(100% + 0.5rem);
+    right: 0;
+    width: min(16rem, calc(var(--card-w) - 2rem));
+    padding: 0.7rem 0.8rem;
+    border-radius: 6px;
+    background: var(--color-black);
+    color: var(--color-white);
+    font-size: 0.8125rem;
+    line-height: 1.35;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-0.25rem);
+    transition:
+      opacity 0.2s ease,
+      transform 0.25s ease,
+      visibility 0s linear 0.2s;
+  }
+
+  .about-card__info:hover .about-card__tip,
+  .about-card__info:focus-within .about-card__tip {
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+    transition:
+      opacity 0.2s ease,
+      transform 0.25s ease;
+  }
+
+  .about-card__info:hover .about-card__info-button,
+  .about-card__info:focus-within .about-card__info-button {
+    border-color: #000;
+    background: #000;
+    color: var(--color-white);
+  }
+
+  .about-card__price {
+    position: absolute;
+    right: 0.9rem;
+    bottom: 0.8rem;
+    left: 0.9rem;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  .about-card__vat {
+    font-family: var(--font-mono);
+    font-size: 0.625rem;
+    line-height: 1.25;
+    text-transform: uppercase;
+  }
+
+  .about-card__amount {
+    margin-left: auto;
+    font-size: 1.25rem;
+    line-height: 1;
+    letter-spacing: -0.03em;
+    white-space: nowrap;
+  }
+
+  /* ---------- Tablette ---------- */
+
+  @media (min-width: 640px) {
+    .about-services {
+      --card-w: 22rem;
+    }
+
+    .about-card {
+      border-radius: 1rem;
+    }
+
+    .about-card__title {
+      padding: 1rem 0 0 1.05rem;
+      font-size: 1.5rem;
+    }
+
+    .about-card__info {
+      top: 0.8rem;
+      right: 0.95rem;
+    }
+
+    .about-card__price {
+      right: 1.05rem;
+      bottom: 1rem;
+      left: 1.05rem;
+    }
+
+    .about-card__vat {
+      font-size: 0.6875rem;
+    }
+
+    .about-card__amount {
+      font-size: 1.5rem;
+    }
+  }
+
+  /* ---------- Desktop : cartes de la maquette (460 × 620), aimantées sur leur bord gauche ---------- */
+
+  @media (min-width: 1024px) {
+    /* À 1512px, la carte aimantée commence à 342px (la précédente dépasse à gauche) ; au-delà,
+       la composition reste centrée sur la largeur de la maquette. */
+    .about-services {
+      --card-w: 28.75rem;
+      --snap-start: max(1rem, calc(50% - 25.875rem));
+    }
+
+    .about-services__scroller {
+      scroll-padding-inline-start: var(--snap-start);
+    }
+
+    .about-card {
+      border-radius: 1.25rem;
+      scroll-snap-align: start;
+    }
+
+    .about-card__title {
+      padding: 1.05rem 0 0 1.1rem;
+      font-size: 1.625rem;
+    }
+
+    .about-card__info {
+      top: 0.85rem;
+      right: 1.05rem;
+    }
+
+    .about-card__info-button {
+      width: 1.7rem;
+      height: 1.7rem;
+    }
+
+    .about-card__price {
+      right: 1.1rem;
+      bottom: 1.05rem;
+      left: 1.1rem;
+    }
+
+    .about-card__amount {
+      font-size: 1.625rem;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .about-card__tip,
+    .about-card__info-button {
+      transition: none;
+    }
+  }
+</style>
+
+<script>
+  /**
+   * Fin de défilement : `scrollend` quand il arrive, et dans tous les cas 150 ms sans événement
+   * `scroll` (Chrome n'envoie pas toujours `scrollend` après un scrollTo lisse qui suit un glisser).
+   */
+  function onScrollSettled(el: HTMLElement, callback: () => void) {
+    let timer: number | undefined;
+    const settle = () => {
+      window.clearTimeout(timer);
+      callback();
+    };
+    el.addEventListener("scrollend", settle);
+    el.addEventListener(
+      "scroll",
+      () => {
+        window.clearTimeout(timer);
+        timer = window.setTimeout(settle, 150);
+      },
+      { passive: true },
+    );
+  }
+
+  function initCarousel(root: HTMLElement) {
+    const scroller = root.querySelector<HTMLElement>("[data-about-carousel-scroller]");
+    const snapAnchor = root.querySelector<HTMLElement>("[data-about-carousel-snap]");
+    if (!scroller || !snapAnchor || root.dataset.carouselReady !== undefined) return;
+    root.dataset.carouselReady = "";
+
+    const cards = [...scroller.querySelectorAll<HTMLElement>(".about-card")];
+    const firstReal = cards.find((card) => card.dataset.copy === "1");
+    const firstCopy2 = cards.find((card) => card.dataset.copy === "2");
+    if (!firstReal || !firstCopy2) return;
+
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+    // Position de défilement qui aimante une carte (même calcul que scroll-snap-align).
+    const snapLeft = (card: HTMLElement) => {
+      if (getComputedStyle(card).scrollSnapAlign.includes("center")) {
+        return card.offsetLeft + card.offsetWidth / 2 - scroller.clientWidth / 2;
+      }
+      return card.offsetLeft - snapAnchor.offsetLeft;
+    };
+    const period = () => firstCopy2.offsetLeft - firstReal.offsetLeft;
+    const nearestSnap = (left: number) =>
+      cards.reduce((best, card) => {
+        const position = snapLeft(card);
+        return Math.abs(position - left) < Math.abs(best - left) ? position : best;
+      }, snapLeft(cards[0]));
+
+    // Reste dans la copie du milieu : un saut d'une copie entière ne se voit pas.
+    const recenter = () => {
+      const width = period();
+      const origin = snapLeft(firstReal);
+      const left = scroller.scrollLeft;
+      if (left < origin - width / 2) scroller.scrollLeft = left + width;
+      else if (left > origin + width / 2) scroller.scrollLeft = left - width;
+    };
+
+    root.classList.add("is-looping");
+    // Au départ : la 2e carte aimantée, la 1re dépasse à gauche (comme sur la maquette).
+    const start = cards[cards.indexOf(firstReal) + 1] ?? firstReal;
+    scroller.scrollLeft = snapLeft(start);
+
+    // ---- Glisser à la souris (le tactile et le trackpad défilent nativement) ----
+    let pointerId: number | null = null;
+    let dragging = false;
+    let startX = 0;
+    let startLeft = 0;
+    let lastX = 0;
+    let lastTime = 0;
+    let velocity = 0;
+    let blockClickUntil = 0;
+
+    scroller.addEventListener("dragstart", (event) => event.preventDefault());
+
+    scroller.addEventListener("pointerdown", (event) => {
+      if (event.pointerType !== "mouse" || event.button !== 0) return;
+      if ((event.target as Element).closest("button")) return;
+      pointerId = event.pointerId;
+      dragging = false;
+      startX = lastX = event.clientX;
+      startLeft = scroller.scrollLeft;
+      lastTime = performance.now();
+      velocity = 0;
+    });
+
+    scroller.addEventListener("pointermove", (event) => {
+      if (event.pointerId !== pointerId) return;
+      const dx = event.clientX - startX;
+      if (!dragging) {
+        if (Math.abs(dx) < 5) return;
+        dragging = true;
+        root.classList.add("is-dragging");
+        scroller.setPointerCapture(event.pointerId);
+      }
+      const now = performance.now();
+      const dt = Math.max(1, now - lastTime);
+      velocity = 0.8 * ((event.clientX - lastX) / dt) + 0.2 * velocity;
+      lastX = event.clientX;
+      lastTime = now;
+      scroller.scrollLeft = startLeft - dx;
+    });
+
+    const release = (event: PointerEvent) => {
+      if (event.pointerId !== pointerId) return;
+      pointerId = null;
+      if (!dragging) return;
+      dragging = false;
+      blockClickUntil = performance.now() + 80;
+      // Élan : on projette le geste, puis on s'aimante sur la carte la plus proche.
+      const target = nearestSnap(scroller.scrollLeft - velocity * 280);
+      if (Math.abs(target - scroller.scrollLeft) < 1) {
+        root.classList.remove("is-dragging");
+        recenter();
+        return;
+      }
+      scroller.scrollTo({ left: target, behavior: reduceMotion.matches ? "auto" : "smooth" });
+    };
+
+    scroller.addEventListener("pointerup", release);
+    scroller.addEventListener("pointercancel", release);
+    scroller.addEventListener(
+      "click",
+      (event) => {
+        if (performance.now() < blockClickUntil) {
+          event.preventDefault();
+          event.stopPropagation();
+        }
+      },
+      { capture: true },
+    );
+
+    onScrollSettled(scroller, () => {
+      if (pointerId !== null) return;
+      root.classList.remove("is-dragging");
+      recenter();
+    });
+
+    // Changement de taille : on se recale sur la carte la plus proche.
+    let resizeTimer: number | undefined;
+    new ResizeObserver(() => {
+      window.clearTimeout(resizeTimer);
+      resizeTimer = window.setTimeout(() => {
+        scroller.scrollLeft = nearestSnap(scroller.scrollLeft);
+        recenter();
+      }, 150);
+    }).observe(scroller);
+  }
+
+  function initCarousels() {
+    document.querySelectorAll<HTMLElement>("[data-about-carousel]").forEach(initCarousel);
+  }
+
+  initCarousels();
+  document.addEventListener("astro:page-load", initCarousels);
+</script>

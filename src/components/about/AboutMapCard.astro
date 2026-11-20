@@ -1,0 +1,224 @@
+---
+/**
+ * Carte « BXL » (maquette « Squad ») : fiche sombre à bande perforée, coordonnées, heure et
+ * température à Bruxelles (même horloge que le hero de la home), carte des 19 communes.
+ * Mise à l'échelle avec la carte (unités de conteneur) : mêmes proportions à toutes les tailles.
+ */
+import { Image } from "astro:assets";
+import type { Locale } from "../../i18n";
+import { BUSINESS } from "../../lib/business-info";
+import mapImage from "../../assets/images/about/bruxelles-communes.png";
+import haMark from "../../assets/svg/about/ha-mark.svg?raw";
+import { getAboutCopy } from "./copy";
+
+interface Props {
+  lang: Locale;
+  class?: string;
+}
+
+const { lang, class: className = "" } = Astro.props;
+const copy = getAboutCopy(lang).map;
+---
+
+<div class:list={["about-map", className]}>
+  <div class="about-map__card" data-home-clock data-days={JSON.stringify(copy.days)}>
+    <p class="about-map__label">{copy.label}</p>
+    <span class="about-map__mark" aria-hidden="true"><Fragment set:html={haMark} /></span>
+    <p class="about-map__city">
+      <span class="about-map__at">{copy.at}</span>
+      <span class="about-map__bxl">{copy.city}</span>
+    </p>
+    <p class="about-map__line about-map__coords">{copy.coordinates}</p>
+    <p class="about-map__line about-map__region">
+      <span>{copy.region}</span>
+      <span aria-hidden="true"><span data-home-clock-time>---_--:--:--</span>_<span data-home-clock-temp>--</span>°</span>
+    </p>
+    <div class="about-map__map">
+      <Image src={mapImage} alt={copy.mapAlt} widths={[244, 488, 732]} sizes="(min-width: 1024px) 243px, 51vw" loading="lazy" decoding="async" />
+      <svg class="about-map__pin" viewBox="0 0 36 36" fill="none" aria-hidden="true">
+        <circle cx="18" cy="18" r="17.25" stroke="currentColor" stroke-width="1.5" />
+        <circle cx="18" cy="18" r="10.5" stroke="currentColor" stroke-width="4" />
+        <circle cx="18" cy="18" r="4.5" fill="currentColor" />
+      </svg>
+    </div>
+    <div class="about-map__foot">
+      <svg class="about-map__shapes" viewBox="0 0 60 17" fill="currentColor" aria-hidden="true">
+        <path d="M5.3 0.3h6.4l4.5 4.5v6.4l-4.5 4.5H5.3L0.8 11.2V4.8z" />
+        <rect x="21.5" y="0.5" width="16" height="16" rx="2" />
+        <path d="M50.6 1.6a1.5 1.5 0 0 1 2.6 0l6.5 12.8a1.5 1.5 0 0 1-1.3 2.1H45.4a1.5 1.5 0 0 1-1.3-2.1z" />
+      </svg>
+      <a href={`mailto:${BUSINESS.email}`} class="about-map__email" aria-label={`${copy.emailLabel} : ${BUSINESS.email}`}>{BUSINESS.email}</a>
+    </div>
+  </div>
+</div>
+
+<style>
+  /* Bande perforée : en haut sur mobile, à gauche dès 640px. */
+  .about-map {
+    --rail: 0.625rem;
+    position: relative;
+    padding-top: var(--rail);
+  }
+
+  .about-map::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    height: var(--rail);
+    background:
+      repeating-linear-gradient(to right, transparent 0 2rem, #fff 2rem 4.0625rem),
+      #16191b;
+  }
+
+  .about-map__card {
+    position: relative;
+    container-type: inline-size;
+    aspect-ratio: 471 / 617;
+    border-radius: 1rem;
+    background: #16191b;
+    color: var(--color-white);
+    font-family: var(--font-mono);
+    text-transform: uppercase;
+    overflow: hidden;
+  }
+
+  /* 1 unité = 1px de la maquette desktop (carte de 471px de large). Les unités de conteneur
+     se rapportent au conteneur parent : on les définit sur les enfants de la carte. */
+  .about-map__card > * {
+    --u: calc(100cqw / 471);
+    position: absolute;
+  }
+
+  .about-map__label,
+  .about-map__line,
+  .about-map__at,
+  .about-map__email {
+    font-size: calc(13 * var(--u));
+    line-height: 1.2;
+    letter-spacing: 0.02em;
+  }
+
+  .about-map__label {
+    top: calc(21 * var(--u));
+    left: calc(24 * var(--u));
+  }
+
+  .about-map__mark {
+    top: calc(10 * var(--u));
+    right: calc(20 * var(--u));
+    width: calc(194 * var(--u));
+  }
+
+  .about-map__mark :global(svg) {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  .about-map__city {
+    top: calc(76 * var(--u));
+    left: calc(24 * var(--u));
+    display: flex;
+    align-items: baseline;
+    gap: calc(12 * var(--u));
+  }
+
+  .about-map__bxl {
+    font-family: var(--font-sans);
+    font-size: calc(58 * var(--u));
+    line-height: 1;
+    letter-spacing: -0.04em;
+    text-transform: none;
+  }
+
+  .about-map__coords {
+    top: calc(145 * var(--u));
+    left: calc(24 * var(--u));
+  }
+
+  .about-map__region {
+    white-space: nowrap;
+    top: calc(164 * var(--u));
+    right: calc(22 * var(--u));
+    left: calc(24 * var(--u));
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  .about-map__map {
+    top: calc(240 * var(--u));
+    left: calc(105 * var(--u));
+    width: calc(243 * var(--u));
+  }
+
+  .about-map__map img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  .about-map__pin {
+    position: absolute;
+    top: 47.9%;
+    left: 49.8%;
+    width: calc(36 * var(--u));
+    color: var(--color-white);
+    transform: translate(-50%, -50%);
+  }
+
+  /* Pointillés pleine largeur, puis formes et e-mail. */
+  .about-map__foot {
+    right: 0;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: calc(60 * var(--u));
+    padding-inline: calc(24 * var(--u)) calc(22 * var(--u));
+    border-top: 1px dashed #4a4d51;
+  }
+
+  .about-map__shapes {
+    width: calc(60 * var(--u));
+  }
+
+  .about-map__email {
+    text-decoration: none;
+  }
+
+  .about-map__email:hover,
+  .about-map__email:focus-visible {
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+  }
+
+  .about-map__email:focus-visible {
+    outline: 2px solid var(--color-white);
+    outline-offset: 3px;
+  }
+
+  @media (min-width: 640px) {
+    .about-map {
+      padding-top: 0;
+      padding-left: var(--rail);
+    }
+
+    .about-map::before {
+      right: auto;
+      bottom: 0;
+      width: var(--rail);
+      height: auto;
+      background:
+        repeating-linear-gradient(to bottom, transparent 0 3.25rem, #fff 3.25rem 6.8125rem, transparent 6.8125rem 7.0625rem),
+        #16191b;
+    }
+
+    .about-map__card {
+      border-radius: 1.25rem;
+    }
+  }
+</style>

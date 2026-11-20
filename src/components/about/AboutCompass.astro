@@ -1,0 +1,69 @@
+---
+/**
+ * Boussole de la section Bruxelles (maquette « Squad »). Les points cardinaux sont du texte,
+ * traduits (O / SO / NO en français, W / SW / NW en anglais).
+ */
+interface Props {
+  /** Dans l'ordre : N, NE, E, SE, S, SO, O, NO. */
+  labels: readonly string[];
+  class?: string;
+}
+
+const { labels, class: className = "" } = Astro.props;
+// Centre de chaque libellé (repère 360 × 360 de la maquette).
+const positions = [
+  [179.4, 65.9],
+  [262.9, 95.9],
+  [290.6, 178.9],
+  [262.8, 260.9],
+  [179.4, 291.9],
+  [96.9, 260.9],
+  [68.4, 178.9],
+  [97.1, 95.9],
+] as const;
+const dots = [
+  [141.5, 87.5],
+  [219.5, 87.5],
+  [270.5, 138.5],
+  [270.5, 216.5],
+  [219.5, 267.5],
+  [141.5, 267.5],
+  [90.5, 216.5],
+  [90.5, 138.5],
+] as const;
+---
+
+<svg class={className} viewBox="0 0 360 360" fill="none" aria-hidden="true">
+  <circle cx="180" cy="180" r="169.5" stroke-width="7" stroke="#9F98A6" />
+  <circle cx="180" cy="180" r="179.5" stroke="currentColor" />
+  <circle cx="179.5" cy="178.5" r="46" stroke="currentColor" />
+  <g stroke="currentColor">
+    <line x1="179.5" y1="78" x2="179.5" y2="279" />
+    <line x1="280" y1="179.5" x2="79" y2="179.5" />
+    <line x1="250.916" y1="107.791" x2="108.788" y2="249.92" />
+    <line x1="250.209" y1="249.916" x2="108.08" y2="107.788" />
+  </g>
+  <path
+    d="M189.046 140.296L217.705 168.956C222.977 174.228 222.977 182.776 217.705 188.048L189.046 216.707C183.774 221.979 175.226 221.979 169.954 216.707L141.295 188.048C136.023 182.776 136.023 174.228 141.295 168.956L169.954 140.296C175.226 135.024 183.774 135.024 189.046 140.296Z"
+    stroke-width="7"
+    stroke="currentColor"
+  />
+  <rect x="145.735" y="144.738" width="67.5304" height="67.5304" rx="13.5" stroke-width="7" stroke="currentColor" />
+  <g fill="currentColor">
+    {dots.map(([cx, cy]) => <circle cx={cx} cy={cy} r="2.5" />)}
+  </g>
+  <g class="about-compass__labels" fill="currentColor">
+    {positions.map(([x, y], index) => (
+      <text x={x} y={y}>{labels[index]}</text>
+    ))}
+  </g>
+</svg>
+
+<style>
+  .about-compass__labels {
+    font-family: var(--font-mono);
+    font-size: 11.5px;
+    text-anchor: middle;
+    dominant-baseline: central;
+  }
+</style>

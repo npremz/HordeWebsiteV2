@@ -20,6 +20,7 @@ interface Props {
   robots?: 'index, follow' | 'noindex, follow' | 'noindex, nofollow';
   canonical?: string;
   ogType?: 'website' | 'article';
+  pageType?: 'WebPage' | 'AboutPage';
   ogImage?: string;
   ogImageAlt?: string;
   ogImageWidth?: number;
@@ -52,6 +53,7 @@ const {
   robots,
   canonical,
   ogType,
+  pageType,
   ogImage,
   ogImageAlt,
   ogImageWidth,
@@ -93,6 +95,7 @@ const initialHeaderTheme = headerVariant ?? pageHeaderTheme;
       robots={robots}
       canonical={canonical}
       ogType={ogType}
+      pageType={pageType}
       ogImage={ogImage}
       ogImageAlt={ogImageAlt}
       ogImageWidth={ogImageWidth}

@@ -1,154 +1,145 @@
 import type { Locale } from '../../i18n';
 
 /**
- * Textes de la page « Notre culture » (/about/). Formulations de Nicolas et Alexandre,
- * gardées au plus près : on n'ajoute que les intitulés et les boutons.
+ * Textes de la page « L’agence » (/about/), maquette « Squad ». Formulations de Nicolas et
+ * Alexandre, gardées au plus près ; les labels anglais de la maquette sont traduits en français
+ * (sauf « remote »).
  */
+export type AboutServiceSlug =
+  | 'creation-mvp-saas'
+  | 'refonte-site-web'
+  | 'creation-landing-page'
+  | 'applications-evenementielles'
+  | 'creation-ecommerce'
+  | 'optimisation-site-web'
+  | 'audit-offert';
+
 const fr = {
   hero: {
-    eyebrow: 'Notre culture',
-    // h1 : la phrase entière ; découpée en lignes pour l'animation.
-    titleLines: ['Horde, c’est la volonté', 'de voir de belles choses', 'sur le web.'],
-    location: 'Bruxelles & remote',
-    bookCall: 'Réserver un appel',
-  },
-  marquee: ['Human-first', 'Design UI/UX', 'Développement', 'Bruxelles', 'Remote', 'Durable'],
-  vision: {
-    statementLabel: 'L’état actuel des choses',
+    // h1 : « Horde » en gris, puis la suite de la phrase.
+    titleBrand: 'Horde',
+    titleRest: ', c’est la volonté de voir de belles choses sur le web.',
     statement: 'Aujourd’hui tout se numérise, ça va à une vitesse folle, mais la qualité des expériences en prend un coup.',
-    offerLabel: 'Ce qu’on propose',
-    // [avant, mis en avant, entre, mis en avant, après]
-    offer: ['C’est de prendre le temps de faire des interfaces ', 'bien pensées pour l’humain', ' et surtout ', 'durables', ' pour votre usage.'],
-    tag: 'Human-first',
+    offer: 'Ce qu’on propose, c’est de prendre le temps de faire des interfaces bien pensées pour l’humain et surtout durables pour votre usage.',
   },
+  marquee: ['À propos', 'Nous'],
+  photos: {
+    teamAlt: 'Nicolas Prémont et Alexandre Potakowski, les deux fondateurs de Horde',
+    /** Légende lue par les lecteurs d’écran et les moteurs, masquée à l’écran (rôles = données structurées). */
+    teamCaption: 'Nicolas Prémont, co-fondateur et développeur, et Alexandre Potakowski, co-fondateur et designer UX.',
+    deskAlt: 'Un clavier sur un bureau, dans la lumière du jour',
+  },
+  /** Grand titre en filigrane sous les photos (décoratif). */
+  ghost: 'L’Agence',
+  /** Taille du filigrane selon la longueur du mot : il tient en entier dans l'écran (≈ 90 % de la
+      largeur sur mobile, 93 % sur desktop, plafonné à la largeur de la maquette). */
+  ghostScale: { mobile: 1.1, desktop: 1.22 },
   speed: {
-    label: 'Actuellement',
-    lead: 'Tout va beaucoup plus vite qu’il y a un an,',
-    title: 'alors utilisons cette vitesse d’itération pour créer des expériences utilisateur parfaites !',
+    title: 'Utilisons cette vitesse d’itération pour créer des expériences utilisateur parfaites !',
+    diagram: { input: 'Itération rapide', core: 'IA', output: 'Plus de résultats' },
+    team: 'On a tous les deux acquis des années d’expérience dans le design UI/UX en plus de nos diplômes. L’IA générative ne remplace pas notre expertise mais elle l’accélère grandement.',
+    modes: 'Avec également un passage par la pédagogie de l’école 42, notre équipe peut prendre en charge des projets de bout en bout, ou rejoindre la vôtre sur un point précis de votre développement.',
   },
-  team: {
-    label: 'L’équipe',
-    text: 'On est tous les deux diplômés dans le design UI/UX, en plus d’en faire depuis bientôt 10 ans.',
-    photoAlt: 'Nicolas et Alexandre, les deux fondateurs de Horde',
-    people: [
-      {
-        id: 'nicolas',
-        name: 'Nicolas Prémont',
-        role: 'Co-fondateur · Design & développement',
-        tags: ['Diplômé UI/UX', 'Formation 42'],
-        alt: 'Nicolas Prémont, co-fondateur de Horde',
-      },
-      {
-        id: 'alexandre',
-        name: 'Alexandre Potakowski',
-        role: 'Co-fondateur · Design UI/UX',
-        tags: ['Diplômé UI/UX'],
-        alt: 'Alexandre Potakowski, co-fondateur de Horde',
-      },
-    ],
-    quote: '« En plus du design, je suis passé par la méthodologie et la formation 42, ce qui a permis à notre précision technique de passer au niveau supérieur. »',
-    quoteAuthor: 'Nicolas',
-    quoteRole: 'Co-fondateur',
+  services: {
+    title: 'Nos services',
+    hint: 'Faites glisser pour voir tous nos services',
+    priceLabel: ['Prix', 'hors TVA'],
+    infoLabel: 'En savoir plus sur',
+    from: 'àpd',
+    perDay: 'jour',
+    free: 'Offert',
+    /** Ordre du carousel (celui de la maquette) et nom court affiché sur chaque carte. */
+    cards: [
+      { slug: 'creation-mvp-saas', name: 'Développement SaaS' },
+      { slug: 'refonte-site-web', name: 'Refonte de site web' },
+      { slug: 'creation-landing-page', name: 'Landing page' },
+      { slug: 'applications-evenementielles', name: 'Événementiel interactif' },
+      { slug: 'creation-ecommerce', name: 'Site e-commerce' },
+      { slug: 'optimisation-site-web', name: 'Optimisation de site web' },
+      { slug: 'audit-offert', name: 'Audit offert' },
+    ] as { slug: AboutServiceSlug; name: string }[],
   },
   work: {
-    label: 'Comment on travaille',
-    text: 'On travaille depuis Bruxelles et en remote. On accompagne entrepreneurs et startups dans la création de leur présence en ligne, de leurs applications et de leurs outils.',
-    remote: 'Remote',
-    modesLabel: 'Deux façons de collaborer',
-    modes: [
-      {
-        title: 'De bout en bout',
-        text: 'Notre équipe peut prendre en charge des projets de bout en bout.',
-        cta: 'Démarrer un projet',
-      },
-      {
-        title: 'Avec votre équipe',
-        text: 'Ou rejoindre la vôtre sur un point précis de votre développement.',
-        cta: 'Réserver un appel',
-      },
-    ],
+    // Deux lignes (maquette) : « / Remote » s'aligne sur la plus longue.
+    titleLines: ['On travaille depuis', 'Bruxelles et en remote.'],
+    based: ['Basés à Bruxelles,', 'Belgique'],
+    remote: '/ Remote',
+    text: 'On accompagne entrepreneurs et startups dans la création de leur présence en ligne, de leurs applications et de leurs outils.',
+    cta: 'Nous contacter',
   },
-  cta: {
-    label: 'Prochaine étape',
-    title: 'Parlons de votre projet.',
-    text: 'Un appel de 30 minutes pour en discuter, ou un message via la page contact : on vous répond.',
-    bookCall: 'Réserver un appel',
-    bookCallMeta: '30 min',
-    contact: 'Écrire via la page contact',
-    newTab: '(s’ouvre dans un nouvel onglet)',
+  map: {
+    label: 'Carte_2026',
+    at: 'À',
+    city: 'BXL',
+    coordinates: 'Coordonnées : (50,85045° N, 4,34878° E)',
+    region: 'Région : Bruxelles-Capitale',
+    days: ['DIM', 'LUN', 'MAR', 'MER', 'JEU', 'VEN', 'SAM'],
+    mapAlt: 'Carte des 19 communes de la Région de Bruxelles-Capitale, avec notre position au centre-ville',
+    /** Points cardinaux de la boussole, dans l'ordre N, NE, E, SE, S, SO, O, NO. */
+    compassLabels: ['N', 'NE', 'E', 'SE', 'S', 'SO', 'O', 'NO'],
+    /** Le même point que la carte (centre de Bruxelles), en degrés, minutes et secondes. */
+    compass: ['Bruxelles-centre', '50°51\'2" N, 4°20\'56" E'],
+    emailLabel: 'Nous écrire',
   },
 };
 
 const en: typeof fr = {
   hero: {
-    eyebrow: 'Our culture',
-    titleLines: ['Horde is the will', 'to see beautiful things', 'on the web.'],
-    location: 'Brussels & remote',
-    bookCall: 'Book a call',
-  },
-  marquee: ['Human-first', 'UI/UX design', 'Development', 'Brussels', 'Remote', 'Lasting'],
-  vision: {
-    statementLabel: 'The current state of things',
+    titleBrand: 'Horde',
+    titleRest: ' is the will to see beautiful things on the web.',
     statement: 'Today everything is going digital, at a crazy speed, but the quality of experiences is taking a hit.',
-    offerLabel: 'What we offer',
-    offer: ['Taking the time to build interfaces ', 'well thought out for humans', ' and above all ', 'lasting', ' for the way you use them.'],
-    tag: 'Human-first',
+    offer: 'What we offer is taking the time to build interfaces well thought out for humans and, above all, lasting for the way you use them.',
   },
+  marquee: ['About', 'Us'],
+  photos: {
+    teamAlt: 'Nicolas Prémont and Alexandre Potakowski, the two founders of Horde',
+    teamCaption: 'Nicolas Prémont, co-founder and developer, and Alexandre Potakowski, co-founder and UX designer.',
+    deskAlt: 'A keyboard on a desk in daylight',
+  },
+  ghost: 'The Agency',
+  ghostScale: { mobile: 0.83, desktop: 0.91 },
   speed: {
-    label: 'Right now',
-    lead: 'Everything moves much faster than a year ago,',
-    title: 'so let’s use that iteration speed to create perfect user experiences!',
+    title: 'Let’s use this iteration speed to create perfect user experiences!',
+    diagram: { input: 'Fast iteration', core: 'AI', output: 'More outcome' },
+    team: 'On top of our degrees, we’ve both built up years of experience in UI/UX design. Generative AI doesn’t replace our expertise, but it speeds it up enormously.',
+    modes: 'Having also been through the 42 school’s teaching approach, our team can take projects on from start to finish, or join yours on a specific part of your development.',
   },
-  team: {
-    label: 'The team',
-    text: 'We both hold degrees in UI/UX design, and we’ve been doing it for almost 10 years.',
-    photoAlt: 'Nicolas and Alexandre, the two founders of Horde',
-    people: [
-      {
-        id: 'nicolas',
-        name: 'Nicolas Prémont',
-        role: 'Co-founder · Design & development',
-        tags: ['UI/UX degree', '42 school'],
-        alt: 'Nicolas Prémont, co-founder of Horde',
-      },
-      {
-        id: 'alexandre',
-        name: 'Alexandre Potakowski',
-        role: 'Co-founder · UI/UX design',
-        tags: ['UI/UX degree'],
-        alt: 'Alexandre Potakowski, co-founder of Horde',
-      },
+  services: {
+    title: 'Our services',
+    hint: 'Drag to see all our services',
+    priceLabel: ['Price', 'excl. VAT'],
+    infoLabel: 'Learn more about',
+    from: 'from',
+    perDay: 'day',
+    free: 'Free',
+    cards: [
+      { slug: 'creation-mvp-saas', name: 'SaaS development' },
+      { slug: 'refonte-site-web', name: 'Website redesign' },
+      { slug: 'creation-landing-page', name: 'Landing page' },
+      { slug: 'applications-evenementielles', name: 'Interactive events' },
+      { slug: 'creation-ecommerce', name: 'E-commerce website' },
+      { slug: 'optimisation-site-web', name: 'Website optimization' },
+      { slug: 'audit-offert', name: 'Free audit' },
     ],
-    quote: '“On top of design, I went through the 42 methodology and training, which took our technical precision to the next level.”',
-    quoteAuthor: 'Nicolas',
-    quoteRole: 'Co-founder',
   },
   work: {
-    label: 'How we work',
-    text: 'We work from Brussels and remotely. We help entrepreneurs and startups build their online presence, their apps and their tools.',
-    remote: 'Remote',
-    modesLabel: 'Two ways to work together',
-    modes: [
-      {
-        title: 'End to end',
-        text: 'Our team can take projects on from start to finish.',
-        cta: 'Start a project',
-      },
-      {
-        title: 'With your team',
-        text: 'Or join yours on a specific part of your development.',
-        cta: 'Book a call',
-      },
-    ],
+    titleLines: ['We work from Brussels', 'and remotely.'],
+    based: ['Based in Brussels,', 'Belgium'],
+    remote: '/ Remote',
+    text: 'We help entrepreneurs and startups build their online presence, their apps and their tools.',
+    cta: 'Get in touch',
   },
-  cta: {
-    label: 'Next step',
-    title: 'Let’s talk about your project.',
-    text: 'A 30-minute call to discuss it, or a message through the contact page: we’ll get back to you.',
-    bookCall: 'Book a call',
-    bookCallMeta: '30 min',
-    contact: 'Write to us on the contact page',
-    newTab: '(opens in a new tab)',
+  map: {
+    label: 'Map_2026',
+    at: 'At',
+    city: 'BXL',
+    coordinates: 'Coordinates: (50.85045° N, 4.34878° E)',
+    region: 'Region: Marshland, Belgium',
+    days: ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'],
+    mapAlt: 'Map of the 19 municipalities of the Brussels-Capital Region, with our location in the city centre',
+    compassLabels: ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW'],
+    compass: ['Central Brussels', '50°51\'2" N, 4°20\'56" E'],
+    emailLabel: 'Email us',
   },
 };
 

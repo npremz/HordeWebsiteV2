@@ -17,7 +17,7 @@ const { lang } = Astro.params as { lang: Locale };
 const t = useTranslations(lang);
 ---
 
-<Layout lang={lang} title={t.aboutPage.title} description={t.aboutPage.description} headerVariant="dark" bare>
+<Layout lang={lang} title={t.aboutPage.title} description={t.aboutPage.description} pageType="AboutPage" headerVariant="light" bare>
   <script is:inline>document.documentElement.classList.add("home-js");</script>
   <article id="page-content" class="home-page about-page relative">
     <AboutPage lang={lang} />

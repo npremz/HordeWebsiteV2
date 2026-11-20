@@ -25,6 +25,8 @@ interface Props {
 
   // Open Graph
   ogType?: 'website' | 'article';
+  /** Type schema.org de la page (AboutPage pour « L’agence »). */
+  pageType?: 'WebPage' | 'AboutPage';
   ogImage?: string;
   ogImageAlt?: string;
   ogImageWidth?: number;
@@ -84,6 +86,7 @@ const {
   robots = 'index, follow',
   canonical,
   ogType = 'website',
+  pageType = 'WebPage',
   ogImage,
   ogImageAlt,
   ogImageWidth,
@@ -327,7 +330,7 @@ const structuredContactUrl = `${normalizedSiteUrl}/${lang}/contact/`;
 <!-- Structured Data - WebPage -->
 <script is:inline type="application/ld+json" set:html={JSON.stringify({
   "@context": "https://schema.org",
-  "@type": "WebPage",
+  "@type": pageType,
   "name": title,
   "description": description,
   "url": canonicalURL,
@@ -338,6 +341,7 @@ const structuredContactUrl = `${normalizedSiteUrl}/${lang}/contact/`;
   "about": {
     "@id": organizationId
   },
+  ...(pageType === "AboutPage" ? { "mainEntity": { "@id": organizationId } } : {}),
   "inLanguage": HTML_LOCALE_CODES[lang],
   ...(ogType === "article" && publishedTime ? {
     "datePublished": publishedTime,
