@@ -67,4 +67,5 @@ Journal des retours de Nicolas sur les propositions et les articles. À relire a
 - Constat ajouté : Lovable invente adresse, horaires, prix, équipe et provenance des verres.
 - Notre version Loma : présentée comme en développement, sans défaut cité (règle du 7/11).
 - Les blocs de code `prompt` passent à la ligne (CSS `.language-prompt`), pour citer des prompts sans défilement horizontal.
-- En attente de relecture.
+- Validé pour publication le 20 novembre 2026 (« tout est nickel »), formulation Framer « fidèle en surface, vide en dessous » gardée.
+- Les trois sites générés sont cités en sources : un contrôle quotidien (cron Hermes « Veille liens — sites générés A3 ») prévient Nicolas s'ils ne répondent plus.
