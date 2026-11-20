@@ -15,7 +15,7 @@ const fr = {
   intents: {
     project: 'Démarrer un projet',
     team: 'Rejoindre l’équipe',
-    culture: 'Découvrir notre culture',
+    culture: 'Découvrir l’agence',
     word: 'Laisser un petit mot',
     write: 'Écris-nous :',
   },
@@ -114,7 +114,7 @@ const en: ContactCopy = {
   intents: {
     project: 'Start a project',
     team: 'Join the team',
-    culture: 'Discover our culture',
+    culture: 'Discover the agency',
     word: 'Drop a quick word',
     write: 'Write us:',
   },

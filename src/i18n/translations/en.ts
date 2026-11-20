@@ -194,7 +194,7 @@ export const en: Translations = {
       titleLine2: 'human team',
       description:
         'We are a small agency that puts the human side first. We take the time to find the right solutions with you and help make your digital presence match the ambition of your projects.',
-      cta: 'Our culture',
+      cta: 'The agency',
     },
     fallbackDescription: 'Web agency specialized in performance and UX.',
   },

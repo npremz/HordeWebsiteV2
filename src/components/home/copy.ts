@@ -7,7 +7,7 @@ const fr = {
   },
   nav: {
     home: 'Accueil',
-    culture: 'Notre culture',
+    culture: 'L’agence',
     services: 'Services',
     projects: 'Projets',
     blog: 'Blog',
@@ -79,7 +79,7 @@ const fr = {
   team: {
     label: 'Une équipe à taille humaine',
     text: 'On est deux, un designer et un développeur, obsédés par des expériences utilisateur soignées et pensées pour l’humain. Un site générique se fait aujourd’hui en quelques minutes. On vous propose mieux, un site où chaque interaction a du sens pour votre cible et votre usage.',
-    link: 'Notre culture',
+    link: 'L’agence',
     photo1Alt: 'L’équipe Horde en atelier autour d’un écran',
     photo2Alt: 'Un membre de l’équipe Horde à son poste de travail',
     human: 'Human-first',
@@ -132,7 +132,7 @@ const en: HomeCopy = {
   },
   nav: {
     home: 'Home',
-    culture: 'Our culture',
+    culture: 'The agency',
     services: 'Services',
     projects: 'Projects',
     blog: 'Blog',
@@ -204,7 +204,7 @@ const en: HomeCopy = {
   team: {
     label: 'A human-sized team',
     text: 'We’re two people, a designer and a developer, obsessed with polished, human-first user experiences. A generic website takes minutes to make these days. We offer you better: a site where every interaction makes sense for your audience and your goals.',
-    link: 'Our culture',
+    link: 'The agency',
     photo1Alt: 'The Horde team working together around a screen',
     photo2Alt: 'A Horde team member at their workstation',
     human: 'Human-first',

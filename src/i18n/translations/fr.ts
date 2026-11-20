@@ -193,7 +193,7 @@ export const fr = {
       titleLine2: 'humaine',
       description:
         'On est une agence de petite taille qui met en avant le côté humain, on prend le temps avec vous de trouver les solutions qui vous conviennent et on vous aide à ce que votre présence numérique soit à la hauteur de vos projets.',
-      cta: 'Notre culture',
+      cta: 'L’agence',
     },
     fallbackDescription: 'Agence web spécialisée en performance et UX.',
   },

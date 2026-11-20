@@ -1,6 +1,6 @@
 /**
  * Apparition au scroll des blocs `[data-home-reveal]` (styles dans components/home/home.css).
- * Partagé par la home et la page « Notre culture ».
+ * Partagé par la home et la page « L’agence ».
  */
 export function initHomeReveal(): void {
   const items = document.querySelectorAll<HTMLElement>('[data-home-reveal]:not(.is-revealed)');
