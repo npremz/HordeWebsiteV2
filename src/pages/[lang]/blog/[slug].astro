@@ -992,6 +992,12 @@ const schemaOrg = {
 			background: transparent;
 		}
 
+		/* Prompts quoted in articles are prose-length lines: wrap instead of scrolling sideways. */
+		.prose :global(pre code.language-prompt) {
+			white-space: pre-wrap;
+			overflow-wrap: anywhere;
+		}
+
 		.prose :global(.article-sources) {
 			margin: 2rem 0;
 			border-top: 1px solid var(--color-lines);

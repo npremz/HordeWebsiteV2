@@ -59,3 +59,12 @@ Journal des retours de Nicolas sur les propositions et les articles. À relire a
 - Abonnements comparés sur 24 mois en facturation annuelle, prix normaux (pas la remise Wix de première période), hors taxes.
 - Validé pour publication le 18 novembre 2026 sans modification (« parfait »), y compris les deux textes européens de la section 2027 et le calcul au prix Wix normal.
 - À faire : ajouter le lien vers A2 dans `combien-coute-refonte-site-web` (article publié, modification séparée).
+
+## 2026-11-20 — « Créer son site en 2027 : IA, builder ou agence ? » (A3, IA)
+
+- Proposition du vendredi acceptée. Nicolas a fourni lui-même les trois générations (Lovable, Framer, Wix) et le prompt, et demandé la comparaison avec notre landing Loma en développement.
+- Thèse de Nicolas : le prompt vient de notre travail en amont, les outils avaient toutes les clés ; Lovable correct, Framer et Wix médiocres. Mesures cohérentes, avec une nuance écrite : Framer est fidèle visuellement sur ordinateur, médiocre par le contenu (aucun prix, adresse ni horaire, carte vide, pas de H1, photo sur le titre en mobile).
+- Constat ajouté : Lovable invente adresse, horaires, prix, équipe et provenance des verres.
+- Notre version Loma : présentée comme en développement, sans défaut cité (règle du 7/11).
+- Les blocs de code `prompt` passent à la ligne (CSS `.language-prompt`), pour citer des prompts sans défilement horizontal.
+- En attente de relecture.

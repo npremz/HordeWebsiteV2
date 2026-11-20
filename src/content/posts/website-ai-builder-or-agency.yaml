@@ -1,0 +1,40 @@
+slug: website-ai-builder-or-agency
+slug_fr: creer-site-ia-builder-ou-agence
+title_fr: 'En 2027, l’IA livre un site en dix minutes. Le reste prend toujours du temps.'
+title_en: 'In 2027, AI delivers a website in ten minutes. The rest still takes time.'
+seoTitle_fr: 'Créer son site en 2027 : IA, builder ou agence ?'
+seoTitle_en: 'Building a website in 2027: AI, builder or agency?'
+excerpt_fr: >-
+  Créer son site en 2027 : nous avons donné le même brief à Lovable, Framer AI
+  et Wix AI. Ce que chacun rend, ce qu’il invente, et quand une équipe s’impose.
+excerpt_en: >-
+  Building a website in 2027: we gave the same brief to Lovable, Framer AI and
+  Wix AI. What each one delivers, what it invents, and when you need a team.
+seoDescription_fr: >-
+  IA, builder ou agence pour créer son site en 2027 ? Le même brief testé sur
+  Lovable, Framer AI et Wix AI, avec captures, audit axe et rendu mobile.
+seoDescription_en: >-
+  AI, builder or agency to build your website in 2027? The same brief tested on
+  Lovable, Framer AI and Wix AI, with screenshots, axe audit and mobile render.
+featuredImageAlt_fr: >-
+  Une feuille de brief noire et ivoire d’où partent trois chemins cobalt vers
+  trois cadres d’interface : un désordonné, un presque vide, un presque complet.
+featuredImageAlt_en: >-
+  A black and ivory brief sheet sending three cobalt paths to three interface
+  frames: one jumbled, one nearly empty, one nearly complete.
+featuredImage: /src/assets/images/blog/website-ai-builder-or-agency/featuredImage.png
+author: nicolas-premont
+category: strategie
+publishedDate: 2026-11-20
+readingTime: 10
+keyTakeaways_fr:
+  - Avec le même brief de designer, Lovable rend une base correcte, Framer AI reproduit le style sans le contenu et Wix AI ne tient ni l’un ni l’autre.
+  - Le défaut le plus dangereux est invisible ; Lovable invente une adresse, des horaires, des prix et une équipe qui ne viennent pas du client.
+  - Un générateur reproduit la qualité du brief qu’on lui donne ; le brief, les vraies informations et la vérification restent un travail humain.
+keyTakeaways_en:
+  - With the same designer’s brief, Lovable delivers a solid base, Framer AI copies the style without the content and Wix AI manages neither.
+  - The most dangerous flaw is invisible; Lovable invents an address, opening hours, prices and staff that never came from the client.
+  - A generator reproduces the quality of the brief it is given; the brief, the real information and the checking remain human work.
+featured: false
+draft: false
+seoRobots: index, follow

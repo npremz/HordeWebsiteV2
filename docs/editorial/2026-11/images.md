@@ -34,3 +34,12 @@ Composition SVG faite à la main (source : docs/editorial/2026-11/website-cost-c
 Une étiquette de prix cobalt est reliée par un fil en pointillés à trois blocs d’interface ivoire de plus en plus grands (présenter, vendre, tester un produit) ; le plus grand porte un anneau vert acide. Le prix suit ce que le site doit faire.
 
 Prix des outils relevés le 18 novembre 2026 depuis une connexion belge, locale fr-BE, avec les scripts de docs/editorial/2026-11/scripts/ (prices*.cjs, wix.cjs) : Wix fr.wix.com/pricing (Light 14 €, Essentiel 25 €, Business 34 € par mois en annuel, remise de 50 % sur la première période affichée ce jour-là), Framer (Basic 10 €/Pro 30 € en annuel, 15 €/45 € en mensuel), Lovable (Pro 21 €/Business 42 € en annuel, 25 €/50 € en mensuel), Webflow (Basic 15 $/Premium 25 $ en annuel, en USD).
+
+## website-ai-builder-or-agency
+
+Fichier : src/assets/images/blog/website-ai-builder-or-agency/featuredImage.png
+
+Composition SVG faite à la main (source : docs/editorial/2026-11/website-ai-builder-or-agency-cover.svg), rendue en PNG 1536 × 1024 avec Chromium. Palette du site, grain papier, aucun texte, sujet centré.
+Une feuille de brief (pastille vert acide) envoie trois chemins cobalt vers trois cadres d’interface : un désordonné, un presque vide, un presque complet marqué d’un anneau vert acide. Le même brief, trois résultats.
+
+Preuve : les trois versions générées par Nicolas (Lovable, Framer AI, Wix AI, offres gratuites) à partir du même prompt, et la version de développement Horde (loma.dev.nicolas-premont.be), parcourues le 20 novembre 2026 dans Chromium 158 à 1440 × 900 et 390 × 844, axe-core 4.14.1, interactions testées (curseur, parallaxe, accordéon). Requêtes autres que GET bloquées. Figures sans texte de langue (noms d’outils seulement) : les légendes portent le FR et l’EN. Scripts : docs/editorial/2026-11/scripts/a3*.cjs.

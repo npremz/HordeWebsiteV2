@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1536" height="1024" viewBox="0 0 1536 1024">
+<rect width="1536" height="1024" fill="#f0e9df"/>
+<filter id="paper"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="4"/><feColorMatrix values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.045 0"/></filter>
+<rect x="344" y="344" width="200" height="280" fill="#b3a6e6"/>
+<path d="M330 330 H484 L530 376 V610 H330 Z" fill="#f7f3ea" stroke="#121212" stroke-width="5" stroke-linejoin="round"/>
+<path d="M484 330 V376 H530" fill="none" stroke="#121212" stroke-width="5" stroke-linejoin="round"/>
+<rect x="356" y="400" width="104" height="10" rx="5" fill="#121212"/>
+<rect x="356" y="430" width="81" height="10" rx="5" fill="#bfb9b1"/>
+<rect x="356" y="460" width="111" height="10" rx="5" fill="#bfb9b1"/>
+<rect x="356" y="490" width="59" height="10" rx="5" fill="#121212"/>
+<rect x="356" y="520" width="89" height="10" rx="5" fill="#bfb9b1"/>
+<rect x="356" y="550" width="74" height="10" rx="5" fill="#bfb9b1"/>
+<circle cx="370" cy="370" r="12" fill="#d4f73a" stroke="#121212" stroke-width="3"/>
+<path d="M538 470.0 C 670 470.0, 670 325.0, 814 325.0" fill="none" stroke="#2436d4" stroke-width="5" stroke-linecap="round"/>
+<path d="M538 470.0 C 670 470.0, 670 520.0, 814 520.0" fill="none" stroke="#2436d4" stroke-width="5" stroke-linecap="round"/>
+<path d="M538 470.0 C 670 470.0, 670 715.0, 814 715.0" fill="none" stroke="#2436d4" stroke-width="5" stroke-linecap="round"/>
+<rect x="832" y="262" width="300" height="150" fill="#b3a6e6"/>
+<rect x="820" y="250" width="300" height="150" fill="#f7f3ea" stroke="#121212" stroke-width="5"/>
+<line x1="820" y1="280" x2="1120" y2="280" stroke="#121212" stroke-width="3"/>
+<rect x="850" y="300" width="110" height="34" fill="#121212" transform="rotate(-9 905 317)"/>
+<rect x="970" y="320" width="80" height="60" fill="#b3a6e6" stroke="#121212" stroke-width="4" transform="rotate(12 1010 350)"/>
+<rect x="860" y="350" width="70" height="12" rx="6" fill="#bfb9b1" transform="rotate(6 895 356)"/>
+<rect x="832" y="457" width="300" height="150" fill="#b3a6e6"/>
+<rect x="820" y="445" width="300" height="150" fill="#f7f3ea" stroke="#121212" stroke-width="5"/>
+<line x1="820" y1="475" x2="1120" y2="475" stroke="#121212" stroke-width="3"/>
+<rect x="850" y="497" width="160" height="22" fill="#121212"/>
+<rect x="850" y="535" width="240" height="4" fill="#bfb9b1"/>
+<rect x="850" y="551" width="240" height="4" fill="#bfb9b1"/>
+<rect x="850" y="567" width="240" height="4" fill="#bfb9b1"/>
+<rect x="832" y="652" width="300" height="150" fill="#b3a6e6"/>
+<rect x="820" y="640" width="300" height="150" fill="#f7f3ea" stroke="#121212" stroke-width="5"/>
+<line x1="820" y1="670" x2="1120" y2="670" stroke="#121212" stroke-width="3"/>
+<rect x="844" y="688" width="90" height="84" fill="#2436d4"/>
+<rect x="950" y="692" width="130" height="16" fill="#121212"/>
+<rect x="950" y="720" width="100" height="8" rx="4" fill="#bfb9b1"/>
+<rect x="950" y="740" width="140" height="8" rx="4" fill="#bfb9b1"/>
+<circle cx="1080" cy="752" r="22" fill="none" stroke="#d4f73a" stroke-width="11"/>
+<circle cx="1080" cy="752" r="22" fill="none" stroke="#121212" stroke-width="3"/>
+<rect width="1536" height="1024" filter="url(#paper)"/></svg>
