@@ -69,3 +69,8 @@ Journal des retours de Nicolas sur les propositions et les articles. À relire a
 - Les blocs de code `prompt` passent à la ligne (CSS `.language-prompt`), pour citer des prompts sans défilement horizontal.
 - Validé pour publication le 20 novembre 2026 (« tout est nickel »), formulation Framer « fidèle en surface, vide en dessous » gardée.
 - Les trois sites générés sont cités en sources : un contrôle quotidien (cron Hermes « Veille liens — sites générés A3 ») prévient Nicolas s'ils ne répondent plus.
+
+## 2026-11-23 — mise à jour best-ai-for-coding (GPT-6.2, Gemini 4 Neon)
+- Retour Nicolas après la veille 968df6c2b49a : Neon très fort, harnais Antigravity/agy toujours faible, attente de l’ouverture des abonnements Google aux harnais libres (ex. Hermes). GPT-6.2 décevant à l’usage dans l’abonnement, non utilisé.
+- Poussé directement sur master à la demande de Nicolas (« go prod »), sans PR programmée.
+- Vérifié : Neon inclus dans Google AI Pro ; Artificial Analysis Index Fable 5.2 = 65, GPT-6.2 Astra = 62, Neon = 61 (23/11). Citation signée Nicolas (« lourd » rendu par « vraiment fort »).

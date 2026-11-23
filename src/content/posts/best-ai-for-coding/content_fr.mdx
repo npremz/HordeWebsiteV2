@@ -2,7 +2,7 @@ Pour coder avec l’IA dans un cadre professionnel en 2027, notre choix est **Cl
 
 Nous avons testé Claude Code, Codex (OpenAI), Gemini (Google) et DeepSeek sur nos propres projets. Deux constats en sortent. La vitesse compte bien plus que les classements ne le laissent croire. Et aucune de ces IA n’atteint encore le niveau d’un professionnel quand il s’agit d’expérience utilisateur.
 
-*Comparatif préparé pour 2027, à jour au 16 novembre 2026. Nous le revoyons à chaque sortie majeure de ces outils, tout au long de l’année.*
+*Comparatif préparé pour 2027, à jour au 23 novembre 2026. Nous le revoyons à chaque sortie majeure de ces outils, tout au long de l’année.*
 
 ## Le modèle n’est qu’une partie de l’outil
 
@@ -29,8 +29,8 @@ Il faut toutefois éviter une conclusion trop simple. Le modèle le plus rapide 
 | Outil | Ce que nous en retenons | Où nous l’utilisons |
 | --- | --- | --- |
 | Claude Code (Anthropic) | L’écosystème le plus complet pour un usage clé en main, avec un bon équilibre entre qualité et vitesse | Projets clients, travail en équipe |
-| Codex (OpenAI) | Un code correct, mais trop lent aujourd’hui pour notre façon d’itérer | Peu, pour l’instant |
-| Gemini (Google) | Une offre trop complexe : en abonnement, le modèle le plus puissant demande 99,99 €/mois, et le harnais Antigravity déçoit | Pas en production chez nous |
+| Codex (OpenAI) | Un code correct, mais GPT-6.2 nous a déçus à l’usage et ne change pas notre avis | Pas dans notre flux |
+| Gemini (Google) | Gemini 4 Neon est excellent et inclus dans Google AI Pro, mais le harnais reste faible et l’abonnement ne sort pas des outils de Google | Neon, activement depuis sa sortie |
 | DeepSeek | Un excellent rapport qualité/vitesse, avec une vraie question sur les données | Tests et itérations rapides, sur des données non sensibles |
 
 Ces constats viennent de notre usage quotidien en novembre 2026. Ce ne sont pas des mesures de laboratoire, et ils peuvent changer dès la prochaine version.
@@ -47,13 +47,18 @@ Raisonnablement sûr, donc, à condition de choisir le bon cadre.
 
 Le code produit n’est pas en cause. C’est le temps de réponse qui rend Codex peu pratique dans notre flux, dans l’état actuel. Ce point peut changer vite. C’est exactement le genre de constat que nous revérifierons à chaque nouvelle version.
 
-### Gemini : on se demande ce que Google fabrique
+Nous l’avons fait avec GPT-6.2, sorti le 17 novembre 2026 en deux versions, Astra pour les tâches difficiles et Sol pour le quotidien ([annonce d’OpenAI](https://openai.com/index/introducing-gpt-6-2-astra-sol/)). Dans le cadre de l’abonnement, l’usage nous a déçus, et nous ne l’utilisons pas. Les chiffres indépendants ne nous font pas changer d’avis : l’Artificial Analysis Intelligence Index place GPT-6.2 Astra à 62, derrière Claude Fable 5.2 (65) et un seul point devant Gemini 4 Neon (61) ([classement Artificial Analysis](https://artificialanalysis.ai/leaderboards/models), consulté le 23 novembre 2026).
 
-Sur le papier, Google a tout : des modèles de pointe, une plateforme de développement, un agent de code. En pratique, l’offre est tout simplement trop complexe pour le moment.
+### Gemini : un excellent modèle, enfermé chez Google
 
-Les modèles frontière sont enchaînés à l’écosystème de Google, AI Studio en tête. Et l’accès dépend de l’abonnement. Côté abonnements, le modèle le plus puissant, Gemini 4 Carbon, est réservé à Google AI Ultra, facturé en Belgique 99,99 € par mois, ou 219,99 € pour les limites les plus hautes. Sinon, il faut passer par l’API facturée à l’usage. Gemini 4 Argon demande au minimum Google AI Pro, à 21,99 € par mois ([tarifs Google AI en Belgique](https://gemini.google/be/subscriptions/?hl=fr), [plans dans AI Studio](https://aistudio.google.com/docs/google-ai-plans)). En face, Claude Code et Codex sont accessibles dès une vingtaine d’euros par mois, avec Claude Pro ou ChatGPT Plus.
+Sur le papier, Google a tout : des modèles de pointe, une plateforme de développement, un agent de code. Depuis Gemini 4 Neon, le modèle est au rendez-vous. C’est le reste qui coince.
 
-La génération 4 ne change pas grand-chose à ce constat : les modèles accessibles ne nous ont pas impressionnés, autour du niveau d’un Claude Sonnet, et le plus puissant est trop cher pour de simples tests. Quant à Antigravity, l’environnement d’agents de Google, c’est le harnais le moins convaincant que nous ayons testé.
+Gemini 4 Neon est sorti le 18 novembre 2026 ([fiche du modèle](https://aistudio.google.com/docs/models/gemini-4-neon)) et il est inclus dans Google AI Pro, à 21,99 € par mois en Belgique. Le modèle le plus puissant, Gemini 4 Carbon, reste réservé à Google AI Ultra, à 99,99 € par mois, ou 219,99 € pour les limites les plus hautes ([tarifs Google AI en Belgique](https://gemini.google/be/subscriptions/?hl=fr), [plans dans AI Studio](https://aistudio.google.com/docs/google-ai-plans)). En face, Claude Code et Codex sont accessibles dès une vingtaine d’euros par mois, avec Claude Pro ou ChatGPT Plus.
+
+Neon change notre usage : nous l’utilisons activement depuis sa sortie. Le harnais, lui, n’a pas changé. Antigravity, l’environnement d’agents de Google, reste le harnais le moins convaincant que nous ayons testé, et sa version en ligne de commande, agy, est limitée et pénible à utiliser. Or l’abonnement ne fonctionne que dans les outils de Google. Pour utiliser Neon dans un autre harnais, il faut une clé API facturée à l’usage, en plus de l’abonnement ([plans Google AI](https://aistudio.google.com/docs/google-ai-plans)).
+
+> « Gemini 4 Neon, c’est vraiment fort. Mais le harnais est toujours mauvais : agy est limité et son UX est ratée. On attend avec impatience que Google permette d’utiliser ses modèles dans les harnais libres. »
+> — Nicolas Prémont, développeur chez Horde
 
 ### DeepSeek : rapide et efficace, pas pour toutes les données
 
@@ -90,7 +95,8 @@ Le dernier cas est le plus fréquent, et le plus souvent oublié. Une IA vous am
 Les modèles progressent tous, et l’écart de qualité brute entre les meilleurs se resserre. Ce n’est donc plus là que le choix se fera. Voici ce que nous surveillerons en 2027, et ce que nous vous conseillons de regarder avant de vous engager sur un outil.
 
 * **La boucle d’itération.** Le temps entre une demande et un résultat vérifié deviendra le critère principal. Un outil lent perdra face à un outil un peu moins bon mais plus rapide, parce qu’on fait plus d’essais dans une journée.
-* **Le harnais plus que le modèle.** La génération Gemini 4 le montre déjà : un modèle puissant ne suffit pas si l’accès est compliqué et si l’agent qui l’entoure est faible. Les outils qui gagneront sont ceux qui lisent un projet entier, lancent les tests et se corrigent seuls.
+* **Le harnais plus que le modèle.** Gemini 4 Neon le montre déjà : un modèle de premier plan perd une partie de son intérêt si l’agent qui l’entoure est faible. Les outils qui gagneront sont ceux qui lisent un projet entier, lancent les tests et se corrigent seuls.
+* **L’ouverture des abonnements.** Pouvoir utiliser son abonnement dans le harnais de son choix, et pas seulement dans celui de l’éditeur du modèle, pèsera de plus en plus. C’est ce que nous attendons de Google en premier.
 * **Le cadre des données.** Plus l’IA touche au code client, plus la question du contrat devient centrale : entraînement sur vos données ou non, lieu de stockage, conformité au RGPD. Un prix bas ne compense pas un risque juridique.
 * **L’expérience utilisateur.** Si tout le monde peut produire un prototype qui fonctionne, ce qui distinguera un produit sera sa clarté : moins de bruit, une action principale évidente, des parcours testés. C’est le travail que l’IA ne fait pas encore.
 
@@ -109,6 +115,9 @@ Vous avez un prototype construit avec l’IA qui fonctionne, mais qui ne convain
 * [DeepSeek — Privacy Policy](https://cdn.deepseek.com/policies/en-US/deepseek-privacy-policy.html)
 * [Google — Abonnements Google AI en Belgique](https://gemini.google/be/subscriptions/?hl=fr)
 * [Google AI Studio — Google AI plans](https://aistudio.google.com/docs/google-ai-plans)
+* [Google AI Studio — Gemini 4 Neon](https://aistudio.google.com/docs/models/gemini-4-neon)
+* [OpenAI — Introducing GPT-6.2 Astra and Sol](https://openai.com/index/introducing-gpt-6-2-astra-sol/)
+* [Artificial Analysis — LLM Leaderboard](https://artificialanalysis.ai/leaderboards/models)
 * [Anthropic — Tarifs Claude](https://claude.com/pricing)
 * [OpenAI — Codex pricing](https://chatgpt.com/codex/pricing/)
 * [Bird & Bird — The Garante imposes a definitive limitation on the processing of Italian users’ personal data (2025)](https://cm.twobirds.com/en/insights/2025/the-garante-imposes-a-definitive-limitation-on-the-processing-of-italian-users%E2%80%99-personal-data)
