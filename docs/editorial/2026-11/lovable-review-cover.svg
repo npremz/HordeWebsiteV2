@@ -1,7 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1536" height="1024" viewBox="0 0 1536 1024">
 <rect width="1536" height="1024" fill="#f0e9df"/>
 <filter id="paper"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="7"/><feColorMatrix values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.045 0"/></filter>
-<g transform="translate(-110 0)">
+<g transform="translate(768 512) scale(0.9) translate(-715 -488)"><g transform="translate(-110 0)">
 <rect x="436" y="316" width="430" height="430" fill="#b3a6e6"/>
 <rect x="420" y="300" width="430" height="430" fill="#f7f3ea" stroke="#121212" stroke-width="5"/>
 <line x1="420" y1="340" x2="850" y2="340" stroke="#121212" stroke-width="3"/>
@@ -24,5 +24,5 @@
 <path d="M870 515.0 H 890" stroke="#2436d4" stroke-width="5" stroke-linecap="round"/>
 <circle cx="1225" cy="505" r="20" fill="#2436d4"/>
 <rect x="362" y="242" width="150" height="150" fill="#b3a6e6"/><rect x="350" y="230" width="150" height="150" fill="#f7f3ea" stroke="#121212" stroke-width="5"/><path transform="translate(383.8 263.0) scale(0.07629)" fill-rule="evenodd" d="M324.052 0C503.021 0 648.103 145.771 648.103 325.588V449.331H755.948C934.917 449.331 1080 595.102 1080 774.919C1080 954.736 934.917 1100.51 755.948 1100.51H0V325.588C0 145.771 145.083 0 324.052 0Z" fill="#121212"/>
-</g>
+</g></g>
 <rect width="1536" height="1024" filter="url(#paper)"/></svg>
