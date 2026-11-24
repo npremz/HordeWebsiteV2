@@ -50,5 +50,6 @@ Fichier : src/assets/images/blog/lovable-review/featuredImage.png
 
 Composition SVG faite à la main (source : docs/editorial/2026-11/lovable-review-cover.svg), rendue en PNG 1536 × 1024 avec Chromium. Palette du site, grain papier, aucun texte, sujet dans le carré central.
 Un cadre d’application complet marqué d’une coche vert acide (le code fonctionne), relié par un trait cobalt à des cadres en pointillés vides (ce qui reste à construire : stratégie, contenus, suivi).
+Logo Lovable (logomark noir) ajouté à la demande de Nicolas, sur une tuile ivoire au coin du cadre. Source officielle : brand hub Lovable, https://lovablebrand.lovable.app/logos/logomark-black.svg (lien depuis lovable.dev/brand), tracé repris tel quel, recoloré #121212.
 
 Preuve : l’app Loma générée par Nicolas avec Lovable (projet A3 transformé en app, Lovable Cloud), publiée le 24/11/2026. Audit du dépôt GitHub privé (migrations SQL, RLS), tests de la base de l’extérieur avec la seule clé publique (scripts/a4-rls.py ; aucune donnée créée), parcours Chromium 158 desktop et mobile + axe-core 4.14 (scripts/a4.cjs, a4f.cjs), figures annotées injectées dans la page publiée (scripts/a4g.cjs). Requêtes autres que GET bloquées.

@@ -19,11 +19,13 @@ seoDescription_en: >-
   Our Lovable review for 2027 after a real test: Supabase security probed from
   outside, invented data, GDPR, accessibility and the missing strategy.
 featuredImageAlt_fr: >-
-  Un cadre d’application ivoire marqué d’une coche vert acide, relié par un
-  trait cobalt à des cadres en pointillés encore vides.
+  Le logo de Lovable sur une tuile ivoire, posé sur un cadre d’application marqué
+  d’une coche vert acide et relié par un trait cobalt à des cadres en pointillés
+  encore vides.
 featuredImageAlt_en: >-
-  An ivory app frame marked with an acid-green tick, linked by a cobalt line to
-  dashed frames that are still empty.
+  The Lovable logo on an ivory tile, set on an app frame marked with an
+  acid-green tick and linked by a cobalt line to dashed frames that are still
+  empty.
 featuredImage: /src/assets/images/blog/lovable-review/featuredImage.png
 author: nicolas-premont
 category: strategie
