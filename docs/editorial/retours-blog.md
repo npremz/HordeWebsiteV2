@@ -81,4 +81,5 @@ Journal des retours de Nicolas sur les propositions et les articles. À relire a
 - Audit sécurité délégué (« j’ai pas le temps d’audit la secu ») : propre, aucune fuite ; écrit comme tel, avec le contexte CVE-2025-48757. Le H1 « 80 % » est abandonné (non mesurable).
 - Verdict de Nicolas cité et signé : code qui fonctionne, aucune stratégie (UX reprise d’une DA existante, SEO sans mot-clé, aucune vraie info), bon prototype ; Lovable oui pour un premier jet ou un site pas cher, pas pour scaler ; l’IA donne la même stratégie au concurrent.
 - Nouveau constat : numéro de téléphone inventé, aussi dans le JSON-LD BarOrPub ; aucune notification de réservation.
-- En attente de relecture.
+- Nicolas a demandé le logo Lovable sur la couverture, puis une couverture qui tienne en carré (vignettes).
+- Validé pour publication le 24 novembre 2026 (« parfait go prod ») ; numéro inventé laissé en clair, faute de demande de masquage.
