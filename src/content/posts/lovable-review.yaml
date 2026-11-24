@@ -1,0 +1,42 @@
+slug: lovable-review
+slug_fr: lovable-avis
+title_fr: 'Lovable en 2027 : un bon prototype. Pas encore un site qui fait venir des clients.'
+title_en: 'Lovable in 2027: a good prototype. Not yet a site that brings in customers.'
+seoTitle_fr: 'Lovable avis 2027 : ce qu’il fait bien, ce qu’il faut reprendre'
+seoTitle_en: 'Lovable review 2027: what it does well, what needs reworking'
+excerpt_fr: >-
+  Lovable en 2027 : nous avons transformé une landing en vraie app de
+  réservation, puis audité sécurité, UX, SEO et contenus. Ce qu’il réussit, ce
+  qu’il invente, et où il s’arrête.
+excerpt_en: >-
+  Lovable in 2027: we turned a landing page into a real booking app, then
+  audited security, UX, SEO and content. What it gets right, what it invents,
+  and where it stops.
+seoDescription_fr: >-
+  Notre avis sur Lovable en 2027 après un vrai test : sécurité Supabase testée
+  de l’extérieur, données inventées, RGPD, accessibilité et stratégie absente.
+seoDescription_en: >-
+  Our Lovable review for 2027 after a real test: Supabase security probed from
+  outside, invented data, GDPR, accessibility and the missing strategy.
+featuredImageAlt_fr: >-
+  Un cadre d’application ivoire marqué d’une coche vert acide, relié par un
+  trait cobalt à des cadres en pointillés encore vides.
+featuredImageAlt_en: >-
+  An ivory app frame marked with an acid-green tick, linked by a cobalt line to
+  dashed frames that are still empty.
+featuredImage: /src/assets/images/blog/lovable-review/featuredImage.png
+author: nicolas-premont
+category: strategie
+publishedDate: 2026-11-24
+readingTime: 9
+keyTakeaways_fr:
+  - Sur notre test, la sécurité de l’app Lovable tient ; un visiteur anonyme ne peut ni lire ni modifier les données protégées.
+  - Lovable invente adresse, horaires et numéro de téléphone, puis les inscrit en base et dans les données lues par Google.
+  - Notifications, anti-spam, RGPD et surtout stratégie restent à faire ; Lovable convient au premier jet, pas à un site qui doit grandir.
+keyTakeaways_en:
+  - In our test, the Lovable app’s security holds; an anonymous visitor can neither read nor change protected data.
+  - Lovable invents an address, opening hours and a phone number, then stores them in the database and in the data Google reads.
+  - Notifications, anti-spam, GDPR and above all strategy are still to do; Lovable suits a first draft, not a site that has to grow.
+featured: false
+draft: false
+seoRobots: index, follow

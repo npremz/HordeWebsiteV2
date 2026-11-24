@@ -43,3 +43,12 @@ Composition SVG faite à la main (source : docs/editorial/2026-11/website-ai-bui
 Une feuille de brief (pastille vert acide) envoie trois chemins cobalt vers trois cadres d’interface : un désordonné, un presque vide, un presque complet marqué d’un anneau vert acide. Le même brief, trois résultats.
 
 Preuve : les trois versions générées par Nicolas (Lovable, Framer AI, Wix AI, offres gratuites) à partir du même prompt, et la version de développement Horde (loma.dev.nicolas-premont.be), parcourues le 20 novembre 2026 dans Chromium 158 à 1440 × 900 et 390 × 844, axe-core 4.14.1, interactions testées (curseur, parallaxe, accordéon). Requêtes autres que GET bloquées. Figures sans texte de langue (noms d’outils seulement) : les légendes portent le FR et l’EN. Scripts : docs/editorial/2026-11/scripts/a3*.cjs.
+
+## lovable-review
+
+Fichier : src/assets/images/blog/lovable-review/featuredImage.png
+
+Composition SVG faite à la main (source : docs/editorial/2026-11/lovable-review-cover.svg), rendue en PNG 1536 × 1024 avec Chromium. Palette du site, grain papier, aucun texte, sujet dans le carré central.
+Un cadre d’application complet marqué d’une coche vert acide (le code fonctionne), relié par un trait cobalt à des cadres en pointillés vides (ce qui reste à construire : stratégie, contenus, suivi).
+
+Preuve : l’app Loma générée par Nicolas avec Lovable (projet A3 transformé en app, Lovable Cloud), publiée le 24/11/2026. Audit du dépôt GitHub privé (migrations SQL, RLS), tests de la base de l’extérieur avec la seule clé publique (scripts/a4-rls.py ; aucune donnée créée), parcours Chromium 158 desktop et mobile + axe-core 4.14 (scripts/a4.cjs, a4f.cjs), figures annotées injectées dans la page publiée (scripts/a4g.cjs). Requêtes autres que GET bloquées.

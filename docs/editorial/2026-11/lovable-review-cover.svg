@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1536" height="1024" viewBox="0 0 1536 1024">
+<rect width="1536" height="1024" fill="#f0e9df"/>
+<filter id="paper"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="7"/><feColorMatrix values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.045 0"/></filter>
+<g transform="translate(-110 0)">
+<rect x="436" y="316" width="430" height="430" fill="#b3a6e6"/>
+<rect x="420" y="300" width="430" height="430" fill="#f7f3ea" stroke="#121212" stroke-width="5"/>
+<line x1="420" y1="340" x2="850" y2="340" stroke="#121212" stroke-width="3"/>
+<circle cx="442" cy="320" r="6" fill="#121212"/>
+<circle cx="462" cy="320" r="6" fill="#bfb9b1"/>
+<circle cx="482" cy="320" r="6" fill="#bfb9b1"/>
+<rect x="450" y="370" width="220" height="26" fill="#121212"/>
+<rect x="450" y="420" width="300" height="9" rx="4.5" fill="#bfb9b1"/>
+<rect x="450" y="444" width="260" height="9" rx="4.5" fill="#bfb9b1"/>
+<rect x="450" y="468" width="320" height="9" rx="4.5" fill="#bfb9b1"/>
+<line x1="450" y1="530" x2="820" y2="530" stroke="#121212" stroke-width="3"/>
+<line x1="450" y1="574" x2="820" y2="574" stroke="#121212" stroke-width="3"/>
+<line x1="450" y1="618" x2="820" y2="618" stroke="#121212" stroke-width="3"/>
+<rect x="450" y="650" width="370" height="46" fill="#2436d4"/>
+<circle cx="840" cy="310" r="40" fill="#d4f73a" stroke="#121212" stroke-width="5"/>
+<path d="M823 311 L835 324 L858 297" fill="none" stroke="#121212" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+<rect x="900" y="330" width="200" height="150" fill="none" stroke="#2436d4" stroke-width="4" stroke-dasharray="14 12"/>
+<rect x="900" y="530" width="200" height="150" fill="none" stroke="#2436d4" stroke-width="4" stroke-dasharray="14 12"/>
+<rect x="1150" y="430" width="150" height="150" fill="none" stroke="#2436d4" stroke-width="4" stroke-dasharray="14 12"/>
+<path d="M870 515.0 H 890" stroke="#2436d4" stroke-width="5" stroke-linecap="round"/>
+<circle cx="1225" cy="505" r="20" fill="#2436d4"/>
+</g>
+<rect width="1536" height="1024" filter="url(#paper)"/></svg>

@@ -74,3 +74,11 @@ Journal des retours de Nicolas sur les propositions et les articles. À relire a
 - Retour Nicolas après la veille 968df6c2b49a : Neon très fort, harnais Antigravity/agy toujours faible, attente de l’ouverture des abonnements Google aux harnais libres (ex. Hermes). GPT-6.2 décevant à l’usage dans l’abonnement, non utilisé.
 - Poussé directement sur master à la demande de Nicolas (« go prod »), sans PR programmée.
 - Vérifié : Neon inclus dans Google AI Pro ; Artificial Analysis Index Fable 5.2 = 65, GPT-6.2 Astra = 62, Neon = 61 (23/11). Citation signée Nicolas (« lourd » rendu par « vraiment fort »).
+
+## 2026-11-24 — « Lovable avis 2027 » (A4, IA)
+
+- Proposition du lundi acceptée. Nicolas a repris le projet Lovable de A3 (pas de remix) et l’a transformé en app avec le prompt fourni ; l’URL citée en A3 affiche donc désormais l’app.
+- Audit sécurité délégué (« j’ai pas le temps d’audit la secu ») : propre, aucune fuite ; écrit comme tel, avec le contexte CVE-2025-48757. Le H1 « 80 % » est abandonné (non mesurable).
+- Verdict de Nicolas cité et signé : code qui fonctionne, aucune stratégie (UX reprise d’une DA existante, SEO sans mot-clé, aucune vraie info), bon prototype ; Lovable oui pour un premier jet ou un site pas cher, pas pour scaler ; l’IA donne la même stratégie au concurrent.
+- Nouveau constat : numéro de téléphone inventé, aussi dans le JSON-LD BarOrPub ; aucune notification de réservation.
+- En attente de relecture.
