@@ -90,4 +90,5 @@ Journal des retours de Nicolas sur les propositions et les articles. À relire a
 - Angle imposé : l'IA est good enough pour le code (surtout le front) ; entre les mains d'un expert, UX de pointe grâce à l'itération rapide ; un non-formé croit son interface suffisante ; le test utilisateur est essentiel ; « une UX impeccable ne se remarque pas, c'est l'inverse qui fait tache ».
 - Citation signée Nicolas (dev) : il n'écrit plus de code, il relit, contrôle, maintient et déploie ; le reste c'est du chipotage.
 - Son avis sur les modèles (régression de GPT-6.1, Opus 5.5 meilleur) gardé hors article : seuls les outils réellement utilisés sont cités, d'après les commits.
-- En attente de relecture.
+- Validé pour publication le 25 novembre 2026 (« go prod »), sans réponse aux trois questions : date du test laissée à « en septembre », outils d'après les commits.
+- rocket.42belgium.be ajouté à la veille des liens (cron 7be8b1192435).
