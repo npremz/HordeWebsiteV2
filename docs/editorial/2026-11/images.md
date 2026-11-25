@@ -53,3 +53,12 @@ Un cadre d’application complet marqué d’une coche vert acide (le code fonct
 Logo Lovable (logomark noir) ajouté à la demande de Nicolas, sur une tuile ivoire au coin du cadre. Source officielle : brand hub Lovable, https://lovablebrand.lovable.app/logos/logomark-black.svg (lien depuis lovable.dev/brand), tracé repris tel quel, recoloré #121212.
 
 Preuve : l’app Loma générée par Nicolas avec Lovable (projet A3 transformé en app, Lovable Cloud), publiée le 24/11/2026. Audit du dépôt GitHub privé (migrations SQL, RLS), tests de la base de l’extérieur avec la seule clé publique (scripts/a4-rls.py ; aucune donnée créée), parcours Chromium 158 desktop et mobile + axe-core 4.14 (scripts/a4.cjs, a4f.cjs), figures annotées injectées dans la page publiée (scripts/a4g.cjs). Requêtes autres que GET bloquées.
+
+## vibe-coding-explained
+
+Fichier : src/assets/images/blog/vibe-coding-explained/featuredImage.png
+
+Composition SVG faite à la main (source : docs/editorial/2026-11/vibe-coding-explained-cover.svg), rendue en PNG 1536 × 1024 avec Chromium, vérifiée en recadrage carré. Palette du site, grain papier, aucun texte.
+Un écran de progression (la TV du workshop) et un téléphone ivoire, reliés par un pointillé cobalt à une pastille vert acide figurant un utilisateur : l'app se règle avec ceux qui s'en servent.
+
+Preuve : Rocket Mission (rocket.42belgium.be), app vibe-codée par Nicolas (Codex + GPT-5.6, puis Claude Code + Opus 5.5 en octobre), workshop 42 Belgium du 20/10/2026, 2 × 20 participants. Dépôt privé npremz/rocketMissionWeb lu le 25/11 (historique, specs Spec Kit, docs/ux-workshop-hardening.md, docs/workshop-readiness-2026-09-17.md). Audit de la version en ligne en lecture seule (scripts/a5.cjs : axe, API sans identifiant, en-têtes) ; figures (scripts/a5f.cjs) : accueil poste/mobile, TV de la session de démonstration, chronologie FR/EN tirée des commits.

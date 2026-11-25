@@ -83,3 +83,11 @@ Journal des retours de Nicolas sur les propositions et les articles. À relire a
 - Nouveau constat : numéro de téléphone inventé, aussi dans le JSON-LD BarOrPub ; aucune notification de réservation.
 - Nicolas a demandé le logo Lovable sur la couverture, puis une couverture qui tienne en carré (vignettes).
 - Validé pour publication le 24 novembre 2026 (« parfait go prod ») ; numéro inventé laissé en clair, faute de demande de masquage.
+
+## 2026-11-25 — « Vibe coding en 2027 » (A5, IA)
+
+- Nicolas a remplacé le petit projet prévu par une vraie app vibe-codée sans ouvrir l'éditeur : Rocket Mission (rocket.42belgium.be, 42 Belgium nommable, dépôt privé), workshop du 20/10, 2 × 20 personnes, tous les cas particuliers prévus survenus au moins une fois.
+- Angle imposé : l'IA est good enough pour le code (surtout le front) ; entre les mains d'un expert, UX de pointe grâce à l'itération rapide ; un non-formé croit son interface suffisante ; le test utilisateur est essentiel ; « une UX impeccable ne se remarque pas, c'est l'inverse qui fait tache ».
+- Citation signée Nicolas (dev) : il n'écrit plus de code, il relit, contrôle, maintient et déploie ; le reste c'est du chipotage.
+- Son avis sur les modèles (régression de GPT-6.1, Opus 5.5 meilleur) gardé hors article : seuls les outils réellement utilisés sont cités, d'après les commits.
+- En attente de relecture.

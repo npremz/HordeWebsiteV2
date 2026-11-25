@@ -1,0 +1,41 @@
+slug: vibe-coding-explained
+slug_fr: vibe-coding
+title_fr: 'En 2027, l’IA code assez bien pour aller en production. L’UX, elle, se règle avec les utilisateurs.'
+title_en: 'In 2027, AI codes well enough for production. UX still gets tuned with real users.'
+seoTitle_fr: 'Vibe coding en 2027 : c’est quoi, et comment aller en production'
+seoTitle_en: 'Vibe coding in 2027: what it is and how to take it to production'
+excerpt_fr: >-
+  Vibe coding en 2027 : une app construite sans ouvrir l’éditeur de code a servi
+  à 40 participants chez 42 Belgium. Ce que l’IA a bien fait, et ce qui l’a
+  vraiment fait tenir.
+excerpt_en: >-
+  Vibe coding in 2027: an app built without opening a code editor served 40
+  participants at 42 Belgium. What AI did well, and what really made it hold up.
+seoDescription_fr: >-
+  Le vibe coding expliqué en 2027 à partir d’un vrai projet mis en production :
+  spécifications, tests, test utilisateur et ce qu’il reste à vérifier.
+seoDescription_en: >-
+  Vibe coding explained in 2027 through a real project in production:
+  specifications, tests, user testing and what still needs checking.
+featuredImageAlt_fr: >-
+  Un écran de progression et un téléphone ivoire, reliés par un pointillé cobalt
+  à une pastille vert acide représentant un utilisateur.
+featuredImageAlt_en: >-
+  An ivory progress screen and phone, linked by a dotted cobalt line to an
+  acid-green badge representing a user.
+featuredImage: /src/assets/images/blog/vibe-coding-explained/featuredImage.png
+author: nicolas-premont
+category: strategie
+publishedDate: 2026-11-25
+readingTime: 10
+keyTakeaways_fr:
+  - Une app de workshop construite uniquement par prompts, sans ouvrir l’éditeur, a servi deux groupes de vingt personnes chez 42 Belgium.
+  - L’IA écrit un code suffisant ; ce qui a fait tenir l’app, ce sont les spécifications, les tests et un test avec de vrais participants.
+  - Le risque du vibe coding est l’angle mort UX ; une interface qui a l’air correcte ne l’est pas toujours pour ceux qui s’en servent.
+keyTakeaways_en:
+  - A workshop app built entirely through prompts, without opening an editor, served two groups of twenty people at 42 Belgium.
+  - AI writes good-enough code; what made the app hold up were specifications, tests and a test with real participants.
+  - The risk of vibe coding is the UX blind spot; an interface that looks fine is not always fine for the people using it.
+featured: false
+draft: false
+seoRobots: index, follow

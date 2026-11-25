@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1536" height="1024" viewBox="0 0 1536 1024">
+<rect width="1536" height="1024" fill="#f0e9df"/>
+<filter id="paper"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="11"/><feColorMatrix values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.045 0"/></filter>
+<rect x="396" y="266" width="620" height="380" fill="#b3a6e6"/>
+<rect x="380" y="250" width="620" height="380" fill="#f7f3ea" stroke="#121212" stroke-width="6"/>
+<rect x="420" y="290" width="540" height="18" rx="9" fill="#bfb9b1"/><rect x="420" y="290" width="313" height="18" rx="9" fill="#2436d4"/>
+<circle cx="432" cy="361" r="7" fill="#121212"/>
+<rect x="456" y="350" width="446" height="22" rx="11" fill="#121212"/>
+<circle cx="432" cy="413" r="7" fill="#121212"/>
+<rect x="456" y="402" width="291" height="22" rx="11" fill="#bfb9b1"/>
+<circle cx="432" cy="465" r="7" fill="#121212"/>
+<rect x="456" y="454" width="226" height="22" rx="11" fill="#bfb9b1"/>
+<circle cx="432" cy="517" r="7" fill="#121212"/>
+<rect x="456" y="506" width="188" height="22" rx="11" fill="#bfb9b1"/>
+<circle cx="432" cy="569" r="7" fill="#121212"/>
+<rect x="456" y="558" width="141" height="22" rx="11" fill="#bfb9b1"/>
+<rect x="620.0" y="630" width="140" height="40" fill="#121212"/><rect x="560.0" y="670" width="260" height="14" fill="#121212"/>
+<rect x="972" y="442" width="170" height="320" rx="22" fill="#b3a6e6"/>
+<rect x="960" y="430" width="170" height="320" rx="22" fill="#f7f3ea" stroke="#121212" stroke-width="6"/>
+<rect x="988" y="480" width="114" height="22" fill="none" stroke="#121212" stroke-width="3"/>
+<rect x="988" y="520" width="114" height="22" fill="none" stroke="#121212" stroke-width="3"/>
+<rect x="988" y="560" width="114" height="22" fill="#2436d4" stroke="#121212" stroke-width="3"/>
+<rect x="988" y="630" width="114" height="40" fill="#121212"/>
+<rect x="1020" y="720" width="50" height="8" rx="4" fill="#121212"/>
+<circle cx="430" cy="700" r="62" fill="#d4f73a" stroke="#121212" stroke-width="6"/>
+<circle cx="430" cy="684" r="18" fill="#121212"/><path d="M396 736 Q430 694 464 736" fill="#121212"/>
+<path d="M500 690 C 650 580, 800 550, 946 580" fill="none" stroke="#2436d4" stroke-width="6" stroke-linecap="round" stroke-dasharray="2 16"/>
+<rect width="1536" height="1024" filter="url(#paper)"/></svg>
