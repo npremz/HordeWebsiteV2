@@ -13,6 +13,7 @@ import type { ServicePageCopy } from '../../../components/services/v2/types';
 import { getEventsCopy } from '../../../components/services/events/copy';
 import { getMvpCopy } from '../../../components/services/mvp/copy';
 import { getLandingCopy } from '../../../components/services/landing/copy';
+import { getEcommerceCopy } from '../../../components/services/ecommerce/copy';
 import { HTML_LOCALE_CODES, SUPPORTED_LOCALES, type Locale, useTranslations } from '../../../i18n';
 import { type ServiceEntry, getServices, localizeServiceEntry } from '../../../lib/content/services';
 
@@ -47,6 +48,7 @@ const V2_COPIES: Record<string, (lang: Locale) => ServicePageCopy> = {
   'applications-evenementielles': getEventsCopy,
   'creation-mvp-saas': getMvpCopy,
   'creation-landing-page': getLandingCopy,
+  'creation-ecommerce': getEcommerceCopy,
 };
 const v2Copy = V2_COPIES[service.data.slug]?.(lang);
 
