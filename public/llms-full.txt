@@ -130,19 +130,19 @@ Prestations:
 - URL FR: https://hordeagence.com/fr/services/creation-landing-page/
 - URL EN: https://hordeagence.com/en/services/landing-page-design-brussels/
 - SEO title FR: Creation de landing page a Bruxelles | Horde
-- Objectif: creer une page focalisee sur une action precise: lead, achat, inscription, rendez-vous ou test d'offre.
-- Cibles: campagnes Google Ads, campagnes Meta Ads, lancements d'offre, capture de leads B2B et tests A/B.
-- Prix: a partir de 1 999 EUR HTVA, jusqu'a 4 000 EUR HTVA selon le perimetre.
+- Objectif: concevoir la page qui convainc pour une marque ou un produit a presenter ou a vendre, par son design comme par son message (direction artistique, textes, developpement, mise en ligne).
+- Cibles: startups et marques qui lancent un produit, une offre ou une collection ; campagnes Google Ads et Meta Ads.
+- Prix: a partir de 1 999 EUR HTVA, selon les assets existants (branding, photos, textes) et la page (sections, animations, video, integrations CRM ou paiement).
+- Delai: 1 a 4 semaines selon les assets et le branding deja existants.
 
-Prestations:
+Process:
 
-- brief
-- structure et copywriting
-- copywriting oriente conversion
-- design sans distraction
-- performance mobile-first
-- integrations
-- mise en ligne
+- appel de cadrage gratuit
+- structure et textes proposes avant le design
+- direction artistique et ecrans valides avec le client
+- developpement et mise en ligne sur le domaine du client, suivi des conversions verifie
+
+Exemples: proposition pour une marque de mode dans le cadre d'un appel d'offres (design et developpement Horde, projet non realise faute de financement) ; Cafe Loma, projet fictif de refonte digitale d'un bar-cafe bruxellois.
 
 ### Creation MVP SaaS
 
@@ -337,7 +337,7 @@ Dependances principales relevees dans le projet:
 
 Description:
 
-Etude de cas autour d'un site web pour le Cafe Loma. La conception UX/UI met l'accent sur la simplicite, la reactivite et la coherence visuelle.
+Projet fictif (non commande par un client) : refonte digitale d'un bar-cafe bruxellois. La conception UX/UI met l'accent sur la simplicite, la reactivite et la coherence visuelle.
 
 Construite sur Next.js, la plateforme comprend des fonctionnalites permettant de gerer un systeme de reservation, les dates des prochains evenements et la carte des differents produits du Cafe Loma.
 
