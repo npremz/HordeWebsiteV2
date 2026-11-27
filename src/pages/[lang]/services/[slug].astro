@@ -12,6 +12,7 @@ import ServicePageV2 from '../../../components/services/v2/ServicePageV2.astro';
 import type { ServicePageCopy } from '../../../components/services/v2/types';
 import { getEventsCopy } from '../../../components/services/events/copy';
 import { getMvpCopy } from '../../../components/services/mvp/copy';
+import { getLandingCopy } from '../../../components/services/landing/copy';
 import { HTML_LOCALE_CODES, SUPPORTED_LOCALES, type Locale, useTranslations } from '../../../i18n';
 import { type ServiceEntry, getServices, localizeServiceEntry } from '../../../lib/content/services';
 
@@ -45,6 +46,7 @@ const alternateUrl = localizeServiceEntry(service, switchLang).data.seoUrl;
 const V2_COPIES: Record<string, (lang: Locale) => ServicePageCopy> = {
   'applications-evenementielles': getEventsCopy,
   'creation-mvp-saas': getMvpCopy,
+  'creation-landing-page': getLandingCopy,
 };
 const v2Copy = V2_COPIES[service.data.slug]?.(lang);
 
