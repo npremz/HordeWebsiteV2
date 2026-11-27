@@ -151,7 +151,7 @@ const fr: HubCopy = {
     items: [
       {
         title: 'On cadre',
-        text: 'Avant d’écrire une ligne, on pose ce que vous voulez obtenir, pour qui, et ce qui entre dans le projet. Pour Rocket Mission, huit dossiers de spécifications ont précédé le code.',
+        text: 'Avant d’écrire une ligne, on pose ce que vous voulez obtenir, pour qui, et ce qui entre dans le projet. Sur Rocket Mission, huit dossiers de spécifications ont décrit le besoin, les cas limites et la façon de vérifier le résultat avant chaque développement.',
       },
       {
         title: 'On pense pour l’humain',
@@ -276,7 +276,7 @@ const en: HubCopy = {
     items: [
       {
         title: 'We scope',
-        text: 'Before writing a line, we pin down what you want to achieve, for whom, and what is in the project. For Rocket Mission, eight specification files came before the code.',
+        text: 'Before writing a line, we pin down what you want to achieve, for whom, and what is in the project. On Rocket Mission, eight specification files set out the need, the edge cases and how to check the result before each piece was built.',
       },
       {
         title: 'We design for humans',
