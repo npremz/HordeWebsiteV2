@@ -200,22 +200,19 @@ Projets realises pour 42 Belgium:
 - Slug: optimisation-site-web
 - URL FR: https://hordeagence.com/fr/services/optimisation-site-web/
 - URL EN: https://hordeagence.com/en/services/website-optimization-brussels/
-- SEO title FR: Optimisation site web a Bruxelles
-- Objectif: ameliorer la vitesse, les Core Web Vitals et la stabilite d'un site existant.
-- Cibles: sites lents, pages qui perdent des visiteurs, interfaces instables ou plateformes qui accumulent une dette technique visible.
-- Prix: 199 EUR HTVA par jour d'intervention, nombre de jours estime apres le diagnostic gratuit.
+- SEO title FR: Optimisation de site web a Bruxelles
+- Objectif: corriger les details qui coincent sur un site existant (visiteurs bloques, Google, RGPD, securite) sans refonte.
+- Cibles: sites globalement bons mais bloques quelque part (formulaire, affichage mobile, Google), sites faits avec l'IA presque prets.
+- Prix: 199 EUR HTVA par jour, nombre de jours estime apres l'audit offert ; generalement une journee suffit.
 
-Prestations:
+Ce qu'on corrige:
 
-- LCP (Largest Contentful Paint)
-- INP (Interaction to Next Paint)
-- CLS (Cumulative Layout Shift)
-- SEO technique
-- infrastructure et cache
-- diagnostic initial
-- plan d'action priorise
-- implementation
-- validation
+- ce qui bloque les visiteurs : formulaires, boutons, affichage sur telephone, chargement
+- ce qui gene Google : pages introuvables, titres manquants, liens casses
+- RGPD : banniere cookies, consentement, politique de confidentialite
+- securite : protections manquantes, acces trop ouverts
+
+Si l'audit montre qu'il faut repenser les parcours ou le design, c'est une refonte (a partir de 999 EUR HTVA).
 
 ## Prix
 
