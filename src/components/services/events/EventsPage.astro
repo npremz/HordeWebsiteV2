@@ -1,0 +1,852 @@
+---
+/**
+ * Page service « Applications événementielles », dans la DA de la home (pilote de la refonte
+ * des pages services). Ordre : promesse + prix → photo réelle → qualification → preuves (42) →
+ * citation → formats → déroulé → prix → FAQ → contact.
+ * Fonds alternés : noir → noir → bg → blanc → bg → blanc → bg → blanc → bg → noir.
+ */
+import { Image } from "astro:assets";
+import type { Locale } from "../../../i18n";
+import { BUSINESS } from "../../../lib/business-info";
+import HeroLines from "../../home/svg/HeroLines.astro";
+import HomeLink from "../../home/ui/HomeLink.astro";
+import "../../home/home.css";
+import relayPhoto from "../../../assets/images/services/evenements/code-relay-proximus.jpg";
+import wielsPhoto from "../../../assets/images/services/evenements/rocket-mission-wiels.jpg";
+import postesPhoto from "../../../assets/images/services/evenements/rocket-mission-postes.jpg";
+import relayScreenPhoto from "../../../assets/images/services/evenements/code-relay-ecran.jpg";
+import { getEventsCopy } from "./copy";
+
+interface Props {
+  lang: Locale;
+}
+
+const { lang } = Astro.props;
+const copy = getEventsCopy(lang);
+const contactHref = `/${lang}/contact/`;
+const photos = { relayScreen: relayScreenPhoto, wiels: wielsPhoto, postes: postesPhoto } as const;
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: copy.faq.items.map((item) => ({
+    "@type": "Question",
+    name: item.q,
+    acceptedAnswer: { "@type": "Answer", text: item.a },
+  })),
+};
+---
+
+<script is:inline type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+
+<!-- 1. Hero : la promesse, le prix et le délai, le CTA. -->
+<section class="ev-hero relative overflow-clip bg-black text-white" data-header-theme="dark">
+  <HeroLines class="pointer-events-none absolute inset-0 h-full w-full opacity-60" />
+  <div class="ev-hero__inner home-column home-column--wide relative">
+    <p class="ev-mono ev-hero__eyebrow">{copy.hero.eyebrow}</p>
+    <h1 class="ev-hero__title">
+      {copy.hero.titleLines.map((line, index) => (
+        <span class="ev-hero__line"><span style={`--line: ${index}`}>{line}</span></span>
+      ))}
+    </h1>
+    <p class="ev-hero__lead">{copy.hero.lead}</p>
+    <ul class="ev-hero__facts">
+      {copy.hero.facts.map((fact) => <li class="ev-mono">{fact}</li>)}
+    </ul>
+    <div class="ev-hero__actions">
+      <a href={contactHref} class="ev-button ev-button--white">{copy.hero.cta}</a>
+      <HomeLink href="#projets" label={copy.hero.secondary} tone="light" />
+    </div>
+  </div>
+</section>
+
+<!-- 2. Photo réelle d'un événement. -->
+<section class="ev-shot bg-black" data-header-theme="dark">
+  <figure class="ev-shot__figure home-column home-column--wide" data-home-reveal>
+    <div class="ev-shot__frame">
+      <Image
+        src={relayPhoto}
+        alt={copy.shot.alt}
+        widths={[480, 800, 1280]}
+        sizes="(min-width: 1256px) 68rem, 94vw"
+        loading="eager"
+        decoding="async"
+      />
+    </div>
+    <figcaption class="ev-mono ev-shot__caption">{copy.shot.caption}</figcaption>
+  </figure>
+</section>
+
+<!-- 3. Qualification : pour vous / pas pour vous. -->
+<section class="ev-fit bg-bg" data-header-theme="light">
+  <div class="home-column home-column--wide">
+    <h2 class="ev-h2" data-home-reveal>{copy.fit.title}</h2>
+    <div class="ev-fit__grid">
+      <div class="ev-fit__col" data-home-reveal>
+        <p class="ev-mono ev-fit__label">{copy.fit.yesLabel}</p>
+        <ul class="ev-fit__list">
+          {copy.fit.yes.map((item) => <li><span class="ev-fit__mark" aria-hidden="true">+</span>{item}</li>)}
+        </ul>
+      </div>
+      <div class="ev-fit__col ev-fit__col--no" data-home-reveal style="--reveal-delay: 0.1s">
+        <p class="ev-mono ev-fit__label">{copy.fit.noLabel}</p>
+        <ul class="ev-fit__list">
+          {copy.fit.no.map((item) => <li><span class="ev-fit__mark" aria-hidden="true">–</span>{item}</li>)}
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 4. Les preuves : deux événements pour 42 Belgium. -->
+<section id="projets" class="ev-projects bg-white" data-header-theme="light">
+  <div class="home-column home-column--wide">
+    <h2 class="ev-projects__title" data-home-reveal>
+      <span class="ev-mono ev-projects__count">({copy.projects.count})</span>
+      <span>{copy.projects.title}</span>
+    </h2>
+
+    {copy.projects.items.map((project, index) => (
+      <article class:list={["ev-project", index % 2 === 1 && "ev-project--flip"]}>
+        <div class:list={["ev-project__media", project.images.length > 1 && "ev-project__media--pair"]} data-home-reveal>
+          {project.images.map((image) => (
+            <div class="ev-project__photo">
+              <Image
+                src={photos[image.key as keyof typeof photos]}
+                alt={image.alt}
+                widths={[400, 640, 960]}
+                sizes={project.images.length > 1 ? "(min-width: 1024px) 18rem, 46vw" : "(min-width: 1024px) 34rem, 94vw"}
+                loading="lazy"
+                decoding="async"
+              />
+            </div>
+          ))}
+        </div>
+        <div class="ev-project__body" data-home-reveal style="--reveal-delay: 0.1s">
+          <h3 class="ev-project__name">{project.name}</h3>
+          <ul class="ev-project__meta">
+            {project.meta.map((item) => <li class="ev-mono">{item}</li>)}
+          </ul>
+          <p class="ev-text">{project.text}</p>
+          <p class="ev-mono ev-project__list-label">{project.listLabel}</p>
+          <ul class="ev-project__list">
+            {project.list.map((item) => <li>{item}</li>)}
+          </ul>
+          {project.note && <p class="ev-text ev-project__note">{project.note}</p>}
+          {project.link && <HomeLink href={project.link.href} label={project.link.label} class="ev-project__link" />}
+        </div>
+      </article>
+    ))}
+  </div>
+</section>
+
+<!-- 5. Ce qu'en dit le client. -->
+<section class="ev-quote bg-bg" data-header-theme="light">
+  <figure class="home-column" data-home-reveal>
+    <p class="ev-mono ev-quote__label">{copy.quote.label}</p>
+    <blockquote class="ev-quote__text"><p>{copy.quote.text}</p></blockquote>
+    <figcaption class="ev-mono ev-quote__source">{copy.quote.source}</figcaption>
+  </figure>
+</section>
+
+<!-- 6. Les formats possibles. -->
+<section class="ev-formats bg-white" data-header-theme="light">
+  <div class="home-column home-column--wide">
+    <h2 class="ev-h2" data-home-reveal>{copy.formats.title}</h2>
+    <ul class="ev-formats__grid">
+      {copy.formats.items.map((item, index) => (
+        <li class="ev-card" data-home-reveal style={`--reveal-delay: ${(index % 2) * 0.08}s`}>
+          <span class="ev-mono ev-card__index">{String(index + 1).padStart(2, "0")}</span>
+          <h3 class="ev-card__title">{item.title}</h3>
+          <p class="ev-text">{item.text}</p>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<!-- 7. Le déroulé, semaine par semaine. -->
+<section class="ev-process bg-bg" data-header-theme="light">
+  <div class="home-column home-column--wide">
+    <h2 class="ev-h2" data-home-reveal>{copy.process.title}</h2>
+    <ol class="ev-process__steps">
+      {copy.process.steps.map((step, index) => (
+        <li class="ev-step" data-home-reveal style={`--reveal-delay: ${index * 0.08}s`}>
+          <span class="ev-mono ev-step__when">{step.when}</span>
+          <h3 class="ev-step__title">{step.title}</h3>
+          <p class="ev-text">{step.text}</p>
+        </li>
+      ))}
+    </ol>
+  </div>
+</section>
+
+<!-- 8. Le prix. -->
+<section class="ev-price bg-white" data-header-theme="light">
+  <div class="home-column home-column--wide">
+    <p class="ev-mono ev-price__label">{copy.price.label}</p>
+    <h2 class="ev-price__title" data-home-reveal>
+      <span class="block">{copy.price.title}</span>
+      <span class="block ev-price__rest">{copy.price.titleRest}</span>
+    </h2>
+    <div class="ev-price__grid">
+      <p class="ev-text ev-price__intro">{copy.price.intro}</p>
+      {copy.price.factors.map((factor, index) => (
+        <div class="ev-price__factor" data-home-reveal style={`--reveal-delay: ${index * 0.08}s`}>
+          <h3 class="ev-card__title">{factor.title}</h3>
+          <p class="ev-text">{factor.text}</p>
+        </div>
+      ))}
+    </div>
+    <p class="ev-price__note">{copy.price.note}</p>
+  </div>
+</section>
+
+<!-- 9. FAQ. -->
+<section class="ev-faq bg-bg" data-header-theme="light">
+  <div class="home-column">
+    <h2 class="ev-h2" data-home-reveal>{copy.faq.title}</h2>
+    <div class="ev-faq__list">
+      {copy.faq.items.map((item) => (
+        <details class="ev-faq__item">
+          <summary class="ev-faq__q">
+            <span>{item.q}</span>
+            <span class="ev-faq__icon" aria-hidden="true"></span>
+          </summary>
+          <p class="ev-text ev-faq__a">{item.a}</p>
+        </details>
+      ))}
+    </div>
+  </div>
+</section>
+
+<!-- 10. Contact. -->
+<section class="ev-cta bg-black text-white" data-header-theme="dark">
+  <div class="home-column home-column--wide">
+    <p class="ev-mono ev-cta__label">{copy.cta.label}</p>
+    <h2 class="ev-cta__title" data-home-reveal>
+      {copy.cta.titleLines.map((line, index) => (
+        <>{index > 0 && " "}<span class="block">{line}</span></>
+      ))}
+    </h2>
+    <p class="ev-cta__text">{copy.cta.text}</p>
+    <div class="ev-hero__actions">
+      <a href={contactHref} class="ev-button ev-button--white">{copy.cta.primary}</a>
+      <HomeLink href={BUSINESS.bookingUrl} label={copy.cta.booking} tone="light" icon="arrow" external newTabLabel={copy.cta.newTab} />
+    </div>
+    <p class="ev-mono ev-cta__reassurance">{copy.cta.reassurance} · <a href={`mailto:${BUSINESS.email}`}>{BUSINESS.email}</a></p>
+  </div>
+</section>
+
+<style>
+  /* ---------- Partagé ---------- */
+
+  .ev-mono {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    line-height: 1.2;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .ev-text {
+    font-size: 1rem;
+    line-height: 1.25;
+    letter-spacing: -0.005em;
+  }
+
+  .ev-h2 {
+    max-width: 40rem;
+    font-size: clamp(2rem, 6vw, 3.75rem);
+    font-weight: 300;
+    line-height: 0.95;
+    letter-spacing: -0.045em;
+  }
+
+  .ev-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 3.25rem;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.75rem;
+    font-size: 1.0625rem;
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+    text-align: center;
+    transition:
+      background-color 0.25s ease,
+      color 0.25s ease;
+  }
+
+  .ev-button--white {
+    background: var(--color-button-white);
+    color: var(--color-black);
+  }
+
+  .ev-button:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 3px;
+  }
+
+  @media (hover: hover) {
+    .ev-button--white:hover {
+      background: var(--color-bg);
+    }
+  }
+
+  /* ---------- 1. Hero ---------- */
+
+  .ev-hero__inner {
+    padding-block: 8.5rem 3.5rem;
+  }
+
+  .ev-hero__eyebrow {
+    margin-bottom: 1.75rem;
+    color: rgb(244 241 248 / 0.7);
+  }
+
+  .ev-hero__title {
+    font-size: clamp(2.35rem, 9.6vw, 5.75rem);
+    font-weight: 300;
+    line-height: 0.98;
+    letter-spacing: -0.045em;
+  }
+
+  .ev-hero__line {
+    display: block;
+    overflow: hidden;
+    padding-bottom: 0.12em;
+    margin-bottom: -0.12em;
+  }
+
+  .ev-hero__line > span {
+    display: block;
+    animation: ev-hero-line 0.9s cubic-bezier(0.77, 0, 0.18, 1) both;
+    animation-delay: calc(0.15s + var(--line) * 0.1s);
+  }
+
+  .ev-hero__line:last-child > span {
+    color: rgb(244 241 248 / 0.55);
+  }
+
+  @keyframes ev-hero-line {
+    from {
+      transform: translateY(calc(100% + 0.2em));
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .ev-hero__line > span {
+      animation: none;
+    }
+  }
+
+  .ev-hero__lead {
+    max-width: 36rem;
+    margin-top: 2rem;
+    font-size: 1.125rem;
+    line-height: 1.25;
+    color: rgb(244 241 248 / 0.85);
+  }
+
+  .ev-hero__facts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 2rem;
+  }
+
+  .ev-hero__facts li {
+    padding: 0.5rem 0.7rem;
+    border: 1px solid rgb(244 241 248 / 0.35);
+    border-radius: 0.4rem;
+  }
+
+  .ev-hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1.25rem 2rem;
+    margin-top: 2.5rem;
+  }
+
+  /* ---------- 2. Photo ---------- */
+
+  .ev-shot {
+    padding-bottom: 4rem;
+  }
+
+  .ev-shot__frame {
+    overflow: hidden;
+    aspect-ratio: 4 / 3;
+    border-radius: 0.875rem;
+    background: #24272a;
+  }
+
+  .ev-shot__frame :global(img) {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 50% 60%;
+  }
+
+  .ev-shot__caption {
+    margin-top: 0.9rem;
+    color: rgb(244 241 248 / 0.65);
+  }
+
+  /* ---------- 3. Pour vous ---------- */
+
+  .ev-fit {
+    padding-block: 4.5rem;
+  }
+
+  .ev-fit__grid {
+    display: grid;
+    gap: 2.5rem;
+    margin-top: 2.75rem;
+  }
+
+  .ev-fit__label {
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--color-black);
+  }
+
+  .ev-fit__list li {
+    display: flex;
+    gap: 0.9rem;
+    padding-block: 1rem;
+    border-bottom: 1px solid rgb(15 16 17 / 0.2);
+    font-size: 1.1875rem;
+    line-height: 1.2;
+    letter-spacing: -0.015em;
+  }
+
+  .ev-fit__mark {
+    flex: none;
+    width: 1rem;
+    font-family: var(--font-mono);
+  }
+
+  .ev-fit__col--no {
+    color: rgb(15 16 17 / 0.7);
+  }
+
+  /* ---------- 4. Projets ---------- */
+
+  .ev-projects {
+    padding-block: 4.5rem 5rem;
+  }
+
+  .ev-projects__title {
+    display: flex;
+    align-items: baseline;
+    gap: 1rem;
+    font-size: clamp(2rem, 6vw, 3.75rem);
+    font-weight: 300;
+    line-height: 0.95;
+    letter-spacing: -0.045em;
+  }
+
+  .ev-projects__count {
+    flex: none;
+  }
+
+  .ev-project {
+    display: grid;
+    gap: 2rem;
+    margin-top: 3.5rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--color-black);
+  }
+
+  .ev-project__media {
+    display: grid;
+    gap: 0.5rem;
+    align-self: start;
+  }
+
+  .ev-project__media--pair {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .ev-project__photo {
+    overflow: hidden;
+    aspect-ratio: 4 / 5;
+    border-radius: 0.75rem;
+    background: var(--color-bg-light);
+  }
+
+  .ev-project__media:not(.ev-project__media--pair) .ev-project__photo {
+    aspect-ratio: 1 / 1;
+  }
+
+  .ev-project__photo :global(img) {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .ev-project__name {
+    font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: 400;
+    line-height: 1;
+    letter-spacing: -0.04em;
+  }
+
+  .ev-project__meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-block: 1.25rem 1.5rem;
+  }
+
+  .ev-project__meta li {
+    padding: 0.35rem 0.55rem;
+    border-radius: 0.3rem;
+    background: var(--color-black);
+    color: var(--color-white);
+  }
+
+  .ev-project__list-label {
+    margin-top: 1.75rem;
+    padding-bottom: 0.6rem;
+    border-bottom: 1px solid var(--color-black);
+  }
+
+  .ev-project__list li {
+    padding-block: 0.6rem;
+    border-bottom: 1px solid rgb(15 16 17 / 0.15);
+    font-size: 1rem;
+    line-height: 1.2;
+  }
+
+  .ev-project__note {
+    margin-top: 1.5rem;
+  }
+
+  .ev-project :global(.ev-project__link) {
+    margin-top: 1.75rem;
+  }
+
+  /* ---------- 5. Citation ---------- */
+
+  .ev-quote {
+    padding-block: 5rem;
+  }
+
+  .ev-quote__text {
+    margin-top: 1.5rem;
+    font-size: clamp(1.6rem, 4.6vw, 2.9rem);
+    font-weight: 300;
+    line-height: 1.05;
+    letter-spacing: -0.035em;
+  }
+
+  .ev-quote__source {
+    margin-top: 1.75rem;
+  }
+
+  /* ---------- 6. Formats ---------- */
+
+  .ev-formats {
+    padding-block: 4.5rem 5rem;
+  }
+
+  .ev-formats__grid {
+    display: grid;
+    gap: 0.75rem;
+    margin-top: 2.75rem;
+  }
+
+  .ev-card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+    padding: 1.5rem;
+    border-radius: 0.875rem;
+    background: var(--color-bg-light);
+  }
+
+  .ev-card__title {
+    font-size: 1.375rem;
+    font-weight: 400;
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+  }
+
+  /* ---------- 7. Déroulé ---------- */
+
+  .ev-process {
+    padding-block: 4.5rem 5rem;
+  }
+
+  .ev-process__steps {
+    display: grid;
+    gap: 0;
+    margin-top: 2.75rem;
+    border-top: 1px solid var(--color-black);
+  }
+
+  .ev-step {
+    display: grid;
+    gap: 0.6rem;
+    padding-block: 1.5rem;
+    border-bottom: 1px solid rgb(15 16 17 / 0.25);
+  }
+
+  .ev-step__title {
+    font-size: 1.375rem;
+    font-weight: 400;
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+  }
+
+  /* ---------- 8. Prix ---------- */
+
+  .ev-price {
+    padding-block: 4.5rem 5rem;
+  }
+
+  .ev-price__title {
+    margin-top: 1.25rem;
+    font-size: clamp(2.2rem, 7.5vw, 5rem);
+    font-weight: 300;
+    line-height: 0.95;
+    letter-spacing: -0.045em;
+  }
+
+  .ev-price__rest {
+    color: #7a7980;
+  }
+
+  .ev-price__grid {
+    display: grid;
+    gap: 1.75rem;
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--color-black);
+  }
+
+  .ev-price__factor {
+    display: grid;
+    gap: 0.75rem;
+  }
+
+  .ev-price__note {
+    max-width: 36rem;
+    margin-top: 2.5rem;
+    font-size: 1.1875rem;
+    line-height: 1.2;
+    letter-spacing: -0.015em;
+  }
+
+  /* ---------- 9. FAQ ---------- */
+
+  .ev-faq {
+    padding-block: 4.5rem 5rem;
+  }
+
+  .ev-faq__list {
+    margin-top: 2.5rem;
+    border-top: 1px solid var(--color-black);
+  }
+
+  .ev-faq__item {
+    border-bottom: 1px solid rgb(15 16 17 / 0.25);
+  }
+
+  .ev-faq__q {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+    padding-block: 1.25rem;
+    font-size: 1.1875rem;
+    line-height: 1.2;
+    letter-spacing: -0.015em;
+    cursor: pointer;
+    list-style: none;
+  }
+
+  .ev-faq__q::-webkit-details-marker {
+    display: none;
+  }
+
+  .ev-faq__q:focus-visible {
+    outline: 2px solid var(--color-black);
+    outline-offset: 4px;
+  }
+
+  .ev-faq__icon {
+    position: relative;
+    flex: none;
+    width: 1.75rem;
+    height: 1.75rem;
+    border-radius: 0.4rem;
+    background: var(--color-black);
+  }
+
+  .ev-faq__icon::before,
+  .ev-faq__icon::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0.6rem;
+    height: 1.5px;
+    background: var(--color-white);
+    transform: translate(-50%, -50%);
+    transition: transform 0.25s ease;
+  }
+
+  .ev-faq__icon::after {
+    transform: translate(-50%, -50%) rotate(90deg);
+  }
+
+  .ev-faq__item[open] .ev-faq__icon::after {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+
+  .ev-faq__a {
+    max-width: 40rem;
+    padding-bottom: 1.5rem;
+  }
+
+  /* ---------- 10. Contact ---------- */
+
+  .ev-cta {
+    padding-block: 5rem;
+  }
+
+  .ev-cta__label {
+    color: rgb(244 241 248 / 0.7);
+  }
+
+  .ev-cta__title {
+    margin-top: 1.25rem;
+    font-size: clamp(2.4rem, 8vw, 5.75rem);
+    font-weight: 300;
+    line-height: 0.95;
+    letter-spacing: -0.045em;
+  }
+
+  .ev-cta__text {
+    max-width: 34rem;
+    margin-top: 1.75rem;
+    font-size: 1.125rem;
+    line-height: 1.25;
+    color: rgb(244 241 248 / 0.85);
+  }
+
+  .ev-cta__reassurance {
+    margin-top: 2rem;
+    color: rgb(244 241 248 / 0.7);
+  }
+
+  .ev-cta__reassurance a {
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+  }
+
+  /* ---------- Tablette ---------- */
+
+  @media (min-width: 640px) {
+    .ev-text {
+      font-size: 1.0625rem;
+    }
+
+    .ev-fit__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 3rem;
+    }
+
+    .ev-formats__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .ev-card {
+      min-height: 15rem;
+      padding: 1.75rem;
+    }
+
+    .ev-card .ev-text {
+      margin-top: auto;
+    }
+
+    .ev-step {
+      grid-template-columns: 10rem minmax(0, 1fr) minmax(0, 1.3fr);
+      align-items: baseline;
+      gap: 1.5rem;
+    }
+
+    .ev-price__grid {
+      grid-template-columns: 1fr 1.4fr 1.4fr;
+      gap: 2rem;
+    }
+  }
+
+  /* ---------- Desktop ---------- */
+
+  @media (min-width: 1024px) {
+    .ev-hero__inner {
+      padding-block: 11rem 4.5rem;
+    }
+
+    .ev-hero__lead,
+    .ev-cta__text {
+      font-size: 1.3125rem;
+    }
+
+    .ev-shot {
+      padding-bottom: 6rem;
+    }
+
+    .ev-shot__frame {
+      aspect-ratio: 16 / 9;
+    }
+
+    .ev-fit,
+    .ev-projects,
+    .ev-formats,
+    .ev-process,
+    .ev-price,
+    .ev-faq {
+      padding-block: 7rem;
+    }
+
+    .ev-quote,
+    .ev-cta {
+      padding-block: 8rem;
+    }
+
+    .ev-project {
+      grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+      gap: 4rem;
+      margin-top: 4.5rem;
+    }
+
+    .ev-project--flip .ev-project__media {
+      order: 2;
+    }
+
+    .ev-fit__list li,
+    .ev-faq__q {
+      font-size: 1.375rem;
+    }
+  }
+</style>
+
+<script>
+  import { initHomeReveal } from "../../../lib/home-reveal";
+  import { pauseOffscreen } from "../../../lib/pause-offscreen";
+
+  initHomeReveal();
+  pauseOffscreen();
+  document.addEventListener("astro:page-load", () => {
+    initHomeReveal();
+    pauseOffscreen();
+  });
+</script>

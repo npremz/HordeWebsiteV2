@@ -8,6 +8,7 @@ import ServiceDeliverablesSection from '../../../components/services/ServiceDeli
 import ServiceExclusionsSection from '../../../components/services/ServiceExclusionsSection.astro';
 import ServiceFaqSection from '../../../components/services/ServiceFaqSection.astro';
 import ServiceCtaSection from '../../../components/services/ServiceCtaSection.astro';
+import EventsPage from '../../../components/services/events/EventsPage.astro';
 import { HTML_LOCALE_CODES, SUPPORTED_LOCALES, type Locale, useTranslations } from '../../../i18n';
 import { type ServiceEntry, getServices, localizeServiceEntry } from '../../../lib/content/services';
 
@@ -35,6 +36,9 @@ const t = useTranslations(lang);
 const localizedService = localizeServiceEntry(service, lang);
 const switchLang: Locale = lang === 'fr' ? 'en' : 'fr';
 const alternateUrl = localizeServiceEntry(service, switchLang).data.seoUrl;
+
+// Page pilote de la refonte des services : mise en page dédiée, dans la DA de la home.
+const isEventsPage = service.data.slug === 'applications-evenementielles';
 
 const siteUrl = (Astro.site?.href || 'https://hordeagence.com/').replace(/\/$/, '');
 const pageUrl = new URL(localizedService.data.seoUrl, `${siteUrl}/`).href;
@@ -98,25 +102,66 @@ const serviceSchema = {
 
 <script is:inline type="application/ld+json" set:html={JSON.stringify(serviceSchema)} />
 
-<Layout
-  lang={lang}
-  alternateUrl={alternateUrl}
-  title={localizedService.data.seoTitle}
-  description={localizedService.data.seoDescription}
-  robots={localizedService.data.seoRobots as 'index, follow' | 'noindex, follow' | 'noindex, nofollow'}
-  headerVariant="dark"
-  containerClass="landing-column"
->
-  <div class="fixed inset-0 bg-bg -z-10" aria-hidden="true"></div>
-  <article data-service-slug={localizedService.data.slug}>
-    <ServiceHero service={localizedService.data} />
-    <ServiceOfferSection service={localizedService.data} />
-    <ServiceMethodSection service={localizedService.data} />
-    <ServiceDeliverablesSection service={localizedService.data} lang={lang} />
-    <ServiceExclusionsSection service={localizedService.data} lang={lang} />
-    <ServiceFaqSection service={localizedService.data} />
-    <ServiceCtaSection service={localizedService.data} formTranslations={t.form} />
-  </article>
+{isEventsPage ? (
+  <Layout
+    lang={lang}
+    alternateUrl={alternateUrl}
+    title={localizedService.data.seoTitle}
+    description={localizedService.data.seoDescription}
+    robots={localizedService.data.seoRobots as 'index, follow' | 'noindex, follow' | 'noindex, nofollow'}
+    headerVariant="dark"
+    bare
+  >
+    <script is:inline>document.documentElement.classList.add("home-js");</script>
+    <article class="home-page relative" data-service-slug={localizedService.data.slug}>
+      <EventsPage lang={lang} />
+    </article>
+    <div slot="footer" class="service-page__footer">
+      <Footer lang={lang} />
+    </div>
+  </Layout>
+) : (
+  <Layout
+    lang={lang}
+    alternateUrl={alternateUrl}
+    title={localizedService.data.seoTitle}
+    description={localizedService.data.seoDescription}
+    robots={localizedService.data.seoRobots as 'index, follow' | 'noindex, follow' | 'noindex, nofollow'}
+    headerVariant="dark"
+    containerClass="landing-column"
+  >
+    <div class="fixed inset-0 bg-bg -z-10" aria-hidden="true"></div>
+    <article data-service-slug={localizedService.data.slug}>
+      <ServiceHero service={localizedService.data} />
+      <ServiceOfferSection service={localizedService.data} />
+      <ServiceMethodSection service={localizedService.data} />
+      <ServiceDeliverablesSection service={localizedService.data} lang={lang} />
+      <ServiceExclusionsSection service={localizedService.data} lang={lang} />
+      <ServiceFaqSection service={localizedService.data} />
+      <ServiceCtaSection service={localizedService.data} formTranslations={t.form} />
+    </article>
 
-  <Footer slot="footer" lang={lang} hideOverflow={false} />
-</Layout>
+    <Footer slot="footer" lang={lang} hideOverflow={false} />
+  </Layout>
+)}
+
+<style>
+  /* Mêmes marges que le footer de la home, de la page contact et de « L’agence ». */
+  .service-page__footer {
+    padding-inline: 1rem;
+    background: var(--color-bg);
+    overflow-x: clip;
+  }
+
+  @media (min-width: 640px) {
+    .service-page__footer {
+      padding-inline: 2rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .service-page__footer {
+      padding-inline: 3.6rem;
+    }
+  }
+</style>
