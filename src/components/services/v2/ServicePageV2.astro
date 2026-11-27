@@ -80,22 +80,24 @@ const faqSchema = {
   </div>
 </section>
 
-<!-- 2. Photo réelle d'un événement. -->
+<!-- 2. Photo réelle (optionnelle). -->
+{copy.shot && (
 <section class="ev-shot bg-black" data-header-theme="dark">
   <figure class="ev-shot__figure home-column home-column--wide" data-home-reveal>
-    <div class="ev-shot__frame" style={copy.shot.position ? `--shot-position: ${copy.shot.position}` : undefined}>
+    <div class="ev-shot__frame" style={copy.shot!.position ? `--shot-position: ${copy.shot!.position}` : undefined}>
       <Image
-        src={photos[copy.shot.key]}
-        alt={copy.shot.alt}
+        src={photos[copy.shot!.key]}
+        alt={copy.shot!.alt}
         widths={[480, 800, 1280]}
         sizes="(min-width: 1256px) 68rem, 94vw"
         loading="eager"
         decoding="async"
       />
     </div>
-    <figcaption class="ev-mono ev-shot__caption">{copy.shot.caption}</figcaption>
+    <figcaption class="ev-mono ev-shot__caption">{copy.shot!.caption}</figcaption>
   </figure>
 </section>
+)}
 
 <!-- 3. Qualification : pour vous / pas pour vous. -->
 <section class="ev-fit bg-bg" data-header-theme="light">
@@ -127,8 +129,9 @@ const faqSchema = {
     </h2>
 
     {copy.projects.items.map((project, index) => (
-      <article class:list={["ev-project", index % 2 === 1 && "ev-project--flip"]}>
-        <div class:list={["ev-project__media", project.images.length > 1 && "ev-project__media--pair"]} style={project.mediaRatio ? `--media-ratio: ${project.mediaRatio}` : undefined} data-home-reveal>
+      <article class:list={["ev-project", index % 2 === 1 && "ev-project--flip", project.images.length === 0 && "ev-project--text"]}>
+        {project.images.length > 0 && (
+          <div class:list={["ev-project__media", project.images.length > 1 && "ev-project__media--pair"]} style={project.mediaRatio ? `--media-ratio: ${project.mediaRatio}` : undefined} data-home-reveal>
           {project.images.map((image) => (
             <div class="ev-project__photo">
               <Image
@@ -142,6 +145,7 @@ const faqSchema = {
             </div>
           ))}
         </div>
+        )}
         <div class="ev-project__body" data-home-reveal style="--reveal-delay: 0.1s">
           <h3 class="ev-project__name">{project.name}</h3>
           <ul class="ev-project__meta">
@@ -889,6 +893,15 @@ const faqSchema = {
 
     .ev-project--flip .ev-project__media {
       order: 2;
+    }
+
+    /* Projet sans visuel : une seule colonne de lecture. */
+    .ev-project--text {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .ev-project--text .ev-project__body {
+      max-width: 42rem;
     }
 
     .ev-fit__list li,

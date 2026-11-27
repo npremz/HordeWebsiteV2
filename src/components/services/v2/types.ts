@@ -25,7 +25,8 @@ export interface ServicePageCopy {
     cta: string;
     secondary: string;
   };
-  shot: { key: ServicePhotoKey; alt: string; caption: string; position?: string };
+  /** Grande photo sous le hero : section masquée si absente. */
+  shot?: { key: ServicePhotoKey; alt: string; caption: string; position?: string };
   fit: {
     title: string;
     yesLabel: string;
