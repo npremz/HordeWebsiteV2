@@ -6,7 +6,7 @@ import type { ServicePageCopy } from '../v2/types';
  * Angle (Nicolas, 27/11/2026) : audit UX/UI d'abord, c'est là que Horde se démarque ; le
  * référencement Google est vérifié mais pas mis en avant (« tous nos concurrents le font en un
  * prompt »). Angle IA : on reprend un site ou une app prototypé avec l'IA et on le rend pro, pensé
- * pour des humains. Pas de jargon. Point sécurité sur demande.
+ * pour des humains. Pas de jargon. Point sécurité sur demande. RGPD vérifié (demande de Nicolas).
  * Déroulé (relevé, appel, vidéo possible, sous 24 h) : Nicolas, 27/11/2026.
  * Exemples : test Lovable (article lovable-avis) et Rocket Mission (article vibe-coding).
  * « Aucune obligation » : repris de la page en ligne. Prix optimisation/refonte : grille 2026-11.
@@ -16,7 +16,7 @@ const fr: ServicePageCopy = {
     eyebrow: 'Audit UX/UI offert · Bruxelles',
     titleLines: ['Ce qui fait fuir', 'vos visiteurs,', 'en 24 h.'],
     lead:
-      'On regarde votre site avec les yeux de vos visiteurs : est-ce clair, est-ce agréable, trouve-t-on comment vous contacter ou acheter ? On vérifie aussi que tout fonctionne et que rien ne gêne Google. Puis on vous explique tout, en appel ou en vidéo. C’est offert.',
+      'On regarde votre site avec les yeux de vos visiteurs : est-ce clair, est-ce agréable, trouve-t-on comment vous contacter ou acheter ? On vérifie aussi que tout fonctionne, que rien ne gêne Google et que vous êtes en règle avec le RGPD. Puis on vous explique tout, en appel ou en vidéo. C’est offert.',
     facts: ['Offert', 'Retour sous 24 h', 'En appel ou en vidéo'],
     cta: 'Demander mon audit offert',
     secondary: 'Voir des exemples d’audit',
@@ -49,6 +49,7 @@ const fr: ServicePageCopy = {
           'un numéro de téléphone inventé par l’IA',
           'personne n’est prévenu quand une table est réservée, ni le bar ni le client',
           'rien n’empêche un robot de remplir l’agenda de fausses réservations',
+          'aucune mention RGPD, alors que l’app collecte noms, emails et téléphones',
           'des textes trop peu contrastés et des boutons trop petits sur mobile',
         ],
         note: null,
@@ -89,8 +90,8 @@ const fr: ServicePageCopy = {
         text: 'Les pages, les formulaires, l’affichage sur téléphone : on vérifie que tout marche, partout.',
       },
       {
-        title: 'Google et sécurité',
-        text: 'On vérifie que rien n’empêche Google de bien lire votre site. Et si vous le souhaitez, on fait aussi un point sécurité.',
+        title: 'Google, RGPD et sécurité',
+        text: 'On vérifie que rien n’empêche Google de bien lire votre site et que vous êtes en règle avec le RGPD : cookies, consentement, politique de confidentialité. Si vous le souhaitez, on fait aussi un point sécurité.',
       },
     ],
   },
@@ -157,8 +158,8 @@ const fr: ServicePageCopy = {
         a: 'Sous 24 h après votre demande.',
       },
       {
-        q: 'Vous regardez aussi le référencement et la sécurité ?',
-        a: 'Oui. On vérifie que rien ne gêne Google, et on ajoute un point sécurité si vous le souhaitez.',
+        q: 'Vous regardez aussi le référencement, le RGPD et la sécurité ?',
+        a: 'Oui. On vérifie que rien ne gêne Google et que votre site respecte le RGPD (cookies, consentement, politique de confidentialité). On ajoute un point sécurité si vous le souhaitez.',
       },
       {
         q: 'Je ne suis pas technique, je vais comprendre ?',
@@ -186,7 +187,7 @@ const en: ServicePageCopy = {
     eyebrow: 'Free UX/UI audit · Brussels',
     titleLines: ['What drives', 'your visitors away,', 'in 24 hours.'],
     lead:
-      'We look at your site through your visitors’ eyes: is it clear, is it pleasant, can people find how to contact you or buy? We also check that everything works and that nothing gets in Google’s way. Then we explain it all, on a call or by video. It is free.',
+      'We look at your site through your visitors’ eyes: is it clear, is it pleasant, can people find how to contact you or buy? We also check that everything works, that nothing gets in Google’s way and that you comply with the GDPR. Then we explain it all, on a call or by video. It is free.',
     facts: ['Free', 'Feedback within 24 hours', 'On a call or by video'],
     cta: 'Request my free audit',
     secondary: 'See example audits',
@@ -219,6 +220,7 @@ const en: ServicePageCopy = {
           'a phone number made up by the AI',
           'nobody is notified when a table is booked, neither the bar nor the customer',
           'nothing stops a bot from filling the calendar with fake bookings',
+          'no GDPR notices, although the app collects names, emails and phone numbers',
           'low-contrast text and buttons too small on mobile',
         ],
         note: null,
@@ -259,8 +261,8 @@ const en: ServicePageCopy = {
         text: 'Pages, forms, display on phones: we check that everything works, everywhere.',
       },
       {
-        title: 'Google and security',
-        text: 'We check that nothing stops Google from reading your site properly. And if you want, we also run a security check.',
+        title: 'Google, GDPR and security',
+        text: 'We check that nothing stops Google from reading your site properly and that you comply with the GDPR: cookies, consent, privacy policy. If you want, we also run a security check.',
       },
     ],
   },
@@ -327,8 +329,8 @@ const en: ServicePageCopy = {
         a: 'Within 24 hours of your request.',
       },
       {
-        q: 'Do you also look at search and security?',
-        a: 'Yes. We check that nothing gets in Google’s way, and we add a security check if you want one.',
+        q: 'Do you also look at search, GDPR and security?',
+        a: 'Yes. We check that nothing gets in Google’s way and that your site complies with the GDPR (cookies, consent, privacy policy). We add a security check if you want one.',
       },
       {
         q: 'I’m not technical. Will I understand?',

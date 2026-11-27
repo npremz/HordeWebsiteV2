@@ -96,7 +96,7 @@ const fr: ServicePageCopy = {
       },
       {
         title: 'Les finitions qu’on oublie',
-        text: 'Emails de confirmation, protection contre le spam, mentions légales, affichage mobile : ce qui sépare un prototype d’un vrai site.',
+        text: 'Emails de confirmation, protection contre le spam, mise en conformité RGPD (cookies, consentement, politique de confidentialité), affichage mobile : ce qui sépare un prototype d’un vrai site.',
       },
     ],
   },
@@ -152,7 +152,7 @@ const fr: ServicePageCopy = {
     items: [
       {
         q: 'Mon site a été fait avec Lovable, Bolt ou une autre IA. Vous pouvez le reprendre ?',
-        a: 'Oui. On garde ce qui fonctionne et on repense ce qui ne marche pas pour vos visiteurs : parcours, design, textes et finitions.',
+        a: 'Oui. On garde ce qui fonctionne et on repense ce qui ne marche pas pour vos visiteurs : parcours, design, textes et finitions, RGPD compris.',
       },
       {
         q: 'Vous repartez de zéro ?',
@@ -264,7 +264,7 @@ const en: ServicePageCopy = {
       },
       {
         title: 'The finishing touches people forget',
-        text: 'Confirmation emails, spam protection, legal notices, mobile display: what separates a prototype from a real website.',
+        text: 'Confirmation emails, spam protection, GDPR compliance (cookies, consent, privacy policy), mobile display: what separates a prototype from a real website.',
       },
     ],
   },
@@ -320,7 +320,7 @@ const en: ServicePageCopy = {
     items: [
       {
         q: 'My site was made with Lovable, Bolt or another AI. Can you take it over?',
-        a: 'Yes. We keep what works and rethink what doesn’t work for your visitors: journeys, design, copy and finishing touches.',
+        a: 'Yes. We keep what works and rethink what doesn’t work for your visitors: journeys, design, copy and finishing touches, GDPR included.',
       },
       {
         q: 'Do you start from scratch?',
