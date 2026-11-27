@@ -94,6 +94,7 @@ const fr: ServicePageCopy = {
         text: 'On vérifie que rien n’empêche Google de bien lire votre site et que vous êtes en règle avec le RGPD : cookies, consentement, politique de confidentialité. Si vous le souhaitez, on fait aussi un point sécurité.',
       },
     ],
+    link: { label: 'Notre méthode d’audit UX/UI, en détail', href: '/fr/blog/audit-ux-ui-site-web/' },
   },
   process: {
     title: 'Comment ça se passe',
@@ -265,6 +266,7 @@ const en: ServicePageCopy = {
         text: 'We check that nothing stops Google from reading your site properly and that you comply with the GDPR: cookies, consent, privacy policy. If you want, we also run a security check.',
       },
     ],
+    link: { label: 'Our UX/UI audit method, in detail', href: '/en/blog/website-ui-ux-audit/' },
   },
   process: {
     title: 'How it works',
