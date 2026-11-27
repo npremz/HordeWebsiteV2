@@ -80,12 +80,12 @@ const fr = {
     linkLabel: 'Voir le post',
     items: [
       {
-        text: '« Un grand merci à Nicolas Prémont […] pour avoir créé et animé cet atelier ! »',
+        text: '«\u00a0Un grand merci à Nicolas Prémont […] pour avoir créé et animé cet atelier\u202f!\u00a0»',
         source: '42 Belgium sur LinkedIn, à propos du Code Relay (traduit de l’anglais)',
         href: 'https://www.linkedin.com/posts/great-to-be-part-of-the-proximus-tech-student-share-7445463745817956353-jYh4/',
       },
       {
-        text: '« Nous n’avons dit à aucun élève de travailler ensemble. Pas besoin. En quelques minutes, ils comparaient leurs idées, testaient des solutions et s’entraidaient. »',
+        text: '«\u00a0Nous n’avons dit à aucun élève de travailler ensemble. Pas besoin. En quelques minutes, ils comparaient leurs idées, testaient des solutions et s’entraidaient.\u00a0»',
         source: '42 Belgium sur LinkedIn, à propos de Rocket Mission (traduit de l’anglais)',
         href: 'https://www.linkedin.com/posts/42belgium_42belgium-ftibrussels-peerlearning-activity-7518680284150558720-R0iJ',
       },
