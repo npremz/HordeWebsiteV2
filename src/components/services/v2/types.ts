@@ -4,7 +4,16 @@
  */
 
 /** Clés des photos disponibles (voir `photos` dans ServicePageV2.astro). */
-export type ServicePhotoKey = 'relay' | 'relayScreen' | 'wiels' | 'postes';
+export type ServicePhotoKey =
+  | 'relay'
+  | 'relayScreen'
+  | 'wiels'
+  | 'postes'
+  | 'fysuHero'
+  | 'fysuProducts'
+  | 'fysuMobile'
+  | 'lomaDesktop'
+  | 'lomaMobile';
 
 export interface ServicePageCopy {
   hero: {
@@ -34,10 +43,13 @@ export interface ServicePageCopy {
       list: string[];
       note: string | null;
       images: { key: ServicePhotoKey; alt: string }[];
+      /** Ratio de l'image seule (défaut 1 / 1), ex. « 1320 / 852 » pour une capture desktop. */
+      mediaRatio?: string;
       link: { label: string; href: string } | null;
     }[];
   };
-  quote: {
+  /** Citations clients : section masquée si absente. */
+  quote?: {
     label: string;
     linkLabel: string;
     items: { text: string; source: string; href: string }[];

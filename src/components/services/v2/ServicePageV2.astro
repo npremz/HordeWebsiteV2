@@ -15,6 +15,11 @@ import relayPhoto from "../../../assets/images/services/evenements/code-relay-pr
 import wielsPhoto from "../../../assets/images/services/evenements/rocket-mission-wiels.jpg";
 import postesPhoto from "../../../assets/images/services/evenements/rocket-mission-postes.jpg";
 import relayScreenPhoto from "../../../assets/images/services/evenements/code-relay-ecran.jpg";
+import fysuHeroPhoto from "../../../assets/images/services/projets/fysu-hero.jpg";
+import fysuProductsPhoto from "../../../assets/images/services/projets/fysu-produits.jpg";
+import fysuMobilePhoto from "../../../assets/images/services/projets/fysu-mobile.jpg";
+import lomaDesktopPhoto from "../../../assets/images/services/projets/cafe-loma-desktop.jpg";
+import lomaMobilePhoto from "../../../assets/images/services/projets/cafe-loma-mobile.jpg";
 import type { ServicePageCopy, ServicePhotoKey } from "./types";
 
 interface Props {
@@ -29,7 +34,16 @@ const photos: Record<ServicePhotoKey, ImageMetadata> = {
   relayScreen: relayScreenPhoto,
   wiels: wielsPhoto,
   postes: postesPhoto,
+  fysuHero: fysuHeroPhoto,
+  fysuProducts: fysuProductsPhoto,
+  fysuMobile: fysuMobilePhoto,
+  lomaDesktop: lomaDesktopPhoto,
+  lomaMobile: lomaMobilePhoto,
 };
+// Fonds alternés : sans citations, les sections suivantes décalent d'un cran.
+const [formatsBg, processBg, priceBg, faqBg] = copy.quote
+  ? ["bg-white", "bg-bg", "bg-white", "bg-bg"]
+  : ["bg-bg", "bg-white", "bg-bg", "bg-white"];
 const faqSchema = {
   "@context": "https://schema.org",
   "@type": "FAQPage",
@@ -112,7 +126,7 @@ const faqSchema = {
 
     {copy.projects.items.map((project, index) => (
       <article class:list={["ev-project", index % 2 === 1 && "ev-project--flip"]}>
-        <div class:list={["ev-project__media", project.images.length > 1 && "ev-project__media--pair"]} data-home-reveal>
+        <div class:list={["ev-project__media", project.images.length > 1 && "ev-project__media--pair"]} style={project.mediaRatio ? `--media-ratio: ${project.mediaRatio}` : undefined} data-home-reveal>
           {project.images.map((image) => (
             <div class="ev-project__photo">
               <Image
@@ -145,23 +159,25 @@ const faqSchema = {
 </section>
 
 <!-- 5. Ce qu'en dit le client. -->
+{copy.quote && (
 <section class="ev-quote bg-bg" data-header-theme="light">
   <div class="home-column">
-    <p class="ev-mono ev-quote__label">{copy.quote.label}</p>
-    {copy.quote.items.map((quote, index) => (
+    <p class="ev-mono ev-quote__label">{copy.quote!.label}</p>
+    {copy.quote!.items.map((quote, index) => (
       <figure class="ev-quote__item" data-home-reveal style={`--reveal-delay: ${index * 0.08}s`}>
         <blockquote class="ev-quote__text"><p>{quote.text}</p></blockquote>
         <figcaption class="ev-quote__source">
           <span class="ev-mono">{quote.source}</span>
-          <HomeLink href={quote.href} label={copy.quote.linkLabel} icon="arrow" external newTabLabel={copy.cta.newTab} />
+          <HomeLink href={quote.href} label={copy.quote!.linkLabel} icon="arrow" external newTabLabel={copy.cta.newTab} />
         </figcaption>
       </figure>
     ))}
   </div>
 </section>
+)}
 
 <!-- 6. Les formats possibles. -->
-<section class="ev-formats bg-white" data-header-theme="light">
+<section class:list={["ev-formats", formatsBg]} data-header-theme="light">
   <div class="home-column home-column--wide">
     <h2 class="ev-h2" data-home-reveal>{copy.formats.title}</h2>
     <ul class="ev-formats__grid">
@@ -177,7 +193,7 @@ const faqSchema = {
 </section>
 
 <!-- 7. Le déroulé, semaine par semaine. -->
-<section class="ev-process bg-bg" data-header-theme="light">
+<section class:list={["ev-process", processBg]} data-header-theme="light">
   <div class="home-column home-column--wide">
     <h2 class="ev-h2" data-home-reveal>{copy.process.title}</h2>
     <ol class="ev-process__steps">
@@ -194,7 +210,7 @@ const faqSchema = {
 </section>
 
 <!-- 8. Le prix. -->
-<section class="ev-price bg-white" data-header-theme="light">
+<section class:list={["ev-price", priceBg]} data-header-theme="light">
   <div class="home-column home-column--wide">
     <p class="ev-mono ev-price__label">{copy.price.label}</p>
     <h2 class="ev-price__title" data-home-reveal>
@@ -215,7 +231,7 @@ const faqSchema = {
 </section>
 
 <!-- 9. FAQ. -->
-<section class="ev-faq bg-bg" data-header-theme="light">
+<section class:list={["ev-faq", faqBg]} data-header-theme="light">
   <div class="home-column">
     <h2 class="ev-h2" data-home-reveal>{copy.faq.title}</h2>
     <div class="ev-faq__list">
@@ -492,7 +508,7 @@ const faqSchema = {
   }
 
   .ev-project__media:not(.ev-project__media--pair) .ev-project__photo {
-    aspect-ratio: 1 / 1;
+    aspect-ratio: var(--media-ratio, 1 / 1);
   }
 
   .ev-project__photo :global(img) {
