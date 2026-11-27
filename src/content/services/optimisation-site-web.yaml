@@ -13,7 +13,7 @@ seoDescription: >-
   grâce à un plan d’action priorisé, sans lancer une refonte complète.
 seoRobots: index, follow
 seoInternalLinks:
-  - /fr/services/audit-seo-technique-bruxelles/
+  - /fr/services/audit-ux-ui-bruxelles/
   - /fr/services/refonte-site-web-bruxelles/
   - /fr/contact/
 h1: Optimisation de site web
@@ -38,7 +38,7 @@ translations:
       Improve website speed, Core Web Vitals and technical SEO with a prioritized
       action plan that fixes bottlenecks without a complete redesign.
     seoInternalLinks:
-      - /en/services/technical-seo-audit-brussels/
+      - /en/services/ux-ui-audit-brussels/
       - /en/services/website-redesign-brussels/
       - /en/contact/
     h1: Website optimization
@@ -152,12 +152,12 @@ translations:
       - >-
         You can also email us at hello@hordeagence.com
     primaryCtaLabel: Request a free audit
-    primaryCtaUrl: /en/services/technical-seo-audit-brussels/
+    primaryCtaUrl: /en/services/ux-ui-audit-brussels/
     secondaryCtaLabel: Contact us
     secondaryCtaUrl: /en/contact/
     recommendedLinks:
       - anchor: free 48h audit
-        url: /en/services/technical-seo-audit-brussels/
+        url: /en/services/ux-ui-audit-brussels/
       - anchor: performance-focused redesign
         url: /en/services/website-redesign-brussels/
       - anchor: contact us
@@ -276,12 +276,12 @@ ctaParagraphs:
   - >-
     Ou vous pouvez nous envoyer un e-mail à l'adresse hello@hordeagence.com
 primaryCtaLabel: Demander un audit gratuit
-primaryCtaUrl: /fr/services/audit-seo-technique-bruxelles/
+primaryCtaUrl: /fr/services/audit-ux-ui-bruxelles/
 secondaryCtaLabel: Nous contacter
 secondaryCtaUrl: /fr/contact/
 recommendedLinks:
   - anchor: audit gratuit de 48h
-    url: /fr/services/audit-seo-technique-bruxelles/
+    url: /fr/services/audit-ux-ui-bruxelles/
   - anchor: refonte orientée performance
     url: /fr/services/refonte-site-web-bruxelles/
   - anchor: nous contacter

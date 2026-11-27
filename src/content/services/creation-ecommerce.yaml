@@ -12,7 +12,7 @@ seoDescription: >-
   design soigné, tunnels de vente fluides. Dès 2 999 € HTVA.
 seoRobots: index, follow
 seoInternalLinks:
-  - /fr/services/audit-seo-technique-bruxelles/
+  - /fr/services/audit-ux-ui-bruxelles/
   - /fr/services/creation-landing-page/
   - /fr/projets/
   - /fr/contact/
@@ -37,7 +37,7 @@ translations:
       E-commerce agency in Brussels: Shopify or custom online stores, polished
       design, smooth sales funnels. From €2,999 excl. VAT.
     seoInternalLinks:
-      - /en/services/technical-seo-audit-brussels/
+      - /en/services/ux-ui-audit-brussels/
       - /en/services/landing-page-design-brussels/
       - /en/projets/
       - /en/contact/
@@ -158,7 +158,7 @@ translations:
     reassurance: First exchange with no commitment. Reply within 24h.
     recommendedLinks:
       - anchor: audit your current store
-        url: /en/services/technical-seo-audit-brussels/
+        url: /en/services/ux-ui-audit-brussels/
       - anchor: product landing pages
         url: /en/services/landing-page-design-brussels/
       - anchor: our work
@@ -284,7 +284,7 @@ secondaryCtaUrl: /fr/projets/
 reassurance: Premier échange sans engagement. Réponse sous 24h.
 recommendedLinks:
   - anchor: audit de votre boutique actuelle
-    url: /fr/services/audit-seo-technique-bruxelles/
+    url: /fr/services/audit-ux-ui-bruxelles/
   - anchor: landing pages produit
     url: /fr/services/creation-landing-page/
   - anchor: nos réalisations

@@ -13,7 +13,7 @@ seoDescription: >-
   utilisateurs, un produit prêt pour vos investisseurs. Dès 3 999 € HTVA.
 seoRobots: index, follow
 seoInternalLinks:
-  - /fr/services/audit-seo-technique-bruxelles/
+  - /fr/services/audit-ux-ui-bruxelles/
   - /fr/services/creation-landing-page/
   - /fr/projets/
   - /fr/contact/
@@ -39,7 +39,7 @@ translations:
       MVP development in Brussels: fast iterations, testing with real users, a
       product ready for your investors. From €3,999 excl. VAT.
     seoInternalLinks:
-      - /en/services/technical-seo-audit-brussels/
+      - /en/services/ux-ui-audit-brussels/
       - /en/services/landing-page-design-brussels/
       - /en/projets/
       - /en/contact/
@@ -160,7 +160,7 @@ translations:
       - anchor: landing page for your launch
         url: /en/services/landing-page-design-brussels/
       - anchor: audit your existing app
-        url: /en/services/technical-seo-audit-brussels/
+        url: /en/services/ux-ui-audit-brussels/
       - anchor: our work
         url: /en/projets/
       - anchor: contact us
@@ -294,7 +294,7 @@ recommendedLinks:
   - anchor: landing page pour votre lancement
     url: /fr/services/creation-landing-page/
   - anchor: audit de votre application existante
-    url: /fr/services/audit-seo-technique-bruxelles/
+    url: /fr/services/audit-ux-ui-bruxelles/
   - anchor: nos réalisations
     url: /fr/projets/
   - anchor: nous contacter

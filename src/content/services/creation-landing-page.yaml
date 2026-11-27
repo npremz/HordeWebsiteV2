@@ -13,7 +13,7 @@ seoDescription: >-
   mesure, message qui convainc, développement. Dès 1 999 € HTVA.
 seoRobots: index, follow
 seoInternalLinks:
-  - /fr/services/audit-seo-technique-bruxelles/
+  - /fr/services/audit-ux-ui-bruxelles/
   - /fr/services/creation-ecommerce/
   - /fr/services/developpement-mvp-bruxelles/
   - /fr/contact/
@@ -39,7 +39,7 @@ translations:
       Landing page design in Brussels for startups and brands: custom design,
       a message that convinces, development. From €1,999 excl. VAT.
     seoInternalLinks:
-      - /en/services/technical-seo-audit-brussels/
+      - /en/services/ux-ui-audit-brussels/
       - /en/services/ecommerce-website-brussels/
       - /en/services/mvp-development-brussels/
       - /en/contact/
@@ -168,7 +168,7 @@ translations:
     reassurance: Reply within 24h. Delivery in 1 to 2 weeks.
     recommendedLinks:
       - anchor: audit your current page
-        url: /en/services/technical-seo-audit-brussels/
+        url: /en/services/ux-ui-audit-brussels/
       - anchor: complete online store
         url: /en/services/ecommerce-website-brussels/
       - anchor: SaaS product or app
@@ -302,7 +302,7 @@ secondaryCtaUrl: /fr/projets/
 reassurance: Réponse sous 24h. Livraison en 1 à 2 semaines.
 recommendedLinks:
   - anchor: audit de votre page actuelle
-    url: /fr/services/audit-seo-technique-bruxelles/
+    url: /fr/services/audit-ux-ui-bruxelles/
   - anchor: boutique en ligne complète
     url: /fr/services/creation-ecommerce/
   - anchor: produit SaaS ou application

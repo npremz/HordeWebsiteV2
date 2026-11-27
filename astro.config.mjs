@@ -99,13 +99,22 @@ export default defineConfig({
       status: 301,
       destination: '/en/projets/cafe-loma/',
     },
+    // Audit offert repositionné UX/UI (2026-11).
+    '/fr/services/audit-seo-technique-bruxelles/': {
+      status: 301,
+      destination: '/fr/services/audit-ux-ui-bruxelles/',
+    },
+    '/en/services/technical-seo-audit-brussels/': {
+      status: 301,
+      destination: '/en/services/ux-ui-audit-brussels/',
+    },
     '/fr/services/audit-offert/': {
       status: 301,
-      destination: '/fr/services/audit-seo-technique-bruxelles/',
+      destination: '/fr/services/audit-ux-ui-bruxelles/',
     },
     '/en/services/audit-offert/': {
       status: 301,
-      destination: '/en/services/technical-seo-audit-brussels/',
+      destination: '/en/services/ux-ui-audit-brussels/',
     },
     '/fr/services/refonte-site-web/': {
       status: 301,

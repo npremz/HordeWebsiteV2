@@ -13,7 +13,7 @@ seoDescription: >-
   et on le rend clair et pro pour vos visiteurs. Dès 999 € HTVA.
 seoRobots: index, follow
 seoInternalLinks:
-  - /fr/services/audit-seo-technique-bruxelles/
+  - /fr/services/audit-ux-ui-bruxelles/
   - /fr/services/optimisation-site-web/
   - /fr/projets/
   - /fr/contact/
@@ -37,7 +37,7 @@ translations:
       Website redesign in Brussels: we take over your site, even one built with
       AI, and make it clear and professional for your visitors. From €999 excl. VAT.
     seoInternalLinks:
-      - /en/services/technical-seo-audit-brussels/
+      - /en/services/ux-ui-audit-brussels/
       - /en/services/website-optimization-brussels/
       - /en/projets/
       - /en/contact/
@@ -162,7 +162,7 @@ translations:
     reassurance: Reply within 48h. Free first exchange, no commitment.
     recommendedLinks:
       - anchor: free audit before redesign
-        url: /en/services/technical-seo-audit-brussels/
+        url: /en/services/ux-ui-audit-brussels/
       - anchor: optimization without a full redesign
         url: /en/services/website-optimization-brussels/
       - anchor: our work
@@ -299,7 +299,7 @@ secondaryCtaUrl: /fr/projets/
 reassurance: Réponse sous 48h. Premier échange gratuit, sans engagement.
 recommendedLinks:
   - anchor: audit gratuit avant refonte
-    url: /fr/services/audit-seo-technique-bruxelles/
+    url: /fr/services/audit-ux-ui-bruxelles/
   - anchor: optimisation sans refonte complète
     url: /fr/services/optimisation-site-web/
   - anchor: nos réalisations

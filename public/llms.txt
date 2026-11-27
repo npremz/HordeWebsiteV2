@@ -37,8 +37,8 @@ Horde Agence accompagne les entreprises qui veulent un site plus rapide, plus cl
 
 ### Audit site web offert
 
-- URL FR: https://hordeagence.com/fr/services/audit-seo-technique-bruxelles/
-- URL EN: https://hordeagence.com/en/services/technical-seo-audit-brussels/
+- URL FR: https://hordeagence.com/fr/services/audit-ux-ui-bruxelles/
+- URL EN: https://hordeagence.com/en/services/ux-ui-audit-brussels/
 - Objectif: identifier les vrais blocages SEO, vitesse, UX, UI, accessibilite et compatibilite.
 - Livrables: analyse initiale, session de 30 minutes et plan d'action clair.
 

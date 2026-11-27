@@ -1,5 +1,5 @@
 slug: audit-offert
-seoUrl: /fr/services/audit-seo-technique-bruxelles/
+seoUrl: /fr/services/audit-ux-ui-bruxelles/
 seoPrimaryKeyword: audit ux ui bruxelles
 seoSecondaryKeywords:
   - audit ux site web
@@ -24,7 +24,7 @@ pricing:
   from: 0
 translations:
   en:
-    seoUrl: /en/services/technical-seo-audit-brussels/
+    seoUrl: /en/services/ux-ui-audit-brussels/
     seoPrimaryKeyword: ux ui audit brussels
     seoSecondaryKeywords:
       - website ux audit

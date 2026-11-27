@@ -57,8 +57,8 @@ Horde Agence cree des sites web rapides, legers, bien references et simples a ma
 ### Audit site web offert (audit UX/UI)
 
 - Slug: audit-offert
-- URL FR: https://hordeagence.com/fr/services/audit-seo-technique-bruxelles/
-- URL EN: https://hordeagence.com/en/services/technical-seo-audit-brussels/
+- URL FR: https://hordeagence.com/fr/services/audit-ux-ui-bruxelles/
+- URL EN: https://hordeagence.com/en/services/ux-ui-audit-brussels/
 - SEO title FR: Audit UX/UI offert a Bruxelles
 - Objectif: regarder un site existant avec les yeux de ses visiteurs (experience, design), verifier qu'il fonctionne, que rien ne gene Google et qu'il respecte le RGPD (cookies, consentement, politique de confidentialite), sans jargon. Point securite sur demande.
 - Angle: les sites et apps prototypes avec l'IA ont l'air corrects ; Horde regarde ce que l'IA ne voit pas (ce que les visiteurs comprennent, ou ils decrochent) et les rend pros, penses pour des humains.
