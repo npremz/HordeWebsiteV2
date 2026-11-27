@@ -16,6 +16,7 @@ import { getLandingCopy } from '../../../components/services/landing/copy';
 import { getEcommerceCopy } from '../../../components/services/ecommerce/copy';
 import { getAuditCopy } from '../../../components/services/audit/copy';
 import { getRefonteCopy } from '../../../components/services/refonte/copy';
+import { getOptimisationCopy } from '../../../components/services/optimisation/copy';
 import { HTML_LOCALE_CODES, SUPPORTED_LOCALES, type Locale, useTranslations } from '../../../i18n';
 import { type ServiceEntry, getServices, localizeServiceEntry } from '../../../lib/content/services';
 
@@ -53,6 +54,7 @@ const V2_COPIES: Record<string, (lang: Locale) => ServicePageCopy> = {
   'creation-ecommerce': getEcommerceCopy,
   'audit-offert': getAuditCopy,
   'refonte-site-web': getRefonteCopy,
+  'optimisation-site-web': getOptimisationCopy,
 };
 const v2Copy = V2_COPIES[service.data.slug]?.(lang);
 
