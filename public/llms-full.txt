@@ -109,20 +109,19 @@ Process:
 - URL FR: https://hordeagence.com/fr/services/creation-ecommerce/
 - URL EN: https://hordeagence.com/en/services/ecommerce-website-brussels/
 - SEO title FR: Creation site e-commerce a Bruxelles | Horde
-- Objectif: creer une boutique rapide, fiable et pensee pour l'achat.
-- Cibles: marques qui lancent une boutique, migrent un e-commerce ou veulent une experience d'achat plus efficace.
-- Prix: a partir de 2 999 EUR HTVA, jusqu'a 6 000 EUR HTVA selon le perimetre.
+- Objectif: faire passer la boutique d'une marque en ligne au niveau superieur : un site soigne, sur Shopify ou sur mesure, avec des tunnels de vente fluides de la fiche produit au paiement.
+- Cibles: marques qui vendent deja ou vont vendre en ligne et dont la boutique ne leur ressemble pas.
+- Prix: a partir de 2 999 EUR HTVA, selon la plateforme (le sur mesure est plus cher que Shopify), le volume (produits, variantes, collections) et les fonctionnalites (plugins, apps, landings additionnelles).
 
 Prestations:
 
-- boutiques Shopify
-- e-commerce sur mesure
-- migration e-commerce
-- UX et parcours d'achat
-- performance technique
-- SEO e-commerce
-- paiement et logistique
-- bases headless commerce selon les contraintes du projet
+- boutiques Shopify avec theme concu pour la marque
+- boutiques sur mesure quand la logique de vente depasse une plateforme
+- tunnels de vente penses pour le mobile
+- landings additionnelles pour les campagnes
+- paiement, livraison et apps configures, commandes de test avant l'ouverture
+
+Exemple: proposition de boutique pour une marque de mode dans le cadre d'un appel d'offres (design et developpement Horde, projet non realise faute de financement).
 
 ### Creation landing page
 
