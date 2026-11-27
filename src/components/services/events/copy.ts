@@ -43,7 +43,7 @@ const fr: ServicePageCopy = {
         name: 'Code Relay',
         meta: ['Proximus Tech Student Experience', '2 avril 2026', '2 groupes de 25 à 30 personnes', 'Développé en 3 semaines'],
         text:
-          'Une course de relais, mais en code. Un problème est posé, les équipes ont 5 minutes pour réfléchir, puis chaque membre code 2 minutes avant de passer le clavier au suivant, sur 8 tours maximum. Le code final est noté par un testeur automatique, puis par un jury pour la lisibilité. On a conçu l’atelier et on l’a animé sur place.',
+          'Une course de relais, mais en code. Un problème est posé, les équipes ont 5 minutes pour réfléchir, puis chaque membre code 2 minutes avant de passer le clavier au suivant, sur 8 tours maximum. Le code final est noté par un testeur automatique, puis par un jury pour la lisibilité. Testé une semaine avant avec un vrai groupe à 42, conçu et animé sur place par nous.',
         listLabel: 'L’application faisait tourner l’événement',
         list: [
           'inscription des équipes par QR code, sans compte',
@@ -233,7 +233,7 @@ const en: ServicePageCopy = {
         name: 'Code Relay',
         meta: ['Proximus Tech Student Experience', '2 April 2026', '2 groups of 25 to 30 people', 'Built in 3 weeks'],
         text:
-          'A relay race, but with code. A problem is set, teams get 5 minutes to think, then each member codes for 2 minutes before handing the keyboard to the next, for up to 8 turns. The final code is scored by an automated tester, then by a jury for readability. We designed the workshop and ran it on site.',
+          'A relay race, but with code. A problem is set, teams get 5 minutes to think, then each member codes for 2 minutes before handing the keyboard to the next, for up to 8 turns. The final code is scored by an automated tester, then by a jury for readability. Tested a week before with a real group at 42, designed and run on site by us.',
         listLabel: 'The app ran the event',
         list: [
           'team registration by QR code, no account needed',
