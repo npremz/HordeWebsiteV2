@@ -24,6 +24,8 @@ export interface ServicePageCopy {
     facts: string[];
     cta: string;
     secondary: string;
+    /** Cible du lien secondaire (défaut « #projets »). */
+    secondaryHref?: string;
   };
   /** Grande photo sous le hero : section masquée si absente. */
   shot?: { key: ServicePhotoKey; alt: string; caption: string; position?: string };
@@ -34,7 +36,8 @@ export interface ServicePageCopy {
     noLabel: string;
     no: string[];
   };
-  projects: {
+  /** Preuves : section masquée si absente. */
+  projects?: {
     count: string;
     title: string;
     items: {
@@ -59,6 +62,8 @@ export interface ServicePageCopy {
   formats: {
     title: string;
     items: { title: string; text: string }[];
+    /** Lien sous les cartes (ex. l'article qui détaille la méthode). */
+    link?: { label: string; href: string };
   };
   process: {
     title: string;

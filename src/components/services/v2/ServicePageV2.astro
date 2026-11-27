@@ -42,10 +42,11 @@ const photos: Record<ServicePhotoKey, ImageMetadata> = {
   lomaDesktop: lomaDesktopPhoto,
   lomaMobile: lomaMobilePhoto,
 };
-// Fonds alternés : sans citations, les sections suivantes décalent d'un cran.
-const [formatsBg, processBg, priceBg, faqBg] = copy.quote
-  ? ["bg-white", "bg-bg", "bg-white", "bg-bg"]
-  : ["bg-bg", "bg-white", "bg-bg", "bg-white"];
+// Fonds alternés bg / blanc entre le hero et le contact, selon les sections présentes.
+const lightSections = ["fit", copy.projects && "projects", copy.quote && "quote", "formats", "process", "price", "faq"].filter(
+  Boolean,
+) as string[];
+const bgOf = (name: string) => (lightSections.indexOf(name) % 2 === 0 ? "bg-bg" : "bg-white");
 const faqSchema = {
   "@context": "https://schema.org",
   "@type": "FAQPage",
@@ -75,7 +76,7 @@ const faqSchema = {
     </ul>
     <div class="ev-hero__actions">
       <a href={contactHref} class="ev-button ev-button--white">{copy.hero.cta}</a>
-      <HomeLink href="#projets" label={copy.hero.secondary} tone="light" />
+      <HomeLink href={copy.hero.secondaryHref ?? "#projets"} label={copy.hero.secondary} tone="light" />
     </div>
   </div>
 </section>
@@ -100,7 +101,7 @@ const faqSchema = {
 )}
 
 <!-- 3. Qualification : pour vous / pas pour vous. -->
-<section class="ev-fit bg-bg" data-header-theme="light">
+<section class:list={["ev-fit", bgOf("fit")]} data-header-theme="light">
   <div class="home-column home-column--wide">
     <h2 class="ev-h2" data-home-reveal>{copy.fit.title}</h2>
     <div class="ev-fit__grid">
@@ -120,15 +121,16 @@ const faqSchema = {
   </div>
 </section>
 
-<!-- 4. Les preuves : projets réels. -->
-<section id="projets" class="ev-projects bg-white" data-header-theme="light">
+<!-- 4. Les preuves : projets réels (optionnels). -->
+{copy.projects && (
+<section id="projets" class:list={["ev-projects", bgOf("projects")]} data-header-theme="light">
   <div class="home-column home-column--wide">
     <h2 class="ev-projects__title" data-home-reveal>
-      <span class="ev-mono ev-projects__count">({copy.projects.count})</span>
-      <span>{copy.projects.title}</span>
+      <span class="ev-mono ev-projects__count">({copy.projects!.count})</span>
+      <span>{copy.projects!.title}</span>
     </h2>
 
-    {copy.projects.items.map((project, index) => (
+    {copy.projects!.items.map((project, index) => (
       <article class:list={["ev-project", index % 2 === 1 && "ev-project--flip", project.images.length === 0 && "ev-project--text"]}>
         {project.images.length > 0 && (
           <div class:list={["ev-project__media", project.images.length > 1 && "ev-project__media--pair"]} style={project.mediaRatio ? `--media-ratio: ${project.mediaRatio}` : undefined} data-home-reveal>
@@ -163,10 +165,11 @@ const faqSchema = {
     ))}
   </div>
 </section>
+)}
 
 <!-- 5. Ce qu'en dit le client. -->
 {copy.quote && (
-<section class="ev-quote bg-bg" data-header-theme="light">
+<section class:list={["ev-quote", bgOf("quote")]} data-header-theme="light">
   <div class="home-column">
     <p class="ev-mono ev-quote__label">{copy.quote!.label}</p>
     {copy.quote!.items.map((quote, index) => (
@@ -183,7 +186,7 @@ const faqSchema = {
 )}
 
 <!-- 6. Les formats possibles. -->
-<section class:list={["ev-formats", formatsBg]} data-header-theme="light">
+<section id="formats" class:list={["ev-formats", bgOf("formats")]} data-header-theme="light">
   <div class="home-column home-column--wide">
     <h2 class="ev-h2" data-home-reveal>{copy.formats.title}</h2>
     <ul class="ev-formats__grid">
@@ -195,11 +198,12 @@ const faqSchema = {
         </li>
       ))}
     </ul>
+    {copy.formats.link && <HomeLink href={copy.formats.link.href} label={copy.formats.link.label} class="ev-formats__link" />}
   </div>
 </section>
 
 <!-- 7. Le déroulé, semaine par semaine. -->
-<section class:list={["ev-process", processBg]} data-header-theme="light">
+<section class:list={["ev-process", bgOf("process")]} data-header-theme="light">
   <div class="home-column home-column--wide">
     <h2 class="ev-h2" data-home-reveal>{copy.process.title}</h2>
     <ol class="ev-process__steps">
@@ -216,7 +220,7 @@ const faqSchema = {
 </section>
 
 <!-- 8. Le prix. -->
-<section class:list={["ev-price", priceBg]} data-header-theme="light">
+<section class:list={["ev-price", bgOf("price")]} data-header-theme="light">
   <div class="home-column home-column--wide">
     <p class="ev-mono ev-price__label">{copy.price.label}</p>
     <h2 class="ev-price__title" data-home-reveal>
@@ -237,7 +241,7 @@ const faqSchema = {
 </section>
 
 <!-- 9. FAQ. -->
-<section class:list={["ev-faq", faqBg]} data-header-theme="light">
+<section class:list={["ev-faq", bgOf("faq")]} data-header-theme="light">
   <div class="home-column">
     <h2 class="ev-h2" data-home-reveal>{copy.faq.title}</h2>
     <div class="ev-faq__list">
@@ -605,6 +609,10 @@ const faqSchema = {
     display: grid;
     gap: 0.75rem;
     margin-top: 2.75rem;
+  }
+
+  .ev-formats :global(.ev-formats__link) {
+    margin-top: 2.5rem;
   }
 
   .ev-card {
