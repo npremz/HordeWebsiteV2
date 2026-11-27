@@ -1,23 +1,23 @@
 slug: audit-offert
 seoUrl: /fr/services/audit-seo-technique-bruxelles/
-seoPrimaryKeyword: audit seo technique bruxelles
+seoPrimaryKeyword: audit ux ui bruxelles
 seoSecondaryKeywords:
-  - audit performance site web
-  - core web vitals bruxelles
-  - audit ux ui bruxelles
-  - analyse site web bruxelles
+  - audit ux site web
+  - audit ui
+  - audit site web offert
+  - audit seo bruxelles
   - diagnostic site web
-seoTitle: Audit SEO technique offert à Bruxelles
+seoTitle: Audit UX/UI offert à Bruxelles
 seoDescription: >-
-  Audit SEO technique offert à Bruxelles : on relève ce qui freine votre site
-  (SEO, UX, conversion) et on en parle en appel ou en vidéo, sous 24 h.
+  Audit UX/UI offert à Bruxelles : on regarde votre site avec les yeux de vos
+  visiteurs, on vérifie qu’il fonctionne et que Google le lit bien. Sous 24 h.
 seoRobots: index, follow
 seoInternalLinks:
   - /fr/services/optimisation-site-web/
   - /fr/services/refonte-site-web-bruxelles/
   - /fr/contact/
-h1: Audit SEO technique et performance à Bruxelles
-shortName: Audit SEO technique
+h1: Audit UX/UI offert à Bruxelles
+shortName: Audit UX/UI
 footerTitle: Audit (Offert)
 footerOrder: 0
 pricing:
@@ -25,23 +25,23 @@ pricing:
 translations:
   en:
     seoUrl: /en/services/technical-seo-audit-brussels/
-    seoPrimaryKeyword: technical seo audit brussels
+    seoPrimaryKeyword: ux ui audit brussels
     seoSecondaryKeywords:
-      - website performance audit
-      - core web vitals brussels
-      - ux ui audit brussels
-      - website analysis brussels
+      - website ux audit
+      - ui audit
+      - free website audit
+      - seo audit belgium
       - website diagnostic
-    seoTitle: Free technical SEO audit in Brussels
+    seoTitle: Free UX/UI audit in Brussels
     seoDescription: >-
-      Free technical SEO audit in Brussels: we list what holds your site back
-      (SEO, UX, conversion) and walk you through it by call or video, within 24 hours.
+      Free UX/UI audit in Brussels: we look at your site through your visitors’
+      eyes, check that it works and that Google reads it well. Within 24 hours.
     seoInternalLinks:
       - /en/services/website-optimization-brussels/
       - /en/services/website-redesign-brussels/
       - /en/contact/
-    h1: Technical SEO and performance audit in Brussels
-    shortName: Technical SEO audit
+    h1: Free UX/UI audit in Brussels
+    shortName: UX/UI audit
     footerTitle: Audit (Free)
     intro: >-
       We look at what is holding your website back: speed, technical SEO, UX and

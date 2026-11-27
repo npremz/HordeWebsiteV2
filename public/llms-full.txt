@@ -54,14 +54,15 @@ Horde Agence cree des sites web rapides, legers, bien references et simples a ma
 
 ## Services
 
-### Audit site web offert
+### Audit site web offert (audit UX/UI)
 
 - Slug: audit-offert
 - URL FR: https://hordeagence.com/fr/services/audit-seo-technique-bruxelles/
 - URL EN: https://hordeagence.com/en/services/technical-seo-audit-brussels/
-- SEO title FR: Audit SEO technique offert a Bruxelles | Horde Agence
-- Objectif: relever ce qui freine un site existant (SEO technique, experience, conversion) avant de proposer une solution.
-- Cibles: entreprises dont le site n'apporte ni contacts ni ventes, ou qui hesitent entre corriger et refaire leur site.
+- SEO title FR: Audit UX/UI offert a Bruxelles
+- Objectif: regarder un site existant avec les yeux de ses visiteurs (experience, design), verifier qu'il fonctionne et que rien ne gene Google, sans jargon. Point securite sur demande.
+- Angle: les sites et apps prototypes avec l'IA ont l'air corrects ; Horde regarde ce que l'IA ne voit pas (ce que les visiteurs comprennent, ou ils decrochent) et les rend pros, penses pour des humains.
+- Cibles: entreprises dont le site n'apporte ni contacts ni ventes, sites faits avec l'IA, entreprises qui hesitent entre corriger et refaire.
 - Prix: gratuit, aucune obligation de travailler avec Horde ensuite.
 - Delai: retour sous 24 h.
 
@@ -72,9 +73,7 @@ Deroule:
 - on en parle en appel ; une video peut etre envoyee a la place ou en plus
 - suites possibles : optimisation (199 EUR HTVA par jour) ou refonte (a partir de 999 EUR HTVA)
 
-Axes: SEO technique (indexation, balises, donnees structurees, chargement), experience et conversion, mobile et accessibilite, image de marque.
-
-Exemple publie: audit de Rocket Mission (25 novembre 2026) dans l'article https://hordeagence.com/fr/blog/vibe-coding/
+Exemples publies: test d'une app generee avec Lovable (https://hordeagence.com/fr/blog/lovable-avis/) et audit de Rocket Mission (https://hordeagence.com/fr/blog/vibe-coding/).
 
 ### Refonte site web
 
