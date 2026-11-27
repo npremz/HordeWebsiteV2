@@ -150,16 +150,16 @@ const fr: HubCopy = {
     title: 'Comment on travaille',
     items: [
       {
-        title: 'Pensé pour des humains',
-        text: 'L’IA nous fait gagner du temps. Ce qui fait un bon site, c’est de regarder de vrais visiteurs s’en servir et de corriger ce qui les gêne.',
+        title: 'On cadre',
+        text: 'Avant d’écrire une ligne, on pose ce que vous voulez obtenir, pour qui, et ce qui entre dans le projet. Pour Rocket Mission, huit dossiers de spécifications ont précédé le code.',
       },
       {
-        title: 'Des prix affichés',
-        text: 'Chaque offre a son prix de départ, HTVA, sur sa page. Vous savez où vous mettez les pieds avant le premier appel.',
+        title: 'On pense pour l’humain',
+        text: 'L’IA écrit vite. Nous, on regarde ce que vos visiteurs comprennent, où ils hésitent et ce qui leur donne envie d’aller au bout.',
       },
       {
-        title: 'Sans jargon',
-        text: 'On vous explique ce qui se passe et pourquoi, avec des mots simples, à chaque étape.',
+        title: 'On teste avant de livrer',
+        text: 'Avec de vraies personnes, sur les vrais appareils. Rocket Mission a été joué un mois avant l’événement, le Code Relay une semaine avant.',
       },
     ],
   },
@@ -275,16 +275,16 @@ const en: HubCopy = {
     title: 'How we work',
     items: [
       {
-        title: 'Built for humans',
-        text: 'AI saves us time. What makes a good website is watching real visitors use it and fixing what gets in their way.',
+        title: 'We scope',
+        text: 'Before writing a line, we pin down what you want to achieve, for whom, and what is in the project. For Rocket Mission, eight specification files came before the code.',
       },
       {
-        title: 'Prices shown',
-        text: 'Every offer has its starting price, excl. VAT, on its page. You know where you stand before the first call.',
+        title: 'We design for humans',
+        text: 'AI writes fast. We look at what your visitors understand, where they hesitate and what makes them want to go all the way.',
       },
       {
-        title: 'No jargon',
-        text: 'We explain what is happening and why, in plain words, at every step.',
+        title: 'We test before we deliver',
+        text: 'With real people, on the real devices. Rocket Mission was played a month before the event, Code Relay a week before.',
       },
     ],
   },
