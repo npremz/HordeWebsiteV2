@@ -1,0 +1,603 @@
+---
+/**
+ * Hub des services (refonte v2), dans la DA de la home et des pages services v2.
+ * Ordre : promesse → porte d'entrée (audit offert) → situations (3 groupes, offres avec prix et
+ * délai) → preuve (42 Belgium) → principes → contact.
+ */
+import { Image } from "astro:assets";
+import type { Locale } from "../../../i18n";
+import { BUSINESS } from "../../../lib/business-info";
+import { getServiceSummaries } from "../../../lib/content/services";
+import HeroLines from "../../home/svg/HeroLines.astro";
+import HomeLink from "../../home/ui/HomeLink.astro";
+import "../../home/home.css";
+import relayPhoto from "../../../assets/images/services/evenements/code-relay-proximus.jpg";
+import { getHubCopy, type HubServiceSlug } from "./copy";
+
+interface Props {
+  lang: Locale;
+}
+
+const { lang } = Astro.props;
+const copy = getHubCopy(lang);
+const contactHref = `/${lang}/contact/`;
+const summaries = await getServiceSummaries(lang);
+const urlOf = (slug: HubServiceSlug) => {
+  const summary = summaries.find((service) => service.slug === slug);
+  if (!summary) throw new Error(`Service introuvable pour le hub : ${slug}`);
+  return summary.url;
+};
+---
+
+<!-- 1. Hero. -->
+<section class="hub-hero relative overflow-clip bg-black text-white" data-header-theme="dark">
+  <HeroLines class="pointer-events-none absolute inset-0 h-full w-full opacity-60" />
+  <div class="hub-hero__inner home-column home-column--wide relative">
+    <p class="hub-mono hub-hero__eyebrow">{copy.hero.eyebrow}</p>
+    <h1 class="hub-hero__title">
+      {copy.hero.titleLines.map((line, index) => (
+        <span class="hub-hero__line"><span style={`--line: ${index}`}>{line}</span></span>
+      ))}
+    </h1>
+    <p class="hub-hero__lead">{copy.hero.lead}</p>
+    <div class="hub-actions">
+      <a href={urlOf("audit-offert")} class="hub-button">{copy.hero.cta}</a>
+      <HomeLink href="#situations" label={copy.hero.secondary} tone="light" />
+    </div>
+  </div>
+</section>
+
+<!-- 2. Porte d'entrée : l'audit offert. -->
+<section class="hub-entry bg-bg" data-header-theme="light">
+  <div class="hub-entry__inner home-column home-column--wide" data-home-reveal>
+    <p class="hub-mono">{copy.entry.label}</p>
+    <div class="hub-entry__body">
+      <h2 class="hub-entry__title">{copy.entry.title}</h2>
+      <p class="hub-text">{copy.entry.text}</p>
+      <HomeLink href={urlOf("audit-offert")} label={copy.entry.link} />
+    </div>
+  </div>
+</section>
+
+<!-- 3. Les situations. -->
+<section id="situations" class="hub-situations bg-white" data-header-theme="light">
+  <div class="home-column home-column--wide">
+    <h2 class="hub-h2" data-home-reveal>{copy.situations.title}</h2>
+    {copy.situations.groups.map((group) => (
+      <div class="hub-group">
+        <div class="hub-group__head" data-home-reveal>
+          <span class="hub-mono">({group.index})</span>
+          <h3 class="hub-group__title">{group.title}</h3>
+          <p class="hub-text hub-group__text">{group.text}</p>
+        </div>
+        <ul class="hub-offers">
+          {group.services.map((service, index) => (
+            <li data-home-reveal style={`--reveal-delay: ${index * 0.06}s`}>
+              <a href={urlOf(service.slug)} class="hub-offer">
+                <span class="hub-offer__name">{service.name}</span>
+                <span class="hub-text hub-offer__pitch">{service.pitch}</span>
+                <span class="hub-offer__facts">
+                  {service.facts.map((fact) => <span class="hub-mono">{fact}</span>)}
+                </span>
+                <span class="hub-offer__more" aria-hidden="true">
+                  <span class="hub-mono">{copy.situations.more}</span>
+                  <svg viewBox="0 0 16 16" fill="none"><path d="M4 12 12 4M5.5 4H12v6.5" stroke="currentColor" stroke-width="1.5" /></svg>
+                </span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    ))}
+  </div>
+</section>
+
+<!-- 4. La preuve. -->
+<section class="hub-proof bg-black text-white" data-header-theme="dark">
+  <div class="hub-proof__inner home-column home-column--wide">
+    <figure class="hub-proof__figure" data-home-reveal>
+      <div class="hub-proof__frame">
+        <Image src={relayPhoto} alt={copy.proof.alt} widths={[480, 800, 1280]} sizes="(min-width: 1024px) 34rem, 94vw" loading="lazy" decoding="async" />
+      </div>
+      <figcaption class="hub-mono hub-proof__caption">{copy.proof.caption}</figcaption>
+    </figure>
+    <div class="hub-proof__body" data-home-reveal style="--reveal-delay: 0.1s">
+      <p class="hub-mono hub-proof__label">{copy.proof.label}</p>
+      <h2 class="hub-proof__title">{copy.proof.title}</h2>
+      <p class="hub-text hub-proof__text">{copy.proof.text}</p>
+      <blockquote class="hub-proof__quote"><p>{copy.proof.quote}</p></blockquote>
+      <p class="hub-mono hub-proof__source">{copy.proof.source}</p>
+      <div class="hub-proof__links">
+        {copy.proof.links.map((link) => <HomeLink href={urlOf(link.slug)} label={link.label} tone="light" />)}
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 5. Principes. -->
+<section class="hub-principles bg-bg" data-header-theme="light">
+  <div class="home-column home-column--wide">
+    <h2 class="hub-h2" data-home-reveal>{copy.principles.title}</h2>
+    <ul class="hub-principles__grid">
+      {copy.principles.items.map((item, index) => (
+        <li class="hub-card" data-home-reveal style={`--reveal-delay: ${index * 0.08}s`}>
+          <span class="hub-mono">{String(index + 1).padStart(2, "0")}</span>
+          <h3 class="hub-card__title">{item.title}</h3>
+          <p class="hub-text">{item.text}</p>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<!-- 6. Contact. -->
+<section class="hub-cta bg-black text-white" data-header-theme="dark">
+  <div class="home-column home-column--wide">
+    <p class="hub-mono hub-cta__label">{copy.cta.label}</p>
+    <h2 class="hub-cta__title" data-home-reveal>
+      {copy.cta.titleLines.map((line, index) => (
+        <>{index > 0 && " "}<span class="block">{line}</span></>
+      ))}
+    </h2>
+    <p class="hub-cta__text">{copy.cta.text}</p>
+    <div class="hub-actions">
+      <a href={contactHref} class="hub-button">{copy.cta.primary}</a>
+      <HomeLink href={BUSINESS.bookingUrl} label={copy.cta.booking} tone="light" icon="arrow" external newTabLabel={copy.cta.newTab} />
+    </div>
+    <p class="hub-mono hub-cta__reassurance">{copy.cta.reassurance} · <a href={`mailto:${BUSINESS.email}`}>{BUSINESS.email}</a></p>
+  </div>
+</section>
+
+<style>
+  .hub-mono {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    line-height: 1.2;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .hub-text {
+    font-size: 1rem;
+    line-height: 1.25;
+    letter-spacing: -0.005em;
+  }
+
+  .hub-h2 {
+    font-size: clamp(2rem, 6vw, 3.75rem);
+    font-weight: 300;
+    line-height: 0.95;
+    letter-spacing: -0.045em;
+  }
+
+  .hub-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1.25rem 2rem;
+    margin-top: 2.5rem;
+  }
+
+  .hub-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 3.25rem;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.75rem;
+    background: var(--color-button-white);
+    color: var(--color-black);
+    font-size: 1.0625rem;
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+    text-align: center;
+    transition: background-color 0.25s ease;
+  }
+
+  .hub-button:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 3px;
+  }
+
+  @media (hover: hover) {
+    .hub-button:hover {
+      background: var(--color-bg);
+    }
+  }
+
+  /* ---------- Hero ---------- */
+
+  .hub-hero__inner {
+    padding-block: 8.5rem 4rem;
+  }
+
+  .hub-hero__eyebrow {
+    margin-bottom: 1.75rem;
+    color: rgb(244 241 248 / 0.7);
+  }
+
+  .hub-hero__title {
+    font-size: clamp(2.6rem, 11vw, 6.25rem);
+    font-weight: 300;
+    line-height: 0.96;
+    letter-spacing: -0.045em;
+  }
+
+  .hub-hero__line {
+    display: block;
+    overflow: hidden;
+    padding-bottom: 0.12em;
+    margin-bottom: -0.12em;
+  }
+
+  .hub-hero__line > span {
+    display: block;
+    animation: hub-hero-line 0.9s cubic-bezier(0.77, 0, 0.18, 1) both;
+    animation-delay: calc(0.15s + var(--line) * 0.1s);
+  }
+
+  .hub-hero__line:last-child > span {
+    color: rgb(244 241 248 / 0.55);
+  }
+
+  @keyframes hub-hero-line {
+    from {
+      transform: translateY(calc(100% + 0.2em));
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hub-hero__line > span {
+      animation: none;
+    }
+  }
+
+  .hub-hero__lead {
+    max-width: 38rem;
+    margin-top: 2rem;
+    font-size: 1.125rem;
+    line-height: 1.25;
+    color: rgb(244 241 248 / 0.85);
+  }
+
+  /* ---------- Porte d'entrée ---------- */
+
+  .hub-entry {
+    padding-block: 3.5rem;
+  }
+
+  .hub-entry__inner {
+    display: grid;
+    gap: 1rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--color-black);
+  }
+
+  .hub-entry__body {
+    display: grid;
+    gap: 1rem;
+    justify-items: start;
+  }
+
+  .hub-entry__title {
+    font-size: clamp(1.75rem, 4.5vw, 2.75rem);
+    font-weight: 400;
+    line-height: 1;
+    letter-spacing: -0.04em;
+  }
+
+  .hub-entry__body .hub-text {
+    max-width: 34rem;
+  }
+
+  /* ---------- Situations ---------- */
+
+  .hub-situations {
+    padding-block: 4.5rem 5rem;
+  }
+
+  .hub-group {
+    display: grid;
+    gap: 1.5rem;
+    margin-top: 3.5rem;
+    padding-top: 1.75rem;
+    border-top: 1px solid var(--color-black);
+  }
+
+  .hub-group__head {
+    display: grid;
+    gap: 0.75rem;
+    align-content: start;
+  }
+
+  .hub-group__title {
+    font-size: clamp(1.6rem, 4vw, 2.25rem);
+    font-weight: 400;
+    line-height: 1;
+    letter-spacing: -0.035em;
+  }
+
+  .hub-group__text {
+    max-width: 24rem;
+    color: rgb(15 16 17 / 0.7);
+  }
+
+  .hub-offers {
+    display: grid;
+    gap: 0.5rem;
+  }
+
+  .hub-offer {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 0.6rem 1rem;
+    padding: 1.25rem;
+    border-radius: 0.875rem;
+    background: var(--color-bg-light);
+    transition:
+      background-color 0.25s ease,
+      color 0.25s ease;
+  }
+
+  .hub-offer__name {
+    font-size: 1.375rem;
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+  }
+
+  .hub-offer__pitch {
+    grid-column: 1 / -1;
+  }
+
+  .hub-offer__facts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+    grid-column: 1 / -1;
+  }
+
+  .hub-offer__facts span {
+    padding: 0.35rem 0.55rem;
+    border-radius: 0.3rem;
+    background: var(--color-black);
+    color: var(--color-white);
+  }
+
+  .hub-offer__more {
+    grid-column: 2;
+    grid-row: 1;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+
+  .hub-offer__more svg {
+    width: 0.9rem;
+    height: 0.9rem;
+  }
+
+  .hub-offer:focus-visible {
+    outline: 2px solid var(--color-black);
+    outline-offset: 3px;
+  }
+
+  @media (hover: hover) {
+    .hub-offer:hover {
+      background: var(--color-black);
+      color: var(--color-white);
+    }
+
+    .hub-offer:hover .hub-offer__facts span {
+      background: var(--color-white);
+      color: var(--color-black);
+    }
+  }
+
+  /* ---------- Preuve ---------- */
+
+  .hub-proof__inner {
+    display: grid;
+    gap: 2.5rem;
+    padding-block: 5rem;
+  }
+
+  .hub-proof__frame {
+    overflow: hidden;
+    aspect-ratio: 1 / 1;
+    border-radius: 0.875rem;
+    background: #24272a;
+  }
+
+  .hub-proof__frame :global(img) {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .hub-proof__caption,
+  .hub-proof__label,
+  .hub-proof__source {
+    color: rgb(244 241 248 / 0.65);
+  }
+
+  .hub-proof__caption {
+    margin-top: 0.9rem;
+  }
+
+  .hub-proof__title {
+    margin-top: 1rem;
+    font-size: clamp(2rem, 5vw, 3.25rem);
+    font-weight: 300;
+    line-height: 0.98;
+    letter-spacing: -0.045em;
+  }
+
+  .hub-proof__text {
+    max-width: 34rem;
+    margin-top: 1.5rem;
+    color: rgb(244 241 248 / 0.85);
+  }
+
+  .hub-proof__quote {
+    margin-top: 2rem;
+    font-size: clamp(1.35rem, 3vw, 1.9rem);
+    font-weight: 300;
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+  }
+
+  .hub-proof__source {
+    margin-top: 1rem;
+  }
+
+  .hub-proof__links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem 2rem;
+    margin-top: 2rem;
+  }
+
+  /* ---------- Principes ---------- */
+
+  .hub-principles {
+    padding-block: 4.5rem 5rem;
+  }
+
+  .hub-principles__grid {
+    display: grid;
+    gap: 0.75rem;
+    margin-top: 2.75rem;
+  }
+
+  .hub-card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+    padding: 1.5rem;
+    border-radius: 0.875rem;
+    background: var(--color-bg-light);
+  }
+
+  .hub-card__title {
+    font-size: 1.375rem;
+    font-weight: 400;
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+  }
+
+  /* ---------- Contact ---------- */
+
+  .hub-cta {
+    padding-block: 5rem;
+  }
+
+  .hub-cta__label,
+  .hub-cta__reassurance {
+    color: rgb(244 241 248 / 0.7);
+  }
+
+  .hub-cta__title {
+    margin-top: 1.25rem;
+    font-size: clamp(2.4rem, 8vw, 5.75rem);
+    font-weight: 300;
+    line-height: 0.95;
+    letter-spacing: -0.045em;
+  }
+
+  .hub-cta__text {
+    max-width: 34rem;
+    margin-top: 1.75rem;
+    font-size: 1.125rem;
+    line-height: 1.25;
+    color: rgb(244 241 248 / 0.85);
+  }
+
+  .hub-cta__reassurance {
+    margin-top: 2rem;
+  }
+
+  .hub-cta__reassurance a {
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+  }
+
+  /* ---------- Tablette ---------- */
+
+  @media (min-width: 640px) {
+    .hub-text {
+      font-size: 1.0625rem;
+    }
+
+    .hub-entry__inner {
+      grid-template-columns: 10rem minmax(0, 1fr);
+    }
+
+    .hub-offer {
+      padding: 1.5rem;
+    }
+
+    .hub-principles__grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .hub-card {
+      min-height: 14rem;
+    }
+
+    .hub-card .hub-text {
+      margin-top: auto;
+    }
+  }
+
+  /* ---------- Desktop ---------- */
+
+  @media (min-width: 1024px) {
+    .hub-hero__inner {
+      padding-block: 11rem 5.5rem;
+    }
+
+    .hub-hero__lead,
+    .hub-cta__text {
+      font-size: 1.3125rem;
+    }
+
+    .hub-entry {
+      padding-block: 4.5rem;
+    }
+
+    .hub-situations,
+    .hub-principles {
+      padding-block: 7rem;
+    }
+
+    .hub-group {
+      grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+      gap: 3rem;
+      margin-top: 4.5rem;
+    }
+
+    .hub-proof__inner {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: 4rem;
+      align-items: center;
+      padding-block: 8rem;
+    }
+
+    .hub-cta {
+      padding-block: 8rem;
+    }
+  }
+</style>
+
+<script>
+  import { initHomeReveal } from "../../../lib/home-reveal";
+  import { pauseOffscreen } from "../../../lib/pause-offscreen";
+
+  initHomeReveal();
+  pauseOffscreen();
+  document.addEventListener("astro:page-load", () => {
+    initHomeReveal();
+    pauseOffscreen();
+  });
+</script>

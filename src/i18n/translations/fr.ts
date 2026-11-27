@@ -279,10 +279,7 @@ export const fr = {
   servicesPage: {
     title: 'Services web et applications à Bruxelles',
     description:
-      'Audit, refonte, e-commerce, landing page, MVP, applications événementielles et optimisation : découvrez les services web de Horde à Bruxelles.',
-    heading: 'La bonne solution pour\nfaire grandir votre business',
-    intro:
-      'Audit, refonte, e-commerce, landing page, MVP, applications événementielles ou optimisation : on définit la bonne approche pour votre site, votre produit ou votre événement.',
+      'Services web à Bruxelles selon votre situation : audit UX/UI offert, optimisation, refonte, landing page, e-commerce, MVP et événements. Prix en HTVA.',
     breadcrumbHome: 'Accueil',
     breadcrumbServices: 'Services',
     breadcrumbAriaLabel: 'Fil d’Ariane',

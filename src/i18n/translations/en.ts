@@ -280,10 +280,7 @@ export const en: Translations = {
   servicesPage: {
     title: 'Website and web app services in Brussels',
     description:
-      'Explore Horde’s website audit, redesign, e-commerce, landing page, MVP, event web app and optimization services in Brussels.',
-    heading: 'The right solution to make\nyour business grow',
-    intro:
-      'Audit, redesign, e-commerce, landing page, MVP, event web apps or optimization: we define the right approach for your website, product or event.',
+      'Web services in Brussels by situation: free UX/UI audit, optimisation, redesign, landing page, e-commerce, MVP and events. Prices shown, excl. VAT.',
     breadcrumbHome: 'Home',
     breadcrumbServices: 'Services',
     breadcrumbAriaLabel: 'Breadcrumb',
