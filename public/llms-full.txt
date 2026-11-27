@@ -150,20 +150,20 @@ Prestations:
 - URL FR: https://hordeagence.com/fr/services/developpement-mvp-bruxelles/
 - URL EN: https://hordeagence.com/en/services/mvp-development-brussels/
 - SEO title FR: Developpement MVP SaaS a Bruxelles
-- Objectif: passer d'une idee produit a une premiere version utilisable, testable et maintenable.
-- Cibles: fondateurs, equipes produit et entreprises qui veulent valider une solution SaaS sans construire trop tot une plateforme trop lourde.
-- Prix: a partir de 3 999 EUR HTVA, jusqu'a 8 000 EUR HTVA selon le perimetre.
+- Objectif: construire un MVP par iterations rapides (on livre, on teste avec de vrais utilisateurs, on corrige) jusqu'a un produit pret pour le marche et les investisseurs, pour des porteurs d'idee sans bagage technique.
+- Cibles: fondateurs sans equipe technique, porteurs de projet qui preparent une levee de fonds, entreprises qui veulent tester une idee de produit.
+- Prix: a partir de 3 999 EUR HTVA, selon la complexite des fonctionnalites (ex. une architecture multi-clients pour un SaaS demande plus d'infrastructure et de securite).
+- Delai: en moyenne 2 mois jusqu'a un MVP pret pour la production, avancement visible tout du long.
 
-Prestations:
+Process:
 
-- cadrage produit
-- UX et prototypage
-- developpement
-- mise en production
-- suivi post-lancement
-- choix de stack selon les contraintes du projet
-- frontend possible en React, Next.js ou Astro
-- backend possible en Node.js ou autre architecture adaptee
+- appel de cadrage gratuit : idee, utilisateurs vises, hypothese a prouver, budget
+- specification courte validee avant le developpement
+- iterations avec lien de test : on livre, vous testez, on corrige
+- test avec un vrai groupe d'utilisateurs avant le lancement
+- mise en production, code et acces transmis
+
+Projets: Rocket Mission (premier jeu jouable en 1 jour, teste avec de vrais participants un mois avant, 4 interfaces temps reel, 3 langues, 400+ tests automatises) et Code Relay (developpe en 3 semaines, teste une semaine avant avec un groupe a 42), tous deux pour 42 Belgium.
 
 ### Applications evenementielles
 
