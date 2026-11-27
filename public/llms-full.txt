@@ -112,6 +112,7 @@ Process:
 - Objectif: faire passer la boutique d'une marque en ligne au niveau superieur : un site soigne, sur Shopify ou sur mesure, avec des tunnels de vente fluides de la fiche produit au paiement.
 - Cibles: marques qui vendent deja ou vont vendre en ligne et dont la boutique ne leur ressemble pas.
 - Prix: a partir de 2 999 EUR HTVA, selon la plateforme (le sur mesure est plus cher que Shopify), le volume (produits, variantes, collections) et les fonctionnalites (plugins, apps, landings additionnelles).
+- Delai: 1 a 2 mois du cadrage a l'ouverture.
 
 Prestations:
 

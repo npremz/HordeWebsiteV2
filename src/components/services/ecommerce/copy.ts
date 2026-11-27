@@ -5,8 +5,8 @@ import type { ServicePageCopy } from '../v2/types';
  * Page service « Création de site e-commerce » (refonte v2).
  * Pitch, plateformes (Shopify ou sur mesure, le sur mesure coûte plus cher), facteurs de prix
  * (volume, fonctionnalités/plugins, landings additionnelles), « à partir de 2 999 € » et preuve
- * Fysu : Nicolas, nov. 2026. Prix plancher 2 999 € (commit 07cc743, 17/11/2026) : à reconfirmer,
- * le pitch de Nicolas du 27/11 disait 1 999 €. Délai : en attente, ne rien afficher.
+ * Fysu : Nicolas, nov. 2026. Prix plancher 2 999 € confirmé par Nicolas le 27/11/2026.
+ * Délai : 1 à 2 mois (Nicolas, 27/11/2026).
  * SEO (GSC) : garder « agence e-commerce », « boutique en ligne », « e-shop », « Belgique ».
  */
 const fr: ServicePageCopy = {
@@ -15,7 +15,7 @@ const fr: ServicePageCopy = {
     titleLines: ['Votre boutique', 'passe au niveau', 'supérieur.'],
     lead:
       'Vous avez une marque en ligne et vous voulez que votre e-shop suive. On conçoit et on développe un site soigné, sur Shopify ou sur mesure, avec des tunnels de vente fluides, de la fiche produit au paiement.',
-    facts: ['À partir de 2 999 € HTVA', 'Shopify ou sur mesure', 'Pensé pour le mobile'],
+    facts: ['À partir de 2 999 € HTVA', '1 à 2 mois', 'Shopify ou sur mesure'],
     cta: 'Parlez-nous de votre boutique',
     secondary: 'Voir notre travail',
   },
@@ -114,6 +114,7 @@ const fr: ServicePageCopy = {
         text: 'On passe de vraies commandes de test avant l’ouverture, puis on vous montre comment gérer la boutique.',
       },
     ],
+    note: 'Comptez 1 à 2 mois du cadrage à l’ouverture, selon le volume du catalogue et les fonctionnalités.',
   },
   price: {
     label: 'Le prix',
@@ -142,6 +143,10 @@ const fr: ServicePageCopy = {
       {
         q: 'Shopify ou sur mesure ?',
         a: 'Shopify convient à la plupart des boutiques et coûte moins cher. Le sur mesure se justifie quand votre façon de vendre sort de ce qu’une plateforme sait faire. On vous conseille pendant le cadrage.',
+      },
+      {
+        q: 'Combien de temps faut-il ?',
+        a: 'De 1 à 2 mois du cadrage à l’ouverture, selon le volume du catalogue et les fonctionnalités.',
       },
       {
         q: 'Je pourrai gérer mes produits moi-même ?',
@@ -174,7 +179,7 @@ const en: ServicePageCopy = {
     titleLines: ['Take your store', 'to the next', 'level.'],
     lead:
       'You have an online brand and you want your e-shop to keep up. We design and build a polished store, on Shopify or custom, with smooth sales funnels from product page to checkout.',
-    facts: ['From €2,999 excl. VAT', 'Shopify or custom', 'Designed for mobile'],
+    facts: ['From €2,999 excl. VAT', '1 to 2 months', 'Shopify or custom'],
     cta: 'Tell us about your store',
     secondary: 'See our work',
   },
@@ -273,6 +278,7 @@ const en: ServicePageCopy = {
         text: 'We place real test orders before opening, then show you how to run the store.',
       },
     ],
+    note: 'Expect 1 to 2 months from scoping to opening, depending on the size of the catalogue and the features.',
   },
   price: {
     label: 'Pricing',
@@ -301,6 +307,10 @@ const en: ServicePageCopy = {
       {
         q: 'Shopify or custom?',
         a: 'Shopify suits most stores and costs less. Custom makes sense when the way you sell goes beyond what a platform can do. We advise you during scoping.',
+      },
+      {
+        q: 'How long does it take?',
+        a: '1 to 2 months from scoping to opening, depending on the size of the catalogue and the features.',
       },
       {
         q: 'Will I be able to manage my products myself?',
