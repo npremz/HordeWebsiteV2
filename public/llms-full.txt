@@ -85,6 +85,7 @@ Exemples publies: test d'une app generee avec Lovable (https://hordeagence.com/f
 - Angle: les sites et apps prototypes avec l'IA (Lovable, Bolt, v0...) ont l'air corrects ; Horde les reprend et les rend pros, penses pour des humains, avec une vraie reflexion UX.
 - Cibles: sites en place avec des soucis connus, prototypes faits avec l'IA a rendre pros, entreprises qui veulent ameliorer leur site sans tout jeter.
 - Prix: a partir de 999 EUR HTVA ; selon le perimetre, jusqu'a 2 999 EUR HTVA pour un site vitrine, 3 999 EUR HTVA pour un e-commerce ; une app ou un SaaS se chiffre comme un developpement complet.
+- Delai: 1 a 4 semaines selon le chantier (seulement l'UX, ou aussi des visuels et des fonctionnalites a refaire).
 
 Process:
 

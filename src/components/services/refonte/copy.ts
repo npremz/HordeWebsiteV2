@@ -7,7 +7,7 @@ import type { ServicePageCopy } from '../v2/types';
  * (on reprend un prototype fait avec l'IA et on le rend pro, pensé pour des humains, avec une
  * vraie réflexion UX) : Nicolas, 27/11/2026. Pas de jargon.
  * Prix : grille 2026-11 (dès 999 €, vitrine jusqu'à 2 999 €, e-commerce jusqu'à 3 999 €, SaaS
- * chiffré comme un développement complet). Délai : en attente, ne rien afficher.
+ * chiffré comme un développement complet). Délai : 1 à 4 semaines selon le chantier (Nicolas, 27/11/2026).
  * Preuves : corrections UX de Rocket Mission (article vibe-coding), test Lovable (article lovable-avis).
  * GSC : aucune impression sur la page en 6 mois, rien à préserver.
  */
@@ -17,7 +17,7 @@ const fr: ServicePageCopy = {
     titleLines: ['Votre site existe.', 'On le rend bon', 'pour les humains.'],
     lead:
       'Votre site est en place, mais vous savez qu’il coince quelque part. Ou il a été fait avec l’IA, il a l’air correct, et pourtant personne ne va au bout. On reprend l’existant, sans repartir de zéro, et on repense ce qui doit l’être pour vos visiteurs.',
-    facts: ['À partir de 999 € HTVA', 'On garde ce qui marche', 'Sites faits avec l’IA bienvenus'],
+    facts: ['À partir de 999 € HTVA', '1 à 4 semaines', 'Sites faits avec l’IA bienvenus'],
     cta: 'Parlez-nous de votre site',
     secondary: 'Voir comment on travaille',
   },
@@ -129,6 +129,7 @@ const fr: ServicePageCopy = {
         text: 'Le nouveau site remplace l’ancien sans perdre votre place sur Google : les anciennes adresses mènent aux nouvelles.',
       },
     ],
+    note: 'Comptez 1 à 4 semaines selon le chantier : quelques parcours à repenser, ou aussi des visuels et des fonctionnalités à refaire.',
   },
   price: {
     label: 'Le prix',
@@ -163,6 +164,10 @@ const fr: ServicePageCopy = {
         a: 'Si quelques détails techniques coincent, l’optimisation suffit. Si ce sont les parcours ou le design qui font fuir vos visiteurs, c’est une refonte. L’audit offert tranche.',
       },
       {
+        q: 'Combien de temps prend une refonte ?',
+        a: 'De 1 à 4 semaines. Ça dépend du chantier : si seule l’expérience est à repenser, c’est court ; s’il faut aussi refaire des visuels ou des fonctionnalités, c’est plus long.',
+      },
+      {
         q: 'Je vais perdre ma place sur Google ?',
         a: 'Non. On fait en sorte que vos anciennes adresses mènent aux nouvelles pages, pour que Google et vos visiteurs s’y retrouvent.',
       },
@@ -185,7 +190,7 @@ const en: ServicePageCopy = {
     titleLines: ['Your site exists.', 'We make it work', 'for humans.'],
     lead:
       'Your site is live, but you know something is off. Or it was made with AI, it looks fine, and yet nobody goes all the way. We take what exists, without starting from scratch, and rethink what needs rethinking for your visitors.',
-    facts: ['From €999 excl. VAT', 'We keep what works', 'AI-built sites welcome'],
+    facts: ['From €999 excl. VAT', '1 to 4 weeks', 'AI-built sites welcome'],
     cta: 'Tell us about your site',
     secondary: 'See how we work',
   },
@@ -297,6 +302,7 @@ const en: ServicePageCopy = {
         text: 'The new site replaces the old one without losing your place on Google: old addresses lead to the new pages.',
       },
     ],
+    note: 'Expect 1 to 4 weeks depending on the job: a few journeys to rethink, or visuals and features to rebuild as well.',
   },
   price: {
     label: 'Pricing',
@@ -329,6 +335,10 @@ const en: ServicePageCopy = {
       {
         q: 'Redesign or optimisation: how do I choose?',
         a: 'If a few technical details are off, an optimisation is enough. If the journeys or the design are driving visitors away, it is a redesign. The free audit decides.',
+      },
+      {
+        q: 'How long does a redesign take?',
+        a: '1 to 4 weeks. It depends on the job: if only the experience needs rethinking, it is short; if visuals or features need rebuilding too, it takes longer.',
       },
       {
         q: 'Will I lose my place on Google?',
