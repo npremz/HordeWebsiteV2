@@ -80,28 +80,21 @@ Exemples publies: test d'une app generee avec Lovable (https://hordeagence.com/f
 - Slug: refonte-site-web
 - URL FR: https://hordeagence.com/fr/services/refonte-site-web-bruxelles/
 - URL EN: https://hordeagence.com/en/services/website-redesign-brussels/
-- SEO title FR: Refonte site web a Bruxelles | UX, perf et SEO
-- Objectif: ameliorer un site existant quand ses fondations, son design ou ses performances limitent la croissance.
-- Cibles: entreprises avec un site lent, confus, obsolete, difficile a maintenir ou mal convertissant.
-- Prix: a partir de 999 EUR HTVA ; selon le perimetre, jusqu'a 2 999 EUR HTVA pour un site vitrine, 3 999 EUR HTVA pour un e-commerce ; refonte de SaaS chiffree comme un developpement complet.
-
-Prestations:
-
-- audit de l'existant
-- architecture et UX
-- design UI
-- developpement axe performance
-- migration et lancement
-- preservation ou amelioration SEO
-- approche mobile-first
+- SEO title FR: Refonte de site web a Bruxelles : UX et design
+- Objectif: reprendre un site existant sans repartir de zero et repenser ce qui coince pour les visiteurs (parcours, design, textes, finitions).
+- Angle: les sites et apps prototypes avec l'IA (Lovable, Bolt, v0...) ont l'air corrects ; Horde les reprend et les rend pros, penses pour des humains, avec une vraie reflexion UX.
+- Cibles: sites en place avec des soucis connus, prototypes faits avec l'IA a rendre pros, entreprises qui veulent ameliorer leur site sans tout jeter.
+- Prix: a partir de 999 EUR HTVA ; selon le perimetre, jusqu'a 2 999 EUR HTVA pour un site vitrine, 3 999 EUR HTVA pour un e-commerce ; une app ou un SaaS se chiffre comme un developpement complet.
 
 Process:
 
-- cadrage
-- UX et architecture
-- design UI
-- developpement
-- migration et lancement
+- audit offert (retour sous 24 h)
+- choix de ce qu'on garde et de ce qu'on refait
+- design des parcours a refaire
+- developpement et verification de chaque parcours sur telephone et ordinateur
+- mise en ligne avec redirections des anciennes adresses
+
+Exemples: corrections UX humaines de Rocket Mission, app ecrite par l'IA (https://hordeagence.com/fr/blog/vibe-coding/) ; test d'une app generee avec Lovable et ce qu'il lui manquait avant le public (https://hordeagence.com/fr/blog/lovable-avis/).
 
 ### Creation site e-commerce
 
