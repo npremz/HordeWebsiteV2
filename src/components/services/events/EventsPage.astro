@@ -141,11 +141,18 @@ const faqSchema = {
 
 <!-- 5. Ce qu'en dit le client. -->
 <section class="ev-quote bg-bg" data-header-theme="light">
-  <figure class="home-column" data-home-reveal>
+  <div class="home-column">
     <p class="ev-mono ev-quote__label">{copy.quote.label}</p>
-    <blockquote class="ev-quote__text"><p>{copy.quote.text}</p></blockquote>
-    <figcaption class="ev-mono ev-quote__source">{copy.quote.source}</figcaption>
-  </figure>
+    {copy.quote.items.map((quote, index) => (
+      <figure class="ev-quote__item" data-home-reveal style={`--reveal-delay: ${index * 0.08}s`}>
+        <blockquote class="ev-quote__text"><p>{quote.text}</p></blockquote>
+        <figcaption class="ev-quote__source">
+          <span class="ev-mono">{quote.source}</span>
+          <HomeLink href={quote.href} label={copy.quote.linkLabel} icon="arrow" external newTabLabel={copy.cta.newTab} />
+        </figcaption>
+      </figure>
+    ))}
+  </div>
 </section>
 
 <!-- 6. Les formats possibles. -->
@@ -545,7 +552,18 @@ const faqSchema = {
     letter-spacing: -0.035em;
   }
 
+  .ev-quote__item + .ev-quote__item {
+    margin-top: 3.5rem;
+    padding-top: 3.5rem;
+    border-top: 1px solid rgb(15 16 17 / 0.25);
+  }
+
   .ev-quote__source {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem 2rem;
     margin-top: 1.75rem;
   }
 

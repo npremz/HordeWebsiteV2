@@ -171,28 +171,32 @@ Prestations:
 - URL FR: https://hordeagence.com/fr/services/applications-evenementielles/
 - URL EN: https://hordeagence.com/en/services/event-web-apps/
 - SEO title FR: Creation d'applications evenementielles a Bruxelles
-- Objectif: faire participer un public et coordonner les interfaces participants, animateur et affichage autour du deroule d'un evenement.
+- Objectif: faire participer le public d'un workshop, d'un salon, d'une conference ou d'une pleniere avec une application web sur mesure (telephones, ecrans, regie).
 - Cibles: organisateurs d'evenements, agences de communication, equipes marketing, animateurs de workshops et equipes produit.
 - Prix: a partir de 1 999 EUR HTVA, puis sur devis (public, infrastructure, responsabilites).
 
-Prestations:
+Formats:
 
-- demonstrations, catalogues interactifs et quiz pour salons et stands
-- gestion d'equipes, defis, votes et progression pour workshops
-- simulateurs, parcours guides et presentations produit interactives
-- interfaces de pilotage et affichage synchronise
-- prise en main par l'equipe organisatrice
+- activation d'une salle avant une pleniere (prenom, etoile ou selfie envoyes sur grand ecran par QR code)
+- jeux d'equipe, defis, relais et classement en direct pilotes depuis une regie
+- interactions courtes pour stands de salon (defi, quiz, demo, collecte de contacts)
+- questions, votes et reactions pendant une presentation
+- rien a installer : les participants rejoignent par QR code dans le navigateur
 
-Process:
+Process (3 semaines du brief au jour J):
 
-- cadrage de la date, du public, du lieu et du materiel
-- prototype du parcours et des interfaces
-- developpement et synchronisation
-- repetition sur les appareils prevus
-- mise en service et transmission
+- appel de cadrage gratuit : format, public, lieu, ecrans, fourchette de prix
+- 2 semaines de developpement, lien de test des les premiers jours
+- test grandeur nature avec de vraies personnes une semaine avant
+- jour J : application en ligne, equipe formee au pilotage, presence sur place si prevue au devis
 
-L'hebergement, l'assistance le jour J et la reutilisation sont definis selon le perimetre convenu. Les usages hors ligne sont a prevoir et a tester. Le delai d'environ deux semaines cite dans les exemples existants reste conditionne a un besoin bien cadre.
+Projets realises pour 42 Belgium:
 
+- Code Relay : relais de programmation par equipes a la Proximus Tech Student Experience, 2 avril 2026, 2 groupes de 25 a 30 personnes, developpe en 3 semaines ; inscription par QR code, minuteurs pilotes par l'organisateur, classement sur ecran, notation jury. Atelier concu et anime par Horde.
+- Rocket Mission : atelier d'initiation a la programmation presente par 42 Belgium au FTI Brussels (WIELS), 20 octobre 2026, 2 groupes de 20 eleves ; inspire de Robotzzle, le jeu d'admission de 42 ; missions, contenu et application concus par Horde ; 4 interfaces temps reel (poste d'equipe, labo mobile, ecran TV, regie), FR/EN/NL.
+
+- Etude de cas FR: https://hordeagence.com/fr/blog/vibe-coding/
+- Etude de cas EN: https://hordeagence.com/en/blog/vibe-coding-explained/
 - Exemples FR: https://hordeagence.com/fr/blog/webapp-evenementielle-ia/
 - Exemples EN: https://hordeagence.com/en/blog/ai-assisted-event-web-apps/
 

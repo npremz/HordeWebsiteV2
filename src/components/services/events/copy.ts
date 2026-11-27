@@ -17,7 +17,7 @@ const fr = {
   },
   shot: {
     alt: 'Salle comble autour de l’écran du Code Relay : brief de la manche, minuteur à 05:00 et QR code d’inscription.',
-    caption: 'Code Relay · 42 Belgium chez Proximus · 2 avril 2026',
+    caption: 'Code Relay · 42 Belgium à la Proximus Tech Student Experience · 2 avril 2026',
   },
   fit: {
     title: 'Est-ce pour vous ?',
@@ -39,9 +39,9 @@ const fr = {
     items: [
       {
         name: 'Code Relay',
-        meta: ['Salon Proximus', '2 avril 2026', '2 groupes de 25 à 30 personnes', 'Développé en 3 semaines'],
+        meta: ['Proximus Tech Student Experience', '2 avril 2026', '2 groupes de 25 à 30 personnes', 'Développé en 3 semaines'],
         text:
-          'Une course de relais, mais en code. Un problème est posé, les équipes ont 5 minutes pour réfléchir, puis chaque membre code 2 minutes avant de passer le clavier au suivant, sur 8 tours maximum. Le code final est noté par un testeur automatique, puis par un jury pour la lisibilité.',
+          'Une course de relais, mais en code. Un problème est posé, les équipes ont 5 minutes pour réfléchir, puis chaque membre code 2 minutes avant de passer le clavier au suivant, sur 8 tours maximum. Le code final est noté par un testeur automatique, puis par un jury pour la lisibilité. On a conçu l’atelier et on l’a animé sur place.',
         listLabel: 'L’application faisait tourner l’événement',
         list: [
           'inscription des équipes par QR code, sans compte',
@@ -77,9 +77,19 @@ const fr = {
   },
   quote: {
     label: 'Ce qu’en dit 42 Belgium',
-    text:
-      '« Nous n’avons dit à aucun élève de travailler ensemble. Pas besoin. En quelques minutes, ils comparaient leurs idées, testaient des solutions et s’entraidaient. »',
-    source: '42 Belgium, sur LinkedIn, à propos de Rocket Mission (traduit de l’anglais)',
+    linkLabel: 'Voir le post',
+    items: [
+      {
+        text: '« Un grand merci à Nicolas Prémont […] pour avoir créé et animé cet atelier ! »',
+        source: '42 Belgium sur LinkedIn, à propos du Code Relay (traduit de l’anglais)',
+        href: 'https://www.linkedin.com/posts/great-to-be-part-of-the-proximus-tech-student-share-7445463745817956353-jYh4/',
+      },
+      {
+        text: '« Nous n’avons dit à aucun élève de travailler ensemble. Pas besoin. En quelques minutes, ils comparaient leurs idées, testaient des solutions et s’entraidaient. »',
+        source: '42 Belgium sur LinkedIn, à propos de Rocket Mission (traduit de l’anglais)',
+        href: 'https://www.linkedin.com/posts/42belgium_42belgium-ftibrussels-peerlearning-activity-7518680284150558720-R0iJ',
+      },
+    ],
   },
   formats: {
     title: 'Ce qu’on peut construire pour vous',
@@ -196,7 +206,7 @@ const en: typeof fr = {
   },
   shot: {
     alt: 'A packed room around the Code Relay screen: round brief, timer at 05:00 and registration QR code.',
-    caption: 'Code Relay · 42 Belgium at Proximus · 2 April 2026',
+    caption: 'Code Relay · 42 Belgium at the Proximus Tech Student Experience · 2 April 2026',
   },
   fit: {
     title: 'Is this for you?',
@@ -218,9 +228,9 @@ const en: typeof fr = {
     items: [
       {
         name: 'Code Relay',
-        meta: ['Proximus trade show', '2 April 2026', '2 groups of 25 to 30 people', 'Built in 3 weeks'],
+        meta: ['Proximus Tech Student Experience', '2 April 2026', '2 groups of 25 to 30 people', 'Built in 3 weeks'],
         text:
-          'A relay race, but with code. A problem is set, teams get 5 minutes to think, then each member codes for 2 minutes before handing the keyboard to the next, for up to 8 turns. The final code is scored by an automated tester, then by a jury for readability.',
+          'A relay race, but with code. A problem is set, teams get 5 minutes to think, then each member codes for 2 minutes before handing the keyboard to the next, for up to 8 turns. The final code is scored by an automated tester, then by a jury for readability. We designed the workshop and ran it on site.',
         listLabel: 'The app ran the event',
         list: [
           'team registration by QR code, no account needed',
@@ -256,9 +266,19 @@ const en: typeof fr = {
   },
   quote: {
     label: 'What 42 Belgium says',
-    text:
-      '“We didn’t tell any students to work together. We didn’t have to. Within minutes, they were comparing ideas, testing solutions, and helping each other out.”',
-    source: '42 Belgium, on LinkedIn, about Rocket Mission',
+    linkLabel: 'See the post',
+    items: [
+      {
+        text: '“Big shoutout to Nicolas Prémont […] for creating and leading this workshop!”',
+        source: '42 Belgium on LinkedIn, about Code Relay',
+        href: 'https://www.linkedin.com/posts/great-to-be-part-of-the-proximus-tech-student-share-7445463745817956353-jYh4/',
+      },
+      {
+        text: '“We didn’t tell any students to work together. We didn’t have to. Within minutes, they were comparing ideas, testing solutions, and helping each other out.”',
+        source: '42 Belgium on LinkedIn, about Rocket Mission',
+        href: 'https://www.linkedin.com/posts/42belgium_42belgium-ftibrussels-peerlearning-activity-7518680284150558720-R0iJ',
+      },
+    ],
   },
   formats: {
     title: 'What we can build for you',
