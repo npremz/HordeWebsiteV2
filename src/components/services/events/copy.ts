@@ -1,11 +1,12 @@
 import type { Locale } from '../../../i18n';
+import type { ServicePageCopy } from '../v2/types';
 
 /**
  * Page service « Applications événementielles » (pilote de la refonte des pages services).
  * Faits sourcés : Code Relay (repo codeRelayWeb + Nicolas), Rocket Mission (article
  * vibe-coding + post LinkedIn de 42 Belgium). Ne rien ajouter qui ne soit pas vérifié.
  */
-const fr = {
+const fr: ServicePageCopy = {
   hero: {
     eyebrow: 'Applications événementielles · Bruxelles',
     titleLines: ['Votre public ne regarde', 'plus l’écran.', 'Il joue dessus.'],
@@ -16,6 +17,7 @@ const fr = {
     secondary: 'Voir nos projets',
   },
   shot: {
+    key: 'relay',
     alt: 'Salle comble autour de l’écran du Code Relay : brief de la manche, minuteur à 05:00 et QR code d’inscription.',
     caption: 'Code Relay · 42 Belgium à la Proximus Tech Student Experience · 2 avril 2026',
   },
@@ -194,7 +196,7 @@ const fr = {
   },
 };
 
-const en: typeof fr = {
+const en: ServicePageCopy = {
   hero: {
     eyebrow: 'Event web apps · Brussels',
     titleLines: ['Your audience stops', 'watching the screen.', 'They play on it.'],
@@ -205,6 +207,7 @@ const en: typeof fr = {
     secondary: 'See our projects',
   },
   shot: {
+    key: 'relay',
     alt: 'A packed room around the Code Relay screen: round brief, timer at 05:00 and registration QR code.',
     caption: 'Code Relay · 42 Belgium at the Proximus Tech Student Experience · 2 April 2026',
   },

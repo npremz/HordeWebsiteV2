@@ -1,8 +1,8 @@
 ---
 /**
- * Page service « Applications événementielles », dans la DA de la home (pilote de la refonte
- * des pages services). Ordre : promesse + prix → photo réelle → qualification → preuves (42) →
- * citation → formats → déroulé → prix → FAQ → contact.
+ * Page service « v2 », dans la DA de la home (refonte des pages services). Le contenu vient d'un
+ * copy.ts par service (type ServicePageCopy). Ordre : promesse + prix → photo réelle →
+ * qualification → preuves → citations → formats → déroulé → prix → FAQ → contact.
  * Fonds alternés : noir → noir → bg → blanc → bg → blanc → bg → blanc → bg → noir.
  */
 import { Image } from "astro:assets";
@@ -15,16 +15,21 @@ import relayPhoto from "../../../assets/images/services/evenements/code-relay-pr
 import wielsPhoto from "../../../assets/images/services/evenements/rocket-mission-wiels.jpg";
 import postesPhoto from "../../../assets/images/services/evenements/rocket-mission-postes.jpg";
 import relayScreenPhoto from "../../../assets/images/services/evenements/code-relay-ecran.jpg";
-import { getEventsCopy } from "./copy";
+import type { ServicePageCopy, ServicePhotoKey } from "./types";
 
 interface Props {
   lang: Locale;
+  copy: ServicePageCopy;
 }
 
-const { lang } = Astro.props;
-const copy = getEventsCopy(lang);
+const { lang, copy } = Astro.props;
 const contactHref = `/${lang}/contact/`;
-const photos = { relayScreen: relayScreenPhoto, wiels: wielsPhoto, postes: postesPhoto } as const;
+const photos: Record<ServicePhotoKey, ImageMetadata> = {
+  relay: relayPhoto,
+  relayScreen: relayScreenPhoto,
+  wiels: wielsPhoto,
+  postes: postesPhoto,
+};
 const faqSchema = {
   "@context": "https://schema.org",
   "@type": "FAQPage",
@@ -62,9 +67,9 @@ const faqSchema = {
 <!-- 2. Photo réelle d'un événement. -->
 <section class="ev-shot bg-black" data-header-theme="dark">
   <figure class="ev-shot__figure home-column home-column--wide" data-home-reveal>
-    <div class="ev-shot__frame">
+    <div class="ev-shot__frame" style={copy.shot.position ? `--shot-position: ${copy.shot.position}` : undefined}>
       <Image
-        src={relayPhoto}
+        src={photos[copy.shot.key]}
         alt={copy.shot.alt}
         widths={[480, 800, 1280]}
         sizes="(min-width: 1256px) 68rem, 94vw"
@@ -97,7 +102,7 @@ const faqSchema = {
   </div>
 </section>
 
-<!-- 4. Les preuves : deux événements pour 42 Belgium. -->
+<!-- 4. Les preuves : projets réels. -->
 <section id="projets" class="ev-projects bg-white" data-header-theme="light">
   <div class="home-column home-column--wide">
     <h2 class="ev-projects__title" data-home-reveal>
@@ -111,7 +116,7 @@ const faqSchema = {
           {project.images.map((image) => (
             <div class="ev-project__photo">
               <Image
-                src={photos[image.key as keyof typeof photos]}
+                src={photos[image.key]}
                 alt={image.alt}
                 widths={[400, 640, 960]}
                 sizes={project.images.length > 1 ? "(min-width: 1024px) 18rem, 46vw" : "(min-width: 1024px) 34rem, 94vw"}
@@ -184,6 +189,7 @@ const faqSchema = {
         </li>
       ))}
     </ol>
+    {copy.process.note && <p class="ev-process__note" data-home-reveal>{copy.process.note}</p>}
   </div>
 </section>
 
@@ -395,7 +401,7 @@ const faqSchema = {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    object-position: 50% 60%;
+    object-position: var(--shot-position, 50% 60%);
   }
 
   .ev-shot__caption {
@@ -613,6 +619,14 @@ const faqSchema = {
     gap: 0.6rem;
     padding-block: 1.5rem;
     border-bottom: 1px solid rgb(15 16 17 / 0.25);
+  }
+
+  .ev-process__note {
+    max-width: 36rem;
+    margin-top: 2.5rem;
+    font-size: 1.1875rem;
+    line-height: 1.2;
+    letter-spacing: -0.015em;
   }
 
   .ev-step__title {

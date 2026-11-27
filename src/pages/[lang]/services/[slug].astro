@@ -8,7 +8,9 @@ import ServiceDeliverablesSection from '../../../components/services/ServiceDeli
 import ServiceExclusionsSection from '../../../components/services/ServiceExclusionsSection.astro';
 import ServiceFaqSection from '../../../components/services/ServiceFaqSection.astro';
 import ServiceCtaSection from '../../../components/services/ServiceCtaSection.astro';
-import EventsPage from '../../../components/services/events/EventsPage.astro';
+import ServicePageV2 from '../../../components/services/v2/ServicePageV2.astro';
+import type { ServicePageCopy } from '../../../components/services/v2/types';
+import { getEventsCopy } from '../../../components/services/events/copy';
 import { HTML_LOCALE_CODES, SUPPORTED_LOCALES, type Locale, useTranslations } from '../../../i18n';
 import { type ServiceEntry, getServices, localizeServiceEntry } from '../../../lib/content/services';
 
@@ -37,8 +39,12 @@ const localizedService = localizeServiceEntry(service, lang);
 const switchLang: Locale = lang === 'fr' ? 'en' : 'fr';
 const alternateUrl = localizeServiceEntry(service, switchLang).data.seoUrl;
 
-// Page pilote de la refonte des services : mise en page dédiée, dans la DA de la home.
-const isEventsPage = service.data.slug === 'applications-evenementielles';
+// Refonte des services : les slugs listés ici utilisent la page v2 (DA de la home), les autres
+// gardent l'ancien gabarit tant qu'ils ne sont pas réécrits.
+const V2_COPIES: Record<string, (lang: Locale) => ServicePageCopy> = {
+  'applications-evenementielles': getEventsCopy,
+};
+const v2Copy = V2_COPIES[service.data.slug]?.(lang);
 
 const siteUrl = (Astro.site?.href || 'https://hordeagence.com/').replace(/\/$/, '');
 const pageUrl = new URL(localizedService.data.seoUrl, `${siteUrl}/`).href;
@@ -102,7 +108,7 @@ const serviceSchema = {
 
 <script is:inline type="application/ld+json" set:html={JSON.stringify(serviceSchema)} />
 
-{isEventsPage ? (
+{v2Copy ? (
   <Layout
     lang={lang}
     alternateUrl={alternateUrl}
@@ -114,7 +120,7 @@ const serviceSchema = {
   >
     <script is:inline>document.documentElement.classList.add("home-js");</script>
     <article class="home-page relative" data-service-slug={localizedService.data.slug}>
-      <EventsPage lang={lang} />
+      <ServicePageV2 lang={lang} copy={v2Copy} />
     </article>
     <div slot="footer" class="service-page__footer">
       <Footer lang={lang} />
