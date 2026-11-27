@@ -57,7 +57,7 @@ const fr: ServicePageCopy = {
         note: null,
         images: [
           { key: 'fysuMobile', alt: 'La page de la marque de mode sur mobile : titre et photo de collection.' },
-          { key: 'fysuProducts', alt: 'Carrousel des produits mis en avant : chemise, trench, veste brodée.' },
+          { key: 'fysuProducts', alt: 'Une carte du carrousel produits : veste en cuir brodée sur fond clair.' },
         ],
         link: null,
       },
@@ -233,7 +233,7 @@ const en: ServicePageCopy = {
         note: null,
         images: [
           { key: 'fysuMobile', alt: 'The fashion brand page on mobile: title and collection photo.' },
-          { key: 'fysuProducts', alt: 'Featured products carousel: shirt, trench coat, embroidered jacket.' },
+          { key: 'fysuProducts', alt: 'A card from the product carousel: embroidered leather jacket on a light background.' },
         ],
         link: null,
       },
