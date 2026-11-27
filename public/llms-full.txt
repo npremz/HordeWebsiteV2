@@ -60,20 +60,21 @@ Horde Agence cree des sites web rapides, legers, bien references et simples a ma
 - URL FR: https://hordeagence.com/fr/services/audit-seo-technique-bruxelles/
 - URL EN: https://hordeagence.com/en/services/technical-seo-audit-brussels/
 - SEO title FR: Audit SEO technique offert a Bruxelles | Horde Agence
-- Objectif: comprendre avant d'agir et identifier les blocages prioritaires.
-- Cibles: entreprises qui veulent verifier la vitesse, l'UX, l'UI, le SEO technique et la clarte commerciale de leur site.
-- Prix: gratuit.
+- Objectif: relever ce qui freine un site existant (SEO technique, experience, conversion) avant de proposer une solution.
+- Cibles: entreprises dont le site n'apporte ni contacts ni ventes, ou qui hesitent entre corriger et refaire leur site.
+- Prix: gratuit, aucune obligation de travailler avec Horde ensuite.
+- Delai: retour sous 24 h.
 
-Prestations:
+Deroule:
 
-- audit UX/UI
-- audit SEO technique
-- analyse Core Web Vitals
-- analyse des parcours utilisateur
-- verification de l'image de marque et de la coherence visuelle
-- accessibilite et compatibilite
-- session de 30 minutes
-- plan d'action clair
+- le prospect envoie l'adresse du site et ce qui l'inquiete
+- Horde releve les points qui freinent le site, par ordre d'importance
+- on en parle en appel ; une video peut etre envoyee a la place ou en plus
+- suites possibles : optimisation (199 EUR HTVA par jour) ou refonte (a partir de 999 EUR HTVA)
+
+Axes: SEO technique (indexation, balises, donnees structurees, chargement), experience et conversion, mobile et accessibilite, image de marque.
+
+Exemple publie: audit de Rocket Mission (25 novembre 2026) dans l'article https://hordeagence.com/fr/blog/vibe-coding/
 
 ### Refonte site web
 
