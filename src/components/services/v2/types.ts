@@ -11,6 +11,7 @@ export type ServicePhotoKey =
   | 'postes'
   | 'fysuHero'
   | 'fysuProducts'
+  | 'fysuRail'
   | 'fysuMobile'
   | 'lomaDesktop'
   | 'lomaMobile';

@@ -17,6 +17,7 @@ import postesPhoto from "../../../assets/images/services/evenements/rocket-missi
 import relayScreenPhoto from "../../../assets/images/services/evenements/code-relay-ecran.jpg";
 import fysuHeroPhoto from "../../../assets/images/services/projets/fysu-hero.jpg";
 import fysuProductsPhoto from "../../../assets/images/services/projets/fysu-produits.jpg";
+import fysuRailPhoto from "../../../assets/images/services/projets/fysu-rail.jpg";
 import fysuMobilePhoto from "../../../assets/images/services/projets/fysu-mobile.jpg";
 import lomaDesktopPhoto from "../../../assets/images/services/projets/cafe-loma-desktop.jpg";
 import lomaMobilePhoto from "../../../assets/images/services/projets/cafe-loma-mobile.jpg";
@@ -36,6 +37,7 @@ const photos: Record<ServicePhotoKey, ImageMetadata> = {
   postes: postesPhoto,
   fysuHero: fysuHeroPhoto,
   fysuProducts: fysuProductsPhoto,
+  fysuRail: fysuRailPhoto,
   fysuMobile: fysuMobilePhoto,
   lomaDesktop: lomaDesktopPhoto,
   lomaMobile: lomaMobilePhoto,
@@ -217,7 +219,7 @@ const faqSchema = {
       <span class="block">{copy.price.title}</span>
       <span class="block ev-price__rest">{copy.price.titleRest}</span>
     </h2>
-    <div class="ev-price__grid">
+    <div class:list={["ev-price__grid", copy.price.factors.length > 2 && "ev-price__grid--wide"]}>
       <p class="ev-text ev-price__intro">{copy.price.intro}</p>
       {copy.price.factors.map((factor, index) => (
         <div class="ev-price__factor" data-home-reveal style={`--reveal-delay: ${index * 0.08}s`}>
@@ -833,6 +835,15 @@ const faqSchema = {
     .ev-price__grid {
       grid-template-columns: 1fr 1.4fr 1.4fr;
       gap: 2rem;
+    }
+
+    /* Trois facteurs : l'intro passe sur sa propre ligne, les facteurs en colonnes égales. */
+    .ev-price__grid--wide {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .ev-price__grid--wide .ev-price__intro {
+      grid-column: 1 / -1;
     }
   }
 
