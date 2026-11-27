@@ -151,15 +151,15 @@ const fr: HubCopy = {
     items: [
       {
         title: 'On cadre',
-        text: 'Avant d’écrire une ligne, on pose ce que vous voulez obtenir, pour qui, et ce qui entre dans le projet. Sur Rocket Mission, huit dossiers de spécifications ont décrit le besoin, les cas limites et la façon de vérifier le résultat avant chaque développement.',
+        text: 'Avant de construire quoi que ce soit, on pose avec vous ce que vous voulez obtenir, pour qui, et ce qui entre dans le projet. Tout le monde sait où on va.',
       },
       {
         title: 'On pense pour l’humain',
-        text: 'L’IA écrit vite. Nous, on regarde ce que vos visiteurs comprennent, où ils hésitent et ce qui leur donne envie d’aller au bout.',
+        text: 'Chaque écran est pensé pour les personnes qui vont s’en servir : qu’elles comprennent tout de suite, qu’elles trouvent ce qu’elles cherchent, qu’elles aillent au bout.',
       },
       {
         title: 'On teste avant de livrer',
-        text: 'Avec de vraies personnes, sur les vrais appareils. Rocket Mission a été joué un mois avant l’événement, le Code Relay une semaine avant.',
+        text: 'Avant la mise en ligne, on fait utiliser le site par de vraies personnes, sur téléphone et sur ordinateur, et on corrige ce qui coince.',
       },
     ],
   },
@@ -276,15 +276,15 @@ const en: HubCopy = {
     items: [
       {
         title: 'We scope',
-        text: 'Before writing a line, we pin down what you want to achieve, for whom, and what is in the project. On Rocket Mission, eight specification files set out the need, the edge cases and how to check the result before each piece was built.',
+        text: 'Before building anything, we pin down with you what you want to achieve, for whom, and what is in the project. Everyone knows where we are going.',
       },
       {
         title: 'We design for humans',
-        text: 'AI writes fast. We look at what your visitors understand, where they hesitate and what makes them want to go all the way.',
+        text: 'Every screen is designed for the people who will use it: so they understand straight away, find what they are looking for and go all the way.',
       },
       {
         title: 'We test before we deliver',
-        text: 'With real people, on the real devices. Rocket Mission was played a month before the event, Code Relay a week before.',
+        text: 'Before going live, we have real people use the site, on phone and desktop, and we fix whatever gets in their way.',
       },
     ],
   },
